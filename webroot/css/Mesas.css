@@ -1,0 +1,7 @@
+@CHARSET "UTF-8";
+
+.mesas{
+	height: 540px;
+	zoom:200%;
+	overflow: scroll;
+}

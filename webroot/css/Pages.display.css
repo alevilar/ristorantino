@@ -1,0 +1,13 @@
+@CHARSET "UTF-8";
+
+
+#botonera_home{
+	width: 300px;
+	margin: auto;
+	position: relative;
+	top: 95px;
+	background-color: red;
+}
+
+
+

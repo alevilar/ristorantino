@@ -1,0 +1,746 @@
+@CHARSET "UTF-8";
+
+/* SVN FILE: $Id: cake.generic.css 7690 2008-10-02 04:56:53Z nate $ */
+	/**
+ *
+ * PHP versions 4 and 5
+ *
+ * CakePHP(tm) :  Rapid Development Framework <http://www.cakephp.org/>
+ * Copyright 2005-2008, Cake Software Foundation, Inc.
+ *								1785 E. Sahara Avenue, Suite 490-204
+ *								Las Vegas, Nevada 89104
+ *
+ * Licensed under The MIT License
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @filesource
+ * @copyright		Copyright 2005-2008, Cake Software Foundation, Inc.
+ * @link				http://www.cakefoundation.org/projects/info/cakephp CakePHP(tm) Project
+ * @package			cake
+ * @subpackage		cake.app.webroot.css
+ * @since			CakePHP(tm)
+ * @version			$Revision: 7690 $
+ * @modifiedby		$LastChangedBy: nate $
+ * @lastmodified	$Date: 2008-10-02 00:56:53 -0400 (Thu, 02 Oct 2008) $
+ * @license			http://www.opensource.org/licenses/mit-license.php The MIT License
+ */
+* {
+	margin: 0;
+	padding: 0;
+}
+
+/* General Style Info */
+body {
+	background: #003d4c;
+	color: #fff;
+	font-family: 'lucida grande', verdana, helvetica, arial, sans-serif;
+	font-size: large;
+	margin: 0;
+	overflow: hidden;
+}
+
+A,A:VISITED {	
+	height: 50px;
+	text-decoration: none;
+	background-color: silver;
+	vertical-align: middle;
+}
+
+A:HOVER {
+	background-color: buttonface;
+}
+
+A:ACTIVE {
+
+ 	background-color: red;
+  	color:#00c;outline:0; /* Para los navegadores que lo entienden */
+}
+
+.boton{
+	display: block;
+	height: 70px;
+	width: 70px;	
+	\height: 68px;
+	\width: 68px;	
+	border: 1px dashed grey;
+	text-align: center;
+	font-size-adjust: 100%;
+	text-decoration: none;
+	background-color: silver;
+	vertical-align: middle;
+	
+	font-family: fantasy;
+	font-size: 12px;
+}
+
+
+
+h1,h2,h3,h4 {
+	font-weight: normal;
+}
+
+h1 {
+	background: #fff;
+	color: #003d4c;
+	font-size: 100%;
+	margin: 0.1em 0;
+}
+
+h2 {
+	background: #fff;
+	color: #e32;
+	font-family: 'Gill Sans', 'lucida grande', helvetica, arial, sans-serif;
+	font-size: 190%;
+	margin: 0.3em 0;
+	padding-top: 0.8em;
+}
+
+h3 {
+	color: #993;
+	font-family: 'Gill Sans', 'lucida grande', helvetica, arial, sans-serif;
+	font-size: 165%;
+	padding-top: 1.5em;
+}
+
+h4 {
+	color: #993;
+	font-weight: normal;
+	padding-top: 0.5em;
+}
+
+ul,li {
+	margin: 0 12px;
+}
+
+/* Layout */
+#container {
+	width: 800px;
+	height: 600px;
+	text-align: left;
+}
+
+#content {
+	height: 600px;
+	\height: 580px; /* para FF*/
+	padding: 10px;
+	background: #fff;
+	clear: both;
+	color: #333;
+	overflow: hidden;
+}
+
+#adicion-cabecera {
+	position: absolute;
+	width: 780px;
+	height: 100px;
+}
+
+#MozoCambiarMozoForm {
+	float: left;
+}
+
+#mesajes {
+	background-color:black;
+	border:medium none grey;
+	color:white;
+	float:right;
+	font-size:x-small;
+	height:74px;
+	margin-top:-24px;
+	width:300px;
+}
+
+#mesas-listado {
+	left:48px;
+	position:absolute;
+	top:100px;
+	width:700px;
+}
+
+#mesas-listado UL,LI {
+	list-style: none;
+	padding: 0px;
+	margin: 0px;
+}
+
+#mesas-listado LI {
+	float: left;
+}
+
+#mesas-listado A {
+	
+}
+
+#mesas-listado A:hover {
+	
+}
+
+#mesas {
+	position: absolute;
+	top: 200px;
+	width: 780px;
+	border: 1px solid grey;
+}
+
+#mesa-container {
+	background-color:grey;
+	height:438px;
+	position:absolute;
+	top:158px;
+	width:780px;
+}
+
+#mesa-acciones {
+	margin-top: 12px;
+	float: left;
+}
+
+
+#mesa-data {
+	height:398px;
+	overflow:hidden;
+	width:600px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Tables */
+table {
+	background: #fff;
+	border: 1px solid #ccc;
+	border-right: 0;
+	clear: both;
+	color: #333;
+	margin-bottom: 10px;
+	width: 100%;
+}
+
+th {
+	background: #f2f2f2;
+	border: 1px solid #bbb;
+	border-top: 1px solid #fff;
+	border-left: 1px solid #fff;
+	text-align: center;
+}
+
+th a {
+	background: #f2f2f2;
+	display: block;
+	padding: 2px 4px;
+	text-decoration: none;
+}
+
+th a:hover {
+	background: #ccc;
+	color: #333;
+	text-decoration: none;
+}
+
+table tr td {
+	background: #fff;
+	border-right: 1px solid #ccc;
+	padding: 4px;
+	text-align: center;
+	vertical-align: top;
+}
+
+table tr.altrow td {
+	background: #f4f4f4;
+}
+
+td.actions {
+	text-align: center;
+	white-space: nowrap;
+}
+
+td.actions a {
+	margin: 0px 6px;
+}
+
+.cake-sql-log table {
+	background: #f4f4f4;
+}
+
+.cake-sql-log td {
+	padding: 4px 8px;
+	text-align: left;
+}
+
+/* Paging */
+div.paging {
+	background: #fff;
+	color: #ccc;
+	margin-bottom: 2em;
+}
+
+div.paging div.disabled {
+	color: #ddd;
+	display: inline;
+}
+
+div.paging span {
+	
+}
+
+div.paging span.current {
+	color: #000;
+}
+
+div.paging span a {
+	
+}
+
+/* Scaffold View */
+dl {
+	line-height: 2em;
+	margin: 0em 0em;
+	width: 60%;
+}
+
+dl.altrow {
+	background: #f4f4f4;
+}
+
+dt {
+	font-weight: bold;
+	padding-left: 4px;
+	vertical-align: top;
+}
+
+dd {
+	margin-left: 10em;
+	margin-top: -2em;
+	vertical-align: top;
+}
+
+/* Forms */
+SELECT,INPUT {
+	height: 50px;
+}
+
+.select {
+	height: 50px;
+	display: inline;
+	width: 100px;
+}
+
+INPUT[type=button] {
+	clear: none;
+	display: inline;
+}
+
+form {
+	display: inline;
+}
+
+fieldset {
+	border: 1px solid #ccc;
+	margin-top: 30px;
+	padding: 16px 20px;
+}
+
+fieldset legend {
+	background: #fff;
+	color: #e32;
+	font-size: 160%;
+	font-weight: bold;
+}
+
+fieldset fieldset {
+	margin-top: 0px;
+	margin-bottom: 20px;
+	padding: 16px 10px;
+}
+
+fieldset fieldset legend {
+	font-weight: normal;
+}
+
+fieldset fieldset div {
+	clear: left;
+	margin: 0 20px;
+}
+
+form div {
+	display: inline;
+	vertical-align: text-top;
+}
+
+form div.input {
+	color: #444;
+}
+
+form div.required {
+	color: #333;
+	font-weight: bold;
+}
+
+label {
+	display: block;
+	padding-right: 20px;
+}
+
+input,textarea {
+	font-family: "frutiger linotype", "lucida grande", "verdana", sans-serif
+		;
+	padding: 2px;
+}
+
+select {
+	vertical-align: text-bottom;
+}
+
+select[multiple=multiple] {
+	
+}
+
+option {
+	padding: 0 3px;
+}
+
+div.radio label {
+	margin: 0 0 6px 20px;
+}
+
+/* Notices and Errors */
+div.message {
+	clear: both;
+	color: #900;
+	font-weight: bold;
+	margin: 1em 0;
+}
+
+div.error-message {
+	clear: both;
+	color: #900;
+	font-weight: bold;
+}
+
+p.error {
+	background-color: #e32;
+	color: #fff;
+	font-family: Courier, monospace;
+	line-height: 140%;
+	padding: 0.8em;
+	margin: 1em 0;
+}
+
+p.error em {
+	color: #000;
+	font-weight: normal;
+	line-height: 140%;
+}
+
+.notice {
+	background: #ffcc00;
+	color: #000;
+	display: block;
+	font-family: Courier, monospace;
+	line-height: 140%;
+	padding: 0.8em;
+	margin: 1em 0;
+}
+
+.success {
+	background: green;
+	color: #fff;
+}
+
+/*  Actions  */
+div.actions ul {
+	margin: 0px 0;
+	padding: 0;
+}
+
+div.actions li {
+	display: inline;
+	list-style-type: none;
+	line-height: 2em;
+	margin: 0 2em 0 0;
+	white-space: nowrap;
+}
+
+div.actions ul li a {
+	background: #fff;
+	color: #003d4c;
+	text-decoration: none;
+}
+
+div.actions ul li a:hover {
+	color: #333;
+	text-decoration: underline;
+}
+
+/* Related */
+div.related {
+	clear: both;
+	display: block;
+}
+
+/* Debugging */
+pre {
+	color: #000;
+	background: #f0f0f0;
+	padding: 1em;
+}
+
+pre.cake-debug {
+	background: #ffcc00;
+	font-size: 120%;
+	line-height: 140%;
+	margin-top: 1em;
+	overflow: auto;
+	position: relative;
+}
+
+div.cake-stack-trace {
+	background: #fff;
+	border: 4px dotted #ffcc00;
+	color: #333;
+	margin: 0px;
+	padding: 6px;
+	font-size: 120%;
+	line-height: 140%;
+	overflow: auto;
+	position: relative;
+}
+
+div.cake-code-dump pre {
+	position: relative;
+	overflow: auto;
+}
+
+div.cake-stack-trace pre,div.cake-code-dump pre {
+	color: #000;
+	background-color: #F0F0F0;
+	margin: 0px;
+	padding: 1em;
+	overflow: auto;
+}
+
+div.cake-code-dump pre,div.cake-code-dump pre code {
+	clear: both;
+	font-size: 12px;
+	line-height: 15px;
+	margin: 4px 2px;
+	padding: 4px;
+	overflow: auto;
+}
+
+div.cake-code-dump span.code-highlight {
+	background-color: #ff0;
+	padding: 4px;
+}
+
+div.code-coverage-results div.code-line {
+	padding-left: 5px;
+	display: block;
+	margin-left: 10px;
+}
+
+div.code-coverage-results div.uncovered span.content {
+	background: #ecc;
+}
+
+div.code-coverage-results div.covered span.content {
+	background: #cec;
+}
+
+div.code-coverage-results div.ignored span.content {
+	color: #aaa;
+}
+
+div.code-coverage-results span.line-num {
+	color: #666;
+	display: block;
+	float: left;
+	width: 20px;
+	text-align: right;
+	margin-right: 5px;
+}
+
+div.code-coverage-results span.line-num strong {
+	color: #666;
+}
+
+div.code-coverage-results div.start {
+	border: 1px solid #aaa;
+	border-width: 1px 1px 0px 1px;
+	margin-top: 30px;
+	padding-top: 5px;
+}
+
+div.code-coverage-results div.end {
+	border: 1px solid #aaa;
+	border-width: 0px 1px 1px 1px;
+	margin-bottom: 30px;
+	padding-bottom: 5px;
+}
+
+div.code-coverage-results div.realstart {
+	margin-top: 0px;
+}
+
+div.code-coverage-results p.note {
+	color: #bbb;
+	padding: 5px;
+	margin: 5px 0 10px;
+	font-size: 10px;
+}
+
+div.code-coverage-results span.result-bad {
+	color: #a00;
+}
+
+div.code-coverage-results span.result-ok {
+	color: #fa0;
+}
+
+div.code-coverage-results span.result-good {
+	color: #0a0;
+}
+
+.boton_grande {
+	width: 146px;
+	margin-right: 2px;
+	margin-bottom: 2px;
+	height: 120px;
+	float: left;
+	border: 1px solid grey;
+}
+
+
+#mesas-contenedor{
+	width: 99999999999999px; /* le puse este valor de width porque sino se me iban para abajo las LI qe estaban adentro y no me servia*/
+}
+
+
+#LeftArrow {
+	float: left;
+}
+
+#RightArrow {
+	float: right;
+}
+
+.arrow IMG {
+	border: none;
+	width: 50px;
+	height: 50px;
+	\margin-top: -12px;  /* solo para FF porque todos los A (links) tienen margen, y se me desfasaban mal si no ponia esto*/
+}
+
+#ScrollMesaBox {
+	float: left;
+	overflow: hidden;
+	width: 560px;
+	height: 88px;
+}
+
+
+
+#mesas-scrollbar{
+	position: absolute;
+	top: 500px;
+	left: 120px;
+}
+
+
+#mesas-contenedor LI :focus{
+	 border-bottom: grey 10px solid;
+}
+
+
+
+#items-listado {
+	display: block;
+	clear: both;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.productos-boton {
+	
+}
+
+
+.menu-horizontal UL,LI {
+	float: left;
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+	font-size: x-small;
+}
+
+.menu-horizontal A {
+	padding: 0px;
+	height: 50px;
+}
+
+
+
+
+.menu-vertical UL,LI {
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+}
+
+.menu-vertical A,LI {
+	display: inline;	
+}
+
+.menu-vertical A {
+	width: 160px;
+	display: block;	
+}
+
+
+
+#categorias-listado{
+	position: absolute;
+	top: 20px;
+	height: 50px;
+	width: 640px;
+}
+
+
+#productos-listado{
+	position: absolute;
+	top: 80px;
+}
+
+#productos-contenedor{
+	position: absolute;
+	top : 180px;
+	left: 20px;
+	width: 525px;
+	height: 400px;
+	background-color: white;
+	border: 2px solid grey;
+}
+
+
+#comanda{
+	position: absolute;
+	top : 180px;
+	left: 555px;
+	width: 240px;
+	height: 400px;
+	background-color: white;
+	border: 2px solid grey;
+}
