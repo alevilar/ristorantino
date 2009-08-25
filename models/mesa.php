@@ -30,7 +30,7 @@ class Mesa extends AppModel {
 	);
 
 	var $hasMany = array(
-			'Comanda' => array('className' => 'Comanda',
+			'DetalleComanda' => array('className' => 'DetalleComanda',
 								'foreignKey' => 'mesa_id',
 								'dependent' => false,
 								'conditions' => '',

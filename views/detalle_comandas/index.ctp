@@ -25,24 +25,24 @@ foreach ($comandas as $comanda):
 ?>
 	<tr<?php echo $class;?>>
 		<td>
-			<?php echo $comanda['Comanda']['id']; ?>
+			<?php echo $comanda['DetalleComanda']['id']; ?>
 		</td>
 		<td>
-			<?php echo $comanda['Comanda']['producto_id']; ?>
+			<?php echo $comanda['DetalleComanda']['producto_id']; ?>
 		</td>
 		<td>
-			<?php echo $comanda['Comanda']['cant']; ?>
+			<?php echo $comanda['DetalleComanda']['cant']; ?>
 		</td>
 		<td>
-			<?php echo $comanda['Comanda']['mesa_id']; ?>
+			<?php echo $comanda['DetalleComanda']['mesa_id']; ?>
 		</td>
 		<td>
-			<?php echo $comanda['Comanda']['created']; ?>
+			<?php echo $comanda['DetalleComanda']['created']; ?>
 		</td>
 		<td class="actions">
-			<?php echo $html->link(__('View', true), array('action'=>'view', $comanda['Comanda']['id'])); ?>
-			<?php echo $html->link(__('Edit', true), array('action'=>'edit', $comanda['Comanda']['id'])); ?>
-			<?php echo $html->link(__('Delete', true), array('action'=>'delete', $comanda['Comanda']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $comanda['Comanda']['id'])); ?>
+			<?php echo $html->link(__('View', true), array('action'=>'view', $comanda['DetalleComanda']['id'])); ?>
+			<?php echo $html->link(__('Edit', true), array('action'=>'edit', $comanda['DetalleComanda']['id'])); ?>
+			<?php echo $html->link(__('Delete', true), array('action'=>'delete', $comanda['DetalleComanda']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $comanda['DetalleComanda']['id'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>

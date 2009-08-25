@@ -1,6 +1,7 @@
 
 
 function cambiarMesa(mesaCambiar){
+	
 	currentMesa = mesaCambiar;
 
 	comanda.resetearComanda(currentMozo, currentMesa);
@@ -10,6 +11,10 @@ function cambiarMesa(mesaCambiar){
     
     
     
+function cerrarMesa(){
+	window.location.href = "/ristorantino/mesas/cerrarMesa/"+currentMesa.id+"/mozo_id:"+currentMozo.id;
+}
+
     
     
 function agregarProducto(){
@@ -39,8 +44,9 @@ function abrirMesa(){
      * para que se actualicen algunas variables globales, es necesario que se ejectute esta funcion
      */
 function actualizar_numero_mesa_div(){
-	$("numero-mesa").update("Mesa: "+currentMesa.numero)
-	
+	if (currentMesa){
+		$("numero-mesa").update("Mesa: "+currentMesa.numero)
+	}	
 }
 
 
@@ -68,9 +74,10 @@ function MoveMesaLeft()
  */
 function MoveMesaRight()
 {
-	console.info("mesas listado: "+mesas_listado);
 	
-	var cantScrolls = (cantidad_de_mesas*50)/630;
+	var cantScrolls = (currentMozo.mesas.length*50)/630;
+	
+	
 	
 	if(cantScrolls > (parseInt(cantScrolls)+1)){
 		cantScrolls = parseInt(cantScrolls)+ 1;
@@ -78,7 +85,6 @@ function MoveMesaRight()
 	else{
 		cantScrolls = parseInt(cantScrolls);
 	}
-	console.info("cantidad scrolls: "+cantScrolls);
 	
 	if (mesas_listado<cantScrolls){
 		new Effect.MoveBy('mesas-contenedor', 0, -630 , 

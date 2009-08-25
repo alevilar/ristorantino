@@ -34,7 +34,7 @@ body {
 	background: #003d4c;
 	color: #fff;
 	font-family: 'lucida grande', verdana, helvetica, arial, sans-serif;
-	font-size: large;
+	font-size: x-large;
 	margin: 0;
 	overflow: hidden;
 }
@@ -64,13 +64,11 @@ A:ACTIVE {
 	\width: 68px;	
 	border: 1px dashed grey;
 	text-align: center;
-	font-size-adjust: 100%;
 	text-decoration: none;
 	background-color: silver;
 	vertical-align: middle;
 	
 	font-family: fantasy;
-	font-size: 12px;
 }
 
 
@@ -82,7 +80,6 @@ h1,h2,h3,h4 {
 h1 {
 	background: #fff;
 	color: #003d4c;
-	font-size: 100%;
 	margin: 0.1em 0;
 }
 
@@ -90,7 +87,6 @@ h2 {
 	background: #fff;
 	color: #e32;
 	font-family: 'Gill Sans', 'lucida grande', helvetica, arial, sans-serif;
-	font-size: 190%;
 	margin: 0.3em 0;
 	padding-top: 0.8em;
 }
@@ -98,7 +94,6 @@ h2 {
 h3 {
 	color: #993;
 	font-family: 'Gill Sans', 'lucida grande', helvetica, arial, sans-serif;
-	font-size: 165%;
 	padding-top: 1.5em;
 }
 
@@ -193,6 +188,7 @@ ul,li {
 #mesa-acciones {
 	margin-top: 12px;
 	float: left;
+	width: 162px;
 }
 
 
@@ -683,7 +679,6 @@ div.code-coverage-results span.result-good {
 	list-style: none;
 	margin: 0px;
 	padding: 0px;
-	font-size: x-small;
 }
 
 .menu-horizontal A {

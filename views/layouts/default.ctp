@@ -34,23 +34,13 @@
 	<?php
 		echo $html->meta('icon');
 
-		echo $html->css('ristorantino.generic');
-		echo $html->css($this->name);
+		echo $html->css('cake');
 
 		echo $scripts_for_layout;
 		
 		echo $javascript->link('prototype-1.6.0.3');		
 		echo $javascript->link('scriptaculous');	
 		
-		echo $javascript->link('ale_categorias/categorias.class');
-		echo $javascript->link('ale_categorias/comanda.class');
-		echo $javascript->link('ale_categorias/producto.class');
-		
-		echo $javascript->link('body-head');
-		
-		//echo $javascript->link('protofish');
-		//echo $javascript->link('livepipe');
-		//echo $javascript->link('window');
 		echo $javascript->link('Controls'); // PAD numerico
 		
 	?>
@@ -68,7 +58,6 @@
 		</div>
 		
 	</div>
-	<?php echo $javascript->link('tail'); ?>
 	<?php echo $cakeDebug; ?>
 	
 </body>

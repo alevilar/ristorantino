@@ -3,6 +3,8 @@ class MesasController extends AppController {
 
 	var $name = 'Mesas';
 	var $helpers = array('Html', 'Form');
+	
+	
 
 	function index() {
 		$this->Mesa->recursive = 0;
@@ -11,16 +13,18 @@ class MesasController extends AppController {
 
 	function view($id = null) {
 		$this->layout='ajax';
+		Configure::write('debug',0);
+		
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid Mesa.', true));
 			$this->redirect(array('action'=>'index'));
 		}
 		
 		
-		$this->Mesa->Comanda->order = 'Comanda.created';
-		$this->Mesa->Comanda->recursive = 1;
-		$items = $this->Mesa->Comanda->find('all',array('conditions'=>array('Comanda.mesa_id'=>$id),
-														'fields'=> array('Comanda.mesa_id','Comanda.producto_id','sum(Comanda.cant)', 'Producto.name', 'Mesa.numero'),
+		$this->Mesa->DetalleComanda->order = 'DetalleComanda.created';
+		$this->Mesa->DetalleComanda->recursive = 1;
+		$items = $this->Mesa->DetalleComanda->find('all',array('conditions'=>array('DetalleComanda.mesa_id'=>$id),
+														'fields'=> array('DetalleComanda.mesa_id','DetalleComanda.producto_id','sum(DetalleComanda.cant) as cant', 'Producto.name', 'Mesa.numero'),
 														'group'=> array('mesa_id','producto_id', 'Producto.name','Mesa.numero')));
 		$mesa = $this->Mesa->read(null, $id);	
 		$this->set(compact('mesa', 'items'));	
@@ -45,6 +49,17 @@ class MesasController extends AppController {
 		}
 		
 	}
+	
+	
+	function cerrarMesa($mesa_id){
+		$this->Mesa->id = $mesa_id;
+		$result = $this->Mesa->saveField('time_cerro_mesa', date( "Y-m-d H:i:s",strtotime('now')));
+		$mozo_id = $this->passedArgs['mozo_id'];
+		
+		$this->Session->setFlash(__('Se mandò a cerrar la mesa', true));
+		$this->redirect("/adicion/adicionar/mozo_id:$mozo_id");
+	}
+	
 
 	function add() {
 		if (!empty($this->data)) {

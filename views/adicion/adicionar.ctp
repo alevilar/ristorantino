@@ -14,6 +14,8 @@ var currentMesa = fabricaMesa.getMesa();
 var currentMozo = fabricaMozo.getMozo();
 
 
+
+
 //este objeto se crea con el evento window onload
 var comanda = null;
 	
@@ -63,20 +65,21 @@ var mesas_listado = 0;//este es el del listado de mesas horizontal
 <div id="mesas-listado">
     <div id="LeftArrow">
        <?= $html->link($html->image('left.png'),      					
-       					 array('action' => '#moveLeft'),
+       					'#moveLeft',
        					//opciones extra 
-       					 array(	'escape' => false, 
-       					 		'onClick'=>'MoveMesaLeft();return false;',
+       					 array(	'escape' => false,
        					 		'class'=>'arrow boton',
+       					 		'onClick'=>"MoveMesaLeft()",
        					 		'alt'=>'Mover a la izquierda'
        					 ));?>
     </div>     
     <div id="ScrollMesaBox">
         <ul  id="mesas-contenedor">
 		<?php foreach ($this->data['Mesa'] as $m):?>
-			<?php echo '<li>'.$ajax->link($m['numero'],'/Mesas/view/'.$m['id'], array( 	'update'=>'mesa-scroll',
+			<?php echo '<li>'.$ajax->link($m['numero'],'/mesas/view/'.$m['id'], array( 	'update'=>'mesa-scroll',
 																						'id'=>'mesa-ver-'.$m['id'],
 																						'class'=>'boton',
+																						'evalScripts'=>true,
 																						'complete' => 'cambiarMesa()'
 							)).'</li>'
 			?>
@@ -89,11 +92,11 @@ var mesas_listado = 0;//este es el del listado de mesas horizontal
 		
     <div id="RightArrow">
      <?= $html->link($html->image('right.png'),      					
-       					 array('action' => '#moveRight'),
+       					'#moveRight',
        					//opciones extra 
-       					 array(	'escape' => false, 
-       					 		'onClick'=>'MoveMesaRight();return false;',
+       					 array(	'escape' => false,
        					 		'class'=>'arrow boton',
+       					 		'onClick'=>"MoveMesaRight()",
        					 		'alt'=>'Mover a la derecha'));?>
         
     </div>  
@@ -103,11 +106,12 @@ var mesas_listado = 0;//este es el del listado de mesas horizontal
 <div id="mesa-container">
 	<div id="mesa-acciones" class="menu-vertical">
 		<ul>
-			<li><?php echo $html->link('Agregar Producto','#AgregarProducto',array('onClick'=>'agregarProducto(); return false;'));?></li>
+			<li><?php echo $html->link('Comanda','#AgregarProducto',array('onClick'=>'agregarProducto(); return false;'));?></li>
 			<li><?php echo $html->link('Factura "A"','#TipoFactura');?></li>
-			<li><?php echo $html->link('Convertir en Menù','#ConvertirEnMenu');?></li>
-			<li><?php echo $html->link('Invitaciòn','#AplicarInvitacion');?></li>
-			<li><?php echo $html->link('Cerrar','#CerrarMesa');?></li>
+			<li><?php echo $html->link('Menú','#ConvertirEnMenu');?></li>
+			<li><?php echo $html->link('Invitación','#AplicarInvitacion');?></li>
+			
+			<li><?php echo $html->link('Cerrar Mesa',"#cerrarMesa",array('onClick'=>'cerrarMesa()'));?></li>
 		</ul>
 	</div>
 	
@@ -144,16 +148,4 @@ var mesas_listado = 0;//este es el del listado de mesas horizontal
  <div id="keyboard"></div>
  
  
- 
- 
- <div id="productos-contenedor" style="display:none">
-
- </div>
- 
- 
- <script type="text/javascript">
-<!--
-new Ajax.Updater('productos-contenedor', '<?= $html->url('/categorias/listar') ?>', { method: 'get', 'evalScripts' :true });
-//-->
-</script>
 

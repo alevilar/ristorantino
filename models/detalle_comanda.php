@@ -1,7 +1,7 @@
 <?php
-class Comanda extends AppModel {
+class DetalleComanda extends AppModel {
 
-	var $name = 'Comanda';
+	var $name = 'DetalleComanda';
 	var $validate = array(
 		'producto_id' => array('numeric'),
 		'cant' => array('numeric'),

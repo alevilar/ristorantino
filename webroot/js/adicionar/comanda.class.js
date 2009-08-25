@@ -53,13 +53,13 @@ var Comanda = Class.create({
 	  enviarComanda: function(){
 		  console.info("Se enviò una comanda paraimprimir, la del mozo "+this.mozo.id+" mesa "+this.mesa.id);
 		  //armo el formulario que voy  a enviar
-		  var formulario = new Element('form', {'name':'Comanda', 'action':'http://localhost/ristorantino/Comandas/add/mesa_id:'+this.mesa.id+'/mozo_id:'+this.mozo.id});
+		  var formulario = new Element('form', {'name':'Comanda', 'action':'http://localhost/ristorantino/DetalleComandas/add/mesa_id:'+this.mesa.id+'/mozo_id:'+this.mozo.id});
 		 		  
 		  var count = 0; 
 		  this.productos.each(function(p){
-			  formulario.appendChild(new Element('input', {'name': 'data[Comanda]['+count+'][producto_id]'}).setValue(p.getId()));
-			  formulario.appendChild(new Element('input', {'name': 'data[Comanda]['+count+'][cant]'}).setValue(p.getCantidad()));
-			  formulario.appendChild(new Element('input', {'name': 'data[Comanda]['+count+'][mesa_id]'}).setValue(this.mesa.id));
+			  formulario.appendChild(new Element('input', {'name': 'data[DetalleComanda]['+count+'][producto_id]'}).setValue(p.getId()));
+			  formulario.appendChild(new Element('input', {'name': 'data[DetalleComanda]['+count+'][cant]'}).setValue(p.getCantidad()));
+			  formulario.appendChild(new Element('input', {'name': 'data[DetalleComanda]['+count+'][mesa_id]'}).setValue(this.mesa.id));
 			  count++;
 		  }.bind(this));
 		  

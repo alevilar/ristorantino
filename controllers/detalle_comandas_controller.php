@@ -1,11 +1,11 @@
 <?php
-class ComandasController extends AppController {
+class DetalleComandasController extends AppController {
 
-	var $name = 'Comandas';
+	var $name = 'DetalleComandas';
 	var $helpers = array('Html', 'Form');
 
 	function index() {
-		$this->Comanda->recursive = 0;
+		$this->DetalleComanda->recursive = 0;
 		$this->set('comandas', $this->paginate());
 	}
 
@@ -14,7 +14,7 @@ class ComandasController extends AppController {
 			$this->Session->setFlash(__('Invalid Comanda.', true));
 			$this->redirect(array('action'=>'index'));
 		}
-		$this->set('comanda', $this->Comanda->read(null, $id));
+		$this->set('comanda', $this->DetalleComanda->read(null, $id));
 	}
 
 	
@@ -23,12 +23,12 @@ class ComandasController extends AppController {
 		//Configure::write('debug',0);
 		
 		if (isset($this->data)):
-			$guardar = $this->data['Comanda'];
+			$guardar = $this->data['DetalleComanda'];
 		echo "----- la cantiadd de cosas a imprimir se guardaran: ".sizeof($guardar)." ---- <br>";
 			for ($i=0 ; $i < sizeof($guardar) ; $i++):
-				$this->data['Comanda'] = $guardar[$i]; 
+				$this->data['DetalleComanda'] = $guardar[$i]; 
 				
-				if ($this->Comanda->guardar($this->data)) {					
+				if ($this->DetalleComanda->guardar($this->data)) {					
 					$j;
 				} else {
 					$this->Session->setFlash(__('The Comanda could not be saved. Please, try again.', true));
@@ -43,7 +43,7 @@ class ComandasController extends AppController {
 			$this->redirect(array('action'=>'index'));
 		}
 		if (!empty($this->data)) {
-			if ($this->Comanda->save($this->data)) {
+			if ($this->DetalleComanda->save($this->data)) {
 				$this->Session->setFlash(__('The Comanda has been saved', true));
 				$this->redirect(array('action'=>'index'));
 			} else {
@@ -51,10 +51,10 @@ class ComandasController extends AppController {
 			}
 		}
 		if (empty($this->data)) {
-			$this->data = $this->Comanda->read(null, $id);
+			$this->data = $this->DetalleComanda->read(null, $id);
 		}
-		$productos = $this->Comanda->Producto->find('list');
-		$mesas = $this->Comanda->Mesa->find('list');
+		$productos = $this->DetalleComanda->Producto->find('list');
+		$mesas = $this->DetalleComanda->Mesa->find('list');
 		$this->set(compact('productos','mesas'));
 	}
 
@@ -63,7 +63,7 @@ class ComandasController extends AppController {
 			$this->Session->setFlash(__('Invalid id for Comanda', true));
 			$this->redirect(array('action'=>'index'));
 		}
-		if ($this->Comanda->del($id)) {
+		if ($this->DetalleComanda->del($id)) {
 			$this->Session->setFlash(__('Comanda deleted', true));
 			$this->redirect(array('action'=>'index'));
 		}

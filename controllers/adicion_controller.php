@@ -11,7 +11,8 @@ class AdicionController extends AppController {
 	var $layout = 'adicion';
 
 	
-	function beforeFilter(){
+	function beforeFilter(){		
+		
 		//siempre poner el mozo actual, cuando no hay ndie seleccionado mete un CERO
 		$this->current_mozo_id =  (isset($this->passedArgs['mozo_id']))?$this->passedArgs['mozo_id']:0;
 		
@@ -45,6 +46,7 @@ class AdicionController extends AppController {
 	function adicionar(){
 		$this->Mozo->id = $this->current_mozo_id;
 		$this->Mozo->hasMany['Mesa']['order'] = "created DESC";
+		$this->Mozo->hasMany['Mesa']['conditions'] = "time_cerro_mesa = '0000-00-00 00:00:00'";
 		$this->data = $this->Mozo->read();
 		$this->set('mozos',$this->Mozo->find('list',array('fields'=>array('id','numero'))));
 	}

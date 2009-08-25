@@ -34,7 +34,7 @@
 	<?php
 		echo $html->meta('icon');
 
-		//echo $html->css('ristorantino.generic');
+		//echo $html->css('cake');
 		echo $html->css('Adicion');
 
 		echo $scripts_for_layout;
@@ -42,21 +42,22 @@
 		echo $javascript->link('prototype-1.6.0.3');		
 		echo $javascript->link('scriptaculous');	
 		
-		echo $javascript->link('adicion/categorias.class');
-		echo $javascript->link('adicion/comanda.class');
-		echo $javascript->link('adicion/producto.class');
-		echo $javascript->link('adicion/producto_comanda.class');
-		echo $javascript->link('adicion/fabrica_mozo.class');
-		echo $javascript->link('adicion/fabrica_mesas.class');
-		echo $javascript->link('adicion/mesa.class');
-		echo $javascript->link('adicion/mozo.class');
 		
-		echo $javascript->link('body-head');
-		echo $javascript->link('eventos_observados');
+		echo $javascript->link('adicionar/head');		
 		
-		//echo $javascript->link('protofish');
-		//echo $javascript->link('livepipe');
-		//echo $javascript->link('window');
+		echo $javascript->link('ristorantino/categorias.class');
+		echo $javascript->link('ristorantino/producto.class');		
+		echo $javascript->link('ristorantino/fabrica_mozo.class');
+		echo $javascript->link('ristorantino/fabrica_mesas.class');
+		echo $javascript->link('ristorantino/mesa.class');
+		echo $javascript->link('ristorantino/mozo.class');
+		
+		echo $javascript->link('adicionar/comanda.class');
+		echo $javascript->link('adicionar/producto_comanda.class');		
+		
+		echo $javascript->link('adicionar/eventos_observados');
+
+		
 		echo $javascript->link('Controls'); // PAD numerico
 		
 	?>
@@ -67,7 +68,7 @@
 			<?php echo $content_for_layout; ?>
 		</div>
 	</div>
-	<?php echo $javascript->link('tail'); ?>
+	<?php echo $javascript->link('adicionar/tail'); ?>
 	<?php echo $cakeDebug; ?>
 	
 </body>

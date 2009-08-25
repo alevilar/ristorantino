@@ -1,28 +1,25 @@
-/* SVN FILE: $Id: cake.generic.css 7690 2008-10-02 04:56:53Z nate $ */
+/* SVN FILE: $Id: cake.generic.css 7945 2008-12-19 02:16:01Z gwoo $ */
 /**
  *
  * PHP versions 4 and 5
  *
- * CakePHP(tm) :  Rapid Development Framework <http://www.cakephp.org/>
- * Copyright 2005-2008, Cake Software Foundation, Inc.
- *								1785 E. Sahara Avenue, Suite 490-204
- *								Las Vegas, Nevada 89104
+ * CakePHP(tm) :  Rapid Development Framework (http://www.cakephp.org)
+ * Copyright 2005-2008, Cake Software Foundation, Inc. (http://www.cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
  * @filesource
- * @copyright		Copyright 2005-2008, Cake Software Foundation, Inc.
- * @link				http://www.cakefoundation.org/projects/info/cakephp CakePHP(tm) Project
- * @package			cake
- * @subpackage		cake.app.webroot.css
- * @since			CakePHP(tm)
- * @version			$Revision: 7690 $
- * @modifiedby		$LastChangedBy: nate $
- * @lastmodified	$Date: 2008-10-02 00:56:53 -0400 (Thu, 02 Oct 2008) $
- * @license			http://www.opensource.org/licenses/mit-license.php The MIT License
+ * @copyright     Copyright 2005-2008, Cake Software Foundation, Inc. (http://www.cakefoundation.org)
+ * @link          http://www.cakefoundation.org/projects/info/cakephp CakePHP(tm) Project
+ * @package       cake
+ * @subpackage    cake.app.webroot.css
+ * @since         CakePHP(tm)
+ * @version       $Revision: 7945 $
+ * @modifiedby    $LastChangedBy: gwoo $
+ * @lastmodified  $Date: 2008-12-18 18:16:01 -0800 (Thu, 18 Dec 2008) $
+ * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
-
 
 * {
 	margin:0;
@@ -85,14 +82,10 @@ ul, li {
 
 /* Layout */
 #container {
-	width: 800px;
-	height: 600px;
 	text-align: left;
 }
 
 #header{
-	height: 80px;
-	\height: 60px; /* para FF*/
 	padding: 10px 20px;
 }
 #header h1 {
@@ -112,17 +105,13 @@ ul, li {
 	text-decoration: underline;
 }
 #content{
-	height: 450px;
-	\height: 400px; /* para FF*/
-	padding: 10px 20px 40px 20px;
 	background: #fff;
 	clear: both;
-	color: #333;	
+	color: #333;
+	padding: 10px 20px 40px 20px;
 	overflow: auto;
 }
 #footer {
-	height: 30px;
-	\height: 13px; /* para FF*/
 	clear: both;
 	padding: 6px 10px;
 	text-align: right;
@@ -488,4 +477,3 @@ div.code-coverage-results span.result-ok {
 div.code-coverage-results span.result-good {
 	color: #0a0;
 }
-

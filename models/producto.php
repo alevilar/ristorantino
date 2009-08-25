@@ -14,7 +14,7 @@ class Producto extends AppModel {
 	);
 
 	var $hasMany = array(
-			'Comanda' => array('className' => 'Comanda',
+			'DetalleComanda' => array('className' => 'DetalleComanda',
 								'foreignKey' => 'producto_id',
 								'dependent' => false,
 								'conditions' => '',
