@@ -36,5 +36,6 @@ var Mesa = Class.create({
 		setProductos: function(productos){
 			this.productos = productos;
 		}
+		
 
 });

@@ -1,54 +1,7 @@
 
 
-function cambiarMesa(mesaCambiar){
-	
-	currentMesa = mesaCambiar;
-
-	comanda.resetearComanda(currentMozo, currentMesa);
-	actualizar_numero_mesa_div();
-	
-}
     
-    
-    
-function cerrarMesa(){
-	window.location.href = "/ristorantino/mesas/cerrarMesa/"+currentMesa.id+"/mozo_id:"+currentMozo.id;
-}
-
-    
-    
-function agregarProducto(){
-	$("productos-contenedor").show(); 
-	$("comanda").show();
-	
-}    
-    
-    
-    
-    
-    
-    
-    /**
-     * Esta funcion es para cuando yo abro una nueva mesa, me muestra el form input con un PAD numerico
-     */
-function abrirMesa(){ 
-	$('mesa-abrir').toggle();Field.activate('MesaNumero');
-}    
-    
-    
-    
-    
-
-    /**
-     * cuando hago click en una mesa, esta llama via ajax a la informacion
-     * para que se actualicen algunas variables globales, es necesario que se ejectute esta funcion
-     */
-function actualizar_numero_mesa_div(){
-	if (currentMesa){
-		$("numero-mesa").update("Mesa: "+currentMesa.numero)
-	}	
-}
-
+   
 
 
 /**
@@ -75,7 +28,7 @@ function MoveMesaLeft()
 function MoveMesaRight()
 {
 	
-	var cantScrolls = (currentMozo.mesas.length*50)/630;
+	var cantScrolls = (adicion.currentMozo.mesas.length*50)/630;
 	
 	
 	

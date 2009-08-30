@@ -67,7 +67,7 @@ A:ACTIVE {
 	text-decoration: none;
 	background-color: silver;
 	vertical-align: middle;
-	
+	font-size: 14px;
 	font-family: fantasy;
 }
 
@@ -81,6 +81,9 @@ h1 {
 	background: #fff;
 	color: #003d4c;
 	margin: 0.1em 0;
+	font-size: 22px;
+	text-align: center;
+	border-bottom: thin solid grey;
 }
 
 h2 {
@@ -104,7 +107,7 @@ h4 {
 }
 
 ul,li {
-	margin: 0 12px;
+	margin: 0px;
 }
 
 /* Layout */
@@ -134,15 +137,31 @@ ul,li {
 	float: left;
 }
 
-#mesajes {
+#numero-mesa{
+	float: left;
+}
+
+#mensajes {
 	background-color:black;
 	border:medium none grey;
 	color:white;
 	float:right;
 	font-size:x-small;
 	height:74px;
-	margin-top:-24px;
 	width:300px;
+	overflow: hidden;
+}
+
+
+#mesa-abrir{
+	position: absolute;
+	top: 200px;
+}
+
+
+#mensajes UL LI{
+	padding: 0px;
+	margin: 0px;
 }
 
 #mesas-listado {
@@ -152,7 +171,7 @@ ul,li {
 	width:700px;
 }
 
-#mesas-listado UL,LI {
+#mesas-listado UL{
 	list-style: none;
 	padding: 0px;
 	margin: 0px;
@@ -160,6 +179,9 @@ ul,li {
 
 #mesas-listado LI {
 	float: left;
+	list-style: none;
+	padding: 0px;
+	margin: 0px;
 }
 
 #mesas-listado A {
@@ -188,14 +210,15 @@ ul,li {
 #mesa-acciones {
 	margin-top: 12px;
 	float: left;
-	width: 162px;
 }
 
 
 #mesa-data {
 	height:398px;
 	overflow:hidden;
-	width:600px;
+	width:370px;
+	margin-top: 14px;
+	background-color: white;
 }
 
 
@@ -637,7 +660,6 @@ div.code-coverage-results span.result-good {
 	border: none;
 	width: 50px;
 	height: 50px;
-	\margin-top: -12px;  /* solo para FF porque todos los A (links) tienen margen, y se me desfasaban mal si no ponia esto*/
 }
 
 #ScrollMesaBox {
@@ -674,7 +696,21 @@ div.code-coverage-results span.result-good {
 }
 
 
-.menu-horizontal UL,LI {
+
+
+.menu-margen A{
+	border: thin solid;
+	margin: 2px;
+}
+	
+	
+/********************************************************************************************
+	
+	MENU HORIZONTAL
+	
+*/
+.menu-horizontal UL LI {
+	list-style: none;
 	float: left;
 	list-style: none;
 	margin: 0px;
@@ -684,24 +720,31 @@ div.code-coverage-results span.result-good {
 .menu-horizontal A {
 	padding: 0px;
 	height: 50px;
+	float:left;
 }
 
 
-
-
-.menu-vertical UL,LI {
+/********************************************************************************************
+	
+	MENU VERTICAL
+	
+*/
+.menu-vertical UL LI {
 	list-style: none;
 	margin: 0px;
 	padding: 0px;
+	clear:both;
+	display:block;
 }
 
-.menu-vertical A,LI {
-	display: inline;	
+.menu-vertical A LI {
 }
 
 .menu-vertical A {
 	width: 160px;
 	display: block;	
+	border:thin solid;
+	margin:2px;
 }
 
 
@@ -710,7 +753,7 @@ div.code-coverage-results span.result-good {
 	position: absolute;
 	top: 20px;
 	height: 50px;
-	width: 640px;
+	width: 500px;
 }
 
 
@@ -719,23 +762,42 @@ div.code-coverage-results span.result-good {
 	top: 80px;
 }
 
+
+#contenedor-comandas{
+	left:10px;
+	position:absolute;
+	top:96px;
+	width:780px;
+}
+
+
 #productos-contenedor{
-	position: absolute;
-	top : 180px;
-	left: 20px;
-	width: 525px;
-	height: 400px;
-	background-color: white;
-	border: 2px solid grey;
+	background-color:white;
+	border:2px solid grey;
+	height:500px;
+	width:525px;
+	font-size: 16px;
 }
 
 
 #comanda{
-	position: absolute;
-	top : 180px;
-	left: 555px;
-	width: 240px;
-	height: 400px;
-	background-color: white;
-	border: 2px solid grey;
+	background-color:white;
+	border:2px solid grey;
+	float:right;
+	height:500px;
+	width:240px;
+}
+
+#comanda-ul{
+	margin-left: 10px;
+	margin-top: 70px;
+	font-size: 14px;
+}
+
+#comanda-ul A{
+	width: 100px;
+}
+
+#comanda-enviar{
+ 	padding-left: 40px;
 }

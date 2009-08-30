@@ -31,6 +31,7 @@ var PositionInfo = function (elm)
     {
         var x = 0;
         var elm = Get(p_elm);
+        console.debug(elm);
         while (elm != null)
         {
             x+= elm.offsetLeft;
@@ -100,7 +101,8 @@ var NumpadControl = function ()
     {
         div.style.display = "block";
         iframe.style.display = "block";        
-        target = control;        
+        target = control; 
+        target.focus();
         var info = null;
         
         // Move the numpad below the target control.        
@@ -127,7 +129,7 @@ var NumpadControl = function ()
     // Create the HTML elements and bind events    
     var Initialize = function ()
     {
-        div = document.createElement("div");
+        div = new Element("div",{'id':'numPad'});
         div.style.position = "absolute";
         div.style.zIndex = 999999;
         // div.style.backgroundColor = "#ccc";        
@@ -183,7 +185,7 @@ var NumpadControl = function ()
         // Close button
         button = document.createElement("input");
         button.type = "button";
-        button.value = "V";
+        button.value = "X";
         button.style.width = "50px";
         button.style.height = "50px";
         div.appendChild(button);

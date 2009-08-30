@@ -8,7 +8,7 @@
 fabricaMesa = new FabricaMesa(<?php echo $mesa_json?>);
 mesaCambiar = fabricaMesa.getMesa();
 
-cambiarMesa(mesaCambiar);
+adicion.cambiarMesa(mesaCambiar);
 //-->
 </script>
 

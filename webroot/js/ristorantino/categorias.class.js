@@ -34,7 +34,7 @@ var Categorias = Class.create({
 	actualizarProductos:function (){	
 		$('productos-listado').update("");
 		console.info("actualizarProductos..::"+this.currentArbol.Categoria.name);
-		console.info(this.currentArbol);
+		
 	 	if (this.currentArbol.Producto.length > 0){
 	 		this.currentArbol.Producto.each(function(e){ 			
 	 			this.construirLinkProducto(e,'productos-listado');
@@ -79,7 +79,7 @@ var Categorias = Class.create({
 			  'class': 'boton', 
 			  'href': '#producto-'+producto.id, 
 			  'id': "producto-"+producto.id,
-			  'onclick': "comanda.add('"+Object.toJSON(producto)+"'); return false;"
+			  'onclick': "adicion.comanda.add('"+Object.toJSON(producto)+"'); return false;"
 		}).update(producto.name);
 		$(divContenedor).appendChild(li).appendChild(a);
 	},

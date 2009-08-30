@@ -1,25 +1,20 @@
+
 <script type="text/javascript">
 <!--
 
 console.info('Iniciando aplicacion');
 
+var mensajero = new Mensaje('mensajes');
 
 //este es para el navegador de categorias de productos que se lo llma desde ajax
-var manejadorCategorias = null; 
+this.manejadorCategorias = null; 
+
 
 var fabricaMesa = new FabricaMesa(<?php echo $current_mesa?>);
 var fabricaMozo = new FabricaMozo(<?php echo $current_mozo?>);
 
-var currentMesa = fabricaMesa.getMesa();
-var currentMozo = fabricaMozo.getMozo();
+var adicion = new Adicion(fabricaMozo.getMozo(), fabricaMesa.getMesa());
 
-
-
-
-//este objeto se crea con el evento window onload
-var comanda = null;
-	
-var cantidad_de_mesas = currentMozo.mesas.length;
 
 
 //inicializalizo los scrollbars
@@ -27,33 +22,44 @@ var mesas_scrollbar = 0; //este es el que contiene los datos de la mesa. la coma
 var mesas_listado = 0;//este es el del listado de mesas horizontal
 
 
+//NUMPAD ------------------------------------------------------
+var txtNumber = null;
+var numPad = null;
 
 //-->
 </script>
 
+
+<?php 
+	echo $this->renderElement('loading');
+?>
 
 <div id="adicion-cabecera">
 	<?php 
 	echo $form->create('Adicion',array('action'=>'cambiar_mozo','id'=>'MozoCambiarMozoForm'));
 	//$mozos = array(1,2,3,4,5,6,7,8,9,10,11,14,16);
 	echo $form->input('mozo_id',array('type'=>'select','options'=>$mozos, 'default'=>$current_mozo_id,'onChange'=>'$("MozoCambiarMozoForm").submit()'));
-	echo $form->end(null);	
+	echo $form->end(null);
 	?>
 	
-	<div id="numero-mesa"></div>	
-	<script type="text/javascript">actualizar_numero_mesa_div();</script>
+	<div id="numero-mesa"></div>
 	
-	<div id="mesajes">
-		Mesas Abiertas (<?= sizeof($this->data['Mesa'])?>)<br>
-		<?php $session->flash(); ?>
-	</div>
+	
+	<div id="mensajes"><?php $session->flash(); ?></div>
+	<script type="text/javascript">
+		var canMesas = "<?= sizeof($this->data['Mesa'])?>";
+		mensajero.show(canMesas+" Mesas Abiertas");
+	</script>	
+	
+	
 </div>	
 	
-	<div id="mesa-abrir" style="display: none; position:absolute;">
+	<div id="mesa-abrir" style="display: none">
 		<?php 
 			echo $form->create('Mesa',array('action'=>'abrirMesa'));
 			echo $form->input('mozo_id',array('type'=>'hidden','value'=>$current_mozo_id));
 			echo $form->input('numero');
+			echo $form->button('Cancelar',array('onclick'=>'Dialog.closeInfo();'));
 			echo $form->end('Abrir mesa');
 		?>
 	</div>
@@ -80,11 +86,11 @@ var mesas_listado = 0;//este es el del listado de mesas horizontal
 																						'id'=>'mesa-ver-'.$m['id'],
 																						'class'=>'boton',
 																						'evalScripts'=>true,
-																						'complete' => 'cambiarMesa()'
+																						'complete' => 'cambiarMesa();'
 							)).'</li>'
 			?>
 		<?php endforeach; ?>
-			<li><?php echo $html->link(' + ','#AbrirMesa',array('onclick'=>"abrirMesa(); return false;",
+			<li><?php echo $html->link(' + ','#AbrirMesa',array('onclick'=>"adicion.abrirMesa(); return false;",
 																'class'=>'boton'))?></li>
 		</ul>
     </div>
@@ -106,12 +112,12 @@ var mesas_listado = 0;//este es el del listado de mesas horizontal
 <div id="mesa-container">
 	<div id="mesa-acciones" class="menu-vertical">
 		<ul>
-			<li><?php echo $html->link('Comanda','#AgregarProducto',array('onClick'=>'agregarProducto(); return false;'));?></li>
+			<li><?php echo $html->link('Comanda','#AgregarProducto',array('onClick'=>'adicion.hacerComanda(); return false;'));?></li>
 			<li><?php echo $html->link('Factura "A"','#TipoFactura');?></li>
 			<li><?php echo $html->link('Menú','#ConvertirEnMenu');?></li>
 			<li><?php echo $html->link('Invitación','#AplicarInvitacion');?></li>
 			
-			<li><?php echo $html->link('Cerrar Mesa',"#cerrarMesa",array('onClick'=>'cerrarMesa()'));?></li>
+			<li><?php echo $html->link('Cerrar Mesa',"#cerrarMesa",array('onClick'=>'adicion.cerrarCurrentMesa();'));?></li>
 		</ul>
 	</div>
 	
@@ -148,4 +154,5 @@ var mesas_listado = 0;//este es el del listado de mesas horizontal
  <div id="keyboard"></div>
  
  
+ <div id="contenedor-comandas"></div>
 

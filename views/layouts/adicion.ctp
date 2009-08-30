@@ -36,6 +36,12 @@
 
 		//echo $html->css('cake');
 		echo $html->css('Adicion');
+		
+		// para los modal window
+		echo $html->css('windowthemes/default');
+		echo $html->css('windowthemes/alert');
+		echo $html->css('windowthemes/spread');
+		echo $html->css('windowthemes/ligthing');
 
 		echo $scripts_for_layout;
 		
@@ -51,14 +57,20 @@
 		echo $javascript->link('ristorantino/fabrica_mesas.class');
 		echo $javascript->link('ristorantino/mesa.class');
 		echo $javascript->link('ristorantino/mozo.class');
+		echo $javascript->link('ristorantino/mensaje.class');
 		
 		echo $javascript->link('adicionar/comanda.class');
+		echo $javascript->link('adicionar/adicion.class');
 		echo $javascript->link('adicionar/producto_comanda.class');		
 		
 		echo $javascript->link('adicionar/eventos_observados');
 
 		
-		echo $javascript->link('Controls'); // PAD numerico
+		echo $javascript->link('numpad'); // PAD numerico
+		
+		
+		// Modal window  Prototype window by http://prototype-window.xilinus.com/index.html
+		echo $javascript->link('window'); 
 		
 	?>
 </head>
