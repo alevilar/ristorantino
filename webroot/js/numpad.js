@@ -1,6 +1,7 @@
 ﻿/********************************************************************************
 * Numpad control by Sebastien Vanryckeghem (http://saezndaree.wordpress.com/)
-* Copyright © 2008 Sebastien Vanryckeghem
+* Modificaco por AlejandroVilar
+* 2009 Alevilar Copyleft
 *
 * THIS SOFTWARE IS PROVIDED "AS IS" AND WITHOUT ANY EXPRESS OR 
 * IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED 
@@ -8,209 +9,136 @@
 * PURPOSE.
 ********************************************************************************/
 
-// ---------------------------------------------------------------------
-// Provides information about an object's coordinates on screen.
-// ---------------------------------------------------------------------
-var PositionInfo = function (elm)
-{
-    var p_elm = elm;  
-
-    var Get = function (obj)
-    {
-        if(typeof(obj) == "object")
-        {
-            return obj;
-        }
-        else
-        {
-            return document.getElementById(obj);
-        }
-    }
-
-    var Left = function ()
-    {
-        var x = 0;
-        var elm = Get(p_elm);
-        console.debug(elm);
-        while (elm != null)
-        {
-            x+= elm.offsetLeft;
-            elm = elm.offsetParent;
-        }
-        return parseInt(x);
-    }
-
-    var Width = function ()
-    {
-        var elm = Get(p_elm);
-        return parseInt(elm.offsetWidth);
-    }
-
-    var Right = function ()
-    {
-        return Left(p_elm) + Width(p_elm);
-    }
-
-    var Top = function ()
-    {
-        var y = 0;
-        var elm = Get(p_elm);
-        while (elm != null)
-        {
-            y+= elm.offsetTop;
-            elm = elm.offsetParent;
-        }
-        return parseInt(y);
-    }
-
-    var Height = function ()
-    {
-        var elm = Get(p_elm);
-        return parseInt(elm.offsetHeight);
-    }
-
-    var Bottom = function ()
-    {
-        return Top(p_elm) + Height(p_elm);
-    }
-
-    return {
-        Top: Top,
-        Right: Right,
-        Bottom: Bottom,
-        Left: Left,
-        Width: Width,
-        Height: Height
-    };
-}
+var NumpadControl = Class.create();
 
 // ---------------------------------------------------------------------
 // A virtual numpad that can be attached to a text box, and
 // allows entering numbers without having to use the keyboard.
 // ---------------------------------------------------------------------
-var NumpadControl = function ()
-{
-    // Create the container
-    var div = null;  
-    var button = null; 
-    var target = null;
-    var iframe = document.createElement("iframe");
+
+NumpadControl.prototype={
+		
+		
+		// Attach the Numpad control to the page.
+	    // Create the HTML elements and bind events   
+		/**
+		 * @params string: emenent_container es el mnombre del contenedor donde yo voy a ahacer el appendChild del numPad, o sea, es donde o voy a querer que se muestre el pad
+		 */
+	  initialize: function(element_container) {
+			
+	
+			//es el ID el elemento que contendrá al numPPad, por lo general es un div, por lo tanto sera algo asi <div id="xxxthis.element_idxxx"></div>
+		    this.element_id = "numPad";
+		    
+		    
+		    //este es el tamaño del boton del Pad numerico
+		    this.button_heigth = "50px";
+		    this.button_width = "50px";
+			
+	
+			// Create the container
+		    this.div = new Element("div",{'id': this.element_id});
+		    this.button = null; 
+		    this.target = null;
+		    this.iframe = document.createElement("iframe");
+		    
+		    //@ variable global
+		    numPad;
+		    
+		    // crear botones del 1 al 9
+	        for(var i=1; i<=9; i++)
+	        {
+	        	this.button = document.createElement("input");
+	        	this.button.type = "button";
+	        	this.button.value = i;
+	        	this.button.style.width = this.button_width;
+	        	this.button.style.height = this.button_heigth;
+	            
+	        	this.button.onclick = (function (value)
+	            {
+	                return function ()
+	                {
+	                	numPad.target.value += value;
+	                }          
+	            })(i);
+	            
+	        	this.div.appendChild(this.button);
+	        }
+	        
+	        // crear "Clear" button     
+	        this.button = document.createElement("input");
+	        this.button.type = "button";
+	        this.button.value = "C";
+	        this.button.style.width = this.button_width;
+	        this.button.style.height = this.button_heigth;
+	        this.div.appendChild(this.button);   
+	        
+	        this.button.onclick = function ()
+	        {
+	        	numPad.target.value = "";        
+	        }
+	        
+	        // crear "0" button        
+	        this.button = document.createElement("input");
+	        this.button.type = "button";
+	        this.button.value = "0";
+	        this.button.style.width = this.button_width;
+	        this.button.style.height = this.button_heigth;
+	        this.div.appendChild(this.button);
+	        
+	        this.button.onclick = (function (value)
+	        {
+	            return function ()
+	            {
+	            	numPad.target.value += value;
+	            }          
+	        })(0);
+	        
+	        // crear "Close" button
+	        this.button = document.createElement("input");
+	        this.button.type = "button";
+	        this.button.value = "X";
+	        this.button.style.width = this.button_width;
+	        this.button.style.height = this.button_heigth;
+	        this.div.appendChild(this.button);
+	        
+	        this.button.onclick = function ()
+	        {
+	            this.hide();        
+	        }     
+	        
+	        this.div.style.width = "160px"; 
+	        this.iframe.style.position = "absolute";
+	        this.iframe.frameBorder = 0;
+	                
+	        document.body.appendChild(this.iframe);
+	        document.body.appendChild(this.div);
+	        
+	        console.debug(this.div);
+	        this.hide();
+	        $(element_container).appendChild(this.div);
+	  },	  
+		
+    
     
     // Show the control and position it below the target text box.
-    var Show = function (control)
+	  //@param control es el INPUT, se le pasa el elemento input al cual yo voy a bindear el numpad
+    show : function (control) 
     {
-        div.style.display = "block";
-        iframe.style.display = "block";        
-        target = control; 
-        target.focus();
+		this.div.style.display = "block";
+		this.iframe.style.display = "block";        
+		this.target = control; 
+		this.target.focus();
+		
+		
         var info = null;
-        
-        // Move the numpad below the target control.        
-        info = new PositionInfo(control);
-        div.style.top = info.Bottom() + "px";
-        div.style.left = info.Left() + "px";
-        
-        // Move the IFRAME behind the numpad.
-        info = new PositionInfo(div);      
-        iframe.style.top = info.Top();
-        iframe.style.left = info.Left();
-        iframe.style.width = info.Width() + "px";
-        iframe.style.height = info.Height() + "px";
-    } 
+    }, 
     
     // Hide the control    
-    var Hide = function ()
+    hide : function ()
     {
-        div.style.display = "none";
-        iframe.style.display = "none";
+    	this.div.style.display = "none";
+    	this.iframe.style.display = "none";
     }
     
-    // Attach the Numpad control to the page.
-    // Create the HTML elements and bind events    
-    var Initialize = function ()
-    {
-        div = new Element("div",{'id':'numPad'});
-        div.style.position = "absolute";
-        div.style.zIndex = 999999;
-        // div.style.backgroundColor = "#ccc";        
-    
-        for(var i=1; i<=9; i++)
-        {
-            button = document.createElement("input");
-            button.type = "button";
-            button.value = i;
-            button.style.width = "50px";
-            button.style.height = "50px";
-            
-            button.onclick = (function (value)
-            {
-                return function ()
-                {
-                    target.value += value;
-                }          
-            })(i);
-            
-            div.appendChild(button);
-        }
-        
-        // Clear button     
-        button = document.createElement("input");
-        button.type = "button";
-        button.value = "C";
-        button.style.width = "50px";
-        button.style.height = "50px";
-        div.appendChild(button);   
-        
-        button.onclick = function ()
-        {
-            target.value = "";        
-        }
-        
-        // 0 button        
-        button = document.createElement("input");
-        button.type = "button";
-        button.value = "0";
-        button.style.width = "50px";
-        button.style.height = "50px";
-        div.appendChild(button);
-        
-        button.onclick = (function (value)
-        {
-            return function ()
-            {
-                target.value += value;
-            }          
-        })(0);
-        
-        // Close button
-        button = document.createElement("input");
-        button.type = "button";
-        button.value = "X";
-        button.style.width = "50px";
-        button.style.height = "50px";
-        div.appendChild(button);
-        
-        button.onclick = function ()
-        {
-            Hide();        
-        }     
-        
-        div.style.width = "160px"; 
-        iframe.style.position = "absolute";
-        iframe.frameBorder = 0;
-                
-        document.body.appendChild(iframe);
-        document.body.appendChild(div);
-        
-        Hide();        
-    }
-    
-    // Call the initialize function to generate the control.    
-    Initialize();
-    
-    // Return the contro object.    
-    return {
-        Show: Show,
-        Hide: Hide
-    };
-}
+};

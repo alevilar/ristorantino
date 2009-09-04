@@ -21,13 +21,36 @@ class DetalleComandasController extends AppController {
 	function add(){
 		$this->autoRender = false;
 		//Configure::write('debug',0);
+		/*
+		if($this->DetalleComanda->Comanda->save($this->data)){
+			echo "se guardo la comanda correctamente";
+		}
+		else echo "se grabo mal la comanda";
+		*/
+		$comanda = $this->data['DetalleComanda'];
+		if($this->DetalleComanda->Comanda->save($comanda)){
+			echo "se guardo la comandao corectamente bien";
+		}
 		
+		$cont = 0;
+		foreach ($this->data['DetalleComanda'] as $dv):
+			$detacomanda[$cont] = $dv;
+			$detacomanda[$cont]['comanda_id'] = $this->DetalleComanda->Comanda->id;
+			$cont++;
+		endforeach;
+		
+		if($this->DetalleComanda->saveAll($detacomanda)){
+			echo "se guardo el detalle comandao corectamente bien";
+		}
+		else echo "se grabo mal el detallecomanda";
+		/*
 		if (isset($this->data)):
 			$guardar = $this->data['DetalleComanda'];
-		echo "----- la cantiadd de cosas a imprimir se guardaran: ".sizeof($guardar)." ---- <br>";
 			for ($i=0 ; $i < sizeof($guardar) ; $i++):
 				$this->data['DetalleComanda'] = $guardar[$i]; 
-				
+				$this->data['DetalleComanda']['comanda_id'] = $this->DetalleComanda->Comanda->id;
+				$this->data['Comanda']['id'] = $this->DetalleComanda->Comanda->id;
+				debug($this->data);
 				if ($this->DetalleComanda->guardar($this->data)) {					
 					$j;
 				} else {
@@ -35,6 +58,7 @@ class DetalleComandasController extends AppController {
 				}
 			endfor;
 		endif;
+		*/
 	}
 
 	function edit($id = null) {

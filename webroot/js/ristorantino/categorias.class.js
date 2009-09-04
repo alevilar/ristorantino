@@ -1,5 +1,9 @@
 
-var Categorias = Class.create({
+var Categorias = Class.create();
+	
+
+Categorias.prototype = {
+		
 	  initialize: function(varArbolCategorias) {
 	    this.arbolCategorias = varArbolCategorias;
 	    
@@ -55,7 +59,7 @@ var Categorias = Class.create({
 	construirLinkCategoria: function (categoria, divContenedor){
 		var li = new Element('li');
 		var a = new Element('a', { 
-			  'class': 'boton', 
+			  'class': 'boton leta-chica', 
 			  'href': '#categoria-'+categoria.id, 
 			  'id': "categoria-"+categoria.id,
 			  'onclick': 'manejadorCategorias.actualizarCategorias('+categoria.id+');return false'
@@ -65,22 +69,23 @@ var Categorias = Class.create({
 
 
 
-/**
- * 
- *  me construye los links que se van a meter en algun lado maneja obtejos que tengan atributos llamados 'id' y 'name'
- *
- * categoria es el Objeto categoria que devuelve el phop con json
- * divContenefdor, es el lugar donde se van a meter los links
- * prefijo  es el nombre que se le va a poner a cada link como id, es el prefijo, por ejemplo "categoria_"
- */
+	/**
+	 * 
+	 *  me construye los links que se van a meter en algun lado maneja obtejos que tengan atributos llamados 'id' y 'name'
+	 *
+	 * producto es el Objeto producto  que devuelve el phop con json
+	 * divContenefdor, es el lugar donde se van a meter los links
+	 * prefijo  es el nombre que se le va a poner a cada link como id, es el prefijo, por ejemplo "categoria_"
+	 */
 	construirLinkProducto: function (producto, divContenedor){
 		var li = new Element('li');
 		var a = new Element('a', { 
-			  'class': 'boton', 
+			  'class': 'boton letra-chica', 
 			  'href': '#producto-'+producto.id, 
 			  'id': "producto-"+producto.id,
-			  'onclick': "adicion.comanda.add('"+Object.toJSON(producto)+"'); return false;"
+			  'onclick': "adicion.comanda.add('"+Object.toJSON(producto)+"');return false;"
 		}).update(producto.name);
+
 		$(divContenedor).appendChild(li).appendChild(a);
 	},
 
@@ -170,6 +175,6 @@ var Categorias = Class.create({
 
 
 
-});
+}
 
 

@@ -46,7 +46,7 @@ var Mozo = Class.create({
 		   	return this.username;		    
 	  },
 	  setUsername: function(username) {
-		   	this.numero = username;		    
+		   	this.username = username;		    
 	  },
 	  
 	  setMesas: function(mesas) {

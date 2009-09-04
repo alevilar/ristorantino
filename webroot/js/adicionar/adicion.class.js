@@ -72,7 +72,7 @@ Adicion.prototype = {
 			var ops = {
 					howEffect: Element.show, 
 					hideEffect: Element.hide, 
-					//className: 'alphacube', 
+					//className: 'alert_simple', 
 					zIndex: 2000, 
 					width:400, 
 					height:400, 
@@ -85,12 +85,12 @@ Adicion.prototype = {
 			
 			
 			//NUMPAD ------------------------------------------------------		
-			
-			numPad = new NumpadControl();   
+			//numPad es una variable global
+			numPad = new NumpadControl('MesaAbrirMesaForm');   
 			    
-			$('MesaAbrirMesaForm').appendChild($('numPad'));
+			//$('MesaAbrirMesaForm').appendChild($('numPad'));
 			    	
-			numPad.Show($('MesaNumero'));		        
+			numPad.show($('MesaNumero'));		        
 			
 
 			//---------------------------------------  -------------------------

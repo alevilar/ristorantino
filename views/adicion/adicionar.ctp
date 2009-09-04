@@ -5,6 +5,7 @@
 console.info('Iniciando aplicacion');
 
 var mensajero = new Mensaje('mensajes');
+mensajero.setImageLoading('<? echo $html->url('/img/loader.gif',true)?>');
 
 //este es para el navegador de categorias de productos que se lo llma desde ajax
 this.manejadorCategorias = null; 
@@ -24,7 +25,7 @@ var mesas_listado = 0;//este es el del listado de mesas horizontal
 
 //NUMPAD ------------------------------------------------------
 var txtNumber = null;
-var numPad = null;
+var numPad = null; //este se tiene que llamar asi para que funcione
 
 //-->
 </script>
@@ -35,12 +36,44 @@ var numPad = null;
 ?>
 
 <div id="adicion-cabecera">
-	<?php 
-	echo $form->create('Adicion',array('action'=>'cambiar_mozo','id'=>'MozoCambiarMozoForm'));
-	//$mozos = array(1,2,3,4,5,6,7,8,9,10,11,14,16);
-	echo $form->input('mozo_id',array('type'=>'select','options'=>$mozos, 'default'=>$current_mozo_id,'onChange'=>'$("MozoCambiarMozoForm").submit()'));
-	echo $form->end(null);
-	?>
+	<div id="cambiar-mozos" class="menu-horizontal" style="display: none; width: 280px">
+		<ul>
+			<?php foreach ($mozos as $mozo):?>
+				<li><?php echo $html->link($mozo['Mozo']['numero'],'/adicion/cambiarMozo/'.$mozo['Mozo']['id'],array('class'=>'boton letra-grande'));?></li>
+			<?php endforeach;?>
+		</ul>
+	</div>
+	<script type="text/javascript">
+		var contenedorMozos = null;
+
+		contenedorMozos = new Window({
+						maximizable: false, 
+						resizable: false, 
+						hideEffect:Element.hide, 
+						showEffect:Element.show, 
+						minWidth: 10,
+						width: 400,
+						heigth: 400,
+						destroyOnClose: false
+					});
+		
+		contenedorMozos.setContent('cambiar-mozos', true, true);
+				//contentWin.getContent().innerHTML= $('cambiar-mozos-template').innerHTML;
+			
+	</script>
+	
+	<a href="#cambiarMozo" id="mozo-numero" class="boton" style="float: left" onclick="contenedorMozos.showCenter();">Mozo</a>
+	
+	<script type="text/javascript">
+		if(adicion.currentMozo){
+			$("mozo-numero").update("Mozo "+adicion.currentMozo.numero);
+		}
+	</script>
+	
+	
+	
+	
+	
 	
 	<div id="numero-mesa"></div>
 	
@@ -58,7 +91,7 @@ var numPad = null;
 		<?php 
 			echo $form->create('Mesa',array('action'=>'abrirMesa'));
 			echo $form->input('mozo_id',array('type'=>'hidden','value'=>$current_mozo_id));
-			echo $form->input('numero');
+			echo $form->input('numero',array('label'=>'','style'=>'float:left;'));
 			echo $form->button('Cancelar',array('onclick'=>'Dialog.closeInfo();'));
 			echo $form->end('Abrir mesa');
 		?>
@@ -86,7 +119,7 @@ var numPad = null;
 																						'id'=>'mesa-ver-'.$m['id'],
 																						'class'=>'boton',
 																						'evalScripts'=>true,
-																						'complete' => 'cambiarMesa();'
+																						'complete' => 'adicion.cambiarMesa();'
 							)).'</li>'
 			?>
 		<?php endforeach; ?>
@@ -114,6 +147,7 @@ var numPad = null;
 		<ul>
 			<li><?php echo $html->link('Comanda','#AgregarProducto',array('onClick'=>'adicion.hacerComanda(); return false;'));?></li>
 			<li><?php echo $html->link('Factura "A"','#TipoFactura');?></li>
+			<li><?php echo $html->link('Cliente','#SetearCliente');?></li>
 			<li><?php echo $html->link('Menú','#ConvertirEnMenu');?></li>
 			<li><?php echo $html->link('Invitación','#AplicarInvitacion');?></li>
 			
@@ -150,8 +184,6 @@ var numPad = null;
 	    </div>  
 </div>
 
-
- <div id="keyboard"></div>
  
  
  <div id="contenedor-comandas"></div>

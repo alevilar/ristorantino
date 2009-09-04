@@ -40,10 +40,8 @@ body {
 }
 
 A,A:VISITED {	
-	height: 50px;
+	color: #333;
 	text-decoration: none;
-	background-color: silver;
-	vertical-align: middle;
 }
 
 A:HOVER {
@@ -54,6 +52,15 @@ A:ACTIVE {
 
  	background-color: red;
   	color:#00c;outline:0; /* Para los navegadores que lo entienden */
+}
+
+
+.letra-grande{
+	font-size: 18px;
+}
+
+.letra-chica{
+	font-size: 14px;
 }
 
 .boton{
@@ -67,7 +74,6 @@ A:ACTIVE {
 	text-decoration: none;
 	background-color: silver;
 	vertical-align: middle;
-	font-size: 14px;
 	font-family: fantasy;
 }
 
@@ -674,7 +680,7 @@ div.code-coverage-results span.result-good {
 #mesas-scrollbar{
 	position: absolute;
 	top: 500px;
-	left: 120px;
+	left: 545px;
 }
 
 

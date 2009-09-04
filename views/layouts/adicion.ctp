@@ -40,6 +40,7 @@
 		// para los modal window
 		echo $html->css('windowthemes/default');
 		echo $html->css('windowthemes/alert');
+		echo $html->css('windowthemes/alert_simple');
 		echo $html->css('windowthemes/spread');
 		echo $html->css('windowthemes/ligthing');
 

@@ -10,8 +10,11 @@
  */
 function MoveMesaLeft()
 {
+	//es el tamaño del div que contiene el listado de mesas
+	var width_de_las_mesas = 560;
+	
 	if (mesas_listado>0){
-		new Effect.MoveBy('mesas-contenedor', 0, 630 , 
+		new Effect.MoveBy('mesas-contenedor', 0, width_de_las_mesas , 
                               {
                                   duration: 0.4,  
                                   transition: Effect.Transitions.sinoidal
@@ -27,10 +30,18 @@ function MoveMesaLeft()
  */
 function MoveMesaRight()
 {
+	// este numerocorresponde al numero de mesas que entran en la vista de bavegacion de mesas
+	var mesasQueEntran = 8;
+	//es el tamaño del div que contiene el listado de mesas
+	var width_de_las_mesas = 560;
+		
+		
+	//entran 8 mesas
+	var cantMesas = adicion.currentMozo.mesas.length;
+	// le sumo 1 que corresponde al TAB de Agregar mesa (+)
+	cantMesas += 1;
 	
-	var cantScrolls = (adicion.currentMozo.mesas.length*50)/630;
-	
-	
+	var cantScrolls = adicion.currentMozo.mesas.length/mesasQueEntran;	
 	
 	if(cantScrolls > (parseInt(cantScrolls)+1)){
 		cantScrolls = parseInt(cantScrolls)+ 1;
@@ -40,7 +51,7 @@ function MoveMesaRight()
 	}
 	
 	if (mesas_listado<cantScrolls){
-		new Effect.MoveBy('mesas-contenedor', 0, -630 , 
+		new Effect.MoveBy('mesas-contenedor', 0, -(width_de_las_mesas) , 
                               {
                                   duration: 0.4,  
                                   transition: Effect.Transitions.sinoidal

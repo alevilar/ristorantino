@@ -21,6 +21,12 @@ class DetalleComanda extends AppModel {
 								'conditions' => '',
 								'fields' => '',
 								'order' => ''
+			),
+			'Comanda' => array('className' => 'Comanda',
+								'foreignKey' => 'comanda_id',
+								'conditions' => '',
+								'fields' => '',
+								'order' => ''			
 			)
 	);
 	

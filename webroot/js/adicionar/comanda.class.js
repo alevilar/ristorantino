@@ -1,8 +1,11 @@
+var Comanda = Class.create();
 
+	
+		
 /**
  *  En esta clase que arma la comanda con cada producto sque se le va haciendo click
  */
-var Comanda = Class.create({
+Comanda.prototype = {
 	
 	  initialize: function(varMozo, varMesa) {
 	    this.productos  = new Array(); 
@@ -27,12 +30,12 @@ var Comanda = Class.create({
 	    
 	    
 		$('comanda-enviar').appendChild(new Element('a', {
-				'class':'boton',
+				'class':'boton letra-chica',
 				'href': '#EnviarComanda',
 				'onClick': 'adicion.comanda.imprimirComanda(); return false;'})).update("Mandar Comanda");
 		
 		$('comanda-enviar').appendChild(new Element('a', {
-				'class':'boton',
+				'class':'boton letra-chica',
 				'href': '#EnviarComandaNoImprimir',
 				'onClick': 'adicion.comanda.guardarComanda(); return false;'})).update("Sin imprimir");
 	  },
@@ -69,10 +72,18 @@ var Comanda = Class.create({
 		  $('comanda-ul').update('');
 		 
 		  this.productos.each(function(p){
-			  var li = new Element('li');
-			  var a = new Element('a',{'id':'comanda-producto-'+p.getId()}).update(p.getCantidad()+" --| "+p.getName());
-			  li.appendChild(a);
-			  $('comanda-ul').appendChild(li);
+			  if(p.cantidad > 0){
+				  var li = new Element('li');
+				  
+				  var a = new Element('a',{
+					  			'id':'comanda-producto-'+p.getId(),
+					  			'onClick': "adicion.comanda.restar('"+Object.toJSON(p)+"')"
+					  			}
+				  ).update(p.getCantidad()+" --| "+p.getName());
+				  
+				  li.appendChild(a);
+				  $('comanda-ul').appendChild(li);
+			  }
 		  });
 		 
 	  },
@@ -139,22 +150,65 @@ var Comanda = Class.create({
 		        }.bind(this)
 		    });
 	  },
-	  
-
-	  	add: function(prod) {
-		  var producto = new ProductoComanda(eval('(' + prod + ')'));
+	  	  
+	  /**
+	   * Agrega un producto a la comanda
+	   * @param producto_agregar es el JSON del producto
+	   * @return
+	   */
+	  	add: function(producto_agregar) {
+		  var producto = new ProductoComanda();
+		  //covierto el JSON en productoComanda
+		  producto.copiar(producto_agregar);
+				  
 		  var prod_busq = new ProductoComanda();
 	  
 		  prod_busq = this.buscar(producto);
-		  if (prod_busq == null){ // si no estaba en la coleccion lo meto
-			  this.productos.push(producto);
-			  console.info("se agregò un producto a la comanda. El producto: "+producto.getName()+" ..... y actualmente hay "+this.productos.length+" productos en la coleccion");
-			  producto.sumar();
+		  
+		  console.info("esto es lo que encontró");
+		  console.debug(prod_busq);
+		  if (prod_busq == null){ // si no estaba en la coleccion lo meto	
+			  this.__agregarProducto(producto);
+			  console.info("se agregò un producto a la comanda. El producto:"+producto.getName()+"..... y actualmente hay "+this.productos.length+" productos en la coleccion");
 		  }
 		  else{ // ya estaba en la coleccion , asqiue solo le incremento el valor cantidad
 			  prod_busq.sumar();
 			  console.info("ya estaba, solo le incremente el valor");
 		  }
+
+		  this.actualizarComanda();
+		  return this.productos.length;
+	  },
+	  
+	  /**
+	   * agrega un producto en la cola deproductos y le incrementa en 1 la cantidad
+	   * @param producto
+	   * @return
+	   */
+	  __agregarProducto: function(producto)
+	  {		  
+		  this.productos.push(producto);
+		  producto.sumar();
+	  },
+	  
+	  
+	  __restarProducto: function(producto){
+		  producto.restar();
+	  },
+	  
+	  restar: function(prod) {
+		  var producto = new ProductoComanda();
+		  //covierto el JSON en productoComanda
+		  producto.copiar(prod);
+				  
+		  var prod_busq = new ProductoComanda();
+	  
+		  prod_busq = this.buscar(producto);
+		  
+		  if (prod_busq != null){ // si estaba lo resto
+			  this.__restarProducto(prod_busq);
+		  }
+
 		  this.actualizarComanda();
 		  return this.productos.length;
 	  },
@@ -163,15 +217,20 @@ var Comanda = Class.create({
 	  	 * 
 	  	 *  busca el producto por su id, si lo encuenta devuelve el producto
 	  	 *  si no encuentra nada devuelve null
-	  	 *  @params producto es el ID del producto
+	  	 *  @params producto es el objeto producto
 	  	 */
 		buscar: function(producto){
 		  console.info("hay esta cantidad de productos en la coleccion "+this.productos.length);
-			for(var i = 0; i<this.productos.length;i++){
-				console.info("yo estoy buscando "+this.productos[i].getId()+" y me vino "+producto.getId());
-				if(this.productos[i].getId() == producto.getId()) return this.productos[i];
-			}
-			return null;
+		  
+		  prod = this.productos.find(function(p){	  
+				return (p.getId() == producto.getId());
+		  });
+		  
+	 	  if(prod){
+	 		 return prod; 
+		  }else{ 
+			  return null;
+		  }
 	  	},
 	  
 	  
@@ -184,5 +243,5 @@ var Comanda = Class.create({
 	  		console.info("hay "+contador+" productos con el nombre: "+producto.getName());
 	  		return contador;
 	  	}
-	});
+	};
 

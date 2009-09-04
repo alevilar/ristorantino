@@ -1,13 +1,22 @@
 
 Ajax.Responders.register({
-	  onLoading: function() {
-		Ajax.activeRequestCount++;
-	   	mostrar_onloading();
+	  
+	  onCreate : function(a_request)
+	  {
+		  if (Ajax.activeRequestCount >= 1)
+		  {
+			 //mostrar_onloading();
+			 mensajero.playLoading();
+		  }
 	  },
-	  onLoaded: function() {
-		  Ajax.activeRequestCount--;
-	      ocultar_onloading();
-	      
+	  onComplete : function(a_request)
+	  {
+		  if (Ajax.activeRequestCount == 0)
+		  {
+			// ocultar_onloading();
+			  mensajero.stopLoading();
+		  }
 	  }
+	  
 	});
 

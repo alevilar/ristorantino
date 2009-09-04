@@ -3,8 +3,15 @@
 	<fieldset>
  		<legend><?php __('Add Mozo');?></legend>
 	<?php
-		echo $form->input('user_id');
-		echo $form->input('numero');
+		echo $form->input('0.user_id');
+		echo $form->input('0.numero');
+		
+		echo $form->input('1.user_id');
+		echo $form->input('1.numero');
+		echo $form->input('2.user_id');
+		echo $form->input('2.numero');
+		echo $form->input('3.user_id');
+		echo $form->input('3.numero');
 	?>
 	</fieldset>
 <?php echo $form->end('Submit');?>
