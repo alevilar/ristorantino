@@ -1,7 +1,4 @@
-<?php 
-//esta variable no la uso
- //$mozo_json
- ?>
+
  
 <script type="text/javascript">
 <!--
@@ -15,6 +12,7 @@ adicion.cambiarMesa(mesaCambiar);
 
 <div class="mesas view">
 	<ul>
+	
  	<?php 
  	echo (sizeof($items)== 0)?"NO HAY ITEMS<br>":"";
  	
@@ -28,11 +26,33 @@ adicion.cambiarMesa(mesaCambiar);
  	 * 	$i['Producto']['name']
  	 *  $i['Mesa']['numero']
  	 */
+ 	$prod_borrados = array();
 	foreach ($items as $i):
 		$cantidad = $i[0]['cant'];
 		$producto = $i['Producto']['name'];
-		echo "<li><b>$cantidad - </b>$producto</li>";
+		if($cantidad > 0)
+		{
+			echo "<li><b>$cantidad - </b>$producto</li>";	
+		}
+		else
+		{
+			array_push($prod_borrados,$i);
+		}		
 	endforeach;
 	?>
 	</ul>
+	
+	<?php 
+	if(count($prod_borrados)>0):
+	?>	
+		<h2>Productos Eliminados</h2>
+		<ul>
+			<?php 
+			foreach ($prod_borrados as $i):
+				$producto = $i['Producto']['name'];
+				echo "<li>$producto</li>";
+			endforeach;
+			?>	
+		</ul>
+	<?php endif;?>
 </div>

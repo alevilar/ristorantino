@@ -31,14 +31,11 @@ class AdicionController extends AppController {
 		// esto es para javascript -----------------------------------
 		$this->Mozo->id = $this->current_mozo_id;
 		$this->set('current_mozo', json_encode($this->Mozo->read()));
- 	
-		$this->Mesa->id = $this->current_mesa_id;
-		$this->set('current_mesa', json_encode($this->Mesa->read()));
 		//---------------------------------------------------------------
 	} 
 	
 	function home(){
-		$this->set('mozos',$this->Mozo->find('list',array('fields'=>array('id','numero'))));
+		$this->set('mozos',$this->Mozo->find('all',array('fields'=>array('id','numero'))));
 	}
 	
 	

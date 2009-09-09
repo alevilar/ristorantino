@@ -9,7 +9,6 @@
 fabricaMesa = new FabricaMesa(<?php echo $mesa_json?>);
 currentMesa = fabricaMesa.getMesa();
 
-actualizar_numero_mesa_div();
 //-->
 </script>
 

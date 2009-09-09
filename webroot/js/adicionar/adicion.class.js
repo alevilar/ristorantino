@@ -2,14 +2,17 @@ var Adicion = Class.create();
 
 Adicion.prototype = {
 	
-		initialize: function(mozo, mesa) {
-			
+		initialize: function(mozo) {
 	
-			this.currentMesa = mesa;
+			this.currentMozo = new Mozo();
+			
 			this.currentMozo = mozo;
 				
-			this.cantidad_de_mesas = 0;
-
+			this.currentMesa = null;
+			
+			//this.cantidad_de_mesas = 0;
+			// esta es la comanda que se genera al sacar un Item de un DetalleMesa
+			this.comandaSacar = new ComandaSacar(this.currentMozo);
 			
 			/**
 			 *  
@@ -21,18 +24,14 @@ Adicion.prototype = {
 			this.comanda = null;  //este objeto se crea con el evento window onload
 			Event.observe(window, 'load', function() {
 				// creo la comanda y su vista
-				this.comanda = new Comanda(this.currentMozo, this.currentMesa);		
+				this.comanda = new ComandaCocina(this.currentMozo);	
 				
 				var menuDiv = new Element('div',{'id':'productos-contenedor'});
 				$('contenedor-comandas').hide();
 				$('contenedor-comandas').appendChild(menuDiv);
 				
 				// esto hace que se cargen las categorias y productos de productos-contenedor
-				new Ajax.Updater(menuDiv, 'http://localhost/ristorantino/categorias/listar', { method: 'get', 'evalScripts' :true });
-				
-				//actualizo el numero de mesa en el DIV de arriba de todo
-				this.actualizar_numero_mesa_div();
-				
+				new Ajax.Updater(menuDiv, 'http://localhost/ristorantino/categorias/listar', { method: 'get', 'evalScripts' :true });	
 				
 				// esto hace que que oculte de la vista cuando se hace click en la cabecera de la pagina, es para cerrar la ventana
 				Event.observe('adicion-cabecera', 'click', function() {
@@ -58,9 +57,9 @@ Adicion.prototype = {
 		//cambia de mesa
 		cambiarMesa: function (mesaCambiar){			
 			this.setCurrentMesa(mesaCambiar);
-			this.comanda.resetearComanda(this.currentMozo, this.currentMesa);
-			this.actualizar_numero_mesa_div();
 			
+			this.comanda.resetearComanda(this.currentMozo, this.currentMesa);
+				
 		},	
 		
 
@@ -103,26 +102,44 @@ Adicion.prototype = {
 
 		// envia la mesa para ser cerrada
 		cerrarCurrentMesa: function (){
-			window.location.href = "/ristorantino/mesas/cerrarMesa/"+this.currentMesa.id+"/mozo_id:"+this.currentMozo.id;
+			
+			var confirma  = Dialog.confirm(
+							"Se va a cerrar la mesa Nº "+this.currentMesa.numero, 
+							{
+								width:300, 
+								okLabel: "Aceptar", 
+							/*	buttonClass: "myButtonClass",*/ 
+								id: "mesa-confirma-cierre", 
+								cancel: function(win) {
+									return false
+									}, 
+								ok:function(win) {
+										window.location.href = "/ristorantino/mesas/cerrarMesa/"+this.currentMesa.id+"/mozo_id:"+this.currentMozo.id;
+										return true;
+										}.bind(this) 
+							});
+							
+			return confirma;			
+			
 		},		
-		
-		
-	    /**
-	     * cuando hago click en una mesa, esta llama via ajax a la informacion
-	     * para que se actualicen algunas variables globales, es necesario que se ejectute esta funcion
-	     */
-		actualizar_numero_mesa_div: function (){
-			if (this.currentMesa){
-				$("numero-mesa").update("Mesa: "+this.currentMesa.numero)
-			}	
-		},
-		
+			
 
 	    
 		hacerComanda: function(){
 			if(this.currentMesa){
 				$("contenedor-comandas").show();
 			}
+		},
+		
+		hacerComandaSacar: function(){
+			if (this.currentMesa){
+				this.comandaSacar.actualizarComanda(this.currentMesa.productos);
+	
+				this.comandaSacar.resetearComanda(this.currentMozo, this.currentMesa);
+				// @global
+				sacarItemWindow.showCenter();
+			}
 		}
+		
 		
 };

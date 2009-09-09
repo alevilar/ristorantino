@@ -42,16 +42,18 @@ body {
 A,A:VISITED {	
 	color: #333;
 	text-decoration: none;
+	background-color:silver;
 }
 
 A:HOVER {
-	background-color: buttonface;
+	/*background-color: buttonface;*/
 }
 
 A:ACTIVE {
 
- 	background-color: red;
-  	color:#00c;outline:0; /* Para los navegadores que lo entienden */
+ 	background-color: buttonface;
+  	color:#000;
+  	outline:0; /* Para los navegadores que lo entienden */
 }
 
 
@@ -93,6 +95,7 @@ h1 {
 }
 
 h2 {
+	font-size: 16px;
 	background: #fff;
 	color: #e32;
 	font-family: 'Gill Sans', 'lucida grande', helvetica, arial, sans-serif;
@@ -143,9 +146,6 @@ ul,li {
 	float: left;
 }
 
-#numero-mesa{
-	float: left;
-}
 
 #mensajes {
 	background-color:black;
@@ -173,7 +173,7 @@ ul,li {
 #mesas-listado {
 	left:48px;
 	position:absolute;
-	top:100px;
+	top:89px;
 	width:700px;
 }
 
@@ -198,6 +198,10 @@ ul,li {
 	
 }
 
+#mesas-listado-marcada A {
+	background-color: #798393;
+}
+
 #mesas {
 	position: absolute;
 	top: 200px;
@@ -213,6 +217,10 @@ ul,li {
 	width:780px;
 }
 
+#mesa-acciones-2 {
+	margin-top: 12px;
+	float: right;
+}
 #mesa-acciones {
 	margin-top: 12px;
 	float: left;
@@ -222,7 +230,7 @@ ul,li {
 #mesa-data {
 	height:398px;
 	overflow:hidden;
-	width:370px;
+	width:448px;
 	margin-top: 14px;
 	background-color: white;
 }
@@ -662,6 +670,9 @@ div.code-coverage-results span.result-good {
 	float: right;
 }
 
+.arrow{
+	background-color: transparent;
+}
 .arrow IMG {
 	border: none;
 	width: 50px;
@@ -680,14 +691,14 @@ div.code-coverage-results span.result-good {
 #mesas-scrollbar{
 	position: absolute;
 	top: 500px;
-	left: 545px;
+	left: 625px;
 }
 
-
-#mesas-contenedor LI :focus{
-	 border-bottom: grey 10px solid;
+#sistem-nav{
+	position: absolute;
+	top: 500px;
+	left: 685px;
 }
-
 
 
 #items-listado {
@@ -751,6 +762,7 @@ div.code-coverage-results span.result-good {
 	display: block;	
 	border:thin solid;
 	margin:2px;
+	height: 50px;
 }
 
 
@@ -806,4 +818,12 @@ div.code-coverage-results span.result-good {
 
 #comanda-enviar{
  	padding-left: 40px;
+}
+
+
+
+.mesa-seleccionada{
+	color: white;
+	padding-top: 5px;
+	border-top: white solid 23px;
 }

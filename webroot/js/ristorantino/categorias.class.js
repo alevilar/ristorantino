@@ -20,8 +20,7 @@ Categorias.prototype = {
 
 	  //var productosElegidos = new ListadoProductos();
 	},
-
-
+	
 /**
  * 
  * Con esta funcion arranca todo. Es la que tiene que llamar el evento ue quiero que me dispare algo cuando se hace click en el menù

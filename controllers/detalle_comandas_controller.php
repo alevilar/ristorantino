@@ -18,18 +18,39 @@ class DetalleComandasController extends AppController {
 	}
 
 	
+	function sacarProductos(){
+		$this->autoRender = false;
+		$ok = false;
+		//Configure::write('debug',1);
+		
+		$cont = 0;
+		foreach ($this->data['DetalleComanda'] as $dv):
+			$detacomanda[$cont] = $dv;
+			$detacomanda[$cont]['comanda_id'] = $this->DetalleComanda->Comanda->id;
+			$cont++;
+		endforeach;
+		
+		if($this->DetalleComanda->saveAll($detacomanda)){
+			$ok = true;
+		}
+		else $ok = false;
+		
+		return ($ok)?'ok':'failed to save comanda';
+	}
+	
 	function add(){
 		$this->autoRender = false;
-		//Configure::write('debug',0);
-		/*
+		$ok = false;
+		//Configure::write('debug',1);
+		
+		// recordar que la priooridad de la comanda viene como TRUE o FALSE por eso que hago esto aca, porque en BD es un integer
+		// $this->data['Comanda']['prioridad']
+		$this->data['Comanda']['prioridad'] = ($this->data['Comanda']['prioridad'])?1:0;
+		//$this->data['Comanda']['prioridad'] = 1;
+		//debug($this->data);
+		$this->DetalleComanda->Comanda->create();
 		if($this->DetalleComanda->Comanda->save($this->data)){
-			echo "se guardo la comanda correctamente";
-		}
-		else echo "se grabo mal la comanda";
-		*/
-		$comanda = $this->data['DetalleComanda'];
-		if($this->DetalleComanda->Comanda->save($comanda)){
-			echo "se guardo la comandao corectamente bien";
+			$ok = true;
 		}
 		
 		$cont = 0;
@@ -40,25 +61,11 @@ class DetalleComandasController extends AppController {
 		endforeach;
 		
 		if($this->DetalleComanda->saveAll($detacomanda)){
-			echo "se guardo el detalle comandao corectamente bien";
+			$ok = true;
 		}
-		else echo "se grabo mal el detallecomanda";
-		/*
-		if (isset($this->data)):
-			$guardar = $this->data['DetalleComanda'];
-			for ($i=0 ; $i < sizeof($guardar) ; $i++):
-				$this->data['DetalleComanda'] = $guardar[$i]; 
-				$this->data['DetalleComanda']['comanda_id'] = $this->DetalleComanda->Comanda->id;
-				$this->data['Comanda']['id'] = $this->DetalleComanda->Comanda->id;
-				debug($this->data);
-				if ($this->DetalleComanda->guardar($this->data)) {					
-					$j;
-				} else {
-					$this->Session->setFlash(__('The Comanda could not be saved. Please, try again.', true));
-				}
-			endfor;
-		endif;
-		*/
+		else $ok = false;
+		
+		return ($ok)?'ok':'failed to save comanda';
 	}
 
 	function edit($id = null) {

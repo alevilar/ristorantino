@@ -1,7 +1,7 @@
+var Mozo = Class.create();
 
 
-
-var Mozo = Class.create({
+Mozo.prototype = {
 	
 	  initialize: function() {
 		this.id;
@@ -53,6 +53,4 @@ var Mozo = Class.create({
 		   	this.mesas = mesas;		    
 	  }
 
-
-
-});
+};

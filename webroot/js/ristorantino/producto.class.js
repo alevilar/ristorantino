@@ -2,14 +2,14 @@ var Producto = Class.create();
 
 Producto.prototype ={
 	  initialize: function() {
-	    this.id;
-	    this.name;
-	    this.abrev;
-	    this.description;
-	    this.categoria_id;
-	    this.precio;
-	    this.created;
-	    this.modified;  
+	    this.id = 0;
+	    this.name = "";
+	    this.abrev = "";
+	    this.description = "";
+	    this.categoria_id = 0;
+	    this.precio = 0;
+	    this.created = "";
+	    this.modified = "";  
 	  },
 	  
 	esIgual: function(otroProducto){

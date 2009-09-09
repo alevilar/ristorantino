@@ -11,10 +11,9 @@ mensajero.setImageLoading('<? echo $html->url('/img/loader.gif',true)?>');
 this.manejadorCategorias = null; 
 
 
-var fabricaMesa = new FabricaMesa(<?php echo $current_mesa?>);
 var fabricaMozo = new FabricaMozo(<?php echo $current_mozo?>);
 
-var adicion = new Adicion(fabricaMozo.getMozo(), fabricaMesa.getMesa());
+var adicion = new Adicion(fabricaMozo.getMozo());
 
 
 
@@ -32,60 +31,24 @@ var numPad = null; //este se tiene que llamar asi para que funcione
 
 
 <?php 
+
+	/*------------------------------------------------------------------------------------------------------------------------------------*/
+/*-****************************************************-------------------
+ * ACA RENDERIZO ELEMENTOS QUE NO SE VEN HASTA QUE SON LLAMADOS
+ * 
+ * por lo general se usan con los modal windows ventanas y cosas por el estilo
+ */
 	echo $this->renderElement('loading');
+	echo $this->renderElement('sacar_item');		
+	
+	/*------------------------------------------------------------------------------------------------------------------------------------*/
 ?>
 
-<div id="adicion-cabecera">
-	<div id="cambiar-mozos" class="menu-horizontal" style="display: none; width: 280px">
-		<ul>
-			<?php foreach ($mozos as $mozo):?>
-				<li><?php echo $html->link($mozo['Mozo']['numero'],'/adicion/cambiarMozo/'.$mozo['Mozo']['id'],array('class'=>'boton letra-grande'));?></li>
-			<?php endforeach;?>
-		</ul>
-	</div>
-	<script type="text/javascript">
-		var contenedorMozos = null;
+	<div id="adicion-cabecera">
+		<?php echo $this->renderElement('cambiar_mozo');?>		
+		<?php echo $this->renderElement('mensajes');?>		
+	</div>	
 
-		contenedorMozos = new Window({
-						maximizable: false, 
-						resizable: false, 
-						hideEffect:Element.hide, 
-						showEffect:Element.show, 
-						minWidth: 10,
-						width: 400,
-						heigth: 400,
-						destroyOnClose: false
-					});
-		
-		contenedorMozos.setContent('cambiar-mozos', true, true);
-				//contentWin.getContent().innerHTML= $('cambiar-mozos-template').innerHTML;
-			
-	</script>
-	
-	<a href="#cambiarMozo" id="mozo-numero" class="boton" style="float: left" onclick="contenedorMozos.showCenter();">Mozo</a>
-	
-	<script type="text/javascript">
-		if(adicion.currentMozo){
-			$("mozo-numero").update("Mozo "+adicion.currentMozo.numero);
-		}
-	</script>
-	
-	
-	
-	
-	
-	
-	<div id="numero-mesa"></div>
-	
-	
-	<div id="mensajes"><?php $session->flash(); ?></div>
-	<script type="text/javascript">
-		var canMesas = "<?= sizeof($this->data['Mesa'])?>";
-		mensajero.show(canMesas+" Mesas Abiertas");
-	</script>	
-	
-	
-</div>	
 	
 	<div id="mesa-abrir" style="display: none">
 		<?php 
@@ -96,8 +59,6 @@ var numPad = null; //este se tiene que llamar asi para que funcione
 			echo $form->end('Abrir mesa');
 		?>
 	</div>
-	
-	
 	
 	
 	
@@ -141,17 +102,41 @@ var numPad = null; //este se tiene que llamar asi para que funcione
     </div>  
 </div>
 
+	
+	<script type="text/javascript">
+<!--
+	Event.observe('mesas-contenedor', 'click', function(event) {
+		  var element = Event.element(event);
+		  //removeClassName,'mesa-seleccionada'
+		  $$('.mesa-seleccionada').each(function(e){e.removeClassName('mesa-seleccionada')});
+		  
+		  //element.addClassName('mesa-seleccionada');
+		  $(element.id).addClassName('mesa-seleccionada');
+		});
+
+//-->
+</script>
+	
+	
+
 
 <div id="mesa-container">
 	<div id="mesa-acciones" class="menu-vertical">
 		<ul>
 			<li><?php echo $html->link('Comanda','#AgregarProducto',array('onClick'=>'adicion.hacerComanda(); return false;'));?></li>
-			<li><?php echo $html->link('Factura "A"','#TipoFactura');?></li>
-			<li><?php echo $html->link('Cliente','#SetearCliente');?></li>
-			<li><?php echo $html->link('Menú','#ConvertirEnMenu');?></li>
-			<li><?php echo $html->link('Invitación','#AplicarInvitacion');?></li>
+			<li><?php echo $html->link('Sacar Item','#SacarProducto',array('onclick'=>'adicion.hacerComandaSacar(); return false;'));?></li>
 			
-			<li><?php echo $html->link('Cerrar Mesa',"#cerrarMesa",array('onClick'=>'adicion.cerrarCurrentMesa();'));?></li>
+			<li><?php echo $html->link('Nº Mesa','#CambiarNumeroDeMesa');?></li>	
+			<li><?php echo $html->link('Mozo Socio','#MozoSocio');?></li>
+			<li><?php echo $html->link('Cerrar Mesa',"#cerrarMesa",array('onClick'=>'adicion.cerrarCurrentMesa()'));?></li>
+		</ul>
+	</div>
+	
+	<div id="mesa-acciones-2" class="menu-vertical">
+		<ul>
+			<li><?php echo $html->link('Comensales','#Comensales',array('alt','ingrese datos estadisticos'));?></li>
+			<li><?php echo $html->link('Cliente','#SeleccionCliente',array('alt','Tipo de factura. y descuentos salen de aca'));?></li>
+			<li><?php echo $html->link('Menú','#ConvertirEnMenu');?></li>	
 		</ul>
 	</div>
 	
@@ -184,6 +169,10 @@ var numPad = null; //este se tiene que llamar asi para que funcione
 	    </div>  
 </div>
 
+
+<div id="sistem-nav">
+	<a href="#" class="boton">SALIR</a>
+</div>
  
  
  <div id="contenedor-comandas"></div>

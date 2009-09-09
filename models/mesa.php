@@ -10,12 +10,6 @@ class Mesa extends AppModel {
 								'conditions' => '',
 								'fields' => '',
 								'order' => ''
-			),
-			'Descuento' => array('className' => 'Descuento',
-								'foreignKey' => 'descuento_id',
-								'conditions' => '',
-								'fields' => '',
-								'order' => ''
 			)
 	);
 

@@ -13,7 +13,7 @@ class MesasController extends AppController {
 
 	function view($id = null) {
 		$this->layout='ajax';
-		Configure::write('debug',0);
+		
 		
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid Mesa.', true));
@@ -21,13 +21,29 @@ class MesasController extends AppController {
 		}
 		
 		
-		$this->Mesa->DetalleComanda->order = 'DetalleComanda.created';
+		$this->Mesa->DetalleComanda->order = 'Producto.categoria_id';
 		$this->Mesa->DetalleComanda->recursive = 1;
+		
 		$items = $this->Mesa->DetalleComanda->find('all',array('conditions'=>array('DetalleComanda.mesa_id'=>$id),
-														'fields'=> array('DetalleComanda.mesa_id','DetalleComanda.producto_id','sum(DetalleComanda.cant) as cant', 'Producto.name', 'Mesa.numero'),
-														'group'=> array('mesa_id','producto_id', 'Producto.name','Mesa.numero')));
+														'fields'=> array('DetalleComanda.mesa_id','DetalleComanda.producto_id','sum(DetalleComanda.cant) as cant', 'Producto.name', 'Producto.id', 'Mesa.numero'),
+														'group'=> array('mesa_id','producto_id', 'Producto.name','Mesa.numero')
+														));
+		//$this->Mesa->recursive = 2;
 		$mesa = $this->Mesa->read(null, $id);	
 		$this->set(compact('mesa', 'items'));	
+		
+		$cont = 0;
+		//debug($items);
+		//convierto detaleComanda a Producto por el Json, porque en javascript tengpo una coleccion de productos para esta mesa, y no DetalleComandas como lo llamo en php
+		foreach ($items as $d):
+			$mesa['Producto'][$cont]['cantidad'] = $d[0]['cant'];
+			$mesa['Producto'][$cont]['name'] = $d['Producto']['name'];
+			$mesa['Producto'][$cont]['id'] 	 = $d['Producto']['id'];
+			$cont++;
+		endforeach;
+		
+		//debug($mesa);
+		
 		$this->set('mesa_json', json_encode($mesa));
 		$this->set('mozo_json', json_encode($this->Mesa->Mozo->read(null, $mesa['Mozo']['id'])));
 	}

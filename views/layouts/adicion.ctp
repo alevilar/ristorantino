@@ -46,7 +46,7 @@
 
 		echo $scripts_for_layout;
 		
-		echo $javascript->link('prototype-1.6.0.3');		
+		echo $javascript->link('prototype');		
 		echo $javascript->link('scriptaculous');	
 		
 		
@@ -60,7 +60,10 @@
 		echo $javascript->link('ristorantino/mozo.class');
 		echo $javascript->link('ristorantino/mensaje.class');
 		
-		echo $javascript->link('adicionar/comanda.class');
+		echo $javascript->link('ristorantino/comanda.class');
+		echo $javascript->link('ristorantino/comanda_sacar.class');
+		echo $javascript->link('ristorantino/comanda_cocina.class');
+		
 		echo $javascript->link('adicionar/adicion.class');
 		echo $javascript->link('adicionar/producto_comanda.class');		
 		
