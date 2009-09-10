@@ -80,8 +80,7 @@ Adicion.prototype = {
 			};
 			$('mesa-abrir').show();
 			Dialog.info("<h1>Abrir Mesa</h1>"+$('mesa-abrir').innerHTML, ops);
-			
-			
+
 			
 			//NUMPAD ------------------------------------------------------		
 			//numPad es una variable global
@@ -97,6 +96,8 @@ Adicion.prototype = {
 			$('MesaAbrirMesaForm').focusFirstElement();
 			//$('MesaNumero').focus();
 		},		    
+		
+		
 		
 		
 

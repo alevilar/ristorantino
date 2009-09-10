@@ -1,28 +1,22 @@
 <?php
-class Mesa extends AppModel {
+class Cliente extends AppModel {
 
-	var $name = 'Mesa';
+	var $name = 'Cliente';
+	var $validate = array(
+		'user_id' => array('numeric'),
+		'imprime_ticket' => array('numeric')
+	);
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 	var $belongsTo = array(
-			'Mozo' => array('className' => 'Mozo',
-								'foreignKey' => 'mozo_id',
+			'User' => array('className' => 'User',
+								'foreignKey' => 'user_id',
 								'conditions' => '',
 								'fields' => '',
 								'order' => ''
 			),
-			'Cliente' => array('className' => 'Cliente',
-								'foreignKey' => 'cliente_id',
-								'conditions' => '',
-								'fields' => '',
-								'order' => ''
-			)
-	);
-
-	var $hasOne = array(
-			'Comensal' => array('className' => 'Comensal',
-								'foreignKey' => 'mesa_id',
-								'dependent' => false,
+			'Descuento' => array('className' => 'Descuento',
+								'foreignKey' => 'descuento_id',
 								'conditions' => '',
 								'fields' => '',
 								'order' => ''
@@ -30,8 +24,8 @@ class Mesa extends AppModel {
 	);
 
 	var $hasMany = array(
-			'DetalleComanda' => array('className' => 'DetalleComanda',
-								'foreignKey' => 'mesa_id',
+			'Mesa' => array('className' => 'Mesa',
+								'foreignKey' => 'cliente_id',
 								'dependent' => false,
 								'conditions' => '',
 								'fields' => '',

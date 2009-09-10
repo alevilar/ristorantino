@@ -38,6 +38,50 @@
  */
 class AppController extends Controller {
 	var $helpers = array('Html', 'Form','Javascript','Ajax');
-	var $components = array( 'RequestHandler' );
+	var $components = array( 'Auth' , 'RequestHandler');
+	
+	
+	
+	 function beforeFilter(){
+
+                $this->Auth->loginError ='Usuario o Password Incorrectos';
+                $this->Auth->authError = 'Debe registrarse para acceder a esta página';
+                $this->Auth->logoutRedirect='/pages/home';
+                $this->Auth->allow('*');
+                //$this->Auth->allow('display','login','logout');
+                $this->Auth->authorize = 'controller'; 
+        }       
+        
+        
+        function isAuthorized() 
+        {        	
+        	if ($this->name == 'Adicion') {$llAuth = true;}
+        	
+
+          	switch ($this->Auth->user('role')):
+                case 'invitado':
+                    //hago que la sesion expire en mas tiempo
+                    $llAuth = true;
+                    break;
+                case 'encargado':
+                    //hago que la sesion expire en mas tiempo
+                    $llAuth = false;                
+                default:
+	  				$llAuth = false;
+	  		endswitch;
+	  		
+	  		
+	  		 if ($llAuth == true) {
+                        return true;
+                } else {                        
+                        $this->Session->setFlash('No tiene permisos para acceder a esta opción.', true);
+                        
+                        $this->redirect('/pages/home');
+                        return false;
+                }
+	  		
+                
+        }
+	
 }
 ?>

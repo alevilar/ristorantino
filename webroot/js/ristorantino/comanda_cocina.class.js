@@ -60,7 +60,7 @@ ComandaCocina = Class.create(Comanda, {
 	  },
 	  
 	  resetearComanda: function($super, varMozo, varMesa){
-		  $super();
+		  $super(varMozo, varMesa);
 		  $('comanda-ul').update(""); // le vacio el contenido          
 	  },
 	  

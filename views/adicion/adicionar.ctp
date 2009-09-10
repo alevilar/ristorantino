@@ -39,7 +39,11 @@ var numPad = null; //este se tiene que llamar asi para que funcione
  * por lo general se usan con los modal windows ventanas y cosas por el estilo
  */
 	echo $this->renderElement('loading');
-	echo $this->renderElement('sacar_item');		
+	echo $this->renderElement('sacar_item');	
+
+	echo $this->renderElement('abrir_mesa');	
+	
+	echo $this->renderElement('imprimir_como_menu');	
 	
 	/*------------------------------------------------------------------------------------------------------------------------------------*/
 ?>
@@ -50,15 +54,7 @@ var numPad = null; //este se tiene que llamar asi para que funcione
 	</div>	
 
 	
-	<div id="mesa-abrir" style="display: none">
-		<?php 
-			echo $form->create('Mesa',array('action'=>'abrirMesa'));
-			echo $form->input('mozo_id',array('type'=>'hidden','value'=>$current_mozo_id));
-			echo $form->input('numero',array('label'=>'','style'=>'float:left;'));
-			echo $form->button('Cancelar',array('onclick'=>'Dialog.closeInfo();'));
-			echo $form->end('Abrir mesa');
-		?>
-	</div>
+	
 	
 	
 	
@@ -76,9 +72,10 @@ var numPad = null; //este se tiene que llamar asi para que funcione
     <div id="ScrollMesaBox">
         <ul  id="mesas-contenedor">
 		<?php foreach ($this->data['Mesa'] as $m):?>
+			<?php $add_class = ($m['time_cerro_mesa'] !=  '0000-00-00 00:00:00')?' mesa-cerrada':'';?>
 			<?php echo '<li>'.$ajax->link($m['numero'],'/mesas/view/'.$m['id'], array( 	'update'=>'mesa-scroll',
 																						'id'=>'mesa-ver-'.$m['id'],
-																						'class'=>'boton',
+																						'class'=>'boton'.$add_class,
 																						'evalScripts'=>true,
 																						'complete' => 'adicion.cambiarMesa();'
 							)).'</li>'
@@ -136,7 +133,7 @@ var numPad = null; //este se tiene que llamar asi para que funcione
 		<ul>
 			<li><?php echo $html->link('Comensales','#Comensales',array('alt','ingrese datos estadisticos'));?></li>
 			<li><?php echo $html->link('Cliente','#SeleccionCliente',array('alt','Tipo de factura. y descuentos salen de aca'));?></li>
-			<li><?php echo $html->link('Menú','#ConvertirEnMenu');?></li>	
+			<li><?php echo $html->link('Menú','#ConvertirEnMenu',array('onclick'=>'mostrarContenedorImprimirComoMenu(); return false;'));?></li>	
 		</ul>
 	</div>
 	

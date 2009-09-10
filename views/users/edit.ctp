@@ -9,6 +9,9 @@
 		echo $form->input('nombre');
 		echo $form->input('apellido');
 		echo $form->input('telefono');
+		
+		$opciones = array('gerente'=>'Gerente','mozo'=>'Mozo','cliente'=>'Cliente');
+		echo $form->input('role',array('type'=>'select','options'=>$opciones,'label'=>'Tipo de Usuario'));
 	?>
 	</fieldset>
 <?php echo $form->end('Submit');?>

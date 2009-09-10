@@ -57,6 +57,24 @@ class UsersController extends AppController {
 			$this->redirect(array('action'=>'index'));
 		}
 	}
+	
+	
+	     /**
+         * 
+         *   Cosas de Authentication
+         * 
+         */
+        function login(){
+                
+        }
+        
+        
+        function logout(){
+                $this->Session->setFlash('Ha salido de su cuenta');
+                $this->redirect($this->Auth->logout());
+        }
+	
+        
 
 }
 ?>
