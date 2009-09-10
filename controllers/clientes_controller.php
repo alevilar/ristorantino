@@ -64,6 +64,19 @@ class ClientesController extends AppController {
 			$this->redirect(array('action'=>'index'));
 		}
 	}
+	
+	
+	/**
+	 * me lista todos los clientes que sean del tipo Factura "A"
+	 *
+	 */
+	function ajax_clientes_factura_a(){
+		$this->Cliente->order = 'name';
+		$this->paginate = array('conditions'=>array('tipofactura' => 'A'));
+		
+		$this->set('clientes',$this->paginate());
+		
+	}
 
 }
 ?>

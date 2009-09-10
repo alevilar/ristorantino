@@ -91,6 +91,34 @@ class MesasController extends AppController {
 		$descuentos = $this->Mesa->Descuento->find('list');
 		$this->set(compact('mozos', 'descuentos'));
 	}
+	
+	
+	
+	function ajax_edit(){
+		$this->autoRender = false;
+		
+		if (!empty($this->data)) {
+			if(isset($this->data['Mesa']['id'])){
+				if(($this->data['Mesa']['id'] != '') || ($this->data['Mesa']['id'] != null) || ($this->data['Mesa']['id'] != 0)){
+					$this->Mesa->recursive = -1;
+					$this->Mesa->id = $this->data['Mesa']['id'];
+					$mesa = $this->Mesa->read();
+
+					while(list($k,$v) = each($this->data['Mesa'])){
+						if($k!='modified'){ // para que no me sobreescriba el campo modified
+							$mesa['Mesa'][$k] = $v;
+						}
+					}
+					if ($this->Mesa->save($mesa)) {
+						return 1;
+					} else {
+						return 0;
+					}
+				}
+			}
+		}
+	}
+	
 
 	function edit($id = null) {
 		if (!$id && empty($this->data)) {

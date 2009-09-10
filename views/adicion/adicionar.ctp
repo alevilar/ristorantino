@@ -38,6 +38,7 @@ var numPad = null; //este se tiene que llamar asi para que funcione
  * 
  * por lo general se usan con los modal windows ventanas y cosas por el estilo
  */
+	echo $this->renderElement('listar_clientes');	
 	echo $this->renderElement('loading');
 	echo $this->renderElement('sacar_item');	
 
@@ -132,7 +133,7 @@ var numPad = null; //este se tiene que llamar asi para que funcione
 	<div id="mesa-acciones-2" class="menu-vertical">
 		<ul>
 			<li><?php echo $html->link('Comensales','#Comensales',array('alt','ingrese datos estadisticos'));?></li>
-			<li><?php echo $html->link('Cliente','#SeleccionCliente',array('alt','Tipo de factura. y descuentos salen de aca'));?></li>
+			<li><?php echo $html->link('Cliente','#SeleccionCliente',array('onclick'=>'callListarClientes(); return false;','id'=>'boton-cliente'));?></li>
 			<li><?php echo $html->link('Menú','#ConvertirEnMenu',array('onclick'=>'mostrarContenedorImprimirComoMenu(); return false;'));?></li>	
 		</ul>
 	</div>

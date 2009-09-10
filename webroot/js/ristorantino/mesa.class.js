@@ -4,12 +4,12 @@
 
 var Mesa = Class.create({
 	
-		initialize: function() {
-		
+		initialize: function() {		
 			this.id;
 			this.comensal;
 		    this.productos;
-		    this.numero;		
+		    this.numero;
+		    this.cliente;
 		},
 
 		setId: function(id){

@@ -45,7 +45,7 @@ A,A:VISITED {
 	background-color:silver;
 }
 
-A:HOVER {
+A:HOVER { 	
 	/*background-color: buttonface;*/
 }
 
@@ -74,7 +74,7 @@ A:ACTIVE {
 	border: 1px dashed grey;
 	text-align: center;
 	text-decoration: none;
-	background-color: silver;
+	/*background-color: silver;*/
 	vertical-align: middle;
 	font-family: fantasy;
 }
@@ -94,6 +94,9 @@ A:ACTIVE {
 	font-family: fantasy;
 }
 
+.boton-apretado, A.boton-apretado{
+	background-color: lime;
+}
 
 h1,h2,h3,h4 {
 	font-weight: normal;
@@ -276,6 +279,11 @@ table {
 	width: 100%;
 }
 
+tr{
+	height: 40px;
+	border: 1 solid grey;
+}
+
 th {
 	background: #f2f2f2;
 	border: 1px solid #bbb;
@@ -300,6 +308,7 @@ th a:hover {
 table tr td {
 	background: #fff;
 	border-right: 1px solid #ccc;
+	border-bottom: 1px solid #333;
 	padding: 4px;
 	text-align: center;
 	vertical-align: top;

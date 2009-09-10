@@ -59,6 +59,7 @@
 		echo $javascript->link('ristorantino/mesa.class');
 		echo $javascript->link('ristorantino/mozo.class');
 		echo $javascript->link('ristorantino/mensaje.class');
+		echo $javascript->link('ristorantino/cliente.class');
 		
 		echo $javascript->link('ristorantino/comanda.class');
 		echo $javascript->link('ristorantino/comanda_sacar.class');
