@@ -251,7 +251,7 @@ ul,li {
 #mesa-data {
 	height:398px;
 	overflow:hidden;
-	width:448px;
+	width:440px;
 	margin-top: 14px;
 	background-color: white;
 }
@@ -348,7 +348,7 @@ div.paging {
 }
 
 div.paging div.disabled {
-	color: #ddd;
+	color: black;
 	display: inline;
 }
 
@@ -358,6 +358,15 @@ div.paging span {
 
 div.paging span.current {
 	color: #000;
+}
+
+LI.current{
+	color: #333;
+	font-size: 50px;
+	padding-top: 3px;
+	margin-left: 6px;
+	margin-right: 6px;
+	width: 50px;
 }
 
 div.paging span a {
@@ -856,4 +865,13 @@ div.code-coverage-results span.result-good {
 	color: white;
 	padding-top: 5px;
 	border-top: white solid 23px;
+}
+
+
+#listado-clientes-paginador{
+}
+
+#listado-clientes-paginador span{
+	display: inline;
+	
 }

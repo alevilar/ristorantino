@@ -72,10 +72,24 @@ class ClientesController extends AppController {
 	 */
 	function ajax_clientes_factura_a(){
 		$this->Cliente->order = 'name';
-		$this->paginate = array('conditions'=>array('tipofactura' => 'A'));
+		$this->paginate = array('conditions'=>array('tipofactura' => 'A'),
+								'limit'=> 8
+		);
 		
 		$this->set('clientes',$this->paginate());
+	}
+	
+/**
+	 * me lista todos los clientes que sean del tipo Factura "A"
+	 *
+	 */
+	function ajax_clientes_con_descuento(){
+		$this->Cliente->order = 'name';
+		$this->paginate = array('conditions'=>array('descuento_id <>' => 0),
+								'limit'=> 8
+		);
 		
+		$this->set('clientes',$this->paginate());
 	}
 
 }

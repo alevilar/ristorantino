@@ -1,3 +1,19 @@
+<script type="text/javascript">
+<!--
+/*****************************************************************************
+ * 
+ *				MENSAJERO ---- Enviar mensajes al usuario mediante javascript
+ *
+ *****************************************************************************/
+
+ //inicializacion
+var mensajero = new Mensaje('mensajes');
+mensajero.setImageLoading('<? echo $html->url('/img/loader.gif',true)?>');
+
+//-->
+</script>
+
+
 
 
 	<div id="mensajes"><?php $session->flash(); ?></div>

@@ -4,12 +4,6 @@
 
 console.info('Iniciando aplicacion');
 
-var mensajero = new Mensaje('mensajes');
-mensajero.setImageLoading('<? echo $html->url('/img/loader.gif',true)?>');
-
-//este es para el navegador de categorias de productos que se lo llma desde ajax
-this.manejadorCategorias = null; 
-
 
 var fabricaMozo = new FabricaMozo(<?php echo $current_mozo?>);
 
@@ -38,19 +32,19 @@ var numPad = null; //este se tiene que llamar asi para que funcione
  * 
  * por lo general se usan con los modal windows ventanas y cosas por el estilo
  */
-	echo $this->renderElement('listar_clientes');	
+	echo $this->renderElement('listar_clientes');		
 	echo $this->renderElement('loading');
-	echo $this->renderElement('sacar_item');	
-
-	echo $this->renderElement('abrir_mesa');	
 	
-	echo $this->renderElement('imprimir_como_menu');	
+	echo $this->renderElement('adicion/comanda');	
+	echo $this->renderElement('adicion/sacar_item');	
+	echo $this->renderElement('adicion/abrir_mesa');		
+	echo $this->renderElement('adicion/imprimir_como_menu');	
 	
 	/*------------------------------------------------------------------------------------------------------------------------------------*/
 ?>
 
 	<div id="adicion-cabecera">
-		<?php echo $this->renderElement('cambiar_mozo');?>		
+		<?php echo $this->renderElement('adicion/cambiar_mozo');?>		
 		<?php echo $this->renderElement('mensajes');?>		
 	</div>	
 
@@ -172,5 +166,5 @@ var numPad = null; //este se tiene que llamar asi para que funcione
 </div>
  
  
- <div id="contenedor-comandas"></div>
+
 
