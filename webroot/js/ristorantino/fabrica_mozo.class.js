@@ -18,7 +18,6 @@ var FabricaMozo = Class.create({
 			console.info("MMMMMMMMMMMMMMMOOOOOOOOOOOOOOOOOOOOOZZZZZZZZZZZZZZOOOOOOOOOOOOOOOO");
 			console.info(this);
 			
-			return this.mesa;
 		}				
 		else return null;
 		

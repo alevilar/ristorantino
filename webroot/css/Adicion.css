@@ -175,6 +175,10 @@ ul,li {
 	overflow: hidden;
 }
 
+.mensaje-error{
+	color: pink;
+}
+
 
 #mesa-abrir{
 	position: absolute;
@@ -279,7 +283,7 @@ table {
 	width: 100%;
 }
 
-tr{
+tr.listado{
 	height: 40px;
 	border: 1 solid grey;
 }
@@ -761,6 +765,7 @@ div.code-coverage-results span.result-good {
 	padding: 0px;
 	height: 50px;
 	float:left;
+	border: solid black 2px;
 }
 
 

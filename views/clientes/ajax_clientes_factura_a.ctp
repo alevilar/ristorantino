@@ -2,14 +2,14 @@
 
 <div id="listado-clientes-ajax">
 	<table>
-		<tr> 
+		<tr class="listado"> 
 			<th><?php echo $paginator->sort('Cuit', 'cuit'); ?></th> 
 			<th><?php echo $paginator->sort('Denominación', 'denominacion'); ?></th>
 			<th><?php echo $paginator->sort('Domicilio', 'domicilio_fiscal'); ?></th>  
 			<th>+</th>  
 		</tr> 
 		   <?php foreach($clientes as $c): ?> 
-		<tr> 
+		<tr  class="listado"> 
 			<td><?php echo $c['Cliente']['cuit']; ?> </td> 
 			<td><?php echo $c['Cliente']['denominacion']; ?> </td>
 			<td><?php echo $c['Cliente']['domicilio_fiscal']; ?> </td>  

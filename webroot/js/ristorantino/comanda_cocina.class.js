@@ -19,10 +19,10 @@ ComandaCocina = Class.create(Comanda, {
 	     */
 	    this.prioridad = false;
 	    
-	    var h1 = new Element('H1').update("Comanda");    
-	    h1.observe('click',this.tooglePrioridad.bind(this));
+	    this.h1 = new Element('H1').update("Comanda");    
+	    this.h1.observe('click',this.tooglePrioridad.bind(this));
 	    
-	    $('contenedor-comandas').appendChild(new Element('div',{'id': 'comanda'})).appendChild(h1);
+	    $('contenedor-comandas').appendChild(new Element('div',{'id': 'comanda'})).appendChild(this.h1);
 	    $('comanda').appendChild(new Element('p',{'id':'comanda-enviar', 'class': 'menu-horizontal'}));
 	    
 	    div1 = new Element('div',{'class': 'menu-horizontal menu-margen'});

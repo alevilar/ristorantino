@@ -8,7 +8,24 @@ var FabricaMesa = Class.create({
 
 			this.mesa.setId(mesaJSON.Mesa.id);
 			this.mesa.setNumero(mesaJSON.Mesa.numero);
+			
+			this.mesa.clienteId = mesaJSON.Mesa.cliente_id;
+			this.mesa.created = mesaJSON.Mesa.cliente_id;
+
+			this.mesa.menu = mesaJSON.Mesa.menu;
+			this.mesa.modified = mesaJSON.Mesa.modified;
+			this.mesa.time_cerro_mesa = mesaJSON.Mesa.time_cerro_mesa;
+			this.mesa.time_cobro = mesaJSON.Mesa.time_cobro;
+			this.mesa.total = mesaJSON.Mesa.total;
+			this.mesa.created = mesaJSON.Mesa.created;
+				
+			
 			this.mesa.setProductos(mesaJSON.Producto);
+			
+			this.mesa.cliente = mesaJSON.Cliente;
+			this.mesa.comensal = mesaJSON.Comensal;
+				
+			
 			return this.mesa;
 		}
 		else return null;

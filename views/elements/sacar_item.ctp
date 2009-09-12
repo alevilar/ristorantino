@@ -1,8 +1,8 @@
 
 
-<div id="sacar-item-container" style="display: none; width: 460px; height: 200px">
+<div id="sacar-item-container" style="display: none; width: 460px; height: 200px" class="letra-chica">
 	<div class="menu-horizontal">
-		<ul id="sacar-item-ul"></ul>
+		<ul id="sacar-item-ul" ></ul>
 	</div>
 	
 	<br>

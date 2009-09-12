@@ -77,8 +77,7 @@ var numPad = null; //este se tiene que llamar asi para que funcione
 			<?php echo '<li>'.$ajax->link($m['numero'],'/mesas/view/'.$m['id'], array( 	'update'=>'mesa-scroll',
 																						'id'=>'mesa-ver-'.$m['id'],
 																						'class'=>'boton'.$add_class,
-																						'evalScripts'=>true,
-																						'complete' => 'adicion.cambiarMesa();'
+																						'evalScripts'=>true
 							)).'</li>'
 			?>
 		<?php endforeach; ?>
@@ -121,8 +120,8 @@ var numPad = null; //este se tiene que llamar asi para que funcione
 <div id="mesa-container">
 	<div id="mesa-acciones" class="menu-vertical">
 		<ul>
-			<li><?php echo $html->link('Comanda','#AgregarProducto',array('onClick'=>'adicion.hacerComanda(); return false;'));?></li>
-			<li><?php echo $html->link('Sacar Item','#SacarProducto',array('onclick'=>'adicion.hacerComandaSacar(); return false;'));?></li>
+			<li><?php echo $html->link('Comanda','#AgregarProducto',array('onClick'=>'adicion.hacerComanda(); return false;','boton-comanda'));?></li>
+			<li><?php echo $html->link('Sacar Item','#SacarProducto',array('onclick'=>'adicion.hacerComandaSacar(); return false;','id'=>'boton-sacar-item'));?></li>
 			
 			<li><?php echo $html->link('Nº Mesa','#CambiarNumeroDeMesa');?></li>	
 			<li><?php echo $html->link('Mozo Socio','#MozoSocio');?></li>
@@ -134,7 +133,7 @@ var numPad = null; //este se tiene que llamar asi para que funcione
 		<ul>
 			<li><?php echo $html->link('Comensales','#Comensales',array('alt','ingrese datos estadisticos'));?></li>
 			<li><?php echo $html->link('Cliente','#SeleccionCliente',array('onclick'=>'callListarClientes(); return false;','id'=>'boton-cliente'));?></li>
-			<li><?php echo $html->link('Menú','#ConvertirEnMenu',array('onclick'=>'mostrarContenedorImprimirComoMenu(); return false;'));?></li>	
+			<li><?php echo $html->link('Menú','#ConvertirEnMenu',array('onclick'=>'callImprimirComoMenu(); return false;','id'=>'boton-menu'));?></li>	
 		</ul>
 	</div>
 	
@@ -169,7 +168,7 @@ var numPad = null; //este se tiene que llamar asi para que funcione
 
 
 <div id="sistem-nav">
-	<a href="#" class="boton">SALIR</a>
+	<?php echo $html->link('SALIR','/pages/home')?>
 </div>
  
  

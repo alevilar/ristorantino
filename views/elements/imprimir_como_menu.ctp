@@ -1,65 +1,65 @@
 
 
 	<div id="mesa-imprimir-como-menu" style="display: none; width: 400px; height: 300px;">
-		<?php 			
-			echo $ajax->form('imprimir_como_menu','post',array(
-				'type' => 'post',
-				'id' => 'MesaImprimirComoMenu',
-			    'options' => array(
-			        'model'=>'Mesa',
-			        'url' => array(
-			            'controller' => 'mesas',
-			            'action' => 'imprimir_como_menu'
-			        ),
-			        'complete'=>'$$("href:#ConvertirEnMenu").addClassName("boton-apretado")'
-			    )
-			));
-			
-			
-			echo $form->input('id',array('type'=>'hidden','value'=>$current_mesa_id));
-			echo $form->input('menu');
-			echo $form->button('Cancelar',array('onclick'=>'contenedorImprimirComoMenu.hide();'));
-			echo $form->end('Guardar');
-		?>
+		<form action="javascript:return false;" id="mesa-menu-form" name="mesa-menu-form" onsubmit="sendImprimirComoMenu();">
+			<input type="text" name="mesa-menu" id="mesa-menu">
+			<input type="submit" value="Guardar">
+		</form>
 		<div id="contenedor-numPad-menu"></div>
 	</div>
 	
 
 
+
 <script type="text/javascript">
-		var contenedorImprimirComoMenu = null;
-
-		
-		contenedorImprimirComoMenu = new Window({
-								maximizable: false, 
-								resizable: false, 
-								hideEffect:Element.hide, 
-								showEffect:Element.show, 
-								minWidth: 10,
-								destroyOnClose: false
-					});
-		
-		contenedorImprimirComoMenu.setContent('mesa-imprimir-como-menu', true, true);
-
-		function mostrarContenedorImprimirComoMenu(){
-			//reseteo el ID de la mesa
-			$('MesaAbrirMesaForm')
-
-			$('contenedor-numPad-menu').update();
+		var imprimirComoMenuWindow;
+		imprimirComoMenuWindow = new Window({
+							maximizable: false, 
+							resizable: false, 
+							//hideEffect:Element.hide, 
+							//showEffect:Element.show,
+							destroyOnClose: false
+						});
 			
+		imprimirComoMenuWindow.setContent('mesa-imprimir-como-menu', true, true);
+
+
+		function callImprimirComoMenu(){
+
+	
 			//NUMPAD ------------------------------------------------------		
 			//numPad es una variable global
+			$('contenedor-numPad-menu').update();
 			numPad = new NumpadControl('contenedor-numPad-menu');   
 			    			    	
-			numPad.show($('menu'));		        
+			numPad.show($('mesa-menu'));		        
 			
 			//---------------------------------------  -------------------------
-			$('MesaAbrirMesaForm').focusFirstElement();
+			$('mesa-menu-form').focusFirstElement();
 
 			// contenedorImprimirComoMenu es una variable declarada como global
-			contenedorImprimirComoMenu.showCenter();
+			imprimirComoMenuWindow.showCenter();
+		
 		}
+
+
+		function sendImprimirComoMenu(){
+
+			//uso lavariable global
+			//@Global adicion
+			new Ajax.Request("<?php echo $html->url('/mesas/ajax_edit')?>", {
+				  parameters: { 'data[Mesa][id]': adicion.currentMesa.id, 'data[Mesa][menu]': $F('mesa-menu')},
+				  method: 'post',
+				  onSuccess: function(){
+					  imprimirComoMenuWindow.hide();
+						$('boton-menu').addClassName('boton-apretado');
+					  }
+				});				
 			
+			
+		}
+
+
 </script>
 	
 	

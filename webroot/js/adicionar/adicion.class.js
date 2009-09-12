@@ -45,6 +45,25 @@ Adicion.prototype = {
 			
 		},
 		
+		
+		/**
+		 * Inicializa la adicion volviendo a resetear los aspectos visuales
+		 * @return
+		 */
+		resetear: function(){
+			// saca la pestaña de la mesa activada y la pone como las demas
+			$('mesa-ver-'+this.currentMesa.getId()).removeClassName('mesa-seleccionada');
+			
+			// el contenedor de items actuales de una mesa
+			$('mesa-scroll').update("Seleccione una mesa");
+			
+			$('boton-cliente').removeClassName('boton-apretado');
+			$('boton-menu').removeClassName('boton-apretado');
+			$('boton-menu').update('Menú');
+		},
+		
+		
+		
 		setCurrentMozo: function(mozo){
 			this.currentMozo = mozo;
 			var cantidad_de_mesas = this.currentMozo.mesas.length;
@@ -55,11 +74,33 @@ Adicion.prototype = {
 		},
 
 		//cambia de mesa
-		cambiarMesa: function (mesaCambiar){			
+		cambiarMesa: function (mesaCambiar)
+		{						
 			this.setCurrentMesa(mesaCambiar);
-			
-			this.comanda.resetearComanda(this.currentMozo, this.currentMesa);
 				
+			this.comanda.resetearComanda(this.currentMozo, this.currentMesa);	
+					
+			if(this.currentMesa)
+			{
+				// del element listar_clientes.ctp
+				$('boton-cliente').removeClassName('boton-apretado')
+				if (this.currentMesa.tieneCliente()){
+					$('boton-cliente').addClassName('boton-apretado');
+				}	
+				
+					// del element imprimir_como_menu.ctp
+				$('boton-menu').removeClassName('boton-apretado')
+				if (this.currentMesa.tieneMenu()){
+					$('boton-menu').addClassName('boton-apretado');
+				}
+			}
+			
+			if(mesaCambiar.time_cerro_mesa != "0000-00-00 00:00:00")
+			{
+				mensajero.error("La mesa "+mesaCambiar.numero+" ya está cerrada. No se pude modificar");
+				this.resetear();
+				return -1;
+			}
 		},	
 		
 

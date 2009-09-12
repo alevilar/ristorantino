@@ -78,6 +78,16 @@ Mensaje.prototype ={
 		  };
 	  },
 	  
+	  error:  function(mensaje){
+		  this.mensaje = mensaje;
+		  if(this.OK) {
+			  this.mensajeId = "msg-"+Math.random()*500;
+			  var li = new Element('li', {'id':this.mensajeId, 'class':'mensaje-error'});
+			  li.update(this.mensaje);
+			  this.contenedor.appendChild(li);
+		  };
+	  },
+	  
 	  
 	  playLoading: function(mensaje)
 	  {
