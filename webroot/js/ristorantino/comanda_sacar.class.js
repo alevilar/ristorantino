@@ -5,6 +5,14 @@
  */
 var ComandaSacar = Class.create(Comanda ,{
 	
+	   initialize: function($super,varMozo) 
+	   {		
+			$super(varMozo);	    
+	
+		    //@ GLOBAL sacarItemWindow: es la ventana que cree en el  elemento comanda_sacar
+		    this.setWindow(sacarItemWindow);
+	  },
+	
 	  /**
 	   * envia la comanda usando ajax para que PHp la procese, guarde todo en BD y mande a imprimir la comanda
 	   */
@@ -25,19 +33,22 @@ var ComandaSacar = Class.create(Comanda ,{
 		  }.bind(this));
 		  
 		  
-		  console.info("form serializado:::"+formulario.serialize());
+		  //console.info("form serializado:::"+formulario.serialize());
 		  
 		  formulario.request({
 			  	parameters: formulario.serialize(),
 		        onFailure: function() {
 			  		alert("Falló, no se ha impreso la comanda. Por favor ingrese los datos nuevamente") ;
-			  		console.info("Fallo el ajax para enviar la comanda");			  	
+			  		//console.info("Fallo el ajax para enviar la comanda");			  	
 		  		},
-		        onSuccess: function(t) {
-		            sacarItemWindow.hide();
+		        onSuccess: function(t) 
+		        {
+		            this.window.hide();
 		            
-		            mensajero.show("se quitaron los productos correctamente,actualice la mesa para visualizar los cambios");
+		            //resetear la adicion
+		            adicion.resetear();
 		            
+		            mensajero.show("se quitaron los productos correctamente,actualice la mesa para visualizar los cambios");    
 		        }.bind(this)
 		    });
 	  },
@@ -57,15 +68,15 @@ var ComandaSacar = Class.create(Comanda ,{
 	  
 		  prod_busq = this.buscar(producto);
 		  
-		  console.info("esto es lo que encontró");
-		  console.debug(prod_busq);
+		  //console.info("esto es lo que encontró");
+		  //console.debug(prod_busq);
 		  if (prod_busq == null){ // si no estaba en la coleccion lo meto	
 			  this.__agregarProducto(producto);
-			  console.info("se agregò un producto a la comanda. El producto:"+producto.getName()+"..... y actualmente hay "+this.productos.length+" productos en la coleccion");
+			  //console.info("se agregò un producto a la comanda. El producto:"+producto.getName()+"..... y actualmente hay "+this.productos.length+" productos en la coleccion");
 		  }
 		  else{ // ya estaba en la coleccion , asqiue solo le incremento el valor cantidad
 			  prod_busq.restar();
-			  console.info("ya estaba, solo le incremente el valor");
+			  //console.info("ya estaba, solo le incremente el valor");
 		  }
 
 		  adicion; //global
@@ -97,8 +108,8 @@ var ComandaSacar = Class.create(Comanda ,{
 		  	
 			if(typeof productos == 'object')
 			{			
-				console.info("++++++++++++++++++++++++++>>>>>>>>>>>>>>>>>>>>");
-				console.debug(productos);
+				//console.info("++++++++++++++++++++++++++>>>>>>>>>>>>>>>>>>>>");
+				//console.debug(productos);
 				productos.each(function(p){		
 						var li = new Element('li',{'id':'sacar-item-'+p.id});
 						

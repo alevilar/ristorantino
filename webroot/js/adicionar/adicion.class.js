@@ -10,39 +10,26 @@ Adicion.prototype = {
 				
 			this.currentMesa = null;
 			
-			//this.cantidad_de_mesas = 0;
+
 			// esta es la comanda que se genera al sacar un Item de un DetalleMesa
-			this.comandaSacar = new ComandaSacar(this.currentMozo);
+			this.comandaSacar = null;
 			
 			/**
-			 *  
 			 *  Crear la comandera y el menu 
 			 *  para el mozo actual y la mesa actual
-			 *  
-			 * @TODO hay que hacer que cuando el mozo no tiene mesa, que no me tirre error esto 
 			 */
 			this.comanda = null;  //este objeto se crea con el evento window onload
-			Event.observe(window, 'load', function() {
-				// creo la comanda y su vista
-				this.comanda = new ComandaCocina(this.currentMozo);	
-				
-				var menuDiv = new Element('div',{'id':'productos-contenedor'});
-				$('contenedor-comandas').hide();
-				$('contenedor-comandas').appendChild(menuDiv);
-				
-				// esto hace que se cargen las categorias y productos de productos-contenedor
-				new Ajax.Updater(menuDiv, 'http://localhost/ristorantino/categorias/listar', { method: 'get', 'evalScripts' :true });	
-				
-				// esto hace que que oculte de la vista cuando se hace click en la cabecera de la pagina, es para cerrar la ventana
-				Event.observe('adicion-cabecera', 'click', function() {
-					if ($('contenedor-comandas').visible()){
-						$('contenedor-comandas').hide();
-					}
-				});
-
-			}.bind(this));
-
-			
+						
+		},
+		
+		
+		/**
+		 * Me dice si tiene una mesa setteada
+		 * @return boolean
+		 */
+		tieneMesaSeleccionada: function(){
+			if(adicion.currentMesa) return true;
+			else 					return false;
 		},
 		
 		
@@ -60,9 +47,14 @@ Adicion.prototype = {
 			$('boton-cliente').removeClassName('boton-apretado');
 			$('boton-menu').removeClassName('boton-apretado');
 			$('boton-menu').update('Menú');
+			
+			this.borrarCurrentMesa();
 		},
 		
 		
+		borrarCurrentMesa: function(){
+			this.currentMesa = null
+		},
 		
 		setCurrentMozo: function(mozo){
 			this.currentMozo = mozo;
@@ -95,10 +87,13 @@ Adicion.prototype = {
 				}
 			}
 			
+			// si la mesa esta cerrada, el mozo ya nop deberia poder hacer nada hasta que el cajero no confirme el pago, por lo tanto
+			// no le permito al usuario que pueda modificarle valores
 			if(mesaCambiar.time_cerro_mesa != "0000-00-00 00:00:00")
 			{
 				mensajero.error("La mesa "+mesaCambiar.numero+" ya está cerrada. No se pude modificar");
 				this.resetear();
+				this.currentMesa = null;
 				return -1;
 			}
 		},	
@@ -144,44 +139,26 @@ Adicion.prototype = {
 
 		// envia la mesa para ser cerrada
 		cerrarCurrentMesa: function (){
-			
-			var confirma  = Dialog.confirm(
-							"Se va a cerrar la mesa Nº "+this.currentMesa.numero, 
-							{
-								width:300, 
-								okLabel: "Aceptar", 
-							/*	buttonClass: "myButtonClass",*/ 
-								id: "mesa-confirma-cierre", 
-								cancel: function(win) {
-									return false
-									}, 
-								ok:function(win) {
-										window.location.href = "/ristorantino/mesas/cerrarMesa/"+this.currentMesa.id+"/mozo_id:"+this.currentMozo.id;
-										return true;
-										}.bind(this) 
-							});
-							
-			return confirma;			
-			
-		},		
-			
-
-	    
-		hacerComanda: function(){
-			if(this.currentMesa){
-				$("contenedor-comandas").show();
+			if(this.tieneMesaSeleccionada()){
+				var confirma  = Dialog.confirm(
+								"Se va a cerrar la mesa Nº "+this.currentMesa.numero, 
+								{
+									width:300, 
+									okLabel: "Aceptar", 
+								/*	buttonClass: "myButtonClass",*/ 
+									id: "mesa-confirma-cierre", 
+									cancel: function(win) {
+										return false
+										}, 
+									ok:function(win) {
+											window.location.href = "/ristorantino/mesas/cerrarMesa/"+this.currentMesa.id+"/mozo_id:"+this.currentMozo.id;
+											return true;
+											}.bind(this) 
+								});
+								
+				return confirma;
 			}
-		},
-		
-		hacerComandaSacar: function(){
-			if (this.currentMesa){
-				this.comandaSacar.actualizarComanda(this.currentMesa.productos);
-	
-				this.comandaSacar.resetearComanda(this.currentMozo, this.currentMesa);
-				// @global
-				sacarItemWindow.showCenter();
-			}
-		}
-		
+			
+		}		
 		
 };

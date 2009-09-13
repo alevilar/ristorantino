@@ -805,40 +805,44 @@ div.code-coverage-results span.result-good {
 
 
 #categorias-listado{
-	position: absolute;
-	top: 20px;
-	height: 50px;
 	width: 500px;
+	clear: both;
+	display: block;
+}
+
+#categorias-listado LI{
+	margin-bottom: 20px;
 }
 
 
 #productos-listado{
-	position: absolute;
-	top: 80px;
+	margin-top: 20px;
+	clear: both;
+	display: block;
 }
 
 
 #contenedor-comandas{
-	left:10px;
-	position:absolute;
-	top:96px;
-	width:780px;
+	width:772px;
+	height:510px; 
 }
 
 
 #productos-contenedor{
+	padding-top: 20px;
 	background-color:white;
 	border:2px solid grey;
 	height:500px;
-	width:525px;
+	width:520px;
 	font-size: 16px;
+	float: left;
 }
 
 
 #comanda{
 	background-color:white;
 	border:2px solid grey;
-	float:right;
+	float: left;
 	height:500px;
 	width:240px;
 }

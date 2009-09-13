@@ -19,9 +19,15 @@ Comanda.prototype = {
 	
 	  initialize: function(varMozo) {
 	    this.productos = new Array(); 
-	    this.mozo = varMozo;	   	    
+	    this.mozo = varMozo;	
+	    this.window = null; // esla ventana que contiene a la vista correspondiente a la comanda
+
 	  },
 	  
+	  
+	  setWindow: function(contenedorWindow){
+		  this.window = contenedorWindow;
+	  },
 	  
 	  /**
 	   * pr lo general este metodo modifica la vista, ionsertando LI x cada producto y con la cantidad actualizada
@@ -102,7 +108,7 @@ Comanda.prototype = {
 	  	 *  @params producto es el objeto producto
 	  	 */
 		buscar: function(producto){
-		  console.info("hay esta cantidad de productos en la coleccion "+this.productos.length);
+		  //console.info("hay esta cantidad de productos en la coleccion "+this.productos.length);
 		  
 		  prod = this.productos.find(function(p){	  
 				return (p.id == producto.id);
@@ -119,10 +125,10 @@ Comanda.prototype = {
 	  	contarProductoEnComanda: function(producto){
 	  		var contador = 0;
 	  		this.productos.each(function(p){
-	  			console.info("estoy adentro del each e contarProducto: el id de p es: "+p.getId()+" el Id de producto es: "+producto.getId()+" el contador interno va por: "+contador);
+	  			//console.info("estoy adentro del each e contarProducto: el id de p es: "+p.getId()+" el Id de producto es: "+producto.getId()+" el contador interno va por: "+contador);
 	  			if(p.getId() == producto.getId()) contador++;
 	  		});
-	  		console.info("hay "+contador+" productos con el nombre: "+producto.getName());
+	  		//console.info("hay "+contador+" productos con el nombre: "+producto.getName());
 	  		return contador;
 	  	}
 	};

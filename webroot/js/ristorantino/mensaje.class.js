@@ -71,7 +71,7 @@ Mensaje.prototype ={
 		  this.mensaje = mensaje;
 		  if(this.OK) {
 			  this.mensajeId = "msg-"+Math.random()*500;
-			  console.info("mensaje generado con id= "+this.mensajeId);
+			  //console.info("mensaje generado con id= "+this.mensajeId);
 			  var li = new Element('li', {'id':this.mensajeId});
 			  li.update(this.mensaje);
 			  this.contenedor.appendChild(li);
@@ -95,7 +95,7 @@ Mensaje.prototype ={
 		  {
 			  if(this.OK) {
 				  this.loadingID = "msg-"+Math.random()*500;
-				  console.info("mensaje generado con id= "+ this.loadingID);
+				  //console.info("mensaje generado con id= "+ this.loadingID);
 				  var li = new Element('li', {'id': this.loadingID});
 				  
 				  li.update('....cargando....');
@@ -105,8 +105,8 @@ Mensaje.prototype ={
 					  li.appendChild(img);
 				  }
 				//  li.update('...cargando');
-				  console.info("mostrando garabato");
-				  console.debug(li);
+				  //console.info("mostrando garabato");
+				  //console.debug(li);
 				  this.contenedor.appendChild(li);
 			  }
 		  }else{ // si ya estaba creado el loadingID simplemente lo muestro

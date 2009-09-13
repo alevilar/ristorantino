@@ -114,7 +114,7 @@ NumpadControl.prototype={
 	        document.body.appendChild(this.iframe);
 	        document.body.appendChild(this.div);
 	        
-	        console.debug(this.div);
+	        //console.debug(this.div);
 	        this.hide();
 	        $(element_container).appendChild(this.div);
 	  },	  

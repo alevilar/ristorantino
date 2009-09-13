@@ -2,7 +2,7 @@
 <script type="text/javascript">
 <!--
 
-console.info('Iniciando aplicacion');
+//console.info('Iniciando aplicacion');
 
 
 var fabricaMozo = new FabricaMozo(<?php echo $current_mozo?>);
@@ -35,8 +35,8 @@ var numPad = null; //este se tiene que llamar asi para que funcione
 	echo $this->renderElement('listar_clientes');		
 	echo $this->renderElement('loading');
 	
-	echo $this->renderElement('adicion/comanda');	
-	echo $this->renderElement('adicion/sacar_item');	
+	echo $this->renderElement('adicion/comanda_cocina');	
+	echo $this->renderElement('adicion/comanda_sacar');	
 	echo $this->renderElement('adicion/abrir_mesa');		
 	echo $this->renderElement('adicion/imprimir_como_menu');	
 	
@@ -114,20 +114,22 @@ var numPad = null; //este se tiene que llamar asi para que funcione
 <div id="mesa-container">
 	<div id="mesa-acciones" class="menu-vertical">
 		<ul>
-			<li><?php echo $html->link('Comanda','#AgregarProducto',array('onClick'=>'adicion.hacerComanda(); return false;','boton-comanda'));?></li>
-			<li><?php echo $html->link('Sacar Item','#SacarProducto',array('onclick'=>'adicion.hacerComandaSacar(); return false;','id'=>'boton-sacar-item'));?></li>
+			<li><?php echo $html->link('Comanda','#AgregarProducto',array('onClick'=>'callComandaCocina(); return false;','boton-comanda'));?></li>
+			<li><?php echo $html->link('Sacar Item','#SacarProducto',array('onclick'=>'callComandaSacar(); return false;','id'=>'boton-sacar-item'));?></li>
+			<li><?php echo $html->link('Cliente','#SeleccionCliente',array('onclick'=>'callListarClientes(); return false;','id'=>'boton-cliente'));?></li>
+			<li><?php echo $html->link('Menú','#ConvertirEnMenu',array('onclick'=>'callImprimirComoMenu(); return false;','id'=>'boton-menu'));?></li>
 			
-			<li><?php echo $html->link('Nº Mesa','#CambiarNumeroDeMesa');?></li>	
-			<li><?php echo $html->link('Mozo Socio','#MozoSocio');?></li>
+			
 			<li><?php echo $html->link('Cerrar Mesa',"#cerrarMesa",array('onClick'=>'adicion.cerrarCurrentMesa()'));?></li>
 		</ul>
 	</div>
 	
 	<div id="mesa-acciones-2" class="menu-vertical">
 		<ul>
-			<li><?php echo $html->link('Comensales','#Comensales',array('alt','ingrese datos estadisticos'));?></li>
-			<li><?php echo $html->link('Cliente','#SeleccionCliente',array('onclick'=>'callListarClientes(); return false;','id'=>'boton-cliente'));?></li>
-			<li><?php echo $html->link('Menú','#ConvertirEnMenu',array('onclick'=>'callImprimirComoMenu(); return false;','id'=>'boton-menu'));?></li>	
+		<!-- ESTOS VAN A ESTAR EN LA PROXIMA VERSION -->
+		<!-- <li><?php echo $html->link('Comensales','#Comensales',array('alt','ingrese datos estadisticos'));?></li> -->
+		<!-- <li><?php echo $html->link('Nº Mesa','#CambiarNumeroDeMesa');?></li> -->	
+		<!-- <li><?php echo $html->link('Mozo Socio','#MozoSocio');?></li> -->				
 		</ul>
 	</div>
 	

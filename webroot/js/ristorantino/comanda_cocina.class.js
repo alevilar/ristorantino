@@ -10,9 +10,11 @@ ComandaCocina = Class.create(Comanda, {
 		
 	  initialize: function($super,varMozo) {
 	
-		$super(varMozo);
-		
-		
+		$super(varMozo);	    
+
+	    //@ GLOBAL comandaCocinaWindow: es la ventana que cree en el  elemento comanda_cocina
+	    this.setWindow(comandaCocinaWindow);
+	    
 		/**
 	     * este atributo sirve para identificar si la comanda va con prioridad o no
 	     * @var prioridad
@@ -40,7 +42,10 @@ ComandaCocina = Class.create(Comanda, {
 		$('comanda-enviar').appendChild(new Element('a', {
 				'class':'boton letra-chica',
 				'href': '#EnviarComandaNoImprimir',
-				'onClick': 'adicion.comanda.guardarComanda(); return false;'})).update("Sin imprimir");	    
+				'onClick': 'adicion.comanda.guardarComanda(); return false;'})).update("Sin imprimir");	  
+		
+		
+	    
 	  },
 
 	  
@@ -116,7 +121,7 @@ ComandaCocina = Class.create(Comanda, {
 	   * envia la comanda usando ajax para que PHp la procese, guarde todo en BD y mande a imprimir la comanda
 	   */
 	  enviarComanda: function(imprimir){
-		  console.info("Se envió una comanda para imprimir, la del mozo "+this.mozo.id+" mesa "+this.mesa.id);
+		  //console.info("Se envió una comanda para imprimir, la del mozo "+this.mozo.id+" mesa "+this.mesa.id);
 		  //armo el formulario que voy  a enviar
 		  var formulario = new Element('form', {'name':'Comanda', 'action':'http://localhost/ristorantino/DetalleComandas/add/mesa_id:'+this.mesa.id+'/mozo_id:'+this.mozo.id});
 		 	
@@ -134,20 +139,24 @@ ComandaCocina = Class.create(Comanda, {
 		  }.bind(this));
 		  
 		  
-		  console.info("form serializado:::"+formulario.serialize());
+		  //console.info("form serializado:::"+formulario.serialize());
 		  
 		  formulario.request({
 			  	parameters: formulario.serialize(),
 		        onFailure: function() {
 			  		alert("Falló, no se ha impreso la comanda. Por favor ingrese los datos nuevamente") ;
-			  		console.info("Fallo el ajax para enviar la comanda");			  	
+			  		//console.info("Fallo el ajax para enviar la comanda");			  	
 		  		},
 		        onSuccess: function(t) {
 		            this.resetearComanda(this.mozo, this.mesa); //esto ademas de resetar los datos de la comanda, oculta el DIV "comanda"
-		            $('contenedor-comandas').hide();
+		            
+		            this.window.hide();
+		            
+		            //resetear la adicion
+		            adicion.resetear();
 		           
 		            if(imprimir){
-		            	mensajero.show("se mandó a imprimir y se resetearon los datos de la comanda");	
+		            	mensajero.show("se mandó a imprimir una comanda");	
 		            }else{
 		            	mensajero.show("se guardó la comanda correctamnte");
 		            }
@@ -156,9 +165,9 @@ ComandaCocina = Class.create(Comanda, {
 	  },
 	  
 	  
-	  
+	  /*
 	  enviarComandaSacar: function(imprimir){
-		  console.info("Se envió una comanda para imprimir, la del mozo "+this.mozo.id+" mesa "+this.mesa.id);
+		  //console.info("Se envió una comanda para imprimir, la del mozo "+this.mozo.id+" mesa "+this.mesa.id);
 		  //armo el formulario que voy  a enviar
 		  var formulario = new Element('form', {'name':'Comanda', 'action':'http://localhost/ristorantino/DetalleComandas/add/mesa_id:'+this.mesa.id+'/mozo_id:'+this.mozo.id});
 		 	
@@ -176,13 +185,13 @@ ComandaCocina = Class.create(Comanda, {
 		  }.bind(this));
 		  
 		  
-		  console.info("form serializado:::"+formulario.serialize());
+		  //console.info("form serializado:::"+formulario.serialize());
 		  
 		  formulario.request({
 			  	parameters: formulario.serialize(),
 		        onFailure: function() {
 			  		alert("Falló, no se ha impreso la comanda. Por favor ingrese los datos nuevamente") ;
-			  		console.info("Fallo el ajax para enviar la comanda");			  	
+			  		//console.info("Fallo el ajax para enviar la comanda");			  	
 		  		},
 		        onSuccess: function(t) {
 		            this.resetearComanda(this.mozo, this.mesa); //esto ademas de resetar los datos de la comanda, oculta el DIV "comanda"
@@ -197,7 +206,7 @@ ComandaCocina = Class.create(Comanda, {
 		    });
 	  },
 	  
-	  
+	  */
 	  
 	  	  
 	  /**
@@ -214,15 +223,15 @@ ComandaCocina = Class.create(Comanda, {
 	  
 		  prod_busq = this.buscar(producto);
 		  
-		  console.info("esto es lo que encontró");
-		  console.debug(prod_busq);
+		  //console.info("esto es lo que encontró");
+		  //console.debug(prod_busq);
 		  if (prod_busq == null){ // si no estaba en la coleccion lo meto	
 			  this.__agregarProducto(producto);
-			  console.info("se agregò un producto a la comanda. El producto:"+producto.getName()+"..... y actualmente hay "+this.productos.length+" productos en la coleccion");
+			  //console.info("se agregò un producto a la comanda. El producto:"+producto.getName()+"..... y actualmente hay "+this.productos.length+" productos en la coleccion");
 		  }
 		  else{ // ya estaba en la coleccion , asqiue solo le incremento el valor cantidad
 			  prod_busq.sumar();
-			  console.info("ya estaba, solo le incremente el valor");
+			  //console.info("ya estaba, solo le incremente el valor");
 		  }
 
 		  this.actualizarComanda();

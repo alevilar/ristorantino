@@ -42,7 +42,7 @@
 
  // esta funcion es para ser usada en el link que llama a este modulo es el callback del onclick
 	function callListarClientes(){
-		if(adicion.currentMesa){
+		if(adicion.tieneMesaSeleccionada()){
 			if(adicion.currentMesa.cliente.id == null || adicion.currentMesa.cliente.id == 0){
 				listadoClientesWindow.showCenter();
 			}
@@ -68,7 +68,6 @@
 
 	function borrarCliente(){
 		adicion.currentMesa.cliente.id = null; 
-		adicion.currentMesa.cliente.id = null; 
 		
 		// lo mando via ajax para que se guarde
 		borrarClienteACurrentMesa();
@@ -85,7 +84,7 @@
 			  method: 'post',
 			  onSuccess: function(){
 				  listadoClientesWindow.hide();
-					$('boton-cliente').addClassName('boton-apretado');
+				  adicion.resetear();
 				  }
 			});	
 	}
@@ -101,6 +100,8 @@
 			  onSuccess: function(){
 				  listadoClientesWindow.hide();
 					$('boton-cliente').removeClassName('boton-apretado');
+					adicion.resetear();
+					Dialog.closeInfo();
 				  }
 			});	
 	}

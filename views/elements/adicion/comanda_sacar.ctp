@@ -26,7 +26,20 @@
 			
 		sacarItemWindow.setContent('sacar-item-container', true, true);
 
-		
+
+
+		function callComandaSacar(){
+			adicion.comandaSacar = new ComandaSacar(this.currentMozo);	
+
+			if(adicion.tieneMesaSeleccionada()){
+				adicion.comandaSacar.actualizarComanda(adicion.currentMesa.productos);
+				
+				adicion.comandaSacar.resetearComanda(adicion.currentMozo, adicion.currentMesa);
+				
+				sacarItemWindow.showCenter();
+			}	
+		}
+				
 
 
 </script>

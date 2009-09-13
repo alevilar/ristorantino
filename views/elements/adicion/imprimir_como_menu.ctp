@@ -25,21 +25,21 @@
 
 
 		function callImprimirComoMenu(){
-
-	
-			//NUMPAD ------------------------------------------------------		
-			//numPad es una variable global
-			$('contenedor-numPad-menu').update();
-			numPad = new NumpadControl('contenedor-numPad-menu');   
-			    			    	
-			numPad.show($('mesa-menu'));		        
-			
-			//---------------------------------------  -------------------------
-			$('mesa-menu-form').focusFirstElement();
-
-			// contenedorImprimirComoMenu es una variable declarada como global
-			imprimirComoMenuWindow.showCenter();
+			if (adicion.tieneMesaSeleccionada()){
 		
+				//NUMPAD ------------------------------------------------------		
+				//numPad es una variable global
+				$('contenedor-numPad-menu').update();
+				numPad = new NumpadControl('contenedor-numPad-menu');   
+				    			    	
+				numPad.show($('mesa-menu'));		        
+				
+				//---------------------------------------  -------------------------
+				$('mesa-menu-form').focusFirstElement();
+	
+				// contenedorImprimirComoMenu es una variable declarada como global
+				imprimirComoMenuWindow.showCenter();
+			}
 		}
 
 
@@ -53,6 +53,9 @@
 				  onSuccess: function(){
 					  imprimirComoMenuWindow.hide();
 						$('boton-menu').addClassName('boton-apretado');
+
+						mensajero.show("La mesa "+adicion.currentMesa.numero+" se imprimirá como menú x "+$F('mesa-menu'));
+						adicion.resetear();
 					  }
 				});				
 			

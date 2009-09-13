@@ -27,7 +27,7 @@ Categorias.prototype = {
  * 
  */
 	  actualizarCategorias: function (categoria_id){
-		console.info("actualizarCategorias iniciando...");
+		//console.info("actualizarCategorias iniciando...");
 		this.actualizarSubCategoriasDe(categoria_id);
 		
 		this.actualizarProductos();
@@ -36,7 +36,7 @@ Categorias.prototype = {
 
 	actualizarProductos:function (){	
 		$('productos-listado').update("");
-		console.info("actualizarProductos..::"+this.currentArbol.Categoria.name);
+		//console.info("actualizarProductos..::"+this.currentArbol.Categoria.name);
 		
 	 	if (this.currentArbol.Producto.length > 0){
 	 		this.currentArbol.Producto.each(function(e){ 			
@@ -58,7 +58,7 @@ Categorias.prototype = {
 	construirLinkCategoria: function (categoria, divContenedor){
 		var li = new Element('li');
 		var a = new Element('a', { 
-			  'class': 'boton leta-chica', 
+			  'class': 'leta-chica', 
 			  'href': '#categoria-'+categoria.id, 
 			  'id': "categoria-"+categoria.id,
 			  'onclick': 'manejadorCategorias.actualizarCategorias('+categoria.id+');return false'
@@ -97,17 +97,17 @@ Categorias.prototype = {
 	actualizarSubCategoriasDe: function (categoria_id){
 	
 		var arbolito = new Array();
-		console.info("------------------------------------------------");
+		//console.info("------------------------------------------------");
 		arbolito = this.buscaCategoria(this.arbolCategorias,categoria_id);
-		console.info("------------------------------------------------");
+		//console.info("------------------------------------------------");
 		
 		this.categoriaAnterior = Object.clone(this.currentCategoria);
 		this.categoriaAnterior.name = "Anterior";
 		this.currentCategoria = arbolito.Categoria;
 		this.currentArbol = arbolito;
 	
-		console.info("Mirando arbol de la categoria: "+this.currentArbol.Categoria.name);
-		console.debug(this.currentArbol);
+		//console.info("Mirando arbol de la categoria: "+this.currentArbol.Categoria.name);
+		//console.debug(this.currentArbol);
 	
 		// si no hay subcategorias terminar ahi y no actualizar porque se borran todos los links del menu
 		if (arbolito.length < 1) return 0;
@@ -141,34 +141,34 @@ Categorias.prototype = {
 	 * 
 	 */
 	buscaCategoria: function (arbol, categoria_id){
-		console.info("    |  |  |  | iniciando arbol de categoria: "+arbol.Categoria.id);
+		//console.info("    |  |  |  | iniciando arbol de categoria: "+arbol.Categoria.id);
 			
 		if (arbol.Categoria.id == categoria_id){	
-			console.info("enconytro al id "+categoria_id+" esta devolviendo el arbol");
+			//console.info("enconytro al id "+categoria_id+" esta devolviendo el arbol");
 			return arbol;
 		}
 	
 		if (typeof arbol.Hijos == "undefined"){
-			console.info("no tiene hijos");
+			//console.info("no tiene hijos");
 			 return 0; //no tiene hijos asique no puedo buscar nada mas
 		}
 	
 		var arbolaux = 0;
 		
 		for(var i=0;i<arbol.Hijos.length;i++){
-			console.info("Leyendo Hijo "+i+" de categoria : "+arbol.Categoria.id);
+			//console.info("Leyendo Hijo "+i+" de categoria : "+arbol.Categoria.id);
 			arbolaux = this.buscaCategoria(arbol.Hijos[i],categoria_id);
 			if (arbolaux == 0){
-				console.info("aca no estaba la categoria "+categoria_id+" actualmente estoy en la categoria: "+arbol.Categoria.id+" y el indice del FOR es "+i);
+				//console.info("aca no estaba la categoria "+categoria_id+" actualmente estoy en la categoria: "+arbol.Categoria.id+" y el indice del FOR es "+i);
 				continue;
 			}
 			else{
-				console.info("aca encontre algo");
+				//console.info("aca encontre algo");
 				return arbolaux;
 			}
-			console.info("finalizò la vuelta de este for, numero "+i);
+			//console.info("finalizò la vuelta de este for, numero "+i);
 		}
-		console.info("termino la funcion sin que pase nada, llego hasta el final, no se si es bueno esto");
+		//console.info("termino la funcion sin que pase nada, llego hasta el final, no se si es bueno esto");
 		return 0;
 	}
 

@@ -15,8 +15,8 @@ var FabricaMozo = Class.create({
 			this.mozo.setUsername(mozoJSON.User.username); 
 			this.mozo.setMesas(mozoJSON.Mesa); 
 			
-			console.info("MMMMMMMMMMMMMMMOOOOOOOOOOOOOOOOOOOOOZZZZZZZZZZZZZZOOOOOOOOOOOOOOOO");
-			console.info(this);
+			//console.info("MMMMMMMMMMMMMMMOOOOOOOOOOOOOOOOOOOOOZZZZZZZZZZZZZZOOOOOOOOOOOOOOOO");
+			//console.info(this);
 			
 		}				
 		else return null;
