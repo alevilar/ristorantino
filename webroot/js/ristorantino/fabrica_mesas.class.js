@@ -14,7 +14,7 @@ var FabricaMesa = Class.create({
 
 			this.mesa.menu = mesaJSON.Mesa.menu;
 			this.mesa.modified = mesaJSON.Mesa.modified;
-			this.mesa.time_cerro_mesa = mesaJSON.Mesa.time_cerro_mesa;
+			this.mesa.time_cerro = mesaJSON.Mesa.time_cerro;
 			this.mesa.time_cobro = mesaJSON.Mesa.time_cobro;
 			this.mesa.total = mesaJSON.Mesa.total;
 			this.mesa.created = mesaJSON.Mesa.created;

@@ -66,10 +66,17 @@ class MesasController extends AppController {
 		
 	}
 	
+
 	
 	function cerrarMesa($mesa_id){
 		$this->Mesa->id = $mesa_id;
-		$result = $this->Mesa->saveField('time_cerro_mesa', date( "Y-m-d H:i:s",strtotime('now')));
+		
+		$fields = array('sum(cant) as DetalleComanda__cant');
+		$this->Mesa->DetalleComanda->recursive = -1;
+		$total = $this->Mesa->calcular_total();
+		
+		$result = $this->Mesa->saveField('time_cerro', date( "Y-m-d H:i:s",strtotime('now')));
+		$result = $this->Mesa->saveField('total', $total);
 		$mozo_id = $this->passedArgs['mozo_id'];
 		
 		$this->Session->setFlash(__('Se mandò a cerrar la mesa', true));

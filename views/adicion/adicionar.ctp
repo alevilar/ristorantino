@@ -67,7 +67,7 @@ var numPad = null; //este se tiene que llamar asi para que funcione
     <div id="ScrollMesaBox">
         <ul  id="mesas-contenedor">
 		<?php foreach ($this->data['Mesa'] as $m):?>
-			<?php $add_class = ($m['time_cerro_mesa'] !=  '0000-00-00 00:00:00')?' mesa-cerrada':'';?>
+			<?php $add_class = ($m['time_cerro'] !=  '0000-00-00 00:00:00')?' mesa-cerrada':'';?>
 			<?php echo '<li>'.$ajax->link($m['numero'],'/mesas/view/'.$m['id'], array( 	'update'=>'mesa-scroll',
 																						'id'=>'mesa-ver-'.$m['id'],
 																						'class'=>'boton'.$add_class,

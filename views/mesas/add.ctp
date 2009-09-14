@@ -9,7 +9,7 @@
 		echo $form->input('descuento_id');
 		echo $form->input('time_abrio');
 		echo $form->input('time_paso_pedido');
-		echo $form->input('time_cerro_mesa');
+		echo $form->input('time_cerro');
 		echo $form->input('time_cobro');
 	?>
 	</fieldset>

@@ -9,7 +9,7 @@ var Mesa = Class.create({
 		    this.numero;	    
 			this.menu = 0;
 			this.modified = 0;
-			this.time_cerro_mesa = 0;
+			this.time_cerro = 0;
 			this.time_cobro = 0;
 			this.total;
 			this.created;

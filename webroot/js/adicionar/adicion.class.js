@@ -87,9 +87,10 @@ Adicion.prototype = {
 				}
 			}
 			
+
 			// si la mesa esta cerrada, el mozo ya nop deberia poder hacer nada hasta que el cajero no confirme el pago, por lo tanto
 			// no le permito al usuario que pueda modificarle valores
-			if(mesaCambiar.time_cerro_mesa != "0000-00-00 00:00:00")
+			if(mesaCambiar.time_cerro != "0000-00-00 00:00:00")
 			{
 				mensajero.error("La mesa "+mesaCambiar.numero+" ya está cerrada. No se pude modificar");
 				this.resetear();

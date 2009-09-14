@@ -16,7 +16,7 @@ echo $paginator->counter(array(
 	<th><?php echo $paginator->sort('created');?></th>
 	<th><?php echo $paginator->sort('time_abrio');?></th>
 	<th><?php echo $paginator->sort('time_paso_pedido');?></th>
-	<th><?php echo $paginator->sort('time_cerro_mesa');?></th>
+	<th><?php echo $paginator->sort('time_cerro');?></th>
 	<th><?php echo $paginator->sort('time_cobro');?></th>
 	<th class="actions"><?php __('Actions');?></th>
 </tr>
@@ -54,7 +54,7 @@ foreach ($mesas as $mesa):
 			<?php echo $mesa['Mesa']['time_paso_pedido']; ?>
 		</td>
 		<td>
-			<?php echo $mesa['Mesa']['time_cerro_mesa']; ?>
+			<?php echo $mesa['Mesa']['time_cerro']; ?>
 		</td>
 		<td>
 			<?php echo $mesa['Mesa']['time_cobro']; ?>
