@@ -3,7 +3,7 @@ class CategoriasController extends AppController {
 
 	var $name = 'Categorias';
 	var $helpers = array('Html', 'Form');
-	var $layout;
+	//var $layout;
 
 	function index() {
 		$this->Categoria->recursive = 0;		

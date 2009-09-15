@@ -8,13 +8,11 @@ echo $paginator->counter(array(
 ?></p>
 <table cellpadding="0" cellspacing="0">
 <tr>
-	<th><?php echo $paginator->sort('id');?></th>
-	<th><?php echo $paginator->sort('user_id');?></th>
-	<th><?php echo $paginator->sort('descuento_id');?></th>
+
+	<th><?php echo $paginator->sort('User.nombre');?></th>
+	<th><?php echo $paginator->sort('Descuento.name');?></th>
 	<th><?php echo $paginator->sort('tipofactura');?></th>
 	<th><?php echo $paginator->sort('imprime_ticket');?></th>
-	<th><?php echo $paginator->sort('created');?></th>
-	<th><?php echo $paginator->sort('modified');?></th>
 	<th class="actions"><?php __('Actions');?></th>
 </tr>
 <?php
@@ -27,25 +25,16 @@ foreach ($clientes as $cliente):
 ?>
 	<tr<?php echo $class;?>>
 		<td>
-			<?php echo $cliente['Cliente']['id']; ?>
+			<?php echo $cliente['User']['nombre'].' '.$cliente['User']['apellido']; ?>
 		</td>
 		<td>
-			<?php echo $cliente['Cliente']['user_id']; ?>
+			<?php echo $cliente['Descuento']['name'].' (%'.$cliente['Descuento']['porcentaje'].')'; ?>
 		</td>
 		<td>
-			<?php echo $cliente['Cliente']['descuento_id']; ?>
+			<?php echo ($cliente['Cliente']['tipofactura'] == 'A' || $cliente['Cliente']['tipofactura'] == 'B')?'"'.$cliente['Cliente']['tipofactura'].'"':''; ?>
 		</td>
 		<td>
-			<?php echo $cliente['Cliente']['tipofactura']; ?>
-		</td>
-		<td>
-			<?php echo $cliente['Cliente']['imprime_ticket']; ?>
-		</td>
-		<td>
-			<?php echo $cliente['Cliente']['created']; ?>
-		</td>
-		<td>
-			<?php echo $cliente['Cliente']['modified']; ?>
+			<?php echo ($cliente['Cliente']['imprime_ticket'])?'SI':'NO'; ?>
 		</td>
 		<td class="actions">
 			<?php echo $html->link(__('View', true), array('action'=>'view', $cliente['Cliente']['id'])); ?>

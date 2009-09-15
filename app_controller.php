@@ -48,7 +48,11 @@ class AppController extends Controller {
                 $this->Auth->authError = 'Debe registrarse para acceder a esta página';
                 $this->Auth->logoutRedirect='/pages/home';
                 $this->Auth->allow('*');
-                //$this->Auth->allow('display','login','logout');
+                if($this->name == 'Cajero'){
+                	if($this->Auth->user('role') != 'gerente'){
+                		$this->Auth->deny('*');	
+                	}
+                }
                 $this->Auth->authorize = 'controller'; 
         }       
         

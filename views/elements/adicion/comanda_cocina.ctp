@@ -28,13 +28,14 @@
 Event.observe(window, 'load', function() {
 	// creo la comanda y su vista
 	adicion.comanda = new ComandaCocina(adicion.currentMozo);	
+	adicion.comanda.urlEnviarComanda = '<? echo $html->url('/DetalleComandas/add');?>';
 	
 	var menuDiv = new Element('div',{'id':'productos-contenedor'});
 	
 	$('contenedor-comandas').appendChild(menuDiv);
 	
 	// esto hace que se cargen las categorias y productos de productos-contenedor
-	new Ajax.Updater(menuDiv, 'http://localhost/ristorantino/categorias/listar', { method: 'get', 'evalScripts' :true });	
+	new Ajax.Updater(menuDiv, '<?php echo $html->url('/categorias/listar')?>', { method: 'get', 'evalScripts' :true });	
 	
 
 });
@@ -52,8 +53,8 @@ Event.observe(window, 'load', function() {
 comandaCocinaWindow = new Window({
 	maximizable: false, 
 	resizable: false, 
-	//hideEffect:Element.hide, 
-	//showEffect:Element.show, 
+	hideEffect:Element.hide, 
+	showEffect:Element.show, 
 	//minWidth: 100,
 	//width: 400,
 	//heigth: 500,

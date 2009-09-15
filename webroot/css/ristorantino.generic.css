@@ -48,9 +48,6 @@ scrollbar[orient="horizontal"] slider{
 }
 
 A, A:VISITED{
-	display: block;
-	height: 50px;
-	width: 50px; 
 	text-align: center;
 	font-size-adjust: 100%;
 	text-decoration: none;

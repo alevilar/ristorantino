@@ -10,7 +10,9 @@ ComandaCocina = Class.create(Comanda, {
 		
 	  initialize: function($super,varMozo) {
 	
-		$super(varMozo);	    
+		$super(varMozo);	
+		
+		this.urlEnviarComanda = null;
 
 	    //@ GLOBAL comandaCocinaWindow: es la ventana que cree en el  elemento comanda_cocina
 	    this.setWindow(comandaCocinaWindow);
@@ -123,7 +125,7 @@ ComandaCocina = Class.create(Comanda, {
 	  enviarComanda: function(imprimir){
 		  //console.info("Se envió una comanda para imprimir, la del mozo "+this.mozo.id+" mesa "+this.mesa.id);
 		  //armo el formulario que voy  a enviar
-		  var formulario = new Element('form', {'name':'Comanda', 'action':'http://localhost/ristorantino/DetalleComandas/add/mesa_id:'+this.mesa.id+'/mozo_id:'+this.mozo.id});
+		  var formulario = new Element('form', {'name':'Comanda', 'action':this.urlEnviarComanda+'/mesa_id:'+this.mesa.id+'/mozo_id:'+this.mozo.id});
 		 	
 		  //voy armando el formulario y generando el $this->data[]
 		  formulario.appendChild(new Element('input', {'name': 'data[imprimir]'}).setValue(imprimir)); //dice si hay que mandar a imprimr o solo guardar los datos
@@ -164,49 +166,7 @@ ComandaCocina = Class.create(Comanda, {
 		    });
 	  },
 	  
-	  
-	  /*
-	  enviarComandaSacar: function(imprimir){
-		  //console.info("Se envió una comanda para imprimir, la del mozo "+this.mozo.id+" mesa "+this.mesa.id);
-		  //armo el formulario que voy  a enviar
-		  var formulario = new Element('form', {'name':'Comanda', 'action':'http://localhost/ristorantino/DetalleComandas/add/mesa_id:'+this.mesa.id+'/mozo_id:'+this.mozo.id});
-		 	
-		  //voy armando el formulario y generando el $this->data[]
-		  formulario.appendChild(new Element('input', {'name': 'data[imprimir]'}).setValue(imprimir)); //dice si hay que mandar a imprimr o solo guardar los datos
-		  formulario.appendChild(new Element('input', {'name': 'data[Comanda][prioridad]'}).setValue(this.prioridad)); //avisa si la comanda va con prioridad o no
-		  
-		  // le agrego los productos con su rspectiva catidad
-		  var count = 0; 
-		  this.productos.each(function(p){
-			  formulario.appendChild(new Element('input', {'name': 'data[DetalleComanda]['+count+'][producto_id]'}).setValue(p.getId()));
-			  formulario.appendChild(new Element('input', {'name': 'data[DetalleComanda]['+count+'][cant]'}).setValue(p.getCantidad()));
-			  formulario.appendChild(new Element('input', {'name': 'data[DetalleComanda]['+count+'][mesa_id]'}).setValue(this.mesa.id));
-			  count++;
-		  }.bind(this));
-		  
-		  
-		  //console.info("form serializado:::"+formulario.serialize());
-		  
-		  formulario.request({
-			  	parameters: formulario.serialize(),
-		        onFailure: function() {
-			  		alert("Falló, no se ha impreso la comanda. Por favor ingrese los datos nuevamente") ;
-			  		//console.info("Fallo el ajax para enviar la comanda");			  	
-		  		},
-		        onSuccess: function(t) {
-		            this.resetearComanda(this.mozo, this.mesa); //esto ademas de resetar los datos de la comanda, oculta el DIV "comanda"
-		            $('contenedor-comandas').hide();
-		           
-		            if(imprimir){
-		            	mensajero.show("se mandó a imprimir y se resetearon los datos de la comanda");	
-		            }else{
-		            	mensajero.show("se guardó la comanda correctamnte");
-		            }
-		        }.bind(this)
-		    });
-	  },
-	  
-	  */
+
 	  
 	  	  
 	  /**

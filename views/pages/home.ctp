@@ -1,8 +1,8 @@
 
 
-<div id='botonera_home'>
-	<?php echo $html->link('Adición','/adicion/home');?>
-	<?php echo $html->link('Caja','/cajero/cobrar');?>
-	<a class='boton_grande' href="#">Administracion</a>
-	<a class='boton_grande' href="#">Compras</a>
+<div id='botonera_home' class="menu-horizontal">
+	<?php echo $html->link('Adición','/adicion/home');?><br>
+	<?php echo $html->link('Caja','/cajero/cobrar');?><br>
+	<?php echo $html->link('Admin','/pages/administracion');?><br>
+	
 </div>

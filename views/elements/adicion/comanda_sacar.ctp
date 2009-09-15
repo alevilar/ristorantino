@@ -16,8 +16,8 @@
 		sacarItemWindow = new Window({
 							maximizable: false, 
 							resizable: false, 
-							//hideEffect:Element.hide, 
-							//showEffect:Element.show, 
+							hideEffect:Element.hide, 
+							showEffect:Element.show, 
 							//minWidth: 100,
 							//width: 400,
 							//heigth: 500,
@@ -29,7 +29,8 @@
 
 
 		function callComandaSacar(){
-			adicion.comandaSacar = new ComandaSacar(this.currentMozo);	
+			adicion.comandaSacar = new ComandaSacar(this.currentMozo);
+			adicion.comandaSacar.urlEnviarComanda = '<?php echo $html->url('/DetalleComandas/sacarProductos');?>';	
 
 			if(adicion.tieneMesaSeleccionada()){
 				adicion.comandaSacar.actualizarComanda(adicion.currentMesa.productos);

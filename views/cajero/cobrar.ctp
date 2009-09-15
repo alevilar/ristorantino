@@ -12,18 +12,7 @@ cajero.urlGuardar = "<?php echo $html->url('/pagos/add');?>";
 </div>
 
 <div id="listado-mesas-cerradas">
-<ul>
 
-	<?php foreach($mesas_cerradas as $m):?>
-		<li id="mesa-id-<?=  $m['Mesa']['id']?>" onclick="cajero.cobrarMesa('<?=  $m['Mesa']['id']?>','<?= $m['Mesa']['total']?>'); return false;">
-		
-			<div class="mesa-numero"><?= $m['Mesa']['numero']?></div>
-			<div class="mozo-numero">(Mozo <?= $m['Mozo']['numero']?>)</div>
-			<div class="mozo-total">$<?= $m['Mesa']['total']?></div>
-			
-		</li>
-	<?php endforeach;?>
-</ul>
 </div>
 
 
@@ -44,18 +33,27 @@ cajero.urlGuardar = "<?php echo $html->url('/pagos/add');?>";
 	
 </div>
 
+
+
 <script type="text/javascript">
 <!--
 var ventanaSeleccionPago;
 ventanaSeleccionPago = new Window({
 					maximizable: false, 
 					resizable: false, 
-					//hideEffect:Element.hide, 
-					//showEffect:Element.show,
+					hideEffect:Element.hide, 
+					showEffect:Element.show,
 					destroyOnClose: false
 				});
 	
 ventanaSeleccionPago.setContent('cierre-efectivo-tarjeta', true, true);
+
+
+new Ajax.PeriodicalUpdater('listado-mesas-cerradas', '<?php echo $html->url('/cajero/mesas_x_cobrar')?>', {
+	  method: 'get', frequency: 3, decay: 2
+	});
+
+
 //-->
 </script>
 

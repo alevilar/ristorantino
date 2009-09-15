@@ -16,8 +16,8 @@
 		imprimirComoMenuWindow = new Window({
 							maximizable: false, 
 							resizable: false, 
-							//hideEffect:Element.hide, 
-							//showEffect:Element.show,
+							hideEffect:Element.hide, 
+							showEffect:Element.show,
 							destroyOnClose: false
 						});
 			

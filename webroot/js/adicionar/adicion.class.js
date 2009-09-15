@@ -106,8 +106,8 @@ Adicion.prototype = {
 		*/
 		abrirMesa: function(){ 
 			var ops = {
-					howEffect: Element.show, 
-					hideEffect: Element.hide, 
+					hideEffect:Element.hide, 
+					showEffect:Element.show,
 					//className: 'alert_simple', 
 					zIndex: 2000, 
 					width:400, 

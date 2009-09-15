@@ -13,6 +13,8 @@ class AdicionController extends AppController {
 	
 	function beforeFilter(){		
 		parent::beforeFilter();
+		
+		 
 		//siempre poner el mozo actual, cuando no hay ndie seleccionado mete un CERO
 		$this->current_mozo_id =  (isset($this->passedArgs['mozo_id']))?$this->passedArgs['mozo_id']:0;
 		

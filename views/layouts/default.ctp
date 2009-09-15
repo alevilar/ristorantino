@@ -34,7 +34,7 @@
 	<?php
 		echo $html->meta('icon');
 
-		echo $html->css('cake');
+		echo $html->css('ristorantino.generic');
 
 		echo $scripts_for_layout;
 		
@@ -48,7 +48,7 @@
 <body>
 	<div id="container">
 		<div id="header">
-			<h1>Ristorantino: Sistema Web Paxapoga mar</h1>
+			<h1>Paxa Web - El Ristorantino Mágico - versión 1 beta</h1>
 			<div id="mesajes"><?php $session->flash(); ?></div>
 		</div>
 		<div id="content">
