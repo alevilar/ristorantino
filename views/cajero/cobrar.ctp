@@ -16,14 +16,14 @@ cajero.urlGuardar = "<?php echo $html->url('/pagos/add');?>";
 </div>
 
 
-
+<!--  Esta es la ventana que se muesta cuando se hace click sobre una Mesa cerrada
+		Es la que muestra los tipos de pagos -->
 <div id="cierre-efectivo-tarjeta" style="display:  width: 400px; height: 300px;">
-<?php while(list($k,$v) = each($tipo_de_pagos)): ?>
-	<a href="#Cierre" onclick="cajero.guardarCobroDeUna(<?= $k?>)"><?= $v?></a>
+<?php while(list($tipo_de_id,$v) = each($tipo_de_pagos)): ?>
+	<a href="#Cierre" onclick="cajero.guardarCobroDeUna(<?= $tipo_de_id?>)"><?= $v?></a>
 <?php endwhile;?>
 	
 	<div>
-
 		<a href="#Cobrar" onclick="ventanaSeleccionPago.hide()">Cancelar</a>
 	</div>
 	

@@ -20,7 +20,7 @@ var ComandaSacar = Class.create(Comanda ,{
 	   */
 	  enviarComanda: function(){
 		  //armo el formulario que voy  a enviar
-		  var formulario = new Element('form', {'name':'ComandaSacar', 'action':this.urlEnviarComanda'/mesa_id:'+this.mesa.id+'/mozo_id:'+this.mozo.id});
+		  var formulario = new Element('form', {'name':'ComandaSacar', 'action':this.urlEnviarComanda+'/mesa_id:'+this.mesa.id+'/mozo_id:'+this.mozo.id});
 		 	
 		  //voy armando el formulario y generando el $this->data[]
 		  

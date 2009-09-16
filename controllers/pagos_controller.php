@@ -18,18 +18,17 @@ class PagosController extends AppController {
 	}
 
 	function add() {
-		$this->autoRender = false;
 		if (!empty($this->data)) {
 			$this->Pago->create();
 			if ($this->Pago->save($this->data)) {
 				$this->Pago->Mesa->id = $this->data['Pago']['mesa_id'];
 				$this->Pago->Mesa->saveField('time_cobro', date( "Y-m-d H:i:s",strtotime('now')));
 				$this->Session->setFlash(__('The Pago has been saved', true));
-				$this->redirect(array('action'=>'index'));
 			} else {
 				$this->Session->setFlash(__('The Pago could not be saved. Please, try again.', true));
 			}
 		}
+		$this->redirect(array('controller'=> 'cajero', 'action'=>'cobrar'));
 	}
 
 	function edit($id = null) {
