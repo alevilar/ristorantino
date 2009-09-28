@@ -107,12 +107,31 @@ Comanda.prototype = {
 	  	 *  si no encuentra nada devuelve null
 	  	 *  @params producto es el objeto producto
 	  	 */
-		buscar: function(producto){
-		  //console.info("hay esta cantidad de productos en la coleccion "+this.productos.length);
-		  
-		  prod = this.productos.find(function(p){	  
-				return (p.id == producto.id);
-		  });
+		buscar: function(producto)
+		{
+
+			 console.info("los productos checkeo");
+			 console.debug( this.productos);
+			 console.debug(producto);
+			 
+		  //todo esto hay que hacerlo por culpa de los sabores	
+		  prod = this.productos.find(function(p)
+		  {	  
+			  	if (p.id != producto.id) return false;
+			  	
+			  	
+			  	if (p.saboresSeleccionados.length != producto.saboresSeleccionados.length ) return false;
+			  	
+			  	var valor = true;
+			  	p.saboresSeleccionados.each(function(s){
+			  		if(!producto.saboresSeleccionados.find(function(s2){return (s == s2)})){
+			  			valor = false;
+			  			return valor;
+			  		}
+			  	});
+			  	return valor;
+			  
+		  }.bind(this));
 		  
 	 	  if(prod){
 	 		 return prod; 

@@ -17,6 +17,13 @@ ComandaCocina = Class.create(Comanda, {
 	    //@ GLOBAL comandaCocinaWindow: es la ventana que cree en el  elemento comanda_cocina
 	    this.setWindow(comandaCocinaWindow);
 	    
+	    
+	    // este atributpo s el producto mientras se le van agregando los distintos sabores
+	    // es una variable de estado intermedio
+	    this.productoCreandoSabores = new ProductoComanda();
+	    // es la ventana de seleccion de sabores
+	    this.winSeleccion = null;
+	    
 		/**
 	     * este atributo sirve para identificar si la comanda va con prioridad o no
 	     * @var prioridad
@@ -84,11 +91,26 @@ ComandaCocina = Class.create(Comanda, {
 			  if(p.cantidad > 0){
 				  var li = new Element('li');
 				  
-				  var a = new Element('a',{
-					  			'id':'comanda-sacar-producto-'+p.getId(),
-					  			'onClick': "adicion.comanda.restar('"+Object.toJSON(p)+"')"
-					  			}
-				  ).update(p.getCantidad()+" --| "+p.getName());
+				  if(p.saboresSeleccionados.legth == 0){ // si no es del tipo de productos que tiene sabores hacer esto
+					  var a = new Element('a',{
+						  			'id':'comanda-sacar-producto-'+p.getId(),
+						  			'onClick': "adicion.comanda.restar('"+Object.toJSON(p)+"')"
+						  			}
+					  ).update(p.getCantidad()+" --| "+p.getName());
+				  }
+				  else{ // si tiene distintos sabores hacer esto
+					  var a = new Element('a',{
+				  			'id':'comanda-sacar-producto-'+p.getId(),
+				  			'onClick': "adicion.comanda.restar('"+Object.toJSON(p)+"')"
+				  			}
+					  );
+					  var nombre = p.getName()+" (";
+					  p.saboresSeleccionados.each(function(s){
+						  nombre += " "+s.name;
+					  });
+					  nombre += ")";
+					  a.update(p.getCantidad()+" --| "+nombre);
+				  }
 				  
 				  li.appendChild(a);
 				  $('comanda-ul').insertBefore(li, $('comanda-ul').firstChild);
@@ -180,24 +202,93 @@ ComandaCocina = Class.create(Comanda, {
 		  var producto = new ProductoComanda();
 		  //covierto el JSON en productoComanda
 		  producto.copiar(producto_agregar);
-				  
+		  
+		  
 		  var prod_busq = new ProductoComanda();
-	  
+		 
 		  prod_busq = this.buscar(producto);
 		  
-		  //console.info("esto es lo que encontró");
-		  //console.debug(prod_busq);
-		  if (prod_busq == null){ // si no estaba en la coleccion lo meto	
+		  if (prod_busq == null)
+		  {   // si no estaba en la coleccion lo meto	
 			  this.__agregarProducto(producto);
-			  //console.info("se agregò un producto a la comanda. El producto:"+producto.getName()+"..... y actualmente hay "+this.productos.length+" productos en la coleccion");
 		  }
 		  else{ // ya estaba en la coleccion , asqiue solo le incremento el valor cantidad
 			  prod_busq.sumar();
-			  //console.info("ya estaba, solo le incremente el valor");
 		  }
+		  
 
 		  this.actualizarComanda();
 		  return this.productos.length;
+	  },
+	  
+	  
+	  
+	  guardarCambiosSeleccionSabores:function(){
+		  var producto = this.productoCreandoSabores;		  
+		 // producto.id = Math.random()*10000000000;
+		  
+		  var prod_busq = new ProductoComanda();		  
+		  
+		  prod_busq = this.buscar(producto);
+		  
+		  if (prod_busq == null)
+		  {   // si no estaba en la coleccion lo meto	
+			  this.__agregarProducto(producto);
+		  }
+		  else{ // ya estaba en la coleccion , asqiue solo le incremento el valor cantidad
+			  prod_busq.sumar();
+		  }
+		  
+
+		  this.actualizarComanda();
+		  
+		  this.winSeleccion.hide();
+		  return this.productos.length;
+	  },
+	  
+	  
+	  
+	  seleccionarSabores:function(producto)
+	  {
+		  var temp = new ProductoComanda();
+		//le hago un new para asegurarme que estoy creando un bojecto nuevo
+		  // de esta manera el buscador me va a tirar siempre uno distinto para, por ejemplo cada ensalada
+		  this.productoCreandoSabores = new ProductoComanda(); 
+		  
+		  this.productoCreandoSabores.convertirEnProductoComanda(producto);
+		  var html = '';
+		  this.winSeleccion = new Window({	className: "dialog", 
+			  								width:170, 
+			  								height:400, 
+			  								resizable: false, 
+			  								title: "Sabores", 
+			  								//showEffect:Effect.show, 
+			  								//hideEffect: Effect.hide, 
+			  								draggable:false
+		  });
+		  
+		  
+		  var ul = new Element('ul',{'class':'menu-vertical'});
+		  this.productoCreandoSabores.sabores.each(function(sabor){
+			  var li = new Element('li');
+			  var a = new Element('a',{'href':'#seleccionarSabor'});
+			  a.update(sabor.name);
+			  a.observe('click',adicion.comanda.productoCreandoSabores.agregarSabor.bind(adicion.comanda.productoCreandoSabores,sabor));
+			  a.observe('click',a.hide);
+			  li.appendChild(a);
+			  ul.appendChild(li);
+		  });
+		  
+		  var li = new Element('li');
+		  var a = new Element('a',{'href':'#seleccionarSabor','class':'btn-comando'});
+		  a.update("¡ Listo !");
+		  a.observe('click',adicion.comanda.guardarCambiosSeleccionSabores.bind(this));
+		  li.appendChild(a);
+		  ul.appendChild(li);
+		  
+		  this.winSeleccion.content.appendChild(ul);
+		  
+		  this.winSeleccion.showCenter();
 	  }
 	  
 	});

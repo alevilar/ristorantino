@@ -38,8 +38,10 @@ Producto.prototype ={
 	/**
 	 * Convierte un JSON en un objecto producto
 	 * @param prod JSOn del rpducto genralmente es el que viene de PHP
+	 * @return prod el producto pero convertido en objeto con eval()
 	 */
 	copiar: function(prod){
+		
 		 prod =  eval( "(" + prod + ")" );  
 		 this.id = prod.id;
 		 this.name = prod.name;
@@ -49,6 +51,7 @@ Producto.prototype ={
 		 this.precio = prod.precio;
 		 this.created = prod.created;
 		 this.modified = prod.modified;  
+		 return prod;
 	}
 	
 	

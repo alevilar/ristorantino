@@ -8,6 +8,7 @@ echo $html->link('Nuevo usuario','/users/add').'<br>';
 echo $html->link('Nuevo mozo','/mozos/add').'<br>';
 echo $html->link('Categorias','/categorias').'<br>';
 echo $html->link('Productos','/productos').'<br>';
+echo $html->link('Gustos y Sabores','/sabores').'<br>';
 ?>
 	</td>
     <td>

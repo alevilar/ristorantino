@@ -21,8 +21,22 @@ class Categoria extends AppModel {
 								'exclusive' => '',
 								'finderQuery' => '',
 								'counterQuery' => ''
+			),
+			'Sabor' => array('className' => 'Sabor',
+								'foreignKey' => 'categoria_id',
+								'dependent' => true,
+								'conditions' => '',
+								'fields' => '',
+								'order' => 'Sabor.name',
+								'limit' => '',
+								'offset' => '',
+								'exclusive' => '',
+								'finderQuery' => '',
+								'counterQuery' => ''
 			)
 	);
+	
+	
 	
 	
 	/**

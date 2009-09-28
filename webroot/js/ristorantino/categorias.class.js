@@ -38,8 +38,14 @@ Categorias.prototype = {
 		$('productos-listado').update("");
 		//console.info("actualizarProductos..::"+this.currentArbol.Categoria.name);
 		
-	 	if (this.currentArbol.Producto.length > 0){
-	 		this.currentArbol.Producto.each(function(e){ 			
+	 	if (this.currentArbol.Producto.length > 0)
+	 	{
+	 		this.currentArbol.Producto.each(function(e){ 
+	 			e.sabores = new Array();
+	 			if (this.currentArbol.Sabor.length > 0){
+	 				e.sabores = this.currentArbol.Sabor;
+		 		}
+
 	 			this.construirLinkProducto(e,'productos-listado');
 	 	 	}.bind(this));
 	 	}
@@ -76,14 +82,32 @@ Categorias.prototype = {
 	 * divContenefdor, es el lugar donde se van a meter los links
 	 * prefijo  es el nombre que se le va a poner a cada link como id, es el prefijo, por ejemplo "categoria_"
 	 */
-	construirLinkProducto: function (producto, divContenedor){
+	construirLinkProducto: function (producto, divContenedor)
+	{
 		var li = new Element('li');
-		var a = new Element('a', { 
-			  'class': 'boton letra-chica', 
-			  'href': '#producto-'+producto.id, 
-			  'id': "producto-"+producto.id,
-			  'onclick': "adicion.comanda.add('"+Object.toJSON(producto)+"');return false;"
-		}).update(producto.name);
+		
+		//si el producto no tiene sabores
+		if(producto.sabores.length == 0)
+		{
+			var a = new Element('a', { 
+				  'class': 'boton letra-chica', 
+				  'href': '#producto-'+producto.id, 
+				  'id': "producto-"+producto.id,
+				  'onclick': "adicion.comanda.add('"+Object.toJSON(producto)+"');return false;"
+			}).update(producto.name);
+		}
+		else
+		{
+			producto.id = Math.random()*50000;
+			var a = new Element('a', { 
+				  'class': 'boton letra-chica', 
+				  'href': '#producto-'+producto.id, 
+				  'id': "producto-"+producto.id,
+				  'onclick': "return false;"
+			}).update(producto.name);
+			a.observe('click',adicion.comanda.seleccionarSabores.bind(adicion.comanda,producto));
+		}
+		
 
 		$(divContenedor).appendChild(li).appendChild(a);
 	},

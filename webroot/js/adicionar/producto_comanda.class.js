@@ -13,6 +13,8 @@ var ProductoComanda = Class.create(Producto,{
 	initialize: function($super) {
 		$super();
 		this.cantidad = 0;
+		this.sabores =  new Array();
+		this.saboresSeleccionados =  new Array();
 	},
 	
 	sumar: function(){
@@ -21,6 +23,12 @@ var ProductoComanda = Class.create(Producto,{
 	
 	restar: function(){
 		this.cantidad--;
+	},
+	
+	
+	copiar: function($super,prod){
+		prod = $super(prod);
+		this.sabores = prod.sabores;
 	},
 	
 	/**
@@ -63,6 +71,15 @@ var ProductoComanda = Class.create(Producto,{
 		 if(prod.cantidad ){
 			 this.cantidad = prod.cantidad;  
 		 }
+		 
+		 if(prod.sabores ){
+			 this.sabores = prod.sabores;  
+		 }
+	},
+	
+	
+	agregarSabor:function(sabor){
+		this.saboresSeleccionados.push(sabor);
 	}
 	
 });
