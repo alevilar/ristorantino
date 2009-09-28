@@ -56,6 +56,13 @@
 <body>
 	<div id="container">
 		<div id="content">
+			
+			<div id="navegador">
+				<?php echo $html->link('HOME','/pages/home',array('class'=> 'boton letra-chica'));?>
+				<?php echo $html->link('Cajero','/cajero/cobrar',array('class'=> 'boton letra-chica'));?>
+				<?php echo $html->link('Mesas Abiertas','/cajero/mesas_abiertas',array('class'=> 'boton letra-chica'));?>
+			</div>
+
 			<?php echo $content_for_layout; ?>
 		</div>
 	</div>

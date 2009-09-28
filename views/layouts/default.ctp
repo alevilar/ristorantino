@@ -34,7 +34,8 @@
 	<?php
 		echo $html->meta('icon');
 
-		echo $html->css('ristorantino.generic');
+		//echo $html->css('ristorantino.generic');
+		echo $html->css('cake');
 
 		echo $scripts_for_layout;
 		
@@ -50,11 +51,10 @@
 		<div id="header">
 			<h1>Paxa Web - El Ristorantino Mágico - versión 1 beta</h1>
 			<div id="mesajes"><?php $session->flash(); ?></div>
+			<?php echo $html->link($html->image('inicio.png'),'/pages/home',array('escape'=>false))?>
 		</div>
 		<div id="content">
-
 			<?php echo $content_for_layout; ?>
-
 		</div>
 		
 	</div>

@@ -77,6 +77,7 @@ A:ACTIVE {
 	/*background-color: silver;*/
 	vertical-align: middle;
 	font-family: fantasy;
+	overflow: hidden;
 }
 
 
@@ -490,7 +491,7 @@ div.message {
 	clear: both;
 	color: #900;
 	font-weight: bold;
-	margin: 1em 0;
+	margin: 0px;
 }
 
 div.error-message {
@@ -766,7 +767,7 @@ div.code-coverage-results span.result-good {
 	list-style: none;
 	float: left;
 	list-style: none;
-	margin: 0px;
+	margin: 1px;
 	padding: 0px;
 }
 
@@ -775,6 +776,8 @@ div.code-coverage-results span.result-good {
 	height: 50px;
 	float:left;
 	border: solid black 2px;
+	max-width:100px;
+	min-width:50px;
 }
 
 
@@ -823,8 +826,8 @@ div.code-coverage-results span.result-good {
 
 
 #contenedor-comandas{
-	width:772px;
-	height:510px; 
+	width: 772px;
+	height: 560px;
 }
 
 
@@ -832,18 +835,19 @@ div.code-coverage-results span.result-good {
 	padding-top: 20px;
 	background-color:white;
 	border:2px solid grey;
-	height:500px;
+	height:538px;
 	width:520px;
 	font-size: 16px;
 	float: left;
 }
 
 
+
 #comanda{
 	background-color:white;
 	border:2px solid grey;
 	float: left;
-	height:500px;
+	height:556px;
 	width:240px;
 }
 

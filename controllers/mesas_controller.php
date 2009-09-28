@@ -54,13 +54,16 @@ class MesasController extends AppController {
 			if ($this->Mesa->save($this->data)) {
 				$this->Session->setFlash(__('Se abrió la mesa n° '.$this->data['Mesa']['numero'], true));
 				//debug($this->data);
-				$this->Mesa->Mozo->id = $this->data['Mesa']['mozo_id'];
-				$this->data = $this->Mesa->Mozo->read();
+			//	$this->Mesa->Mozo->id = $this->data['Mesa']['mozo_id'];
+			//	$this->data = $this->Mesa->Mozo->read();
 				
 				$this->redirect(array(	'controller'=>'Adicion', 
-										'action' => 'adicionar/mozo_id:'.$this->data['Mozo']['id']));
+										'action' => 'adicionar/mozo_id:'.$this->data['Mesa']['mozo_id']));
 			} else {
-				$this->Session->setFlash(__('La mesa no pudo ser abierta. Intente nuevamente.', true));
+				$this->Session->setFlash(__('La mesa no pudo ser abierta. ¿Ingresó un número correcto?.', true));
+				
+				$this->redirect(array(	'controller'=>'Adicion', 
+										'action' => 'adicionar/mozo_id:'.$this->data['Mesa']['mozo_id']));
 			}
 		}
 		

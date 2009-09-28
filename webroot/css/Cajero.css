@@ -155,6 +155,10 @@ ul,li {
 
 
 
+#mesas-paginador{
+	position: absolute;
+	bottom:0px; 
+}
 
 
 #navegador{
@@ -176,11 +180,19 @@ ul,li {
 	font-size: 16px;
 }
 
-#listado-mesas-cerradas UL{
+#listado-mesas-abiertas{
+	position: absolute;
+	top: 150px;
+	left: 50px;
+	width: 700px;
+	font-size: 16px;
+}
+
+.listado-mesas{
 	list-style: none;
 }
 
-#listado-mesas-cerradas LI, A{
+.listado-mesas LI, A{
 	display: block;
 	clear: none;
 	height: 93px;
@@ -188,17 +200,35 @@ ul,li {
 	float: left;
 	margin: 2px;
 	border: 1px solid black;
-	background-color: pink;
 	cursor: pointer;
+	background-color: #E0F8F7;
 }
+
+.mesa-cerrada{
+	background-color: pink;
+}
+
 
 .mesa-numero{
 	text-align: center;
-	font-size: 24px;
+	font-size: 30px;
+	font-size: 26px;
+	display: block;
+	float: left;
+	width: 37px;
+	height: 46px;
+	color: #0B3861;
 }
 
 .mozo-numero{
 	text-align: center;
+	background-image: url("img/camarero.png");
+	padding-right: 10px;
+	display: block;
+	width: 37px;
+	height: 46px;
+	float: right;
+	text-indent: -12px;
 }
 			
 
@@ -206,4 +236,29 @@ ul,li {
 	text-align: center;
 	font-size: 24px;
 	color: red;
+	float:left;
+	margin-top: -14px;
+	margin-left: 6px;
+}
+
+.mozo-subtotal{
+	text-align: center;
+	font-size: 24px;
+	color: #B45F04;
+	float:left;
+	margin-top: -14px;
+	margin-left: 6px;
+}
+
+.mesa-time-created{
+	clear: both;
+	text-align: center;
+	font-size: 10px;
+}
+
+.mesa-time-cerro{
+	clear: both;
+	text-align: center;
+	font-size: 10px;
+	margin-top: 0px;
 }

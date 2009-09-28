@@ -19,16 +19,15 @@ class ClientesController extends AppController {
 
 	function add() {
 		if (!empty($this->data)) {
-			$this->Cliente->User->create();
 			$this->Cliente->create();
-			if ($this->Cliente->saveAll($this->data)) {
+			if ($this->Cliente->save($this->data)) {
 				$this->Session->setFlash(__('Se agregó un nuevo cliente', true));
 				$this->redirect(array('action'=>'index'));
 			} else {
 				$this->Session->setFlash(__('El Cliente no pudo ser gardado, intente nuevamente.', true));
 			}
 		}
-		$users = $this->Cliente->User->find('list');
+		$users = $this->Cliente->User->find('list',array('fields'=>array('User.nombre')));
 		$descuentos = $this->Cliente->Descuento->find('list');
 		$this->set(compact('users', 'descuentos'));
 	}
@@ -49,7 +48,7 @@ class ClientesController extends AppController {
 		if (empty($this->data)) {
 			$this->data = $this->Cliente->read(null, $id);
 		}
-		$users = $this->Cliente->User->find('list');
+		$users = $this->Cliente->User->find('list',array('fields'=>array('User.nombre')));
 		$descuentos = $this->Cliente->Descuento->find('list');
 		$this->set(compact('users','descuentos'));
 	}

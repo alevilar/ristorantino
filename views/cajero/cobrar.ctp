@@ -6,10 +6,6 @@ cajero.urlGuardar = "<?php echo $html->url('/pagos/add');?>";
 </script>
 
 
-<div id="navegador">
-	<?php echo $html->link('HOME','/pages/home',array('class'=> 'boton letra-chica'));?>
-
-</div>
 
 <div id="listado-mesas-cerradas">
 

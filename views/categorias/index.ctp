@@ -8,7 +8,9 @@ echo $paginator->counter(array(
 ?></p>
 <table cellpadding="0" cellspacing="0">
 <tr>
-	<th><?php echo $paginator->sort('name');?></th>
+	<th><?php echo $paginator->sort('id');?></th>
+	<th><?php echo $paginator->sort('parent_id');?></th>
+	<th><?php echo $paginator->sort('name');?></th>	
 	<th><?php echo $paginator->sort('description');?></th>
 	<th class="actions"><?php __('Actions');?></th>
 </tr>
@@ -21,6 +23,12 @@ foreach ($categorias as $categoria):
 	}
 ?>
 	<tr<?php echo $class;?>>
+		<td>
+			<?php echo $categoria['Categoria']['id']; ?>
+		</td>
+		<td>
+			<?php echo $categoria['Categoria']['parent_id']; ?>
+		</td>
 		<td>
 			<?php echo $categoria['Categoria']['name']; ?>
 		</td>

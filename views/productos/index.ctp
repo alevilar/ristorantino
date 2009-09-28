@@ -12,7 +12,7 @@ echo $paginator->counter(array(
 	<th><?php echo $paginator->sort('name');?></th>
 	<th><?php echo $paginator->sort('abrev');?></th>
 	<th><?php echo $paginator->sort('description');?></th>
-	<th><?php echo $paginator->sort('categoria_id');?></th>
+	<th><?php echo $paginator->sort('Categoria.name');?></th>
 	<th><?php echo $paginator->sort('precio');?></th>
 	<th><?php echo $paginator->sort('created');?></th>
 	<th><?php echo $paginator->sort('modified');?></th>
@@ -40,10 +40,10 @@ foreach ($productos as $producto):
 			<?php echo $producto['Producto']['description']; ?>
 		</td>
 		<td>
-			<?php echo $producto['Producto']['categoria_id']; ?>
+			<?php echo $producto['Categoria']['name']; ?>
 		</td>
 		<td>
-			<?php echo $producto['Producto']['precio']; ?>
+			<?php echo "$".$producto['Producto']['precio']; ?>
 		</td>
 		<td>
 			<?php echo $producto['Producto']['created']; ?>
@@ -52,9 +52,9 @@ foreach ($productos as $producto):
 			<?php echo $producto['Producto']['modified']; ?>
 		</td>
 		<td class="actions">
-			<?php echo $html->link(__('View', true), array('action'=>'view', $producto['Producto']['id'])); ?>
-			<?php echo $html->link(__('Edit', true), array('action'=>'edit', $producto['Producto']['id'])); ?>
-			<?php echo $html->link(__('Delete', true), array('action'=>'delete', $producto['Producto']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $producto['Producto']['id'])); ?>
+			<?php echo $html->link(__('Ver', true), array('action'=>'view', $producto['Producto']['id'])); ?>
+			<?php echo $html->link(__('Editar', true), array('action'=>'edit', $producto['Producto']['id'])); ?>
+			<?php echo $html->link(__('Borrar', true), array('action'=>'delete', $producto['Producto']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $producto['Producto']['id'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>
@@ -67,6 +67,6 @@ foreach ($productos as $producto):
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $html->link(__('New Producto', true), array('action'=>'add')); ?></li>
+		<li><?php echo $html->link(__('Nuevo Producto', true), array('action'=>'add')); ?></li>
 	</ul>
 </div>

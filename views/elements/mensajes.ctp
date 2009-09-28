@@ -15,9 +15,16 @@ mensajero.setImageLoading('<? echo $html->url('/img/loader.gif',true)?>');
 
 
 
-
-	<div id="mensajes"><?php $session->flash(); ?></div>
+	<!--  Este es el DIV que contine los mensajes delo que va ocurriendo y que el usuario verá-->
+	<div id="mensajes"></div>
+	
 	<script type="text/javascript">
 		var canMesas = "<?= sizeof($this->data['Mesa'])?>";
-		mensajero.show(canMesas+" Mesas Abiertas");
+
+		Event.observe(window,'load',function(){
+			mensajero.show(canMesas+" Mesas Abiertas");
+
+			mensajero.show('<?php $session->flash(); ?>');
+
+		});
 	</script>	

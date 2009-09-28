@@ -91,7 +91,9 @@ ComandaCocina = Class.create(Comanda, {
 				  ).update(p.getCantidad()+" --| "+p.getName());
 				  
 				  li.appendChild(a);
-				  $('comanda-ul').appendChild(li);
+				  $('comanda-ul').insertBefore(li, $('comanda-ul').firstChild);
+
+				  //$('comanda-ul').insertBefore(li);
 			  }
 		  });
 		 

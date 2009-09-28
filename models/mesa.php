@@ -3,6 +3,12 @@ class Mesa extends AppModel {
 
 	var $name = 'Mesa';
 
+	
+	var $validate = array(
+		'numero' => array('notempty','numeric')
+	);
+	
+	
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 	var $belongsTo = array(
 			'Mozo' => array('className' => 'Mozo',
@@ -24,7 +30,7 @@ class Mesa extends AppModel {
 	var $hasOne = array(
 			'Comensal' => array('className' => 'Comensal',
 								'foreignKey' => 'mesa_id',
-								'dependent' => false,
+								'dependent' => true,
 								'conditions' => '',
 								'fields' => '',
 								'order' => ''
@@ -40,7 +46,7 @@ class Mesa extends AppModel {
 	var $hasMany = array(
 			'DetalleComanda' => array('className' => 'DetalleComanda',
 								'foreignKey' => 'mesa_id',
-								'dependent' => false,
+								'dependent' => true,
 								'conditions' => '',
 								'fields' => '',
 								'order' => '',
@@ -51,9 +57,15 @@ class Mesa extends AppModel {
 								'counterQuery' => ''
 			)
 	);
+	
+	
+	
 
 	
-	
+	/**
+	 * Calcula el total de la mesa cuyo id fue seteado en $this->Mesa->id 
+	 * return @total el valor
+	 */
 	function calcular_total(){
 		$fields 	= array('sum(cant)*precio as "total"');
 		$conditions = array('mesa_id'=>$this->id);
