@@ -44,7 +44,7 @@ class Mesa extends AppModel {
 	);
 
 	var $hasMany = array(
-			'DetalleComanda' => array('className' => 'DetalleComanda',
+			'Comanda' => array('className' => 'Comanda',
 								'foreignKey' => 'mesa_id',
 								'dependent' => true,
 								'conditions' => '',
@@ -77,6 +77,7 @@ class Mesa extends AppModel {
 									select sum(total) as total from (select sum(cant)*precio as total
 									from detalle_comandas 
 									left join productos on (producto_id = productos.id)
+									left join comandas on (comanda_id = comandas.id)
 									where 
 									mesa_id = $this->id
 									group by producto_id
@@ -87,7 +88,10 @@ class Mesa extends AppModel {
 	}
 	
 	
-	
+	/**
+	 * Me devuelve ellistado de productos de una mesa en especial
+	 *
+	 */
 	function listado_de_productos($id = 0)
 	{
 		//inicialiozo variable return
@@ -98,24 +102,34 @@ class Mesa extends AppModel {
 		}	
 
 		
-		$this->DetalleComanda->order = 'Producto.categoria_id';
-		$this->DetalleComanda->recursive = 2;
+		$this->Comanda->DetalleComanda->order = 'Producto.categoria_id';
+		$this->Comanda->DetalleComanda->recursive = 2;
 		
 		// le saco todos los modelos que no necesito paraqe haga mas rapido la consulta
-		$this->DetalleComanda->Producto->unBindModel(array('hasMany' => array('DetalleComanda'), 
+		$this->Comanda->DetalleComanda->Producto->unBindModel(array('hasMany' => array('DetalleComanda'), 
 																 'belongsTo'=> array('Categoria')));
-		$this->DetalleComanda->Mesa->unBindModel(array('belongsTo'=> array('Mozo','Cliente'), 
+		/*
+		$this->Comanda->DetalleComanda->Comanda->Mesa->unBindModel(array('belongsTo'=> array('Mozo','Cliente'), 
 															 'hasMany' => array('DetalleComanda'),
 															 'hasOne'=>array('Comensal','Pago')));
-		$this->DetalleComanda->DetalleSabor->unBindModel(array('belongsTo' => array('DetalleComanda')));
+*/															 
+		$this->Comanda->DetalleComanda->DetalleSabor->unBindModel(array('belongsTo' => array('DetalleComanda')));
 		
-		$items = $this->DetalleComanda->find('all',array('conditions'=>array('DetalleComanda.mesa_id'=>$this->id),
-														'fields'=> array('DetalleComanda.mesa_id','DetalleComanda.producto_id','sum(DetalleComanda.cant) as cant', 'Producto.name', 'Producto.id', 'Mesa.numero'),
-														'group'=> array('mesa_id','producto_id', 'Producto.name','Mesa.numero')
-														));		
+		$items = $this->Comanda->DetalleComanda->find('all',array('conditions'=>array('Comanda.mesa_id'=>$this->id),
+														'fields'=> array('Comanda.mesa_id','DetalleComanda.producto_id','sum(DetalleComanda.cant) as cant', 'Producto.name', 'Producto.id'),
+														'group'=> array('Comanda.mesa_id','producto_id', 'Producto.name')
+											));
+			
 		return $items;
 	}
 	
+	
+	
+	
+	function listado_de_abiertas($recursive = -1){
+		$this->recursive = $recursive;
+		return $this->find('all', array('conditions'=>array('created <>'=>'0000-00-00 00:00:00', 'time_cerro'=>'0000-00-00 00:00:00')));
+	}
 	
 }
 ?>

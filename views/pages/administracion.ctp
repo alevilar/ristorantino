@@ -16,6 +16,7 @@ echo $html->link('Gustos y Sabores','/sabores').'<br>';
 <?php 
 echo $html->link('Clientes','/clientes').'<br>';
 echo $html->link('Tipo de Pagos','/TipoDePagos').'<br>';
+echo $html->link('Comandas','/Comandas').'<br>';
 
 ?>
 	</td>

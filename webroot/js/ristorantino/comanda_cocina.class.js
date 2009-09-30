@@ -159,13 +159,13 @@ ComandaCocina = Class.create(Comanda, {
 		  
 		  
 		  formulario.appendChild(new Element('input', {'name': 'data[Comanda][prioridad]'}).setValue(this.prioridad)); //avisa si la comanda va con prioridad o no
+		  formulario.appendChild(new Element('input', {'name': 'data[Comanda][mesa_id]'}).setValue(this.mesa.id));
 		  // le agrego los productos con su rspectiva catidad
 		  var count = 0; 
 		  this.productos.each(function(p){
 			  if(p.cantidad > 0){
 				  formulario.appendChild(new Element('input', {'name': 'data['+count+'][DetalleComanda][producto_id]'}).setValue(p.getId()));
 				  formulario.appendChild(new Element('input', {'name': 'data['+count+'][DetalleComanda][cant]'}).setValue(p.getCantidad()));
-				  formulario.appendChild(new Element('input', {'name': 'data['+count+'][DetalleComanda][mesa_id]'}).setValue(this.mesa.id));
 				  	  
 				  var cont2 = 0;
 				  p.saboresSeleccionados.each(function(sabor){

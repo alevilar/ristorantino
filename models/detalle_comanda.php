@@ -16,12 +16,6 @@ class DetalleComanda extends AppModel {
 								'fields' => '',
 								'order' => ''
 			),
-			'Mesa' => array('className' => 'Mesa',
-								'foreignKey' => 'mesa_id',
-								'conditions' => '',
-								'fields' => '',
-								'order' => ''
-			),
 			'Comanda' => array('className' => 'Comanda',
 								'foreignKey' => 'comanda_id',
 								'conditions' => '',

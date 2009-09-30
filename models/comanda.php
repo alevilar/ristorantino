@@ -7,7 +7,7 @@ class Comanda extends AppModel {
 	var $hasMany = array(
 			'DetalleComanda' => array('className' => 'DetalleComanda',
 								'foreignKey' => 'comanda_id',
-								'dependent' => false,
+								'dependent' => true,
 								'conditions' => '',
 								'fields' => '',
 								'order' => '',
@@ -18,6 +18,27 @@ class Comanda extends AppModel {
 								'counterQuery' => ''
 			)
 	);
+	
+	
+	var $belongsTo = array(
+			'Mesa' => array('className' => 'Mesa',
+								'foreignKey' => 'mesa_id',
+								'conditions' => '',
+								'fields' => '',
+								'order' => ''
+			)
+	);
+	
+	
+	function dame_las_comandas_abiertas(){
+		$mesas_abiertas = $this->Mesa->listado_de_abiertas();
+		
+		foreach($mesas_abiertas as $m):
+			$ids[] = $m['Mesa']['id'];
+		endforeach;
+		
+		return $this->find('all',array('conditions'=>array('Comanda.mesa_id'=>$ids)));
+	}
 
 }
 ?>

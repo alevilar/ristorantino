@@ -114,11 +114,17 @@ Comanda.prototype = {
 		  prod = this.productos.find(function(p)
 		  {	  
 			  	//los productos que no tienen sabores se comparan por el ids
-			  	if (p.sabores.length == 0)
-			  	{
-			  		if (p.id != producto.id) return false;
-			  	}
-			  	
+			    if (typeof p.sabores != 'undefined'){			    	
+				  	if (p.sabores.length == 0)
+				  	{
+				  		if (p.id != producto.id) return false;
+				  		else return true;
+				  	}
+			    }
+			    if (typeof p.sabores == 'undefined'){
+				  		if (p.id != producto.id) return false;
+				  		else return true;
+			    }
 			  	
 			  	if (p.saboresSeleccionados.length != producto.saboresSeleccionados.length ) return false;
 			  	

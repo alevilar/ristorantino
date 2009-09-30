@@ -26,11 +26,11 @@ var ComandaSacar = Class.create(Comanda ,{
 		  
 		  // le agrego los productos con su rspectiva catidad
 		  var count = 0; 
+		  formulario.appendChild(new Element('input', {'name': 'data[Comanda][mesa_id]'}).setValue(this.mesa.id));
+		  
 		  this.productos.each(function(p){
 			  formulario.appendChild(new Element('input', {'name': 'data[DetalleComanda]['+count+'][producto_id]'}).setValue(p.id));
 			  formulario.appendChild(new Element('input', {'name': 'data[DetalleComanda]['+count+'][cant]'}).setValue(p.getCantidad()));
-			  formulario.appendChild(new Element('input', {'name': 'data[DetalleComanda]['+count+'][mesa_id]'}).setValue(this.mesa.id));
-			  formulario.appendChild(new Element('input', {'name': 'data[DetalleComanda]['+count+'][comanda_id]'}).setValue(0));
 			  count++;
 		  }.bind(this));
 		  

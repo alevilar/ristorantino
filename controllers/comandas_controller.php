@@ -24,5 +24,11 @@ class ComandasController extends AppController {
 				}
 		endif;
 	}
+	
+	
+	function index(){
+		$this->set('comandas',$comandas = $this->Comanda->dame_las_comandas_abiertas());
+		
+	}
 }
 ?>
