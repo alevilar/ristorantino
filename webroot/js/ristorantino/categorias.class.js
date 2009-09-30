@@ -98,7 +98,7 @@ Categorias.prototype = {
 		}
 		else
 		{
-			producto.id = Math.random()*50000;
+			//producto.id = Math.random()*50000;
 			var a = new Element('a', { 
 				  'class': 'boton letra-chica', 
 				  'href': '#producto-'+producto.id, 

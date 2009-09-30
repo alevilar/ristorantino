@@ -575,6 +575,7 @@ pre.cake-debug {
 	margin-top: 1em;
 	overflow: auto;
 	position: relative;
+	font-size: xx-small;
 }
 
 div.cake-stack-trace {
@@ -773,7 +774,7 @@ div.code-coverage-results span.result-good {
 
 .menu-horizontal A {
 	padding: 0px;
-	height: 50px;
+	min-height: 50px;
 	float:left;
 	border: solid black 2px;
 	max-width:100px;
@@ -802,7 +803,7 @@ div.code-coverage-results span.result-good {
 	display: block;	
 	border:thin solid;
 	margin:2px;
-	height: 50px;
+	min-height: 50px;
 }
 
 

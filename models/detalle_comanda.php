@@ -30,6 +30,20 @@ class DetalleComanda extends AppModel {
 			)
 	);
 	
+	var $hasMany = array(
+			'DetalleSabor' => array('className' => 'DetalleSabor',
+								'foreignKey' => 'detalle_comanda_id',
+								'dependent' => true,
+								'conditions' => '',
+								'fields' => '',
+								'order' => '',
+								'limit' => '',
+								'offset' => '',
+								'exclusive' => '',
+								'finderQuery' => '',
+								'counterQuery' => ''
+			)
+	);
 	
 	
 	function guardar($data){		

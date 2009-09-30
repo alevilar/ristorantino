@@ -15,7 +15,7 @@ adicion.cambiarMesa(mesaCambiar);
 	
  	<?php 
  	echo (sizeof($items)== 0)?"NO HAY ITEMS<br>":"";
- 	
+ 	//debug($items);
  	
  	/**
  	 * 
@@ -25,6 +25,8 @@ adicion.cambiarMesa(mesaCambiar);
  	 * 	$i[0][cant]
  	 * 	$i['Producto']['name']
  	 *  $i['Mesa']['numero']
+ 	 *  $i['DetalleSabor'][x][campos]
+ 	 *  $i['DetalleSabor'][x][Sabor][campos]
  	 */
  	$prod_borrados = array();
 	foreach ($items as $i):

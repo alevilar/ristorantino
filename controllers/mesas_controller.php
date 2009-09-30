@@ -20,15 +20,10 @@ class MesasController extends AppController {
 			$this->redirect(array('action'=>'index'));
 		}
 		
+		$this->Mesa->id = $id;
+		$items = $this->Mesa->listado_de_productos();
 		
-		$this->Mesa->DetalleComanda->order = 'Producto.categoria_id';
-		$this->Mesa->DetalleComanda->recursive = 1;
 		
-		$items = $this->Mesa->DetalleComanda->find('all',array('conditions'=>array('DetalleComanda.mesa_id'=>$id),
-														'fields'=> array('DetalleComanda.mesa_id','DetalleComanda.producto_id','sum(DetalleComanda.cant) as cant', 'Producto.name', 'Producto.id', 'Mesa.numero'),
-														'group'=> array('mesa_id','producto_id', 'Producto.name','Mesa.numero')
-														));
-		//$this->Mesa->recursive = 2;
 		$mesa = $this->Mesa->read(null, $id);	
 		$this->set(compact('mesa', 'items'));	
 		

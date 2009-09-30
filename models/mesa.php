@@ -87,5 +87,35 @@ class Mesa extends AppModel {
 	}
 	
 	
+	
+	function listado_de_productos($id = 0)
+	{
+		//inicialiozo variable return
+		$mesa = array();
+
+		if($id != 0){
+			$this->id = $id;
+		}	
+
+		
+		$this->DetalleComanda->order = 'Producto.categoria_id';
+		$this->DetalleComanda->recursive = 2;
+		
+		// le saco todos los modelos que no necesito paraqe haga mas rapido la consulta
+		$this->DetalleComanda->Producto->unBindModel(array('hasMany' => array('DetalleComanda'), 
+																 'belongsTo'=> array('Categoria')));
+		$this->DetalleComanda->Mesa->unBindModel(array('belongsTo'=> array('Mozo','Cliente'), 
+															 'hasMany' => array('DetalleComanda'),
+															 'hasOne'=>array('Comensal','Pago')));
+		$this->DetalleComanda->DetalleSabor->unBindModel(array('belongsTo' => array('DetalleComanda')));
+		
+		$items = $this->DetalleComanda->find('all',array('conditions'=>array('DetalleComanda.mesa_id'=>$this->id),
+														'fields'=> array('DetalleComanda.mesa_id','DetalleComanda.producto_id','sum(DetalleComanda.cant) as cant', 'Producto.name', 'Producto.id', 'Mesa.numero'),
+														'group'=> array('mesa_id','producto_id', 'Producto.name','Mesa.numero')
+														));		
+		return $items;
+	}
+	
+	
 }
 ?>

@@ -8,6 +8,10 @@ class DetalleComandasController extends AppController {
 		$this->DetalleComanda->recursive = 0;
 		$this->set('comandas', $this->paginate());
 	}
+	
+	function prueba(){
+		debug($this->DetalleComanda->find('all'));die();
+	}
 
 	function view($id = null) {
 		if (!$id) {
@@ -43,29 +47,31 @@ class DetalleComandasController extends AppController {
 		$ok = false;
 		//Configure::write('debug',1);
 		
-		// recordar que la priooridad de la comanda viene como TRUE o FALSE por eso que hago esto aca, porque en BD es un integer
-		// $this->data['Comanda']['prioridad']
-		$this->data['Comanda']['prioridad'] = ($this->data['Comanda']['prioridad'])?1:0;
-		//$this->data['Comanda']['prioridad'] = 1;
-		//debug($this->data);
+		$imprimir = $this->data['imprimir'];
+		unset($this->data['imprimir']);
+		
+		
 		$this->DetalleComanda->Comanda->create();
-		if($this->DetalleComanda->Comanda->save($this->data)){
-			$ok = true;
-		}
+			if($this->DetalleComanda->Comanda->save($this->data['Comanda'])){
+				$ok = true;
+			}
+		unset($this->data['Comanda']);
 		
-		$cont = 0;
-		foreach ($this->data['DetalleComanda'] as $dv):
-			$detacomanda[$cont] = $dv;
-			$detacomanda[$cont]['comanda_id'] = $this->DetalleComanda->Comanda->id;
-			$cont++;
+		debug($this->data);
+		foreach($this->data as $data):
+			$data['DetalleComanda']['comanda_id'] = $this->DetalleComanda->Comanda->id;
+			
+			if ($this->DetalleComanda->saveAll($data)){
+				$ok = true;
+			}
+			else {
+				$ok = false;
+				break;
+			}
+			
 		endforeach;
-		
-		if($this->DetalleComanda->saveAll($detacomanda)){
-			$ok = true;
-		}
-		else $ok = false;
-		
 		return ($ok)?'ok':'failed to save comanda';
+		
 	}
 
 	function edit($id = null) {

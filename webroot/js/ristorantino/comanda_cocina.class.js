@@ -94,24 +94,27 @@ ComandaCocina = Class.create(Comanda, {
 				  if(p.saboresSeleccionados.legth == 0){ // si no es del tipo de productos que tiene sabores hacer esto
 					  var a = new Element('a',{
 						  			'id':'comanda-sacar-producto-'+p.getId(),
-						  			'onClick': "adicion.comanda.restar('"+Object.toJSON(p)+"')"
+						  			//'onClick': "adicion.comanda.restar('"+Object.toJSON(p)+"')"
+						  			'onClick': "return false;"
 						  			}
 					  ).update(p.getCantidad()+" --| "+p.getName());
 				  }
 				  else{ // si tiene distintos sabores hacer esto
 					  var a = new Element('a',{
 				  			'id':'comanda-sacar-producto-'+p.getId(),
-				  			'onClick': "adicion.comanda.restar('"+Object.toJSON(p)+"')"
+				  			//'onClick': "adicion.comanda.restar('"+Object.toJSON(p)+"')"
+				  			'onClick': "return false;"
 				  			}
 					  );
-					  var nombre = p.getName()+" (";
+					 
+					  var nombre = p.getName()+" :";
 					  p.saboresSeleccionados.each(function(s){
 						  nombre += " "+s.name;
 					  });
-					  nombre += ")";
+					  
 					  a.update(p.getCantidad()+" --| "+nombre);
 				  }
-				  
+				  a.observe('click',adicion.comanda.restar.bind(adicion.comanda,p));
 				  li.appendChild(a);
 				  $('comanda-ul').insertBefore(li, $('comanda-ul').firstChild);
 
@@ -153,20 +156,28 @@ ComandaCocina = Class.create(Comanda, {
 		 	
 		  //voy armando el formulario y generando el $this->data[]
 		  formulario.appendChild(new Element('input', {'name': 'data[imprimir]'}).setValue(imprimir)); //dice si hay que mandar a imprimr o solo guardar los datos
-		  formulario.appendChild(new Element('input', {'name': 'data[Comanda][prioridad]'}).setValue(this.prioridad)); //avisa si la comanda va con prioridad o no
 		  
+		  
+		  formulario.appendChild(new Element('input', {'name': 'data[Comanda][prioridad]'}).setValue(this.prioridad)); //avisa si la comanda va con prioridad o no
 		  // le agrego los productos con su rspectiva catidad
 		  var count = 0; 
 		  this.productos.each(function(p){
-			  formulario.appendChild(new Element('input', {'name': 'data[DetalleComanda]['+count+'][producto_id]'}).setValue(p.getId()));
-			  formulario.appendChild(new Element('input', {'name': 'data[DetalleComanda]['+count+'][cant]'}).setValue(p.getCantidad()));
-			  formulario.appendChild(new Element('input', {'name': 'data[DetalleComanda]['+count+'][mesa_id]'}).setValue(this.mesa.id));
-			  count++;
+			  if(p.cantidad > 0){
+				  formulario.appendChild(new Element('input', {'name': 'data['+count+'][DetalleComanda][producto_id]'}).setValue(p.getId()));
+				  formulario.appendChild(new Element('input', {'name': 'data['+count+'][DetalleComanda][cant]'}).setValue(p.getCantidad()));
+				  formulario.appendChild(new Element('input', {'name': 'data['+count+'][DetalleComanda][mesa_id]'}).setValue(this.mesa.id));
+				  	  
+				  var cont2 = 0;
+				  p.saboresSeleccionados.each(function(sabor){
+	//				  formulario.appendChild(new Element('input', {'name': 'data[Datos]['+count+'][DetalleSabor][detalle_comanda_id]'}).setValue(this.mesa.id));
+					  formulario.appendChild(new Element('input', {'name': 'data['+count+'][DetalleSabor]['+cont2+'][sabor_id]'}).setValue(sabor.id));
+					  cont2++;
+				  });
+				  
+				  count++;
+			  }
 		  }.bind(this));
-		  
-		  
-		  //console.info("form serializado:::"+formulario.serialize());
-		  
+		  		  
 		  formulario.request({
 			  	parameters: formulario.serialize(),
 		        onFailure: function() {
@@ -247,7 +258,11 @@ ComandaCocina = Class.create(Comanda, {
 	  },
 	  
 	  
-	  
+	  /**
+	   * Me abre la ventana que me muestra los distintos sabors para ser seleccionados
+	   * 
+	   * cuando hago click en un saor, éste pasa a formar parte de la comanda
+	   */
 	  seleccionarSabores:function(producto)
 	  {
 		  var temp = new ProductoComanda();
@@ -269,19 +284,20 @@ ComandaCocina = Class.create(Comanda, {
 		  
 		  
 		  var ul = new Element('ul',{'class':'menu-vertical'});
+		  // para cada sabor le construyo el link asi lo puedo seleccionar
 		  this.productoCreandoSabores.sabores.each(function(sabor){
 			  var li = new Element('li');
 			  var a = new Element('a',{'href':'#seleccionarSabor'});
 			  a.update(sabor.name);
 			  a.observe('click',adicion.comanda.productoCreandoSabores.agregarSabor.bind(adicion.comanda.productoCreandoSabores,sabor));
-			  a.observe('click',a.hide);
+			  //a.observe('click',a.hide);
 			  li.appendChild(a);
 			  ul.appendChild(li);
 		  });
 		  
 		  var li = new Element('li');
 		  var a = new Element('a',{'href':'#seleccionarSabor','class':'btn-comando'});
-		  a.update("¡ Listo !");
+		  a.update("- Guardar -");
 		  a.observe('click',adicion.comanda.guardarCambiosSeleccionSabores.bind(this));
 		  li.appendChild(a);
 		  ul.appendChild(li);

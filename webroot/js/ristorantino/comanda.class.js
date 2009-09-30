@@ -85,13 +85,14 @@ Comanda.prototype = {
 	  },
 	  
 	  restar: function(prod) {
+		  /*
 		  var producto = new ProductoComanda();
 		  //covierto el JSON en productoComanda
 		  producto.copiar(prod);
-				  
+		*/
 		  var prod_busq = new ProductoComanda();
 	  
-		  prod_busq = this.buscar(producto);
+		  prod_busq = this.buscar(prod);
 		  
 		  if (prod_busq != null){ // si estaba lo resto
 			  this.__restarProducto(prod_busq);
@@ -108,16 +109,15 @@ Comanda.prototype = {
 	  	 *  @params producto es el objeto producto
 	  	 */
 		buscar: function(producto)
-		{
-
-			 console.info("los productos checkeo");
-			 console.debug( this.productos);
-			 console.debug(producto);
-			 
+		{			 
 		  //todo esto hay que hacerlo por culpa de los sabores	
 		  prod = this.productos.find(function(p)
 		  {	  
-			  	if (p.id != producto.id) return false;
+			  	//los productos que no tienen sabores se comparan por el ids
+			  	if (p.sabores.length == 0)
+			  	{
+			  		if (p.id != producto.id) return false;
+			  	}
 			  	
 			  	
 			  	if (p.saboresSeleccionados.length != producto.saboresSeleccionados.length ) return false;

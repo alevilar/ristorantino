@@ -79,7 +79,6 @@ Cajero.prototype = {
 		
 		$('cierre-efectivo-tarjeta').appendChild(form);
 		form.submit();
-		console.info(form);
 
 		$("mesa-id-"+this.mesa_id).hide();
 		
