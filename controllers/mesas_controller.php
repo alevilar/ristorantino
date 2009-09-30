@@ -3,8 +3,12 @@ class MesasController extends AppController {
 
 	var $name = 'Mesas';
 	var $helpers = array('Html', 'Form');
+	var $components = array( 'Printer');
 	
 	
+	function prueba(){
+		$this->Printer->imprimirComanda(16);
+	}
 
 	function index() {
 		$this->Mesa->recursive = 0;
@@ -69,15 +73,11 @@ class MesasController extends AppController {
 	function cerrarMesa($mesa_id){
 		$this->Mesa->id = $mesa_id;
 		
-		$fields = array('sum(cant) as DetalleComanda__cant');
-		$this->Mesa->DetalleComanda->recursive = -1;
-		$total = $this->Mesa->calcular_total();
+		$this->Mesa->cerrar_mesa();
 		
-		$result = $this->Mesa->saveField('time_cerro', date( "Y-m-d H:i:s",strtotime('now')));
-		$result = $this->Mesa->saveField('total', $total);
 		$mozo_id = $this->passedArgs['mozo_id'];
 		
-		$this->Session->setFlash(__('Se mandò a cerrar la mesa', true));
+		$this->Session->setFlash(__('Se mandó a cerrar la mesa', true));
 		$this->redirect("/adicion/adicionar/mozo_id:$mozo_id");
 	}
 	

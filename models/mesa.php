@@ -60,6 +60,20 @@ class Mesa extends AppModel {
 	
 	
 	
+	
+	function cerrar_mesa($mesa_id = 0)
+	{
+		$this->id = ($mesa_id == 0)?$this->id:$mesa_id;	
+				
+		$result = $this->saveField('time_cerro', date( "Y-m-d H:i:s",strtotime('now')));
+		$result = $this->saveField('total', $this->calcular_total());
+		
+		
+		
+	}
+	
+	
+	
 
 	
 	/**
@@ -86,6 +100,10 @@ class Mesa extends AppModel {
 		return $total[0][0]['total'];
 		
 	}
+	
+	
+	
+	
 	
 	
 	/**
