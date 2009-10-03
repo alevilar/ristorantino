@@ -10,9 +10,9 @@ echo $paginator->counter(array(
 <tr>
 	<th><?php echo $paginator->sort('id');?></th>
 	<th><?php echo $paginator->sort('name');?></th>
-	<th><?php echo $paginator->sort('categoria_id');?></th>
-	<th><?php echo $paginator->sort('created');?></th>
-	<th><?php echo $paginator->sort('modified');?></th>
+	<th><?php echo $paginator->sort('Categoria','Categoria.name');?></th>
+	<th><?php echo $paginator->sort('Creado','created');?></th>
+	<th><?php echo $paginator->sort('Modificado','modified');?></th>
 	<th class="actions"><?php __('Actions');?></th>
 </tr>
 <?php
@@ -31,13 +31,13 @@ foreach ($sabores as $sabor):
 			<?php echo $sabor['Sabor']['name']; ?>
 		</td>
 		<td>
-			<?php echo $sabor['Sabor']['categoria_id']; ?>
+			<?php echo $sabor['Categoria']['name']; ?>
 		</td>
 		<td>
-			<?php echo $sabor['Sabor']['created']; ?>
+			<?php echo date('d-m-y H:i:s',strtotime($sabor['Sabor']['created'])); ?>
 		</td>
 		<td>
-			<?php echo $sabor['Sabor']['modified']; ?>
+			<?php echo date('d-m-y H:i:s',strtotime($sabor['Sabor']['modified'])); ?>
 		</td>
 		<td class="actions">
 			<?php echo $html->link(__('View', true), array('action'=>'view', $sabor['Sabor']['id'])); ?>
@@ -55,6 +55,6 @@ foreach ($sabores as $sabor):
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $html->link(__('New Sabor', true), array('action'=>'add')); ?></li>
+		<li><?php echo $html->link(__('Nuevo Sabor', true), array('action'=>'add')); ?></li>
 	</ul>
 </div>

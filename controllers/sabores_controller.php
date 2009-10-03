@@ -27,7 +27,7 @@ class SaboresController extends AppController {
 				$this->Session->setFlash(__('The Sabor could not be saved. Please, try again.', true));
 			}
 		}
-		$categorias = $this->Sabor->Categoria->find('list');
+		$categorias = $this->Sabor->Categoria->generatetreelist(null, null, null, '___');
 		$this->set(compact('categorias'));
 	}
 
@@ -47,7 +47,7 @@ class SaboresController extends AppController {
 		if (empty($this->data)) {
 			$this->data = $this->Sabor->read(null, $id);
 		}
-		$categorias = $this->Sabor->Categoria->find('list');
+		$categorias = $this->Sabor->Categoria->generatetreelist(null, null, null, '___');
 		$this->set(compact('categorias'));
 	}
 

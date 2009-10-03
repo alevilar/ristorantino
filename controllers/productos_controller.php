@@ -28,7 +28,7 @@ class ProductosController extends AppController {
 			}
 		}
 		$comanderas = $this->Producto->Comandera->find('list');
-		$categorias = $this->Producto->Categoria->generatetreelist(null, null, null, '-- ');
+		$categorias = $this->Producto->Categoria->generatetreelist(null, null, null, '___');
 		$this->set(compact('categorias','comanderas'));
 	}
 
@@ -49,7 +49,7 @@ class ProductosController extends AppController {
 			$this->data = $this->Producto->read(null, $id);
 		}
 		$comanderas = $this->Producto->Comandera->find('list');
-		$categorias = $this->Producto->Categoria->generatetreelist(null, null, null, '-- ');
+		$categorias = $this->Producto->Categoria->generatetreelist(null, null, null, '___');
 		$this->set(compact('categorias','comanderas'));
 	}
 

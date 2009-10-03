@@ -23,7 +23,7 @@ class Sabor extends AppModel {
 								'dependent' => false,
 								'conditions' => '',
 								'fields' => '',
-								'order' => 'name',
+								'order' => '',
 								'limit' => '',
 								'offset' => '',
 								'exclusive' => '',

@@ -149,5 +149,21 @@ class Mesa extends AppModel {
 		return $this->find('all', array('conditions'=>array('created <>'=>'0000-00-00 00:00:00', 'time_cerro'=>'0000-00-00 00:00:00')));
 	}
 	
+	
+	/**
+	 * nos dice si el numero de mesa existe o no
+	 * 
+	 * @param integer numero demesa
+	 * @return boolean
+	 */
+	function numero_de_mesa_existente($numero_mesa){
+		$this->recursive = -1;
+		$result = $this->find('all',array(
+									'conditions'=>array('created <>'=>'0000-00-00 00:00:00', 'time_cerro'=>'0000-00-00 00:00:00', 'numero'=>$numero_mesa)
+		));
+		
+		return (count($result)>0)?true:false;
+		
+	}
 }
 ?>

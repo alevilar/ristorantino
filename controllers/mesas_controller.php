@@ -49,20 +49,28 @@ class MesasController extends AppController {
 
 	function abrirMesa() {
 		if (!empty($this->data)) {
-			$this->Mesa->create();
-			if ($this->Mesa->save($this->data)) {
-				$this->Session->setFlash(__('Se abrió la mesa n° '.$this->data['Mesa']['numero'], true));
-				//debug($this->data);
-			//	$this->Mesa->Mozo->id = $this->data['Mesa']['mozo_id'];
-			//	$this->data = $this->Mesa->Mozo->read();
-				
+			if(!$this->Mesa->numero_de_mesa_existente($this->data['Mesa']['numero'])){
+				$this->Mesa->create();
+				if ($this->Mesa->save($this->data)) {
+					$this->Session->setFlash(__('Se abrió la mesa n° '.$this->data['Mesa']['numero'], true));
+					//debug($this->data);
+				//	$this->Mesa->Mozo->id = $this->data['Mesa']['mozo_id'];
+				//	$this->data = $this->Mesa->Mozo->read();
+					
+					$this->redirect(array(	'controller'=>'Adicion', 
+											'action' => 'adicionar/mozo_id:'.$this->data['Mesa']['mozo_id']));
+				} else {
+					$this->Session->setFlash(__('La mesa no pudo ser abierta. ¿Ingresó un número correcto?.', true));
+					
+					$this->redirect(array(	'controller'=>'Adicion', 
+											'action' => 'adicionar/mozo_id:'.$this->data['Mesa']['mozo_id']));
+				}
+			}
+			else{
+				$this->Session->setFlash(__('Ese número de mesa ya existe. No puede crear 2 mesas con el mismo número', true));
+					
 				$this->redirect(array(	'controller'=>'Adicion', 
-										'action' => 'adicionar/mozo_id:'.$this->data['Mesa']['mozo_id']));
-			} else {
-				$this->Session->setFlash(__('La mesa no pudo ser abierta. ¿Ingresó un número correcto?.', true));
-				
-				$this->redirect(array(	'controller'=>'Adicion', 
-										'action' => 'adicionar/mozo_id:'.$this->data['Mesa']['mozo_id']));
+											'action' => 'adicionar/mozo_id:'.$this->data['Mesa']['mozo_id']));
 			}
 		}
 		
