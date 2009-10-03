@@ -75,6 +75,10 @@ var ProductoComanda = Class.create(Producto,{
 		 if(prod.sabores ){
 			 this.sabores = prod.sabores;  
 		 }
+		 
+		 if(prod.comandera_id ){
+			 this.comandera_id = prod.comandera_id;  
+		 }
 	},
 	
 	

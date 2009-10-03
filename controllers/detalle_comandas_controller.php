@@ -3,6 +3,7 @@ class DetalleComandasController extends AppController {
 
 	var $name = 'DetalleComandas';
 	var $helpers = array('Html', 'Form');
+	var $components = array( 'Printer');
 
 	function index() {
 		$this->DetalleComanda->recursive = 0;
@@ -59,25 +60,53 @@ class DetalleComandasController extends AppController {
 		unset($this->data['imprimir']);
 		
 		
-		$this->DetalleComanda->Comanda->create();
-			if($this->DetalleComanda->Comanda->save($this->data['Comanda'])){
-				$ok = true;
-			}
+		// este array contine la prioridad y la mesa_id ---> todos datos de Modelo Comanda
+		$comanda = $this->data['Comanda'];
 		unset($this->data['Comanda']);
 		
-		debug($this->data);
-		foreach($this->data as $data):
-			$data['DetalleComanda']['comanda_id'] = $this->DetalleComanda->Comanda->id;
-			
-			if ($this->DetalleComanda->saveAll($data)){
-				$ok = true;
+		
+		//cuento la cantidad de comanderas involucradas en este pedido para genrar la cantidad de comandas correspondientes
+		$v_comanderas = array();
+		foreach($this->data as $find_data):
+			$v_comanderas[$find_data['DetalleComanda']['comandera_id']] = $find_data['DetalleComanda']['comandera_id'];
+		endforeach;
+		
+		// por cada comandera involucrada creo una comanda
+		$v_comandera_y_comanda = array();
+		while (list($key, $value) = each($v_comanderas)):
+			// Creo una comanda
+			$this->DetalleComanda->Comanda->create();
+			if($this->DetalleComanda->Comanda->save($comanda)){
+					$ok = true;
+					$v_comandera_y_comanda[$key] = $this->DetalleComanda->Comanda->id;
 			}
 			else {
-				$ok = false;
-				break;
+				debug("No se pudo crear una nueva Comanda");
+				return false;
 			}
 			
-		endforeach;
+		endwhile;
+		
+		// por cada Comanda que hice (o sea por cada comandera) genero elDetalleComanda
+		while(list($comandera_id, $comanda_id) = each($v_comandera_y_comanda)):
+			foreach($this->data as $data):
+				$data['DetalleComanda']['comanda_id'] = $comanda_id;
+				if ($data['DetalleComanda']['comandera_id'] == $comandera_id){
+					if ($this->DetalleComanda->saveAll($data)){
+						$ok = true;
+					}
+					else {
+						$ok = false;
+						break;
+					}
+				}				
+			endforeach;
+			//imprimio la comanda usando el Componente Printer
+			$this->Printer->imprimirComanda($comanda_id);
+		endwhile;
+		
+		
+					
 		return ($ok)?'ok':'failed to save comanda';
 		
 	}

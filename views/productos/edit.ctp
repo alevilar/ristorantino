@@ -8,6 +8,7 @@
 		echo $form->input('abrev', array('label'=>'Abreviatura','after'=>'<cite>Nombre con el que se imprimirá el ticket factura</cite>'));
 		echo $form->input('description', array('label'=>'Descripción'));
 		echo $form->input('categoria_id');
+		echo $form->input('comandera_id');
 		echo $form->input('precio',array('label'=>'Precio $','after'=>'los centavos van separados de un punto, NO poner coma ni el signo pesos. Ejemplo de un precio correcto: <b>6.50</b>'));
 	?>
 	</fieldset>

@@ -9,7 +9,8 @@ Producto.prototype ={
 	    this.categoria_id = 0;
 	    this.precio = 0;
 	    this.created = "";
-	    this.modified = "";  
+	    this.modified = ""; 
+	    this.comandera_id = 0;
 	  },
 	  
 	esIgual: function(otroProducto){
@@ -35,6 +36,11 @@ Producto.prototype ={
 	getAbrev: function(){
 		return this.abrev
 	},
+	
+	getComanderaId: function(){
+		return this.comandera_id;
+	},
+	
 	/**
 	 * Convierte un JSON en un objecto producto
 	 * @param prod JSOn del rpducto genralmente es el que viene de PHP
@@ -50,7 +56,8 @@ Producto.prototype ={
 		 this.categoria_id = prod.categoria_id;
 		 this.precio = prod.precio;
 		 this.created = prod.created;
-		 this.modified = prod.modified;  
+		 this.modified = prod.modified;
+		 this.comandera_id = prod.comandera_id;
 		 return prod;
 	}
 	

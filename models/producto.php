@@ -9,7 +9,13 @@ class Producto extends AppModel {
 								'foreignKey' => 'categoria_id',
 								'conditions' => '',
 								'fields' => '',
-								'order' => ''
+								'order' => 'Categoria.name'
+			),
+			'Comandera' => array('className' => 'Comandera',
+								'foreignKey' => 'comandera_id',
+								'conditions' => '',
+								'fields' => '',
+								'order' => 'Comandera.name'
 			)
 	);
 
@@ -27,6 +33,7 @@ class Producto extends AppModel {
 								'counterQuery' => ''
 			)
 	);
+	
 
 }
 ?>

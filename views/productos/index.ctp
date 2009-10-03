@@ -9,13 +9,13 @@ echo $paginator->counter(array(
 <table cellpadding="0" cellspacing="0">
 <tr>
 	<th><?php echo $paginator->sort('id');?></th>
-	<th><?php echo $paginator->sort('name');?></th>
-	<th><?php echo $paginator->sort('abrev');?></th>
-	<th><?php echo $paginator->sort('description');?></th>
-	<th><?php echo $paginator->sort('Categoria.name');?></th>
+	<th><?php echo $paginator->sort('Nombre','name');?></th>
+	<th><?php echo $paginator->sort('abreviatura','abrev');?></th>
+	<th><?php echo $paginator->sort('Comandera','Comandera.name');?></th>
+	<th><?php echo $paginator->sort('Categoria','Categoria.name');?></th>
 	<th><?php echo $paginator->sort('precio');?></th>
-	<th><?php echo $paginator->sort('created');?></th>
-	<th><?php echo $paginator->sort('modified');?></th>
+	<th><?php echo $paginator->sort('Creado','created');?></th>
+	<th><?php echo $paginator->sort('Modificado','modified');?></th>
 	<th class="actions"><?php __('Actions');?></th>
 </tr>
 <?php
@@ -37,7 +37,7 @@ foreach ($productos as $producto):
 			<?php echo $producto['Producto']['abrev']; ?>
 		</td>
 		<td>
-			<?php echo $producto['Producto']['description']; ?>
+			<?php echo $producto['Comandera']['name']; ?>
 		</td>
 		<td>
 			<?php echo $producto['Categoria']['name']; ?>
@@ -46,10 +46,10 @@ foreach ($productos as $producto):
 			<?php echo "$".$producto['Producto']['precio']; ?>
 		</td>
 		<td>
-			<?php echo $producto['Producto']['created']; ?>
+			<?php echo date('d-m-y',strtotime($producto['Producto']['created'])); ?>
 		</td>
 		<td>
-			<?php echo $producto['Producto']['modified']; ?>
+			<?php echo date('d-m-y',strtotime($producto['Producto']['modified'])); ?>
 		</td>
 		<td class="actions">
 			<?php echo $html->link(__('Ver', true), array('action'=>'view', $producto['Producto']['id'])); ?>
@@ -68,5 +68,7 @@ foreach ($productos as $producto):
 <div class="actions">
 	<ul>
 		<li><?php echo $html->link(__('Nuevo Producto', true), array('action'=>'add')); ?></li>
+		<li><?php echo $html->link(__('Listar Categorias', true), '/Categorias/index'); ?></li>
+		<li><?php echo $html->link(__('Agregar Nueva Categoria', true), '/Categorias/add'); ?></li>
 	</ul>
 </div>

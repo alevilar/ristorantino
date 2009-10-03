@@ -2,7 +2,7 @@
 class ComandasController extends AppController {
 
 	var $name = 'Comandas';
-	
+
 	
 	
 	
@@ -11,6 +11,7 @@ class ComandasController extends AppController {
 		//Configure::write('debug',0);
 		
 		if (isset($this->data)):
+				$this->Comanda->create();
 				if ($this->Comanda->save($this->data)) {					
 					$j = 1;
 					?><script type="text/javascript">
@@ -18,7 +19,7 @@ class ComandasController extends AppController {
 						mensajero.show("comanda enviada");
 						//-->
 						</script>
-					<?php 
+					<?php 			
 				} else {
 					$this->Session->setFlash(__('The Comanda could not be saved. Please, try again.', true));
 				}

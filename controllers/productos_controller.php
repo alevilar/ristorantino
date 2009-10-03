@@ -27,8 +27,9 @@ class ProductosController extends AppController {
 				$this->Session->setFlash(__('The Producto could not be saved. Please, try again.', true));
 			}
 		}
+		$comanderas = $this->Producto->Comandera->find('list');
 		$categorias = $this->Producto->Categoria->generatetreelist(null, null, null, '-- ');
-		$this->set(compact('categorias'));
+		$this->set(compact('categorias','comanderas'));
 	}
 
 	function edit($id = null) {
@@ -47,8 +48,9 @@ class ProductosController extends AppController {
 		if (empty($this->data)) {
 			$this->data = $this->Producto->read(null, $id);
 		}
+		$comanderas = $this->Producto->Comandera->find('list');
 		$categorias = $this->Producto->Categoria->generatetreelist(null, null, null, '-- ');
-		$this->set(compact('categorias'));
+		$this->set(compact('categorias','comanderas'));
 	}
 
 	function delete($id = null) {

@@ -166,6 +166,7 @@ ComandaCocina = Class.create(Comanda, {
 			  if(p.cantidad > 0){
 				  formulario.appendChild(new Element('input', {'name': 'data['+count+'][DetalleComanda][producto_id]'}).setValue(p.getId()));
 				  formulario.appendChild(new Element('input', {'name': 'data['+count+'][DetalleComanda][cant]'}).setValue(p.getCantidad()));
+				  formulario.appendChild(new Element('input', {'name': 'data['+count+'][DetalleComanda][comandera_id]'}).setValue(p.getComanderaId()));
 				  	  
 				  var cont2 = 0;
 				  p.saboresSeleccionados.each(function(sabor){
