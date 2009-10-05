@@ -31,6 +31,8 @@ cajero.urlGuardar = "<?php echo $html->url('/pagos/add');?>";
 
 
 
+<?php echo $this->renderElement('mesas_scroll');?>
+
 <script type="text/javascript">
 <!--
 var ventanaSeleccionPago;
@@ -46,7 +48,7 @@ ventanaSeleccionPago.setContent('cierre-efectivo-tarjeta', true, true);
 
 
 new Ajax.PeriodicalUpdater('listado-mesas-cerradas', '<?php echo $html->url('/cajero/mesas_x_cobrar')?>', {
-	  method: 'get', frequency: 3, decay: 2
+	  method: 'get', frequency: 10, decay: 2
 	});
 
 

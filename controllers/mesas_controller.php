@@ -94,10 +94,10 @@ class MesasController extends AppController {
 		if (!empty($this->data)) {
 			$this->Mesa->create();
 			if ($this->Mesa->save($this->data)) {
-				$this->Session->setFlash(__('The Mesa has been saved', true));
+				$this->Session->setFlash(__('La mesa fue guardada', true));
 				$this->redirect(array('action'=>'index'));
 			} else {
-				$this->Session->setFlash(__('The Mesa could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('La mesa no pudo ser guardada. Intente nuevamente.', true));
 			}
 		}
 		$mozos = $this->Mesa->Mozo->find('list');
@@ -140,18 +140,17 @@ class MesasController extends AppController {
 		}
 		if (!empty($this->data)) {
 			if ($this->Mesa->save($this->data)) {
-				$this->Session->setFlash(__('The Mesa has been saved', true));
+				$this->Session->setFlash(__('La mesa fue editada correctamente', true));
 				$this->redirect(array('action'=>'index'));
 			} else {
-				$this->Session->setFlash(__('The Mesa could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('La mesa no pudo ser guardada. Intente nuevamente.', true));
 			}
 		}
 		if (empty($this->data)) {
 			$this->data = $this->Mesa->read(null, $id);
 		}
-		$mozos = $this->Mesa->Mozo->find('list');
-		$descuentos = $this->Mesa->Descuento->find('list');
-		$this->set(compact('mozos','descuentos'));
+		$mozos = $this->Mesa->Mozo->find('list',array('fields'=>array('id','numero')));
+		$this->set(compact('mozos'));
 	}
 
 	function delete($id = null) {

@@ -10,14 +10,11 @@ echo $paginator->counter(array(
 <tr>
 	<th><?php echo $paginator->sort('id');?></th>
 	<th><?php echo $paginator->sort('numero');?></th>
-	<th><?php echo $paginator->sort('mozo_id');?></th>
+	<th><?php echo $paginator->sort('Mozo (ID) Nº','mozo_id');?></th>
 	<th><?php echo $paginator->sort('total');?></th>
-	<th><?php echo $paginator->sort('descuento_id');?></th>
-	<th><?php echo $paginator->sort('created');?></th>
-	<th><?php echo $paginator->sort('time_abrio');?></th>
-	<th><?php echo $paginator->sort('time_paso_pedido');?></th>
-	<th><?php echo $paginator->sort('time_cerro');?></th>
-	<th><?php echo $paginator->sort('time_cobro');?></th>
+	<th><?php echo $paginator->sort('Abierta','created');?></th>
+	<th><?php echo $paginator->sort('Cerró','time_cerro');?></th>
+	<th><?php echo $paginator->sort('Cobró','time_cobro');?></th>
 	<th class="actions"><?php __('Actions');?></th>
 </tr>
 <?php
@@ -36,28 +33,19 @@ foreach ($mesas as $mesa):
 			<?php echo $mesa['Mesa']['numero']; ?>
 		</td>
 		<td>
-			<?php echo $mesa['Mesa']['mozo_id']; ?>
+			<?php echo $html->link('('.$mesa['Mesa']['mozo_id'].') Nº: '.$mesa['Mozo']['numero'],'/Mozos/view/'.$mesa['Mesa']['mozo_id']); ?>
 		</td>
 		<td>
 			<?php echo $mesa['Mesa']['total']; ?>
 		</td>
 		<td>
-			<?php echo $mesa['Mesa']['descuento_id']; ?>
+			<?php echo date('d-m-y (H:i:s)',strtotime($mesa['Mesa']['created'])); ?>
 		</td>
 		<td>
-			<?php echo $mesa['Mesa']['created']; ?>
+			<?php echo date('d-m-y (H:i:s)',strtotime($mesa['Mesa']['time_cerro'])); ?>
 		</td>
 		<td>
-			<?php echo $mesa['Mesa']['time_abrio']; ?>
-		</td>
-		<td>
-			<?php echo $mesa['Mesa']['time_paso_pedido']; ?>
-		</td>
-		<td>
-			<?php echo $mesa['Mesa']['time_cerro']; ?>
-		</td>
-		<td>
-			<?php echo $mesa['Mesa']['time_cobro']; ?>
+			<?php echo date('d-m-y (H:i:s)',strtotime($mesa['Mesa']['time_cobro'])); ?>
 		</td>
 		<td class="actions">
 			<?php echo $html->link(__('View', true), array('action'=>'view', $mesa['Mesa']['id'])); ?>

@@ -9,9 +9,9 @@ echo $paginator->counter(array(
 <table cellpadding="0" cellspacing="0">
 <tr>
 	<th><?php echo $paginator->sort('id');?></th>
-	<th><?php echo $paginator->sort('user_id');?></th>
+	<th><?php echo $paginator->sort('Nombre','User.nombre');?></th>
 	<th><?php echo $paginator->sort('numero');?></th>
-	<th class="actions"><?php __('Actions');?></th>
+	<th class="actions"><?php __('');?></th>
 </tr>
 <?php
 $i = 0;
@@ -26,13 +26,13 @@ foreach ($mozos as $mozo):
 			<?php echo $mozo['Mozo']['id']; ?>
 		</td>
 		<td>
-			<?php echo $html->link($mozo['User']['id'], array('controller'=> 'users', 'action'=>'view', $mozo['User']['id'])); ?>
+			<?php echo $html->link($mozo['User']['nombre']." ".$mozo['User']['apellido'], array('controller'=> 'users', 'action'=>'view', $mozo['User']['id'])); ?>
 		</td>
 		<td>
 			<?php echo $mozo['Mozo']['numero']; ?>
 		</td>
 		<td class="actions">
-			<?php echo $html->link(__('View', true), array('action'=>'view', $mozo['Mozo']['id'])); ?>
+			<?php // echo $html->link(__('View', true), array('action'=>'view', $mozo['Mozo']['id'])); ?>
 			<?php echo $html->link(__('Edit', true), array('action'=>'edit', $mozo['Mozo']['id'])); ?>
 			<?php echo $html->link(__('Delete', true), array('action'=>'delete', $mozo['Mozo']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $mozo['Mozo']['id'])); ?>
 		</td>
@@ -47,10 +47,9 @@ foreach ($mozos as $mozo):
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $html->link(__('New Mozo', true), array('action'=>'add')); ?></li>
-		<li><?php echo $html->link(__('List Users', true), array('controller'=> 'users', 'action'=>'index')); ?> </li>
-		<li><?php echo $html->link(__('New User', true), array('controller'=> 'users', 'action'=>'add')); ?> </li>
-		<li><?php echo $html->link(__('List Mesas', true), array('controller'=> 'mesas', 'action'=>'index')); ?> </li>
-		<li><?php echo $html->link(__('New Mesa', true), array('controller'=> 'mesas', 'action'=>'add')); ?> </li>
+		<li><?php echo $html->link(__('Nuevo Mozo', true), array('action'=>'add')); ?></li>
+		<li><?php echo $html->link(__('Listar Usuarios', true), array('controller'=> 'users', 'action'=>'index')); ?> </li>
+		<li><?php echo $html->link(__('Nuevo Usuario', true), array('controller'=> 'users', 'action'=>'add')); ?> </li>
+		<li><?php echo $html->link(__('Listar Mesas', true), array('controller'=> 'mesas', 'action'=>'index')); ?> </li>
 	</ul>
 </div>

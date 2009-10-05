@@ -168,11 +168,13 @@ ul,li {
 	width: 800px;
 	height: 100px;
 	border: 1px solid grey;
+	z-index:99;
+	background-color: white;
 }
 
 
 
-#listado-mesas-cerradas{
+#listado-mesas{
 	position: absolute;
 	top: 150px;
 	left: 50px;
@@ -180,13 +182,6 @@ ul,li {
 	font-size: 16px;
 }
 
-#listado-mesas-abiertas{
-	position: absolute;
-	top: 150px;
-	left: 50px;
-	width: 700px;
-	font-size: 16px;
-}
 
 .listado-mesas{
 	list-style: none;
@@ -261,4 +256,28 @@ ul,li {
 	text-align: center;
 	font-size: 10px;
 	margin-top: 0px;
+}
+
+
+.arrow{
+	background-color: transparent;
+}
+.arrow IMG {
+	border: none;
+	width: 50px;
+	height: 50px;
+}
+
+#mesas-scrollbar{
+	position: absolute;
+	top: 486px;
+	left: 740px;
+	background-color: transparent;
+}
+
+#mesas-scrollbar A{
+border: none;
+	width: 50px;
+	height: 50px;
+
 }

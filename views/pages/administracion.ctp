@@ -5,8 +5,8 @@
     <td>
     <h2>Usuarios y Clientes</h2>
 <?php 
-echo $html->link('Nuevo usuario','/users/add').'<br>';
-echo $html->link('Nuevo mozo','/mozos/add').'<br>';
+echo $html->link('Usuarios','/users/index').'<br>';
+echo $html->link('Mozos','/mozos/index').'<br>';
 echo $html->link('Clientes','/clientes').'<br>';
 echo $html->link('Tipo de Pagos','/TipoDePagos').'<br>';
 ?>

@@ -47,7 +47,7 @@ class AdicionController extends AppController {
 		$this->Mozo->hasMany['Mesa']['order'] = "created DESC";
 		$this->Mozo->hasMany['Mesa']['conditions'] = "time_cobro = '0000-00-00 00:00:00'";
 		$this->data = $this->Mozo->read();
-		$this->set('mozos',$this->Mozo->find('all',array('fields'=>array('id','numero'))));
+		$this->set('mozos',$this->Mozo->dameActivos());
 	}
 	
 	

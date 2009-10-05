@@ -1,4 +1,4 @@
-<div id="listado-mesas-x-cobrar" class="listado-mesas">
+<div id="listado-mesas" class="listado-mesas">
 
 <ul>
 
@@ -17,3 +17,14 @@
 	<?php endforeach;?>
 </ul>
 </div>
+
+
+
+<script type="text/javascript">
+<!--
+// TENGO QUE VOLVER A IREINICIALIZAR LOS SCROLL BARS !!!!
+var mesas_scrollbar = 0; //este es el que contiene los datos de la mesa. la comanda
+var mesas_listado = 0;//este es el del listado de mesas horizontal
+
+//-->
+</script>

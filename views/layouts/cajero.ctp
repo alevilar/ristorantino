@@ -20,6 +20,7 @@
 		echo $javascript->link('scriptaculous');	
 		
 		echo $javascript->link('cajero/cajero');	
+		echo $javascript->link('cajero/head');
 		
 		/*
 		echo $javascript->link('adicionar/head');		

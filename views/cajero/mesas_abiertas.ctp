@@ -1,7 +1,7 @@
-<div id="listado-mesas-abiertas" class="listado-mesas">
+<div id="listado-mesas" class="listado-mesas">
 	<ul>
 		<?php foreach($mesas_abiertas as $m):?>
-			<li id="mesa-id-<?=  $m['Mesa']['id']?>" onclick="cajero.cobrarMesa('<?=  $m['Mesa']['id']?>','<?= $m['Mesa']['total']?>'); return false;">
+			<li id="mesa-id-<?=  $m['Mesa']['id']?>" onclick="window.location.href='<?=  $html->url('/Mesas/edit/'.$m['Mesa']['id']);?>'; return false;">
 					
 				<span class="mesa-numero"><?= $m['Mesa']['numero']?></span>
 				<span class="mozo-numero"><?= $m['Mozo']['numero']?></span>
@@ -13,6 +13,8 @@
 	</ul>
 </div>
 
+
+<?php echo $this->renderElement('mesas_scroll');?>
 
 <div id="mesas-paginador">
 	<?php echo $paginator->prev(); ?> 

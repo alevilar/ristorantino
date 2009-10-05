@@ -5,8 +5,14 @@ class Mesa extends AppModel {
 
 	
 	var $validate = array(
-		'numero' => array('notempty','numeric')
-	);
+		'numero' => array(
+			'notempty',
+			'numeric',
+			'numero_de_mesa_inexistente' => array(
+                         'rule' => array('numero_de_mesa_inexistente'),
+                         'message'=> 'El número ya existe.'
+            )	
+	));
 	
 	
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
@@ -158,12 +164,27 @@ class Mesa extends AppModel {
 	 */
 	function numero_de_mesa_existente($numero_mesa){
 		$this->recursive = -1;
-		$result = $this->find('all',array(
-									'conditions'=>array('created <>'=>'0000-00-00 00:00:00', 'time_cerro'=>'0000-00-00 00:00:00', 'numero'=>$numero_mesa)
-		));
+		$conditions = array('created <>'=>'0000-00-00 00:00:00', 'time_cerro'=>'0000-00-00 00:00:00', 'numero'=>$numero_mesa);
+		
+		if(isset($this->id)){
+			$conditions = array_merge($conditions, array('Mesa.id <>'=> $this->id));
+		}
+		
+		$result = $this->find('all',array('conditions'=>$conditions));
+		
+		
 		
 		return (count($result)>0)?true:false;
 		
+	}
+	
+	
+	function numero_de_mesa_inexistente($numero_mesa = 0){
+		 if($numero_mesa != 0){
+		 	$numero_mesa = $this->data['Mesa']['numero'];
+		 }
+		 return ($this->numero_de_mesa_existente($numero_mesa))?false:true;
+		 
 	}
 }
 ?>

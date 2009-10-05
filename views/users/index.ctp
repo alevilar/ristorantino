@@ -10,7 +10,6 @@ echo $paginator->counter(array(
 <tr>
 	<th><?php echo $paginator->sort('id');?></th>
 	<th><?php echo $paginator->sort('username');?></th>
-	<th><?php echo $paginator->sort('password');?></th>
 	<th><?php echo $paginator->sort('nombre');?></th>
 	<th><?php echo $paginator->sort('apellido');?></th>
 	<th><?php echo $paginator->sort('telefono');?></th>
@@ -30,9 +29,6 @@ foreach ($users as $user):
 		</td>
 		<td>
 			<?php echo $user['User']['username']; ?>
-		</td>
-		<td>
-			<?php echo $user['User']['password']; ?>
 		</td>
 		<td>
 			<?php echo $user['User']['nombre']; ?>

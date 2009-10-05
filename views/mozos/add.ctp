@@ -1,27 +1,20 @@
 <div class="mozos form">
 <?php echo $form->create('Mozo');?>
 	<fieldset>
- 		<legend><?php __('Add Mozo');?></legend>
+ 		<legend>Nuevo Mozo</legend>
 	<?php
-		echo $form->input('0.user_id');
-		echo $form->input('0.numero');
-		
-		echo $form->input('1.user_id');
-		echo $form->input('1.numero');
-		echo $form->input('2.user_id');
-		echo $form->input('2.numero');
-		echo $form->input('3.user_id');
-		echo $form->input('3.numero');
+		echo $form->input('user_id');
+		echo $form->input('numero');
+		echo $form->input('activo');
 	?>
 	</fieldset>
 <?php echo $form->end('Submit');?>
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $html->link(__('List Mozos', true), array('action'=>'index'));?></li>
-		<li><?php echo $html->link(__('List Users', true), array('controller'=> 'users', 'action'=>'index')); ?> </li>
-		<li><?php echo $html->link(__('New User', true), array('controller'=> 'users', 'action'=>'add')); ?> </li>
-		<li><?php echo $html->link(__('List Mesas', true), array('controller'=> 'mesas', 'action'=>'index')); ?> </li>
-		<li><?php echo $html->link(__('New Mesa', true), array('controller'=> 'mesas', 'action'=>'add')); ?> </li>
+		<li><?php echo $html->link(__('Listar Mozos', true), array('action'=>'index'));?></li>
+		<li><?php echo $html->link(__('Listar Usuarios', true), array('controller'=> 'users', 'action'=>'index')); ?> </li>
+		<li><?php echo $html->link(__('Nuevo usuario', true), array('controller'=> 'users', 'action'=>'add')); ?> </li>
+		<li><?php echo $html->link(__('Listar Mesas', true), array('controller'=> 'mesas', 'action'=>'index')); ?> </li>
 	</ul>
 </div>

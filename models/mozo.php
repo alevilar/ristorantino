@@ -31,6 +31,25 @@ class Mozo extends AppModel {
 								'counterQuery' => ''
 			)
 	);
+	
+	
+	/**
+	 * Me devuelve todo los mozos activos
+	 *
+	 * @param recursive -1 por default
+	 * @ return array del find(all)
+	 */
+	function dameActivos($recursive = 0)
+	{
+		$this->recursive = $recursive;
+		return $this->find('all',array('conditions'=>array('Mozo.activo'=>1)));
+	}
+	
+	
+	function dameTodos($recursive = 0){
+		$this->recursive = $recursive;
+		return $this->find('all');
+	}
 
 }
 ?>
