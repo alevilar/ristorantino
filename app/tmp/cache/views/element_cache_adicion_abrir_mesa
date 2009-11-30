@@ -1,0 +1,23 @@
+
+
+	<div id="mesa-abrir" style="display: none">
+		<form id="MesaAbrirMesaForm" method="post" action="/ristorantino/mesas/abrirMesa"><fieldset style="display:none;"><input type="hidden" name="_method" value="POST" /></fieldset><input type="hidden" name="data[Mesa][mozo_id]" value="7" id="MesaMozoId" /><div class="input text required"><label for="MesaNumero"></label><input name="data[Mesa][numero]" type="text" style="float:left;" maxlength="11" value="" id="MesaNumero" /></div><input type="button" value="Cancelar" onclick="Dialog.closeInfo();" /><input type="button" value="AbrirMesa" onclick="verificar();" /></form>	</div>
+	
+	
+	<script type="text/javascript">
+	<!--
+		function verificar()
+	 	{		
+			if($F('MesaNumero')< 600){
+				$('MesaAbrirMesaForm').submit();
+				return true;
+			}
+			else{
+				Dialog.closeInfo();
+				mensajero.error("El Nº de mesa debe ser menor a 600");
+				return false;
+			}
+		
+		}		
+	//-->
+	</script>

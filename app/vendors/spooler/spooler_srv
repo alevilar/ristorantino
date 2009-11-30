@@ -1,0 +1,37 @@
+set -x
+#!/bin/bash
+
+SCRIPT=/var/www/ristorantino/app/vendors/spooler/hasar_spooler.sh
+DIA=`date +%d-%m-%y`
+
+CARPETA_FUENTE=/tmp/fuente
+CARPETA_DESTINO=/tmp/dest
+
+
+RETVAL=0
+case "$1" in
+    start)
+
+	sh $SCRIPT &
+	RETVAL=$?
+    ;;
+    stop)
+      PROC_ID=`ps -fea | grep hasar_spooler | grep -v grep | awk '{print $3}'`
+      #killall -9 prueba.sh
+      kill -9 $PROC_ID
+      killall -9 spooler
+      echo "cerrando........"
+      RETVAL=$?
+    ;;
+    restart)
+      stop
+      start
+      RETVAL=$?
+    ;;
+    *)
+      echo "Este es el servidor del spooler de Hasar: spoler_srv {startstoprestart}"
+      exit 1
+  
+esac      
+exit $RETVAL
+

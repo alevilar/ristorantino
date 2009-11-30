@@ -1,0 +1,974 @@
+@CHARSET "UTF-8";
+
+/* SVN FILE: $Id: cake.generic.css 7690 2008-10-02 04:56:53Z nate $ */
+	/**
+ *
+ * PHP versions 4 and 5
+ *
+ * CakePHP(tm) :  Rapid Development Framework <http://www.cakephp.org/>
+ * Copyright 2005-2008, Cake Software Foundation, Inc.
+ *								1785 E. Sahara Avenue, Suite 490-204
+ *								Las Vegas, Nevada 89104
+ *
+ * Licensed under The MIT License
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @filesource
+ * @copyright		Copyright 2005-2008, Cake Software Foundation, Inc.
+ * @link				http://www.cakefoundation.org/projects/info/cakephp CakePHP(tm) Project
+ * @package			cake
+ * @subpackage		cake.app.webroot.css
+ * @since			CakePHP(tm)
+ * @version			$Revision: 7690 $
+ * @modifiedby		$LastChangedBy: nate $
+ * @lastmodified	$Date: 2008-10-02 00:56:53 -0400 (Thu, 02 Oct 2008) $
+ * @license			http://www.opensource.org/licenses/mit-license.php The MIT License
+ */
+* {
+	margin: 0;
+	padding: 0;
+}
+
+/* General Style Info */
+body {
+	background: #003d4c;
+	color: #fff;
+	font-family: 'lucida grande', verdana, helvetica, arial, sans-serif;
+	font-size: x-large;
+	margin: 0;
+	overflow: hidden;
+}
+
+A {	
+	color: #333;
+	text-decoration: none;
+	background-color:silver;
+	outline: 0;
+}
+
+A:HOVER { 	
+	/*background-color: buttonface;*/
+}
+
+A:ACTIVE {
+  	outline: none; /* Para los navegadores que lo entienden */
+}
+
+
+.letra-grande{
+	font-size: 18px;
+}
+
+.letra-chica{
+	font-size: 14px;
+}
+
+
+
+.boton-simple{
+	display: block;
+	height: 70px;
+	width: 70px;	
+	\height: 68px;
+	\width: 68px;	
+	border: none;
+	text-align: center;
+	text-decoration: none;
+	background-color: transparent;
+	vertical-align: middle;
+	overflow: hidden;
+}
+
+
+.boton{
+	display: block;
+	height: 70px;
+	width: 70px;	
+	\height: 68px;
+	\width: 68px;	
+	border: 1px solid grey;
+	text-align: center;
+	text-decoration: none;
+	/*background-color: silver;*/
+	vertical-align: middle;
+	font-family: fantasy;
+	overflow: hidden;
+}
+
+.boton:HOVER{
+	background-color: ThreeDLightShadow;
+}
+
+.redondeado{
+	-moz-border-radius:17px;
+}
+
+.redondeado-arriba{
+	-moz-border-radius-topleft:17px;
+	-moz-border-radius-topright:17px;
+}
+
+.redondeado-abajo{
+	-moz-border-radius-bottomleft:17px;
+	-moz-border-radius-bottomright:17px;
+}
+
+
+.boton-submit{
+	display: block;
+	height: 70px;
+	width: 100px;	
+	\height: 68px;
+	\width: 98px;	
+	border: 1px dashed grey;
+	text-align: center;
+	text-decoration: none;
+	background-color: #333;
+	vertical-align: middle;
+	font-family: fantasy;
+}
+
+.boton-apretado, A.boton-apretado{
+	background-color: lime;
+}
+
+h1,h2,h3,h4 {
+	font-weight: normal;
+}
+
+h1 {
+	background: #fff;
+	color: #003d4c;
+	margin: 0.1em 0;
+	font-size: 22px;
+	text-align: center;
+	border-bottom: thin solid grey;
+}
+
+h2 {
+	font-size: 16px;
+	background: #fff;
+	color: #e32;
+	font-family: 'Gill Sans', 'lucida grande', helvetica, arial, sans-serif;
+	margin: 0.3em 0;
+	padding-top: 0.8em;
+}
+
+h3 {
+	color: #993;
+	font-family: 'Gill Sans', 'lucida grande', helvetica, arial, sans-serif;
+	padding-top: 1.5em;
+}
+
+h4 {
+	color: #993;
+	font-weight: normal;
+	padding-top: 0.5em;
+}
+
+ul,li {
+	margin: 0px;
+}
+
+/* Layout */
+#container {
+	width: 800px;
+	height: 600px;
+	text-align: left;
+}
+
+#content {
+	height: 600px;
+	\height: 580px; /* para FF*/
+	padding: 10px;
+	background: #fff;
+	clear: both;
+	color: #333;
+	overflow: hidden;
+}
+
+#adicion-cabecera {
+	position: absolute;
+	width: 780px;
+	height: 100px;
+}
+
+#MozoCambiarMozoForm {
+	float: left;
+}
+
+
+#mensajes {
+	background-color:black;
+	border:medium none grey;
+	color:white;
+	float:right;
+	font-size:x-small;
+	height:74px;
+	width:300px;
+	overflow: hidden;
+}
+
+.mensaje-error{
+	color: pink;
+}
+
+
+#mesa-abrir{
+	position: absolute;
+	top: 200px;
+}
+
+
+#mensajes UL LI{
+	padding: 0px;
+	margin: 0px;
+}
+
+#mesas-listado {
+	left:48px;
+	position:absolute;
+	top:89px;
+	width:700px;
+}
+
+#mesas-listado UL{
+	list-style: none;
+	padding: 0px;
+	margin: 0px;
+}
+
+#mesas-listado LI {
+	float: left;
+	list-style: none;
+	padding: 0px;
+	margin: 0px;
+}
+
+#mesas-listado A {
+	
+}
+
+#mesas-listado A:hover {
+	
+}
+
+#mesas-listado-marcada A {
+	background-color: #798393;
+}
+
+#mesas {
+	position: absolute;
+	top: 200px;
+	width: 780px;
+	border: 1px solid grey;
+}
+
+#mesa-container {
+	background-color:grey;
+	height:438px;
+	position:absolute;
+	top:158px;
+	width:780px;
+}
+
+#mesa-acciones-2 {
+	margin-top: 12px;
+	float: right;
+}
+#mesa-acciones {
+	margin-top: 12px;
+	float: left;
+}
+
+
+#mesa-data {
+	height:398px;
+	overflow:hidden;
+	width:440px;
+	margin-top: 14px;
+	background-color: white;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Tables */
+table {
+	background: #fff;
+	border: 1px solid #ccc;
+	border-right: 0;
+	clear: both;
+	color: #333;
+	margin-bottom: 10px;
+	width: 100%;
+}
+
+tr.listado{
+	height: 40px;
+	border: 1 solid grey;
+}
+
+th {
+	background: #f2f2f2;
+	border: 1px solid #bbb;
+	border-top: 1px solid #fff;
+	border-left: 1px solid #fff;
+	text-align: center;
+}
+
+th a {
+	background: #f2f2f2;
+	display: block;
+	padding: 2px 4px;
+	text-decoration: none;
+}
+
+th a:hover {
+	background: #ccc;
+	color: #333;
+	text-decoration: none;
+}
+
+table tr td {
+	background: #fff;
+	border-right: 1px solid #ccc;
+	border-bottom: 1px solid #333;
+	padding: 4px;
+	text-align: center;
+	vertical-align: top;
+}
+
+table tr.altrow td {
+	background: #f4f4f4;
+}
+
+td.actions {
+	text-align: center;
+	white-space: nowrap;
+}
+
+td.actions a {
+	margin: 0px 6px;
+}
+
+.cake-sql-log table {
+	background: #f4f4f4;
+}
+
+.cake-sql-log td {
+	padding: 4px 8px;
+	text-align: left;
+}
+
+/* Paging */
+div.paging {
+	background: #fff;
+	color: #ccc;
+	margin-bottom: 2em;
+}
+
+div.paging div.disabled {
+	color: black;
+	display: inline;
+}
+
+div.paging span {
+	
+}
+
+div.paging span.current {
+	color: #000;
+}
+
+LI.current{
+	color: #333;
+	font-size: 50px;
+	padding-top: 3px;
+	margin-left: 6px;
+	margin-right: 6px;
+	width: 50px;
+}
+
+div.paging span a {
+	
+}
+
+/* Scaffold View */
+dl {
+	line-height: 2em;
+	margin: 0em 0em;
+	width: 60%;
+}
+
+dl.altrow {
+	background: #f4f4f4;
+}
+
+dt {
+	font-weight: bold;
+	padding-left: 4px;
+	vertical-align: top;
+}
+
+dd {
+	margin-left: 10em;
+	margin-top: -2em;
+	vertical-align: top;
+}
+
+/* Forms */
+SELECT,INPUT {
+	height: 50px;
+}
+
+.select {
+	height: 50px;
+	display: inline;
+	width: 100px;
+}
+
+INPUT[type=button] {
+	clear: none;
+	display: inline;
+}
+
+form {
+	display: inline;
+}
+
+fieldset {
+	border: 1px solid #ccc;
+	margin-top: 30px;
+	padding: 16px 20px;
+}
+
+fieldset legend {
+	background: #fff;
+	color: #e32;
+	font-size: 160%;
+	font-weight: bold;
+}
+
+fieldset fieldset {
+	margin-top: 0px;
+	margin-bottom: 20px;
+	padding: 16px 10px;
+}
+
+fieldset fieldset legend {
+	font-weight: normal;
+}
+
+fieldset fieldset div {
+	clear: left;
+	margin: 0 20px;
+}
+
+form div {
+	display: inline;
+	vertical-align: text-top;
+}
+
+form div.input {
+	color: #444;
+}
+
+form div.required {
+	color: #333;
+	font-weight: bold;
+}
+
+label {
+	display: block;
+	padding-right: 20px;
+}
+
+input,textarea {
+	font-family: "frutiger linotype", "lucida grande", "verdana", sans-serif
+		;
+	padding: 2px;
+}
+
+select {
+	vertical-align: text-bottom;
+}
+
+select[multiple=multiple] {
+	
+}
+
+option {
+	padding: 0 3px;
+}
+
+div.radio label {
+	margin: 0 0 6px 20px;
+}
+
+/* Notices and Errors */
+div.message {
+	clear: both;
+	color: pink;
+	font-weight: bold;
+	margin: 0px;
+}
+
+div.error-message {
+	clear: both;
+	color: #900;
+	font-weight: bold;
+}
+
+p.error {
+	background-color: #e32;
+	color: #fff;
+	font-family: Courier, monospace;
+	line-height: 140%;
+	padding: 0.8em;
+	margin: 1em 0;
+}
+
+p.error em {
+	color: #000;
+	font-weight: normal;
+	line-height: 140%;
+}
+
+.notice {
+	background: #ffcc00;
+	color: #000;
+	display: block;
+	font-family: Courier, monospace;
+	line-height: 140%;
+	padding: 0.8em;
+	margin: 1em 0;
+}
+
+.success {
+	background: green;
+	color: #fff;
+}
+
+/*  Actions  */
+div.actions ul {
+	margin: 0px 0;
+	padding: 0;
+}
+
+div.actions li {
+	display: inline;
+	list-style-type: none;
+	line-height: 2em;
+	margin: 0 2em 0 0;
+	white-space: nowrap;
+}
+
+div.actions ul li a {
+	background: #fff;
+	color: #003d4c;
+	text-decoration: none;
+}
+
+div.actions ul li a:hover {
+	color: #333;
+	text-decoration: underline;
+}
+
+/* Related */
+div.related {
+	clear: both;
+	display: block;
+}
+
+/* Debugging */
+pre {
+	color: #000;
+	background: #f0f0f0;
+	padding: 1em;
+}
+
+pre.cake-debug {
+	background: #ffcc00;
+	font-size: 120%;
+	line-height: 140%;
+	margin-top: 1em;
+	overflow: auto;
+	position: relative;
+	font-size: xx-small;
+}
+
+div.cake-stack-trace {
+	background: #fff;
+	border: 4px dotted #ffcc00;
+	color: #333;
+	margin: 0px;
+	padding: 6px;
+	font-size: 120%;
+	line-height: 140%;
+	overflow: auto;
+	position: relative;
+}
+
+div.cake-code-dump pre {
+	position: relative;
+	overflow: auto;
+}
+
+div.cake-stack-trace pre,div.cake-code-dump pre {
+	color: #000;
+	background-color: #F0F0F0;
+	margin: 0px;
+	padding: 1em;
+	overflow: auto;
+}
+
+div.cake-code-dump pre,div.cake-code-dump pre code {
+	clear: both;
+	font-size: 12px;
+	line-height: 15px;
+	margin: 4px 2px;
+	padding: 4px;
+	overflow: auto;
+}
+
+div.cake-code-dump span.code-highlight {
+	background-color: #ff0;
+	padding: 4px;
+}
+
+div.code-coverage-results div.code-line {
+	padding-left: 5px;
+	display: block;
+	margin-left: 10px;
+}
+
+div.code-coverage-results div.uncovered span.content {
+	background: #ecc;
+}
+
+div.code-coverage-results div.covered span.content {
+	background: #cec;
+}
+
+div.code-coverage-results div.ignored span.content {
+	color: #aaa;
+}
+
+div.code-coverage-results span.line-num {
+	color: #666;
+	display: block;
+	float: left;
+	width: 20px;
+	text-align: right;
+	margin-right: 5px;
+}
+
+div.code-coverage-results span.line-num strong {
+	color: #666;
+}
+
+div.code-coverage-results div.start {
+	border: 1px solid #aaa;
+	border-width: 1px 1px 0px 1px;
+	margin-top: 30px;
+	padding-top: 5px;
+}
+
+div.code-coverage-results div.end {
+	border: 1px solid #aaa;
+	border-width: 0px 1px 1px 1px;
+	margin-bottom: 30px;
+	padding-bottom: 5px;
+}
+
+div.code-coverage-results div.realstart {
+	margin-top: 0px;
+}
+
+div.code-coverage-results p.note {
+	color: #bbb;
+	padding: 5px;
+	margin: 5px 0 10px;
+	font-size: 10px;
+}
+
+div.code-coverage-results span.result-bad {
+	color: #a00;
+}
+
+div.code-coverage-results span.result-ok {
+	color: #fa0;
+}
+
+div.code-coverage-results span.result-good {
+	color: #0a0;
+}
+
+.boton_grande {
+	width: 146px;
+	margin-right: 2px;
+	margin-bottom: 2px;
+	height: 120px;
+	float: left;
+	border: 1px solid grey;
+}
+
+
+#mesas-contenedor{
+	width: 99999999999999px; /* le puse este valor de width porque sino se me iban para abajo las LI qe estaban adentro y no me servia*/
+}
+
+
+#LeftArrow {
+	float: left;
+	background-image: url("img/arrow_left.png");
+	background-repeat: no-repeat;
+}
+
+#RightArrow {
+	float: right;
+	background-image: url("img/arrow_right.png");
+	background-repeat: no-repeat;
+}
+
+#UpArrow{
+	background-image: url("img/up.png");
+	background-repeat: no-repeat;
+	height: 66px;
+	width: 66px;
+	float: right;
+	margin-bottom: 10px;
+}
+
+#DownArrow{
+	background-image: url("img/down.png");
+	background-repeat: no-repeat;
+	height: 50px;
+	height: 66px;
+	width: 66px;
+	float: right;
+	}
+
+.arrow{
+	text-indent: -1000px;
+	background-color: transparent;	
+}
+.arrow IMG {
+	border: none;
+	width: 50px;
+	height: 50px;
+}
+
+#ScrollMesaBox {
+	float: left;
+	overflow: hidden;
+	width: 560px;
+	height: 88px;
+}
+
+
+
+#mesas-scrollbar{
+	position: absolute;
+	top: 434px;
+	left: 687px;
+	outline: 0;
+}
+#mesas-scrollbar A{
+display: block;
+height: 100%;
+width: 100%;
+outline: 0;
+}
+
+#sistem-nav{
+	position: absolute;
+	top: 500px;
+	left: 685px;
+}
+
+
+#items-listado {
+	display: block;
+	clear: both;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.productos-boton {
+	
+}
+
+
+
+
+.menu-margen A{
+	border: thin solid;
+	margin: 2px;
+}
+	
+	
+/********************************************************************************************
+	
+	MENU HORIZONTAL
+	
+*/
+.menu-horizontal UL LI {
+	list-style: none;
+	float: left;
+	list-style: none;
+	margin: 1px;
+	padding: 0px;
+}
+
+.menu-horizontal A {
+	padding: 0px;
+	min-height: 50px;
+	float:left;
+	border: solid black 2px;
+	max-width:100px;
+	min-width:50px;
+}
+
+
+/********************************************************************************************
+	
+	MENU VERTICAL
+	
+*/
+.menu-vertical UL LI {
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+	clear:both;
+	display:block;
+}
+
+.menu-vertical A LI {
+}
+
+.menu-vertical A {
+	width: 160px;
+	display: block;	
+	border:thin solid;
+	margin:2px;
+	min-height: 50px;
+}
+
+
+
+#categorias-listado{
+	width: 500px;
+	clear: both;
+	display: block;
+}
+
+#categorias-listado LI{
+	margin-bottom: 20px;
+}
+
+
+#productos-listado{
+	margin-top: 20px;
+	clear: both;
+	display: block;
+}
+
+
+#contenedor-comandas{
+	width: 772px;
+	height: 560px;
+}
+
+
+#productos-contenedor{
+	padding-top: 20px;
+	background-color:white;
+	border:2px solid grey;
+	height:538px;
+	width:520px;
+	font-size: 16px;
+	float: left;
+}
+
+
+
+#comanda{
+	background-color:white;
+	border:2px solid grey;
+	float: left;
+	height:556px;
+	width:240px;
+}
+
+#comanda-ul{
+	margin-left: 10px;
+	margin-top: 70px;
+	font-size: 14px;
+}
+
+#comanda-ul A{
+	width: 100px;
+}
+
+#comanda-enviar{
+ 	padding-left: 40px;
+}
+
+.mesa-cerrada{
+	background-color: pink;
+	background-image: url("img/delete.png");
+	background-position: 13px 23px;
+	background-repeat: no-repeat;
+	font-size: large;
+}
+
+.mesa-seleccionada{
+	-moz-border-radius-topleft:17px;
+	-moz-border-radius-topright:17px;
+	border-style:solid;
+	color:white;
+	margin-top:23px;
+	padding-top:5px;
+}
+
+
+#listado-clientes-paginador{
+}
+
+#listado-clientes-paginador span{
+	display: inline;
+	
+}
+
+
+
+
+#abrir-mesa{
+	background-image: url("img/new_tab.png");
+	background-repeat: no-repeat;
+	text-indent: -100px;
+}
+
+
+
+#f5-refresh{
+	background-image: url("img/refresh.png");
+	background-repeat: no-repeat;
+	background-position: 2px 4px;
+	text-indent: -1000px;
+}
