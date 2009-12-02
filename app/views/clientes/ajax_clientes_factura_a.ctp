@@ -8,14 +8,14 @@
 			<tr class="listado"> 
 				<th><?php echo $paginator->sort('Cuit', 'nrodocumento'); ?></th> 
 				<th><?php echo $paginator->sort('Denominación', 'nombre'); ?></th>
-				<th><?php echo $paginator->sort('Domicilio', 'domicilio'); ?></th>  
+				<!-- <th><?php echo $paginator->sort('Domicilio', 'domicilio'); ?></th> -->  
 				<th>+</th>  
 			</tr> 
 			   <?php foreach($clientes as $c): ?> 
 			<tr  class="listado"> 
 				<td><?php echo $c['Cliente']['nrodocumento']; ?> </td> 
 				<td><?php echo $c['Cliente']['nombre']; ?> </td>
-				<td><?php echo $c['Cliente']['domicilio']; ?> </td>  
+				<!--  <td><?php echo $c['Cliente']['domicilio']; ?> </td> -->  
 				<td><a href="#AgregarCliente" onclick="agregarClienteACurrentMesa(<?php echo $c['Cliente']['id'];?>)">ADD</a></td> 
 			</tr> 
 			<?php endforeach; ?> 

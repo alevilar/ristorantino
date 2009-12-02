@@ -29,7 +29,7 @@ var numPad = null; //este se tiene que llamar asi para que funcione
  * 
  * por lo general se usan con los modal windows ventanas y cosas por el estilo
  */
-	echo $this->renderElement('listar_clientes', array('cache'=>'1 hour'));		
+	echo $this->renderElement('listar_clientes');		
 	echo $this->renderElement('loading');
 	
 	echo $this->renderElement('adicion/comanda_cocina');	

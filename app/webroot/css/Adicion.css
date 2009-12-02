@@ -93,9 +93,47 @@ A:ACTIVE {
 	vertical-align: middle;
 	overflow: hidden;
 }
-
 .boton:HOVER{
 	background-color: ThreeDLightShadow;
+}
+
+
+.boton-ancho-largo{
+	display: block;
+	height: 70px;
+	width: 170px;	
+	\height: 68px;
+	\width: 168px;	
+	border: 1px solid grey;
+	text-align: center;
+	text-decoration: none;
+	/*background-color: silver;*/
+	vertical-align: middle;
+	overflow: hidden;
+}
+.boton-ancho-largo:HOVER{
+	background-color: ThreeDLightShadow;
+}
+
+
+.btn-comando{
+	display: block;
+	height: 70px;
+	width: 170px;	
+	\height: 68px;
+	\width: 168px;	
+	border: 1px groove grey;
+	background-color: maroon;
+	color: white;
+	text-align: center;
+	text-decoration: none;
+	vertical-align: middle;
+	overflow: hidden;
+}
+
+.btn-comando:HOVER{
+	background-color: silver;
+	color: white;
 }
 
 .redondeado{
@@ -851,15 +889,17 @@ outline: 0;
 	padding: 0px;
 }
 
-
+/*
 .menu-horizontal A {
 	padding: 0px;
 	min-height: 40px;
 	float:left;
 	border: solid black 2px;
-	max-width:100px;
+	max-width:180px;
 	min-width:45px;
+	width: 160px;
 }
+*/
 
 
 /********************************************************************************************
@@ -1024,4 +1064,16 @@ outline: 0;
 	background-image: url("img/entrada_48.png");
 	background-position: -2px;
 	text-indent: -1000px;
+}
+
+.categorias{
+	border-color: blue;
+}
+
+.productos{
+	border-color: orange;
+}
+
+.productos-con-sabores{
+	border-color: DeepPink;
 }

@@ -149,7 +149,7 @@ ComandaCocina = Class.create(Comanda, {
 				  if(p.saboresSeleccionados.legth == 0){ // si no es del tipo de productos que tiene sabores hacer esto
 					  var a = new Element('a',{
 						  			'id':'comanda-sacar-producto-'+p.getId(),
-						  			'class': claseEntrada,
+						  			'class': "boton "+claseEntrada,
 						  			//'onClick': "adicion.comanda.restar('"+Object.toJSON(p)+"')"
 						  			'onClick': "return false;"
 						  			}
@@ -158,7 +158,7 @@ ComandaCocina = Class.create(Comanda, {
 				  else{ // si tiene distintos sabores hacer esto
 					  var a = new Element('a',{
 				  			'id':'comanda-sacar-producto-'+p.getId(),
-				  			'class': 'producto-con-sabores'+claseEntrada,
+				  			'class': 'producto-con-sabores boton '+claseEntrada,
 				  			//'onClick': "adicion.comanda.restar('"+Object.toJSON(p)+"')"
 				  			'onClick': "return false;"
 				  			}
@@ -267,20 +267,12 @@ ComandaCocina = Class.create(Comanda, {
 	  },
 	  
 
-	  
-	  	  
 	  /**
-	   * Agrega un producto a la comanda
-	   * @param producto_agregar es el JSON del producto
-	   * @return 
+	   * @param Producto producto es el objeto producto qe quiero agregar
 	   */
-	  	add: function(producto_agregar) {
-		  var producto = new ProductoComanda();
-		  //covierto el JSON en productoComanda
-		  producto.copiar(producto_agregar);
-		  
+	  addProduct: function(producto){
 		  var prod_busq = new ProductoComanda();
-		 
+		  
 		  prod_busq = this.buscar(producto);
 		  
 		  if (prod_busq == null)
@@ -299,14 +291,29 @@ ComandaCocina = Class.create(Comanda, {
 		  return this.productos.length;
 	  },
 	  
+	  	  
+	  /**
+	   * Agrega un producto a la comanda
+	   * @param producto_agregar es el JSON del producto
+	   * @return 
+	   */
+	  	add: function(producto_agregar) {
+		  var producto = new ProductoComanda();
+		  //covierto el JSON en productoComanda
+		  producto.copiar(producto_agregar);
+		  
+		  return this.addProduct(producto);
+		  
+	  },
+	  
 	  
 	  
 	  guardarCambiosSeleccionSabores:function(){
 		  var producto = this.productoCreandoSabores;		  
 		 // producto.id = Math.random()*10000000000;
 		  
-		  var prod_busq = new ProductoComanda();		  
-		  
+		  //var prod_busq = new ProductoComanda();		  
+		  /*
 		  prod_busq = this.buscar(producto);
 		  
 		  if (prod_busq == null)
@@ -319,6 +326,8 @@ ComandaCocina = Class.create(Comanda, {
 		  
 
 		  this.actualizarComanda();
+		  */
+		  this.addProduct(producto);
 		  
 		  this.winSeleccion.hide();
 		  return this.productos.length;
@@ -340,21 +349,21 @@ ComandaCocina = Class.create(Comanda, {
 		  this.productoCreandoSabores.convertirEnProductoComanda(producto);
 		  var html = '';
 		  this.winSeleccion = new Window({	className: "dialog", 
-			  								width:170, 
-			  								height:600, 
-			  								resizable: false, 
+			  								width:700, 
+			  								height:500, 
+			  								resizable: true, 
 			  								title: "Sabores", 
 			  								//showEffect:Effect.show, 
 			  								//hideEffect: Effect.hide, 
-			  								draggable:false
+			  								draggable:true
 		  });
 		  
 		  
-		  var ul = new Element('ul',{'class':'menu-vertical'});
+		  var ul = new Element('ul',{'class':'menu-horizontal'});
 		  // para cada sabor le construyo el link asi lo puedo seleccionar
 		  this.productoCreandoSabores.sabores.each(function(sabor){
 			  var li = new Element('li');
-			  var a = new Element('a',{'href':'#seleccionarSabor'});
+			  var a = new Element('a',{'href':'#seleccionarSabor','class':'boton-ancho-largo'});
 			  a.update(sabor.name);
 			  a.observe('click',adicion.comanda.productoCreandoSabores.agregarSabor.bind(adicion.comanda.productoCreandoSabores,sabor));
 			  //a.observe('click',a.hide);

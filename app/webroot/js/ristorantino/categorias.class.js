@@ -105,7 +105,7 @@ Categorias.prototype = {
 		{
 			//producto.id = Math.random()*50000;
 			var a = new Element('a', { 
-				  'class': 'boton letra-chica productos', 
+				  'class': 'boton letra-chica productos-con-sabores', 
 				  'href': '#producto-'+producto.id, 
 				  'id': "producto-"+producto.id,
 				  'onclick': "return false;"
