@@ -149,7 +149,7 @@ ComandaCocina = Class.create(Comanda, {
 				  if(p.saboresSeleccionados.legth == 0){ // si no es del tipo de productos que tiene sabores hacer esto
 					  var a = new Element('a',{
 						  			'id':'comanda-sacar-producto-'+p.getId(),
-						  			'class': "boton "+claseEntrada,
+						  			'class': "boton-ancho-fijo "+claseEntrada,
 						  			//'onClick': "adicion.comanda.restar('"+Object.toJSON(p)+"')"
 						  			'onClick': "return false;"
 						  			}
@@ -158,7 +158,7 @@ ComandaCocina = Class.create(Comanda, {
 				  else{ // si tiene distintos sabores hacer esto
 					  var a = new Element('a',{
 				  			'id':'comanda-sacar-producto-'+p.getId(),
-				  			'class': 'producto-con-sabores boton '+claseEntrada,
+				  			'class': 'producto-con-sabores boton-ancho-fijo '+claseEntrada,
 				  			//'onClick': "adicion.comanda.restar('"+Object.toJSON(p)+"')"
 				  			'onClick': "return false;"
 				  			}

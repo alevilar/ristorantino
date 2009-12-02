@@ -42,7 +42,12 @@ class AdicionController extends AppController {
 	}
 	
 	
-	
+	/**
+	 * 
+	 * esta es la accion para que adicione la adicion
+	 * la diferencia aca es que se van amostrar todas las mesas abiertas independientemente del mozo
+	 * @return unknown_type
+	 */
 	function adicionar(){
 		$this->Mozo->id = $this->current_mozo_id;
 		$this->Mozo->hasMany['Mesa']['order'] = "created DESC";
@@ -50,9 +55,10 @@ class AdicionController extends AppController {
 		$this->data = $this->Mozo->read();
 		$this->set('mozos',$this->Mozo->dameActivos());
 		
-		
+		$this->Mesa->order = "Mesa.numero ASC";
 		$this->set('mesasabiertas',$this->Mesa->listado_de_abiertas());
 	}
+	
 	
 	
 	
@@ -77,6 +83,7 @@ class AdicionController extends AppController {
 		$this->current_mesa_numero = isset($this->data['Mesa'][0]['numero'])?$this->data['Mesa'][0]['numero']:0;
 
 		$this->redirect('adicionar/mozo_id:'.$this->current_mozo_id.'/mesa_id:'.$this->current_mesa_id.'/mesa_numero:'.$this->current_mesa_numero);
+		
 	}
 	
 }

@@ -176,7 +176,7 @@ class PrinterComponent extends Object {
 							$prod_sabor .= ', ' ;
 						}
 						else{
-							$prod_sabor .= 'de: [' ;
+							$prod_sabor .= ':: [' ;
 							$primero = false;
 						}
 						$prod_sabor .= $sabor['Sabor']['name'];

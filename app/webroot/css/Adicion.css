@@ -116,6 +116,23 @@ A:ACTIVE {
 }
 
 
+.boton-ancho-fijo{
+	display: block;
+	width: 70px;	
+	max-height: 168px;
+	min-height: 48px;
+	\width: 68px;	
+	border: 1px solid grey;
+	text-align: center;
+	text-decoration: none;
+	/*background-color: silver;*/
+	vertical-align: middle;
+	overflow: hidden;
+}
+.boton-ancho-fijo:HOVER{
+	background-color: ThreeDLightShadow;
+}
+
 .btn-comando{
 	display: block;
 	height: 70px;

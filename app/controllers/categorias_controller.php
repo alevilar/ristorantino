@@ -4,9 +4,6 @@ class CategoriasController extends AppController {
 	var $name = 'Categorias';
 	var $helpers = array('Html', 'Form','Cache');
 	
-	var $cacheAction = array(
-		'listar/' => '600000'
-	);
 	
 	
 	//var $layout;
@@ -27,6 +24,7 @@ class CategoriasController extends AppController {
 	}
 
 	function add() {
+		Cache::delete('categorias');
 		if (!empty($this->data)) {
 			$this->Categoria->create();
 			if ($this->Categoria->save($this->data)) {
@@ -42,6 +40,7 @@ class CategoriasController extends AppController {
 	}
 
 	function edit($id = null) {
+		Cache::delete('categorias');
 		if (!$id && empty($this->data)) {
 			$this->Session->setFlash(__('Invalid Categoria', true));
 			$this->redirect(array('action'=>'index'));
@@ -61,6 +60,7 @@ class CategoriasController extends AppController {
 	}
 
 	function delete($id = null) {
+		Cache::delete('categorias');
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for Categoria', true));
 			$this->redirect(array('action'=>'index'));
@@ -73,18 +73,17 @@ class CategoriasController extends AppController {
 	
 	
 	function listar(){
+		$this->cacheAction = true;
 		Configure::write('debug', 0);
 		$this->layout = 'ajax';
 		
 		
-		//$categorias = Cache::read('categorias_listado');
-		
-		//if ($categorias == false) {
+		if (($varjson = Cache::read('categorias')) === false) {
 			$categorias = $this->Categoria->array_listado();
-		//	Cache::write('categorias_listado', $categorias);	
-		//}
-		
-		$varjson =  json_encode($categorias);
+			$varjson =  json_encode($categorias);
+			Cache::write('categorias', $varjson);
+		}
+
 		$this->set(compact('varjson'));
 	}
 

@@ -73,18 +73,15 @@ class Comanda extends AppModel {
 
 		
 		$this->DetalleComanda->order = 'Producto.categoria_id';
+		/*
 		$this->DetalleComanda->recursive = 2;
 		
 		// le saco todos los modelos que no necesito paraqe haga mas rapido la consulta
 		$this->DetalleComanda->Producto->unBindModel(array('hasMany' => array('DetalleComanda'), 
 																 'belongsTo'=> array('Categoria')));
-		/*
-		$this->Comanda->DetalleComanda->Comanda->Mesa->unBindModel(array('belongsTo'=> array('Mozo','Cliente'), 
-															 'hasMany' => array('DetalleComanda'),
-															 'hasOne'=>array('Comensal','Pago')));
-*/															 
+												 
 		$this->DetalleComanda->DetalleSabor->unBindModel(array('belongsTo' => array('DetalleComanda')));
-		
+		*/
 		unset($condiciones);
 		$condiciones[]['Comanda.id'] = $this->id;
 		
@@ -104,11 +101,11 @@ class Comanda extends AppModel {
 														'contain'=>array(
 																			'Producto'=>array('Comandera'),
 																			'Comanda'=> array('Mesa'=>array('Mozo')),
-																			'DetalleSabor'		
+																			'DetalleSabor'=>array('Sabor(name)')
 			)
 											));
 
-													
+											debug($items);
 		return $items;
 	}
 	
