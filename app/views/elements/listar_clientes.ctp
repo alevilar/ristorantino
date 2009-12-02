@@ -1,4 +1,4 @@
-<div id="clientes-listar-container" style="width: 100%; height: 500px;">
+<div id="clientes-listar-container" style="float: left;">
 	<div id="clientes-listar-header">
 		<ul class="menu-horizontal letra-grande"><li><?php echo $ajax->link('Factura A', '/clientes/ajax_clientes_factura_a', array('update'=>'clientes-listado'));?></li></ul>
 		<ul class="menu-horizontal letra-grande"><li><?php echo $ajax->link('Cliente Con Descuento', '/clientes/ajax_clientes_con_descuento', array('update'=>'clientes-listado'));?></li></ul>

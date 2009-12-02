@@ -4,6 +4,11 @@ var Categorias = Class.create();
 
 Categorias.prototype = {
 		
+		
+		/**
+		 * recibe
+		 * @var JSon varArbolCategorias recibe un listado de productos y categorias
+		 */
 	  initialize: function(varArbolCategorias) {
 	    this.arbolCategorias = varArbolCategorias;
 	    
@@ -64,7 +69,7 @@ Categorias.prototype = {
 	construirLinkCategoria: function (categoria, divContenedor){
 		var li = new Element('li');
 		var a = new Element('a', { 
-			  'class': 'leta-chica', 
+			  'class': 'leta-chica boton categorias', 
 			  'href': '#categoria-'+categoria.id, 
 			  'id': "categoria-"+categoria.id,
 			  'onclick': 'manejadorCategorias.actualizarCategorias('+categoria.id+');return false'
@@ -90,7 +95,7 @@ Categorias.prototype = {
 		if(producto.sabores.length == 0)
 		{
 			var a = new Element('a', { 
-				  'class': 'boton letra-chica', 
+				  'class': 'boton letra-chica productos', 
 				  'href': '#producto-'+producto.id, 
 				  'id': "producto-"+producto.id,
 				  'onclick': "adicion.comanda.add('"+Object.toJSON(producto)+"');return false;"
@@ -100,7 +105,7 @@ Categorias.prototype = {
 		{
 			//producto.id = Math.random()*50000;
 			var a = new Element('a', { 
-				  'class': 'boton letra-chica', 
+				  'class': 'boton letra-chica productos', 
 				  'href': '#producto-'+producto.id, 
 				  'id': "producto-"+producto.id,
 				  'onclick': "return false;"

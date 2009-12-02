@@ -1,7 +1,15 @@
 <?php
+
+define('DETALLE_COMANDA_TRAER_TODO', 0);
+define('DETALLE_COMANDA_TRAER_PLATOS_PRINCIPALES', 1);
+define('DETALLE_COMANDA_TRAER_ENTRADAS', 2);
+
+
 class Comanda extends AppModel {
 
 	var $name = 'Comanda';
+	
+	var $actsAs = array('Containable');
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 	var $hasMany = array(
@@ -41,17 +49,27 @@ class Comanda extends AppModel {
 	}
 	
 	
+	
+	
+	
+	
+	
+	
+	
 	/**
 	 * @param comanda_id
+	 * @param con_entrada 	0 si quiero todos los productos
+	 * 						1 si quiero solo platos principales
+	 * 						2 si quiero solo las entradas
 	 *
 	 */
-	function listado_de_productos_con_sabores($id){
+	function listado_de_productos_con_sabores($id, $con_entrada = DETALLE_COMANDA_TRAER_TODOS){
 		//inicialiozo variable return
 		$items = array();
 
 		if($id != 0){
 			$this->id = $id;
-		}	
+		}
 
 		
 		$this->DetalleComanda->order = 'Producto.categoria_id';
@@ -67,9 +85,30 @@ class Comanda extends AppModel {
 */															 
 		$this->DetalleComanda->DetalleSabor->unBindModel(array('belongsTo' => array('DetalleComanda')));
 		
-		$items = $this->DetalleComanda->find('all',array('conditions'=>array('Comanda.id'=>$this->id)
+		unset($condiciones);
+		$condiciones[]['Comanda.id'] = $this->id;
+		
+		switch($con_entrada){
+			case DETALLE_COMANDA_TRAER_PLATOS_PRINCIPALES: // si quiero solo platos principales
+				$condiciones[]['DetalleComanda.es_entrada'] = 0;
+				break;
+			case DETALLE_COMANDA_TRAER_ENTRADAS: // si quiero solo entradas
+				$condiciones[]['DetalleComanda.es_entrada'] = 1;
+				break;
+			default: // si quiero todo = DETALLE_COMANDA_TRAER_TODoS
+				break;
+		}
+		
+		
+		$items = $this->DetalleComanda->find('all',array('conditions'=>$condiciones,
+														'contain'=>array(
+																			'Producto'=>array('Comandera'),
+																			'Comanda'=> array('Mesa'=>array('Mozo')),
+																			'DetalleSabor'		
+			)
 											));
-			
+
+													
 		return $items;
 	}
 	

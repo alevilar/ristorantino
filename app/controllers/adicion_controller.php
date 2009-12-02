@@ -49,6 +49,9 @@ class AdicionController extends AppController {
 		$this->Mozo->hasMany['Mesa']['conditions'] = "time_cobro = '0000-00-00 00:00:00'";
 		$this->data = $this->Mozo->read();
 		$this->set('mozos',$this->Mozo->dameActivos());
+		
+		
+		$this->set('mesasabiertas',$this->Mesa->listado_de_abiertas());
 	}
 	
 	

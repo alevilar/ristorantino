@@ -91,7 +91,6 @@ A:ACTIVE {
 	text-decoration: none;
 	/*background-color: silver;*/
 	vertical-align: middle;
-	font-family: fantasy;
 	overflow: hidden;
 }
 
@@ -718,13 +717,30 @@ div.code-coverage-results span.result-good {
 	color: #0a0;
 }
 
-.boton_grande {
+.boton-grande {
 	width: 146px;
 	margin-right: 2px;
 	margin-bottom: 2px;
 	height: 120px;
 	float: left;
 	border: 1px solid grey;
+}
+
+
+.boton-chico {	
+	display: block;
+	height: 50px;
+	width: 47px;	
+	\height: 48px;
+	\width: 45px;	
+	border: 1px solid grey;
+	text-align: center;
+	text-decoration: none;
+	/*background-color: silver;*/
+	vertical-align: middle;
+	font-family: verdana;
+	overflow: hidden;	
+	margin: 2px;
 }
 
 
@@ -827,7 +843,7 @@ outline: 0;
 	MENU HORIZONTAL
 	
 */
-.menu-horizontal UL LI {
+.menu-horizontal UL, .menu-horizontal LI {
 	list-style: none;
 	float: left;
 	list-style: none;
@@ -835,13 +851,14 @@ outline: 0;
 	padding: 0px;
 }
 
+
 .menu-horizontal A {
 	padding: 0px;
-	min-height: 50px;
+	min-height: 40px;
 	float:left;
 	border: solid black 2px;
 	max-width:100px;
-	min-width:50px;
+	min-width:45px;
 }
 
 
@@ -850,7 +867,7 @@ outline: 0;
 	MENU VERTICAL
 	
 */
-.menu-vertical UL LI {
+.menu-vertical UL, .menu-vertical LI {
 	list-style: none;
 	margin: 0px;
 	padding: 0px;
@@ -858,7 +875,7 @@ outline: 0;
 	display:block;
 }
 
-.menu-vertical A LI {
+.menu-vertical A, .menu-vertical  LI {
 }
 
 .menu-vertical A {
@@ -926,7 +943,7 @@ outline: 0;
 }
 
 #comanda-enviar{
- 	padding-left: 40px;
+	margin-left: 10px;
 }
 
 .mesa-cerrada{
@@ -970,5 +987,41 @@ outline: 0;
 	background-image: url("img/refresh.png");
 	background-repeat: no-repeat;
 	background-position: 2px 4px;
+	text-indent: -1000px;
+}
+
+
+
+.producto-es-entrada{
+	background-color: pink;
+}
+
+
+
+
+#btn-imprimir-comanda{
+	background-color: white;
+	background-image: url("img/print48.png");
+	background-position: -2px;
+	text-indent: -1000px;
+}
+
+#btn-sinimprimir-comanda{
+	background-color: white;
+	background-image: url("img/dontprint48.png");
+	background-position: -2px;
+	text-indent: -1000px;
+}
+
+#btn-observacion-comanda{
+	background-color: white;
+	background-image: url("img/pencil_48.png");
+	background-position: -2px;
+	text-indent: -1000px;
+}
+
+#btn-seleccionar-entradas{
+	background-image: url("img/entrada_48.png");
+	background-position: -2px;
 	text-indent: -1000px;
 }

@@ -139,8 +139,12 @@ class PrinterComponent extends Object {
 		//comanderas_involucradas es un array de IDś dlas comaderas involucradas en esta comanda
 		$comanderas_involucradas =  $Comanda->comanderas_involucradas($comanda_id);
 
-		$productos = $Comanda->listado_de_productos_con_sabores($comanda_id);
+		$entradas = $Comanda->listado_de_productos_con_sabores($comanda_id, DETALLE_COMANDA_TRAER_ENTRADAS);
+		
+		$platos_principales = $Comanda->listado_de_productos_con_sabores($comanda_id, DETALLE_COMANDA_TRAER_PLATOS_PRINCIPALES);
 
+		
+		$productos = array_merge($entradas, $platos_principales);
 
 		// genero el array lindo paraimprimir por cada comanda
 		// o sea, genero un renglón de la comanda
@@ -148,109 +152,133 @@ class PrinterComponent extends Object {
 		// "1) Milanesa de pollo\n"
 		foreach($comanderas_involucradas as $comandera_id):
 			
-		foreach($productos as $detalle):
-		// solo imprimir el producto que se imprime con esta comandera
-		if($detalle['Producto']['comandera_id']==$comandera_id){
-			$prod_cant = $detalle['DetalleComanda']['cant'];
-			$prod_name = $detalle['Producto']['name'];
-			$prod_sabor = '';
-			$primero = true;
-			foreach ( $detalle['DetalleSabor'] as $sabor){
-				if(!$primero){
-					$prod_sabor .= ', ' ;
-				}
-				else{
-					$prod_sabor .= 'de: [' ;
-					$primero = false;
-				}
-				$prod_sabor .= $sabor['Sabor']['name'];
+			$cant_entradas = count($entradas);
+			if($cant_entradas >0){
+					$prod_a_imprimir[] =	" -----        ENTRADAS       -----";
+					$prod_a_imprimir[] = 	" ";
 			}
-			$prod_sabor .= (count($detalle['DetalleSabor']) == 0)?'':']';
-				
-			$prod_a_imprimir[] =	"$prod_cant) $prod_name $prod_sabor";
-		}
-
-		endforeach;
-			
-		// imprimo el array de esta primer comanda
-		try {
-			//path y nombre del txt que voy a guardar en elpath temporal de la impresora par luego mandarlo a imprimir
-			$arch_name = $this->comanderas[$comandera_id]['Comandera']['path']."/printer_".$comandera_id."_comanda_".$comanda_id.".txt";
-
-			if(!file_exists($arch_name)){
-				// si el archivo no existe lo creo
-				$archivo_comanda = fopen($arch_name, "x+");
-				
-				// pongo el ESC para comenzar ESC/P
-				fwrite($archivo_comanda,chr(27).'@');
-			
-				
-					
-				// IMPRIMO EL HEADER
-				if($productos[0]['Comanda']['prioridad']){
-					$header = " - $title # $comanda_id -";
-					fwrite($archivo_comanda,'*****************************************');
-					fwrite($archivo_comanda,"\n");
-					fwrite($archivo_comanda,'*********** COMANDA PRIORIDAD ***********');
-					fwrite($archivo_comanda,"\n");
-					fwrite($archivo_comanda,"                 #$comanda_id");
-					fwrite($archivo_comanda,"\n");
-					fwrite($archivo_comanda,'*****************************************');
-					fwrite($archivo_comanda,"\n\n");
-				}else{
-					fwrite($archivo_comanda,"              Comanda  #$comanda_id");
-					fwrite($archivo_comanda,"\n\n");
+			$i = 0;
+			foreach($productos as $detalle):
+				if(($i == $cant_entradas) && count($platos_principales)>0){
+					$prod_a_imprimir[] = 	" ";
+					$prod_a_imprimir[] =	" -----   PLATOS PRINCIPALES   -----";
+					$prod_a_imprimir[] = 	" ";
 				}
 				
+				// solo imprimir el producto que se imprime con esta comandera
+				if($detalle['Producto']['comandera_id']==$comandera_id){
+					$prod_cant = $detalle['DetalleComanda']['cant'];
+					$prod_name = $detalle['Producto']['name'];
+					$prod_sabor = '';
+					$primero = true;
+					foreach ( $detalle['DetalleSabor'] as $sabor){
+						if(!$primero){
+							$prod_sabor .= ', ' ;
+						}
+						else{
+							$prod_sabor .= 'de: [' ;
+							$primero = false;
+						}
+						$prod_sabor .= $sabor['Sabor']['name'];
+					}
+					$prod_sabor .= (count($detalle['DetalleSabor']) == 0)?'':']';
+						
+					$prod_a_imprimir[] =	"$prod_cant) $prod_name $prod_sabor";
+				}
+				$i++;
+			endforeach;
+			
+			// imprimo el array de esta primer comanda
+			try {
+				//path y nombre del txt que voy a guardar en elpath temporal de la impresora par luego mandarlo a imprimir
+				$arch_name = $this->comanderas[$comandera_id]['Comandera']['path']."/printer_".$comandera_id."_comanda_".$comanda_id.".txt";
+	
+				if(!file_exists($arch_name)){
+					// si el archivo no existe lo creo
+					$archivo_comanda = fopen($arch_name, "x+");
 					
-				foreach($prod_a_imprimir as $item){
-					if(!fwrite($archivo_comanda,$item)) throw new Exception("no se puede escribir en el archivo: $arch_name");
+					// pongo el ESC para comenzar ESC/P
+					fwrite($archivo_comanda,chr(27).'@');
+				
+					
+						
+					// IMPRIMO EL HEADER
+					if($productos[0]['Comanda']['prioridad']){
+						$header = " - $title # $comanda_id -";
+						fwrite($archivo_comanda,'*****************************************');
+						fwrite($archivo_comanda,"\n");
+						fwrite($archivo_comanda,'*********** COMANDA PRIORIDAD ***********');
+						fwrite($archivo_comanda,"\n");
+						fwrite($archivo_comanda,"                 #$comanda_id");
+						fwrite($archivo_comanda,"\n");
+						fwrite($archivo_comanda,'*****************************************');
+						fwrite($archivo_comanda,"\n\n");
+					}else{
+						fwrite($archivo_comanda,"              Comanda  #$comanda_id");
+						fwrite($archivo_comanda,"\n\n");
+					}
+					
+					
+					if($productos[0]['Comanda']['observacion']){
+						fwrite($archivo_comanda,' --       --      --     --      --      --');
+						fwrite($archivo_comanda,"\n");
+						fwrite($archivo_comanda,'   OBSERVACION :');
+						fwrite($archivo_comanda,"\n");
+						fwrite($archivo_comanda,$productos[0]['Comanda']['observacion']);
+						fwrite($archivo_comanda,"\n");
+						fwrite($archivo_comanda,"\n");
+					}
+					
+						
+					foreach($prod_a_imprimir as $item){
+						if(!fwrite($archivo_comanda,$item)) throw new Exception("no se puede escribir en el archivo: $arch_name");
+						fwrite($archivo_comanda,"\n");
+					}				
+					
+					$tail = " \n - Mesa #: ".$productos[0]['Comanda']['Mesa']['numero'];
+					fwrite($archivo_comanda,$tail);
+					
+					$tail = " \n - Mozo #: ".$productos[0]['Comanda']['Mesa']['Mozo']['numero'];
+					fwrite($archivo_comanda,$tail);
+					
+					
+					$tail =" -               ".date('H:i:s',strtotime('now'))."\n";
+					fwrite($archivo_comanda,$tail);
+					
+					
+					
+					//  retorno de carro
+					fwrite($archivo_comanda,chr(13));
+					fwrite($archivo_comanda,'-  -  -  -  -  -  -  -  -  -  -  -  -  -  -');
 					fwrite($archivo_comanda,"\n");
-				}				
-				
-				$tail = " \n - Mesa #: ".$productos[0]['Comanda']['Mesa']['numero'];
-				fwrite($archivo_comanda,$tail);
-				
-				
-				$tail =" -               ".date('H:i:s',strtotime('now'))."\n";
-				fwrite($archivo_comanda,$tail);
-				
-				
-				
-				//  retorno de carro
-				fwrite($archivo_comanda,chr(13));
-				fwrite($archivo_comanda,'-  -  -  -  -  -  -  -  -  -  -  -  -  -  -');
-				fwrite($archivo_comanda,"\n");
-				fwrite($archivo_comanda,"\n");
-				fwrite($archivo_comanda,"\n");
-				fwrite($archivo_comanda,"\n");
-				fwrite($archivo_comanda,"\n");
-				fwrite($archivo_comanda,"\n");
-				fwrite($archivo_comanda,"\n");
-				flush();
-				
-				
-				// probando corte completo ESC/P
-				fwrite($archivo_comanda,chr(27).'i');
-				
+					fwrite($archivo_comanda,"\n");
+					fwrite($archivo_comanda,"\n");
+					fwrite($archivo_comanda,"\n");
+					fwrite($archivo_comanda,"\n");
+					fwrite($archivo_comanda,"\n");
+					fwrite($archivo_comanda,"\n");
+					flush();
 					
-				fclose($archivo_comanda);
+					
+					// probando corte completo ESC/P
+					fwrite($archivo_comanda,chr(27).'i');
+					
+						
+					fclose($archivo_comanda);
+				}
+			} catch (Exception $e) {
+				return 'Error: '.  $e->getMessage();
 			}
-		} catch (Exception $e) {
-			return 'Error: '.  $e->getMessage();
-		}
 			
 			
-		//si paso todo bien la creacion del archivo la mando a imprimir
-		$comandera_name = $this->comanderas[$comandera_id]['Comandera']['name'];
-		$comando = "lp -d $comandera_name $arch_name";
-		$retorno = exec($comando);
-		//debug("Se mando el comando". $comando." ---El EL JOB ID es->> ".$retorno);
-			
-		return $retorno;
+			//si paso todo bien la creacion del archivo la mando a imprimir
+			$comandera_name = $this->comanderas[$comandera_id]['Comandera']['name'];
+			$comando = "lp -d $comandera_name $arch_name";
+			$retorno = exec($comando);
+			//debug("Se mando el comando". $comando." ---El EL JOB ID es->> ".$retorno);
+				
+			return $retorno;
 		endforeach;
-
-
 	}
 
 

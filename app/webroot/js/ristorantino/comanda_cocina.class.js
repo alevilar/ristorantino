@@ -30,31 +30,24 @@ ComandaCocina = Class.create(Comanda, {
 	     */
 	    this.prioridad = 0;
 	    
-	    this.h1 = new Element('H1').update("Comanda");    
-	    this.h1.observe('click',this.tooglePrioridad.bind(this));
-	    
-	    $('contenedor-comandas').appendChild(new Element('div',{'id': 'comanda'})).appendChild(this.h1);
-	    $('comanda').appendChild(new Element('p',{'id':'comanda-enviar', 'class': 'menu-horizontal'}));
-	    
-	    div1 = new Element('div',{'class': 'menu-horizontal menu-margen'});
-	    div1.appendChild(new Element('ul',{'id':'comanda-ul'}));
-	    $('comanda').appendChild(div1);
-	    
-	    //$('comanda').appendChild(new Element('ul',{'id':'comanda-ul', 'class': 'menu-vertical'}));
 	    
 	    
-		$('comanda-enviar').appendChild(new Element('a', {
-				'class':'boton letra-chica',
-				'href': '#EnviarComanda',
-				'onClick': 'adicion.comanda.imprimirComanda(); return false;'})).update("Mandar Comanda");
-		
-		$('comanda-enviar').appendChild(new Element('a', {
-				'class':'boton letra-chica',
-				'href': '#EnviarComandaNoImprimir',
-				'onClick': 'adicion.comanda.guardarComanda(); return false;'})).update("Sin imprimir");	  
-		
-		
 	    
+	    /**
+	     * es un boolean que nos dice si los productos seleccionados son entradas o no 
+	     */
+	    this.entrada = false;
+	    
+	  },
+	  
+	  
+	  
+	  /**
+	   * Pone la prioridad en 0 cer nuevamente 
+	   */
+	  resetPrioridad: function(){
+			  this.prioridad = 0;
+			  $("comanda-prioridad-titulo").update('Comanda');
 	  },
 
 	  
@@ -65,18 +58,74 @@ ComandaCocina = Class.create(Comanda, {
 	  tooglePrioridad: function(){
 		  if(this.prioridad == false){
 			  this.prioridad = 1;
-			  this.h1.update('Comanda Prioridad');
+			  $("comanda-prioridad-titulo").update('Comanda Prioridad');
 		  }
 		  else{
 			  this.prioridad = 0;
-			  this.h1.update('Comanda');
+			  $("comanda-prioridad-titulo").update('Comanda');
 		  }
 	  },
 	  
+	  
+	  
+	  
 	  resetearComanda: function($super, varMozo, varMesa){
 		  $super(varMozo, varMesa);
-		  $('comanda-ul').update(""); // le vacio el contenido          
+			  this.resetPrioridad();
+			  this.resetObservacion();
+			  this.resetEntradas();
+			  $('comanda-ul').update(""); // le vacio el contenido
+			 
+		 
+		            
 	  },
+	  
+	  
+	  
+	  
+	  /**
+	   * 
+	   * muestra el textarea para escribir una observacion.
+	   * este se ejecutra al hacer clic ek en boton de observaciones de la comanda
+	   */
+	  agregarObservacion: function(){
+		  if($('productos-contenedor').visible()){
+			  $('comanda-observacion-div').show();
+			  $('productos-contenedor').hide();
+		  }
+		  else{
+			  $('comanda-observacion-div').hide();
+			  $('productos-contenedor').show();
+		  }
+	 },
+	 
+	 resetObservacion: function(){
+		 $('comanda-observacion').setValue("");
+		 $('comanda-observacion-div').hide();
+		 $('productos-contenedor').show();
+	 },
+	  
+	  
+	  /**
+	   * es la funcion que llama el boton qu activa las entradas
+	   * 
+	   */
+	  seleccionarEntradas: function(){
+		  if(this.entrada){
+			  this.entrada = false;
+			  $('btn-seleccionar-entradas').removeClassName('boton-apretado');
+		  }
+		  else{			  
+			  this.entrada = true;
+			  $('btn-seleccionar-entradas').addClassName('boton-apretado');
+		  }
+	  },
+	  
+	  resetEntradas: function(){
+		  this.entrada = false;
+		  $('btn-seleccionar-entradas').removeClassName('boton-apretado');
+	  },
+	  
 	  
 	  
 	  /**
@@ -91,9 +140,16 @@ ComandaCocina = Class.create(Comanda, {
 			  if(p.cantidad > 0){
 				  var li = new Element('li');
 				  
+				  
+				  // si el producto esta marcado como entrada, entonces le pongo la clase para marcarlo
+				  var claseEntrada = ''; 
+				  if(p.entrada){
+					  claseEntrada = " producto-es-entrada ";
+				  }
 				  if(p.saboresSeleccionados.legth == 0){ // si no es del tipo de productos que tiene sabores hacer esto
 					  var a = new Element('a',{
 						  			'id':'comanda-sacar-producto-'+p.getId(),
+						  			'class': claseEntrada,
 						  			//'onClick': "adicion.comanda.restar('"+Object.toJSON(p)+"')"
 						  			'onClick': "return false;"
 						  			}
@@ -102,6 +158,7 @@ ComandaCocina = Class.create(Comanda, {
 				  else{ // si tiene distintos sabores hacer esto
 					  var a = new Element('a',{
 				  			'id':'comanda-sacar-producto-'+p.getId(),
+				  			'class': 'producto-con-sabores'+claseEntrada,
 				  			//'onClick': "adicion.comanda.restar('"+Object.toJSON(p)+"')"
 				  			'onClick': "return false;"
 				  			}
@@ -150,11 +207,8 @@ ComandaCocina = Class.create(Comanda, {
 	   * envia la comanda usando ajax para que PHp la procese, guarde todo en BD y mande a imprimir la comanda
 	   */
 	  enviarComanda: function(imprimir){
-		  //alert(imprimir);
-		  //alert(this.prioridad);
-		  
-		  //console.info("Se envió una comanda para imprimir, la del mozo "+this.mozo.id+" mesa "+this.mesa.id);
 		  //armo el formulario que voy  a enviar
+		  																	//URL = DetalleComandas/add
 		  var formulario = new Element('form', {'name':'Comanda', 'action':this.urlEnviarComanda+'/mesa_id:'+this.mesa.id+'/mozo_id:'+this.mozo.id});
 		 	
 		  //voy armando el formulario y generando el $this->data[]
@@ -163,12 +217,19 @@ ComandaCocina = Class.create(Comanda, {
 		  
 		  formulario.appendChild(new Element('input', {'name': 'data[Comanda][prioridad]'}).setValue(this.prioridad)); //avisa si la comanda va con prioridad o no
 		  formulario.appendChild(new Element('input', {'name': 'data[Comanda][mesa_id]'}).setValue(this.mesa.id));
+		  formulario.appendChild(new Element('input', {'name': 'data[Comanda][observacion]'}).setValue($F('comanda-observacion')));
 		  // le agrego los productos con su rspectiva catidad
 		  var count = 0; 
 		  this.productos.each(function(p){
 			  if(p.cantidad > 0){
 				  formulario.appendChild(new Element('input', {'name': 'data['+count+'][DetalleComanda][producto_id]'}).setValue(p.getId()));
 				  formulario.appendChild(new Element('input', {'name': 'data['+count+'][DetalleComanda][cant]'}).setValue(p.getCantidad()));
+				  
+				  var prod_entrada = 0;
+				  if(p.entrada){
+					  prod_entrada = 1;
+				  }
+				  formulario.appendChild(new Element('input', {'name': 'data['+count+'][DetalleComanda][es_entrada]'}).setValue(prod_entrada));
 				  formulario.appendChild(new Element('input', {'name': 'data['+count+'][DetalleComanda][comandera_id]'}).setValue(p.getComanderaId()));
 				  	  
 				  var cont2 = 0;
@@ -211,26 +272,28 @@ ComandaCocina = Class.create(Comanda, {
 	  /**
 	   * Agrega un producto a la comanda
 	   * @param producto_agregar es el JSON del producto
-	   * @return
+	   * @return 
 	   */
 	  	add: function(producto_agregar) {
 		  var producto = new ProductoComanda();
 		  //covierto el JSON en productoComanda
 		  producto.copiar(producto_agregar);
 		  
-		  
 		  var prod_busq = new ProductoComanda();
 		 
 		  prod_busq = this.buscar(producto);
 		  
 		  if (prod_busq == null)
-		  {   // si no estaba en la coleccion lo meto	
+		  {   // si no estaba en la coleccion lo meto
+			  
+			  //si esta seleccionada la opcion producto como "entrada" entonces el producto es una entrada
+			  producto.entrada = this.entrada; 
 			  this.__agregarProducto(producto);
 		  }
 		  else{ // ya estaba en la coleccion , asqiue solo le incremento el valor cantidad
 			  prod_busq.sumar();
-		  }
-		  
+			  prod_busq.entrada = this.entrada;
+		  }		  
 
 		  this.actualizarComanda();
 		  return this.productos.length;

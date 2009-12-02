@@ -1,13 +1,13 @@
-<div id="clientes-listar-container" style="width: 100%; height: 500px;">
+<div id="clientes-listar-container" style="float: left;">
 	<div id="clientes-listar-header">
-		<ul class="menu-horizontal letra-grande"><li><a href="/ristorantino/clientes/ajax_clientes_factura_a" id="link932914954" onclick=" event.returnValue = false; return false;">Factura A</a><script type="text/javascript">
+		<ul class="menu-horizontal letra-grande"><li><a href="/ristorantino/clientes/ajax_clientes_factura_a" id="link1193416067" onclick=" event.returnValue = false; return false;">Factura A</a><script type="text/javascript">
 //<![CDATA[
-Event.observe('link932914954', 'click', function(event) { new Ajax.Updater('clientes-listado','/ristorantino/clientes/ajax_clientes_factura_a', {asynchronous:true, evalScripts:true, requestHeaders:['X-Update', 'clientes-listado']}) }, false);
+Event.observe('link1193416067', 'click', function(event) { new Ajax.Updater('clientes-listado','/ristorantino/clientes/ajax_clientes_factura_a', {asynchronous:true, evalScripts:true, requestHeaders:['X-Update', 'clientes-listado']}) }, false);
 //]]>
 </script></li></ul>
-		<ul class="menu-horizontal letra-grande"><li><a href="/ristorantino/clientes/ajax_clientes_con_descuento" id="link1045712550" onclick=" event.returnValue = false; return false;">Cliente Con Descuento</a><script type="text/javascript">
+		<ul class="menu-horizontal letra-grande"><li><a href="/ristorantino/clientes/ajax_clientes_con_descuento" id="link954541773" onclick=" event.returnValue = false; return false;">Cliente Con Descuento</a><script type="text/javascript">
 //<![CDATA[
-Event.observe('link1045712550', 'click', function(event) { new Ajax.Updater('clientes-listado','/ristorantino/clientes/ajax_clientes_con_descuento', {asynchronous:true, evalScripts:true, requestHeaders:['X-Update', 'clientes-listado']}) }, false);
+Event.observe('link954541773', 'click', function(event) { new Ajax.Updater('clientes-listado','/ristorantino/clientes/ajax_clientes_con_descuento', {asynchronous:true, evalScripts:true, requestHeaders:['X-Update', 'clientes-listado']}) }, false);
 //]]>
 </script></li></ul>
 	

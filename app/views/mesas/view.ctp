@@ -5,7 +5,11 @@ fabricaMesa = new FabricaMesa(<?php echo $mesa_json?>);
 mesaCambiar = fabricaMesa.getMesa();
 
 
+var fabricaMozo = new FabricaMozo(<?php echo $mozo_json?>);
+var mozoCambiar = fabricaMozo.getMozo();
+
 adicion.cambiarMesa(mesaCambiar);
+adicion.cambiarMozo(mozoCambiar);
 
 //-->
 </script>

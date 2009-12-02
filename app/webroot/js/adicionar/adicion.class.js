@@ -73,12 +73,18 @@ Adicion.prototype = {
 		setCurrentMesa: function(mesa){
 			this.currentMesa = mesa;
 		},
+		
+		
+		cambiarMozo: function(mozoCambiar){
+			this.currentMozo = mozoCambiar;
+			$('mozo-numero').update("Mozo "+this.currentMozo.numero);
+		},
 
 		//cambia de mesa
 		cambiarMesa: function (mesaCambiar)
 		{						
 			this.setCurrentMesa(mesaCambiar);
-				
+
 			this.comanda.resetearComanda(this.currentMozo, this.currentMesa);	
 					
 			if(this.currentMesa)

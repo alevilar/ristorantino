@@ -13,6 +13,7 @@ var ProductoComanda = Class.create(Producto,{
 	initialize: function($super) {
 		$super();
 		this.cantidad = 0;
+		this.entrada = false;
 		this.sabores =  new Array();
 		this.saboresSeleccionados =  new Array();
 	},
