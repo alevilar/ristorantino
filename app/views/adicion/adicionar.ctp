@@ -41,7 +41,13 @@ var numPad = null; //este se tiene que llamar asi para que funcione
 ?>
 
 	<div id="adicion-cabecera">
-		<?php echo $this->renderElement('adicion/cambiar_mozo');?>		
+		
+
+		<a href="#F5Refresh" id="f5-refresh" class="boton" style="float: left" onclick="parent.location.reload();">
+		Refresh
+		</a>
+		<?php echo $this->renderElement('adicion/cambiar_mesa_listar_todas_abiertas');?>	
+			
 		<?php echo $this->renderElement('mensajes');?>		
 	</div>	
 
@@ -51,6 +57,8 @@ var numPad = null; //este se tiene que llamar asi para que funcione
 	
 	
 <div id="mesas-listado">
+	<?php echo $this->renderElement('adicion/cambiar_mozo');?>	
+	
     <div id="LeftArrow">
        <?= $html->link("Izquierda",      					
        					'#moveLeft',

@@ -2,6 +2,7 @@
 class Mesa extends AppModel {
 
 	var $name = 'Mesa';
+	var $actsAs = array('Containable');
 
 	
 	var $validate = array(
@@ -168,12 +169,18 @@ class Mesa extends AppModel {
 	
 	
 	function listado_de_abiertas($recursive = -1){
-		$this->recursive = $recursive;
 		
 		$conditions = array("Mesa.time_cobro" => "0000-00-00 00:00:00",
 							"Mesa.time_cerro" => "0000-00-00 00:00:00");
 		
-		return $this->find('all', array('conditions'=>$conditions));
+		if($recursive>-1){
+			$this->recursive = $recursive;			
+			$mesas = $this->find('all', array('conditions'=>$conditions));
+		}			
+		else{
+			$mesas = $this->find('all', array('conditions'=>$conditions,'contain'=>array('Mozo(numero)')));
+		}
+		return $mesas;
 	}
 	
 	

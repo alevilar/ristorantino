@@ -11,6 +11,9 @@ var mozoCambiar = fabricaMozo.getMozo();
 adicion.cambiarMesa(mesaCambiar);
 adicion.cambiarMozo(mozoCambiar);
 
+
+$("btn-cambio-rapido-de-mesa").update("Mesa "+mesaCambiar.numero+"<br />Mozo "+mozoCambiar.numero);
+
 //-->
 </script>
 

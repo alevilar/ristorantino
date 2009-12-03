@@ -436,18 +436,18 @@ class PrinterComponent extends Object {
 		$this->__setMozoMesa($mozo, $mesa);
 		
 		$comandos = $this->generadorComando->setCustomerData(	$cliente['nombre'],
-																		$cliente['nrodocumento'],
-																		$cliente['responsabilidad_iva'],
-																		$cliente['tipodocumento'],
-																		$cliente['domicilio']
-																);
+																$cliente['nrodocumento'],
+																$cliente['responsabilidad_iva'],
+																$cliente['tipodocumento'],
+																$cliente['domicilio']
+															);
 		
 		switch ($comandos){
 			case -1:
 				$this->log("comandos_fiscales_hassar_441::setCustomerData():: El tipo de documento no es válido: ".$cliente['tipodocumento'], LOG_ERROR);
 				return false;
 			case -2:
-				$this->log("comandos_fiscales_hassar_441::setCustomerData():: La responsabilidad frente al IVA no es válidad".$cliente['responsabilidad_iva'], LOG_ERROR);
+				$this->log("comandos_fiscales_hassar_441::setCustomerData():: La responsabilidad frente al IVA no es válida".$cliente['responsabilidad_iva'], LOG_ERROR);
 				return false;
 			default:
 				$this->vcomandos[] = $comandos;
@@ -459,8 +459,14 @@ class PrinterComponent extends Object {
 
 		//inserto los productos en vcomandas y cierro la mesa
 		$this-> __setProductosYCerrar($productos);
-
-		return $this->printHasarFiscal("ticketMesa$mesa");
+		
+		if($this->printHasarFiscal("ticketMesa$mesa")){
+			$this->log("Se imprimió una factura A correctamente", LOG_INFO);	
+			return true;
+		}else{
+			$this->log("Falló al imprimir una factura A", LOG_ERROR);
+			return false;
+		}
 	}
 
 

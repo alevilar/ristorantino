@@ -280,10 +280,9 @@ ul,li {
 }
 
 #mesas-listado {
-	left:48px;
 	position:absolute;
 	top:89px;
-	width:700px;
+	width:785px;
 }
 
 #mesas-listado UL{

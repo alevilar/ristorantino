@@ -1,2 +1,2 @@
-1259794828
+1259812264
 a:10:{s:4:"libs";a:1:{i:0;s:32:"/var/www/ristorantino/cake/libs/";}s:5:"model";a:1:{i:0;s:38:"/var/www/ristorantino/cake/libs/model/";}s:8:"behavior";a:1:{i:0;s:48:"/var/www/ristorantino/cake/libs/model/behaviors/";}s:10:"controller";a:1:{i:0;s:43:"/var/www/ristorantino/cake/libs/controller/";}s:9:"component";a:1:{i:0;s:54:"/var/www/ristorantino/cake/libs/controller/components/";}s:4:"view";a:1:{i:0;s:37:"/var/www/ristorantino/cake/libs/view/";}s:6:"helper";a:1:{i:0;s:45:"/var/www/ristorantino/cake/libs/view/helpers/";}s:4:"cake";a:1:{i:0;s:27:"/var/www/ristorantino/cake/";}s:6:"vendor";a:1:{i:0;s:30:"/var/www/ristorantino/vendors/";}s:5:"shell";a:1:{i:0;s:40:"/var/www/ristorantino/cake/console/libs/";}}

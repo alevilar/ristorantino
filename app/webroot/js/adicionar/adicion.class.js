@@ -77,7 +77,7 @@ Adicion.prototype = {
 		
 		cambiarMozo: function(mozoCambiar){
 			this.currentMozo = mozoCambiar;
-			$('mozo-numero').update("Mozo "+this.currentMozo.numero);
+			//$('mozo-numero').update("Mozo "+this.currentMozo.numero);
 		},
 
 		//cambia de mesa

@@ -56,7 +56,7 @@ class AdicionController extends AppController {
 		$this->set('mozos',$this->Mozo->dameActivos());
 		
 		$this->Mesa->order = "Mesa.numero ASC";
-		$this->set('mesasabiertas',$this->Mesa->listado_de_abiertas());
+		$this->set('mesasabiertas',$this->Mesa->listado_de_abiertas($recursividad = -1));
 	}
 	
 	

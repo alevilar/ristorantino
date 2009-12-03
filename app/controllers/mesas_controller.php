@@ -80,6 +80,7 @@ class MesasController extends AppController {
 		$productos = $this->Mesa->dameProductosParaTicket();
 		
 		$mesa = $this->Mesa->read();
+		
 		$mesa_nro = $mesa['Mesa']['numero'];
 		$mozo_nro = $mesa['Mozo']['numero'];
 		
@@ -109,21 +110,25 @@ class MesasController extends AppController {
 		$imprimio_ticket = false;
 		$tipoticket = 'Ticket Factura "B"';		
 		$porcentaje_descuento = 0;
-		if (empty($mesa['Cliente'])):
+		
+		if(empty($mesa['Cliente'])):
+		
 			$print_success = $this->Printer->imprimirTicket($prod, $mozo_nro, $mesa_nro);
-			$imprimio_ticket = true;
-			
+			$imprimio_ticket = true;	
+		
 		elseif($mesa['Cliente']['imprime_ticket'] > 0 || $mesa['Cliente']['imprime_ticket'] == ''):
 				switch($mesa['Cliente']['tipofactura']):
 					case 'A':
 						$print_success = $this->Printer->imprimirTicketFacturaA($prod, $mesa['Cliente'], $mozo_nro, $mesa_nro);
 						$tipoticket = 'Ticket Factura "A"';
+						$this->log("se imprimio una factura A para la mesa $mesa_nro, mozo $mozo_nro",LOG_INFO);
 						$imprimio_ticket = true;
 						break;
 					case '':
 					case 'B':
 						$print_success = $this->Printer->imprimirTicket($prod, $mozo_nro, $mesa_nro);
 						$tipoticket = 'Ticket Factura "B"';
+						$this->log("se imprimio una factura B para la mesa $mesa_nro, mozo $mozo_nro",LOG_INFO);
 						$imprimio_ticket = true;
 						break;
 					default:						
@@ -135,9 +140,10 @@ class MesasController extends AppController {
 							}
 						}
 						$print_success = $this->Printer->imprimirTicketConComandera($prod, $mozo_nro, $mesa_nro,$porcentaje_descuento);
+						$this->log("se imprimio un ticket no fiscal desde comandera como remito para la mesa $mesa_nro, mozo $mozo_nro",LOG_INFO);
 						$tipoticket = 'Ticket Descuento';
 						$imprimio_ticket = true;
-				endswitch;				
+				endswitch;		
 		endif;
 		
 		$vreturn['print_success'] = false;
