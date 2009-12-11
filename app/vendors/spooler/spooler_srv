@@ -3,6 +3,7 @@ set -x
 
 SCRIPT=/var/www/ristorantino/app/vendors/spooler/hasar_spooler.sh
 DIA=`date +%d-%m-%y`
+SCRIPTKEEPALIVE=/var/www/ristorantino/app/vendors/spooler/hasar_spooler_keep_alive.sh
 
 CARPETA_FUENTE=/tmp/fuente
 CARPETA_DESTINO=/tmp/dest
@@ -13,6 +14,7 @@ case "$1" in
     start)
 
 	sh $SCRIPT &
+	sh $SCRIPTKEEPALIVE &
 	RETVAL=$?
     ;;
     stop)
