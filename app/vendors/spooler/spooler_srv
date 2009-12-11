@@ -1,4 +1,4 @@
-set -x
+#set -x
 #!/bin/bash
 
 SCRIPT=/var/www/ristorantino/app/vendors/spooler/hasar_spooler.sh
@@ -15,20 +15,34 @@ case "$1" in
 
 	sh $SCRIPT &
 	sh $SCRIPTKEEPALIVE &
+	echo "se iniciaron los servicios del spooler correctamente";
 	RETVAL=$?
     ;;
     stop)
       PROC_ID=`ps -fea | grep hasar_spooler | grep -v grep | awk '{print $3}'`
-      #killall -9 prueba.sh
       kill -9 $PROC_ID
-      killall -9 spooler
-      echo "cerrando........"
+	  echo $PROC_ID
+      echo "Se cerró el hasar_spooler.sh"
+	  
+	  PROC_ID=`ps -fea | grep hasar_spooler_keep_alive.sh | grep -v grep | awk '{print $3}'`
+      kill -9 $PROC_ID2
+	  echo $PROC_ID2
+      echo "Se cerró el hasar_spooler_keep_alive.sh"
+	  
+	  PROC_ID=`ps -fea | grep spooler | grep -v grep | awk '{print $3}'`
+      kill -9 $PROC_ID3
+	  echo $PROC_ID3
+      echo "Se cerró el spooler"
       RETVAL=$?
     ;;
     restart)
-      stop
-      start
-      RETVAL=$?
+      #stop
+      #start
+	  cd /etc/init.d
+	  ./spooler_srv stop
+	  cd /etc/init.d
+	  ./spooler_srv start
+	  RETVAL=$?
     ;;
     *)
       echo "Este es el servidor del spooler de Hasar: spoler_srv {startstoprestart}"
