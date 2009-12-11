@@ -59,6 +59,11 @@ class AppController extends Controller {
         {       
         	$llAuth = false;
         	
+			if($this->RequestHandler->isAjax()){
+				$llAuth = true;
+				return $llAuth;
+			}
+			
         	if ($this->name == 'Adicion') 
         	{
         		$llAuth = true;
@@ -71,10 +76,13 @@ class AppController extends Controller {
 
           	switch ($this->Auth->user('role')):
                 case 'gerente':
-                	
-                    //hago que la sesion expire en mas tiempo
                     $llAuth = true;                
                     break;
+				 case 'mozo':
+					if($this->name == 'Adicion'){
+						$llAuth = true;
+					}
+					break;
                 default:
 	  				$llAuth = false;
 	  				break;
