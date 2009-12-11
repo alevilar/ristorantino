@@ -50,7 +50,7 @@
 <body>
 	<div id="container">
 		<div id="header">
-			<h1>Paxa Web - El Ristorantino Mágico - versión 9.12 Final</h1>
+			<h1>Paxa Web - El Ristorantino Mágico - versión 9.12.11</h1>
 			<div id="mesajes"><?php $session->flash(); ?></div>
 			<?php echo $html->link("Inicio",'/pages/home',array('class'=>'inicio'))?>
 		</div>
