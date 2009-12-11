@@ -105,7 +105,6 @@ class Comanda extends AppModel {
 			)
 											));
 
-											debug($items);
 		return $items;
 	}
 	

@@ -5,12 +5,11 @@ App::import('Model', 'Cliente');
 
 class TestCliente extends Cliente {
 	var $cacheSources = false;
-	var $useDbConfig  = 'test_suite';
 }
 
 class ClienteTestCase extends CakeTestCase {
 	var $Cliente = null;
-	var $fixtures = array('app.cliente', 'app.user', 'app.descuento', 'app.mesa');
+	//var $fixtures = array('app.cliente', 'app.user', 'app.descuento', 'app.mesa');
 
 	function start() {
 		parent::start();
@@ -21,6 +20,7 @@ class ClienteTestCase extends CakeTestCase {
 		$this->assertTrue(is_a($this->Cliente, 'Cliente'));
 	}
 
+	
 	function testClienteFind() {
 		$this->Cliente->recursive = -1;
 		$results = $this->Cliente->find('first');
@@ -34,13 +34,21 @@ class ClienteTestCase extends CakeTestCase {
 			'imprime_ticket'  => 1,
 			'nombre'  => 'Lorem ipsum dolor sit amet',
 			'nrodocumento'  => 'Lorem ips',
-			'tipodocumento'  => 'Lorem ipsum dolor sit ame',
+			'tipo_documento_id'  => 1,
 			'domicilio'  => 'Lorem ipsum dolor sit amet',
-			'responsabilidad_iva'  => 'Lorem ipsum dolor sit ame',
+			'iva_responsabilidad_id'  => 1,
 			'created'  => 'Lorem ipsum dolor sit ame',
 			'modified'  => 'Lorem ipsum dolor sit ame'
 			));
 		$this->assertEqual($results, $expected);
 	}
+	
+	
+	/*
+	function testResponsabilidadIva(){
+		$results = $this->Cliente->responsabilidad_iva(1);		
+		$this->assertTrue(!empty($results));
+	}
+	*/
 }
 ?>

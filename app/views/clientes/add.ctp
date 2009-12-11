@@ -35,16 +35,13 @@
 		echo $form->input('nombre',array('label'=>'Nombre/Denominación','after'=>'Ej: La Serenissima S.A.'));
 		
 		
-		$tipos = array(''=>'Seleccione','C'=>'CUIT','L'=>'CUIL','0'=>'Libreta de Enrolamiento', '1'=> 'Libreta Cívica','2'=>'DNI','3'=>'Pasaporte','4'=>'Cédula de Identidad',' '=>'Sin Identificar');
-		echo $form->input('tipodocumento', array('options'=>$tipos,'label'=>'Tipo de Identificación'));
+		echo $form->input('tipo_documento_id', array('label'=>'Tipo de Identificación', 'empty'=>'Seleccione'));
 		echo $form->input('nrodocumento',array('label'=>'Número'));
-		
-		
-		
+
 		
 		echo $form->input('domicilio');
-		$respo = array(''=>'Seleccione','I'=>'Resp. Inscipto','E'=>'Exento','A'=>'No Responsable','C'=>'Consumidor Final','T'=>'No Categorizado');
-		echo $form->input('responsabilidad_iva', array('options'=>$respo,'empty'=>'Seleccione'));
+
+		echo $form->input('iva_responsabilidad_id', array('empty'=>'Seleccione'));
 	?>
 	</fieldset>
 <?php echo $form->end('Submit');?>

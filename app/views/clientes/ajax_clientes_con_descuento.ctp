@@ -31,6 +31,6 @@
 		
 		<!-- Muestra X de Y, donde X es la página actual e Y el total del páginas -->
 		<?php // echo $paginator->counter(); ?>
-		</ul>
+	</ul>
 	</div>
 </div>

@@ -73,16 +73,16 @@ class CategoriasController extends AppController {
 	
 	
 	function listar(){
-		$this->cacheAction = true;
+		//$this->cacheAction = true;
 		Configure::write('debug', 0);
 		$this->layout = 'ajax';
 		
 		
-		if (($varjson = Cache::read('categorias')) === false) {
+		//if (($varjson = Cache::read('categorias')) === false) {
 			$categorias = $this->Categoria->array_listado();
 			$varjson =  json_encode($categorias);
-			Cache::write('categorias', $varjson);
-		}
+		//	Cache::write('categorias', $varjson);
+		//}
 
 		$this->set(compact('varjson'));
 	}

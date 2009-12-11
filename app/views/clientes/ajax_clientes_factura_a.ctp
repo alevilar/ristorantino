@@ -1,15 +1,22 @@
-<?php $paginator->options(array('update' => 'listado-clientes-ajax'))?>
+
+	
+	
+<?php $paginator->options(array('update' => 'listado-clientes-factura-a-ajax'))?>
 
 
 
-<div id="contenedor-listado-clientes" style="height: 540px">
-	<div id="listado-clientes-ajax">
+<div id="contenedor-listado-clientes-factura-a" style="height: 540px">
+	<div id="listado-clientes-factura-a-ajax">
 		<table>
+		
 			<tr class="listado"> 
+			
 				<th><?php echo $paginator->sort('Cuit', 'nrodocumento'); ?></th> 
+	
 				<th><?php echo $paginator->sort('Denominación', 'nombre'); ?></th>
-				<!-- <th><?php echo $paginator->sort('Domicilio', 'domicilio'); ?></th> -->  
+	
 				<th>+</th>  
+	
 			</tr> 
 			   <?php foreach($clientes as $c): ?> 
 			<tr  class="listado"> 
@@ -22,7 +29,10 @@
 		</table> 
 	</div>
 	
-	<div id="listado-clientes-paginador" class="menu-horizontal">
+
+	
+	
+	<div id="listado-clientes-factura-a-paginador" class="menu-horizontal">
 	<ul>
 		<!-- Muestra los enlaces para Anterior -->
 		<li><?php echo $paginator->prev('« - ', array('class' => 'boton'), null, array('class' => 'disabled boton'));?></li>
@@ -35,6 +45,6 @@
 		
 		<!-- Muestra X de Y, donde X es la página actual e Y el total del páginas -->
 		<?php // echo $paginator->counter(); ?>
-		</ul>
+	</ul>
 	</div>
 </div>

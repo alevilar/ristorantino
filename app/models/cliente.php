@@ -14,7 +14,7 @@
 class Cliente extends AppModel {
 
 	var $name = 'Cliente';
-	
+	var $actsAs = array('Containable');
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 	var $belongsTo = array(
@@ -29,7 +29,9 @@ class Cliente extends AppModel {
 								'conditions' => '',
 								'fields' => '',
 								'order' => ''
-			)
+			),
+			'IvaResponsabilidad',
+			'TipoDocumento'
 	);
 
 	var $hasMany = array(
@@ -46,7 +48,6 @@ class Cliente extends AppModel {
 								'counterQuery' => ''
 			)
 	);
-
 	
 	
 	
@@ -77,17 +78,17 @@ class Cliente extends AppModel {
 	                        
 		),
 		
-		'tipodocumento' =>array(
+		'tipo_documento_id' =>array(
 							'tipodocumento' => array(
 								 'rule' => 'tipodocumento_valido',
-								 'message' => 'El Tipo de Documento no es válido. (C: CUIT, L: CUIL, 2:DNI, 4:CI, y hay mas....)'
+								 'message' => 'El Tipo de Documento no es válido. Para hacer factura A hay que poner el CUIT'
 							)
 		),
 		
-		'responsabilidad_iva' =>array(
+		'iva_responsabilidad_id' =>array(
 							'responsabilidad_iva' => array(
 								 'rule' => 'responsabilidad_iva_valido',
-								 'message' => 'El código de resposabilidad frente IVA no es válido. (I: Resp. Inscripto,E, excento, A: no responsable, C: Consumidor final)'
+								 'message' => 'El código de resposabilidad frente IVA no es válido al hacer Factura A solo se permite responsable Inscripto y Exento'
 							)
 		)
 	);
@@ -108,7 +109,7 @@ class Cliente extends AppModel {
 	
 	function cuit_o_cuil_valido_si_tipodoc_es_cuit(){
 		if(!empty($this->data['Cliente']['tipofactura'])){
-			if($this->data['Cliente']['tipofactura'] == 'A'){			
+			if($this->data['Cliente']['tipofactura'] == 'A'){		
 				 if(!preg_match('/^[0-9]{2}[0-9]{8}[0-9]$/', $this->data['Cliente']['nrodocumento'])) return false;
 				 else return true;
 			}
@@ -121,17 +122,11 @@ class Cliente extends AppModel {
 	function tipodocumento_valido(){
 		if(!empty($this->data['Cliente']['tipofactura'])){
 			if($this->data['Cliente']['tipofactura'] == 'A'){
-				if(	$this->data['Cliente']['tipodocumento'] == 'C' ||
-					$this->data['Cliente']['tipodocumento'] == 'L' ||
-					$this->data['Cliente']['tipodocumento'] == '0' ||
-					$this->data['Cliente']['tipodocumento'] == '1' ||
-					$this->data['Cliente']['tipodocumento'] == '2' ||
-					$this->data['Cliente']['tipodocumento'] == '3' ||
-					$this->data['Cliente']['tipodocumento'] == '4' ||
-					$this->data['Cliente']['tipodocumento'] == ' '){
+				// tiene que ser un CUIT si o si para hacer factura A
+				if(	$this->data['Cliente']['tipo_documento_id'] == 1){  // '-'
 						return true;
-					}
-					else return false;
+				}
+				else return false;
 			}
 		}
 		return true;
@@ -142,17 +137,33 @@ class Cliente extends AppModel {
 	function responsabilidad_iva_valido(){
 		if(!empty($this->data['Cliente']['tipofactura'])){
 			if($this->data['Cliente']['tipofactura'] == 'A'){
-				if(	$this->data['Cliente']['responsabilidad_iva'] == 'I' ||
-					$this->data['Cliente']['responsabilidad_iva'] == 'E' ||
-					$this->data['Cliente']['responsabilidad_iva'] == 'A' ||
-					$this->data['Cliente']['responsabilidad_iva'] == 'C' ||
-					$this->data['Cliente']['responsabilidad_iva'] == 'T'){
+				if(	$this->data['Cliente']['iva_responsabilidad_id'] == 1 || // 'I'
+					$this->data['Cliente']['iva_responsabilidad_id'] == 2  // 'E'
+					//$this->data['Cliente']['iva_responsabilidad_id'] == 3 || // 'A'
+					//$this->data['Cliente']['iva_responsabilidad_id'] == 4 || // 'C'
+					//$this->data['Cliente']['iva_responsabilidad_id'] == 5    // 'T'
+					){  
 						return true;
 					}
 					else return false;
 			}
 		}
 		return true;		
+	}
+	
+	
+	
+	/**
+	 * Me devuelve la responsabilidad del cliente frente el IVA
+	 * 
+	 * @return unknown_type
+	 */
+	function responsabilidad_iva($id = 0){
+		if($id == 0){
+		 $id = $this->id;
+		}
+		$ret = $this->find('first',array('conditions'=>array('Cliente.id'=>$id),'contain'=>array('IvaResponsabilidad')));
+		return $ret;
 	}
 }
 ?>

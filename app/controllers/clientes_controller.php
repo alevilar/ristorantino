@@ -2,7 +2,7 @@
 class ClientesController extends AppController {
 
 	var $name = 'Clientes';
-	var $helpers = array('Html', 'Form');
+	var $helpers = array('Html', 'Form', 'Ajax');
 
 	function index() {
 		$this->Cliente->recursive = 0;
@@ -29,7 +29,11 @@ class ClientesController extends AppController {
 		}
 		$users = $this->Cliente->User->find('list',array('fields'=>array('User.nombre')));
 		$descuentos = $this->Cliente->Descuento->find('list');
-		$this->set(compact('users', 'descuentos'));
+		
+		$tipo_documentos = $this->Cliente->TipoDocumento->find('list');		
+		$iva_responsabilidades = $this->Cliente->IvaResponsabilidad->find('list');
+		
+		$this->set(compact('users', 'descuentos', 'iva_responsabilidades', 'tipo_documentos'));
 	}
 
 	function edit($id = null) {
@@ -50,7 +54,10 @@ class ClientesController extends AppController {
 		}
 		$users = $this->Cliente->User->find('list',array('fields'=>array('User.nombre')));
 		$descuentos = $this->Cliente->Descuento->find('list');
-		$this->set(compact('users','descuentos'));
+		$tipo_documentos = $this->Cliente->TipoDocumento->find('list');		
+		$iva_responsabilidades = $this->Cliente->IvaResponsabilidad->find('list');
+		
+		$this->set(compact('users', 'descuentos', 'iva_responsabilidades', 'tipo_documentos'));
 	}
 
 	function delete($id = null) {
@@ -70,8 +77,8 @@ class ClientesController extends AppController {
 	 *
 	 */
 	function ajax_clientes_factura_a(){
-		$this->Cliente->order = 'name';
-		$this->paginate = array('conditions'=>array('tipofactura' => 'A'),
+		$this->Cliente->order = 'Cliente.nombre';
+		$this->paginate = array('conditions'=>array('Cliente.tipofactura' => 'A'),
 								'limit'=> 8
 		);
 		
@@ -83,8 +90,8 @@ class ClientesController extends AppController {
 	 *
 	 */
 	function ajax_clientes_con_descuento(){
-		$this->Cliente->order = 'name';
-		$this->paginate = array('conditions'=>array('descuento_id <>' => 0),
+		$this->Cliente->order = 'Cliente.nombre';
+		$this->paginate = array('conditions'=>array('tipofactura <>' => "A"),
 								'limit'=> 8
 		);
 		

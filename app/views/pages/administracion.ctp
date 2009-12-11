@@ -8,6 +8,8 @@
 echo $html->link('Usuarios','/users/index').'<br>';
 echo $html->link('Mozos','/mozos/index').'<br>';
 echo $html->link('Clientes','/clientes').'<br>';
+echo $html->link('-   Tipo de Documentos','/tipo_documentos').'<br>';
+echo $html->link('-   IVA Responsabilidades','/iva_responsabilidades').'<br>';
 echo $html->link('Descuentos','/descuentos').'<br>';
 echo $html->link('Tipo de Pagos','/TipoDePagos').'<br>';
 ?>

@@ -353,7 +353,7 @@ ComandaCocina = Class.create(Comanda, {
 			  								height:500, 
 			  								resizable: true, 
 			  								title: "Sabores", 
-			  								//showEffect:Effect.show, 
+			  								//showEffect: Effect.show, 
 			  								//hideEffect: Effect.hide, 
 			  								draggable:true
 		  });

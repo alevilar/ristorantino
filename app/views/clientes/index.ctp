@@ -42,7 +42,7 @@ foreach ($clientes as $cliente):
 			<?php echo $cliente['Cliente']['nombre']; ?>
 		</td>
 		<td>
-			<?php echo $cliente['Cliente']['nrodocumento']; ?>
+			<?php echo $cliente['Cliente']['nrodocumento']." (".$cliente['TipoDocumento']['name'].")"; ?>
 		</td>
 		<td>
 			<?php echo date('d/m/Y H:i',strtotime($cliente['Cliente']['created'])); ?>

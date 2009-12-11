@@ -121,6 +121,8 @@ class MesasController extends AppController {
 					case 'A':
 						$print_success = $this->Printer->imprimirTicketFacturaA($prod, $mesa['Cliente'], $mozo_nro, $mesa_nro);
 						$tipoticket = 'Ticket Factura "A"';
+						$ivaresp = $this->Mesa->Cliente->responsabilidad_iva($mesa['Cliente']['id']);
+						$mesa['Cliente']['responsabilidad_iva'] = $ivaresp['IvaResponsabilidad']['codigo_fiscal'];
 						$this->log("se imprimio una factura A para la mesa $mesa_nro, mozo $mozo_nro",LOG_INFO);
 						$imprimio_ticket = true;
 						break;

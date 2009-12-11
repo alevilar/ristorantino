@@ -3,7 +3,7 @@ class Categoria extends AppModel {
 
 	var $name = 'Categoria';
 	var $actsAs = array('Tree');
-	var $cacheQueries = true;
+	//var $cacheQueries = true;
 	
 	var $validate = array(
 		'name' => array('notempty')
@@ -16,7 +16,7 @@ class Categoria extends AppModel {
 								'dependent' => true,
 								'conditions' => '',
 								'fields' => '',
-								'order' => '',
+								'order' => 'Producto.name',
 								'limit' => '',
 								'offset' => '',
 								'exclusive' => '',

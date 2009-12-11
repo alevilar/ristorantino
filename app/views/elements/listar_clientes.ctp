@@ -1,8 +1,7 @@
 <div id="clientes-listar-container" style="float: left; width: 700px; height: 550px;">
 	<div id="clientes-listar-header">
 		<ul class="menu-horizontal letra-grande"><li><?php echo $ajax->link('Factura A', '/clientes/ajax_clientes_factura_a', array('update'=>'clientes-listado','class'=>'boton-ancho-largo'));?></li></ul>
-		<ul class="menu-horizontal letra-grande"><li><?php echo $ajax->link('Cliente Con Descuento', '/clientes/ajax_clientes_con_descuento', array('update'=>'clientes-listado','class'=>'boton-ancho-largo'));?></li></ul>
-	
+		<ul class="menu-horizontal letra-grande"><li><?php  echo $ajax->link('Cliente Con Descuento', '/clientes/ajax_clientes_con_descuento', array('update'=>'clientes-listado','class'=>'boton-ancho-largo'));?></li></ul>
 	</div>
 	
 	<div id="clientes-listado"></div>
@@ -23,8 +22,8 @@
 		listadoClientesWindow = new Window({
 							maximizable: false, 
 							resizable: false, 
-							//hideEffect:Element.hide, 
-							//showEffect:Element.show,
+							hideEffect:Element.hide, 
+							showEffect:Element.show,
 							destroyOnClose: false
 						});
 			
