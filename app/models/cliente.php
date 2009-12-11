@@ -156,13 +156,28 @@ class Cliente extends AppModel {
 	/**
 	 * Me devuelve la responsabilidad del cliente frente el IVA
 	 * 
-	 * @return unknown_type
+	 * @return array find(first) con Cliente e IvaResponsabilidad
 	 */
-	function responsabilidad_iva($id = 0){
+	function getResponsabilidadIva($id = 0){
 		if($id == 0){
 		 $id = $this->id;
 		}
 		$ret = $this->find('first',array('conditions'=>array('Cliente.id'=>$id),'contain'=>array('IvaResponsabilidad')));
+		return $ret;
+	}
+	
+	
+	
+	/**
+	 * Me devuelve la responsabilidad del cliente frente el IVA
+	 * 
+	 * @return array find first con Cliente y TipoDocumento
+	 */
+	function getTipoDocumento($id = 0){
+		if($id == 0){
+		 $id = $this->id;
+		}
+		$ret = $this->find('first',array('conditions'=>array('Cliente.id'=>$id),'contain'=>array('TipoDocumento')));
 		return $ret;
 	}
 }

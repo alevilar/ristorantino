@@ -119,10 +119,15 @@ class MesasController extends AppController {
 		elseif($mesa['Cliente']['imprime_ticket'] > 0 || $mesa['Cliente']['imprime_ticket'] == ''):
 				switch($mesa['Cliente']['tipofactura']):
 					case 'A':
+						$ivaresp = $this->Mesa->Cliente->getResponsabilidadIva($mesa['Cliente']['id']);
+						$mesa['Cliente']['responsabilidad_iva'] = $ivaresp['IvaResponsabilidad']['codigo_fiscal'];
+						
+						$tipodoc = $this->Mesa->Cliente->getTipoDocumento($mesa['Cliente']['id']);
+						$mesa['Cliente']['tipodocumento'] = $tipodoc['TipoDocumento']['codigo_fiscal'];
+						
 						$print_success = $this->Printer->imprimirTicketFacturaA($prod, $mesa['Cliente'], $mozo_nro, $mesa_nro);
 						$tipoticket = 'Ticket Factura "A"';
-						$ivaresp = $this->Mesa->Cliente->responsabilidad_iva($mesa['Cliente']['id']);
-						$mesa['Cliente']['responsabilidad_iva'] = $ivaresp['IvaResponsabilidad']['codigo_fiscal'];
+						
 						$this->log("se imprimio una factura A para la mesa $mesa_nro, mozo $mozo_nro",LOG_INFO);
 						$imprimio_ticket = true;
 						break;
