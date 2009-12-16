@@ -28,10 +28,15 @@ class CajeroController extends AppController {
 		$this->redirect('/cajero/cobrar');
 	}
 	
-	function vaciar_cola_impresion_fiscal(){
+	function vaciar_cola_impresion_fiscal(){		
 		$this->Printer->eliminarComandosEncolados();
-		$this->Session->setFlash("Se eliminaron todos los tickets que esaban por imprimirse");
+		$this->Session->setFlash("Se eliminaron todos los tickets que estaban por
+imprimirse");
 		
+		exec("sudo /etc/init.d/spooler_srv stop");
+		exec("sudo /etc/init.d/spooler_srv start");
+		exec("cd /");	
+
 		$this->redirect('/cajero/cobrar');
 	}
 	

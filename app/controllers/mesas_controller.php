@@ -11,10 +11,10 @@ class MesasController extends AppController {
 		$this->Mesa->recursive = 0;
 		$this->set('mesas', $this->paginate());
 	}
+	
 
 	function view($id = null) {
 		$this->layout='ajax';
-		
 		
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid Mesa.', true));

@@ -91,31 +91,76 @@ class Mesa extends AppModel {
 		//return $this->DetalleComanda->find('first',array('fields'=>$fields, 'conditions'=> $conditions, 'group'=>$group));
 		
 		/*
-		 * VIEJA
-		$total =  $this->query("
-									select sum(total) as total from (select sum(cant)*precio as total
-									from detalle_comandas 
-									left join productos on (producto_id = productos.id)
-									left join comandas on (comanda_id = comandas.id)
-									where 
-									mesa_id = $this->id
-									group by producto_id
-									having sum(cant)>0) as tabla_sumadora
-									");
+		select sumadas.mesa_id as mesa_id,sum(total) as total, dd.descuento from (
+	select c.mesa_id as mesa_id, sum(s.precio) as total
+	from detalle_comandas dc
+	left join detalle_sabores ds on (ds.detalle_comanda_id =  dc.id)
+	left join sabores s on (s.id = ds.sabor_id)
+	left join comandas c on (dc.comanda_id = c.id)
+	where 
+	c.mesa_id = 72
+	having sum(cant)>0
+
+	UNION
+
+	select c.mesa_id as mesa_id, sum(p.precio*dc.cant) as total
+	from detalle_comandas dc
+	left join productos p on (dc.producto_id = p.id)
+	left join comandas c on (dc.comanda_id = c.id)
+	where 
+	c.mesa_id = 72
+	having sum(dc.cant)>0
+) as sumadas
+
+JOIN
+
+	(select mesa_id, IF(ISNULL(descuentos.porcentaje), 0 , descuentos.porcentaje) as descuento
+		from detalle_comandas
+		left join comandas on (comanda_id = comandas.id)
+		left join mesas on (mesa_id = mesas.id)
+		left join clientes on (clientes.id = mesas.cliente_id )
+		left join descuentos on (clientes.descuento_id = descuentos.id)
+		where 
+		mesa_id = 72
+		group by mesa_id
+	) as dd on (dd.mesa_id = sumadas.mesa_id)
+
 		*/
 		$total =  $this->query("
-								select sum(total) * (IF(ISNULL(descuento), 1, 1-(descuento/100)) ) as total, IF(ISNULL(descuento), 0 , descuento) as descuento
-								from (select sum(cant)*precio as total, descuentos.porcentaje as descuento
-								from detalle_comandas 
-								left join productos on (producto_id = productos.id)
-								left join comandas on (comanda_id = comandas.id)
-								left join mesas on (mesa_id = mesas.id)
-								left join clientes on (clientes.id = mesas.cliente_id )
-								left join descuentos on (clientes.descuento_id = descuentos.id)
-								where 
-								mesa_id = $this->id
-								group by producto_id
-								having sum(cant)>0) as tabla_sumadora
+								select sumadas.mesa_id as mesa_id,sum(total) as total, dd.descuento from (
+									select c.mesa_id as mesa_id, sum(s.precio) as total
+									from detalle_comandas dc
+									left join detalle_sabores ds on (ds.detalle_comanda_id =  dc.id)
+									left join sabores s on (s.id = ds.sabor_id)
+									left join comandas c on (dc.comanda_id = c.id)
+									where 
+									c.mesa_id = $this->id
+									having sum(cant)>0
+								
+									UNION
+								
+									select c.mesa_id as mesa_id, sum(p.precio*dc.cant) as total
+									from detalle_comandas dc
+									left join productos p on (dc.producto_id = p.id)
+									left join comandas c on (dc.comanda_id = c.id)
+									where 
+									c.mesa_id = $this->id
+									having sum(dc.cant)>0
+								) as sumadas
+								
+								JOIN
+								
+									(select mesa_id, IF(ISNULL(descuentos.porcentaje), 0 , descuentos.porcentaje) as descuento
+										from detalle_comandas
+										left join comandas on (comanda_id = comandas.id)
+										left join mesas on (mesa_id = mesas.id)
+										left join clientes on (clientes.id = mesas.cliente_id )
+										left join descuentos on (clientes.descuento_id = descuentos.id)
+										where 
+										mesa_id = $this->id
+										group by mesa_id
+									) as dd on (dd.mesa_id = sumadas.mesa_id)
+										
 		");
 		
 		if($total[0][0]['descuento']){
@@ -159,7 +204,8 @@ class Mesa extends AppModel {
 		
 		$items = $this->Comanda->DetalleComanda->find('all',array('conditions'=>array('Comanda.mesa_id'=>$this->id),
 														'fields'=> array('Comanda.mesa_id','DetalleComanda.producto_id','sum(DetalleComanda.cant) as cant', 'Producto.name', 'Producto.id'),
-														'group'=> array('Comanda.mesa_id','producto_id', 'Producto.name')
+														'group'=> array('Comanda.mesa_id','producto_id', 'Producto.name'),
+														'order'=>'Producto.categoria_id ASC'
 											));
 			
 		return $items;
@@ -255,10 +301,19 @@ class Mesa extends AppModel {
 */															 
 		$this->Comanda->DetalleComanda->DetalleSabor->unBindModel(array('belongsTo' => array('DetalleComanda')));
 		
-		$items = $this->Comanda->DetalleComanda->find('all',array('conditions'=>array('Comanda.mesa_id'=>$this->id),
-														'fields'=> array('sum(DetalleComanda.cant) as "cant"', 'Producto.abrev','Producto.precio'),
-														'group'=> array( 'Producto.abrev','Producto.precio')
-											));
+									
+		$items = $this->Comanda->DetalleComanda->find('all',array(
+									'conditions'=>array(
+										'Comanda.mesa_id'=>$this->id),
+									'fields'=> array(
+										'sum(DetalleComanda.cant) as "cant"',
+										'Producto.abrev',
+										'Producto.precio'),
+									'group'=> array(
+										'Producto.abrev, 
+										 Producto.precio HAVING sum(DetalleComanda.cant) > 0')
+									));	
+
 			
 		return $items;
 	}
