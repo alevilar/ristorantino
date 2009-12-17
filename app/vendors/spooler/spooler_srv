@@ -19,20 +19,20 @@ case "$1" in
 	RETVAL=$?
     ;;
     stop)
-      PROC_ID=`ps -fea | grep hasar_spooler | grep -v grep | awk '{print $3}'`
+      PROC_ID=`ps -fea | grep hasar_spooler | grep -v grep | awk '{print $2}'`
       kill -9 $PROC_ID
 	  echo $PROC_ID
-      echo "Se cerró el hasar_spooler.sh"
+      echo "Se cerro el hasar_spooler.sh - Proceso $PROC_ID"
 	  
-	  PROC_ID=`ps -fea | grep hasar_spooler_keep_alive.sh | grep -v grep | awk '{print $3}'`
+	  PROC_ID2=`ps -fea | grep hasar_spooler_keep_alive.sh | grep -v grep | awk '{print $2}'`
       kill -9 $PROC_ID2
 	  echo $PROC_ID2
-      echo "Se cerró el hasar_spooler_keep_alive.sh"
+      echo "Se cerro el hasar_spooler_keep_alive.sh - Proceso $PROC_ID2"
 	  
-	  PROC_ID=`ps -fea | grep spooler | grep -v grep | awk '{print $3}'`
+	  PROC_ID3=`ps -fea | grep spooler | grep -v grep | awk '{print $2}'`
       kill -9 $PROC_ID3
 	  echo $PROC_ID3
-      echo "Se cerró el spooler"
+      echo "Se cerro el spooler - Proceso $PROC_ID3"
       RETVAL=$?
     ;;
     restart)
