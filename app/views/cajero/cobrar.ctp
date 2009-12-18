@@ -43,9 +43,9 @@ cajero.urlGuardar = "<?php echo $html->url('/pagos/add');?>";
 	
 		<a href="#cancelarCierreDeMesa" onclick="cajero.cancelarCierreDeMesa('<?= $html->url('/mesas/ajax_edit')?>')">Re Abrir Mesa</a>
 		
-		<!-- 
+		
 		<a href="javascript:" onclick="window.location.href='<?php echo $html->url('/mesas/edit/')?>'+cajero.mesa_id">Editar Mesa</a>
-	 	-->
+	 	
 	 	
 		<dl id="cobro-estado"></dl>
 	</div>

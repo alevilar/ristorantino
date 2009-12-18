@@ -42,7 +42,14 @@ $("btn-cambio-rapido-de-mesa").update("Mesa "+mesaCambiar.numero+"<br />Mozo "+m
 		$producto = $i['Producto']['name'];
 		if($cantidad > 0)
 		{
-			echo "<li><b>$cantidad - </b>$producto</li>";	
+			echo "<li><b>$cantidad - </b>$producto</li>";
+			if(count($i['DetalleSabor'])>0){
+				echo "( ";
+				foreach($i['DetalleSabor'] as $sabor):
+					echo $sabor['Sabor']['name'].", ";
+				endforeach;
+				echo " )";
+			}
 		}
 		else
 		{

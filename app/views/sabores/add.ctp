@@ -5,6 +5,7 @@
 	<?php
 		echo $form->input('name');
 		echo $form->input('categoria_id');
+		echo $form->input('precio');
 	?>
 	</fieldset>
 <?php echo $form->end('Submit');?>

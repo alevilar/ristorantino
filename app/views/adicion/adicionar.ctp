@@ -35,7 +35,8 @@ var numPad = null; //este se tiene que llamar asi para que funcione
 	echo $this->renderElement('adicion/comanda_cocina');	
 	echo $this->renderElement('adicion/comanda_sacar');	
 	echo $this->renderElement('adicion/abrir_mesa');		
-	echo $this->renderElement('adicion/imprimir_como_menu');	
+	echo $this->renderElement('adicion/imprimir_como_menu');
+	echo $this->renderElement('adicion/set_comensales');
 	
 	/*------------------------------------------------------------------------------------------------------------------------------------*/
 ?>
@@ -127,10 +128,12 @@ var numPad = null; //este se tiene que llamar asi para que funcione
 			<li><?php echo $html->link('Cliente','#SeleccionCliente',array('onclick'=>'callListarClientes(); return false;','id'=>'boton-cliente'));?></li>
 			<li><?php echo $html->link('Menú','#ConvertirEnMenu',array('onclick'=>'callImprimirComoMenu(); return false;','id'=>'boton-menu'));?></li>
 			
+			<!-- <li><?php echo $html->link('Comensales','#Comensales',array('id'=>'btn-comensales'));?></li> -->
 			
 			<li><?php echo $html->link('Cerrar Mesa',"#cerrarMesa",array('onClick'=>'adicion.cerrarCurrentMesa()'));?></li>
 		</ul>
 	</div>
+	
 	
 	<div id="mesa-acciones-2" class="menu-vertical">
 		<ul>
@@ -147,7 +150,7 @@ var numPad = null; //este se tiene que llamar asi para que funcione
 </div>
 
 
-<?php echo $this->renderElement('mesas_scroll');?>
+<?php echo $this->renderElement('mesas_scroll');?> -->
 
 
 <div id="sistem-nav">

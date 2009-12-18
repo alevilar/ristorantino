@@ -94,6 +94,18 @@ class MesasController extends AppController {
 			$prod[$cont]['cantidad'] =  $p[0]['cant'];
 			$cont++;
 			$total += $p['Producto']['precio']*$p[0]['cant'];
+			
+			if(count($p['DetalleSabor'])>0){
+				foreach ($p['DetalleSabor'] as $sabores){
+					if($sabores['Sabor']['precio']>0){
+						$prod[$cont]['nombre'] 	 = $sabores['Sabor']['name'];
+						$prod[$cont]['precio'] 	 =  $sabores['Sabor']['precio'];
+						$prod[$cont]['cantidad'] =  1;
+						$cont++;
+						$total += $sabores['Sabor']['precio'];
+					}
+				}
+			}
 		}
 		
 		if($mesa['Mesa']['menu']>0)

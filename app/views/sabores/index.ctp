@@ -11,6 +11,7 @@ echo $paginator->counter(array(
 	<th><?php echo $paginator->sort('id');?></th>
 	<th><?php echo $paginator->sort('name');?></th>
 	<th><?php echo $paginator->sort('Categoria','Categoria.name');?></th>
+	<th><?php echo $paginator->sort('Precio','precio');?></th>
 	<th><?php echo $paginator->sort('Creado','created');?></th>
 	<th><?php echo $paginator->sort('Modificado','modified');?></th>
 	<th class="actions"><?php __('Actions');?></th>
@@ -32,6 +33,9 @@ foreach ($sabores as $sabor):
 		</td>
 		<td>
 			<?php echo $sabor['Categoria']['name']; ?>
+		</td>
+		<td>
+			<?php echo "$".$sabor['Sabor']['precio']; ?>
 		</td>
 		<td>
 			<?php echo date('d-m-y H:i:s',strtotime($sabor['Sabor']['created'])); ?>

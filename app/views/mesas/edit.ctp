@@ -31,7 +31,7 @@ foreach($items as $i):
 		if(!empty($i['DetalleSabor'])):
 			echo "<cite>";
 			foreach($i['DetalleSabor'] as $sabor):
-				echo " - ".$sabor['Sabor']['name'];
+				echo " - ".$sabor['Sabor']['name']."($".$sabor['Sabor']['precio'].")";
 			endforeach;
 			echo "</cite><br>";
 		endif;

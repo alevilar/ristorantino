@@ -72,8 +72,9 @@ class Mesa extends AppModel {
 	{
 		$this->id = ($mesa_id == 0)?$this->id:$mesa_id;	
 				
-		$result = $this->saveField('time_cerro', date( "Y-m-d H:i:s",strtotime('now')));
 		$result = $this->saveField('total', $this->calcular_total());
+		$result = $this->saveField('time_cerro', date( "Y-m-d H:i:s",strtotime('now')));
+		
 	}
 	
 	
@@ -127,7 +128,8 @@ JOIN
 
 		*/
 		$total =  $this->query("
-								select sumadas.mesa_id as mesa_id,sum(total) as total, dd.descuento from (
+								select sumadas.mesa_id as mesa_id,sum(total) as total, dd.descuento 
+								from (
 									select c.mesa_id as mesa_id, sum(s.precio) as total
 									from detalle_comandas dc
 									left join detalle_sabores ds on (ds.detalle_comanda_id =  dc.id)
@@ -135,6 +137,7 @@ JOIN
 									left join comandas c on (dc.comanda_id = c.id)
 									where 
 									c.mesa_id = $this->id
+									group by c.mesa_id
 									having sum(cant)>0
 								
 									UNION
@@ -145,10 +148,11 @@ JOIN
 									left join comandas c on (dc.comanda_id = c.id)
 									where 
 									c.mesa_id = $this->id
+									group by c.mesa_id
 									having sum(dc.cant)>0
 								) as sumadas
 								
-								JOIN
+								LEFT JOIN
 								
 									(select mesa_id, IF(ISNULL(descuentos.porcentaje), 0 , descuentos.porcentaje) as descuento
 										from detalle_comandas
@@ -160,10 +164,11 @@ JOIN
 										mesa_id = $this->id
 										group by mesa_id
 									) as dd on (dd.mesa_id = sumadas.mesa_id)
+									group by sumadas.mesa_id
 										
 		");
 		
-		if($total[0][0]['descuento']){
+		if($total[0]['dd']['descuento']){
 			$total[0][0]['total'] = round($total[0][0]['total']);
 		}
 		return $total[0][0]['total'] ;

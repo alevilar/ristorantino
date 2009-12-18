@@ -18,6 +18,20 @@ class ComensalesController extends AppController {
 	}
 
 	function add() {
+		$mesa_id = 0;
+		if(!empty($this->data['Mesa']['id'])){
+			$mesa_id = $this->data['Mesa']['id'];
+			unset($this->data);
+		}
+		$comensales = $this->Comensal->find('first',array('first'=>"Comensal.mesa_id =$mesa_id"));
+		if(count($comensales)>0){
+			$this->redirect('/comensales/edit/'.$comensales['Comensal']['id']);
+		}
+		
+		if(!empty($this->passedArgs['mesa_id'])){
+			$mesa_id = $this->passedArgs['mesa_id'];
+		}
+		
 		if (!empty($this->data)) {
 			$this->Comensal->create();
 			if ($this->Comensal->save($this->data)) {
@@ -27,8 +41,16 @@ class ComensalesController extends AppController {
 				$this->Session->setFlash(__('The Comensal could not be saved. Please, try again.', true));
 			}
 		}
-		$mesas = $this->Comensal->Mesa->find('list');
-		$this->set(compact('mesas'));
+		if($mesa_id != 0){
+			$this->Comensal->Mesa->recursive = -1;
+			$this->Comensal->Mesa->id = $mesa_id;
+			$mesa = $this->Comensal->Mesa->read();
+			$this->data['Comensal']['mesa_id'] = $mesa_id;
+			$this->set(compact('mesa'));
+		}
+		else{
+			return "el ID de la mesa es incorrecto";
+		}
 	}
 
 	function edit($id = null) {
@@ -47,8 +69,11 @@ class ComensalesController extends AppController {
 		if (empty($this->data)) {
 			$this->data = $this->Comensal->read(null, $id);
 		}
-		$mesas = $this->Comensal->Mesa->find('list');
-		$this->set(compact('mesas'));
+		$mesa_id = $this->data['Comensal']['mesa_id'];
+		$this->Comensal->Mesa->recursive = -1;
+		$this->Comensal->Mesa->id = $mesa_id;
+		$mesa = $this->Comensal->Mesa->read();		
+		$this->set(compact('mesa'));
 	}
 
 	function delete($id = null) {
