@@ -20,7 +20,7 @@ ComandaCocina = Class.create(Comanda, {
 	    
 	    // este atributpo s el producto mientras se le van agregando los distintos sabores
 	    // es una variable de estado intermedio
-	    this.productoCreandoSabores = new ProductoComanda();
+	    this.productoCreandoSabores = null;//new ProductoComanda();
 	    // es la ventana de seleccion de sabores
 	    this.winSeleccion = null;
 	    
@@ -268,6 +268,9 @@ ComandaCocina = Class.create(Comanda, {
 	  
 
 	  /**
+	   * 
+	   * me agrega un producto a la  comanda
+	   * 
 	   * @param Producto producto es el objeto producto qe quiero agregar
 	   */
 	  addProduct: function(producto){
@@ -293,7 +296,8 @@ ComandaCocina = Class.create(Comanda, {
 	  
 	  	  
 	  /**
-	   * Agrega un producto a la comanda
+	   * Agrega un producto a la comanda pero enviando in JSON como parametro
+	   * 
 	   * @param producto_agregar es el JSON del producto
 	   * @return 
 	   */
@@ -307,28 +311,12 @@ ComandaCocina = Class.create(Comanda, {
 	  },
 	  
 	  
-	  
+	  //agrega al producto al listado de productos y elimina el producto de estadi intermedio productoCreandoSabores
 	  guardarCambiosSeleccionSabores:function(){
 		  var producto = this.productoCreandoSabores;		  
-		 // producto.id = Math.random()*10000000000;
-		  
-		  //var prod_busq = new ProductoComanda();		  
-		  /*
-		  prod_busq = this.buscar(producto);
-		  
-		  if (prod_busq == null)
-		  {   // si no estaba en la coleccion lo meto	
-			  this.__agregarProducto(producto);
-		  }
-		  else{ // ya estaba en la coleccion , asqiue solo le incremento el valor cantidad
-			  prod_busq.sumar();
-		  }
-		  
 
-		  this.actualizarComanda();
-		  */
 		  this.addProduct(producto);
-		  
+		  this.productoCreandoSabores = null;
 		  this.winSeleccion.hide();
 		  return this.productos.length;
 	  },
@@ -342,7 +330,7 @@ ComandaCocina = Class.create(Comanda, {
 	  seleccionarSabores:function(producto)
 	  {
 		  var temp = new ProductoComanda();
-		//le hago un new para asegurarme que estoy creando un bojecto nuevo
+		  //le hago un new para asegurarme que estoy creando un bojecto nuevo
 		  // de esta manera el buscador me va a tirar siempre uno distinto para, por ejemplo cada ensalada
 		  this.productoCreandoSabores = new ProductoComanda(); 
 		  

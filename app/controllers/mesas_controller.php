@@ -79,7 +79,8 @@ class MesasController extends AppController {
 		
 		$productos = $this->Mesa->dameProductosParaTicket();
 		
-		$mesa = $this->Mesa->read();
+		//$mesa = $this->Mesa->read();
+		$mesa = $this->Mesa->find('first',array('contain'=>array('Mozo','Cliente'=>array('Descuento'))));
 		
 		$mesa_nro = $mesa['Mesa']['numero'];
 		$mozo_nro = $mesa['Mozo']['numero'];
@@ -152,10 +153,8 @@ class MesasController extends AppController {
 						break;
 					default:						
 						if(!empty($mesa['Cliente'])){
-							if($mesa['Cliente']['descuento_id']){
-								$this->Mesa->Cliente->Descuento->id = $mesa['Cliente']['descuento_id'];
-								$descuento = $this->Mesa->Cliente->Descuento->read();
-								$porcentaje_descuento = $descuento['Descuento']['porcentaje'];
+							if(!empty($mesa['Cliente']['Descuento']['porcentaje'])){
+								$porcentaje_descuento = $mesa['Cliente']['Descuento']['porcentaje'];
 							}
 						}
 						$print_success = $this->Printer->imprimirTicketConComandera($prod, $mozo_nro, $mesa_nro,$porcentaje_descuento);

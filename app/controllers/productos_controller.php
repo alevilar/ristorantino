@@ -63,6 +63,24 @@ class ProductosController extends AppController {
 			$this->redirect(array('action'=>'index'));
 		}
 	}
+	
+	
+	function buscarProductos(){
+		$condiciones = array();
+		foreach($this->data as $modelo=>$campos){
+			foreach($campos as $key=>$val){
+					if(!is_array($val))
+						$condiciones[] = array($modelo.".".$key." LIKE"=>'%'.$val.'%');
+			}
+		}
+		$this->Producto->recursive = 0;
+		$this->paginate['Producto'] = array(
+			'conditions' => $condiciones
+		);
+		$this->set('productos', $this->paginate('Producto'));
+		$this->render('index');
+		
+	}
 
 }
 ?>

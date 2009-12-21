@@ -1,3 +1,4 @@
+
 <div class="mesas form">
 <?php echo $form->create('Mesa');?>
 	<fieldset>
@@ -15,6 +16,20 @@
 
 
 <h2>Detalles de la Mesa</h2>
+
+<h3>Cliente</h3>
+<dl>
+<?php 
+	echo "<dt>Tipo Factura</dt>";
+	echo "<dd>". $mesa['Cliente']['tipofactura']."&nbsp;</dd>";
+	
+	echo "<dt>Nombre</dt>";
+	echo "<dd>". $mesa['Cliente']['nombre']."&nbsp;</dd>";
+	
+	echo "<dt>Imprime Ticket</dt>";
+	echo "<dd>". ($mesa['Cliente']['imprime_ticket'])?'SI':'NO'."&nbsp;</dd>";
+?>
+</dl>
 
 <?php 
 echo "Abrió a las ".date('H:i', strtotime($this->data['Mesa']['created']));

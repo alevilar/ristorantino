@@ -113,29 +113,38 @@ Comanda.prototype = {
 		  //todo esto hay que hacerlo por culpa de los sabores	
 		  prod = this.productos.find(function(p)
 		  {	  
-			  	//los productos que no tienen sabores se comparan por el ids
-			    if (typeof p.sabores != 'undefined'){			    	
-				  	if (p.sabores.length == 0)
-				  	{
-				  		if (p.id != producto.id) return false;
-				  		else return true;
-				  	}
-			    }
-			    if (typeof p.sabores == 'undefined'){
-				  		if (p.id != producto.id) return false;
-				  		else return true;
-			    }
-			  	
-			  	if (p.saboresSeleccionados.length != producto.saboresSeleccionados.length ) return false;
-			  	
-			  	var valor = true;
-			  	p.saboresSeleccionados.each(function(s){
-			  		if(!producto.saboresSeleccionados.find(function(s2){return (s == s2)})){
-			  			valor = false;
-			  			return valor;
-			  		}
-			  	});
-			  	return valor;
+			  //primero evaluo en baso a si son productos con sabor o sin sabor
+			  if (p.esProductoConSabor() != producto.esProductoConSabor()){			    	
+			  		console.info("uno es con sabor y el otro no");
+				  return false;
+			   }
+			  
+			  // si tienen distinto ID ya fue.... son distintos.
+			  if (p.id != producto.id) return false; 
+			  
+			  
+			  // si es producto SIN sabor, y el ID es igual.. etonces es el mismo producto
+			  if (!p.esProductoConSabor()){
+				  if (p.id == producto.id) return true;				  
+			  }	
+			  
+			  // caso contrario, si son productos con sabor, el id tiene que ser igual, pero tambien
+			  // tienen que conincidir los sabores para que sean el mismo producto
+			  else{				 
+				 console.info("voy a comparar  productor con sabor");
+				 //si son 
+				 	if (p.saboresSeleccionados.length != producto.saboresSeleccionados.length ) return false;
+					  	
+				  	var valor = true;
+				  	p.saboresSeleccionados.each(function(s){
+				  		if(!producto.saboresSeleccionados.find(function(s2){return (s == s2)})){
+				  			valor = false;
+				  			return valor;
+				  		}
+				  	});
+			  }
+			  
+			  return valor;
 			  
 		  }.bind(this));
 		  

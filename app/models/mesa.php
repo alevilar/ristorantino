@@ -128,7 +128,7 @@ JOIN
 
 		*/
 		$total =  $this->query("
-								select sumadas.mesa_id as mesa_id,sum(total) as total, dd.descuento 
+								select sumadas.mesa_id as mesa_id,sum(total) as total, dd.descuento,  sum(total)*(1-dd.descuento/100) as total_con_descuento 
 								from (
 									select c.mesa_id as mesa_id, sum(s.precio) as total
 									from detalle_comandas dc
@@ -168,11 +168,13 @@ JOIN
 										
 		");
 		
+		/*
 		if($total[0]['dd']['descuento']){
 			$total[0][0]['total'] = round($total[0][0]['total']);
 		}
-		return $total[0][0]['total'] ;
-		
+		*/
+		$total = round($total[0][0]['total_con_descuento']);
+		return $total ;	
 	}
 	
 	

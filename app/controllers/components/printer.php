@@ -611,9 +611,9 @@ class PrinterComponent extends Object {
 			$comando = "lp -d $comandera_name $arch_name";
 			$retorno = exec($comando);
 			//debug("Se mando el comando". $comando." ---El EL JOB ID es->> ".$retorno);
-				
+
 			return $retorno;
-				
+
 		}
 		else return false;
 	}

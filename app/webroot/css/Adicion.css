@@ -1,4 +1,4 @@
-@CHARSET "UTF-8";
+	@CHARSET "UTF-8";
 
 /* SVN FILE: $Id: cake.generic.css 7690 2008-10-02 04:56:53Z nate $ */
 	/**
@@ -101,15 +101,16 @@ A:ACTIVE {
 .boton-ancho-largo{
 	display: block;
 	height: 70px;
-	width: 170px;	
+	width: 130px;	
 	\height: 68px;
-	\width: 168px;	
+	\width: 128px;	
 	border: 1px solid grey;
 	text-align: center;
 	text-decoration: none;
 	/*background-color: silver;*/
 	vertical-align: middle;
 	overflow: hidden;
+	font-size:15pt;
 }
 .boton-ancho-largo:HOVER{
 	background-color: ThreeDLightShadow;

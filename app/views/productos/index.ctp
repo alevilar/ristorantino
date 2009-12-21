@@ -7,6 +7,19 @@ echo $paginator->counter(array(
 ));
 ?></p>
 <table cellpadding="0" cellspacing="0">
+
+<tr>
+	<th><?php echo $form->create("Producto",array("action"=>"buscarProductos")); echo $form->input("id") ?></th>
+	<th><?php echo $form->input('name',array('label'=>false));?></th>
+	<th><?php echo $form->input('abrev',array('label'=>false));?></th>
+	<th><?php echo $form->input('Comandera.name',array('label'=>false));?></th>
+	<th><?php echo $form->input('Categoria.name',array('label'=>false));?></th>
+	<th><?php echo $form->input('precio',array('label'=>false));?></th>
+	<th>&nbsp;</th>
+	<th>&nbsp;</th>
+	<th class="actions"><?php echo $form->end("Buscar")?></th>
+</tr>
+
 <tr>
 	<th><?php echo $paginator->sort('id');?></th>
 	<th><?php echo $paginator->sort('Nombre','name');?></th>

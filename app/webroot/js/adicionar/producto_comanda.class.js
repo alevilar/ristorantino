@@ -18,6 +18,11 @@ var ProductoComanda = Class.create(Producto,{
 		this.saboresSeleccionados =  new Array();
 	},
 	
+	esProductoConSabor: function(){
+		if(this.sabores.length == 0) return false
+		else return true;
+	},
+	
 	sumar: function(){
 			this.cantidad++;
 	},
