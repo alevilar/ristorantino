@@ -8,6 +8,16 @@ echo $paginator->counter(array(
 ?></p>
 <table cellpadding="0" cellspacing="0">
 <tr>
+	<th><?php echo $form->create('Sabor',array('action'=>'index'));?></th>
+	<th><?php echo $form->input('Sabor.name',array('label'=>false));?></th>
+	<th><?php echo $form->input('Categoria.name',array('label'=>false));?></th>
+	<th><?php echo $form->input('Sabor.precio',array('label'=>false));?></th>
+	<th>&nbsp; </th>
+	<th>&nbsp;</th>
+	<th><?php echo $form->end('Buscar');?></th>
+</tr>
+
+<tr>
 	<th><?php echo $paginator->sort('id');?></th>
 	<th><?php echo $paginator->sort('name');?></th>
 	<th><?php echo $paginator->sort('Categoria','Categoria.name');?></th>

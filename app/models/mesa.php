@@ -91,29 +91,33 @@ class Mesa extends AppModel {
 		$group 		= 'producto_id having sum(cant)>0';
 		//return $this->DetalleComanda->find('first',array('fields'=>$fields, 'conditions'=> $conditions, 'group'=>$group));
 		
-		/*
-		select sumadas.mesa_id as mesa_id,sum(total) as total, dd.descuento from (
-	select c.mesa_id as mesa_id, sum(s.precio) as total
+		
+		$total =  $this->query("
+								select sumadas.mesa_id as mesa_id,sum(total) as total, dd.descuento,  sum(total)*(1-dd.descuento/100) as total_con_descuento 
+from (
+	select c.mesa_id as mesa_id, sum(s.precio*(dc.cant-dc.cant_eliminada)) as total
 	from detalle_comandas dc
 	left join detalle_sabores ds on (ds.detalle_comanda_id =  dc.id)
 	left join sabores s on (s.id = ds.sabor_id)
 	left join comandas c on (dc.comanda_id = c.id)
 	where 
-	c.mesa_id = 72
-	having sum(cant)>0
+	c.mesa_id = $this->id AND
+	(dc.cant-dc.cant_eliminada) > 0
+	group by c.mesa_id
 
 	UNION
 
-	select c.mesa_id as mesa_id, sum(p.precio*dc.cant) as total
+	select c.mesa_id as mesa_id, sum(p.precio*(dc.cant-dc.cant_eliminada)) as total
 	from detalle_comandas dc
 	left join productos p on (dc.producto_id = p.id)
 	left join comandas c on (dc.comanda_id = c.id)
 	where 
-	c.mesa_id = 72
-	having sum(dc.cant)>0
+	c.mesa_id = $this->id AND
+	(dc.cant-dc.cant_eliminada) > 0
+	group by c.mesa_id
 ) as sumadas
 
-JOIN
+LEFT JOIN
 
 	(select mesa_id, IF(ISNULL(descuentos.porcentaje), 0 , descuentos.porcentaje) as descuento
 		from detalle_comandas
@@ -122,49 +126,10 @@ JOIN
 		left join clientes on (clientes.id = mesas.cliente_id )
 		left join descuentos on (clientes.descuento_id = descuentos.id)
 		where 
-		mesa_id = 72
+		mesa_id = $this->id
 		group by mesa_id
 	) as dd on (dd.mesa_id = sumadas.mesa_id)
-
-		*/
-		$total =  $this->query("
-								select sumadas.mesa_id as mesa_id,sum(total) as total, dd.descuento,  sum(total)*(1-dd.descuento/100) as total_con_descuento 
-								from (
-									select c.mesa_id as mesa_id, sum(s.precio) as total
-									from detalle_comandas dc
-									left join detalle_sabores ds on (ds.detalle_comanda_id =  dc.id)
-									left join sabores s on (s.id = ds.sabor_id)
-									left join comandas c on (dc.comanda_id = c.id)
-									where 
-									c.mesa_id = $this->id
-									group by c.mesa_id
-									having sum(cant)>0
-								
-									UNION
-								
-									select c.mesa_id as mesa_id, sum(p.precio*dc.cant) as total
-									from detalle_comandas dc
-									left join productos p on (dc.producto_id = p.id)
-									left join comandas c on (dc.comanda_id = c.id)
-									where 
-									c.mesa_id = $this->id
-									group by c.mesa_id
-									having sum(dc.cant)>0
-								) as sumadas
-								
-								LEFT JOIN
-								
-									(select mesa_id, IF(ISNULL(descuentos.porcentaje), 0 , descuentos.porcentaje) as descuento
-										from detalle_comandas
-										left join comandas on (comanda_id = comandas.id)
-										left join mesas on (mesa_id = mesas.id)
-										left join clientes on (clientes.id = mesas.cliente_id )
-										left join descuentos on (clientes.descuento_id = descuentos.id)
-										where 
-										mesa_id = $this->id
-										group by mesa_id
-									) as dd on (dd.mesa_id = sumadas.mesa_id)
-									group by sumadas.mesa_id
+	group by sumadas.mesa_id
 										
 		");
 		
@@ -188,36 +153,21 @@ JOIN
 	 */
 	function listado_de_productos($id = 0)
 	{
-		//inicialiozo variable return
-		$items = array();
-
-		if($id != 0){
-			$this->id = $id;
-		}	
-
+		if($id != 0) 	$this->id = $id;	
 		
-		$this->Comanda->DetalleComanda->order = 'Producto.categoria_id';
-		$this->Comanda->DetalleComanda->recursive = 2;
+		$items = $this->Comanda->DetalleComanda->find('all',array(
+									'conditions'=>array(
+										'Comanda.mesa_id'=>$this->id,
+										'(DetalleComanda.cant - DetalleComanda.cant_eliminada) >'=>0),
+									'order'=>'Comanda.id ASC, Producto.categoria_id ASC, Producto.id ASC',
+									'contain'=>array('Producto','Comanda','DetalleSabor'=>'Sabor(name,precio)')
+						));
+		for($i=0; $i<count($items); $i++){
+			$items[$i]['DetalleComanda']['cant_final'] = $items[$i]['DetalleComanda']['cant']-	$items[$i]['DetalleComanda']['cant_eliminada'];
+		}
 		
-		// le saco todos los modelos que no necesito paraqe haga mas rapido la consulta
-		$this->Comanda->DetalleComanda->Producto->unBindModel(array('hasMany' => array('DetalleComanda'), 
-																 'belongsTo'=> array('Categoria')));
-		/*
-		$this->Comanda->DetalleComanda->Comanda->Mesa->unBindModel(array('belongsTo'=> array('Mozo','Cliente'), 
-															 'hasMany' => array('DetalleComanda'),
-															 'hasOne'=>array('Comensal','Pago')));
-*/															 
-		$this->Comanda->DetalleComanda->DetalleSabor->unBindModel(array('belongsTo' => array('DetalleComanda')));
-		
-		$items = $this->Comanda->DetalleComanda->find('all',array('conditions'=>array('Comanda.mesa_id'=>$this->id),
-														'fields'=> array('Comanda.mesa_id','DetalleComanda.producto_id','sum(DetalleComanda.cant) as cant', 'Producto.name', 'Producto.id'),
-														'group'=> array('Comanda.mesa_id','producto_id', 'Producto.name'),
-														'order'=>'Producto.categoria_id ASC'
-											));
-			
 		return $items;
 	}
-	
 	
 	
 	
@@ -287,41 +237,23 @@ JOIN
 	
 	
 	function dameProductosParaTicket($id = 0){
-		//inicialiozo variable return
-		$items = array();
-
-		if($id != 0){
-			$this->id = $id;
-		}	
-
+		if($id != 0) $this->id = $id;	
 		
-		$this->Comanda->DetalleComanda->order = 'Producto.categoria_id';
-		$this->Comanda->DetalleComanda->recursive = 2;
-		
-		// le saco todos los modelos que no necesito paraqe haga mas rapido la consulta
-		$this->Comanda->DetalleComanda->Producto->unBindModel(array('hasMany' => array('DetalleComanda'), 
-																 'belongsTo'=> array('Categoria')));
-		/*
-		$this->Comanda->DetalleComanda->Comanda->Mesa->unBindModel(array('belongsTo'=> array('Mozo','Cliente'), 
-															 'hasMany' => array('DetalleComanda'),
-															 'hasOne'=>array('Comensal','Pago')));
-*/															 
-		$this->Comanda->DetalleComanda->DetalleSabor->unBindModel(array('belongsTo' => array('DetalleComanda')));
-		
-									
 		$items = $this->Comanda->DetalleComanda->find('all',array(
 									'conditions'=>array(
-										'Comanda.mesa_id'=>$this->id),
-									'fields'=> array(
-										'sum(DetalleComanda.cant) as "cant"',
-										'Producto.abrev',
-										'Producto.precio'),
-									'group'=> array(
-										'Producto.abrev, 
-										 Producto.precio HAVING sum(DetalleComanda.cant) > 0')
-									));	
-
-			
+										'Comanda.mesa_id'=>$this->id,
+										'(DetalleComanda.cant - DetalleComanda.cant_eliminada) >'=> 0),
+									'order'=>
+										'Producto.categoria_id ASC, Producto.id ASC',
+									'contain'=>array(
+										'Producto(abrev,precio,categoria_id)',
+										'Comanda(id)',
+										'DetalleSabor'=>array('Sabor(name,precio)'))									
+						));	
+		for($i=0; $i<count($items); $i++){
+			$items[$i]['DetalleComanda']['cant_final'] = $items[$i]['DetalleComanda']['cant']-	$items[$i]['DetalleComanda']['cant_eliminada'];
+		}
+		//debug($items);die();
 		return $items;
 	}
 	

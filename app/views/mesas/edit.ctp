@@ -40,17 +40,18 @@ echo "Abrió a las ".date('H:i', strtotime($this->data['Mesa']['created']));
 <?php
 $total = 0; 
 foreach($items as $i):
-	 echo "<dt>". $i[0]['cant'].') '.$i['Producto']['name']." . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</dt>";
+	 echo "<dt>". $i['DetalleComanda']['cant_final'].') '.$i['Producto']['name']." . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</dt>";
 	 
-	 echo "<dd>$".$i['Producto']['precio'].' x '.$i[0]['cant'].' = $'.$i['Producto']['precio']*$i[0]['cant'] ."</dd>";
+	 echo "<dd>$".$i['Producto']['precio'].' x '.$i['DetalleComanda']['cant_final'].' = $'.$i['Producto']['precio']*$i['DetalleComanda']['cant_final'] ."</dd>";
 		if(!empty($i['DetalleSabor'])):
 			echo "<cite>";
 			foreach($i['DetalleSabor'] as $sabor):
 				echo " - ".$sabor['Sabor']['name']."($".$sabor['Sabor']['precio'].")";
+				$total += $sabor['Sabor']['precio']*$i['DetalleComanda']['cant_final'];
 			endforeach;
 			echo "</cite><br>";
 		endif;
-	$total += $i['Producto']['precio']*$i[0]['cant']; 
+	$total += $i['Producto']['precio']*$i['DetalleComanda']['cant_final']; 
 endforeach;
 
 ?>

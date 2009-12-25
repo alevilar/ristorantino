@@ -1,9 +1,8 @@
 
 <script type="text/javascript">
 <!--
-fabricaMesa = new FabricaMesa(<?php echo $mesa_json?>);
+fabricaMesa = new FabricaMesa(<?php echo json_encode($mesa)?>);
 mesaCambiar = fabricaMesa.getMesa();
-
 
 var fabricaMozo = new FabricaMozo(<?php echo $mozo_json?>);
 var mozoCambiar = fabricaMozo.getMozo();
@@ -24,52 +23,28 @@ $("btn-cambio-rapido-de-mesa").update("Mesa "+mesaCambiar.numero+"<br />Mozo "+m
  	<?php 
  	echo (sizeof($items)== 0)?"NO HAY ITEMS<br>":"";
  	//debug($items);
- 	
- 	/**
- 	 * 
- 	 *  $i tienen la forma:
- 	 *  $i['Comanda'][mesa_id]
- 	 *  $i['Comanda'][producto_id]
- 	 * 	$i[0][cant]
- 	 * 	$i['Producto']['name']
- 	 *  $i['Mesa']['numero']
- 	 *  $i['DetalleSabor'][x][campos]
- 	 *  $i['DetalleSabor'][x][Sabor][campos]
- 	 */
+ 
  	$prod_borrados = array();
 	foreach ($items as $i):
-		$cantidad = $i[0]['cant'];
+		$cantidad = $i['DetalleComanda']['cant']-$i['DetalleComanda']['cant_eliminada'];
 		$producto = $i['Producto']['name'];
-		if($cantidad > 0)
-		{
+		
 			echo "<li><b>$cantidad - </b>$producto</li>";
 			if(count($i['DetalleSabor'])>0){
-				echo "( ";
+				$esPrimero = true;
+				echo "(";
 				foreach($i['DetalleSabor'] as $sabor):
-					echo $sabor['Sabor']['name'].", ";
+					
+					if(!$esPrimero){
+						echo ", ";
+					}
+					else $esPrimero = false;
+					echo $sabor['Sabor']['name'];
 				endforeach;
-				echo " )";
-			}
-		}
-		else
-		{
-			array_push($prod_borrados,$i);
-		}		
+				echo ")";
+			}		
 	endforeach;
 	?>
 	</ul>
 	
-	<?php 
-	if(count($prod_borrados)>0):
-	?>	
-		<h2>Productos Eliminados</h2>
-		<ul>
-			<?php 
-			foreach ($prod_borrados as $i):
-				$producto = $i['Producto']['name'];
-				echo "<li>$producto</li>";
-			endforeach;
-			?>	
-		</ul>
-	<?php endif;?>
 </div>

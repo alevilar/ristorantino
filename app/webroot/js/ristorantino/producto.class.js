@@ -47,18 +47,22 @@ Producto.prototype ={
 	 * @return prod el producto pero convertido en objeto con eval()
 	 */
 	copiar: function(prod){
+		 if(Object.isString(prod)){
+			  if(prod.isJSON()){
+				  prod =  eval( "(" + prod + ")" );  
+			  }
+		 }
 		
-		 prod =  eval( "(" + prod + ")" );  
-		 this.id = prod.id;
-		 this.name = prod.name;
-		 this.abrev = prod.abrev;
-		 this.description = prod.description;
-		 this.categoria_id = prod.categoria_id;
-		 this.precio = prod.precio;
-		 this.created = prod.created;
-		 this.modified = prod.modified;
-		 this.comandera_id = prod.comandera_id;
-		 return prod;
+		this.id = prod.id;
+		this.name = prod.name;
+		this.abrev = prod.abrev;
+		this.description = prod.description;
+		this.categoria_id = prod.categoria_id;
+		this.precio = prod.precio;
+		this.created = prod.created;
+		this.modified = prod.modified;
+		this.comandera_id = prod.comandera_id;
+		return prod;
 	}
 	
 	

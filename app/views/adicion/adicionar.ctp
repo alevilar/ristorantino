@@ -36,7 +36,7 @@ var numPad = null; //este se tiene que llamar asi para que funcione
 	echo $this->renderElement('adicion/comanda_sacar');	
 	echo $this->renderElement('adicion/abrir_mesa');		
 	echo $this->renderElement('adicion/imprimir_como_menu');
-	echo $this->renderElement('adicion/set_comensales');
+	//echo $this->renderElement('adicion/set_comensales');
 	
 	/*------------------------------------------------------------------------------------------------------------------------------------*/
 ?>

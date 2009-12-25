@@ -25,22 +25,34 @@ class MesasController extends AppController {
 		$items = $this->Mesa->listado_de_productos();
 		
 		
-		$mesa = $this->Mesa->read(null, $id);	
-		$this->set(compact('mesa', 'items'));	
+		//$mesa = $this->Mesa->read(null, $id);	
+		$mesa = $this->Mesa->find('first',array(
+					'conditions'=>array('Mesa.id'=>$id),
+					'contain'=>array(
+						'Mozo(id,numero)',
+						'Cliente(id,nombre,imprime_ticket,tipofactura)',
+						'Comanda(id,prioridad,observacion)')
+		));	
+		
 		
 		$cont = 0;
 		//debug($items);
-		//convierto detaleComanda a Producto por el Json, porque en javascript tengpo una coleccion de productos para esta mesa, y no DetalleComandas como lo llamo en php
+		//Mezco el array $items que contiene Producto-DetalleComanda- y todo lo que venga delacionado al array $items lo mete como si fuera Producto
+		// esto es porque en el javascript trato el ProductoCOmanda como DetalleComanda
 		foreach ($items as $d):
-			$mesa['Producto'][$cont]['cantidad'] = $d[0]['cant'];
-			$mesa['Producto'][$cont]['name'] = $d['Producto']['name'];
-			$mesa['Producto'][$cont]['id'] 	 = $d['Producto']['id'];
+			foreach($d as $coso){
+				foreach($coso as $dcKey=>$dvValue){
+					$mesa['Producto'][$cont][$dcKey] = $dvValue;
+				}
+			}
+			$mesa['Producto'][$cont]['cantidad'] 	= $d['DetalleComanda']['cant'];
+			$mesa['Producto'][$cont]['name'] 		= $d['Producto']['name'];
+			$mesa['Producto'][$cont]['id'] 	 		= $d['DetalleComanda']['id'];
+			$mesa['Producto'][$cont]['producto_id'] = $d['Producto']['id'];
 			$cont++;
 		endforeach;
 		
-		//debug($mesa);
-		
-		$this->set('mesa_json', json_encode($mesa));
+		$this->set(compact('mesa', 'items'));
 		$this->set('mozo_json', json_encode($this->Mesa->Mozo->read(null, $mesa['Mozo']['id'])));
 	}
 
@@ -90,23 +102,23 @@ class MesasController extends AppController {
 		$cont  = 0;
 		$total = 0;
 		foreach ($productos as $p){
-			$prod[$cont]['nombre'] 	 = $p['Producto']['abrev'];
+			$prod[$cont]['nombre'] 	 =  $p['Producto']['abrev'];
 			$prod[$cont]['precio'] 	 =  $p['Producto']['precio'];
-			$prod[$cont]['cantidad'] =  $p[0]['cant'];
+			$prod[$cont]['cantidad'] =  $p['DetalleComanda']['cant_final'];
 			$cont++;
-			$total += $p['Producto']['precio']*$p[0]['cant'];
+			$total += $p['Producto']['precio']*$p['DetalleComanda']['cant_final'];
 			
-			if(count($p['DetalleSabor'])>0){
+			//if(!count($p['DetalleSabor'])>0){
 				foreach ($p['DetalleSabor'] as $sabores){
 					if($sabores['Sabor']['precio']>0){
 						$prod[$cont]['nombre'] 	 = $sabores['Sabor']['name'];
 						$prod[$cont]['precio'] 	 =  $sabores['Sabor']['precio'];
-						$prod[$cont]['cantidad'] =  1;
+						$prod[$cont]['cantidad'] =  $p['DetalleComanda']['cant_final'];
 						$cont++;
-						$total += $sabores['Sabor']['precio'];
+						$total += $sabores['Sabor']['precio']*$p['DetalleComanda']['cant_final'];
 					}
 				}
-			}
+			//}
 		}
 		
 		if($mesa['Mesa']['menu']>0)
@@ -157,6 +169,7 @@ class MesasController extends AppController {
 								$porcentaje_descuento = $mesa['Cliente']['Descuento']['porcentaje'];
 							}
 						}
+						
 						$print_success = $this->Printer->imprimirTicketConComandera($prod, $mozo_nro, $mesa_nro,$porcentaje_descuento);
 						$this->log("se imprimio un ticket no fiscal desde comandera como remito para la mesa $mesa_nro, mozo $mozo_nro",LOG_INFO);
 						$tipoticket = 'Ticket Descuento';

@@ -5,8 +5,26 @@ class SaboresController extends AppController {
 	var $helpers = array('Html', 'Form');
 
 	function index() {
+		if(!empty($this->data)){
+			$condiciones = array();
+			foreach($this->data as $modelo=>$campos){
+				foreach($campos as $key=>$val){
+					if(!is_array($val))
+						$condiciones[] = array($modelo.".".$key." LIKE"=>'%'.$val.'%');
+				}
+			}
+			$this->Producto->recursive = 0;
+			foreach($this->modelNames as $modelo){
+				$this->paginate[$modelo] = array(
+					'conditions' => $condiciones
+				);
+			}
+		}
 		$this->Sabor->recursive = 0;
-		$this->set('sabores', $this->paginate());
+		
+		$sabores = $this->paginate('Sabor');
+		
+		$this->set('sabores',$sabores);
 	}
 
 	function view($id = null) {

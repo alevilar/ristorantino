@@ -12,10 +12,21 @@ var ProductoComanda = Class.create(Producto,{
 	
 	initialize: function($super) {
 		$super();
+		this.detalle_comanda_id = null;
 		this.cantidad = 0;
+		this.cant_sacar = 0 ;
+		this.modificado = false; // esto es un flag, para solo submitear los productos modificados
 		this.entrada = false;
 		this.sabores =  new Array();
 		this.saboresSeleccionados =  new Array();
+		
+		this.elementolink = null;
+		this.elementoCantidad = null;
+	},
+	
+	
+	getCantidadEliminada: function(){
+		return this.cant_sacar;
 	},
 	
 	esProductoConSabor: function(){
@@ -25,17 +36,49 @@ var ProductoComanda = Class.create(Producto,{
 	
 	sumar: function(){
 			this.cantidad++;
+			this.ponerloModificado();
 	},
 	
 	restar: function(){
 		this.cantidad--;
+		this.ponerloModificado();
+	},
+	
+	
+	/**
+	 * Pone al producto como que fue modificado en true
+	 */
+	ponerloModificado: function(){
+		this.modificado = true;
+	},
+	
+	/**
+	 * Suma el atributo cant_sacar. Que simboliza la cantidad de productos sacados de la comanda
+	 * @param integer cant es la cantidad de este producto que quiero sacar. Por defecto es 1.
+	 */
+	sacar: function(cant){
+		if((this.cantidad - this.cant_sacar) > 0){
+			numer = (this.cant_sacar)*1 + cant*1;
+			this.cant_sacar = numer;
+			this.ponerloModificado(); // lo pongo como modificado
+			this.elementoCantidad.update(this.cantidad - this.cant_sacar);
+		}
 	},
 	
 	
 	copiar: function($super,prod){
 		prod = $super(prod);
-		this.sabores = prod.sabores;
+		return this.convertirEnProductoComanda(prod);
 	},
+	
+	
+	/**
+	 * Me devuelve la cantidad total restando la que se quito de la que habia pedido
+	 */
+	cantidadEnComanda: function(){
+		return (this.cantidad - this.cant_sacar);
+	},
+	
 	
 	/**
 	 * Copia un producto para convertirlo en Producto Comanda
@@ -78,6 +121,10 @@ var ProductoComanda = Class.create(Producto,{
 			 this.cantidad = prod.cantidad;  
 		 }
 		 
+		 if(prod.cant_eliminada ){
+			 this.cant_sacar = prod.cant_eliminada;  
+		 }
+		 
 		 if(prod.sabores ){
 			 this.sabores = prod.sabores;  
 		 }
@@ -90,6 +137,26 @@ var ProductoComanda = Class.create(Producto,{
 	
 	agregarSabor:function(sabor){
 		this.saboresSeleccionados.push(sabor);
+	},
+	
+	dameLink: function(){
+		if(this.elementoLink == null)
+		{
+			this.elementoLink = new Element('a',{
+				'href':'#Sacar',
+				//'onclick':"adicion.comandaSacar.add('"+Object.toJSON(prod_aux)+"')",
+				'class':'boton'});
+			
+			if(this.elementoCantidad == null)
+			{
+				this.elementoCantidad = new Element('div',{'style':'font-weight: bolder;'});
+				this.elementoCantidad.update(this.cantidadEnComanda());
+				this.elementoLink.appendChild(this.elementoCantidad);
+			}
+			this.elementoLink.appendChild(new Element('cite').update(this.name));
+			this.elementoLink.observe('click',this.sacar.bind(this,1));
+		}
+		return this.elementoLink;
 	}
 	
 });

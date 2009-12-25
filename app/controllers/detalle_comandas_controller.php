@@ -27,26 +27,10 @@ class DetalleComandasController extends AppController {
 		$this->autoRender = false;
 		$ok = false;
 		//Configure::write('debug',1);
-		
-		
-		$this->DetalleComanda->Comanda->create();
-			if($this->DetalleComanda->Comanda->saveAll($this->data)){
-				$ok = true;
-			}
-		//unset($this->data['Comanda']);
-		/*
-		$cont = 0;
-		foreach ($this->data['DetalleComanda'] as $dv):
-			$detacomanda[$cont] = $dv;
-			$detacomanda[$cont]['comanda_id'] = $this->DetalleComanda->Comanda->id;
-			$cont++;
-		endforeach;
-		
-		if($this->DetalleComanda->saveAll($detacomanda)){
+	debug($this->data);
+		if($this->DetalleComanda->saveAll($this->data)){
 			$ok = true;
 		}
-		else $ok = false;
-		*/
 		
 		return ($ok)?'ok':'failed to save comanda';
 	}

@@ -114,8 +114,7 @@ Comanda.prototype = {
 		  prod = this.productos.find(function(p)
 		  {	  
 			  //primero evaluo en baso a si son productos con sabor o sin sabor
-			  if (p.esProductoConSabor() != producto.esProductoConSabor()){			    	
-			  		console.info("uno es con sabor y el otro no");
+			  if (p.esProductoConSabor() != producto.esProductoConSabor()){	
 				  return false;
 			   }
 			  
@@ -131,7 +130,6 @@ Comanda.prototype = {
 			  // caso contrario, si son productos con sabor, el id tiene que ser igual, pero tambien
 			  // tienen que conincidir los sabores para que sean el mismo producto
 			  else{				 
-				 console.info("voy a comparar  productor con sabor");
 				 //si son 
 				 	if (p.saboresSeleccionados.length != producto.saboresSeleccionados.length ) return false;
 					  	

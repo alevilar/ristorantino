@@ -29,14 +29,15 @@
 		sacarItemWindow.setContent('sacar-item-container', true, true);
 
 
-
 		function callComandaSacar(){
 			adicion.comandaSacar = new ComandaSacar(this.currentMozo);
 			adicion.comandaSacar.urlEnviarComanda = '<?php echo $html->url('/DetalleComandas/sacarProductos');?>';	
+			adicion.comandaSacar.inicializarComanda(adicion.currentMesa.productos); // me arma la parte grafica con los links observados por prototype
 
 			if(adicion.tieneMesaSeleccionada()){
 				adicion.comandaSacar.actualizarComanda(adicion.currentMesa.productos);
-				
+
+				//me carga el mozo,la mesa, y me hace unnew ARray() del array de productos this.productos
 				adicion.comandaSacar.resetearComanda(adicion.currentMozo, adicion.currentMesa);
 				
 				sacarItemWindow.showCenter();
