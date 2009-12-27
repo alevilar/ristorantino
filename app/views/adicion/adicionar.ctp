@@ -124,7 +124,15 @@ var numPad = null; //este se tiene que llamar asi para que funcione
 	<div id="mesa-acciones" class="menu-vertical">
 		<ul>
 			<li><?php echo $html->link('Comanda','#AgregarProducto',array('onClick'=>'callComandaCocina(); return false;','boton-comanda'));?></li>
+			
+<?
+if($session->read('Auth.User.role') != 'mozo'){
+?>
 			<li><?php echo $html->link('Sacar Item','#SacarProducto',array('onclick'=>'callComandaSacar(); return false;','id'=>'boton-sacar-item'));?></li>
+<?
+}
+?>			
+			
 			<li><?php echo $html->link('Cliente','#SeleccionCliente',array('onclick'=>'callListarClientes(); return false;','id'=>'boton-cliente'));?></li>
 			<li><?php echo $html->link('Menú','#ConvertirEnMenu',array('onclick'=>'callImprimirComoMenu(); return false;','id'=>'boton-menu'));?></li>
 			

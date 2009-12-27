@@ -2,10 +2,20 @@
 <div id="cambiar-mozos" class="menu-horizontal" style="display: none; width: 300px">
 		<ul>
 			<?php foreach ($mozos as $mozo):?>
-				<li><?php echo $html->link($mozo['Mozo']['numero'],'/adicion/cambiarMozo/'.$mozo['Mozo']['id'],array(
+				<li>
+				<?php
+					/* 
+					echo $html->link($mozo['Mozo']['numero'],'/adicion/cambiarMozo/'.$mozo['Mozo']['id'],array(
 											'class'=>'boton redondeado letra-grande',
 											'style'=> 'font-size: xx-large'
-											));?></li>
+											));
+					*/
+					echo $html->link($mozo['Mozo']['numero'],'/adicion/adicionar/mozo_id:'.$mozo['Mozo']['id'],array(
+											'class'=>'boton redondeado letra-grande',
+											'style'=> 'font-size: xx-large'
+											));
+				?>
+				</li>
 			<?php endforeach;?>
 		</ul>
 </div>

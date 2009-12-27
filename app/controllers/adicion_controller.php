@@ -49,6 +49,14 @@ class AdicionController extends AppController {
 	 * @return unknown_type
 	 */
 	function adicionar(){
+		if(!empty($this->passedArgs['mozo_id'])){
+			$this->current_mozo_id = $this->passedArgs['mozo_id'];
+		}
+
+		if(!empty($this->data['Mozo']['id'])){
+			$this->current_mozo_id = $this->data['Mozo']['id'];
+		}	
+		
 		$this->Mozo->id = $this->current_mozo_id;
 		$this->Mozo->hasMany['Mesa']['order'] = "created DESC";
 		$this->Mozo->hasMany['Mesa']['conditions'] = "time_cobro = '0000-00-00 00:00:00'";
@@ -62,22 +70,8 @@ class AdicionController extends AppController {
 	
 	
 	
-	function cambiarMozo($mozo_id = 0){				
-		//$this->set('mozos',$this->Mozo->find('list',array('fields'=>array('id','numero'))));
-		/*
-		if (isset($this->data['Adicion']['mozo_id'])):
-			$this->current_mozo_id = $this->data['Adicion']['mozo_id'];
-		else: 
-			if ($mozo_id != 0): $this->current_mozo_id = $mozo_id;
-			else: $this->current_mozo_id = 0;	
-			endif;
-		endif;
-			
-		$this->Mozo->id = $this->current_mozo_id;
+	function cambiarMozo($mozo_id = 0){	
 		
-		$this->Mozo->recursive = 0;
-		//$this->data = $this->Mozo->read();
-		*/
 		$this->current_mozo_id = $mozo_id;
 		$this->current_mesa_id = isset($this->data['Mesa'][0]['id'])?$this->data['Mesa'][0]['id']:0;
 		$this->current_mesa_numero = isset($this->data['Mesa'][0]['numero'])?$this->data['Mesa'][0]['numero']:0;

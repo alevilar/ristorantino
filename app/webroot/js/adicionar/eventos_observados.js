@@ -20,3 +20,9 @@ Ajax.Responders.register({
 	  
 	});
 
+
+
+Event.observe(window,'unload',function(){
+	$('content').update("Cargando ..."); 
+});
+

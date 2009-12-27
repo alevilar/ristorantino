@@ -219,21 +219,26 @@ class PrinterComponent extends Object {
 					}
 					
 					
-					if($productos[0]['Comanda']['observacion']){
-						fwrite($archivo_comanda,' --       --      --     --      --      --');
-						fwrite($archivo_comanda,"\n");
-						fwrite($archivo_comanda,'   OBSERVACION :');
-						fwrite($archivo_comanda,"\n");
-						fwrite($archivo_comanda,$productos[0]['Comanda']['observacion']);
-						fwrite($archivo_comanda,"\n");
-						fwrite($archivo_comanda,"\n");
-					}
-					
+									
 						
 					foreach($prod_a_imprimir as $item){
 						if(!fwrite($archivo_comanda,$item)) throw new Exception("no se puede escribir en el archivo: $arch_name");
 						fwrite($archivo_comanda,"\n");
 					}				
+					
+					
+					if($productos[0]['Comanda']['observacion']){
+						fwrite($archivo_comanda,"\n");
+						fwrite($archivo_comanda,'||||||||||||    OBSERVACION     |||||||||');
+						fwrite($archivo_comanda,"\n");
+						fwrite($archivo_comanda,$productos[0]['Comanda']['observacion']);
+						fwrite($archivo_comanda,"\n");
+						fwrite($archivo_comanda,'|||||||||||||||||||||||||||||||||||||||||');
+						fwrite($archivo_comanda,"\n");
+						fwrite($archivo_comanda,"\n");
+					}
+					
+					
 					
 					$tail = " \n - Mesa #: ".$productos[0]['Comanda']['Mesa']['numero'];
 					fwrite($archivo_comanda,$tail);
@@ -545,10 +550,32 @@ class PrinterComponent extends Object {
 					// pongo el ESC para comenzar ESC/P
 					fwrite($archivo_comanda,chr(27).'@');
 			
-						
+					
+					
+					
+					/*****
+					 * 				 ENCABEZADO
+					 */
 					$header = "          - PAXAPOGA DEL MAR-";
 					fwrite($archivo_comanda,$header);
 					fwrite($archivo_comanda,"\n\n");
+					
+					fwrite($archivo_comanda,'PXA S.R.L.');
+					fwrite($archivo_comanda,"\n");
+					fwrite($archivo_comanda,'C.U.I.T.: 30711054231');
+					fwrite($archivo_comanda,"\n");
+					fwrite($archivo_comanda,'Ing. Brutos: 901-401119-7');
+					fwrite($archivo_comanda,"\n");
+					fwrite($archivo_comanda,'IVA RESPONSABLE INSCRIPTO A CONS. FINAL');
+					fwrite($archivo_comanda,"\n");
+					fwrite($archivo_comanda,'Fecha: '.date('d/m/y',strtotime('now')).'   Hora: '.date('H:i:s',strtotime('now')));
+					fwrite($archivo_comanda,"\n");
+					fwrite($archivo_comanda,"\n");
+					fwrite($archivo_comanda,"\n");
+					
+					fwrite($archivo_comanda,'Cant. P.Unit. Item               Total');
+					fwrite($archivo_comanda,"\n");
+					
 						
 					foreach($prod_a_imprimir as $item){
 						if(!fwrite($archivo_comanda,$item)) throw new Exception("no se puede escribir en el archivo: $arch_name");
@@ -581,7 +608,10 @@ class PrinterComponent extends Object {
 					
 					//  retorno de carro
 					fwrite($archivo_comanda,chr(13));
+					
 					fwrite($archivo_comanda,'-  -  -  -  -  -  -  -  -  -  -  -  -  -  -');
+					fwrite($archivo_comanda,"\n");
+					fwrite($archivo_comanda,' -  - Verifique antes de abonar -  -');
 					fwrite($archivo_comanda,"\n");
 					fwrite($archivo_comanda,' -  - NO VALIDO COMO COMPROBANTE FISCAL -');
 					fwrite($archivo_comanda,"\n");
