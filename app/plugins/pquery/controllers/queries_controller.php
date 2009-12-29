@@ -1,13 +1,11 @@
 <?php
-require("models/querystmp.php");
 
-
-
-class QueriesController extends AppController {
+class QueriesController extends PqueryAppController {
 
 	var $name = 'Queries';
 	var $helpers = array('Html', 'Form','Ajax');
 	var $components = array('RequestHandler');
+	var $uses = array('Query');
 
 	function index() {
 		$this->Query->recursive = 0;
@@ -80,8 +78,8 @@ class QueriesController extends AppController {
 			$conditions['categoria']=$categoria;
 		}
 		if(isset($this->data['Query']['description']) && $this->data['Query']['description']!="") {
-			$conditions['OR']['lower(to_ascii(Query.description)) RLIKE'] = array($this->Query->convertir_para_busqueda_avanzada(utf8_decode($this->data['Query']['description'])));
-			$conditions['OR']['lower(to_ascii(Query.name)) RLIKE'] = array($this->Query->convertir_para_busqueda_avanzada(utf8_decode($this->data['Query']['description'])));
+			$conditions['OR']['lower(to_ascii(Query.description)) SIMILAR TO ?'] = array($this->Query->convertir_para_busqueda_avanzada(utf8_decode($this->data['Query']['description'])));
+			$conditions['OR']['lower(to_ascii(Query.name)) SIMILAR TO ?'] = array($this->Query->convertir_para_busqueda_avanzada(utf8_decode($this->data['Query']['description'])));
 		}
 		
 		$queries=$this->Query->find('all',array('order'=>'modified DESC', 'conditions'=>$conditions));
@@ -131,10 +129,6 @@ class QueriesController extends AppController {
 		$this->layout = 'ajax';
 	}
 
-	
-	
-	
-	
 	function list_view($id="") {
 
 		$this->layout = "sin_menu";
@@ -148,61 +142,29 @@ class QueriesController extends AppController {
 			$this->redirect(array('action'=>'index'));
 		}
 
+		$this->rutaUrl_for_layout[] =array('name'=> 'Queries','link'=>'/Instits/add' );
 		$res = $this->Query->findById($id);
 		
-		$queryTmp = new Querystmp();
-		$queryTmp->setSql($res['Query']['query']);
 		
-		$data = array(); 
+		$this->CustomQuery = Controller::loadModel('CustomQuery');
+
+		$this->CustomQuery->setSql($res['Query']['query']);
+		
 		if (isset($this->passedArgs['viewAll']) && $this->passedArgs['viewAll'] == 'true'){
-			$data = $queryTmp->getData();
-			//$data = $this->query($res['Query']['query']);
+			$data = $this->CustomQuery->getData();
 			$viewAll = false;		
 		} else {	
-			$data = $this->paginate($queryTmp);
+			$data = $this->paginate($this->CustomQuery);
 			$viewAll = true;
 		}			
-		
-				//debug($data);
-		$cols = array();
-		if(!empty($data)){
-			foreach($data[0] as $key1=>$d1){
-				//primer nivel de KEYs de la query
-				$col_aux [] = $key1;
-				foreach($d1 as $key=>$d2){
-					$cols[] = $key;
-				}
-			}
-		}
-		$cont = 0;
-		$data_tmp = array();
-		foreach($data as $keydata=>$d){
-			foreach($col_aux as $col1){
-				
-				foreach($data[$keydata][$col1] as $keycol=>$v2){
-					
-						$data_tmp[$cont][$keycol] = $v2;
-					
-				}
-			}
-			$cont++;
-		}
-		
+
+		$cols = array_keys($data['0']['0']); 
 		$this->set('cols', $cols);
         $url_conditions['query.id'] = $id;
-		$this->set('queries', $data_tmp);
+		$this->set('queries', $data);
 		$this->set('url_conditions', $url_conditions);
 		$this->set('descripcion', $res['Query']['description']);
 		$this->set('viewAll', $viewAll);
-	}
-	
-	
-	
-	
-	function ver_facturacion_por_dia(){
-		if(!empty($this->data)){
-			
-		}
 	}
 	
 

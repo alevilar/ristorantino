@@ -1,5 +1,5 @@
 <?php
-class Query extends AppModel {
+class Query extends PqueryAppModel {
 
 	var $name = 'Query';
 	var $validate = array(
@@ -9,13 +9,6 @@ class Query extends AppModel {
 							'message'=>'Aqui se escribe el nombre de un archivo, solo se admiten valores alfanum�ricos. No ingresar caracteres raros, ni espacios en blanco, ni acentos.')),
 		'query' => array('notempty')
 	);
-	
-	
-	// esto se usa en el paginador customizado para este controlador
-	var $sql = '';
-	var $limit = 20;
-	
-	
 	
 	/**
 	 * Me lista todas las categorias que existen en la Queries
@@ -58,9 +51,5 @@ class Query extends AppModel {
 		}
 		return true;
 	}
-	
-
-        
-        
 }
 ?>

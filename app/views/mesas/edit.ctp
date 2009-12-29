@@ -7,6 +7,7 @@
 		echo $form->input('id');
 		echo $form->input('numero',array('after'=>'Escriba otro número de mesa.','label'=>'Cambiar Número de Mesa'));
 		echo $form->input('mozo_id',array('after'=>'Seleccione un nuevo mozo para ésta mesa'));
+		echo $form->input('total',array('after'=>'OJO !!! Cuando una mesa ya esta cerrada, cuando se modifica el total, se modifica el verdadero valor final de la mesa.'));
 	?>
 	</fieldset>
 <?php echo $form->end('Guardar Cambios');?>

@@ -7,7 +7,7 @@ App::import('Vendor', 'comandos_fiscales'.DS.'comandos_fiscales_hasar_441'); // 
 //define('CORTAR_PAPEL','i');
 
 // COMANDOS ESC/P
-/*
+
 define('ESC',chr(27));
 define('CORTAR_PAPEL',"w");
 define('ENFATIZADO',"E1");
@@ -16,10 +16,10 @@ define('TEXT_STRONG',"");
 define('TEXT_NORMAL',"");
 define('DOBLE_ALTO',"");
 define('SACA_DOBLE_ALTO',"");
-*/
+
 
 // COMANDOS ESC/BEMATECH
-
+/*
 define('ESC',chr(27));
 define('CORTAR_PAPEL',"w");
 define('ENFATIZADO',"E");
@@ -28,7 +28,7 @@ define('TEXT_STRONG',"N4");
 define('TEXT_NORMAL',"N2");
 define('DOBLE_ALTO',"d1");
 define('SACA_DOBLE_ALTO',"d0");
-
+*/
 
 class PrinterComponent extends Object {
 	/**

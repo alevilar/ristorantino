@@ -8,6 +8,16 @@ echo $paginator->counter(array(
 ?></p>
 <table cellpadding="0" cellspacing="0">
 <tr>
+	<th><?php echo $form->create("Mesa",array("action"=>"index")); ?></th>
+	<th><?php echo $form->input('Mesa.numero',array('label'=>false));?></th>
+	<th><?php echo $form->input('Mozo.numero',array('label'=>false));?></th>
+	<th><?php echo $form->input('Mesa.total',array('label'=>false));?></th>
+	<th></th>
+	<th>&nbsp;</th>
+	<th>&nbsp;</th>
+	<th class="actions"><?php echo $form->end("Buscar")?></th>
+</tr>
+<tr>
 	<th><?php echo $paginator->sort('id');?></th>
 	<th><?php echo $paginator->sort('numero');?></th>
 	<th><?php echo $paginator->sort('Mozo (ID) Nº','mozo_id');?></th>

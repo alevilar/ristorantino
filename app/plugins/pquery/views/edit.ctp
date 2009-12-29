@@ -13,7 +13,7 @@
 		echo $ajax->autoComplete('categoria', '/queries/listado_categorias');
 		
 		echo "<div>";
-		echo $form->input('ver_online',array('label'=>'¿Ver Online?','after'=>'si se tilda esta opción se habiiltará la query para ver de forma online como una página normal.'));
+		echo $form->input('ver_online',array('label'=>'¿Ver Online?','after'=>'si se tilda esta opcion se habiiltara la query para ver de forma online como una pagina normal.'));
 		echo "</div>";
 		
 		echo $form->input('query');

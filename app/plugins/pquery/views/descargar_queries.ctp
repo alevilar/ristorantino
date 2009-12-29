@@ -1,4 +1,4 @@
-<h1>Información</h1>
+<h1>Informaci�n</h1>
 
 <script type="text/javascript">
 <!--
@@ -17,19 +17,20 @@
 
 ?>
 
-<?php echo $form->create('Query',array(	'url'=>'/queries/descargar_queries/'.$categoria,
+<?php echo $form->create('Pquery.Query',array(	'url'=>'/pquery/queries/descargar_queries/'.$categoria,
 										'id'=>'FormCategorias'));?>
 <?php		
 		echo $form->input('categoria', array('type'=>'select',
-											 'label'=>'Categoría',
+											 'label'=>'Categoria',
 											 'value'=>$categoria,
 											 'options'=>$categorias,
 											 'onChange'=>'$("FormCategorias").submit();'
 											 ));
 											 
-		echo $form->input('description', array( 'label'=> 'Nombre o Descripción',
-												'type'=>'text'));
-		echo $form->end(null);										 
+		echo $form->input('description', array( 'label'=> 'Ingrese criterio de busqueda',
+												'type'=>'text',
+										 		'after'=> '<cite>Busca tanto en el nombre del archivo como en la descripci�n.</cite>'));
+		echo $form->end('Buscar');										 
 ?>
 
 <h2>Descargas Excel</h2>
@@ -41,10 +42,10 @@ foreach ($queries as $q):?>
 	<li>
 		<?= $html->link($q['Query']['name'].'.xls','contruye_excel/'.$q['Query']['id']); ?>
 		<?= "(".date("j F, Y, g:i a",strtotime($q['Query']['modified'])).")"; ?>
-		<? if($q['Query']['ver_online']) echo $html->link('ver online', '/queries/list_view/'.$q['Query']['id']);?>
+		<? if($q['Query']['ver_online']) 
+			echo $html->link('ver online', array('action'=>'list_view',$q['Query']['id']));?>
 		<br /><?=  $q['Query']['description'] ?>
 	</li>
-	<br />
 	<?php 
 endforeach;
 ?>

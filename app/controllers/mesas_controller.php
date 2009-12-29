@@ -8,6 +8,23 @@ class MesasController extends AppController {
 		
 	
 	function index() {
+		if(!empty($this->data)){
+			$condiciones = array();
+			foreach($this->data as $modelo=>$campos){
+				foreach($campos as $key=>$val){
+					if(!is_array($val))
+						if(!empty($val))
+							$condiciones[] = array($modelo.".".$key=>$val);
+				}
+			}
+			$this->Producto->recursive = 0;
+			foreach($this->modelNames as $modelo){
+				$this->paginate[$modelo] = array(
+					'conditions' => $condiciones
+				);
+			}
+		}
+		
 		$this->Mesa->recursive = 0;
 		$this->set('mesas', $this->paginate());
 	}

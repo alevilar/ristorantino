@@ -9,9 +9,9 @@
 		echo $form->input('description');
 		
 		echo "<label>Categoria </label>";
-		echo $ajax->autoComplete('categoria', '/queries/listado_categorias');
+		echo $ajax->autoComplete('categoria', '/pquery/queries/listado_categorias');
 		
-		echo $form->input('ver_online',array('label'=>'¿Ver Online?','after'=>'si se tilda esta opción se habiiltará la query para ver de forma online como una página normal.'));
+		echo $form->input('ver_online',array('label'=>'¿Ver Online?','after'=>'si se tilda esta opcion se habiiltara la query para ver de forma online como una pagina normal.'));
 		
 		
 		echo $form->input('query');

@@ -14,7 +14,7 @@ $paginator->options(array('url' => $url_conditions));
 
 if (isset($paginator)){
 echo $paginator->counter(array(
-	'format' => __('Página %page% de %pages% Mostrando %current% registros de %count% encontrados', true)
+	'format' => __('Pagina %page% de %pages% Mostrando %current% registros de %count% encontrados', true)
 ));
 }
 //debug($url_conditions);
@@ -23,9 +23,9 @@ echo $paginator->counter(array(
 <p>
 <?php 
 if ($viewAll){
-	echo $html->link('Ver Todos','/Queries/list_view/query.id:'.$url_conditions['query.id'] . '/viewAll:true/',array('class'=>'clearTag'));
+	echo $html->link('Ver Todos','/pquery/Queries/list_view/query.id:'.$url_conditions['query.id'] . '/viewAll:true/',array('class'=>'clearTag'));
 } else {
-	echo $html->link('Ver por pagina','/Queries/list_view/query.id:'.$url_conditions['query.id'] . '/viewAll:false/',array('class'=>'clearTag'));	
+	echo $html->link('Ver por pagina','/pquery/Queries/list_view/query.id:'.$url_conditions['query.id'] . '/viewAll:false/',array('class'=>'clearTag'));	
 }	
 ?>
 
@@ -33,7 +33,10 @@ if ($viewAll){
 <?php echo $html->link('descargar excel','/Queries/contruye_excel/'.$url_conditions['query.id'] ,array('class'=>'clearTag'));?>
 
 <?php echo " | "?>
-<?php echo $html->link('Volver','/Queries/descargar_queries/',array('class'=>'clearTag'));?>
+<?php echo $html->link('Imprimir','#Imprimir',array('class'=>'clearTag','onclick'=>'window.print()'));?>
+
+<?php echo " | "?>
+<?php echo $html->link('Volver','/pquery/Queries/descargar_queries/',array('class'=>'clearTag'));?>
 
 </p>
 
@@ -53,7 +56,7 @@ foreach ($queries as $query):
 	}
 ?>
 	<tr<?php echo $class;?>>
-	   <?php foreach($query as $line):?>	
+	   <?php foreach($query[0] as $line):?>	
 		<td>
 			<?php echo $line; ?>
 		</td>
@@ -62,14 +65,14 @@ foreach ($queries as $query):
 <?php endforeach; ?>
 </table>
 </div>
-<div class="paging">
+<div class="paging" style="background-color: #F0F7FC; height: 60px; padding-top: 20px; text-align: center;border-top: 3px solid #DBEBF6">
 	<?php 
 	if (isset($paginator)){
-		echo $paginator->prev('<<', array(), null, array('class'=>'disabled'));
+		echo $paginator->prev('<<');
 		echo "&nbsp;";
 		echo $paginator->numbers();
 		echo "&nbsp;";
-		echo $paginator->next(' >>', array(), null, array('class'=>'disabled'));
+		echo $paginator->next('>>');
 	}		
 	?>
 </div>
