@@ -1,4 +1,4 @@
-<h1>Informaci�n</h1>
+<h1>Informacion</h1>
 
 <script type="text/javascript">
 <!--

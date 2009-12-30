@@ -5,7 +5,6 @@ class QueriesController extends PqueryAppController {
 	var $name = 'Queries';
 	var $helpers = array('Html', 'Form','Ajax');
 	var $components = array('RequestHandler');
-	var $uses = array('Query');
 
 	function index() {
 		$this->Query->recursive = 0;
@@ -67,7 +66,9 @@ class QueriesController extends PqueryAppController {
 
 		$categorias = array();
 		$categorias[''] = 'Todos';
+		
 		$categorias_aux = $this->Query->listarCategorias();
+
 		foreach($categorias_aux as $c){
 			$categorias[$c['Query']['categoria']] = $c['Query']['categoria'];
 		}			
@@ -145,20 +146,26 @@ class QueriesController extends PqueryAppController {
 		$this->rutaUrl_for_layout[] =array('name'=> 'Queries','link'=>'/Instits/add' );
 		$res = $this->Query->findById($id);
 		
-		
-		$this->CustomQuery = Controller::loadModel('CustomQuery');
+		$this->loadModel('Pquery.CustomQuery');
 
 		$this->CustomQuery->setSql($res['Query']['query']);
 		
 		if (isset($this->passedArgs['viewAll']) && $this->passedArgs['viewAll'] == 'true'){
 			$data = $this->CustomQuery->getData();
-			$viewAll = false;		
+			$viewAll = false;
 		} else {	
 			$data = $this->paginate($this->CustomQuery);
 			$viewAll = true;
-		}			
+		}
 
-		$cols = array_keys($data['0']['0']); 
+		$cols = array();
+			if(!empty($data)){
+			foreach($data[0] as $primero):
+				foreach($primero as $p=>$v){
+					$cols[] = $p;
+				}
+			endforeach;
+		}
 		$this->set('cols', $cols);
         $url_conditions['query.id'] = $id;
 		$this->set('queries', $data);

@@ -18,6 +18,7 @@ echo $html->link('Tipo de Pagos','/TipoDePagos').'<br>';
 <?php 
 
 echo $html->link('Comandas Activas','/Comandas').'<br>';
+echo $html->link('Listado de Mesas','/Mesas').'<br>';
 ?>
 
 	</td>
@@ -40,7 +41,7 @@ echo $html->link('Comandera','/Comanderas').'<br>';
 
 <h2>Informes</h2>
 <?php 
-echo $html->link('Crear consultas para las estadísticas (avanzado)','/Queries').'<br>';
+echo $html->link('Crear consultas para las estadísticas (avanzado)','/Pquery/Queries').'<br>';
 ?>
 
 	</td>

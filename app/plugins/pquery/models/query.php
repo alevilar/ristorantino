@@ -1,7 +1,6 @@
 <?php
 class Query extends PqueryAppModel {
 
-	var $name = 'Query';
 	var $validate = array(
 		'name' => array('notempty',
 						'alphaNumeric' => array(
@@ -18,18 +17,20 @@ class Query extends PqueryAppModel {
 	 * @return array $categorias find(all)
 	 */
 	function listarCategorias($filtro = '*'){
-		
+
 		$conditions[] = array('categoria <>'=>"");
-		
+
 		if($filtro != '*'){
-				$conditions[] = array("categoria LIKE" => "%".$filtro."%");
+			$conditions[] = array("categoria LIKE" => "%".$filtro."%");
 		}
 		$this->recursive = -1;
+
 		$categorias =  $this->find('all', array(
 					'group' => 'categoria',
 					'conditions'=> $conditions,
 					'fields' => array('categoria')
 		));
+
 		return $categorias;
 	}
 	
