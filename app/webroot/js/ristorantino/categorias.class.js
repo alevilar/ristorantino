@@ -23,7 +23,10 @@ Categorias.prototype = {
 	    this.currentArbol = Object.clone(this.arbolCategorias);
 	    this.actualizarCategorias(this.currentCategoria.id);
 
-	  //var productosElegidos = new ListadoProductos();
+	  //var productosElegidos = new ListadoProductos();ç
+	     
+	    // /productos/buscar_por_nombre
+	    this.urlBuscarPorNombre = null;
 	},
 	
 /**
@@ -64,18 +67,18 @@ Categorias.prototype = {
 	 * @param String nombre del producto
 	 */
 	buscarProductoNombre: function(productoNombre){
-		if(productoNombre.length > 1){
-			$('productos-listado').update("");
+		if(productoNombre.length > 2){
+			$('buscar-productos-listado').update("");
 			//console.info("actualizarProductos..::"+this.currentArbol.Categoria.name);
 			
-			new Ajax.Request("http://localhost/ristorantino/productos/buscar_por_nombre/"+$F('buscador-producto-nombre')+".json", {
+			new Ajax.Request(this.urlBuscarPorNombre+"/"+$F('buscador-producto-nombre')+".json", {
 				  method: 'get',
 				  onSuccess: function(transport) {
 					   //var productosJSON = transport.headerJSON;
 					   var productosJSON = eval(transport.responseText);
 					  
 					    productosJSON.each(function(p){
-					    	this.construirLinkProducto(p.Producto,'productos-listado');
+					    	this.construirLinkProducto(p.Producto,'buscar-productos-listado');
 					    }.bind(this));
 				  }.bind(this)
 				});

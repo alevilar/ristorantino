@@ -19,11 +19,17 @@
 
  	</div>
  	
- 	<div><h1 id="comanda-productos-titulo">Categorias</h1>
- 	<a href="#" onclick="$('form-buscador-producto-nombre').toggle();">Buscar Producto</a>
- 		<form id="form-buscador-producto-nombre" action="#" style="display: none;">
- 		<input id="buscador-producto-nombre" name="buscador-producto-nombre" />
+ 	<ul class="menu-horizontal">
+ 		<li><a href="#" onclick="$('buscar-productos-contenedor').hide();">Categorias</a></li>
+ 		<li><a href="#" onclick="$('buscar-productos-contenedor').show();">Buscar</a></li>
+ 	</ul>
+ 	
+ 	<div id="buscar-productos-contenedor" style="display: none;">
+ 	<br><br>
+ 		<form id="form-buscador-producto-nombre" action="javascript:"	>
+ 			<input id="buscador-producto-nombre" />
  		</form>
+ 		<ul class="menu-horizontal" id="buscar-productos-listado"></ul>
  	</div>
  	
  	<div id="productos-contenedor"></div>
@@ -110,9 +116,10 @@ function callComandaCocina()
 	}
 
 	Event.observe(
-			'buscador-producto-nombre', 
-			'keypress', 
+			'form-buscador-producto-nombre', 
+			'submit', 
 			function(event) { 
+				manejadorCategorias.urlBuscarPorNombre = "<?php echo $html->url("/productos/buscar_por_nombre");?>";
 				//$('buscador-producto-nombre').value = $('buscador-producto-nombre').value+String.fromCharCode(event.charCode)
 				manejadorCategorias.buscarProductoNombre($('buscador-producto-nombre').value);
 			});
