@@ -1,6 +1,7 @@
 <div class="categorias index">
 <h2><?php __('Categorias');?></h2>
 
+<?php echo $html->link('Reordenar Alfabeticamente',array('action'=>'reordenar'));?>
 
 <table cellpadding="0" cellspacing="0">
 

@@ -56,7 +56,32 @@ Categorias.prototype = {
 	 	}
 	},
 
+	
 
+	/**
+	 * 
+	 * Me busca un producto por su nombre sieimre y cuando el nombre sea mayor a 3 letras
+	 * @param String nombre del producto
+	 */
+	buscarProductoNombre: function(productoNombre){
+		if(productoNombre.length > 1){
+			$('productos-listado').update("");
+			//console.info("actualizarProductos..::"+this.currentArbol.Categoria.name);
+			
+			new Ajax.Request("http://localhost/ristorantino/productos/buscar_por_nombre/"+$F('buscador-producto-nombre')+".json", {
+				  method: 'get',
+				  onSuccess: function(transport) {
+					   //var productosJSON = transport.headerJSON;
+					   var productosJSON = eval(transport.responseText);
+					  
+					    productosJSON.each(function(p){
+					    	this.construirLinkProducto(p.Producto,'productos-listado');
+					    }.bind(this));
+				  }.bind(this)
+				});
+		}
+	 	
+	},
 
 /**
  * 
@@ -90,29 +115,32 @@ Categorias.prototype = {
 	construirLinkProducto: function (producto, divContenedor)
 	{
 		var li = new Element('li');
-		
+	
 		//si el producto no tiene sabores
-		if(producto.sabores.length == 0)
-		{
+		var pasoAca = false;
+		if(producto.sabores){
+			if(producto.sabores.length > 0)
+			{
+				//producto.id = Math.random()*50000;
+				var a = new Element('a', { 
+					  'class': 'boton letra-chica productos-con-sabores', 
+					  'href': '#producto-'+producto.id, 
+					  'id': "producto-"+producto.id,
+					  'onclick': "return false;"
+				}).update(producto.name);
+				a.observe('click',adicion.comanda.seleccionarSabores.bind(adicion.comanda,producto));
+				pasoAca = true;
+			}
+		}
+		
+		if(!pasoAca){
 			var a = new Element('a', { 
 				  'class': 'boton letra-chica productos', 
 				  'href': '#producto-'+producto.id, 
 				  'id': "producto-"+producto.id,
 				  'onclick': "adicion.comanda.add('"+Object.toJSON(producto)+"');return false;"
 			}).update(producto.name);
-		}
-		else
-		{
-			//producto.id = Math.random()*50000;
-			var a = new Element('a', { 
-				  'class': 'boton letra-chica productos-con-sabores', 
-				  'href': '#producto-'+producto.id, 
-				  'id': "producto-"+producto.id,
-				  'onclick': "return false;"
-			}).update(producto.name);
-			a.observe('click',adicion.comanda.seleccionarSabores.bind(adicion.comanda,producto));
-		}
-		
+		}	
 
 		$(divContenedor).appendChild(li).appendChild(a);
 	},

@@ -31,8 +31,6 @@ ComandaCocina = Class.create(Comanda, {
 	    this.prioridad = 0;
 	    
 	    
-	    
-	    
 	    /**
 	     * es un boolean que nos dice si los productos seleccionados son entradas o no 
 	     */
@@ -150,7 +148,6 @@ ComandaCocina = Class.create(Comanda, {
 					  var a = new Element('a',{
 						  			'id':'comanda-sacar-producto-'+p.getId(),
 						  			'class': "boton-ancho-fijo "+claseEntrada,
-						  			//'onClick': "adicion.comanda.restar('"+Object.toJSON(p)+"')"
 						  			'onClick': "return false;"
 						  			}
 					  ).update(p.getCantidad()+" --| "+p.getName());
@@ -159,7 +156,6 @@ ComandaCocina = Class.create(Comanda, {
 					  var a = new Element('a',{
 				  			'id':'comanda-sacar-producto-'+p.getId(),
 				  			'class': 'producto-con-sabores boton-ancho-fijo '+claseEntrada,
-				  			//'onClick': "adicion.comanda.restar('"+Object.toJSON(p)+"')"
 				  			'onClick': "return false;"
 				  			}
 					  );

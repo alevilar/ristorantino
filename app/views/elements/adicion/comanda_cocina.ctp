@@ -1,9 +1,10 @@
 
 
  <div id="contenedor-comandas" style="display: none;">
+ 	
+ 	
  	<div id="comanda">
  		<h1 id="comanda-prioridad-titulo">Comanda</h1>
- 		
  		
  		<ul id="comanda-enviar" class="menu-horizontal">
 			<li><a id="btn-imprimir-comanda" class="boton-chico letra-chica" href="#EnviarComanda" onclick="adicion.comanda.imprimirComanda(); return false;">Mandar Comanda</a></li>
@@ -12,19 +13,30 @@
 			<li><a id="btn-seleccionar-entradas" class="boton-chico letra-chica" href="#SeleccionarEntradas" onclick="adicion.comanda.seleccionarEntradas(); return false;">Entradas</a></li>
 		</ul>
 
+		
+ 		
 		<ul id="comanda-ul" class="menu-horizontal"></ul>
 
  	</div>
  	
- 	<div><h1 id="comanda-productos-titulo">Categorias</h1></div>
+ 	<div><h1 id="comanda-productos-titulo">Categorias</h1>
+ 	<a href="#" onclick="$('form-buscador-producto-nombre').toggle();">Buscar Producto</a>
+ 		<form id="form-buscador-producto-nombre" action="#" style="display: none;">
+ 		<input id="buscador-producto-nombre" name="buscador-producto-nombre" />
+ 		</form>
+ 	</div>
  	
  	<div id="productos-contenedor"></div>
  	<div id="comanda-observacion-div" style="display:none">
  		<h2>Escriba una observación sobre ésta comanda</h2>
  		<textarea id="comanda-observacion" name="data[Comanda][observacion]" COLS=40 ROWS=6></TEXTAREA>
  	</div>
+
+ 
  </div>
  
+ 
+
 
 <script type="text/javascript">
 <!--
@@ -95,7 +107,15 @@ function callComandaCocina()
 		adicion.comanda.resetearComanda(adicion.currentMozo, adicion.currentMesa);
 	
 		comandaCocinaWindow.showCenter();
-	}	
+	}
+
+	Event.observe(
+			'buscador-producto-nombre', 
+			'keypress', 
+			function(event) { 
+				//$('buscador-producto-nombre').value = $('buscador-producto-nombre').value+String.fromCharCode(event.charCode)
+				manejadorCategorias.buscarProductoNombre($('buscador-producto-nombre').value);
+			});
 }
 
 //-->

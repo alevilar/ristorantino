@@ -16,6 +16,17 @@ class ProductosController extends AppController {
 		}
 		$this->set('producto', $this->Producto->read(null, $id));
 	}
+	
+	/**
+	 * busca un producto por su nombre
+	 * @param string $nombre
+	 * @return array
+	 */
+	function buscar_por_nombre($nombre){
+			Configure::write('debug', 0);
+			$this->Producto->recursive=-1;
+		$this->set('productos',$this->Producto->find('all',array('conditions'=>array('Producto.name LIKE'=>"%$nombre%"))));
+	}
 
 	function add() {
 		if (!empty($this->data)) {

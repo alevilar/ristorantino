@@ -14,6 +14,19 @@ class CategoriasController extends AppController {
 		$this->set('categorias',$this->Categoria->generatetreelist(null, null, null, '&nbsp;&nbsp;&nbsp;'));	
 			
 	}
+	
+	
+	/**
+	 * 
+	 * Reordena el arbol alfabeticamente y devuelve a la pagtalla index
+	 * 
+	 */
+	function reordenar() { 
+		$this->Categoria->reorder(array('field' => 'Categoria.name', 'order' => 'ASC' ));	
+		$this->redirect(array('action'=>'index'));	
+	}
+	
+	
 
 	function view($id = null) {
 		if (!$id) {

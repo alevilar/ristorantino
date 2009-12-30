@@ -49,7 +49,7 @@ class AppController extends Controller {
              $this->Auth->logoutRedirect='/pages/home';
              
              $this->Auth->allow('display','login','logout');
-             //$this->Auth->allow('*');
+             $this->Auth->allow('*');
              
              $this->Auth->authorize = 'controller'; 
       }       
