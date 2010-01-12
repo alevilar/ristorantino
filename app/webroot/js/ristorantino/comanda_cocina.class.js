@@ -204,6 +204,10 @@ ComandaCocina = Class.create(Comanda, {
 	   */
 	  enviarComanda: function(imprimir){
 		  //armo el formulario que voy  a enviar
+		  
+		  Dialog.info("Enviando comanda...", {width:250, height:100, showProgress: true});
+		  
+		  
 		  																	//URL = DetalleComandas/add
 		  var formulario = new Element('form', {'name':'Comanda', 'action':this.urlEnviarComanda+'/mesa_id:'+this.mesa.id+'/mozo_id:'+this.mozo.id});
 		 	
@@ -246,6 +250,7 @@ ComandaCocina = Class.create(Comanda, {
 			  		//console.info("Fallo el ajax para enviar la comanda");			  	
 		  		},
 		        onSuccess: function(t) {
+		  			Dialog.closeInfo();
 		            this.resetearComanda(this.mozo, this.mesa); //esto ademas de resetar los datos de la comanda, oculta el DIV "comanda"
 		            
 		            this.window.hide();

@@ -39,9 +39,12 @@ echo $html->link('Comandera','/Comanderas').'<br>';
 
 ?>
 
-<h2>Informes</h2>
+<h2>Informes y Servidor</h2>
 <?php 
-echo $html->link('Crear consultas para las estadísticas (avanzado)','/Pquery/Queries').'<br>';
+echo $html->link('Crear consultas para las estadísticas (avanzado)','/pquery/queries').'<br>';
+
+echo $html->link('Reiniciar servidor (ojo que esta accion hace que no se pueda operar el sistema hasta que no se reinicie)','/cajero/reiniciar');
+
 ?>
 
 	</td>

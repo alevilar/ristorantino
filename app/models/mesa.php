@@ -93,28 +93,24 @@ class Mesa extends AppModel {
 		
 		
 		$total =  $this->query("
-								select sumadas.mesa_id as mesa_id,sum(total) as total, dd.descuento,  sum(total)*(1-dd.descuento/100) as total_con_descuento 
+				select sumadas.mesa_id as mesa_id,sum(total) as total, dd.descuento,  sum(total)*(1-dd.descuento/100) as total_con_descuento 
 from (
 	select c.mesa_id as mesa_id, sum(s.precio*(dc.cant-dc.cant_eliminada)) as total
-	from detalle_comandas dc
+	from comandas c
+	left join detalle_comandas dc on (dc.comanda_id =  c.id)
 	left join detalle_sabores ds on (ds.detalle_comanda_id =  dc.id)
 	left join sabores s on (s.id = ds.sabor_id)
-	left join comandas c on (dc.comanda_id = c.id)
 	where 
 	c.mesa_id = $this->id AND
 	(dc.cant-dc.cant_eliminada) > 0
-	group by c.mesa_id
-
-	UNION
-
-	select c.mesa_id as mesa_id, sum(p.precio*(dc.cant-dc.cant_eliminada)) as total
-	from detalle_comandas dc
+UNION ALL
+select c.mesa_id as mesa_id, sum(p.precio*(dc.cant-dc.cant_eliminada)) as total
+	from comandas c
+	left join detalle_comandas dc on (dc.comanda_id = c.id)
 	left join productos p on (dc.producto_id = p.id)
-	left join comandas c on (dc.comanda_id = c.id)
 	where 
 	c.mesa_id = $this->id AND
 	(dc.cant-dc.cant_eliminada) > 0
-	group by c.mesa_id
 ) as sumadas
 
 LEFT JOIN
@@ -129,7 +125,7 @@ LEFT JOIN
 		mesa_id = $this->id
 		group by mesa_id
 	) as dd on (dd.mesa_id = sumadas.mesa_id)
-	group by sumadas.mesa_id
+	group by sumadas.mesa_id				
 										
 		");
 		

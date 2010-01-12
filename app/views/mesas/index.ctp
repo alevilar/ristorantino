@@ -14,17 +14,17 @@ echo $paginator->counter(array(
 	<th><?php echo $form->input('Mozo.numero',array('label'=>false));?></th>
 	<th><?php echo $form->input('Mesa.total',array('label'=>false));?></th>
 	<th></th>
-	<th>&nbsp;</th>
+	<th></th>
 	<th>&nbsp;</th>
 	<th class="actions"><?php echo $form->end("Buscar")?></th>
 </tr>
 <tr>
 	<th><?php echo $paginator->sort('id');?></th>
-	<th><?php echo $paginator->sort('numero');?></th>
+	<th><?php echo $paginator->sort('Mesa','numero');?></th>
 	<th><?php echo $paginator->sort('Mozo (ID) Nº','mozo_id');?></th>
 	<th><?php echo $paginator->sort('total');?></th>
-	<th><?php echo $paginator->sort('Abierta','created');?></th>
-	<th><?php echo $paginator->sort('Cerró','time_cerro');?></th>
+	<th><?php echo $paginator->sort('Fecha','created');?></th>
+	<th>Cliente</th>
 	<th><?php echo $paginator->sort('Cobró','time_cobro');?></th>
 	<th class="actions"><?php __('Actions');?></th>
 </tr>
@@ -54,8 +54,13 @@ foreach ($mesas as $mesa):
 			<?php echo date('d-m-y (H:i:s)',strtotime($mesa['Mesa']['created']));} ?>
 		</td>
 		<td>
-			<?php if ( $mesa['Mesa']['time_cerro'] != '0000-00-00 00:00:00'){?>
-			<?php echo date('d-m-y (H:i:s)',strtotime($mesa['Mesa']['time_cerro']));} ?>
+			<?php 
+			if(!empty($mesa['Cliente']['Descuento']['porcentaje'])){
+			 	echo $mesa['Cliente']['Descuento']['porcentaje']."%"; }
+			 elseif($mesa['Cliente']['tipofactura']) {
+			 	echo 'factura "'.$mesa['Cliente']['tipofactura'].'"';
+			 }
+			 else echo 'factura "B"'?>
 		</td>
 		<td>
 			<?php if ( $mesa['Mesa']['time_cobro'] != '0000-00-00 00:00:00'){ ?>

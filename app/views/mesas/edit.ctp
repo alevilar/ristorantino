@@ -20,12 +20,31 @@
 
 <h3>Cliente</h3>
 <dl>
-<?php 
+<?php
+
 	echo "<dt>Tipo Factura</dt>";
-	echo "<dd>". $mesa['Cliente']['tipofactura']."&nbsp;</dd>";
+	if ($mesa['Cliente']['tipofactura'] == ''){
+		$tipofac = "B";
+		$mesa['Cliente']['tipofactura'] = "B";
+	}
 	
-	echo "<dt>Nombre</dt>";
-	echo "<dd>". $mesa['Cliente']['nombre']."&nbsp;</dd>";
+	if ($mesa['Cliente']['tipofactura'] === 0){
+		$tipofac = 'Remito';	
+	}
+	else{
+		$tipofac = $mesa['Cliente']['tipofactura'];
+	}
+	
+	echo "<dd>\"$tipofac\" &nbsp;</dd>";
+	
+	if(empty($mesa['Cliente']['tipofactura'])){
+		echo "<dt>Nombre</dt>";
+		echo "<dd>". $mesa['Cliente']['nombre']."&nbsp;</dd>";
+	
+		echo "<dt>Descuento</dt>";
+		$dto = (!empty($mesa['Cliente']['Descuento']['porcentaje']))?$mesa['Cliente']['Descuento']['porcentaje']:"0";
+		echo "<dd>". $dto."% &nbsp;</dd>";
+	}
 	
 	echo "<dt>Imprime Ticket</dt>";
 	echo "<dd>". ($mesa['Cliente']['imprime_ticket'])?'SI':'NO'."&nbsp;</dd>";
@@ -36,33 +55,65 @@
 echo "Abrió a las ".date('H:i', strtotime($this->data['Mesa']['created']));
 ?>
 
-<dl>
+<ul>
 
 <?php
 $total = 0; 
-foreach($items as $i):
-	 echo "<dt>". $i['DetalleComanda']['cant_final'].') '.$i['Producto']['name']." . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</dt>";
+foreach($items as $comanda):
+	 echo "<li>ID: ";
+	 echo "#".$comanda['id']."</li>";
+	 echo $html->link("Reimprimir Comanda #".$comanda['id'],array('controller'=>'comandas','action'=>'imprimir',$comanda['id']));
+	 if($comanda['observacion']){
+	 echo "<li><cite>Observacion:</cite> ";
+	 echo $comanda['observacion']."</li>";
+	 }
 	 
-	 echo "<dd>$".$i['Producto']['precio'].' x '.$i['DetalleComanda']['cant_final'].' = $'.$i['Producto']['precio']*$i['DetalleComanda']['cant_final'] ."</dd>";
-		if(!empty($i['DetalleSabor'])):
-			echo "<cite>";
-			foreach($i['DetalleSabor'] as $sabor):
-				echo " - ".$sabor['Sabor']['name']."($".$sabor['Sabor']['precio'].")";
-				$total += $sabor['Sabor']['precio']*$i['DetalleComanda']['cant_final'];
-			endforeach;
-			echo "</cite><br>";
-		endif;
-	$total += $i['Producto']['precio']*$i['DetalleComanda']['cant_final']; 
+	 
+	 ?>
+	 <ul>
+	 <?php foreach($comanda['DetalleComanda'] as $detalle){?>
+	 	<li>
+	 		<?php echo "Cant Pedida: ".$detalle['cant']." Sacada: ".$detalle['cant_eliminada'] ?>
+	 		<br>
+	 		<span style="color: maroon; <?php  if(($detalle['cant']-$detalle['cant_eliminada'])==0) echo "text-decoration: line-through;"?> ">
+	 			<?php  echo $detalle['cant']-$detalle['cant_eliminada'].")  ".$detalle['Producto']['name']." [p-u $ ".$detalle['Producto']['precio']."]"?>
+	 		</span>
+	 	</li>
+	 	<?php if(count($detalle['DetalleSabor'])>0){
+	 				$primero = true;
+	 			echo "(";
+	 			 foreach($detalle['DetalleSabor'] as $sabor){
+	 			 	if(!$primero){
+	 			 		echo ", ";
+	 			 	}
+	 			 	$primero = false;
+	 			 	echo $sabor['Sabor']['name']." [ $".$sabor['Sabor']['precio']."]";
+	 			 	$total += ($detalle['cant']-$detalle['cant_eliminada'])*$sabor['Sabor']['precio'];
+	 			 }
+	 			 echo ")";
+	 	}
+	 	
+		$total += ($detalle['cant']-$detalle['cant_eliminada'])*$detalle['Producto']['precio'];
+	 	}?>
+	 </ul>
+	 
+	 
+	 <hr />
+	 <?php 
 endforeach;
 
 ?>
 
-</dl>
+</ul>
+
+
+	 
 
 
 <?php 
 
-echo "<h3>SUBTOTAL = $$total</h3>"
+echo "<h3>SUBTOTAL = $$total</h3>";
+echo "<h4>Total almacenado en Base de Datos: $$subtotal<h4> (este valor debe conicidir con el de arriba)";
 ?>
 
 

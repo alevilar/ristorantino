@@ -8,7 +8,8 @@
 	<dt>Mesa</dt><dd><?php echo $c['Mesa']['numero']?></dd>
 	<dt>Hora impresión</dt><dd><?php echo date('H:i:s',strtotime($c['Comanda']['created']))?></dd>
 	<dt>impresa</dt><dd><?php echo $c['Comanda']['impresa']?'SI':'NO'?></dd>
-	<hr></hr>
+	<?php echo $html->link('Reimprimir comanda',array('action'=>'imprimir',$c['Comanda']['id'])); ?>
+	<hr />
 <?php endforeach;?>
 </dl>
 </div>

@@ -3,11 +3,15 @@ class MesasController extends AppController {
 
 	var $name = 'Mesas';
 	var $helpers = array('Html', 'Form');
-	var $components = array( 'Printer');
+	var $components = array('Printer');
 	
 		
 	
 	function index() {
+		$this->paginate['Mesa'] = array(
+				'contain'	 => array('Mozo(numero)','Cliente'=>array('Descuento'))
+			);
+			
 		if(!empty($this->data)){
 			$condiciones = array();
 			foreach($this->data as $modelo=>$campos){
@@ -18,15 +22,15 @@ class MesasController extends AppController {
 				}
 			}
 			$this->Producto->recursive = 0;
-			foreach($this->modelNames as $modelo){
-				$this->paginate[$modelo] = array(
-					'conditions' => $condiciones
-				);
-			}
+			
+			$this->paginate['Mesa'] = array(
+				'conditions' => $condiciones,
+			);
 		}
 		
+		//debug($this->paginate('Mesa'));
 		$this->Mesa->recursive = 0;
-		$this->set('mesas', $this->paginate());
+		$this->set('mesas', $this->paginate('Mesa'));
 	}
 	
 
@@ -357,15 +361,25 @@ class MesasController extends AppController {
 			}
 		}
 		if (empty($this->data)) {
-			$this->data = $this->Mesa->read(null, $id);
+			$this->data = $this->Mesa->find('first',array(
+												'conditions'=> array(
+													'Mesa.id'=>$id),
+												'contain'=>	array(	
+													'Mozo',
+													'Cliente'=>'Descuento',
+													'Comensal',
+													'Comanda'=>array('DetalleComanda'=>array('Producto','DetalleSabor'=>'Sabor')))	
+			));
 		}
 		
-		$this->Mesa->id = $id;
-		$items = $this->Mesa->listado_de_productos();
+		//$this->Mesa->id = $id;
+		//$items = $this->Mesa->listado_de_productos();
+		$items = $this->data['Comanda'];
 		
-		
-		$mesa = $this->Mesa->read(null, $id);	
+		$mesa = $this->data;	
 		$this->set(compact('mesa', 'items'));	
+		
+		$this->set('subtotal',$this->Mesa->calcular_total());
 		
 		
 		$mozos = $this->Mesa->Mozo->find('list',array('fields'=>array('id','numero')));

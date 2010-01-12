@@ -2,7 +2,7 @@
 class ComandasController extends AppController {
 
 	var $name = 'Comandas';
-
+	var $components = array( 'Printer');
 	
 	
 	
@@ -30,6 +30,16 @@ class ComandasController extends AppController {
 	function index(){
 		$this->set('comandas',$comandas = $this->Comanda->dame_las_comandas_abiertas());
 		
+	}
+	
+	/**
+	 * REimprime comandas
+	 * @param integer $id ID de la comanda
+	 * @return envia a imprimir
+	 */
+	function imprimir($id){
+		$this->Printer->imprimirComanda($id);
+		$this->redirect('/comandas/index');
 	}
 }
 ?>

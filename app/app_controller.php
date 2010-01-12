@@ -48,8 +48,8 @@ class AppController extends Controller {
              $this->Auth->authError = 'Debe registrarse para acceder a esta página';
              $this->Auth->logoutRedirect='/pages/home';
              
-             $this->Auth->allow('display','login','logout');
-             $this->Auth->allow('*');
+             //$this->Auth->allow('display','login','logout');
+             //$this->Auth->allow('*');
              
              $this->Auth->authorize = 'controller'; 
       }       
@@ -72,11 +72,17 @@ class AppController extends Controller {
         	if ($this->name == 'Mesas') 
         	{
         		$llAuth = true;
-        	}        	
+        	}  
+
 
           	switch ($this->Auth->user('role')):
                 case 'gerente':
                     $llAuth = true;                
+                    break;
+                 case 'adicionista':
+        			if($this->name != 'Queries'){
+						$llAuth = true;
+					}                
                     break;
 				 case 'mozo':
 					if($this->name == 'Adicion'){

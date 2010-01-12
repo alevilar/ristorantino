@@ -7,7 +7,7 @@
  		<h1 id="comanda-prioridad-titulo">Comanda</h1>
  		
  		<ul id="comanda-enviar" class="menu-horizontal">
-			<li><a id="btn-imprimir-comanda" class="boton-chico letra-chica" href="#EnviarComanda" onclick="adicion.comanda.imprimirComanda(); return false;">Mandar Comanda</a></li>
+			<li><a id="btn-imprimir-comanda" class="boton-chico letra-chica" href="#EnviarComanda"  ondblclick="alert(Cuidado! hiciste doble click y esto hacia que \nse envien 2 comandas a la cocina. Vuelva a intentar haciendo solo 1 click.);" onclick="adicion.comanda.imprimirComanda(); return false;">Mandar Comanda</a></li>
 			<li><a id="btn-sinimprimir-comanda" class="boton-chico letra-chica" href="#EnviarComandaNoImprimir" onclick="adicion.comanda.guardarComanda(); return false;">Sin imprimir</a></li>
 			<li><a id="btn-observacion-comanda" class="boton-chico letra-chica" href="#AgregarObservacion" onclick="adicion.comanda.agregarObservacion(); return false;">Agregar Observación</a></li>
 			<li><a id="btn-seleccionar-entradas" class="boton-chico letra-chica" href="#SeleccionarEntradas" onclick="adicion.comanda.seleccionarEntradas(); return false;">Entradas</a></li>

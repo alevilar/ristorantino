@@ -225,6 +225,8 @@ class PrinterComponent extends Object {
 					// pongo el ESC para comenzar ESC/P
 					fwrite($archivo_comanda,ESC.'@');
 					
+					//DOBLE_ALTO
+					fwrite($archivo_comanda,ESC.DOBLE_ALTO);
 						
 					// IMPRIMO EL HEADER
 					if($productos[0]['Comanda']['prioridad']){
@@ -282,6 +284,8 @@ class PrinterComponent extends Object {
 					fwrite($archivo_comanda,ESC.SACA_ENFATIZADO);
 					
 					
+					fwrite($archivo_comanda,ESC.SACA_DOBLE_ALTO);
+					
 					fwrite($archivo_comanda,"\n");
 					
 					$tail ="                          ".date('H:i:s',strtotime('now'))."\n";
@@ -298,9 +302,7 @@ class PrinterComponent extends Object {
 					fwrite($archivo_comanda,"\n");
 					fwrite($archivo_comanda,"\n");
 					fwrite($archivo_comanda,"\n");
-					fwrite($archivo_comanda,"\n");
-					flush();
-					
+					fwrite($archivo_comanda,"\n");					
 					
 					// probando corte completo ESC/P
 					fwrite($archivo_comanda,ESC.CORTAR_PAPEL);

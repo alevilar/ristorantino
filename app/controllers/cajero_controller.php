@@ -11,6 +11,13 @@ class CajeroController extends AppController {
 	var $layout = 'cajero';
 
 
+	
+	function reiniciar(){
+		debug(exec('sudo reboot'));
+		die("aguarde que el server esta reiniciandose. Esto puede demorar unos minutos....");
+	}
+	
+	
 	function cierre_x(){		
 		$this->Printer->imprimirCierreX(); 
 		
@@ -59,9 +66,11 @@ imprimirse");
 	
 	
 	function ajax_mesas_x_cobrar(){
-		Configure::write('debug', 0);
+		//die("que paso");
+		Configure::write('debug', 1);
 		$this->RequestHandler->setContent('json', 'text/x-json');
 
+		$this->layout = 'default';
 		$mesas = $this->Mesa->todasLasCerradas();
 	
 		$this->set('mesas_cerradas', $mesas);
@@ -75,13 +84,23 @@ imprimirse");
 		$conditions = array("Mesa.time_cobro" => "0000-00-00 00:00:00",
 							"Mesa.time_cerro" => "0000-00-00 00:00:00");
 		
-		$this->paginate = array('limit' => 28,'conditions'=>$conditions, 'order'=>'Mesa.created DESC');
+		$this->paginate['Mesa'] = array(
+							'limit' => 28,
+							'conditions'=>$conditions, 
+							'order'=>'Mesa.created DESC',
+							'contain'=>	array(	'Mozo',
+												'Cliente'=>'Descuento',
+												'Comensal',
+												'Comanda')				
+		);
+		
 		 $mesas = $this->paginate('Mesa');
-//	debug($mesas);
+		 /*
 		 for ($i = 0; $i<count($mesas); $i++):
 		 	$this->Mesa->id = $mesas[$i]['Mesa']['id'];
 		 	$mesas[$i]['subtotal'] = $this->Mesa->calcular_total();
 		 endfor;
+		 */
 		$this->set('mesas_abiertas',$mesas);
 	}
 
