@@ -5,6 +5,51 @@ class ProductosController extends AppController {
 	var $helpers = array('Html', 'Form');
 
 	function index() {
+		$this->params['PaginateConditions'] = array();
+		
+		if(!empty($this->data)){
+			$condiciones = array();
+			$pagCondiciones = array();
+			foreach($this->data as $modelo=>$campos){
+				foreach($campos as $key=>$val){
+						if(!is_array($val))
+							$condiciones[$modelo.".".$key." LIKE"] = '%'.$val.'%';
+							$pagCondiciones[$modelo.".".$key] = $val;
+				}
+			}
+			$this->Producto->recursive = 0;
+			$this->paginate['Producto'] = array(
+				'conditions' => $condiciones
+			);
+			
+			$this->params['PaginateConditions'] = $pagCondiciones;
+			$this->set('productos', $this->paginate('Producto'));
+		}
+		
+		
+		if(!empty($this->passedArgs) && empty($this->data)){ 
+		 	$condiciones = array();
+			$pagCondiciones = array();
+			foreach($this->passedArgs as $campo=>$valor){
+				if($campo == 'page' || $campo == 'sort' || $campo == 'direction'){ 
+					continue;
+				}
+				$condiciones["$campo LIKE"] = '%'.$valor.'%';
+				$pagCondiciones[$campo] = $valor;
+				$this->data[$campo] = $valor;
+				
+			}
+			$this->Producto->recursive = 0;
+			$this->paginate['Producto'] = array(
+				'conditions' => $condiciones
+			);
+			$this->params['PaginateConditions'] = $pagCondiciones;
+			$this->set('productos', $this->paginate('Producto'));
+		 }   
+		 
+		 
+		
+		
 		$this->Producto->recursive = 0;
 		$this->set('productos', $this->paginate());
 	}
@@ -77,18 +122,7 @@ class ProductosController extends AppController {
 	
 	
 	function buscarProductos(){
-		$condiciones = array();
-		foreach($this->data as $modelo=>$campos){
-			foreach($campos as $key=>$val){
-					if(!is_array($val))
-						$condiciones[] = array($modelo.".".$key." LIKE"=>'%'.$val.'%');
-			}
-		}
-		$this->Producto->recursive = 0;
-		$this->paginate['Producto'] = array(
-			'conditions' => $condiciones
-		);
-		$this->set('productos', $this->paginate('Producto'));
+		
 		$this->render('index');
 		
 	}
