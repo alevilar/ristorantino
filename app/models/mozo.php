@@ -3,8 +3,13 @@ class Mozo extends AppModel {
 
 	var $name = 'Mozo';
 	var $validate = array(
-		'user_id' => array('numeric'),
-		'numero' => array('numeric')
+		'user_id' => array(
+                    'numeric',
+                    'isUnique' => array('message'=>'El usuario seleccionado ya tiene un numero de mozo asignado')),
+		'numero' => array(
+                    'numeric'
+                    
+                    )
 	);
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed

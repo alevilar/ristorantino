@@ -6,6 +6,7 @@ class User extends AppModel {
 	
 		'username' => array(
 			'required' => VALID_NOT_EMPTY,
+                        //'unico' => 'isUnique',
 			'unique' => array('rule'=>array('isUnique','username'),'message' => 'El nombre de usuario ya existe')
 		),
 		'password' => array('notempty'),
