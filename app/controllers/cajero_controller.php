@@ -90,7 +90,6 @@ imprimirse");
 							'order'=>'Mesa.created DESC',
 							'contain'=>	array(	'Mozo',
 												'Cliente'=>'Descuento',
-												'Comensal',
 												'Comanda')				
 		);
 		

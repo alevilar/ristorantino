@@ -79,9 +79,9 @@ class ClientesController extends AppController {
 	function ajax_clientes_factura_a(){
 		$this->Cliente->order = 'Cliente.nombre';
 		$this->paginate = array('conditions'=>array('Cliente.tipofactura' => 'A'),
-								'limit'=> 8
-		);
-		
+					'limit'=> 7,
+                                        'contain' => array('Cliente'),
+		);		
 		$this->set('clientes',$this->paginate());
 	}
 	
@@ -92,7 +92,8 @@ class ClientesController extends AppController {
 	function ajax_clientes_con_descuento(){
 		$this->Cliente->order = 'Cliente.nombre';
 		$this->paginate = array('conditions'=>array('tipofactura <>' => "A"),
-								'limit'=> 8
+                                        'limit'=> 7,
+                                        'contain' => array('Cliente'),
 		);
 		
 		$this->set('clientes',$this->paginate());

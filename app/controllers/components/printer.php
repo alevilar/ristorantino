@@ -99,9 +99,6 @@ class PrinterComponent extends Object {
 			$this->__crearDirectorioSiNoExiste($c['Comandera']['path']);
 		}
 
-		$fiscal =& ClassRegistry::init('Impfiscal');
-
-
 		//$this->impresoraFiscal = $fiscal->find('first');
 		$this->impresoraFiscal = 'ttyUSB0';
 

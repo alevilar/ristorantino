@@ -35,13 +35,6 @@ class Mesa extends AppModel {
 
 	
 	var $hasOne = array(
-			'Comensal' => array('className' => 'Comensal',
-								'foreignKey' => 'mesa_id',
-								'dependent' => true,
-								'conditions' => '',
-								'fields' => '',
-								'order' => ''
-			),
 			'Pago' => array('className' => 'Pago',
 								'foreignKey' => 'mesa_id',
 								'dependent' => true,

@@ -182,31 +182,35 @@ Adicion.prototype = {
     // envia la mesa para ser cerrada
     cerrarCurrentMesa: function(){
         var confirma = false;
-        if(this.tieneMesaSeleccionada()){
-            if(this.currentMesa.productos){
-                var windowConfirma  = Dialog.confirm(
-                    "Se va a cerrar la mesa Nº "+this.currentMesa.numero,
-                    {
-                        width:300,
-                        okLabel: "Aceptar",
-                        /*	buttonClass: "myButtonClass",*/
-                        id: "mesa-confirma-cierre",
-                        onCancel: function(win) {
-                            confirma = false;
-                            return false
-                        },
-                        onOk:function(win) {
-                            this.__aplicarCierre();
-                            confirma = true;
-                            return true;
-                        }.bind(this)
-                    });
-									
-					
-                return confirma;
-            }
-            else{
-                mensajero.error("No se puede cerrar una mesa que no tiene productos cargados.");
+
+        // si aun no se settearon la cantidad de comensales DEBE HACERLO !!
+        if (this.currentMesa.gimpfiscales_controlleretCantComensales() < 1) {
+                showComensalesWindow();
+        } else {
+            if(this.tieneMesaSeleccionada()){
+                if(this.currentMesa.productos){
+                    var windowConfirma  = Dialog.confirm(
+                        "Se va a cerrar la mesa Nº "+this.currentMesa.numero,
+                        {
+                            width:300,
+                            okLabel: "Aceptar",
+                            /*	buttonClass: "myButtonClass",*/
+                            id: "mesa-confirma-cierre",
+                            onCancel: function(win) {
+                                confirma = false;
+                                return false
+                            },
+                            onOk:function(win) {
+                                this.__aplicarCierre();
+                                confirma = true;
+                                return true;
+                            }.bind(this)
+                        });
+                    return confirma;
+                }
+                else{
+                    mensajero.error("No se puede cerrar una mesa que no tiene productos cargados.");
+                }
             }
         }
 			

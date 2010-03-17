@@ -11,34 +11,36 @@
 
 
 <script type="text/javascript">
+
+    function showComensalesWindow(){
+        if(adicion.tieneMesaSeleccionada()){
+            $('div-comensales').show();
+            var ops = {
+                hideEffect:Element.hide,
+                showEffect:Element.show,
+                //className: 'alert_simple',
+                zIndex: 2000,
+                width:400,
+                height:400,
+                showProgress: false,
+                destroyOnClose: true
+            };
+            Dialog.info("<h1>Comensales</h1>"+$('div-comensales').innerHTML, ops);
+
+            //NUMPAD ------------------------------------------------------
+            //numPad es una variable global
+            $('contenedor-numPad-menu-comensales').update();
+            numPad = new NumpadControl('contenedor-numPad-menu-comensales');
+
+            numPad.show($('mesa-cant-comensales'));
+
+            //---------------------------------------  -------------------------
+            $('mesa-cant-comensales').focus();
+        }
+    }
     
     Event.observe(window,'load',function(){
-        $('btn-comensales').observe('click', function(){
-            if(adicion.tieneMesaSeleccionada()){
-                $('div-comensales').show();
-                var ops = {
-                    hideEffect:Element.hide,
-                    showEffect:Element.show,
-                    //className: 'alert_simple',
-                    zIndex: 2000,
-                    width:400,
-                    height:400,
-                    showProgress: false,
-                    destroyOnClose: true
-                };
-                Dialog.info("<h1>Comensales</h1>"+$('div-comensales').innerHTML, ops);
-
-                //NUMPAD ------------------------------------------------------
-                //numPad es una variable global
-                $('contenedor-numPad-menu-comensales').update();
-                numPad = new NumpadControl('contenedor-numPad-menu-comensales');
-
-                numPad.show($('mesa-cant-comensales'));
-
-                //---------------------------------------  -------------------------
-                $('mesa-cant-comensales').focus();
-            }
-        });
+        $('btn-comensales').observe('click', showComensalesWindow);
     });
 
 
