@@ -43,7 +43,7 @@
 		echo $javascript->link('prototype');		
 		echo $javascript->link('scriptaculous');	
 		
-		echo $javascript->link('Controls'); // PAD numerico
+		//echo $javascript->link('Controls'); // PAD numerico
 		
 	?>
 </head>

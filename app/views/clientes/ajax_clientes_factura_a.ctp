@@ -38,7 +38,7 @@
 		<li><?php echo $paginator->prev('« - ', array('class' => 'boton'), null, array('class' => 'disabled boton'));?></li>
 		
 		<!-- Muestra los números de página -->
-		<?php echo $paginator->numbers(array('tag'=>'li','class'=>'boton')); ?>
+		<?php echo $paginator->numbers(array('tag'=>'li','class'=>'boton', 'modulus'=>'5')); ?>
 		
 		<!-- Muestra los enlaces para Siguiente -->	
 		<li><?php echo $paginator->next(' + »', array('class' => 'boton'), null, array('class' => 'disabled boton'));?></li>

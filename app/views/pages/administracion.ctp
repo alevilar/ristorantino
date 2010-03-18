@@ -30,6 +30,11 @@ echo $html->link('Categorias','/categorias').'<br>';
 echo $html->link('Productos','/productos').'<br>';
 echo $html->link('Gustos y Sabores','/sabores').'<br>';
 ?>
+
+  <h2>Gastos</h2>
+<?php
+echo $html->link('Gastos','/gastos').'<br>';
+?>
 	
 
 <h2>Configuración de impresoras</h2>

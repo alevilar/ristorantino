@@ -51,7 +51,11 @@ class AppController extends Controller {
              //$this->Auth->allow('display','login','logout');
              //$this->Auth->allow('*');
              
-             $this->Auth->authorize = 'controller'; 
+             $this->Auth->authorize = 'controller';
+
+             if ($this->RequestHandler->isAjax()) {
+                 Configure::write('debug', 1);
+             }
       }       
         
         
