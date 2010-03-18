@@ -1,0 +1,5 @@
+#COsas que quiero ignorar
+
+app/tmp/*
+app/config/*
+*~
