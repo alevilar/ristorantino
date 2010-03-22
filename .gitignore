@@ -1,5 +1,4 @@
-#COsas que quiero ignorar
+nbproject
+.DS_Store
 
-app/tmp/*
-app/config/*
-*~
+

@@ -70,7 +70,6 @@ Categorias.prototype = {
 		if(productoNombre.length > 2){
 			$('buscar-productos-listado').update("");
 			//console.info("actualizarProductos..::"+this.currentArbol.Categoria.name);
-			
 			new Ajax.Request(this.urlBuscarPorNombre+"/"+$F('buscador-producto-nombre')+".json", {
 				  method: 'get',
 				  onSuccess: function(transport) {

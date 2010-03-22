@@ -285,14 +285,23 @@ class MesasController extends AppController {
         if (!empty($this->data)) {
             $this->Mesa->create();
             if ($this->Mesa->save($this->data)) {
-                $this->Session->setFlash(__('La mesa fue guardada', true));
-                $this->redirect(array('action'=>'index'));
+                $pago = array( 'mesa_id'=>$this->Mesa->id,
+                               'tipo_de_pago_id'=>$this->data['Mesa']['tipo_de_pago']);
+                if ($this->Mesa->Pago->TipoDePago->save($pago, array('fields'=>array('mesa_id','tipo_de_pago_id')))) {
+                    debug($this->Mesa->Pago->TipoDePago->id);
+                    $this->Session->setFlash(__('La mesa fue guardada', true));
+                   // $this->redirect(array('action'=>'index'));
+                }
             } else {
                 $this->Session->setFlash(__('La mesa no pudo ser guardada. Intente nuevamente.', true));
             }
         }
-        $mozos = $this->Mesa->Mozo->find('list');
-        $descuentos = $this->Mesa->Descuento->find('list');
+        $mozos = $this->Mesa->Mozo->find('list',array('fields'=>array('id','numero')));
+
+        $tipo_pagos = $this->Mesa->Pago->TipoDePago->find('list');
+
+        $this->set('tipo_pagos',$tipo_pagos);
+        //$descuentos = $this->Mesa->Descuento->find('list');
         $this->set(compact('mozos', 'descuentos'));
     }
 

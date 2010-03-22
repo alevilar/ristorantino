@@ -184,7 +184,7 @@ Adicion.prototype = {
         var confirma = false;
 
         // si aun no se settearon la cantidad de comensales DEBE HACERLO !!
-        if (this.currentMesa.gimpfiscales_controlleretCantComensales() < 1) {
+        if (this.currentMesa.getCantComensales() < 1) {
                 showComensalesWindow();
         } else {
             if(this.tieneMesaSeleccionada()){

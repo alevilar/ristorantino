@@ -47,6 +47,11 @@ class Producto extends AppModel {
                         )
 		)
 	);
+
+
+        function buscarPorNombre($texto){
+            return $this->find('all',array('conditions'=>array('Producto.name REGEXP'=>"$texto")));
+        }
 	
 	
 

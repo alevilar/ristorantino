@@ -70,7 +70,7 @@ class ProductosController extends AppController {
 	function buscar_por_nombre($nombre){
 			Configure::write('debug', 0);
 			$this->Producto->recursive=-1;
-		$this->set('productos',$this->Producto->find('all',array('conditions'=>array('Producto.name LIKE'=>"%$nombre%"))));
+                        $this->set('productos',$this->Producto->buscarPorNombre($nombre));
 	}
 
 	function add() {

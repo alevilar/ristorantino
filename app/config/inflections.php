@@ -51,14 +51,14 @@
  *  $irregularPlural = array('atlas' => 'atlases', 'beef' => 'beefs', 'brother' => 'brothers')
  */
 //      $irregularPlural = array();
-        $irregularPlural = array(
+        $irregularPlural = array(//'query'=> 'queries',
         					'user' => 'users',
         					'group'=>'groups', 
         					'adicion'=>'adicion', 
         					'cajero'=>'cajero', 
         					'query'=>'queries',
         					'action'=>'actions');
-        
+
 /**
  * This is a key => value array of regex used to match words.
  * If key matches then the value is returned.

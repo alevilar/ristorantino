@@ -337,7 +337,7 @@ ComandaCocina = Class.create(Comanda, {
 		  
 		  this.productoCreandoSabores.convertirEnProductoComanda(producto);
 		  var html = '';
-		  this.winSeleccion = new Window({	className: "dialog", 
+		  this.winSeleccion = new Window({className: "dialog", 
 			  								width:700, 
 			  								height:500, 
 			  								resizable: true, 
@@ -354,6 +354,7 @@ ComandaCocina = Class.create(Comanda, {
 			  var li = new Element('li');
 			  var a = new Element('a',{'href':'#seleccionarSabor','class':'boton-ancho-largo'});
 			  a.update(sabor.name);
+                           a.observe('click', a.setStyle.curry({backgroundColor: 'pink'}));
 			  a.observe('click',adicion.comanda.productoCreandoSabores.agregarSabor.bind(adicion.comanda.productoCreandoSabores,sabor));
 			  //a.observe('click',a.hide);
 			  li.appendChild(a);
@@ -362,6 +363,7 @@ ComandaCocina = Class.create(Comanda, {
 		  
 		  var li = new Element('li');
 		  var a = new Element('a',{'href':'#seleccionarSabor','class':'btn-comando'});
+                 
 		  a.update("- Guardar -");
 		  a.observe('click',adicion.comanda.guardarCambiosSeleccionSabores.bind(this));
 		  li.appendChild(a);

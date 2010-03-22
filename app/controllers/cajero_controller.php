@@ -103,5 +103,13 @@ imprimirse");
 		$this->set('mesas_abiertas',$mesas);
 	}
 
+
+
+        function activar_webcam(){
+           echo "activando webcam...";
+            print_r(exec("sudo sh /home/alejandro/webcamserver.sh"));
+        die();
+        }
+
 	
 }

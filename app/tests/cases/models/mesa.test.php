@@ -4,23 +4,26 @@
 App::import('Model','Mesa');
 
 
-class TestMesa extends Mesa{
-	
-}
-
-
-
 
 class MesaTestCase extends CakeTestCase {
-	
-	function setup(){
-		$this->Mesa = New TestMesa();
-	}
+	var $autoFixtures = false;
+        var $fixtures = array('app.mesa','app.pago');
+
+         function start() {
+            parent::start();
+            $this->Mesa =& ClassRegistry::init('Mesa');
+            
+        }
 	
 	function testGetProductosParaImprimirTicket(){
 		$this->assertEqual(count($this->Mesa->find('all')),1);
 		
 	}
+
+
+        function testGuardarMesaConTipoDePago(){
+            $this->loadFixtures();
+        }
 	
 
 }

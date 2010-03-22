@@ -33,6 +33,7 @@
         <br><br>
         <form id="form-buscador-producto-nombre" action="javascript:"	>
             <input id="buscador-producto-nombre" />
+            <input type="submit" name="submit" value="Buscar!">
         </form>
         <ul class="menu-horizontal" id="buscar-productos-listado"></ul>
     </div>

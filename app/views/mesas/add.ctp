@@ -6,11 +6,13 @@
 		echo $form->input('numero');
 		echo $form->input('mozo_id');
 		echo $form->input('total');
-		echo $form->input('descuento_id');
-		echo $form->input('time_abrio');
-		echo $form->input('time_paso_pedido');
-		echo $form->input('time_cerro');
+		//echo $form->input('descuento_id');
+		//echo $form->input('created');
+		//echo $form->input('time_paso_pedido');
+		//echo $form->input('time_cerro');
 		echo $form->input('time_cobro');
+
+                echo $form->input('tipo_de_pago',array('options'=>$tipo_pagos))
 	?>
 	</fieldset>
 <?php echo $form->end('Submit');?>
