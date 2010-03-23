@@ -19,6 +19,7 @@ echo $html->link('Tipo de Pagos','/TipoDePagos').'<br>';
 
 echo $html->link('Comandas Activas','/Comandas').'<br>';
 echo $html->link('Listado de Mesas','/Mesas').'<br>';
+echo $html->link('Nueva Mesa','/Mesas/add').'<br>';
 ?>
 
 	</td>

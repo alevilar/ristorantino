@@ -284,11 +284,14 @@ class MesasController extends AppController {
     function add() {
         if (!empty($this->data)) {
             $this->Mesa->create();
+            $this->data['Mesa']['created'] = $this->data['Mesa']['time_cobro'];
             if ($this->Mesa->save($this->data)) {
-                $pago = array( 'mesa_id'=>$this->Mesa->id,
-                               'tipo_de_pago_id'=>$this->data['Mesa']['tipo_de_pago']);
-                if ($this->Mesa->Pago->TipoDePago->save($pago, array('fields'=>array('mesa_id','tipo_de_pago_id')))) {
-                    debug($this->Mesa->Pago->TipoDePago->id);
+                $pago['Pago'] = array( 'mesa_id'=>$this->Mesa->id,
+                                       'tipo_de_pago_id'=>$this->data['Mesa']['tipo_de_pago'],
+                                       'valor'=>$this->data['Mesa']['total']
+                    );
+                if ($this->Mesa->Pago->save($pago, array('fields'=>array('mesa_id','tipo_de_pago_id')))) {
+                    debug($this->Mesa->Pago->id);
                     $this->Session->setFlash(__('La mesa fue guardada', true));
                    // $this->redirect(array('action'=>'index'));
                 }
