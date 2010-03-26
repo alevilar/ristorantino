@@ -1,7 +1,7 @@
 #!/bin/bash
 ### MySQL Server Login Info ###
 MUSER="root"
-MPASS="8a4a23rv3R"
+MPASS="********"
 MHOST="localhost"
 MYSQL="$(which mysql)"
 MYSQLDUMP="$(which mysqldump)"
