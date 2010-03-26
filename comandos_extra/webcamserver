@@ -6,7 +6,7 @@ export LD_PRELOAD=/usr/lib/libv4l/v4l1compat.so;
 RETVAL=0
 case "$1" in
     start)
-	webcam-server
+	webcam-server &
 	RETVAL=$?
     ;;
     stop)

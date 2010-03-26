@@ -58,7 +58,7 @@ Adicion.prototype = {
         $('boton-menu').removeClassName('boton-apretado');
         $('boton-menu').update('Menú');
         
-        $('btn-comensales').update('Comensales');
+        $('btn-comensales').update('Cubiertos');
         $('btn-comensales').removeClassName('boton-apretado');
 			
         this.borrarCurrentMesa();
@@ -106,9 +106,9 @@ Adicion.prototype = {
             }
 
             if (this.currentMesa.getCantComensales() > 0) {
-                $('btn-comensales').update(this.currentMesa.getCantComensales()+" Comensales").addClassName('boton-apretado');
+                $('btn-comensales').update(this.currentMesa.getCantComensales()+" Cubiertos").addClassName('boton-apretado');
             } else {
-                $('btn-comensales').update('Indicar Comensales').removeClassName('boton-apretado');
+                $('btn-comensales').update('Indicar Cubiertos').removeClassName('boton-apretado');
             }            
         }
 			
@@ -184,7 +184,7 @@ Adicion.prototype = {
         var confirma = false;
 
         // si aun no se settearon la cantidad de comensales DEBE HACERLO !!
-        if (this.currentMesa.getCantComensales() < 1) {
+        if ((this.currentMesa.getCantComensales() < 1) && (this.currentMozo.numero != 99)) {
                 showComensalesWindow();
         } else {
             if(this.tieneMesaSeleccionada()){

@@ -46,7 +46,8 @@ class AppController extends Controller {
 	 {
              $this->Auth->loginError ='Usuario o Password Incorrectos';
              $this->Auth->authError = 'Debe registrarse para acceder a esta página';
-             $this->Auth->logoutRedirect='/pages/home';
+
+             $this->Auth->logoutRedirect='/users/login';
              
              //$this->Auth->allow('display','login','logout');
              //$this->Auth->allow('*');
@@ -59,60 +60,56 @@ class AppController extends Controller {
       }       
         
         
-        function isAuthorized() 
-        {       
-        	$llAuth = false;
-        	
-			if($this->RequestHandler->isAjax()){
-				$llAuth = true;
-				return $llAuth;
-			}
-			
-        	if ($this->name == 'Adicion') 
-        	{
-        		$llAuth = true;
-        	}
-        	
-        	if ($this->name == 'Mesas') 
-        	{
-        		$llAuth = true;
-        	}  
+        function isAuthorized() {
+            $llAuth = false;
+            $this->Auth->allow('display','login','logout');
+
+            if($this->RequestHandler->isAjax()) {
+                $llAuth = true;
+                return $llAuth;
+            }
+
+            if ($this->name == 'Adicion') {
+                $llAuth = true;
+            }
+
+            if ($this->name == 'Mesas') {
+                $llAuth = true;
+            }
 
 
-          	switch ($this->Auth->user('role')):
+            switch ($this->Auth->user('role')):
                 case 'gerente':
-                    $llAuth = true;                
+                    $llAuth = true;
                     break;
-                 case 'adicionista':
-        			if($this->name != 'Queries'){
-						$llAuth = true;
-					}                
+                case 'adicionista':
+                    if($this->name != 'Queries') {
+                        $llAuth = true;
+                    }
                     break;
-				 case 'mozo':
-					if($this->name == 'Adicion'){
-						$llAuth = true;
-					}
-					break;
+                case 'mozo':
+                    if($this->name == 'Adicion') {
+                        $llAuth = true;
+                    }
+                    break;
                 default:
-	  				$llAuth = false;
-	  				break;
-	  		endswitch;
-	  		
-	  		 
-	  		 if ($llAuth == true) 
-	  		 { 	
+                    $llAuth = false;
+                    break;
+                endswitch;
+
+
+            if ($llAuth == true) {
                 return true;
-             } 
-             else 
-             {                      
-             	$this->Session->setFlash('El perfil de usuario suyo no tiene permisos para acceder aquí.', true);
-                        
+            }
+            else {
+                $this->Session->setFlash('El perfil de usuario suyo no tiene permisos para acceder aquí.', true);
+
                 $this->redirect('/pages/home');
                 return false;
-             }
-	  		
-                
+            }
+
+
         }
-	
+
 }
 ?>

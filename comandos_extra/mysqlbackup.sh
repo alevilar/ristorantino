@@ -9,9 +9,8 @@ BAK="/backups/db"
 GZIP="$(which gzip)"
 
 
- FILE=$BAK/ristorantino.$NOW-$(date +"%T").gz
+ FILE=$BAK/ristorantino_$(date +%Y-%m-%d-%T).gz
  $MYSQLDUMP -u $MUSER -h $MHOST -p$MPASS ristorantino | $GZIP -9 > $FILE
 
- FILE=$BAK/drupal.$NOW-$(date +"%T").gz
+ FILE=$BAK/drupal.$NOW-$(date +%Y-%m-%d-%T).gz
  $MYSQLDUMP -u $MUSER -h $MHOST -p$MPASS drupal | $GZIP -9 > $FILE
-

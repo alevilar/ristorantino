@@ -25,7 +25,7 @@
                 showProgress: false,
                 destroyOnClose: true
             };
-            Dialog.info("<h1>Comensales</h1>"+$('div-comensales').innerHTML, ops);
+            Dialog.info("<h1>Cubiertos</h1>"+$('div-comensales').innerHTML, ops);
 
             //NUMPAD ------------------------------------------------------
             //numPad es una variable global

@@ -126,8 +126,7 @@ echo $this->renderElement('adicion/set_comensales');
         <ul>
             <!--  Los Eventos ONCLICK se manejan desde sus respectivos elements -->
             <li><a href="#AgregarProducto" id="boton-comanda">  Comanda </a></li>
-            <li><a href="#Comensales"      id="btn-comensales"> Comensales</a></li>
-            <li><a href="#SeleccionCliente"id="boton-cliente">  Cliente </a></li>
+            <li><a href="#Comensales"      id="btn-comensales"> Cubiertos</a></li>
             <li><a href="#ConvertirEnMenu" id="boton-menu">     Menú    </a></li>
 
 <!-- <li><?php echo $html->link('Comensales','#Comensales',array('id'=>'btn-comensales'));?></li> -->
@@ -143,8 +142,9 @@ echo $this->renderElement('adicion/set_comensales');
             <?
             if($session->read('Auth.User.role') != 'mozo') {
                 ?>
-            <li><?php echo $html->link('Sacar Item','#SacarProducto',array('onclick'=>'callComandaSacar(); return false;','id'=>'boton-sacar-item'));?></li>
-                <?
+                <li><?php echo $html->link('Sacar Item','#SacarProducto',array('onclick'=>'callComandaSacar(); return false;','id'=>'boton-sacar-item'));?></li>
+                <li><a href="#SeleccionCliente"id="boton-cliente">  Cliente </a></li>
+            <?
             }
             ?>
         </ul>
