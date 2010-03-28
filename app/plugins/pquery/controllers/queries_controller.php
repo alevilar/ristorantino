@@ -1,10 +1,12 @@
 <?php
+App::import('Model','Pquery.CustomQUery');
 
 class QueriesController extends PqueryAppController {
 
 	var $name = 'Queries';
 	var $helpers = array('Html', 'Form','Ajax');
 	var $components = array('RequestHandler');
+        
 
 	function index() {
 		$this->Query->recursive = 0;
@@ -66,14 +68,12 @@ class QueriesController extends PqueryAppController {
 
 		$categorias = array();
 		$categorias[''] = 'Todos';
-		
 		$categorias_aux = $this->Query->listarCategorias();
-
 		foreach($categorias_aux as $c){
 			$categorias[$c['Query']['categoria']] = $c['Query']['categoria'];
-		}			
+		}
 		$this->set('categorias',$categorias);
-		
+
 		$conditions=array();
 		if($categoria!=""){
 			$conditions['categoria']=$categoria;
@@ -82,7 +82,7 @@ class QueriesController extends PqueryAppController {
 			$conditions['OR']['lower(to_ascii(Query.description)) SIMILAR TO ?'] = array($this->Query->convertir_para_busqueda_avanzada(utf8_decode($this->data['Query']['description'])));
 			$conditions['OR']['lower(to_ascii(Query.name)) SIMILAR TO ?'] = array($this->Query->convertir_para_busqueda_avanzada(utf8_decode($this->data['Query']['description'])));
 		}
-		
+
 		$queries=$this->Query->find('all',array('order'=>'modified DESC', 'conditions'=>$conditions));
 		$this->set('queries',$queries);
 	}
@@ -93,18 +93,18 @@ class QueriesController extends PqueryAppController {
 	 */
 	function contruye_excel($id){
 		$this->layout = 'excel';
-		Configure::write('debug',0); 
-		$this->RequestHandler->setContent('xls', 'application/vnd.ms-excel'); 
+		Configure::write('debug',0);
+		$this->RequestHandler->setContent('xls', 'application/vnd.ms-excel');
 		$res = $this->Query->findById($id);
 		$sql = $res['Query']['query'];
 		$this->Query->recursive = -1;
 		$consulta_ejecutada = $this->Query->query($sql);
-		
+
 		$quitar_columnas = $consulta_ejecutada[0][0];
 		while(list($key,$value) = each($quitar_columnas)):
 			$columnas[] = $key;
 		endwhile;
-		
+
 		$this->set('nombre',$res['Query']['name']);
 		$this->set('columnas',$columnas);
 		$this->set('filas',$consulta_ejecutada);
@@ -113,10 +113,10 @@ class QueriesController extends PqueryAppController {
 	
 	
 	function listado_categorias()
-	{	
+	{
 		Configure::write('debug', 0);
 		$this->Query->recursive = -1;
-		
+
 		$categorias = array();
 		if(!empty($this->data['Query']['categoria'])){
 			$categorias = $this->Query->listarCategorias($this->data['Query']['categoria']);
@@ -124,56 +124,56 @@ class QueriesController extends PqueryAppController {
 		else{
 			$categorias = $this->Query->listarCategorias('*'); // me trae todas
 		}
-		
+
 		$this->set('categorias',$categorias);
 		$this->set('string_categoria',$this->data['Query']['categoria']);
 		$this->layout = 'ajax';
 	}
 
-	function list_view($id="") {
 
-		$this->layout = "sin_menu";
 
-		if (isset($this->passedArgs['query.id'])){
-			$id = $this->passedArgs['query.id'];
-		}
-		
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for Query', true));
-			$this->redirect(array('action'=>'index'));
-		}
+        function list_view($id="") {
+            $this->layout = "sin_menu";
+            $this->CustomQuery =& ClassRegistry::init('Pquery.CustomQuery');
 
-		$this->rutaUrl_for_layout[] =array('name'=> 'Queries','link'=>'/Instits/add' );
-		$res = $this->Query->findById($id);
-		
-		$this->loadModel('Pquery.CustomQuery');
+            if (isset($this->passedArgs['query.id'])) {
+                $id = $this->passedArgs['query.id'];
+            }
 
-		$this->CustomQuery->setSql($res['Query']['query']);
-		
-		if (isset($this->passedArgs['viewAll']) && $this->passedArgs['viewAll'] == 'true'){
-			$data = $this->CustomQuery->getData();
-			$viewAll = false;
-		} else {	
-			$data = $this->paginate($this->CustomQuery);
-			$viewAll = true;
-		}
+            if (!$id) {
+                $this->Session->setFlash(__('Invalid id for Query', true));
+                $this->redirect(array('action'=>'index'));
+            }
 
-		$cols = array();
-			if(!empty($data)){
-			foreach($data[0] as $primero):
-				foreach($primero as $p=>$v){
-					$cols[] = $p;
-				}
-			endforeach;
-		}
-		$this->set('cols', $cols);
-        $url_conditions['query.id'] = $id;
-		$this->set('queries', $data);
-		$this->set('url_conditions', $url_conditions);
-		$this->set('descripcion', $res['Query']['description']);
-		$this->set('viewAll', $viewAll);
-	}
-	
+            $this->rutaUrl_for_layout[] =array('name'=> 'Queries','link'=>'/Instits/add' );
+            $res = $this->Query->findById($id);
+
+            $this->CustomQuery->setSql($res['Query']['query']);
+
+            if (!empty($this->passedArgs['viewAll'])) {
+                if ($this->passedArgs['viewAll'] == 'true') {
+                    $data = $this->CustomQuery->query();
+                    $viewAll = false;
+                }
+            } else {
+                $data = $this->paginate($this->CustomQuery);
+                $viewAll = true;
+            }
+            
+            $precols = array_keys($data[0]);
+            $cols = array();
+            foreach ($precols as $indice) {
+                $cols = array_merge($cols, array_keys($data[0][$indice]));
+            }
+            //$cols = array_keys($data['0']['0']);
+            $this->set('cols', $cols);
+            $url_conditions['query.id'] = $id;
+            $this->set('queries', $data);
+            $this->set('url_conditions', $url_conditions);
+            $this->set('descripcion', $res['Query']['description']);
+            $this->set('viewAll', $viewAll);
+        }
+
 
 }
 ?>

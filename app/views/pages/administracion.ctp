@@ -1,59 +1,67 @@
 
 
 <table>
-  <tr>
-    <td>
-    <h2>Usuarios y Clientes</h2>
-<?php 
-echo $html->link('Usuarios','/users/index').'<br>';
-echo $html->link('Mozos','/mozos/index').'<br>';
-echo $html->link('Clientes','/clientes').'<br>';
-echo $html->link('-   Tipo de Documentos','/tipo_documentos').'<br>';
-echo $html->link('-   IVA Responsabilidades','/iva_responsabilidades').'<br>';
-echo $html->link('Descuentos','/descuentos').'<br>';
-echo $html->link('Tipo de Pagos','/TipoDePagos').'<br>';
-?>
+    <tr>
+        <td>
+            <h2>Usuarios y Clientes</h2>
+            <?php
+            echo $html->link('Usuarios','/users/index').'<br>';
+            echo $html->link('Mozos','/mozos/index').'<br>';
+            echo $html->link('Clientes','/clientes').'<br>';
+            echo $html->link('-   Tipo de Documentos','/tipo_documentos').'<br>';
+            echo $html->link('-   IVA Responsabilidades','/iva_responsabilidades').'<br>';
+            echo $html->link('Descuentos','/descuentos').'<br>';
+            echo $html->link('Tipo de Pagos','/TipoDePagos').'<br>';
+            ?>
 
-<h2>Mesas</h2>
-<?php 
+            <h2>Mesas</h2>
+            <?php
 
-echo $html->link('Comandas Activas','/Comandas').'<br>';
-echo $html->link('Listado de Mesas','/Mesas').'<br>';
-echo $html->link('Nueva Mesa','/Mesas/add').'<br>';
-?>
+            echo $html->link('Comandas Activas','/Comandas').'<br>';
+            echo $html->link('Listado de Mesas','/Mesas').'<br>';
+            echo $html->link('Nueva Mesa','/Mesas/add').'<br>';
+            ?>
 
-	</td>
-    <td>
+            <h2>Mi Cuenta</h2>
+            <? echo $html->link('Modificar Mis Datos','/users/self_user_edit/'.$session->read('Auth.User.id')).'<br>'; ?>
+            <? echo $html->link('Modificar Mi Contraseña','/users/cambiar_password/'.$session->read('Auth.User.id')); ?>
+        </td>
 
-  <h2>Productos</h2>
-<?php 
-echo $html->link('Categorias','/categorias').'<br>';
-echo $html->link('Productos','/productos').'<br>';
-echo $html->link('Gustos y Sabores','/sabores').'<br>';
-?>
 
-  <h2>Gastos</h2>
-<?php
-echo $html->link('Gastos','/gastos').'<br>';
-?>
-	
 
-<h2>Configuración de impresoras</h2>
-<?php 
-echo $html->link('CUPS Printer Manager',FULL_BASE_URL.':631').'<br>';
-echo $html->link('Comandera','/Comanderas').'<br>';
 
-?>
+        
+        <td>
 
-<h2>Informes y Servidor</h2>
-<?php 
-echo $html->link('Crear consultas para las estadísticas (avanzado)','/pquery/queries').'<br>';
+            <h2>Productos</h2>
+            <?php
+            echo $html->link('Categorias','/categorias').'<br>';
+            echo $html->link('Productos','/productos').'<br>';
+            echo $html->link('Gustos y Sabores','/sabores').'<br>';
+            ?>
 
-echo $html->link('Reiniciar servidor (ojo que esta accion hace que no se pueda operar el sistema hasta que no se reinicie)','/cajero/reiniciar');
+            <h2>Modulo Contable</h2>
+            <?php
+            echo $html->link('Egresos','/egresos').'<br>';
+            ?>
 
-?>
 
-	</td>
-  </tr>
+            <h2>Configuración de impresoras</h2>
+            <?php
+            echo $html->link('CUPS Printer Manager',FULL_BASE_URL.':631').'<br>';
+            echo $html->link('Comandera','/Comanderas').'<br>';
+
+            ?>
+
+            <h2>Informes y Servidor</h2>
+            <?php
+            echo $html->link('Crear consultas para las estadísticas (avanzado)','/pquery/queries').'<br>';
+
+            echo $html->link('Reiniciar servidor (ojo que esta accion hace que no se pueda operar el sistema hasta que no se reinicie)','/cajero/reiniciar');
+
+            ?>
+
+        </td>
+    </tr>
 </table>
 

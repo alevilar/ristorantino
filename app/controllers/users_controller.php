@@ -4,6 +4,14 @@ class UsersController extends AppController {
 	var $name = 'Users';
 	var $helpers = array('Html', 'Form');
 
+        var $roles = array(
+            'adicionista' => 'Adicionista',
+            'gerente'     => 'Gerente',
+            'mozo'        => 'Mozo',
+            'cliente'     => 'Cliente',
+            'proveedor'   => 'Proveedor',
+            );
+
 	function index() {
 		$this->User->recursive = 0;
 		$this->set('users', $this->paginate());
@@ -27,6 +35,7 @@ class UsersController extends AppController {
 				$this->Session->setFlash(__('The User could not be saved. Please, try again.', true));
 			}
 		}
+                $this->set('roles', $this->roles);
 	}
 
 	function edit($id = null) {
@@ -45,6 +54,7 @@ class UsersController extends AppController {
 		if (empty($this->data)) {
 			$this->data = $this->User->read(null, $id);
 		}
+                $this->set('roles', $this->roles);
 	}
 
 	function delete($id = null) {
@@ -73,8 +83,76 @@ class UsersController extends AppController {
                 $this->Session->setFlash('Ha salido de su cuenta');
                 $this->redirect($this->Auth->logout());
         }
-	
-        
+
+
+        /**
+	 *  Este es para que un usuario se edite el perfil
+	 *
+	 * @param id del usuario
+	 */
+	function self_user_edit($id){
+		if (!$id && empty($this->data)) {
+			$this->Session->setFlash(__('Usuario Incorrecto', true));
+			$this->redirect('/pages/home');
+		}
+		if (!empty($this->data)) {
+			if ($this->User->save($this->data)) {
+				$this->Session->setFlash(__('Se ha guardado la informacion correctamente', true));
+				$this->data = $this->User->read(null, $id);
+			} else {
+				$this->Session->setFlash(__('El usuario no pudo ser guardado. Por favor, intente nuevamente.', true));
+			}
+		}
+		if (empty($this->data)) {
+			$this->data = $this->User->read(null, $id);
+		}
+	}
+
+
+/**
+	 *  Este es para que un usuario se edite el perfil
+	 *
+	 * @param id del usuario
+	 */
+	function cambiar_password($id = 0){
+		if (!$id && empty($this->data)) {
+			$this->Session->setFlash(__('Usuario Incorrecto', true));
+			$this->redirect('/pages/home');
+		}
+		if (!empty($this->data)) {
+			if($this->comparePasswords()){ //me fijo que los passwords coincidan
+				if ($this->User->save($this->data)) {
+					$this->Session->setFlash(__('Se ha guardado el nuevo password correctamente', true));
+					$this->redirect('/pages/home');
+				} else {
+					$this->Session->setFlash(__('La contraseña no pudo ser guardada. Por favor, intente nuevamente.', true));
+				}
+			}
+			else $this->Session->setFlash('La contraseña no coincide, por favor reintente.');
+		}
+		if (empty($this->data)) {
+			$this->data = $this->User->read(null, $id);
+		}
+	}
+
+
+	/**
+	 *  Esta funcion me convierte los passwors para luego ser comparados
+	 *  sirve cuando quiero generar un nuevio opassword y tengo 2 imputs por comparar
+	 * @return unknown_type
+	 */
+	private function comparePasswords(){
+		if(!empty( $this->data['User']['password'] ) ){
+			$this->data['User']['password'] = $this->Auth->password($this->data['User']['password'] );
+		}
+		if(!empty( $this->data['User']['password_check'] ) ){
+			$this->data['User']['password_check'] = $this->Auth->password( $this->data['User']['password_check'] );
+		}
+
+		if ($this->data['User']['password'] == $this->data['User']['password_check']){
+			return true;
+		} else return false;
+	}
 
 }
 ?>

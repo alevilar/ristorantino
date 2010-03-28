@@ -92,7 +92,7 @@ Adicion.prototype = {
         this.comanda.resetearComanda(this.currentMozo, this.currentMesa);
 					
         if(this.currentMesa)
-        {
+        {            
             // del element listar_clientes.ctp
             $('boton-cliente').removeClassName('boton-apretado')
             if (this.currentMesa.tieneCliente()){

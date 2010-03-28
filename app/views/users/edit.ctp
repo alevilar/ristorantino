@@ -4,14 +4,13 @@
  		<legend><?php __('Edit User');?></legend>
 	<?php
 		echo $form->input('id');
+                echo $form->input('role', array('type'=>'select','label'=>'Tipo de Usuario','empty'=>'Seleccione'));
 		echo $form->input('username');
-		echo $form->input('password');
 		echo $form->input('nombre');
 		echo $form->input('apellido');
 		echo $form->input('telefono');
+                echo $form->input('domicilio');
 		
-		$opciones = array('adicionista'=>'Adicionista','gerente'=>'Gerente','mozo'=>'Mozo','cliente'=>'Cliente');
-		echo $form->input('role',array('type'=>'select','options'=>$opciones,'label'=>'Tipo de Usuario'));
 	?>
 	</fieldset>
 <?php echo $form->end('Submit');?>

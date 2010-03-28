@@ -51,6 +51,7 @@ class AppController extends Controller {
              
              //$this->Auth->allow('display','login','logout');
              //$this->Auth->allow('*');
+             //$this->Auth->allow('home','login','logout');
              
              $this->Auth->authorize = 'controller';
 

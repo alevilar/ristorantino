@@ -6,12 +6,12 @@ class User extends AppModel {
 	
 		'username' => array(
 			'required' => VALID_NOT_EMPTY,
-                        //'unico' => 'isUnique',
-			'unique' => array('rule'=>array('isUnique','username'),'message' => 'El nombre de usuario ya existe')
+			'isUnique' => array(
+                            'rule'=>'isUnique',
+                            'message' => 'El nombre de usuario ya existe'),
 		),
 		'password' => array('notempty'),
 		'nombre' => array('notempty'),
-		'apellido' => array('notempty')
 	);
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed

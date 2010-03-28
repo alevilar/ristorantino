@@ -1,54 +1,119 @@
+<script type="text/javascript">
+    Event.observe(window, 'load', function(){
+        if ($F('ClienteTipofactura') == 0){
+            $('datosParaRemito').show();
+        }
+        else if ($F('ClienteTipofactura') == 'A'){
+            $('datosParaFacturaA').show();
+        }
+    });
+</script>
+
 <div class="clientes form">
-<?php echo $form->create('Cliente');?>
-	<fieldset>
- 		<legend><?php __('Edit Cliente');?></legend>
-	<?php
-		echo $form->input('id');
-		
-		echo $form->input('user_id', array('default'=>'Seleccione','empty'=>'Seleccione'));
-		
-		echo $form->input('imprime_ticket',array('checked'=>true,'after'=>'Tildar si se desea imprimir ticket, tanto fiscal como en negro. Si no se tilda, entonces cuando se cierre una mesa no se va a imprimir nada.'));
-		
-		$tipos = array('0'=>'Sin Ticket Factura (en negro)','A'=>'"A"','B'=>'"B"');
-		echo $form->input('tipofactura',array('label'=>'Tipo Factura','options'=>$tipos,'after'=>'Tipo de comprobante a imprimir si es que se tildó la opción para imprimir ticket'));
-		
-		?>		
-		
-		<div id="div-descuento">		
-		<?php echo $form->input('descuento_id',array('empty'=>'Sin Descuento','after'=>'El descuento solo es válido cuando se quiere imprimir en negro'));?>
-		</div>
-		
-		
-		<script type="text/javascript">
-		$('ClienteTipofactura').observe('change',function(){
-				if($F('ClienteTipofactura') != 0){
-					$('ClienteDescuentoId').setValue(""); //lo vuelvo a reinicializar al valor, por si fue modificado por error
-					$('div-descuento').hide();
-				}
-				else{
-					$('div-descuento').show();
-				}
-			});
-		</script>
-		
-		
-		
-		<?		
-		echo $form->input('nombre',array('label'=>'Nombre/Denominación','after'=>'Ej: La Serenissima S.A.'));
-		
-				
-		echo $form->input('tipo_documento_id', array('label'=>'Tipo de Identificación', 'empty'=>'Seleccione'));
-		echo $form->input('nrodocumento',array('label'=>'Número'));
+    <?php echo $form->create('Cliente');?>
+    <fieldset>
+        <legend><?php __('Editar Cliente');?></legend>
+        <?php
+         echo $form->input('id');
 
-		
-		echo $form->input('domicilio');
+         echo $form->input('user_id',
+                    array(  'empty'=> 'Seleccione',
+                            'label'=>'Usuario',
+                            'after'=>'<br> Seleccione un usuario si es que desea tener un registro del mismo.
+                                O sea, si quiere mantener una estadistica de consumiciones, dias que vino, etc.
+                                Lo que necesita es crear primero un usuario y luego relacionar al cliente con
+                                dicho usuario. Si usted no entiende consulte con el administrador del sistema.'
+                        ));
+         
+        echo $form->input(
+            'tipofactura',
+            array(
+                'label'=>'Tipo Factura',
+                'options'=>array('B'=>'"B"', '0'=>'Remito','A'=>'"A"'),
+                'after'=> '<br>Tipo de comprobante a imprimir.
+                            Se puede imprimir una factura "A", "B", o un remito.'
+            )
+        );
 
-		echo $form->input('iva_responsabilidad_id', array('empty'=>'Seleccione'));
-		
-	?>
-	</fieldset>
-<?php echo $form->end('Submit');?>
+
+        ?>
+
+        <div id="datosParaRemito" style="display:none;">
+            <?
+             echo $form->input('imprime_ticket',
+                                array(
+                                    'checked'=>true,
+                                    'after'=>'Hay ocasiones en las que no es necesario imprimir un remito,
+                                        El remito, cuando es impreso sale por una comandera, ya que no es un comprobante fiscal.<br> Si desea imprimir por otra comandera debe dirigirse a la seccion "Comanderas" de la pagina de administracion.'));
+
+
+             echo $form->input('descuento_id',array(
+                'div'=>array('id' => 'div-descuento'),
+                'empty'=>'Sin Descuento',
+                'after'=>'El descuento solo es válido cuando se quiere imprimir un remito'));
+            ?>
+        </div>
+
+
+
+        <div id="datosParaFacturaA" style="display:none;">
+            <?
+            echo $form->input('nombre',
+                               array(
+                                  'label'=>'Nombre/Denominación',
+                                  'after'=>'Ej: La Serenissima S.A.'));
+            echo $form->input('tipo_documento_id',
+                               array(
+                                   'default'=>1, // CUIT, numero hardcodeado de la base de datos
+                                   'label'=>'Tipo de Identificación',
+                                   'empty'=>'Seleccione'));
+            echo $form->input('nrodocumento',
+                               array(
+                                   'label'=>'Número',
+                                   'after'=>'Ej: 3045623431   >>>>No hay que poner los "-". '
+                                   ));
+            echo $form->input('domicilio');
+            echo $form->input('iva_responsabilidad_id',
+                               array(
+                                   'label'=>'Responsabilidad ante el IVA',
+                                   'default'=>1, // Resp. Inscripto, Numero hardcodeado de la base de datos
+                                   'empty'=>'Seleccione'));
+            ?>
+
+        </div>
+
+        <script type="text/javascript">
+            $('ClienteTipofactura').observe('change',function(){
+                if($F('ClienteTipofactura') != 0){
+                    $('ClienteDescuentoId').setValue(""); //lo vuelvo a reinicializar al valor, por si fue modificado por error
+                    $('datosParaRemito').hide();
+                }
+                else{
+                    $('datosParaRemito').show();
+                }
+
+                if($F('ClienteTipofactura') == 'A'){
+                    $('datosParaFacturaA').show();
+                }
+                else{
+                    $('datosParaFacturaA').hide();
+                }
+            });
+        </script>
+
+
+
+
+    </fieldset>
+    <?php echo $form->end('Submit');?>
 </div>
+
+
+
+
+
+
+
 <div class="actions">
 	<ul>
 		<li><?php echo $html->link(__('Delete', true), array('action'=>'delete', $form->value('Cliente.id')), null, sprintf(__('Are you sure you want to delete # %s?', true), $form->value('Cliente.id'))); ?></li>

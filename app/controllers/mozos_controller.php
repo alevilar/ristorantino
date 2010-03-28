@@ -29,7 +29,7 @@ class MozosController extends AppController {
 			}
 		}
 		
-		$users = $this->Mozo->User->find('list',array('fields'=>array('id','username')));
+		$users = $this->Mozo->User->find('list',array('fields'=>array('id','username'), 'conditions'=> array('User.role'=>'mozo')));
 		
 		$this->set(compact('users'));
 	}
@@ -51,7 +51,7 @@ class MozosController extends AppController {
 			$this->data = $this->Mozo->read(null, $id);
 		}
 		
-		$users = $this->Mozo->User->find('list',array('fields'=>array('id','username')));
+		$users = $this->Mozo->User->find('list',array('fields'=>array('id','username'), 'conditions'=> array('User.role'=>'mozo')));
 		$this->set(compact('users'));
 	}
 

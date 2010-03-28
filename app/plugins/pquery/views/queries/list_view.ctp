@@ -21,38 +21,33 @@ echo $paginator->counter(array(
 ?></p>
 
 <p>
-<?php 
+<?php
 if ($viewAll){
-	echo $html->link('Ver Todos',array('action'=>'list_view', 'query.id:'.$url_conditions['query.id'] . '/viewAll:true/'),array('class'=>'clearTag'));
+	echo $html->link('Ver Todos','/pquery/Queries/list_view/query.id:'.$url_conditions['query.id'] . '/viewAll:true/',array('class'=>'clearTag'));
 } else {
-	echo $html->link('Ver por pagina',array('action'=>'list_view','query.id:'.$url_conditions['query.id'] . '/viewAll:false/'),array('class'=>'clearTag'));	
-}	
+	echo $html->link('Ver por pagina','/pquery/Queries/list_view/query.id:'.$url_conditions['query.id'] . '/viewAll:false/',array('class'=>'clearTag'));
+}
 ?>
 
 <?php echo " | "?>
-<?php echo $html->link('descargar excel',array('action'=>'contruye_excel', $url_conditions['query.id'] ),array('class'=>'clearTag'));?>
+<?php echo $html->link('descargar excel','/pquery/Queries/contruye_excel/'.$url_conditions['query.id'] ,array('class'=>'clearTag'));?>
 
 <?php echo " | "?>
 <?php echo $html->link('Imprimir','#Imprimir',array('class'=>'clearTag','onclick'=>'window.print()'));?>
 
 <?php echo " | "?>
-<?php echo $html->link('Volver',array('action'=>'descargar_queries'),array('class'=>'clearTag'));?>
+<?php echo $html->link('Volver','/pquery/Queries/descargar_queries/',array('class'=>'clearTag'));?>
 
 </p>
 
 <table cellpadding="0" cellspacing="0">
 
 <tr>
-	<?php 
-		foreach ($cols as $col): 
-	?>
-			<th><?php echo $col;?></th>
-	<?php 
-			endforeach;
-	 ?>
+	<?php foreach ($cols as $col): ?>
+	<th><?php echo $col;?></th>
+	<?php endforeach; ?>
 </tr>
 <?php
-
 $i = 0;
 foreach ($queries as $query):
 	$class = null;
@@ -61,27 +56,23 @@ foreach ($queries as $query):
 	}
 ?>
 	<tr<?php echo $class;?>>
-	   <?php foreach($query  as $campo):
-	  			foreach($campo as $celda){
-	   ?>	
+	   <?php foreach($query[0] as $line):?>
 		<td>
-			<?php echo $celda; ?>
+			<?php echo $line; ?>
 		</td>
-		<?php 	}
-			endforeach; 
-		?>
+		<?php endforeach; ?>
 	</tr>
 <?php endforeach; ?>
 </table>
 </div>
 <div class="paging" style="background-color: #F0F7FC; height: 60px; padding-top: 20px; text-align: center;border-top: 3px solid #DBEBF6">
-	<?php 
+	<?php
 	if (isset($paginator)){
 		echo $paginator->prev('<<');
 		echo "&nbsp;";
 		echo $paginator->numbers();
 		echo "&nbsp;";
 		echo $paginator->next('>>');
-	}		
+	}
 	?>
 </div>

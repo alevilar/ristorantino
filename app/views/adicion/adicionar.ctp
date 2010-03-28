@@ -17,7 +17,27 @@
     var txtNumber = null;
     var numPad = null; //este se tiene que llamar asi para que funcione
 
+    
+    
+    
+    /********** PERMISOS DE VISTA DE LOS ELEMENTOS *****/
+
+    var currentUser = <? echo json_encode($session->read('Auth.User'));?>;
+    
+    Event.observe(document,'dom:loaded',function(){
+        if (currentUser.role == 'mozo') {
+            $('btn-cambio-rapido-de-mesa').hide();
+            $('boton-sacar-item').hide();
+            $('boton-cliente').hide();
+        }
+    });
+    
+    
     //-->
+
+
+
+
 </script>
 
 
@@ -138,15 +158,8 @@ echo $this->renderElement('adicion/set_comensales');
 
     <div id="mesa-acciones-2" class="menu-vertical">
         <ul>
-            <!-- ESTOS VAN A ESTAR EN LA PROXIMA VERSION -->
-            <?
-            if($session->read('Auth.User.role') != 'mozo') {
-                ?>
-                <li><?php echo $html->link('Sacar Item','#SacarProducto',array('onclick'=>'callComandaSacar(); return false;','id'=>'boton-sacar-item'));?></li>
-                <li><a href="#SeleccionCliente"id="boton-cliente">  Cliente </a></li>
-            <?
-            }
-            ?>
+                <li><a href="#SacarProducto"    id="boton-sacar-item">  Sacar Item </a></li>
+                <li><a href="#SeleccionCliente" id="boton-cliente">  Cliente </a></li>
         </ul>
     </div>
 

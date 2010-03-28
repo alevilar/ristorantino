@@ -1,24 +1,24 @@
 <TABLE FRAME=VOID CELLSPACING=0 COLS=3 RULES=NONE BORDER=0>
 		<TR>
-			<?php 
+			<?php
 				foreach ($columnas as $c):
-					echo "<TD BGCOLOR='#FFFF99'><b>$c</b></TD>";			
+					echo "<TD BGCOLOR='#FFFF99'><b>$c</b></TD>";
 				endforeach;
 			?>
 		</TR>
 
-		<?php 
+		<?php
 		foreach ($filas as $f):
 		?>
 		<TR>
-			<?php 
+			<?php
 			foreach($f[0] as $d):
 				echo "<TD>$d</TD>";
 			endforeach;?>
 		</TR>
-		<?php 
+		<?php
 		endforeach;
-		?>		
+		?>
 
 </TABLE>
 
