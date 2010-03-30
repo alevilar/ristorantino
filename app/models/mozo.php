@@ -7,7 +7,8 @@ class Mozo extends AppModel {
                     'numeric',
                     'isUnique' => array(
                         'rule' => 'isUnique',
-                        'message'=>'El usuario seleccionado ya tiene un numero de mozo asignado'),
+                        'message'=>'El usuario seleccionado ya tiene un numero de mozo asignado'
+                     ),
                    // 'numero' => array('numeric')
                     )
 	);

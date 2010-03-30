@@ -17,6 +17,15 @@ class UsersController extends AppController {
 		$this->set('users', $this->paginate());
 	}
 
+        function listar_x_nombre($nombre = '') {
+            if (empty($nombre)) {
+                if (!empty($this->data['User']['name'])){
+                    $nombre = $this->data['User']['name'];
+                }
+            }
+            $this->set('users', $this->User->listarPorNombre($nombre));
+	}
+
 	function view($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid User.', true));

@@ -10,7 +10,8 @@ class EgresosController extends AppController {
                 if ($this->RequestHandler->isAjax()) {
                     $this->render('ajax/index');
                 }
-                $this->set('tipofacturas', $this->Egreso->TipoFactura->find('list'));
+                $this->set('tipoFacturas', $this->Egreso->TipoFactura->find('list'));
+                $this->set('users', $this->Egreso->User->listarPorNombre('%'));
 	}
 
 
@@ -19,11 +20,16 @@ class EgresosController extends AppController {
                     $this->Egreso->create();
                     if ($this->Egreso->save($this->data)) {
                             $this->Session->setFlash(__('The Egreso has been saved', true));
-                            $this->redirect(array('action' => 'index'));
+                            
                     } else {
                             $this->Session->setFlash(__('The Egreso could not be saved. Please, try again.', true));
+                            debug($this->Egreso->validationErrors);
+
+                            $tx = "¡No se pudo guardar! Alguno de los campos ingresados es incorrecto";
+                            exit("<div class='message' id='flashMessage'>$tx</div>");
                     }
             }
+            $this->redirect('/egresos/index');
         }
 
 	function view($id = null) {

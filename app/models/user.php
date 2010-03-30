@@ -25,5 +25,31 @@ class User extends AppModel {
 			)
 	);
 
+
+        /**
+         *  Realiza una busqueda con un LIKE %NOMBRE%
+         * 
+         * @param string $nombre
+         * @return find('list') con todos los nombres posibles a esa busqueda
+         */
+        function listarPorNombre($nombre = '') {
+            $resultado = array();
+            if (!empty($nombre)){
+                $conditions = array(
+                    'OR' => array(
+                        'User.nombre   LIKE'=>"%$nombre%",
+                        'User.apellido LIKE'=>"%$nombre%",
+                        'User.username LIKE'=>"%$nombre%",
+                    ));
+                $resultado = $this->find(
+                        'list',
+                        array(
+                            'conditions'=>$conditions,
+                            'fields'=> array('id', 'username', 'role'),
+                        ));
+            }
+            return $resultado;
+        }
+
 }
 ?>

@@ -1,3 +1,3 @@
 <?
 
-echo $this->element('gastos_ajax_paginator');
+echo $this->element('egresos_ajax_paginator');

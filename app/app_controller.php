@@ -55,8 +55,13 @@ class AppController extends Controller {
              
              $this->Auth->authorize = 'controller';
 
+             /*
+              * Esto hace que cuando se auna peticion ajax, vaya  a buscar la vista den
+              * tro de la carpeta "ajax" de cada controlador
+              */
              if ($this->RequestHandler->isAjax()) {
                  Configure::write('debug', 1);
+                 $this->layout = 'ajax';
              }
       }       
         
@@ -108,9 +113,6 @@ class AppController extends Controller {
                 $this->redirect('/pages/home');
                 return false;
             }
-
-
         }
-
 }
 ?>
