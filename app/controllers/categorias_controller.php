@@ -52,6 +52,16 @@ class CategoriasController extends AppController {
 		$this->set(compact('categorias'));
 	}
 
+        function recover() {
+            debug($this->Categoria->recover());
+            exit();
+        }
+
+        function verify() {
+            debug($this->Categoria->verify());
+            exit();
+        }
+
 	function edit($id = null) {
 		Cache::delete('categorias');
 		if (!$id && empty($this->data)) {
@@ -76,28 +86,22 @@ class CategoriasController extends AppController {
 		Cache::delete('categorias');
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for Categoria', true));
-			$this->redirect(array('action'=>'index'));
 		}
 		if ($this->Categoria->del($id)) {
 			$this->Session->setFlash(__('Categoria deleted', true));
-			$this->redirect(array('action'=>'index'));
 		}
+                $this->redirect(array('action'=>'index'));
 	}
 	
 	
 	function listar(){
 		//$this->cacheAction = true;
-		Configure::write('debug', 0);
-		$this->layout = 'ajax';
-		
-		
-		//if (($varjson = Cache::read('categorias')) === false) {
-			$categorias = $this->Categoria->array_listado();
-			$varjson =  json_encode($categorias);
-		//	Cache::write('categorias', $varjson);
-		//}
 
-		$this->set(compact('varjson'));
+            $this->layout = 'ajax';
+		
+            $categorias = $this->Categoria->array_listado();
+            $varjson =  json_encode($categorias);
+            $this->set(compact('varjson'));
 	}
 
 }

@@ -39,7 +39,13 @@ foreach ($sabores as $sabor):
 			<?php echo $sabor['Sabor']['id']; ?>
 		</td>
 		<td>
-			<?php echo $sabor['Sabor']['name']; ?>
+			<?php
+                        $name = ($sabor['Sabor']['deleted'])? 
+                            $sabor['Sabor']['name']." (borrado el ".date("d/m/y H:i:s", strtotime($sabor['Sabor']['deleted_date']))." )"
+                            :
+                            $sabor['Sabor']['name'];
+
+                        echo $name; ?>
 		</td>
 		<td>
 			<?php echo $sabor['Categoria']['name']; ?>

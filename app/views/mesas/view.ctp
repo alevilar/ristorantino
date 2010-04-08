@@ -33,11 +33,13 @@ $("btn-cambio-rapido-de-mesa").update("Mesa "+mesaCambiar.numero+"<br />Mozo "+m
 		
 		if($comanda_ant != $i['DetalleComanda']['comanda_id'] ){
 			$comanda_ant = $i['DetalleComanda']['comanda_id'];
+                        $comandaHorario = date("H:i:s",strtotime($i['DetalleComanda']['created']));
+                        $txtComanda = "Comanda #$comanda_ant ($comandaHorario)";
 			if($session->read('Auth.User.role') == 'mozo'){
-				echo "<h2>Comanda #".$comanda_ant."</h2>";
+				echo "<h2>$txtComanda</h2>";
 			}
 			else{
-				echo "<h2>".$html->link("Comanda #$comanda_ant",array('controller'=>'comandas','action'=>'imprimir',$comanda_ant))."</h2>";		
+				echo "<h2>".$html->link($txtComanda,array('controller'=>'comandas','action'=>'imprimir',$comanda_ant),null, "¿Seguro que queres reimprimir la comanda?")."</h2>";
 			}
 		}
 		

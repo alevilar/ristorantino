@@ -16,7 +16,7 @@ while(list($categoria_id, $categoria_name) = each($categorias)):
 ?>
 	<tr<?php echo $class;?>>
 		<td align="left" width="200px;">
-			<span style="text-align: left;"><?php echo $html->image('right.png',array('width'=>'15px;')).$categoria_name; ?></span>
+			<span style="text-align: left;"><?php echo $html->image('right.png',array('width'=>'15px;'))."($categoria_id) $categoria_name"; ?></span>
 		</td>
 		<td class="actions" align="left">
 			<?php echo $html->link(__('View', true), array('action'=>'view', $categoria_id)); ?>

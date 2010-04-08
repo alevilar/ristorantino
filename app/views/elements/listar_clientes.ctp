@@ -5,8 +5,6 @@
     </div>
 
     <div id="clientes-listado"></div>
-
-    <?php ?>
 </div>
 
 

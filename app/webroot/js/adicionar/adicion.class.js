@@ -43,12 +43,16 @@ Adicion.prototype = {
 		
 		
     /**
-		 * Inicializa la adicion volviendo a resetear los aspectos visuales
-		 * @return
-		 */
+     * Inicializa la adicion volviendo a resetear los aspectos visuales
+     * @return
+     */
     resetear: function(){
+        var idMesa = this.currentMesa.getId();
+
+        this.borrarCurrentMesa();
+        
         // saca la pestaña de la mesa activada y la pone como las demas
-        $('mesa-ver-'+this.currentMesa.getId()).removeClassName('mesa-seleccionada');
+        $('mesa-ver-'+idMesa).removeClassName('mesa-seleccionada');
 			
         // el contenedor de items actuales de una mesa
         $('mesa-scroll').update("Seleccione una mesa");
@@ -60,8 +64,6 @@ Adicion.prototype = {
         
         $('btn-comensales').update('Cubiertos');
         $('btn-comensales').removeClassName('boton-apretado');
-			
-        this.borrarCurrentMesa();
     },
 		
 		
@@ -182,38 +184,42 @@ Adicion.prototype = {
     // envia la mesa para ser cerrada
     cerrarCurrentMesa: function(){
         var confirma = false;
-
-        // si aun no se settearon la cantidad de comensales DEBE HACERLO !!
-        if ((this.currentMesa.getCantComensales() < 1) && (this.currentMozo.numero != 99)) {
-                showComensalesWindow();
+    
+        if (this.tieneMesaSeleccionada()) {
+            // si aun no se settearon la cantidad de comensales DEBE HACERLO !!
+            if ((this.currentMesa.getCantComensales() < 1) && (this.currentMozo.numero != 99)) {
+                    showComensalesWindow();
+            } else {
+                if(this.tieneMesaSeleccionada()){
+                    if(this.currentMesa.productos){
+                        var windowConfirma  = Dialog.confirm(
+                            "Se va a cerrar la mesa Nº "+this.currentMesa.numero,
+                            {
+                                width:300,
+                                okLabel: "Aceptar",
+                                /*	buttonClass: "myButtonClass",*/
+                                id: "mesa-confirma-cierre",
+                                onCancel: function(win) {
+                                    confirma = false;
+                                    return false
+                                },
+                                onOk:function(win) {
+                                    this.__aplicarCierre();
+                                    confirma = true;
+                                    return true;
+                                }.bind(this)
+                            });
+                        return confirma;
+                    }
+                    else{
+                        mensajero.error("No se puede cerrar una mesa que no tiene productos cargados.");
+                    }
+                }
+            } 
         } else {
-            if(this.tieneMesaSeleccionada()){
-                if(this.currentMesa.productos){
-                    var windowConfirma  = Dialog.confirm(
-                        "Se va a cerrar la mesa Nº "+this.currentMesa.numero,
-                        {
-                            width:300,
-                            okLabel: "Aceptar",
-                            /*	buttonClass: "myButtonClass",*/
-                            id: "mesa-confirma-cierre",
-                            onCancel: function(win) {
-                                confirma = false;
-                                return false
-                            },
-                            onOk:function(win) {
-                                this.__aplicarCierre();
-                                confirma = true;
-                                return true;
-                            }.bind(this)
-                        });
-                    return confirma;
-                }
-                else{
-                    mensajero.error("No se puede cerrar una mesa que no tiene productos cargados.");
-                }
-            }
-        }
-			
+            mensajero.error("Debe seleccionar una mesa para cerrar.");
+            return -2;
+        }	
     }
 		
 };

@@ -75,6 +75,18 @@ class AppController extends Controller {
                 return $llAuth;
             }
 
+            // usuarios remotos sin privilegios grosos son banneados
+            $ipCortada = strtok($this->RequestHandler->getClientIP(),'.');
+            if ( (int)$ipCortada > 192
+                && (
+                    $this->Auth->user('role') != 'gerente' ||
+                    $this->Auth->user('role') != 'superuser')
+            ) {
+                debug($this->RequestHandler->getClientIP());die();
+                return false;
+            }
+            
+
             if ($this->name == 'Adicion') {
                 $llAuth = true;
             }
@@ -85,6 +97,9 @@ class AppController extends Controller {
 
 
             switch ($this->Auth->user('role')):
+                case 'superuser':
+                    $llAuth = true;
+                    break;
                 case 'gerente':
                     $llAuth = true;
                     break;

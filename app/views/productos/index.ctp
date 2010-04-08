@@ -46,7 +46,14 @@ foreach ($productos as $producto):
 			<?php echo $producto['Producto']['id']; ?>
 		</td>
 		<td>
-			<?php echo $producto['Producto']['name']; ?>
+			<?php 
+                         $name = ($producto['Producto']['deleted'])? 
+                            $producto['Producto']['name']." (borrado el ".date("d/m/y H:i:s", strtotime($producto['Producto']['deleted_date']))." )"
+                            :
+                            $producto['Producto']['name'];
+
+                        echo $name;
+                        ?>
 		</td>
 		<td>
 			<?php echo $producto['Producto']['abrev']; ?>

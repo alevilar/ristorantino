@@ -11,7 +11,6 @@ Categorias.prototype = {
 		 */
 	  initialize: function(varArbolCategorias) {
 	    this.arbolCategorias = varArbolCategorias;
-	    
 	    this.categoriaRoot = Object.clone(this.arbolCategorias.Categoria);
 	    this.categoriaRoot.name = "INICIO";
 
@@ -19,7 +18,7 @@ Categorias.prototype = {
 
 	    this.categoriaAnterior =  Object.clone(this.arbolCategorias.Categoria);
 	    this.categoriaAnterior.name = "Anterior";
-
+            
 	    this.currentArbol = Object.clone(this.arbolCategorias);
 	    this.actualizarCategorias(this.currentCategoria.id);
 
@@ -173,7 +172,7 @@ Categorias.prototype = {
 	
 		
 		$('categorias-listado').update("");
-	
+                
 		//contruyo ellink de la categoria ROOT, este va siempre
 		this.construirLinkCategoria(this.categoriaRoot,'categorias-listado' );
 	
@@ -184,7 +183,9 @@ Categorias.prototype = {
 		// creo los links para cada Sub categoria
 		if(typeof arbolito.Hijos != "undefined" ){		
 			arbolito.Hijos.each(function(h){
+                            if (h != false){
 				this.construirLinkCategoria(h.Categoria, 'categorias-listado');
+                            }
 			}.bind(this));
 		}
 		return 1;
@@ -200,7 +201,6 @@ Categorias.prototype = {
 	 * 
 	 */
 	buscaCategoria: function (arbol, categoria_id){
-		//console.info("    |  |  |  | iniciando arbol de categoria: "+arbol.Categoria.id);
 			
 		if (arbol.Categoria.id == categoria_id){	
 			//console.info("enconytro al id "+categoria_id+" esta devolviendo el arbol");

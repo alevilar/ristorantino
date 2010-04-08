@@ -18,8 +18,6 @@
     var numPad = null; //este se tiene que llamar asi para que funcione
 
     
-    
-    
     /********** PERMISOS DE VISTA DE LOS ELEMENTOS *****/
 
     var currentUser = <? echo json_encode($session->read('Auth.User'));?>;
@@ -28,7 +26,8 @@
         if (currentUser.role == 'mozo') {
             $('btn-cambio-rapido-de-mesa').hide();
             $('boton-sacar-item').hide();
-            $('boton-cliente').hide();
+            //$('boton-cliente').hide();
+            $('sistem-nav').hide();
         }
     });
     
@@ -147,6 +146,7 @@ echo $this->renderElement('adicion/set_comensales');
             <!--  Los Eventos ONCLICK se manejan desde sus respectivos elements -->
             <li><a href="#AgregarProducto" id="boton-comanda">  Comanda </a></li>
             <li><a href="#Comensales"      id="btn-comensales"> Cubiertos</a></li>
+            <li><a href="#SeleccionCliente" id="boton-cliente">  Cliente </a></li>
             <li><a href="#ConvertirEnMenu" id="boton-menu">     Menú    </a></li>
 
 <!-- <li><?php echo $html->link('Comensales','#Comensales',array('id'=>'btn-comensales'));?></li> -->
@@ -159,7 +159,6 @@ echo $this->renderElement('adicion/set_comensales');
     <div id="mesa-acciones-2" class="menu-vertical">
         <ul>
                 <li><a href="#SacarProducto"    id="boton-sacar-item">  Sacar Item </a></li>
-                <li><a href="#SeleccionCliente" id="boton-cliente">  Cliente </a></li>
         </ul>
     </div>
 

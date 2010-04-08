@@ -2,6 +2,8 @@
 class Producto extends AppModel {
 
 	var $name = 'Producto';
+        var $actsAs = array('SoftDeletable');
+
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 	var $belongsTo = array(

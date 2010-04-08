@@ -85,15 +85,19 @@ class ClientesController extends AppController {
 		$this->set('clientes',$this->paginate());
 	}
 	
-/**
-	 * me lista todos los clientes que sean del tipo Factura "A"
+        /**
+	 * me lista todos los clientes con descuento
 	 *
 	 */
 	function ajax_clientes_con_descuento(){
+                $conditions = array('tipofactura <>' => "A");
+                if ($this->Auth->user('role') == 'mozo') {
+                    $conditions = array_merge($conditions, array('Descuento.porcentaje <' => 16));
+                }
 		$this->Cliente->order = 'Cliente.nombre';
-		$this->paginate = array('conditions'=>array('tipofactura <>' => "A"),
+		$this->paginate = array('conditions'=>$conditions,
                                         'limit'=> 7,
-                                        'contain' => array('Cliente'),
+                                        'contain' => array('Cliente'=>array('Descuento')),
 		);
 		
 		$this->set('clientes',$this->paginate());

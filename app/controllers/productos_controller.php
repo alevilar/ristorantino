@@ -112,12 +112,12 @@ class ProductosController extends AppController {
 	function delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for Producto', true));
-			$this->redirect(array('action'=>'index'));
+			
 		}
 		if ($this->Producto->del($id)) {
 			$this->Session->setFlash(__('Producto deleted', true));
-			$this->redirect(array('action'=>'index'));
 		}
+                $this->redirect(array('action'=>'index'));
 	}
 	
 	

@@ -1,8 +1,9 @@
 <?php
-class Categoria extends AppModel {
 
+
+class Categoria extends AppModel {
 	var $name = 'Categoria';
-	var $actsAs = array('Tree');
+	var $actsAs = array('SoftDeletable', 'Tree');
 	//var $cacheQueries = true;
 	
 	var $validate = array(
@@ -10,32 +11,11 @@ class Categoria extends AppModel {
 	);
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
-	var $hasMany = array(
-			'Producto' => array('className' => 'Producto',
-								'foreignKey' => 'categoria_id',
-								'dependent' => true,
-								'conditions' => '',
-								'fields' => '',
-								'order' => 'Producto.name',
-								'limit' => '',
-								'offset' => '',
-								'exclusive' => '',
-								'finderQuery' => '',
-								'counterQuery' => ''
-			),
-			'Sabor' => array('className' => 'Sabor',
-								'foreignKey' => 'categoria_id',
-								'dependent' => true,
-								'conditions' => '',
-								'fields' => '',
-								'order' => 'Sabor.name',
-								'limit' => '',
-								'offset' => '',
-								'exclusive' => '',
-								'finderQuery' => '',
-								'counterQuery' => ''
-			)
-	);
+	var $hasMany = array('Producto' => array(
+                                'conditions' => array('Producto.deleted <>'=>1)),
+                             'Sabor' => array(
+                                'conditions' => array('Sabor.deleted <>'=>1)
+                             ));
 	
 	
 	
@@ -53,13 +33,18 @@ class Categoria extends AppModel {
 		$array_final = $this->read();
 		//agarro los herederos del ROOT
 		$resultado = $this->children($categoria_id,1);
-		
-		foreach ($resultado as $r):				 
-			$array_final['Hijos'][] = $this->array_listado($r['Categoria']['id']);
+
+		foreach ($resultado as $r):
+                    $hijos = $this->array_listado($r['Categoria']['id']);
+                    if (count($hijos) > 0) {
+			$array_final['Hijos'][] = $hijos;
+                    }
 		endforeach;
-		
+
+                if ($array_final == false) {
+                    $array_final = array();
+                }
 		return $array_final;
-		
 	}
 
 }

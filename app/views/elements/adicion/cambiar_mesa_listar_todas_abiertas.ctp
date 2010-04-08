@@ -4,13 +4,18 @@
 	<ul class="menu-horizontal">
 		<?php foreach ($mesasabiertas as $mesa):?>
 		<li>
-				<?php echo '<li>'.$ajax->link($mesa['Mesa']['numero']." M(".$mesa['Mozo']['numero'].")",'/mesas/view/'.$mesa['Mesa']['id'], array( 	'update'=>'mesa-scroll',
-																						'id'=>'todas-las-mesas-ver-'.$mesa['Mesa']['id'],
-																						'class'=>'boton ',
-																						'onclick'=>'hacer_cambio_rapido_de_mesa_mozo('.$mesa['Mesa']['numero'].', '.$mesa['Mozo']['numero'].');',
-																						'evalScripts'=>true
-							)).'</li>'
-				?>
+                <?php echo $ajax->link(
+                        $mesa['Mesa']['numero']." M(".$mesa['Mozo']['numero'].")",
+                        '/mesas/view/'.$mesa['Mesa']['id'],
+                        array(
+                            'update'=>'mesa-scroll',
+                            'id'=>'todas-las-mesas-ver-'.$mesa['Mesa']['id'],
+                            'class'=>'boton ',
+                            'onclick'=>'hacer_cambio_rapido_de_mesa_mozo('.$mesa['Mesa']['numero'].', '.$mesa['Mozo']['numero'].');',
+                            'evalScripts'=>true
+                        )
+                      );
+                                                        ?>
 		</li>
 		<?php endforeach;?>
 	</ul>

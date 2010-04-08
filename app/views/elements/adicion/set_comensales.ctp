@@ -1,5 +1,5 @@
 <div id="div-comensales" style="display: none; width: 500px; height: 500px;">
-    <form action="javascript:return false;" 
+    <form action="javascript:" 
           id="mesa-cant-comensales-form" name="mesa-menu-form"
           onsubmit="guardarDatosDeLosComensales();">
         <input type="text" name="mesa-cant-comensales" id="mesa-cant-comensales">

@@ -2,6 +2,10 @@
 class Sabor extends AppModel {
 
 	var $name = 'Sabor';
+
+        var $actsAs = array('SoftDeletable');
+
+
 	var $validate = array(
 		'name' => array('notempty'),
 		'categoria_id' => array('numeric')

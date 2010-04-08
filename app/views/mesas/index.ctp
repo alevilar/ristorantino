@@ -69,7 +69,7 @@ foreach ($mesas as $mesa):
 		<td class="actions">
 			<?php echo $html->link(__('View', true), array('action'=>'view', $mesa['Mesa']['id'])); ?>
 			<?php echo $html->link(__('Edit', true), array('action'=>'edit', $mesa['Mesa']['id'])); ?>
-			<?php echo $html->link(__('Delete', true), array('action'=>'delete', $mesa['Mesa']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $mesa['Mesa']['id'])); ?>
+			<?php echo $html->link(__('Delete', true), array('action'=>'delete', $mesa['Mesa']['id']), null, sprintf(__('Seguro que queres borrar la mesa # %s?\n Hacerlo significa borrarla de la base de datos y no sera computada.\nSe perderan la informacion estadisica de los pedidos\nrealidados para esta mesa.', true), $mesa['Mesa']['numero'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>

@@ -34,7 +34,11 @@ foreach ($mozos as $mozo):
 		<td class="actions">
 			<?php // echo $html->link(__('View', true), array('action'=>'view', $mozo['Mozo']['id'])); ?>
 			<?php echo $html->link(__('Edit', true), array('action'=>'edit', $mozo['Mozo']['id'])); ?>
-			<?php echo $html->link(__('Delete', true), array('action'=>'delete', $mozo['Mozo']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $mozo['Mozo']['id'])); ?>
+			<?php
+                        if ($session->read('Auth.User.role') == 'superuser') {
+                            echo $html->link(__('Delete', true), array('action'=>'delete', $mozo['Mozo']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $mozo['Mozo']['id']));
+                        }
+                        ?>
 		</td>
 	</tr>
 <?php endforeach; ?>
