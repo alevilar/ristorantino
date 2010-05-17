@@ -29,7 +29,7 @@
 											 
 		echo $form->input('description', array( 'label'=> 'Ingrese criterio de busqueda',
 												'type'=>'text',
-										 		'after'=> '<cite>Busca tanto en el nombre del archivo como en la descripci�n.</cite>'));
+										 		'after'=> '<cite>Busca tanto en el nombre del archivo como en la descripcion.</cite>'));
 		echo $form->end('Buscar');										 
 ?>
 

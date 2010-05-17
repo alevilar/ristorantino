@@ -24,13 +24,8 @@ class CustomQuery extends PqueryAppModel{
 		
 	function paginateCount($conditions, $recursive){
 
-		$sql  = "SELECT COUNT(*) AS total FROM (" . $this->sql . ") AS CONSUL";
-		
-		if( $aux  = $this->query($sql) ){
-			return $aux[0][0]['total'];
-		}
-
-		return false;
+		$sql  = $this->sql;
+		return count($this->query($sql));
 	}
 
 	/**
@@ -59,11 +54,22 @@ class CustomQuery extends PqueryAppModel{
 	
 	function query($sql = null){
 		if(!empty($sql)){
-			return parent::query($sql);
+			$result =  parent::query($sql);
 		}
 		else{
-			return parent::query($this->sql);
+			$result = parent::query($this->sql);
 		}
+
+                $i = 0;
+                foreach ($result as $r){
+                    foreach ($r as $r2){
+                        foreach ($r2 as $key=>$value) {
+                            $consultaFinal[$i][$key] = $value;
+                        }
+                    }
+                    $i++;
+                }
+                return $consultaFinal;
 	}
 	
 }

@@ -100,10 +100,7 @@ class QueriesController extends PqueryAppController {
 		$this->Query->recursive = -1;
 		$consulta_ejecutada = $this->Query->query($sql);
 
-		$quitar_columnas = $consulta_ejecutada[0][0];
-		while(list($key,$value) = each($quitar_columnas)):
-			$columnas[] = $key;
-		endwhile;
+		$precols = array_keys($consulta_ejecutada[0]);
 
 		$this->set('nombre',$res['Query']['name']);
 		$this->set('columnas',$columnas);
@@ -161,12 +158,8 @@ class QueriesController extends PqueryAppController {
             }
             
             $precols = array_keys($data[0]);
-            $cols = array();
-            foreach ($precols as $indice) {
-                $cols = array_merge($cols, array_keys($data[0][$indice]));
-            }
             //$cols = array_keys($data['0']['0']);
-            $this->set('cols', $cols);
+            $this->set('cols', $precols);
             $url_conditions['query.id'] = $id;
             $this->set('queries', $data);
             $this->set('url_conditions', $url_conditions);

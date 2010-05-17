@@ -56,7 +56,7 @@ foreach ($queries as $query):
 	}
 ?>
 	<tr<?php echo $class;?>>
-	   <?php foreach($query[0] as $line):?>
+	   <?php foreach($query as $line):?>
 		<td>
 			<?php echo $line; ?>
 		</td>
@@ -76,3 +76,7 @@ foreach ($queries as $query):
 	}
 	?>
 </div>
+
+<?
+debug($queries);
+?>

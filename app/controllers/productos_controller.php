@@ -68,7 +68,6 @@ class ProductosController extends AppController {
 	 * @return array
 	 */
 	function buscar_por_nombre($nombre){
-			Configure::write('debug', 0);
 			$this->Producto->recursive=-1;
                         $this->set('productos',$this->Producto->buscarPorNombre($nombre));
 	}

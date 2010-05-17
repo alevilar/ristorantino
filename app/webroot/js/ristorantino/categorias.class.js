@@ -2,8 +2,7 @@
 var Categorias = Class.create();
 	
 
-Categorias.prototype = {
-		
+Categorias.prototype = {	
 		
 		/**
 		 * recibe
@@ -58,12 +57,11 @@ Categorias.prototype = {
 	 	}
 	},
 
-	
 
 	/**
 	 * 
 	 * Me busca un producto por su nombre sieimre y cuando el nombre sea mayor a 3 letras
-	 * @param String nombre del producto
+	 * @param String productoNombre del producto
 	 */
 	buscarProductoNombre: function(productoNombre){
 		if(productoNombre.length > 2){
@@ -71,6 +69,9 @@ Categorias.prototype = {
 			//console.info("actualizarProductos..::"+this.currentArbol.Categoria.name);
 			new Ajax.Request(this.urlBuscarPorNombre+"/"+$F('buscador-producto-nombre')+".json", {
 				  method: 'get',
+                                  onFailure: function(){
+                                      mensajero.error("Error al buscar por nombre");
+                                  },
 				  onSuccess: function(transport) {
 					   //var productosJSON = transport.headerJSON;
 					   var productosJSON = eval(transport.responseText);
@@ -81,7 +82,6 @@ Categorias.prototype = {
 				  }.bind(this)
 				});
 		}
-	 	
 	},
 
 /**
