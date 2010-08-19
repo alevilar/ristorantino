@@ -8,11 +8,12 @@ echo $paginator->counter(array(
 ?></p>
 <table cellpadding="0" cellspacing="0">
 <tr>
-	<th><?php echo $paginator->sort('Usuario','User.username');?></th>
+    <th><?php echo $paginator->sort('nombre');?></th>
+    <th><?php echo $paginator->sort('Usuario','User.username');?></th>
 	<th><?php echo $paginator->sort('Tipo Descuento','Descuento.name');?></th>
 	<th><?php echo $paginator->sort('Tipo de Factura','tipofactura');?></th>
 	<th><?php echo $paginator->sort('imprime_ticket');?></th>
-	<th><?php echo $paginator->sort('nombre');?></th>
+	
 	<th><?php echo $paginator->sort('CUIT/CUIL/DNI', 'nrodocumento');?></th>
 	<th><?php echo $paginator->sort('Creado','created');?></th>
 	<th class="actions"><?php __('Acciones');?></th>
@@ -26,6 +27,9 @@ foreach ($clientes as $cliente):
 	}
 ?>
 	<tr<?php echo $class;?>>
+                <td>
+			<?php echo $cliente['Cliente']['nombre']; ?>
+		</td>
 		<td title="<?php echo $cliente['User']['nombre'].", ".$cliente['User']['apellido']; ?>">
 			<?php echo $cliente['User']['username']; ?>
 		</td>
@@ -38,9 +42,7 @@ foreach ($clientes as $cliente):
 		<td>
 			<?php echo ($cliente['Cliente']['imprime_ticket'])?'Si':'No'; ?>
 		</td>
-		<td>
-			<?php echo $cliente['Cliente']['nombre']; ?>
-		</td>
+		
 		<td>
 			<?php echo $cliente['Cliente']['nrodocumento']." (".$cliente['TipoDocumento']['name'].")"; ?>
 		</td>

@@ -12,19 +12,28 @@
 <div class="clientes form">
     <?php echo $form->create('Cliente');?>
     <fieldset>
-        <legend><?php __('Editar Cliente');?></legend>
+        <legend><?php __('Editar Nuevo Cliente');?></legend>
         <?php
-         echo $form->input('id');
-
-         echo $form->input('user_id',
+        echo $form->input('user_id',
                     array(  'empty'=> 'Seleccione',
                             'label'=>'Usuario',
-                            'after'=>'<br> Seleccione un usuario si es que desea tener un registro del mismo.
-                                O sea, si quiere mantener una estadistica de consumiciones, dias que vino, etc.
-                                Lo que necesita es crear primero un usuario y luego relacionar al cliente con
-                                dicho usuario. Si usted no entiende consulte con el administrador del sistema.'
+                            'after'=>'<br>Esta opción sirve para relacionar clientes con algún usuario del sistema. Por ejemplo, clientes relacionados con el Dueño, el encargado, o algún mozo. De esa forma se pude calcular las invitaciones y vales que cada uno usara.'
                         ));
-         
+
+
+
+
+        echo $form->input('nombre',
+                               array(
+                                  'label'=>'Nombre/Denominación',
+                                  'after'=>'Ej: La Serenissima S.A.'));
+
+        echo $form->input('domicilio');
+        echo $form->input('codigo');
+        echo $form->input('mail');
+        echo $form->input('telefono');
+
+
         echo $form->input(
             'tipofactura',
             array(
@@ -34,7 +43,6 @@
                             Se puede imprimir una factura "A", "B", o un remito.'
             )
         );
-
 
         ?>
 
@@ -58,10 +66,7 @@
 
         <div id="datosParaFacturaA" style="display:none;">
             <?
-            echo $form->input('nombre',
-                               array(
-                                  'label'=>'Nombre/Denominación',
-                                  'after'=>'Ej: La Serenissima S.A.'));
+
             echo $form->input('tipo_documento_id',
                                array(
                                    'default'=>1, // CUIT, numero hardcodeado de la base de datos
@@ -72,7 +77,7 @@
                                    'label'=>'Número',
                                    'after'=>'Ej: 3045623431   >>>>No hay que poner los "-". '
                                    ));
-            echo $form->input('domicilio');
+
             echo $form->input('iva_responsabilidad_id',
                                array(
                                    'label'=>'Responsabilidad ante el IVA',
@@ -107,16 +112,8 @@
     </fieldset>
     <?php echo $form->end('Submit');?>
 </div>
-
-
-
-
-
-
-
 <div class="actions">
-	<ul>
-		<li><?php echo $html->link(__('Delete', true), array('action'=>'delete', $form->value('Cliente.id')), null, sprintf(__('Are you sure you want to delete # %s?', true), $form->value('Cliente.id'))); ?></li>
-		<li><?php echo $html->link(__('List Clientes', true), array('action'=>'index'));?></li>
-	</ul>
+    <ul>
+        <li><?php echo $html->link(__('List Clientes', true), array('action'=>'index'));?></li>
+    </ul>
 </div>

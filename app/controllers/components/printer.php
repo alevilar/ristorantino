@@ -245,7 +245,7 @@ class PrinterComponent extends Object {
 									
 						
 					foreach($prod_a_imprimir as $item){
-						if(!fwrite($archivo_comanda,$item)) throw new Exception("no se puede escribir en el archivo: $arch_name");
+						if(!fwrite($archivo_comanda,iconv('UTF-8', 'ISO-8859-1//TRANSLIT', $item))) throw new Exception("no se puede escribir en el archivo: $arch_name");
 						fwrite($archivo_comanda,"\n");
 					}				
 					
@@ -254,7 +254,7 @@ class PrinterComponent extends Object {
 						fwrite($archivo_comanda,"\n");
 						fwrite($archivo_comanda,'||||||||||||    OBSERVACION     |||||||||');
 						fwrite($archivo_comanda,"\n");
-						fwrite($archivo_comanda,$productos[0]['Comanda']['observacion']);
+						fwrite($archivo_comanda, iconv('UTF-8', 'ASCII//TRANSLIT', $productos[0]['Comanda']['observacion']));
 						fwrite($archivo_comanda,"\n");
 						fwrite($archivo_comanda,'|||||||||||||||||||||||||||||||||||||||||');
 						fwrite($archivo_comanda,"\n");

@@ -2,6 +2,8 @@
 class Producto extends AppModel {
 
 	var $name = 'Producto';
+        var $order = 'Producto.name';
+        
         var $actsAs = array('SoftDeletable');
 
 

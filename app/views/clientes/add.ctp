@@ -1,3 +1,15 @@
+<script type="text/javascript">
+    Event.observe(window, 'load', function(){
+        if ($F('ClienteTipofactura') == 0){
+            $('datosParaRemito').show();
+        }
+        else if ($F('ClienteTipofactura') == 'A'){
+            $('datosParaFacturaA').show();
+        }
+    });
+</script>
+
+
 <div class="clientes form">
     <?php echo $form->create('Cliente');?>
     <fieldset>
@@ -6,11 +18,21 @@
         echo $form->input('user_id', 
                     array(  'empty'=> 'Seleccione',
                             'label'=>'Usuario',
-                            'after'=>'<br> Seleccione un usuario si es que desea tener un registro del mismo.
-                                O sea, si quiere mantener una estadistica de consumiciones, dias que vino, etc.
-                                Lo que necesita es crear primero un usuario y luego relacionar al cliente con
-                                dicho usuario. Si usted no entiende consulte con el administrador del sistema.'
+                            'after'=>'<br>Esta opción sirve para relacionar clientes con algún usuario del sistema. Por ejemplo, clientes relacionados con el Dueño, el encargado, o algún mozo. De esa forma se pude calcular las invitaciones y vales que cada uno usara.'
                         ));
+
+
+        
+
+        echo $form->input('nombre',
+                               array(
+                                  'label'=>'Nombre/Denominación',
+                                  'after'=>'Ej: La Serenissima S.A.'));
+
+        echo $form->input('domicilio');
+        echo $form->input('codigo', array('after'=>'<br>Aqui se debe ingresar el código de cliente'));
+        echo $form->input('mail');
+        echo $form->input('telefono');
 
 
         echo $form->input(
@@ -22,7 +44,6 @@
                             Se puede imprimir una factura "A", "B", o un remito.'
             )
         );
-
         
         ?>
         
@@ -46,10 +67,7 @@
 
         <div id="datosParaFacturaA" style="display:none;">
             <?
-            echo $form->input('nombre',
-                               array(
-                                  'label'=>'Nombre/Denominación',
-                                  'after'=>'Ej: La Serenissima S.A.'));
+            
             echo $form->input('tipo_documento_id',
                                array(
                                    'default'=>1, // CUIT, numero hardcodeado de la base de datos
@@ -60,7 +78,7 @@
                                    'label'=>'Número',
                                    'after'=>'Ej: 3045623431   >>>>No hay que poner los "-". '
                                    ));
-            echo $form->input('domicilio');
+            
             echo $form->input('iva_responsabilidad_id', 
                                array(
                                    'label'=>'Responsabilidad ante el IVA',

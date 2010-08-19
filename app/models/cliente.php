@@ -122,6 +122,7 @@ class Cliente extends AppModel {
                     $coeficiente[8]=3;
                     $coeficiente[9]=2;
 
+                    $ok = true;
                     $resultado=1;
                     $cuit_rearmado = "";
 
@@ -132,7 +133,7 @@ class Cliente extends AppModel {
                     }
 
                     if (strlen($cuit_rearmado) <> 11) {  // si to estan todos los digitos
-                        $resultado=0;
+                        $ok=false;
                     } else {
                         $sumador = 0;
                         $verificador = substr($cuit_rearmado, 10, 1); //tomo el digito verificador
@@ -142,16 +143,21 @@ class Cliente extends AppModel {
                         }
 
                         $resultado = $sumador % 11;
-                        $resultado = 11 - $resultado;  //saco el digito verificador
+                        if ($resultado != 0) {
+                            $resultado = 11 - $resultado;  //saco el digito verificador
+                        }
+                        
                         $veri_nro = intval($verificador);
 
-                        if ($veri_nro <> $resultado) {
-                            $resultado=0;
-                        } else {
+                        if ($veri_nro == $resultado) {
+                            $ok = true;
                             $cuit_rearmado = substr($cuit_rearmado, 0, 2) . "-" . substr($cuit_rearmado, 2, 8) . "-" . substr($cuit_rearmado, 10, 1);
+                        } else {
+                            $ok=false;
                         }
                     }
-                    return $resultado;
+
+                    return $ok;
                 }
             }
             return true;
