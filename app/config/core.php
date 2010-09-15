@@ -26,6 +26,34 @@
  * @lastmodified	$Date: 2008-06-27 05:09:03 -0400 (Fri, 27 Jun 2008) $
  * @license			http://www.opensource.org/licenses/mit-license.php The MIT License
  */
+
+
+
+/**
+ * Datos parautilizar en la impresión del ticket
+ */
+Configure::write('Restaurante.name', '          - NOMBRE RESTAURANTE-');
+Configure::write('Restaurante.razon_social', 'RAZON SOCIAL');
+Configure::write('Restaurante.cuit', 'C.U.I.T.: 32332323232');
+Configure::write('Restaurante.ib', 'Ing. Brutos: 901-405554-4');
+Configure::write('Restaurante.iva_resp', 'IVA RESPONSABLE INSCRIPTO A CONS. FINAL');
+
+
+/**
+ *  Impresora Fiscal
+ *
+ *   datos basicos para levantar el sooler
+ */
+// dispositivo de linux
+Configure::write('Dev.printer', 'ttyUSB0'); // Ubicado en "/dev/"
+
+// Carpetas temporales parala impresora fiscal
+Configure::write('TempFolder.fuente', '/tmp/fuente'); // aca se guarda para que el spooler la lea
+Configure::write('TempFolder.dest', '/tmp/dest'); // aca se guarda una vez que el spooler la ejecuto
+Configure::write('TempFolder.impfiscal', '/tmp/impfiscal'); // aca se va armando el archivo
+
+
+
 /**
  * CakePHP Debug Level:
  *

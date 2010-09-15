@@ -56,16 +56,20 @@ class PrinterComponent extends Object {
 	 */
 	var $impresoraFiscal = null;
 
-	// ESTAS CARPTAS SON LLAMADAS DESDE EL SPOOLER, para poder levantar el programita
-	var $sourceFolder = '/tmp/fuente';
-	var $destFolder = '/tmp/dest';
-
-	var $tempFolder = '/tmp/impfiscal';
+	// variables que se inicializan en el constructor y que sirven par aguardar los txt temporales del sppooler
+	var $sourceFolder = '';
+	var $destFolder = '';
+	var $tempFolder = '';
 
 
 
 	function __construct(){
 		$this->generadorComando = new ComandosHasar441();
+
+                // ESTAS CARPTAS SON LLAMADAS DESDE EL SPOOLER, para poder levantar el programita
+                $this->sourceFolder = Configure::read('TempFolder.fuente');
+                $this->destFolder = Configure::read('TempFolder.dest');
+                $this->tempFolder = Configure::read('TempFolder.impfiscal');
 	}
 
 
@@ -87,7 +91,6 @@ class PrinterComponent extends Object {
 
 
 	function __inicio_manual() {
-
 		$comandera =& ClassRegistry::init('Comandera');
 		$comandera->recursive = -1;
 		$comanderas = $comandera->find('all');
@@ -100,7 +103,7 @@ class PrinterComponent extends Object {
 		}
 
 		//$this->impresoraFiscal = $fiscal->find('first');
-		$this->impresoraFiscal = 'ttyUSB0';
+		$this->impresoraFiscal = Configure::read('Dev.printer');
 
 		$this->__ejecutarSpoolerFiscal();
 	}
@@ -217,8 +220,8 @@ class PrinterComponent extends Object {
 	
 				if(!file_exists($arch_name)){
 					// si el archivo no existe lo creo
-					$archivo_comanda = fopen($arch_name, "x+");
-					
+					$archivo_comanda = fopen($arch_name, "w+t");
+
 					// pongo el ESC para comenzar ESC/P
 					fwrite($archivo_comanda,ESC.'@');
 					
@@ -336,7 +339,7 @@ class PrinterComponent extends Object {
 	 *									-2 = si no pudo cambiar los permisos
 	 */
 	function __crearDirectorioSiNoExiste($directorio_name)
-	{
+	{debug($directorio_name);
 		$ok = 0;
 		try {
 			if(!is_dir($directorio_name)){
@@ -346,6 +349,7 @@ class PrinterComponent extends Object {
 			if (!chmod($directorio_name,0777)){
 				$ok = -2;
 			}
+                        
 		} catch (Exception $e) {
 			return $e;
 		}
@@ -363,8 +367,10 @@ class PrinterComponent extends Object {
 	function __setMozoMesa($mozo, $mesa){
 		//seteo el pie de pagina con mesa y mozo
 		$this->vcomandos[] = $this->generadorComando->setTrailer(0,"-  -  -  -  -  -  -  -");
-		$this->vcomandos[] = $this->generadorComando->setTrailer(1,"MOZO $mozo",true);
-		$this->vcomandos[] = $this->generadorComando->setTrailer(2,"MESA $mesa",true);
+                $mozo = iconv('UTF-8', 'ISO-8859-1//TRANSLIT//IGNORE', "MOZO $mozo");
+                $mesa = iconv('UTF-8', 'ISO-8859-1//TRANSLIT//IGNORE', "MESA $mesa");
+		$this->vcomandos[] = $this->generadorComando->setTrailer(1,$mozo,true);
+		$this->vcomandos[] = $this->generadorComando->setTrailer(2,$mesa,true);
 		$this->vcomandos[] = $this->generadorComando->setTrailer(3,"-  -  -  -  -  -  -  -");
 		
 		$this->__setearLoDeConsumidorFinal();
@@ -532,6 +538,7 @@ class PrinterComponent extends Object {
 
 
 	/**
+         * IMPRESION DE PRE-TICKET
 	 * Imprime un ticket en la comandera, pr lo general es utilizado para mostrar previamente al ticket
 	 *
 	 * @param array $productos
@@ -581,7 +588,7 @@ class PrinterComponent extends Object {
 				
 				if(!file_exists($arch_name)){
 					// si el archivo no existe lo creo
-					$archivo_comanda = fopen($arch_name, "x+");
+					$archivo_comanda = fopen($arch_name, "w+t");
 						
 					// pongo el ESC para comenzar ESC/P
 					fwrite($archivo_comanda,ESC.'@');
@@ -592,17 +599,17 @@ class PrinterComponent extends Object {
 					/*****
 					 * 				 ENCABEZADO
 					 */
-					$header = "          - PAXAPOGA DEL MAR-";
+					$header = Configure::read('Restaurante.name');
 					fwrite($archivo_comanda,$header);
 					fwrite($archivo_comanda,"\n\n");
 					
-					fwrite($archivo_comanda,'PXA S.R.L.');
+					fwrite($archivo_comanda,Configure::read('Restaurante.razon_social'));
 					fwrite($archivo_comanda,"\n");
-					fwrite($archivo_comanda,'C.U.I.T.: 30711054231');
+					fwrite($archivo_comanda,Configure::read('Restaurante.cuit'));
 					fwrite($archivo_comanda,"\n");
-					fwrite($archivo_comanda,'Ing. Brutos: 901-401119-7');
+					fwrite($archivo_comanda,Configure::read('Restaurante.ib'));
 					fwrite($archivo_comanda,"\n");
-					fwrite($archivo_comanda,'IVA RESPONSABLE INSCRIPTO A CONS. FINAL');
+					fwrite($archivo_comanda,Configure::read('Restaurante.iva_resp'));
 					fwrite($archivo_comanda,"\n");
 					fwrite($archivo_comanda,'Fecha: '.date('d/m/y',strtotime('now')).'   Hora: '.date('H:i:s',strtotime('now')));
 					fwrite($archivo_comanda,"\n");
@@ -768,7 +775,9 @@ class PrinterComponent extends Object {
 		}
 		//$arch_name = $arch_name.date("His");
 
-		try {				
+		try {
+
+                    debug($this->destFolder);
 			if(file_exists($this->destFolder."/".$arch_name."ans")){
 				//debug("se borrò el archivo $archivo porque ya existia");
 				unlink($this->destFolder."/".$arch_name."ans");
@@ -816,17 +825,22 @@ class PrinterComponent extends Object {
 		}
 
 		// si el archivo no existe lo creo
-		$archivo_comanda = fopen($archivo, "w+");
+		$archivo_comanda = fopen($archivo, "w+t");
 
 
 		foreach($this->vcomandos as $comando):
-		fwrite($archivo_comanda,$comando);
-		fwrite($archivo_comanda,"\n");
+
+                    //fwrite($archivo_comanda, iconv('UTF-8', 'ANSI_X3.4-1968//TRANSLIT//IGNORE', $comando));
+                    //fwrite($archivo_comanda, iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $comando));
+                    fwrite($archivo_comanda,$comando);
+                    fwrite($archivo_comanda,"\n");
 		endforeach;
 
 			
 		fclose($archivo_comanda);
 		chmod($archivo,0777);
+
+
 	}
 }
 
