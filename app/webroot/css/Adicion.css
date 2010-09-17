@@ -328,9 +328,11 @@ ul,li {
 
 #mesa-acciones-2 {
 	margin-top: 12px;
-	float: right;
+	float: left;
+        clear: left;
 }
 #mesa-acciones {
+        clear:both;
 	margin-top: 12px;
 	float: left;
 }
@@ -339,7 +341,7 @@ ul,li {
 #mesa-data {
 	height:398px;
 	overflow:hidden;
-	width:440px;
+	width:603px;
 	margin-top: 14px;
 	background-color: white;
 }
@@ -815,23 +817,24 @@ div.code-coverage-results span.result-good {
 	background-repeat: no-repeat;
 }
 
-#UpArrow{
-	background-image: url("img/up.png");
-	background-repeat: no-repeat;
-	height: 66px;
-	width: 66px;
-	float: right;
-	margin-bottom: 10px;
+#UpArrow {
+    background-image:url("img/up.png");
+    background-repeat:no-repeat;
+    clear:none;
+    float:left;
+    height:66px;
+    width:66px;
 }
 
-#DownArrow{
-	background-image: url("img/down.png");
-	background-repeat: no-repeat;
-	height: 50px;
-	height: 66px;
-	width: 66px;
-	float: right;
-	}
+
+#DownArrow {
+    background-image:url("img/down.png");
+    background-repeat:no-repeat;
+    clear:none;
+    float:right;
+    height:66px;
+    width:66px;
+}
 
 .arrow{
 	text-indent: -1000px;
@@ -850,14 +853,15 @@ div.code-coverage-results span.result-good {
 	height: 88px;
 }
 
-
-
-#mesas-scrollbar{
-	position: absolute;
-	top: 434px;
-	left: 687px;
-	outline: 0;
+#mesas-scrollbar {
+    left:18px;
+    outline:0 none;
+    position:absolute;
+    top:513px;
+    width:153px;
 }
+
+
 #mesas-scrollbar A{
 display: block;
 height: 100%;
@@ -865,10 +869,10 @@ width: 100%;
 outline: 0;
 }
 
-#sistem-nav{
-	position: absolute;
-	top: 500px;
-	left: 685px;
+#sistem-nav {
+    left:355px;
+    position:absolute;
+    top:10px;
 }
 
 
@@ -1092,4 +1096,19 @@ outline: 0;
 
 .productos-con-sabores{
 	border-color: DeepPink;
+}
+
+
+#clientes-listar-header{
+    float: left;
+    clear: both;
+}
+
+
+#clientes-listado{
+    float: left;
+    clear: both;
+}
+
+#clientes-listado{
 }

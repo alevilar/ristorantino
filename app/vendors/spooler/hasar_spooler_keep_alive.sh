@@ -11,15 +11,11 @@ while true ; do
 		#si es mayor cero quiere decir que hay archios en la carpeta para imprimir
 		if [ $CANT -eq 0 ]
 		then
-			cd /dev
-			DBS=`ls ttyUSB*`		
-			
-			for b in $DBS ;
-			do
-				echo "Conectado en dispositivo $b"
-				spooler -p$b -l -c "*" 
-				echo "se envio el comando"
-			done
+			#/etc/init.d/spooler_srv stop
+			echo "se freno el spooler_srv"
+                        #/etc/init.d/spooler_srv start
+			echo "se reinicio el spooler_srv"
+                        cd /
 		fi		
 	fi
 	sleep 200

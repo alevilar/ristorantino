@@ -102,7 +102,6 @@ class PrinterComponent extends Object {
 			$this->__crearDirectorioSiNoExiste($c['Comandera']['path']);
 		}
 
-		//$this->impresoraFiscal = $fiscal->find('first');
 		$this->impresoraFiscal = Configure::read('Dev.printer');
 
 		$this->__ejecutarSpoolerFiscal();
@@ -367,8 +366,8 @@ class PrinterComponent extends Object {
 	function __setMozoMesa($mozo, $mesa){
 		//seteo el pie de pagina con mesa y mozo
 		$this->vcomandos[] = $this->generadorComando->setTrailer(0,"-  -  -  -  -  -  -  -");
-                $mozo = iconv('UTF-8', 'ISO-8859-1//TRANSLIT//IGNORE', "MOZO $mozo");
-                $mesa = iconv('UTF-8', 'ISO-8859-1//TRANSLIT//IGNORE', "MESA $mesa");
+//                $mozo = iconv('UTF-8', 'ISO-8859-1//TRANSLIT//IGNORE', "MOZO $mozo");
+//                $mesa = iconv('UTF-8', 'ISO-8859-1//TRANSLIT//IGNORE', "MESA $mesa");
 		$this->vcomandos[] = $this->generadorComando->setTrailer(1,$mozo,true);
 		$this->vcomandos[] = $this->generadorComando->setTrailer(2,$mesa,true);
 		$this->vcomandos[] = $this->generadorComando->setTrailer(3,"-  -  -  -  -  -  -  -");
@@ -388,9 +387,8 @@ class PrinterComponent extends Object {
 	 * @return void
 	 */
 	function __setearLoDeConsumidorFinal(){
-		$this->vcomandos[] = $this->generadorComando->setTrailer(6, utf8_decode("  ORIENTACION AL COSUMIDOR PROVINCIA"));
+		$this->vcomandos[] = $this->generadorComando->setTrailer(6, "  ORIENTACION AL COSUMIDOR PROVINCIA");
 		$this->vcomandos[] = $this->generadorComando->setTrailer(7, "     DE BUENOS AIRES 0-800-333-6422");
-	
 	}
 	
 	

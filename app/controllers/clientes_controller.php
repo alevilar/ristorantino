@@ -36,6 +36,24 @@ class ClientesController extends AppController {
 		$this->set(compact('users', 'descuentos', 'iva_responsabilidades', 'tipo_documentos'));
 	}
 
+        function addFacturaA() {
+		if (!empty($this->data)) {
+			$this->Cliente->create();
+			if ($this->Cliente->save($this->data)) {
+				$this->Session->setFlash(__('Se agregó un nuevo cliente', true));
+				$this->autoRender = false;
+                                $this->redirect('/clientes/ajax_clientes_factura_a');
+			} else {
+				$this->Session->setFlash(__('El Cliente no pudo ser gardado, intente nuevamente.', true));
+			}
+		}
+		
+		$tipo_documentos = $this->Cliente->TipoDocumento->find('list');
+		$iva_responsabilidades = $this->Cliente->IvaResponsabilidad->find('list');
+
+		$this->set(compact('iva_responsabilidades', 'tipo_documentos'));
+	}
+
 	function edit($id = null) {
 		if (!$id && empty($this->data)) {
 			$this->Session->setFlash(__('Cliente incorrecto', true));

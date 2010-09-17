@@ -76,7 +76,7 @@
                 setComensalesWindow.hide();
                 Dialog.closeInfo();
                 $('btn-comensales').addClassName('boton-apretado');
-                $('btn-comensales').update(cantComensales + ' Comansales')
+                $('btn-comensales').update(cantComensales + ' Cubiertos')
                 mensajero.show("La mesa "+adicion.currentMesa.numero+" tiene "+cantComensales+ " comensales.");
                 adicion.resetear();
             },

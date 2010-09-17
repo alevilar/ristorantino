@@ -182,12 +182,14 @@ Adicion.prototype = {
 		
 
     // envia la mesa para ser cerrada
-    cerrarCurrentMesa: function(){
+    cerrarCurrentMesa: function(cubiertosObligatorios ){
         var confirma = false;
-    
+console.info(cubiertosObligatorios);
+        var cubiertosObligatorios = typeof(cubiertosObligatorios) === 'undefined' ? true : cubiertosObligatorios;
+    console.debug(cubiertosObligatorios);
         if (this.tieneMesaSeleccionada()) {
             // si aun no se settearon la cantidad de comensales DEBE HACERLO !!
-            if ((this.currentMesa.getCantComensales() < 1) && (this.currentMozo.numero != 99)) {
+            if (cubiertosObligatorios && (this.currentMesa.getCantComensales() < 1) && (this.currentMozo.numero != 99)) {
                     showComensalesWindow();
             } else {
                 if(this.tieneMesaSeleccionada()){

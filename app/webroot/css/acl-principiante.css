@@ -1,0 +1,23 @@
+
+#mesas-listado{
+    display: none;
+}
+
+
+#mesa-container {
+    height:495px;
+    top:95px;
+}
+
+
+#mesa-data {
+    height:481px;
+}
+
+#f5-refresh{
+    display:none;
+}
+
+#btn-comensales{
+     display:none;
+}

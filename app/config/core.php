@@ -39,6 +39,29 @@ Configure::write('Restaurante.ib', 'Ing. Brutos: 901-405554-4');
 Configure::write('Restaurante.iva_resp', 'IVA RESPONSABLE INSCRIPTO A CONS. FINAL');
 
 
+
+/**
+ * El Cajero sirve para  saber si el sistema usara cajero o solo adicionista
+ * si el cajero esta en true, al cerrar mesa se toma el time_cierre y el time_cobro
+ * por separado, permitiendo de esa manera que en la pantalla del cajero aparezcan aquellas
+ * mesas que fueron cerradas pero NO cobradas.
+ *
+ * En el caso de que el Cajero este en false, cada vez que se cierre una mesa aparecerá
+ * automaticamente como cerrada
+ *
+ */
+Configure::write('usarCajero', false);
+
+
+
+/**
+ * Indica si es necesario indicar la cantidad de cubiertos para cerrar la mesa
+ * no poner false, poner 0 o 1, porque el javascript no anda si le pongo false
+ */
+Configure::write('cantidadCubiertosObligatorio', 0);
+
+
+
 /**
  *  Impresora Fiscal
  *
@@ -51,6 +74,9 @@ Configure::write('Dev.printer', 'ttyUSB0'); // Ubicado en "/dev/"
 Configure::write('TempFolder.fuente', '/tmp/fuente'); // aca se guarda para que el spooler la lea
 Configure::write('TempFolder.dest', '/tmp/dest'); // aca se guarda una vez que el spooler la ejecuto
 Configure::write('TempFolder.impfiscal', '/tmp/impfiscal'); // aca se va armando el archivo
+
+
+
 
 
 

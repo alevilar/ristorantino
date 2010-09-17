@@ -138,8 +138,6 @@ echo $this->renderElement('adicion/set_comensales');
 </script>
 
 
-
-
 <div id="mesa-container">
     <div id="mesa-acciones" class="menu-vertical">
         <ul>
@@ -151,7 +149,7 @@ echo $this->renderElement('adicion/set_comensales');
 
 <!-- <li><?php echo $html->link('Comensales','#Comensales',array('id'=>'btn-comensales'));?></li> -->
 
-            <li><?php echo $html->link('Cerrar Mesa',"#cerrarMesa",array('onClick'=>'adicion.cerrarCurrentMesa()'));?></li>
+            <li><?php echo $html->link('Cerrar Mesa',"#cerrarMesa",array('onClick'=>'adicion.cerrarCurrentMesa('.Configure::read('cantidadCubiertosObligatorio').')'));?></li>
         </ul>
     </div>
 
@@ -172,7 +170,7 @@ echo $this->renderElement('adicion/set_comensales');
 
 
 <div id="sistem-nav">
-    <?php echo $html->link('SALIR','/pages/home')?>
+    <?php echo $html->link('SALIR','/pages/home', array('class'=>'boton-ancho-largo'))?>
 </div>
 
 

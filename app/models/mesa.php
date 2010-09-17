@@ -66,7 +66,12 @@ class Mesa extends AppModel {
 		$this->id = ($mesa_id == 0)?$this->id:$mesa_id;	
 				
 		$result = $this->saveField('total', $this->calcular_total());
+                
 		$result = $this->saveField('time_cerro', date( "Y-m-d H:i:s",strtotime('now')));
+
+                if (!Configure::read('usarCajero'))  {
+                    $result = $this->saveField('time_cobro', date( "Y-m-d H:i:s",strtotime('now')));
+                }
 		
 	}
 	

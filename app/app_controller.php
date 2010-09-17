@@ -49,7 +49,7 @@ class AppController extends Controller {
 
              $this->Auth->logoutRedirect='/users/login';
              
-             //$this->Auth->allow('display','login','logout');
+             $this->Auth->allow('login','logout');
              //$this->Auth->allow('*');
              //$this->Auth->allow('home','login','logout');
              
@@ -94,8 +94,6 @@ class AppController extends Controller {
             if ($this->name == 'Mesas') {
                 $llAuth = true;
             }
-
-
             switch ($this->Auth->user('role')):
                 case 'superuser':
                     $llAuth = true;
@@ -103,12 +101,16 @@ class AppController extends Controller {
                 case 'gerente':
                     $llAuth = true;
                     break;
+                case 'principiante':
                 case 'adicionista':
                     if($this->name != 'Queries') {
                         $llAuth = true;
                     }
                     break;
                 case 'mozo':
+                    if($this->action == 'home') {
+                        $llAuth = true;
+                    }
                     if($this->name == 'Adicion') {
                         $llAuth = true;
                     }
@@ -125,7 +127,8 @@ class AppController extends Controller {
             else {
                 $this->Session->setFlash('El perfil de usuario suyo no tiene permisos para acceder aquí.', true);
 
-                $this->redirect('/pages/home');
+                $this->redirect('/adicion/adicionar');
+
                 return false;
             }
         }

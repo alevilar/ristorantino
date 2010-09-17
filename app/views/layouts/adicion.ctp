@@ -44,6 +44,13 @@
 		echo $html->css('windowthemes/spread');
 	//	echo $html->css('windowthemes/ligthing');
 
+                $cssUserRole = "acl-".$session->read('Auth.User.role');
+                if (is_file(APP.WEBROOT_DIR.DS."css".DS.$cssUserRole.".css")) {
+                    echo $html->css($cssUserRole,'stylesheet', array('media'=>'screen'));
+                }
+
+                
+
 		echo $scripts_for_layout;
 		
 		echo $javascript->link('prototype');		

@@ -5,6 +5,7 @@ class UsersController extends AppController {
 	var $helpers = array('Html', 'Form');
 
         var $roles = array(
+            'principiante'=> 'Usuario Principiante',
             'adicionista' => 'Adicionista',
             'gerente'     => 'Gerente',
             'mozo'        => 'Mozo',
