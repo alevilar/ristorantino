@@ -15,7 +15,7 @@ class Categoria extends AppModel {
                                 'order'=>'Producto.name',
                                 'conditions' => array('Producto.deleted <>'=>1)),
                              'Sabor' => array(
-                                 'order'=>'Sabor.name',
+                                'order'=>'Sabor.name',
                                 'conditions' => array('Sabor.deleted <>'=>1)
                              ));
 	

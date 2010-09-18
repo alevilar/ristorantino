@@ -22,21 +22,8 @@
 
     var currentUser = <? echo json_encode($session->read('Auth.User'));?>;
     
-    Event.observe(document,'dom:loaded',function(){
-        if (currentUser.role == 'mozo') {
-            $('btn-cambio-rapido-de-mesa').hide();
-            $('boton-sacar-item').hide();
-            //$('boton-cliente').hide();
-            $('sistem-nav').hide();
-        }
-    });
-    
-    
+
     //-->
-
-
-
-
 </script>
 
 
@@ -50,19 +37,16 @@
 */
 echo $this->renderElement('listar_clientes');		
 echo $this->renderElement('loading');
-
 echo $this->renderElement('adicion/comanda_cocina');	
 echo $this->renderElement('adicion/comanda_sacar');	
 echo $this->renderElement('adicion/abrir_mesa');		
 echo $this->renderElement('adicion/imprimir_como_menu');
 echo $this->renderElement('adicion/set_comensales');
-
+echo $this->renderElement('adicion/seleccionar_mozo');
 /*------------------------------------------------------------------------------------------------------------------------------------*/
 ?>
 
 <div id="adicion-cabecera">
-
-
     <a href="#F5Refresh" id="f5-refresh" class="boton" style="float: left" onclick="parent.location.reload();">
 		Refresh
     </a>
