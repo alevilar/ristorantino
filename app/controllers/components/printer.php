@@ -765,7 +765,9 @@ class PrinterComponent extends Object {
 		if(!$this->__validarComandos()){
 			return false;
 		}
-		
+
+                comandosDeReinicializacionServidorImpresion();
+
 		$this->__inicio_manual();
 
 		if ($arch_name == ''){
@@ -780,7 +782,6 @@ class PrinterComponent extends Object {
 				//debug("se borrò el archivo $archivo porque ya existia");
 				unlink($this->destFolder."/".$arch_name."ans");
 			}
-	
 	
 			$this->__crearDirectorioSiNoExiste($this->tempFolder);
 	

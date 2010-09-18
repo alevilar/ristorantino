@@ -45,10 +45,17 @@ class Mozo extends AppModel {
 	 * @param recursive -1 por default
 	 * @ return array del find(all)
 	 */
-	function dameActivos($recursive = 0)
+	function dameActivos($recursive = 1)
 	{
 		$this->recursive = $recursive;
-		return $this->find('all',array('conditions'=>array('Mozo.activo'=>1),'order'=>'Mozo.numero ASC'));
+		return $this->find('all',array(
+                    'contain' => array(
+                        'User',
+                        'Mesa' => array('conditions'=> array(
+                            "Mesa.time_cobro" => "0000-00-00 00:00:00"))
+                    ),
+                    'conditions'=>array('Mozo.activo'=>1),
+                    'order'=>'Mozo.numero ASC'));
 	}
 	
 	
@@ -64,8 +71,7 @@ class Mozo extends AppModel {
 			$this->id = $mozo_id;
 		}
 		$mozo = $this->read();
-		return $mozo['Mozo']['numero'];
-		
+		return $mozo['Mozo']['numero'];	
 	}
 
 }

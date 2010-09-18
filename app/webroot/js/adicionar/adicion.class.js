@@ -73,7 +73,8 @@ Adicion.prototype = {
 		
     setCurrentMozo: function(mozo){
         this.currentMozo = mozo;
-        var cantidad_de_mesas = this.currentMozo.mesas.length;
+        //window.console.debug(this.currentMozo.mesas);
+        //var cantidad_de_mesas = this.currentMozo.mesas.length;
     },
 		
     setCurrentMesa: function(mesa){
@@ -84,7 +85,7 @@ Adicion.prototype = {
     cambiarMozo: function(mozoCambiar){
         this.currentMozo = mozoCambiar;
     //$('mozo-numero').update("Mozo "+this.currentMozo.numero);
-        return 1;
+        return this.currentMozo;
     },
 
     //cambia de mesa

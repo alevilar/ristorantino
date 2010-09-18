@@ -4,16 +4,14 @@
         <?php foreach ($mozos as $mozo):?>
         <li>
                 <?php
-                /*
-		echo $html->link($mozo['Mozo']['numero'],'/adicion/cambiarMozo/'.$mozo['Mozo']['id'],array(
-											'class'=>'boton redondeado letra-grande',
-											'style'=> 'font-size: xx-large'
-											));
-                */
-                echo $html->link($mozo['Mozo']['numero'],'/adicion/adicionar/mozo_id:'.$mozo['Mozo']['id'],array(
-                'class'=>'boton redondeado letra-grande',
-                'style'=> 'font-size: xx-large'
-                ));
+                echo $html->link(
+                        $mozo['Mozo']['numero'],
+                        '/adicion/adicionar/mozo_id:'.$mozo['Mozo']['id'],
+                        array(
+                            'class'=>'boton redondeado letra-grande',
+                            'style'=> 'font-size: xx-large'
+                        )
+                );
                 ?>
         </li>
         <?php endforeach;?>
@@ -35,8 +33,6 @@
     });
 
     contenedorMozos.setContent('cambiar-mozos', true, true);
-    //contentWin.getContent().innerHTML= $('cambiar-mozos-template').innerHTML;
-
 </script>
 
 <a href="#cambiarMozo" id="mozo-numero" class="boton" style="float: left" onclick="contenedorMozos.showCenter();">Mozo</a>

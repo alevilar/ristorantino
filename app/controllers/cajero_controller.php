@@ -39,10 +39,9 @@ class CajeroController extends AppController {
 		$this->Printer->eliminarComandosEncolados();
 		$this->Session->setFlash("Se eliminaron todos los tickets que estaban por
 imprimirse");
-		
-		exec("sudo /etc/init.d/spooler_srv stop");
-		exec("sudo /etc/init.d/spooler_srv start");
-		exec("cd /");	
+
+                // reinicia el servidor de impresion
+		comandosDeReinicializacionServidorImpresion();
 
 		$this->redirect('/cajero/cobrar');
 	}
