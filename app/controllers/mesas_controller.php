@@ -72,7 +72,8 @@ class MesasController extends AppController {
             $mesa['Producto'][$cont]['producto_id'] = $d['Producto']['id'];
             $cont++;
         endforeach;
-        
+
+        $this->set('mesa_total', $this->Mesa->calcular_total());
         $this->set(compact('mesa', 'items'));
         $this->set('mozo_json', json_encode($this->Mesa->Mozo->read(null, $mesa['Mozo']['id'])));
     }
@@ -100,8 +101,13 @@ class MesasController extends AppController {
             }
         }
 
-        $this->redirect(array(	'controller'=>'Adicion',
-                'action' => 'adicionar/mozo_id:'.$this->data['Mesa']['mozo_id']));
+        $meterMesa = '';
+        if (!empty($this->Mesa->id)){
+            $meterMesa = '/mesa_id:'.$this->Mesa->id;
+        }
+        $this->redirect(array(
+                'controller'=>'Adicion',
+                'action' => 'adicionar/mozo_id:'.$this->data['Mesa']['mozo_id'].$meterMesa));
 
     }
 

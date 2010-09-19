@@ -3,7 +3,9 @@ var Adicion = Class.create();
 Adicion.prototype = {
 	
     initialize: function(mozo) {
-	
+
+        this.urlMesaView = '';
+        
         this.currentMozo = new Mozo();
 			
         this.currentMozo = mozo;
@@ -39,6 +41,17 @@ Adicion.prototype = {
             retornar = false;
         }
         return retornar;
+    },
+
+
+    refrescarMesaView: function(){
+        new Ajax.Updater(
+                    'mesa-scroll',
+                    this.urlMesaView+'/'+this.currentMesa.id,
+                    {   asynchronous:true,
+                        evalScripts:true,
+                        requestHeaders:['X-Update', 'mesa-scroll']}
+                );
     },
 		
 		

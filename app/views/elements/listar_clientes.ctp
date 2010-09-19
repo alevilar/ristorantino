@@ -123,8 +123,9 @@
             parameters: { 'data[Mesa][id]': adicion.currentMesa.id, 'data[Mesa][cliente_id]': cliente_id},
             method: 'post',
             onSuccess: function(){
+                adicion.refrescarMesaView();
                 listadoClientesWindow.hide();
-                adicion.resetear();
+                //adicion.resetear();
             }
         });
     }
@@ -140,7 +141,7 @@
             onSuccess: function(){
                 listadoClientesWindow.hide();
                 $('boton-cliente').removeClassName('boton-apretado');
-                adicion.resetear();
+                //adicion.resetear();
                 Dialog.closeInfo();
             }
         });

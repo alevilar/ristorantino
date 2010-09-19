@@ -1,5 +1,4 @@
 
-
 <div id="mesa-abrir" style="display: none">
     <?php
     echo $form->create('Mesa',array('action'=>'abrirMesa'));
@@ -13,14 +12,14 @@
 
 
 <script type="text/javascript">
-    <!--
-
 
     function abrirlaMesa()
     {
         if($F('MesaNumero')< 600){
 
-            $('MesaMozoId').value = adicion.currentMozo.mozo.id;
+            if (adicion.currentMozo.mozo){
+                $('MesaMozoId').value = adicion.currentMozo.mozo.id;
+            }
 
             $('MesaAbrirMesaForm').submit();
             return true;
@@ -32,5 +31,5 @@
         }
 
     }
-    //-->
+    
 </script>

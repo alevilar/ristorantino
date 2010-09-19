@@ -62,7 +62,7 @@
                 $('boton-menu').addClassName('boton-apretado');
 
                 mensajero.show("La mesa "+adicion.currentMesa.numero+" se imprimirá como menú x "+$F('mesa-menu'));
-                adicion.resetear();
+                //adicion.resetear();
             }
         });
     }

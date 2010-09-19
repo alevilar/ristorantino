@@ -1,14 +1,14 @@
 
 <script type="text/javascript">
-    <!--
 
     //console.info('Iniciando aplicacion');
 
 
     var fabricaMozo = new FabricaMozo(<?php echo $current_mozo?>);
 
-    var adicion = new Adicion(fabricaMozo.getMozo());
 
+    var adicion = new Adicion(fabricaMozo.getMozo());
+    adicion.urlMesaView = '<? echo $html->url('/Mesas/view');?>';
 
 
 
@@ -22,8 +22,18 @@
 
     var currentUser = <? echo json_encode($session->read('Auth.User'));?>;
     
+    Event.observe(document, 'dom:loaded', function(){
+        <?php
+        if ($current_mesa_id > 0) {
+            echo $ajax->remoteFunction(array(
+                    'update' => 'mesa-scroll',
+                    'url' =>  '/mesas/view/' . $current_mesa_id,
+                    'evalScripts' => true
+            ));
+        }
+        ?>
+    });
 
-    //-->
 </script>
 
 
@@ -150,7 +160,7 @@ echo $this->renderElement('adicion/seleccionar_mozo');
 </div>
 
 
-<?php echo $this->renderElement('mesas_scroll');?> -->
+<?php echo $this->renderElement('mesas_scroll');?>
 
 
 <div id="sistem-nav">

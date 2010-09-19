@@ -51,10 +51,12 @@ var ComandaSacar = Class.create(Comanda ,{
 		  		},
 		        onSuccess: function(t) 
 		        {
+                            adicion.refrescarMesaView();
+                            
 		            this.window.hide();
 		            
 		            //resetear la adicion
-		            adicion.resetear();
+		            //adicion.resetear();
 		            
 		            mensajero.show("se quitaron los productos correctamente,actualice la mesa para visualizar los cambios");    
 		        }.bind(this)

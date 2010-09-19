@@ -78,7 +78,7 @@
                 $('btn-comensales').addClassName('boton-apretado');
                 $('btn-comensales').update(cantComensales + ' Cubiertos')
                 mensajero.show("La mesa "+adicion.currentMesa.numero+" tiene "+cantComensales+ " comensales.");
-                adicion.resetear();
+                //adicion.resetear();
             },
             onFailure: function(){
                 alert("Se ha perdido conexion con el server. Reintente.");

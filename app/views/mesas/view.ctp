@@ -19,6 +19,9 @@ $("btn-cambio-rapido-de-mesa").update("Mesa "+mesaCambiar.numero+"<br />Mozo "+m
 
 
 <div class="mesas view">
+    <h4 id="mesa-total">
+        <?php echo "Total: $".$mesa_total; ?>
+        </h4>
 	<ul>
 	
  	<?php 

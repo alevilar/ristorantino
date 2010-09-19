@@ -9,3 +9,11 @@
 #sistem-nav{
     display: none;
 }
+
+#btn-add-rapido-de-mesa{
+    display:none;
+}
+
+#mesa-total {
+    top:-103px;
+}

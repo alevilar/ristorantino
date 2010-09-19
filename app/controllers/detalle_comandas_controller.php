@@ -38,17 +38,14 @@ class DetalleComandasController extends AppController {
 	function add(){
 		$this->autoRender = false;
 		$ok = false;
-		//Configure::write('debug',1);
-		
+		//Configure::write('debug',1);		
 		
 		$imprimir = $this->data['imprimir'];
-		unset($this->data['imprimir']);
-		
+		unset($this->data['imprimir']);		
 		
 		// este array contine la prioridad y la mesa_id ---> todos datos de Modelo Comanda
 		$comanda = $this->data['Comanda'];
-		unset($this->data['Comanda']);
-		
+		unset($this->data['Comanda']);		
 		
 		//cuento la cantidad de comanderas involucradas en este pedido para genrar la cantidad de comandas correspondientes
 		$v_comanderas = array();

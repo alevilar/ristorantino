@@ -98,7 +98,7 @@ class ClientesController extends AppController {
 		$this->Cliente->order = 'Cliente.nombre';
 		$this->paginate = array('conditions'=>array('Cliente.tipofactura' => 'A'),
 					'limit'=> 7,
-                                        'contain' => array('Cliente'),
+                                        'contain' => array(),
 		);		
 		$this->set('clientes',$this->paginate());
 	}
@@ -115,7 +115,9 @@ class ClientesController extends AppController {
 		$this->Cliente->order = 'Cliente.nombre';
 		$this->paginate = array('conditions'=>$conditions,
                                         'limit'=> 7,
-                                        'contain' => array('Cliente'=>array('Descuento')),
+                                        'contain' => array(
+                                                'Descuento'
+                                            ),
 		);
 		
 		$this->set('clientes',$this->paginate());

@@ -41,7 +41,7 @@
     <div id="productos-contenedor"></div>
     <div id="comanda-observacion-div" style="display:none">
         <h2>Escriba una observación sobre ésta comanda</h2>
-        <textarea id="comanda-observacion" name="data[Comanda][observacion]" COLS=40 ROWS=6></TEXTAREA>
+        <textarea id="comanda-observacion" name="data[Comanda][observacion]" COLS=40 ROWS=6></textarea>>
  	</div>
 
 
@@ -76,15 +76,17 @@
 
         $("comanda-prioridad-titulo").observe('click', function(){adicion.comanda.tooglePrioridad();});
 
-
-
         // creo la comanda y su vista
         adicion.comanda = new ComandaCocina(adicion.currentMozo);
         adicion.comanda.urlEnviarComanda = '<? echo $html->url('/DetalleComandas/add');?>';
+        
 
         // esto hace que se cargen las categorias y productos de productos-contenedor
-        new Ajax.Updater('productos-contenedor', '<?php echo $html->url('/categorias/listar')?>', { method: 'get', 'evalScripts' :true });
-
+        new Ajax.Updater(
+            'productos-contenedor',
+            '<?php echo $html->url('/categorias/listar')?>',
+            { method: 'get', 'evalScripts' :true }
+        );
     });
 
 

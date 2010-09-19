@@ -271,14 +271,16 @@ ComandaCocina = Class.create(Comanda, {
             //console.info("Fallo el ajax para enviar la comanda");
             },
             onSuccess: function(t) {
+                adicion.refrescarMesaView();
+
                 Dialog.closeInfo();
                 this.resetearComanda(this.mozo, this.mesa); //esto ademas de resetar los datos de la comanda, oculta el DIV "comanda"
 		            
                 this.window.hide();
 		            
                 //resetear la adicion
-                adicion.resetear();
-		           
+                //adicion.resetear();
+		 
                 if(imprimir){
                     mensajero.show("se mandó a imprimir una comanda");
                 }else{
