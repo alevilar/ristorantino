@@ -15,6 +15,7 @@
 
     function abrirlaMesa()
     {
+        //Sound.play(urlSonido,{replace:true});
         if($F('MesaNumero')< 600){
 
             if (adicion.currentMozo.mozo){

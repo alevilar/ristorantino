@@ -368,8 +368,8 @@ class PrinterComponent extends Object {
 		$this->vcomandos[] = $this->generadorComando->setTrailer(0,"-  -  -  -  -  -  -  -");
 //                $mozo = iconv('UTF-8', 'ISO-8859-1//TRANSLIT//IGNORE', "MOZO $mozo");
 //                $mesa = iconv('UTF-8', 'ISO-8859-1//TRANSLIT//IGNORE', "MESA $mesa");
-		$this->vcomandos[] = $this->generadorComando->setTrailer(1,$mozo,true);
-		$this->vcomandos[] = $this->generadorComando->setTrailer(2,$mesa,true);
+		$this->vcomandos[] = $this->generadorComando->setTrailer(1,"MOZO $mozo",true);
+		$this->vcomandos[] = $this->generadorComando->setTrailer(2,"MESA $mesa",true);
 		$this->vcomandos[] = $this->generadorComando->setTrailer(3,"-  -  -  -  -  -  -  -");
 		
 		$this->__setearLoDeConsumidorFinal();
@@ -765,9 +765,7 @@ class PrinterComponent extends Object {
 		if(!$this->__validarComandos()){
 			return false;
 		}
-
-                comandosDeReinicializacionServidorImpresion();
-
+                
 		$this->__inicio_manual();
 
 		if ($arch_name == ''){
@@ -787,13 +785,17 @@ class PrinterComponent extends Object {
 	
 			// imprimo el array de esta primer comanda
 	
-			//path y nombre del txt que voy a guardar en elpath temporal de la impresora par luego mandarlo a imprimir
+			//path y nombre del txt que voy a guardar en elpath temporal
+                        //de la impresora par luego mandarlo a imprimir
 			$path = $this->tempFolder;
 			$archivo = $path.'/'.$arch_name;
 			$this->__hacerArchivoComandosFiscales($archivo);
 	
 			//meter en la cola de impresion
 			copy($archivo,$this->sourceFolder."/$arch_name");
+
+                        $archPathCompleto = $this->sourceFolder."/$arch_name";
+                        //exec("spooler -g -h 1600 -i localhost -f $archPathCompleto");
 			chmod($this->sourceFolder."/$arch_name",0777);
 				
 		} catch (Exception $e) {

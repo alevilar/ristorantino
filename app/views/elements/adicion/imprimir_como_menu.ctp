@@ -33,6 +33,7 @@
 
 
     function callImprimirComoMenu(){
+        //Sound.play(urlSonido,{replace:true});
         if (adicion.tieneMesaSeleccionada()){
 
             //NUMPAD ------------------------------------------------------

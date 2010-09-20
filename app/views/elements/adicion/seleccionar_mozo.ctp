@@ -41,7 +41,7 @@
 
 
     function seleccionarMozo(mozo){
-        
+        //Sound.play(urlSonido,{replace:true});
         adicion.setCurrentMozo(mozo);
 
         adicion.abrirMesa();

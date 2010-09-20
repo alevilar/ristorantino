@@ -55,7 +55,6 @@ class MesasController extends AppController {
                         'Comanda(id,prioridad,observacion)')
         ));
 
-
         $cont = 0;
         //debug($items);
         //Mezco el array $items que contiene Producto-DetalleComanda- y todo lo que venga delacionado al array $items lo mete como si fuera Producto
@@ -74,6 +73,7 @@ class MesasController extends AppController {
         endforeach;
 
         $this->set('mesa_total', $this->Mesa->calcular_total());
+
         $this->set(compact('mesa', 'items'));
         $this->set('mozo_json', json_encode($this->Mesa->Mozo->read(null, $mesa['Mozo']['id'])));
     }

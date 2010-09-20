@@ -30,6 +30,8 @@
 
 
     function callComandaSacar(){
+        //Sound.play(urlSonido,{replace:true});
+        
         adicion.comandaSacar = new ComandaSacar(this.currentMozo);
         adicion.comandaSacar.urlEnviarComanda = '<?php echo $html->url('/DetalleComandas/sacarProductos');?>';
         

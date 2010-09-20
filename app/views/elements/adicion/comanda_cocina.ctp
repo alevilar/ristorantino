@@ -110,6 +110,7 @@
 
     function callComandaCocina()
     {
+        //Sound.play(urlSonido,{replace:true});
         if(adicion.tieneMesaSeleccionada()){
 
             adicion.comanda.resetearComanda(adicion.currentMozo, adicion.currentMesa);

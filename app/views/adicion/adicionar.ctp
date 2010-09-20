@@ -10,9 +10,11 @@
     var adicion = new Adicion(fabricaMozo.getMozo());
     adicion.urlMesaView = '<? echo $html->url('/Mesas/view');?>';
 
-
-
-
+//    url donde esta el sonido que voy a reproducir cuando haga click en alguna accion
+    var urlSonido = '<? echo Configure::read('Sound.url');?>';
+    //Sound.play(urlSonido,{replace:true});
+   
+    
     //NUMPAD ------------------------------------------------------
     var txtNumber = null;
     var numPad = null; //este se tiene que llamar asi para que funcione
@@ -141,9 +143,8 @@ echo $this->renderElement('adicion/seleccionar_mozo');
             <li><a href="#SeleccionCliente" id="boton-cliente">  Cliente </a></li>
             <li><a href="#ConvertirEnMenu" id="boton-menu">     Menú    </a></li>
 
-<!-- <li><?php echo $html->link('Comensales','#Comensales',array('id'=>'btn-comensales'));?></li> -->
-
-            <li><?php echo $html->link('Cerrar Mesa',"#cerrarMesa",array('onClick'=>'adicion.cerrarCurrentMesa('.Configure::read('cantidadCubiertosObligatorio').')'));?></li>
+            <li><?php echo $html->link('Cerrar Mesa',"#cerrarMesa",array(
+                'onClick'=>'adicion.cerrarCurrentMesa('.Configure::read('cantidadCubiertosObligatorio').')'));?></li>
         </ul>
     </div>
 

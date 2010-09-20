@@ -50,7 +50,7 @@ Configure::write('Restaurante.iva_resp', 'IVA RESPONSABLE INSCRIPTO A CONS. FINA
  * automaticamente como cerrada
  *
  */
-Configure::write('usarCajero', false);
+Configure::write('usarCajero', true);
 
 
 
@@ -58,7 +58,7 @@ Configure::write('usarCajero', false);
  * Indica si es necesario indicar la cantidad de cubiertos para cerrar la mesa
  * no poner false, poner 0 o 1, porque el javascript no anda si le pongo false
  */
-Configure::write('cantidadCubiertosObligatorio', 0);
+Configure::write('cantidadCubiertosObligatorio', 1);
 
 
 
@@ -78,6 +78,15 @@ Configure::write('TempFolder.impfiscal', '/tmp/impfiscal'); // aca se va armando
 
 
 
+
+/**
+ * SOnido a reproducir cuando se haga click en alguna accion
+ * Para desactivarlo basta con poner
+ * Configure::write('Sound.url', '');
+ */
+Configure::write('Sound.url', FULL_BASE_URL.DS.'ristorantino'.DS.IMAGES_URL.'click.wav');
+// comentar esta linea para desactuivar el sonido
+//Configure::write('Sound.url', '');
 
 
 /**

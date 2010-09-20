@@ -14,7 +14,7 @@ case "$1" in
     start)
 
 	sh $SCRIPT &
-	#sh $SCRIPTKEEPALIVE &
+	sh $SCRIPTKEEPALIVE &
 	echo "se iniciaron los servicios del spooler correctamente";
 	RETVAL=$?
     ;;

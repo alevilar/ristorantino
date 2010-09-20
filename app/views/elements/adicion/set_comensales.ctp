@@ -13,6 +13,7 @@
 <script type="text/javascript">
 
     function showComensalesWindow(){
+        //Sound.play(urlSonido,{replace:true});
         if(adicion.tieneMesaSeleccionada()){
             $('div-comensales').show();
             var ops = {
@@ -58,6 +59,7 @@
 
 
     function guardarDatosDeLosComensales(){
+        //Sound.play(urlSonido,{replace:true});
         //uso lavariable global
         //@Global adicion
         var cantComensales = 0;
@@ -73,6 +75,7 @@
             },
             method: 'post',
             onSuccess: function(){
+                adicion.refrescarMesaView();
                 setComensalesWindow.hide();
                 Dialog.closeInfo();
                 $('btn-comensales').addClassName('boton-apretado');

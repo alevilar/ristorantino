@@ -199,11 +199,11 @@ Adicion.prototype = {
     cerrarCurrentMesa: function(cubiertosObligatorios ){
         var confirma = false;
         
-        var cubiertosObligatorios = typeof(cubiertosObligatorios) === 'undefined' ? true : cubiertosObligatorios;
+        cubiertosObligatorios = typeof(cubiertosObligatorios) === 'undefined' ? true : cubiertosObligatorios;
 
         if (this.tieneMesaSeleccionada()) {
             // si aun no se settearon la cantidad de comensales DEBE HACERLO !!
-            if (cubiertosObligatorios && (this.currentMesa.getCantComensales() < 1) && (this.currentMozo.numero != 99)) {
+            if (cubiertosObligatorios && (this.currentMesa.getCantComensales() == 0) && (this.currentMozo.numero != 99)) {
                     showComensalesWindow();
             } else {
                 if(this.tieneMesaSeleccionada()){

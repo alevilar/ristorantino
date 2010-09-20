@@ -84,12 +84,7 @@ class Mesa extends AppModel {
 	 * return @total el valor
 	 */
 	function calcular_total(){
-		$fields 	= array('sum(cant)*precio as "total"');
-		$conditions = array('mesa_id'=>$this->id);
-		$group 		= 'producto_id having sum(cant)>0';
-		//return $this->DetalleComanda->find('first',array('fields'=>$fields, 'conditions'=> $conditions, 'group'=>$group));
-		
-		
+            if ($this->cantidadDeProductos() == 0) return 0;
 		$total =  $this->query("
 				select sumadas.mesa_id as mesa_id,sum(total) as total, dd.descuento,  sum(total)*(1-dd.descuento/100) as total_con_descuento 
 from (
@@ -127,17 +122,24 @@ LEFT JOIN
 										
 		");
 		
-		/*
-		if($total[0]['dd']['descuento']){
-			$total[0][0]['total'] = round($total[0][0]['total']);
-		}
-		*/
 		$total = round($total[0][0]['total_con_descuento']);
 		return $total ;	
 	}
 	
 	
-	
+	function cantidadDeProductos($id = 0){
+            if($id != 0) 	$this->id = $id;
+
+		$items = $this->Comanda->DetalleComanda->find('count',array(
+									'conditions'=>array(
+										'Comanda.mesa_id'=>$this->id,
+										'(DetalleComanda.cant - DetalleComanda.cant_eliminada) >'=>0),
+									'order'=>'Comanda.id ASC, Producto.categoria_id ASC, Producto.id ASC',
+									'contain'=>array('Producto','Comanda','DetalleSabor'=>'Sabor(name,precio)')
+						));
+
+		return $items;
+        }
 	
 	
 	

@@ -40,6 +40,7 @@
     contenedorMesasAbiertas.setContent('todas-las-mesas-abiertas', true, true);
 				
     function hacer_cambio_rapido_de_mesa_mozo(mesa, mozo){
+        //Sound.play(urlSonido,{replace:true});
         contenedorMesasAbiertas.hide();
         $("btn-cambio-rapido-de-mesa").update("Mesa "+mesa+"<br />Mozo "+mozo);
     }

@@ -1,0 +1,3132 @@
+19/09-15:52:30: **START SPOOLER**
+19/09-15:52:30: A abrir COM1
+19/09-15:52:30: MandaPaqueteFiscal: CmdRetries 3, SndRetries 2, RcvRetries 2, New_Protocol 0
+
+19/09-15:52:30: Envio el comando: < *004f>
+19/09-15:52:30: Espero el ACK
+19/09-15:52:30: Recibo ACK
+19/09-15:52:30: A esperar la respuesta
+19/09-15:52:30: Checksum Paquete:   [0x0A54]
+19/09-15:52:30: Checksum Calculado: [0x0A54]
+19/09-15:52:30: Checksum: OK
+19/09-15:52:30: Vino la respuesta < *|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-15:52:30: Mando ACK
+19/09-15:52:30: Comando completado: *
+19/09-15:52:30: MandaPaqueteFiscal: CmdRetries 3, SndRetries 2, RcvRetries 2, New_Protocol 0
+
+19/09-15:52:30: Envio el comando: <"*0051>
+19/09-15:52:30: Espero el ACK
+19/09-15:52:30: Recibo ACK
+19/09-15:52:30: A esperar la respuesta
+19/09-15:52:30: Checksum Paquete:   [0x0A56]
+19/09-15:52:30: Checksum Calculado: [0x0A56]
+19/09-15:52:30: Checksum: OK
+19/09-15:52:30: Vino la respuesta <"*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-15:52:30: Mando ACK
+19/09-15:52:30: Comando completado: *
+19/09-15:52:30: MandaPaqueteFiscal: CmdRetries 3, SndRetries 2, RcvRetries 2, New_Protocol 0
+
+19/09-15:52:30: Envio el comando: <$D| |0.0|C|001fe>
+19/09-15:52:30: Espero el ACK
+19/09-15:52:30: Recibo ACK
+19/09-15:52:30: A esperar la respuesta
+19/09-15:52:30: Checksum Paquete:   [0x0250]
+19/09-15:52:30: Checksum Calculado: [0x0250]
+19/09-15:52:30: Checksum: OK
+19/09-15:52:30: Vino la respuesta <$D|C080|8620>
+19/09-15:52:30: Mando ACK
+19/09-15:52:30: Comando completado: D| |0.0|C|0
+19/09-15:52:30: MandaPaqueteFiscal: CmdRetries 3, SndRetries 2, RcvRetries 2, New_Protocol 0
+
+19/09-15:52:30: Envio el comando: <&E0070>
+19/09-15:52:30: Espero el ACK
+19/09-15:52:30: Recibo ACK
+19/09-15:52:30: A esperar la respuesta
+19/09-15:52:30: Checksum Paquete:   [0x0253]
+19/09-15:52:30: Checksum Calculado: [0x0253]
+19/09-15:52:30: Checksum: OK
+19/09-15:52:30: Vino la respuesta <&E|C080|8620>
+19/09-15:52:30: Mando ACK
+19/09-15:52:30: Comando completado: E
+19/09-15:52:30: MandaPaqueteFiscal: CmdRetries 3, SndRetries 2, RcvRetries 2, New_Protocol 0
+
+19/09-15:52:30: Envio el comando: <(J0077>
+19/09-15:52:30: Espero el ACK
+19/09-15:52:30: Recibo ACK
+19/09-15:52:30: A esperar la respuesta
+19/09-15:52:30: Checksum Paquete:   [0x025A]
+19/09-15:52:30: Checksum Calculado: [0x025A]
+19/09-15:52:30: Checksum: OK
+19/09-15:52:30: Vino la respuesta <(J|C080|8620>
+19/09-15:52:30: Mando ACK
+19/09-15:52:30: Comando completado: J
+19/09-15:54:04: **START SPOOLER**
+19/09-15:54:04: Conectando con localhost, Port 1600
+19/09-15:54:04: Iniciando conexi¢n con 127.0.0.1 (49298)
+19/09-15:54:04: Cmd [ *004f]
+19/09-15:54:04: MandaPaqueteFiscal: CmdRetries 3, SndRetries 2, RcvRetries 2, New_Protocol 0
+
+19/09-15:54:04: Envio el comando: <* *004f0178>
+19/09-15:54:04: Espero el ACK
+19/09-15:54:04: Recibo ACK
+19/09-15:54:04: A esperar la respuesta
+19/09-15:54:04: Checksum Paquete:   [0x0A54]
+19/09-15:54:04: Checksum Calculado: [0x0A54]
+19/09-15:54:04: Checksum: OK
+19/09-15:54:04: Vino la respuesta < *|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-15:54:04: Mando ACK
+19/09-15:54:04: Error en Numero de Paquete. Lo desecho
+19/09-15:54:04: A esperar la respuesta
+19/09-15:54:06: TIMEOUT esperando STX
+19/09-15:54:06: Envio de STATPRN local
+19/09-15:54:06: Recibo ACK
+19/09-15:54:06: ACK a comando
+19/09-15:54:06: Espero la respuesta
+19/09-15:54:06: Checksum Paquete:   [0x0A79]
+19/09-15:54:06: Checksum Calculado: [0x0A79]
+19/09-15:54:06: Checksum: OK
+19/09-15:54:06: Envio el ACK
+19/09-15:54:06: Fin de STATPRN local
+
+19/09-15:54:06: Envio el comando: <* *004f0178>
+19/09-15:54:06: Espero el ACK
+19/09-15:54:06: Recibo ACK
+19/09-15:54:06: A esperar la respuesta
+19/09-15:54:06: Checksum Paquete:   [0x0A54]
+19/09-15:54:06: Checksum Calculado: [0x0A54]
+19/09-15:54:06: Checksum: OK
+19/09-15:54:06: Vino la respuesta < *|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-15:54:06: Mando ACK
+19/09-15:54:06: Error en Numero de Paquete. Lo desecho
+19/09-15:54:06: A esperar la respuesta
+19/09-15:54:08: TIMEOUT esperando STX
+19/09-15:54:08: Envio de STATPRN local
+19/09-15:54:08: Recibo ACK
+19/09-15:54:08: ACK a comando
+19/09-15:54:08: Espero la respuesta
+19/09-15:54:08: Checksum Paquete:   [0x0A79]
+19/09-15:54:08: Checksum Calculado: [0x0A79]
+19/09-15:54:08: Checksum: OK
+19/09-15:54:08: Envio el ACK
+19/09-15:54:08: Fin de STATPRN local
+
+19/09-15:54:08: Envio el comando: <* *004f0178>
+19/09-15:54:08: Espero el ACK
+19/09-15:54:08: Recibo ACK
+19/09-15:54:08: A esperar la respuesta
+19/09-15:54:08: Checksum Paquete:   [0x0A54]
+19/09-15:54:08: Checksum Calculado: [0x0A54]
+19/09-15:54:08: Checksum: OK
+19/09-15:54:08: Vino la respuesta < *|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-15:54:08: Mando ACK
+19/09-15:54:08: Error en Numero de Paquete. Lo desecho
+19/09-15:54:08: A esperar la respuesta
+19/09-15:54:10: TIMEOUT esperando STX
+19/09-15:54:10: Envio de STATPRN local
+19/09-15:54:10: Recibo ACK
+19/09-15:54:10: ACK a comando
+19/09-15:54:10: Espero la respuesta
+19/09-15:54:10: Checksum Paquete:   [0x0A79]
+19/09-15:54:10: Checksum Calculado: [0x0A79]
+19/09-15:54:10: Checksum: OK
+19/09-15:54:10: Envio el ACK
+19/09-15:54:10: Fin de STATPRN local
+
+19/09-15:54:10: Error de comunicaciones con la impresora
+19/09-15:54:10: Cmd [ *004f]
+19/09-15:54:10: MandaPaqueteFiscal: CmdRetries 3, SndRetries 2, RcvRetries 2, New_Protocol 0
+
+19/09-15:54:10: Envio el comando: <, *004f017a>
+19/09-15:54:10: Espero el ACK
+19/09-15:54:10: Recibo ACK
+19/09-15:54:10: A esperar la respuesta
+19/09-15:54:10: Checksum Paquete:   [0x0A54]
+19/09-15:54:10: Checksum Calculado: [0x0A54]
+19/09-15:54:10: Checksum: OK
+19/09-15:54:10: Vino la respuesta < *|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-15:54:10: Mando ACK
+19/09-15:54:10: Error en Numero de Paquete. Lo desecho
+19/09-15:54:10: A esperar la respuesta
+19/09-15:54:12: TIMEOUT esperando STX
+19/09-15:54:12: Envio de STATPRN local
+19/09-15:54:12: Recibo ACK
+19/09-15:54:12: ACK a comando
+19/09-15:54:12: Espero la respuesta
+19/09-15:54:12: Checksum Paquete:   [0x0A7B]
+19/09-15:54:12: Checksum Calculado: [0x0A7B]
+19/09-15:54:12: Checksum: OK
+19/09-15:54:12: Envio el ACK
+19/09-15:54:12: Fin de STATPRN local
+
+19/09-15:54:12: Envio el comando: <, *004f017a>
+19/09-15:54:12: Espero el ACK
+19/09-15:54:12: Recibo ACK
+19/09-15:54:12: A esperar la respuesta
+19/09-15:54:12: Checksum Paquete:   [0x0A54]
+19/09-15:54:12: Checksum Calculado: [0x0A54]
+19/09-15:54:12: Checksum: OK
+19/09-15:54:12: Vino la respuesta < *|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-15:54:12: Mando ACK
+19/09-15:54:12: Error en Numero de Paquete. Lo desecho
+19/09-15:54:12: A esperar la respuesta
+19/09-15:54:14: Error de comunicaciones con la impresora, Rc -1
+19/09-15:54:14: TIMEOUT esperando STX
+19/09-15:54:14: Envio de STATPRN local
+19/09-15:54:14: Recibo ACK
+19/09-15:54:14: ACK a comando
+19/09-15:54:14: Espero la respuesta
+19/09-15:54:14: Checksum Paquete:   [0x0A7B]
+19/09-15:54:14: Checksum Calculado: [0x0A7B]
+19/09-15:54:14: Checksum: OK
+19/09-15:54:14: Envio el ACK
+19/09-15:54:14: Fin de STATPRN local
+
+19/09-15:54:14: Envio el comando: <, *004f017a>
+19/09-15:54:14: Espero el ACK
+19/09-15:54:14: Recibo ACK
+19/09-15:54:14: A esperar la respuesta
+19/09-15:54:15: Checksum Paquete:   [0x0A54]
+19/09-15:54:15: Checksum Calculado: [0x0A54]
+19/09-15:54:15: Checksum: OK
+19/09-15:54:15: Vino la respuesta < *|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-15:54:15: Mando ACK
+19/09-15:54:15: Error en Numero de Paquete. Lo desecho
+19/09-15:54:15: A esperar la respuesta
+19/09-15:54:17: TIMEOUT esperando STX
+19/09-15:54:17: Envio de STATPRN local
+19/09-15:54:17: Recibo ACK
+19/09-15:54:17: ACK a comando
+19/09-15:54:17: Espero la respuesta
+19/09-15:54:17: Checksum Paquete:   [0x0A7B]
+19/09-15:54:17: Checksum Calculado: [0x0A7B]
+19/09-15:54:17: Checksum: OK
+19/09-15:54:17: Envio el ACK
+19/09-15:54:17: Fin de STATPRN local
+
+19/09-15:54:17: Error de comunicaciones con la impresora
+19/09-15:54:17: Finalizando conexi¢n con 127.0.0.1 (49298)
+19/09-16:01:06: **START SPOOLER**
+19/09-16:01:06: Conectando con localhost, Port 1600
+19/09-16:01:06: Iniciando conexi¢n con 127.0.0.1 (40609)
+19/09-16:01:06: Cmd [ *004f]
+19/09-16:01:06: MandaPaqueteFiscal: CmdRetries 3, SndRetries 2, RcvRetries 2, New_Protocol 0
+
+19/09-16:01:06: Envio el comando: <. *004f017c>
+19/09-16:01:06: Espero el ACK
+19/09-16:01:06: Recibo ACK
+19/09-16:01:06: A esperar la respuesta
+19/09-16:01:06: Checksum Paquete:   [0x0A54]
+19/09-16:01:06: Checksum Calculado: [0x0A54]
+19/09-16:01:06: Checksum: OK
+19/09-16:01:06: Vino la respuesta < *|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:01:06: Mando ACK
+19/09-16:01:06: Error en Numero de Paquete. Lo desecho
+19/09-16:01:06: A esperar la respuesta
+19/09-16:01:08: TIMEOUT esperando STX
+19/09-16:01:08: Envio de STATPRN local
+19/09-16:01:08: Recibo ACK
+19/09-16:01:08: ACK a comando
+19/09-16:01:08: Espero la respuesta
+19/09-16:01:09: Checksum Paquete:   [0x0A7D]
+19/09-16:01:09: Checksum Calculado: [0x0A7D]
+19/09-16:01:09: Checksum: OK
+19/09-16:01:09: Envio el ACK
+19/09-16:01:09: Fin de STATPRN local
+
+19/09-16:01:09: Envio el comando: <. *004f017c>
+19/09-16:01:09: Espero el ACK
+19/09-16:01:09: Recibo ACK
+19/09-16:01:09: A esperar la respuesta
+19/09-16:01:09: Checksum Paquete:   [0x0A54]
+19/09-16:01:09: Checksum Calculado: [0x0A54]
+19/09-16:01:09: Checksum: OK
+19/09-16:01:09: Vino la respuesta < *|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:01:09: Mando ACK
+19/09-16:01:09: Error en Numero de Paquete. Lo desecho
+19/09-16:01:09: A esperar la respuesta
+19/09-16:01:11: TIMEOUT esperando STX
+19/09-16:01:11: Envio de STATPRN local
+19/09-16:01:11: Recibo ACK
+19/09-16:01:11: ACK a comando
+19/09-16:01:11: Espero la respuesta
+19/09-16:01:11: Checksum Paquete:   [0x0A7D]
+19/09-16:01:11: Checksum Calculado: [0x0A7D]
+19/09-16:01:11: Checksum: OK
+19/09-16:01:11: Envio el ACK
+19/09-16:01:11: Fin de STATPRN local
+
+19/09-16:01:11: Envio el comando: <. *004f017c>
+19/09-16:01:11: Espero el ACK
+19/09-16:01:11: Recibo ACK
+19/09-16:01:11: A esperar la respuesta
+19/09-16:01:11: Checksum Paquete:   [0x0A54]
+19/09-16:01:11: Checksum Calculado: [0x0A54]
+19/09-16:01:11: Checksum: OK
+19/09-16:01:11: Vino la respuesta < *|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:01:11: Mando ACK
+19/09-16:01:11: Error en Numero de Paquete. Lo desecho
+19/09-16:01:11: A esperar la respuesta
+19/09-16:01:13: TIMEOUT esperando STX
+19/09-16:01:13: Envio de STATPRN local
+19/09-16:01:13: Recibo ACK
+19/09-16:01:13: ACK a comando
+19/09-16:01:13: Espero la respuesta
+19/09-16:01:13: Checksum Paquete:   [0x0A7D]
+19/09-16:01:13: Checksum Calculado: [0x0A7D]
+19/09-16:01:13: Checksum: OK
+19/09-16:01:13: Envio el ACK
+19/09-16:01:13: Fin de STATPRN local
+
+19/09-16:01:13: Error de comunicaciones con la impresora
+19/09-16:01:13: Cmd [ *004f]
+19/09-16:01:13: MandaPaqueteFiscal: CmdRetries 3, SndRetries 2, RcvRetries 2, New_Protocol 0
+
+19/09-16:01:13: Envio el comando: <0 *004f017e>
+19/09-16:01:13: Espero el ACK
+19/09-16:01:13: Recibo ACK
+19/09-16:01:13: A esperar la respuesta
+19/09-16:01:13: Checksum Paquete:   [0x0A54]
+19/09-16:01:13: Checksum Calculado: [0x0A54]
+19/09-16:01:13: Checksum: OK
+19/09-16:01:13: Vino la respuesta < *|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:01:13: Mando ACK
+19/09-16:01:13: Error en Numero de Paquete. Lo desecho
+19/09-16:01:13: A esperar la respuesta
+19/09-16:01:15: TIMEOUT esperando STX
+19/09-16:01:15: Envio de STATPRN local
+19/09-16:01:15: Recibo ACK
+19/09-16:01:15: ACK a comando
+19/09-16:01:15: Espero la respuesta
+19/09-16:01:15: Checksum Paquete:   [0x0A7F]
+19/09-16:01:15: Checksum Calculado: [0x0A7F]
+19/09-16:01:15: Checksum: OK
+19/09-16:01:15: Envio el ACK
+19/09-16:01:15: Fin de STATPRN local
+
+19/09-16:01:15: Envio el comando: <0 *004f017e>
+19/09-16:01:15: Espero el ACK
+19/09-16:01:15: Recibo ACK
+19/09-16:01:15: A esperar la respuesta
+19/09-16:01:15: Checksum Paquete:   [0x0A54]
+19/09-16:01:15: Checksum Calculado: [0x0A54]
+19/09-16:01:15: Checksum: OK
+19/09-16:01:15: Vino la respuesta < *|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:01:15: Mando ACK
+19/09-16:01:15: Error en Numero de Paquete. Lo desecho
+19/09-16:01:15: A esperar la respuesta
+19/09-16:01:16: Error de comunicaciones con la impresora, Rc -1
+19/09-16:01:17: TIMEOUT esperando STX
+19/09-16:01:17: Envio de STATPRN local
+19/09-16:01:17: Recibo ACK
+19/09-16:01:17: ACK a comando
+19/09-16:01:17: Espero la respuesta
+19/09-16:01:17: Checksum Paquete:   [0x0A7F]
+19/09-16:01:17: Checksum Calculado: [0x0A7F]
+19/09-16:01:17: Checksum: OK
+19/09-16:01:17: Envio el ACK
+19/09-16:01:17: Fin de STATPRN local
+
+19/09-16:01:17: Envio el comando: <0 *004f017e>
+19/09-16:01:17: Espero el ACK
+19/09-16:01:17: Recibo ACK
+19/09-16:01:17: A esperar la respuesta
+19/09-16:01:17: Checksum Paquete:   [0x0A54]
+19/09-16:01:17: Checksum Calculado: [0x0A54]
+19/09-16:01:17: Checksum: OK
+19/09-16:01:17: Vino la respuesta < *|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:01:17: Mando ACK
+19/09-16:01:17: Error en Numero de Paquete. Lo desecho
+19/09-16:01:17: A esperar la respuesta
+19/09-16:01:19: TIMEOUT esperando STX
+19/09-16:01:19: Envio de STATPRN local
+19/09-16:01:19: Recibo ACK
+19/09-16:01:19: ACK a comando
+19/09-16:01:19: Espero la respuesta
+19/09-16:01:19: Checksum Paquete:   [0x0A7F]
+19/09-16:01:19: Checksum Calculado: [0x0A7F]
+19/09-16:01:19: Checksum: OK
+19/09-16:01:19: Envio el ACK
+19/09-16:01:19: Fin de STATPRN local
+
+19/09-16:01:19: Error de comunicaciones con la impresora
+19/09-16:01:19: Cmd ["*0051]
+19/09-16:01:19: MandaPaqueteFiscal: CmdRetries 3, SndRetries 2, RcvRetries 2, New_Protocol 0
+
+19/09-16:01:19: Envio el comando: <2"*0051014e>
+19/09-16:01:19: Espero el ACK
+19/09-16:01:19: Recibo ACK
+19/09-16:01:19: A esperar la respuesta
+19/09-16:01:19: Checksum Paquete:   [0x0A56]
+19/09-16:01:19: Checksum Calculado: [0x0A56]
+19/09-16:01:19: Checksum: OK
+19/09-16:01:19: Vino la respuesta <"*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:01:19: Mando ACK
+19/09-16:01:19: Error en Numero de Paquete. Lo desecho
+19/09-16:01:19: A esperar la respuesta
+19/09-16:01:21: TIMEOUT esperando STX
+19/09-16:01:21: Envio de STATPRN local
+19/09-16:01:21: Recibo ACK
+19/09-16:01:21: ACK a comando
+19/09-16:01:21: Espero la respuesta
+19/09-16:01:22: Checksum Paquete:   [0x0A81]
+19/09-16:01:22: Checksum Calculado: [0x0A81]
+19/09-16:01:22: Checksum: OK
+19/09-16:01:22: Envio el ACK
+19/09-16:01:22: Fin de STATPRN local
+
+19/09-16:01:22: Envio el comando: <2"*0051014e>
+19/09-16:01:22: Espero el ACK
+19/09-16:01:22: Recibo ACK
+19/09-16:01:22: A esperar la respuesta
+19/09-16:01:22: Checksum Paquete:   [0x0A56]
+19/09-16:01:22: Checksum Calculado: [0x0A56]
+19/09-16:01:22: Checksum: OK
+19/09-16:01:22: Vino la respuesta <"*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:01:22: Mando ACK
+19/09-16:01:22: Error en Numero de Paquete. Lo desecho
+19/09-16:01:22: A esperar la respuesta
+19/09-16:01:24: TIMEOUT esperando STX
+19/09-16:01:24: Envio de STATPRN local
+19/09-16:01:24: Recibo ACK
+19/09-16:01:24: ACK a comando
+19/09-16:01:24: Espero la respuesta
+19/09-16:01:24: Checksum Paquete:   [0x0A81]
+19/09-16:01:24: Checksum Calculado: [0x0A81]
+19/09-16:01:24: Checksum: OK
+19/09-16:01:24: Envio el ACK
+19/09-16:01:24: Fin de STATPRN local
+
+19/09-16:01:24: Envio el comando: <2"*0051014e>
+19/09-16:01:24: Espero el ACK
+19/09-16:01:24: Recibo ACK
+19/09-16:01:24: A esperar la respuesta
+19/09-16:01:24: Checksum Paquete:   [0x0A56]
+19/09-16:01:24: Checksum Calculado: [0x0A56]
+19/09-16:01:24: Checksum: OK
+19/09-16:01:24: Vino la respuesta <"*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:01:24: Mando ACK
+19/09-16:01:24: Error en Numero de Paquete. Lo desecho
+19/09-16:01:24: A esperar la respuesta
+19/09-16:01:26: TIMEOUT esperando STX
+19/09-16:01:26: Envio de STATPRN local
+19/09-16:01:26: Recibo ACK
+19/09-16:01:26: ACK a comando
+19/09-16:01:26: Espero la respuesta
+19/09-16:01:26: Checksum Paquete:   [0x0A81]
+19/09-16:01:26: Checksum Calculado: [0x0A81]
+19/09-16:01:26: Checksum: OK
+19/09-16:01:26: Envio el ACK
+19/09-16:01:26: Fin de STATPRN local
+
+19/09-16:01:26: Error de comunicaciones con la impresora
+19/09-16:01:26: Cmd ["*0051]
+19/09-16:01:26: MandaPaqueteFiscal: CmdRetries 3, SndRetries 2, RcvRetries 2, New_Protocol 0
+
+19/09-16:01:26: Envio el comando: <4"*00510150>
+19/09-16:01:26: Espero el ACK
+19/09-16:01:26: Recibo ACK
+19/09-16:01:26: A esperar la respuesta
+19/09-16:01:26: Checksum Paquete:   [0x0A56]
+19/09-16:01:26: Checksum Calculado: [0x0A56]
+19/09-16:01:26: Checksum: OK
+19/09-16:01:26: Vino la respuesta <"*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:01:26: Mando ACK
+19/09-16:01:26: Error en Numero de Paquete. Lo desecho
+19/09-16:01:26: A esperar la respuesta
+19/09-16:01:26: Error de comunicaciones con la impresora, Rc -1
+19/09-16:01:28: TIMEOUT esperando STX
+19/09-16:01:28: Envio de STATPRN local
+19/09-16:01:28: Recibo ACK
+19/09-16:01:28: ACK a comando
+19/09-16:01:28: Espero la respuesta
+19/09-16:01:28: Checksum Paquete:   [0x0A83]
+19/09-16:01:28: Checksum Calculado: [0x0A83]
+19/09-16:01:28: Checksum: OK
+19/09-16:01:28: Envio el ACK
+19/09-16:01:28: Fin de STATPRN local
+
+19/09-16:01:28: Envio el comando: <4"*00510150>
+19/09-16:01:28: Espero el ACK
+19/09-16:01:28: Recibo ACK
+19/09-16:01:28: A esperar la respuesta
+19/09-16:01:28: Checksum Paquete:   [0x0A56]
+19/09-16:01:28: Checksum Calculado: [0x0A56]
+19/09-16:01:28: Checksum: OK
+19/09-16:01:28: Vino la respuesta <"*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:01:28: Mando ACK
+19/09-16:01:28: Error en Numero de Paquete. Lo desecho
+19/09-16:01:28: A esperar la respuesta
+19/09-16:01:30: TIMEOUT esperando STX
+19/09-16:01:30: Envio de STATPRN local
+19/09-16:01:30: Recibo ACK
+19/09-16:01:30: ACK a comando
+19/09-16:01:30: Espero la respuesta
+19/09-16:01:30: Checksum Paquete:   [0x0A83]
+19/09-16:01:30: Checksum Calculado: [0x0A83]
+19/09-16:01:30: Checksum: OK
+19/09-16:01:30: Envio el ACK
+19/09-16:01:30: Fin de STATPRN local
+
+19/09-16:01:30: Envio el comando: <4"*00510150>
+19/09-16:01:30: Espero el ACK
+19/09-16:01:30: Recibo ACK
+19/09-16:01:30: A esperar la respuesta
+19/09-16:01:30: Checksum Paquete:   [0x0A56]
+19/09-16:01:30: Checksum Calculado: [0x0A56]
+19/09-16:01:30: Checksum: OK
+19/09-16:01:30: Vino la respuesta <"*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:01:30: Mando ACK
+19/09-16:01:30: Error en Numero de Paquete. Lo desecho
+19/09-16:01:30: A esperar la respuesta
+19/09-16:01:32: TIMEOUT esperando STX
+19/09-16:01:32: Envio de STATPRN local
+19/09-16:01:32: Recibo ACK
+19/09-16:01:32: ACK a comando
+19/09-16:01:32: Espero la respuesta
+19/09-16:01:32: Checksum Paquete:   [0x0A83]
+19/09-16:01:32: Checksum Calculado: [0x0A83]
+19/09-16:01:32: Checksum: OK
+19/09-16:01:32: Envio el ACK
+19/09-16:01:32: Fin de STATPRN local
+
+19/09-16:01:32: Error de comunicaciones con la impresora
+19/09-16:01:32: Cmd [$*0053$*0053]
+19/09-16:01:32: MandaPaqueteFiscal: CmdRetries 3, SndRetries 2, RcvRetries 2, New_Protocol 0
+
+19/09-16:01:32: Envio el comando: <6$*0053$*00530271>
+19/09-16:01:32: Espero el ACK
+19/09-16:01:32: Recibo ACK
+19/09-16:01:32: A esperar la respuesta
+19/09-16:01:32: Checksum Paquete:   [0x0A58]
+19/09-16:01:32: Checksum Calculado: [0x0A58]
+19/09-16:01:32: Checksum: OK
+19/09-16:01:32: Vino la respuesta <$*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:01:32: Mando ACK
+19/09-16:01:32: Error en Numero de Paquete. Lo desecho
+19/09-16:01:32: A esperar la respuesta
+19/09-16:01:34: TIMEOUT esperando STX
+19/09-16:01:34: Envio de STATPRN local
+19/09-16:01:34: Recibo ACK
+19/09-16:01:34: ACK a comando
+19/09-16:01:34: Espero la respuesta
+19/09-16:01:35: Checksum Paquete:   [0x0A85]
+19/09-16:01:35: Checksum Calculado: [0x0A85]
+19/09-16:01:35: Checksum: OK
+19/09-16:01:35: Envio el ACK
+19/09-16:01:35: Fin de STATPRN local
+
+19/09-16:01:35: Envio el comando: <6$*0053$*00530271>
+19/09-16:01:35: Espero el ACK
+19/09-16:01:35: Recibo ACK
+19/09-16:01:35: A esperar la respuesta
+19/09-16:01:35: Checksum Paquete:   [0x0A58]
+19/09-16:01:35: Checksum Calculado: [0x0A58]
+19/09-16:01:35: Checksum: OK
+19/09-16:01:35: Vino la respuesta <$*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:01:35: Mando ACK
+19/09-16:01:35: Error en Numero de Paquete. Lo desecho
+19/09-16:01:35: A esperar la respuesta
+19/09-16:01:36: Error de comunicaciones con la impresora, Rc -1
+19/09-16:01:37: TIMEOUT esperando STX
+19/09-16:01:37: Envio de STATPRN local
+19/09-16:01:37: Recibo ACK
+19/09-16:01:37: ACK a comando
+19/09-16:01:37: Espero la respuesta
+19/09-16:01:37: Checksum Paquete:   [0x0A85]
+19/09-16:01:37: Checksum Calculado: [0x0A85]
+19/09-16:01:37: Checksum: OK
+19/09-16:01:37: Envio el ACK
+19/09-16:01:37: Fin de STATPRN local
+
+19/09-16:01:37: Envio el comando: <6$*0053$*00530271>
+19/09-16:01:37: Espero el ACK
+19/09-16:01:37: Recibo ACK
+19/09-16:01:37: A esperar la respuesta
+19/09-16:01:37: Checksum Paquete:   [0x0A58]
+19/09-16:01:37: Checksum Calculado: [0x0A58]
+19/09-16:01:37: Checksum: OK
+19/09-16:01:37: Vino la respuesta <$*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:01:37: Mando ACK
+19/09-16:01:37: Error en Numero de Paquete. Lo desecho
+19/09-16:01:37: A esperar la respuesta
+19/09-16:01:39: TIMEOUT esperando STX
+19/09-16:01:39: Envio de STATPRN local
+19/09-16:01:39: Recibo ACK
+19/09-16:01:39: ACK a comando
+19/09-16:01:39: Espero la respuesta
+19/09-16:01:39: Checksum Paquete:   [0x0A85]
+19/09-16:01:39: Checksum Calculado: [0x0A85]
+19/09-16:01:39: Checksum: OK
+19/09-16:01:39: Envio el ACK
+19/09-16:01:39: Fin de STATPRN local
+
+19/09-16:01:39: Error de comunicaciones con la impresora
+19/09-16:01:39: Cmd [&*0055]
+19/09-16:01:39: MandaPaqueteFiscal: CmdRetries 3, SndRetries 2, RcvRetries 2, New_Protocol 0
+
+19/09-16:01:39: Envio el comando: <8&*0055015c>
+19/09-16:01:39: Espero el ACK
+19/09-16:01:39: Recibo ACK
+19/09-16:01:39: A esperar la respuesta
+19/09-16:01:39: Checksum Paquete:   [0x0A5A]
+19/09-16:01:39: Checksum Calculado: [0x0A5A]
+19/09-16:01:39: Checksum: OK
+19/09-16:01:39: Vino la respuesta <&*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:01:39: Mando ACK
+19/09-16:01:39: Error en Numero de Paquete. Lo desecho
+19/09-16:01:39: A esperar la respuesta
+19/09-16:01:41: TIMEOUT esperando STX
+19/09-16:01:41: Envio de STATPRN local
+19/09-16:01:41: Recibo ACK
+19/09-16:01:41: ACK a comando
+19/09-16:01:41: Espero la respuesta
+19/09-16:01:41: Checksum Paquete:   [0x0A87]
+19/09-16:01:41: Checksum Calculado: [0x0A87]
+19/09-16:01:41: Checksum: OK
+19/09-16:01:41: Envio el ACK
+19/09-16:01:41: Fin de STATPRN local
+
+19/09-16:01:41: Envio el comando: <8&*0055015c>
+19/09-16:01:41: Espero el ACK
+19/09-16:01:41: Recibo ACK
+19/09-16:01:41: A esperar la respuesta
+19/09-16:01:41: Checksum Paquete:   [0x0A5A]
+19/09-16:01:41: Checksum Calculado: [0x0A5A]
+19/09-16:01:41: Checksum: OK
+19/09-16:01:41: Vino la respuesta <&*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:01:41: Mando ACK
+19/09-16:01:41: Error en Numero de Paquete. Lo desecho
+19/09-16:01:41: A esperar la respuesta
+19/09-16:01:43: TIMEOUT esperando STX
+19/09-16:01:43: Envio de STATPRN local
+19/09-16:01:43: Recibo ACK
+19/09-16:01:43: ACK a comando
+19/09-16:01:43: Espero la respuesta
+19/09-16:01:43: Checksum Paquete:   [0x0A87]
+19/09-16:01:43: Checksum Calculado: [0x0A87]
+19/09-16:01:43: Checksum: OK
+19/09-16:01:43: Envio el ACK
+19/09-16:01:43: Fin de STATPRN local
+
+19/09-16:01:43: Envio el comando: <8&*0055015c>
+19/09-16:01:43: Espero el ACK
+19/09-16:01:43: Recibo ACK
+19/09-16:01:43: A esperar la respuesta
+19/09-16:01:43: Checksum Paquete:   [0x0A5A]
+19/09-16:01:43: Checksum Calculado: [0x0A5A]
+19/09-16:01:43: Checksum: OK
+19/09-16:01:43: Vino la respuesta <&*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:01:43: Mando ACK
+19/09-16:01:43: Error en Numero de Paquete. Lo desecho
+19/09-16:01:43: A esperar la respuesta
+19/09-16:01:45: TIMEOUT esperando STX
+19/09-16:01:45: Envio de STATPRN local
+19/09-16:01:45: Recibo ACK
+19/09-16:01:45: ACK a comando
+19/09-16:01:45: Espero la respuesta
+19/09-16:01:45: Checksum Paquete:   [0x0A87]
+19/09-16:01:45: Checksum Calculado: [0x0A87]
+19/09-16:01:45: Checksum: OK
+19/09-16:01:45: Envio el ACK
+19/09-16:01:45: Fin de STATPRN local
+
+19/09-16:01:45: Error de comunicaciones con la impresora
+19/09-16:01:45: Cmd [&*0055]
+19/09-16:01:45: MandaPaqueteFiscal: CmdRetries 3, SndRetries 2, RcvRetries 2, New_Protocol 0
+
+19/09-16:01:45: Envio el comando: <:&*0055015e>
+19/09-16:01:45: Espero el ACK
+19/09-16:01:45: Recibo ACK
+19/09-16:01:45: A esperar la respuesta
+19/09-16:01:45: Checksum Paquete:   [0x0A5A]
+19/09-16:01:45: Checksum Calculado: [0x0A5A]
+19/09-16:01:45: Checksum: OK
+19/09-16:01:45: Vino la respuesta <&*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:01:45: Mando ACK
+19/09-16:01:45: Error en Numero de Paquete. Lo desecho
+19/09-16:01:45: A esperar la respuesta
+19/09-16:01:46: Error de comunicaciones con la impresora, Rc -1
+19/09-16:01:47: TIMEOUT esperando STX
+19/09-16:01:47: Envio de STATPRN local
+19/09-16:01:47: Recibo ACK
+19/09-16:01:47: ACK a comando
+19/09-16:01:47: Espero la respuesta
+19/09-16:01:48: Checksum Paquete:   [0x0A89]
+19/09-16:01:48: Checksum Calculado: [0x0A89]
+19/09-16:01:48: Checksum: OK
+19/09-16:01:48: Envio el ACK
+19/09-16:01:48: Fin de STATPRN local
+
+19/09-16:01:48: Envio el comando: <:&*0055015e>
+19/09-16:01:48: Espero el ACK
+19/09-16:01:48: Recibo ACK
+19/09-16:01:48: A esperar la respuesta
+19/09-16:01:48: Checksum Paquete:   [0x0A5A]
+19/09-16:01:48: Checksum Calculado: [0x0A5A]
+19/09-16:01:48: Checksum: OK
+19/09-16:01:48: Vino la respuesta <&*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:01:48: Mando ACK
+19/09-16:01:48: Error en Numero de Paquete. Lo desecho
+19/09-16:01:48: A esperar la respuesta
+19/09-16:01:50: TIMEOUT esperando STX
+19/09-16:01:50: Envio de STATPRN local
+19/09-16:01:50: Recibo ACK
+19/09-16:01:50: ACK a comando
+19/09-16:01:50: Espero la respuesta
+19/09-16:01:50: Checksum Paquete:   [0x0A89]
+19/09-16:01:50: Checksum Calculado: [0x0A89]
+19/09-16:01:50: Checksum: OK
+19/09-16:01:50: Envio el ACK
+19/09-16:01:50: Fin de STATPRN local
+
+19/09-16:01:50: Envio el comando: <:&*0055015e>
+19/09-16:01:50: Espero el ACK
+19/09-16:01:50: Recibo ACK
+19/09-16:01:50: A esperar la respuesta
+19/09-16:01:50: Checksum Paquete:   [0x0A5A]
+19/09-16:01:50: Checksum Calculado: [0x0A5A]
+19/09-16:01:50: Checksum: OK
+19/09-16:01:50: Vino la respuesta <&*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:01:50: Mando ACK
+19/09-16:01:50: Error en Numero de Paquete. Lo desecho
+19/09-16:01:50: A esperar la respuesta
+19/09-16:01:52: TIMEOUT esperando STX
+19/09-16:01:52: Envio de STATPRN local
+19/09-16:01:52: Recibo ACK
+19/09-16:01:52: ACK a comando
+19/09-16:01:52: Espero la respuesta
+19/09-16:01:52: Checksum Paquete:   [0x0A89]
+19/09-16:01:52: Checksum Calculado: [0x0A89]
+19/09-16:01:52: Checksum: OK
+19/09-16:01:52: Envio el ACK
+19/09-16:01:52: Fin de STATPRN local
+
+19/09-16:01:52: Error de comunicaciones con la impresora
+19/09-16:01:52: Cmd [(*0057(*0057]
+19/09-16:01:52: MandaPaqueteFiscal: CmdRetries 3, SndRetries 2, RcvRetries 2, New_Protocol 0
+
+19/09-16:01:52: Envio el comando: <<(*0057(*00570287>
+19/09-16:01:52: Espero el ACK
+19/09-16:01:52: Recibo ACK
+19/09-16:01:52: A esperar la respuesta
+19/09-16:01:52: Checksum Paquete:   [0x0A5C]
+19/09-16:01:52: Checksum Calculado: [0x0A5C]
+19/09-16:01:52: Checksum: OK
+19/09-16:01:52: Vino la respuesta <(*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:01:52: Mando ACK
+19/09-16:01:52: Error en Numero de Paquete. Lo desecho
+19/09-16:01:52: A esperar la respuesta
+19/09-16:01:54: TIMEOUT esperando STX
+19/09-16:01:54: Envio de STATPRN local
+19/09-16:01:54: Recibo ACK
+19/09-16:01:54: ACK a comando
+19/09-16:01:54: Espero la respuesta
+19/09-16:01:54: Checksum Paquete:   [0x0A8B]
+19/09-16:01:54: Checksum Calculado: [0x0A8B]
+19/09-16:01:54: Checksum: OK
+19/09-16:01:54: Envio el ACK
+19/09-16:01:54: Fin de STATPRN local
+
+19/09-16:01:54: Envio el comando: <<(*0057(*00570287>
+19/09-16:01:54: Espero el ACK
+19/09-16:01:54: Recibo ACK
+19/09-16:01:54: A esperar la respuesta
+19/09-16:01:54: Checksum Paquete:   [0x0A5C]
+19/09-16:01:54: Checksum Calculado: [0x0A5C]
+19/09-16:01:54: Checksum: OK
+19/09-16:01:54: Vino la respuesta <(*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:01:54: Mando ACK
+19/09-16:01:54: Error en Numero de Paquete. Lo desecho
+19/09-16:01:54: A esperar la respuesta
+19/09-16:01:56: TIMEOUT esperando STX
+19/09-16:01:56: Envio de STATPRN local
+19/09-16:01:56: Recibo ACK
+19/09-16:01:56: ACK a comando
+19/09-16:01:56: Espero la respuesta
+19/09-16:01:56: Checksum Paquete:   [0x0A8B]
+19/09-16:01:56: Checksum Calculado: [0x0A8B]
+19/09-16:01:56: Checksum: OK
+19/09-16:01:56: Envio el ACK
+19/09-16:01:56: Fin de STATPRN local
+
+19/09-16:01:56: Envio el comando: <<(*0057(*00570287>
+19/09-16:01:56: Espero el ACK
+19/09-16:01:56: Recibo ACK
+19/09-16:01:56: A esperar la respuesta
+19/09-16:01:56: Checksum Paquete:   [0x0A5C]
+19/09-16:01:56: Checksum Calculado: [0x0A5C]
+19/09-16:01:56: Checksum: OK
+19/09-16:01:56: Vino la respuesta <(*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:01:56: Mando ACK
+19/09-16:01:56: Error en Numero de Paquete. Lo desecho
+19/09-16:01:56: A esperar la respuesta
+19/09-16:01:56: Error de comunicaciones con la impresora, Rc -1
+19/09-16:01:58: TIMEOUT esperando STX
+19/09-16:01:58: Envio de STATPRN local
+19/09-16:01:58: Recibo ACK
+19/09-16:01:58: ACK a comando
+19/09-16:01:58: Espero la respuesta
+19/09-16:01:58: Checksum Paquete:   [0x0A8B]
+19/09-16:01:58: Checksum Calculado: [0x0A8B]
+19/09-16:01:58: Checksum: OK
+19/09-16:01:58: Envio el ACK
+19/09-16:01:58: Fin de STATPRN local
+
+19/09-16:01:58: Error de comunicaciones con la impresora
+19/09-16:01:58: Cmd [**0059]
+19/09-16:01:58: MandaPaqueteFiscal: CmdRetries 3, SndRetries 2, RcvRetries 2, New_Protocol 0
+
+19/09-16:01:58: Envio el comando: <>**0059016a>
+19/09-16:01:58: Espero el ACK
+19/09-16:01:58: Recibo ACK
+19/09-16:01:58: A esperar la respuesta
+19/09-16:01:58: Checksum Paquete:   [0x0A5E]
+19/09-16:01:58: Checksum Calculado: [0x0A5E]
+19/09-16:01:58: Checksum: OK
+19/09-16:01:58: Vino la respuesta <**|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:01:58: Mando ACK
+19/09-16:01:58: Error en Numero de Paquete. Lo desecho
+19/09-16:01:58: A esperar la respuesta
+19/09-16:02:00: TIMEOUT esperando STX
+19/09-16:02:00: Envio de STATPRN local
+19/09-16:02:00: Recibo ACK
+19/09-16:02:00: ACK a comando
+19/09-16:02:00: Espero la respuesta
+19/09-16:02:01: Checksum Paquete:   [0x0A8D]
+19/09-16:02:01: Checksum Calculado: [0x0A8D]
+19/09-16:02:01: Checksum: OK
+19/09-16:02:01: Envio el ACK
+19/09-16:02:01: Fin de STATPRN local
+
+19/09-16:02:01: Envio el comando: <>**0059016a>
+19/09-16:02:01: Espero el ACK
+19/09-16:02:01: Recibo ACK
+19/09-16:02:01: A esperar la respuesta
+19/09-16:02:01: Checksum Paquete:   [0x0A5E]
+19/09-16:02:01: Checksum Calculado: [0x0A5E]
+19/09-16:02:01: Checksum: OK
+19/09-16:02:01: Vino la respuesta <**|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:02:01: Mando ACK
+19/09-16:02:01: Error en Numero de Paquete. Lo desecho
+19/09-16:02:01: A esperar la respuesta
+19/09-16:02:03: TIMEOUT esperando STX
+19/09-16:02:03: Envio de STATPRN local
+19/09-16:02:03: Recibo ACK
+19/09-16:02:03: ACK a comando
+19/09-16:02:03: Espero la respuesta
+19/09-16:02:03: Checksum Paquete:   [0x0A8D]
+19/09-16:02:03: Checksum Calculado: [0x0A8D]
+19/09-16:02:03: Checksum: OK
+19/09-16:02:03: Envio el ACK
+19/09-16:02:03: Fin de STATPRN local
+
+19/09-16:02:03: Envio el comando: <>**0059016a>
+19/09-16:02:03: Espero el ACK
+19/09-16:02:03: Recibo ACK
+19/09-16:02:03: A esperar la respuesta
+19/09-16:02:03: Checksum Paquete:   [0x0A5E]
+19/09-16:02:03: Checksum Calculado: [0x0A5E]
+19/09-16:02:03: Checksum: OK
+19/09-16:02:03: Vino la respuesta <**|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:02:03: Mando ACK
+19/09-16:02:03: Error en Numero de Paquete. Lo desecho
+19/09-16:02:03: A esperar la respuesta
+19/09-16:02:05: TIMEOUT esperando STX
+19/09-16:02:05: Envio de STATPRN local
+19/09-16:02:05: Recibo ACK
+19/09-16:02:05: ACK a comando
+19/09-16:02:05: Espero la respuesta
+19/09-16:02:05: Checksum Paquete:   [0x0A8D]
+19/09-16:02:05: Checksum Calculado: [0x0A8D]
+19/09-16:02:05: Checksum: OK
+19/09-16:02:05: Envio el ACK
+19/09-16:02:05: Fin de STATPRN local
+
+19/09-16:02:05: Error de comunicaciones con la impresora
+19/09-16:02:05: Cmd [**0059]
+19/09-16:02:05: MandaPaqueteFiscal: CmdRetries 3, SndRetries 2, RcvRetries 2, New_Protocol 0
+
+19/09-16:02:05: Envio el comando: <@**0059016c>
+19/09-16:02:05: Espero el ACK
+19/09-16:02:05: Recibo ACK
+19/09-16:02:05: A esperar la respuesta
+19/09-16:02:05: Checksum Paquete:   [0x0A5E]
+19/09-16:02:05: Checksum Calculado: [0x0A5E]
+19/09-16:02:05: Checksum: OK
+19/09-16:02:05: Vino la respuesta <**|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:02:05: Mando ACK
+19/09-16:02:05: Error en Numero de Paquete. Lo desecho
+19/09-16:02:05: A esperar la respuesta
+19/09-16:02:06: Error de comunicaciones con la impresora, Rc -1
+19/09-16:02:07: TIMEOUT esperando STX
+19/09-16:02:07: Envio de STATPRN local
+19/09-16:02:07: Recibo ACK
+19/09-16:02:07: ACK a comando
+19/09-16:02:07: Espero la respuesta
+19/09-16:02:07: Checksum Paquete:   [0x0A8F]
+19/09-16:02:07: Checksum Calculado: [0x0A8F]
+19/09-16:02:07: Checksum: OK
+19/09-16:02:07: Envio el ACK
+19/09-16:02:07: Fin de STATPRN local
+
+19/09-16:02:07: Envio el comando: <@**0059016c>
+19/09-16:02:07: Espero el ACK
+19/09-16:02:07: Recibo ACK
+19/09-16:02:07: A esperar la respuesta
+19/09-16:02:07: Checksum Paquete:   [0x0A5E]
+19/09-16:02:07: Checksum Calculado: [0x0A5E]
+19/09-16:02:07: Checksum: OK
+19/09-16:02:07: Vino la respuesta <**|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:02:07: Mando ACK
+19/09-16:02:07: Error en Numero de Paquete. Lo desecho
+19/09-16:02:07: A esperar la respuesta
+19/09-16:02:09: TIMEOUT esperando STX
+19/09-16:02:09: Envio de STATPRN local
+19/09-16:02:09: Recibo ACK
+19/09-16:02:09: ACK a comando
+19/09-16:02:09: Espero la respuesta
+19/09-16:02:09: Checksum Paquete:   [0x0A8F]
+19/09-16:02:09: Checksum Calculado: [0x0A8F]
+19/09-16:02:09: Checksum: OK
+19/09-16:02:09: Envio el ACK
+19/09-16:02:09: Fin de STATPRN local
+
+19/09-16:02:09: Envio el comando: <@**0059016c>
+19/09-16:02:09: Espero el ACK
+19/09-16:02:09: Recibo ACK
+19/09-16:02:09: A esperar la respuesta
+19/09-16:02:09: Checksum Paquete:   [0x0A5E]
+19/09-16:02:09: Checksum Calculado: [0x0A5E]
+19/09-16:02:09: Checksum: OK
+19/09-16:02:09: Vino la respuesta <**|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:02:09: Mando ACK
+19/09-16:02:09: Error en Numero de Paquete. Lo desecho
+19/09-16:02:09: A esperar la respuesta
+19/09-16:02:11: TIMEOUT esperando STX
+19/09-16:02:11: Envio de STATPRN local
+19/09-16:02:11: Recibo ACK
+19/09-16:02:11: ACK a comando
+19/09-16:02:11: Espero la respuesta
+19/09-16:02:11: Checksum Paquete:   [0x0A8F]
+19/09-16:02:11: Checksum Calculado: [0x0A8F]
+19/09-16:02:11: Checksum: OK
+19/09-16:02:11: Envio el ACK
+19/09-16:02:11: Fin de STATPRN local
+
+19/09-16:02:11: Error de comunicaciones con la impresora
+19/09-16:02:11: Cmd [,*005b]
+19/09-16:02:11: MandaPaqueteFiscal: CmdRetries 3, SndRetries 2, RcvRetries 2, New_Protocol 0
+
+19/09-16:02:11: Envio el comando: <B,*005b0199>
+19/09-16:02:11: Espero el ACK
+19/09-16:02:11: Recibo ACK
+19/09-16:02:11: A esperar la respuesta
+19/09-16:02:11: Checksum Paquete:   [0x0A60]
+19/09-16:02:11: Checksum Calculado: [0x0A60]
+19/09-16:02:11: Checksum: OK
+19/09-16:02:11: Vino la respuesta <,*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:02:11: Mando ACK
+19/09-16:02:11: Error en Numero de Paquete. Lo desecho
+19/09-16:02:11: A esperar la respuesta
+19/09-16:02:13: TIMEOUT esperando STX
+19/09-16:02:13: Envio de STATPRN local
+19/09-16:02:13: Recibo ACK
+19/09-16:02:13: ACK a comando
+19/09-16:02:13: Espero la respuesta
+19/09-16:02:14: Checksum Paquete:   [0x0A91]
+19/09-16:02:14: Checksum Calculado: [0x0A91]
+19/09-16:02:14: Checksum: OK
+19/09-16:02:14: Envio el ACK
+19/09-16:02:14: Fin de STATPRN local
+
+19/09-16:02:14: Envio el comando: <B,*005b0199>
+19/09-16:02:14: Espero el ACK
+19/09-16:02:14: Recibo ACK
+19/09-16:02:14: A esperar la respuesta
+19/09-16:02:14: Checksum Paquete:   [0x0A60]
+19/09-16:02:14: Checksum Calculado: [0x0A60]
+19/09-16:02:14: Checksum: OK
+19/09-16:02:14: Vino la respuesta <,*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:02:14: Mando ACK
+19/09-16:02:14: Error en Numero de Paquete. Lo desecho
+19/09-16:02:14: A esperar la respuesta
+19/09-16:02:16: TIMEOUT esperando STX
+19/09-16:02:16: Envio de STATPRN local
+19/09-16:02:16: Recibo ACK
+19/09-16:02:16: ACK a comando
+19/09-16:02:16: Espero la respuesta
+19/09-16:02:16: Checksum Paquete:   [0x0A91]
+19/09-16:02:16: Checksum Calculado: [0x0A91]
+19/09-16:02:16: Checksum: OK
+19/09-16:02:16: Envio el ACK
+19/09-16:02:16: Fin de STATPRN local
+
+19/09-16:02:16: Envio el comando: <B,*005b0199>
+19/09-16:02:16: Espero el ACK
+19/09-16:02:16: Recibo ACK
+19/09-16:02:16: A esperar la respuesta
+19/09-16:02:16: Checksum Paquete:   [0x0A60]
+19/09-16:02:16: Checksum Calculado: [0x0A60]
+19/09-16:02:16: Checksum: OK
+19/09-16:02:16: Vino la respuesta <,*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:02:16: Mando ACK
+19/09-16:02:16: Error en Numero de Paquete. Lo desecho
+19/09-16:02:16: A esperar la respuesta
+19/09-16:02:16: Error de comunicaciones con la impresora, Rc -1
+19/09-16:02:18: TIMEOUT esperando STX
+19/09-16:02:18: Envio de STATPRN local
+19/09-16:02:18: Recibo ACK
+19/09-16:02:18: ACK a comando
+19/09-16:02:18: Espero la respuesta
+19/09-16:02:18: Checksum Paquete:   [0x0A91]
+19/09-16:02:18: Checksum Calculado: [0x0A91]
+19/09-16:02:18: Checksum: OK
+19/09-16:02:18: Envio el ACK
+19/09-16:02:18: Fin de STATPRN local
+
+19/09-16:02:18: Error de comunicaciones con la impresora
+19/09-16:02:18: Cmd [,*005b.*005d]
+19/09-16:02:18: MandaPaqueteFiscal: CmdRetries 3, SndRetries 2, RcvRetries 2, New_Protocol 0
+
+19/09-16:02:18: Envio el comando: <D,*005b.*005d02f1>
+19/09-16:02:18: Espero el ACK
+19/09-16:02:18: Recibo ACK
+19/09-16:02:18: A esperar la respuesta
+19/09-16:02:18: Checksum Paquete:   [0x0A60]
+19/09-16:02:18: Checksum Calculado: [0x0A60]
+19/09-16:02:18: Checksum: OK
+19/09-16:02:18: Vino la respuesta <,*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:02:18: Mando ACK
+19/09-16:02:18: Error en Numero de Paquete. Lo desecho
+19/09-16:02:18: A esperar la respuesta
+19/09-16:02:20: TIMEOUT esperando STX
+19/09-16:02:20: Envio de STATPRN local
+19/09-16:02:20: Recibo ACK
+19/09-16:02:20: ACK a comando
+19/09-16:02:20: Espero la respuesta
+19/09-16:02:20: Checksum Paquete:   [0x0A93]
+19/09-16:02:20: Checksum Calculado: [0x0A93]
+19/09-16:02:20: Checksum: OK
+19/09-16:02:20: Envio el ACK
+19/09-16:02:20: Fin de STATPRN local
+
+19/09-16:02:20: Envio el comando: <D,*005b.*005d02f1>
+19/09-16:02:20: Espero el ACK
+19/09-16:02:20: Recibo ACK
+19/09-16:02:20: A esperar la respuesta
+19/09-16:02:20: Checksum Paquete:   [0x0A60]
+19/09-16:02:20: Checksum Calculado: [0x0A60]
+19/09-16:02:20: Checksum: OK
+19/09-16:02:20: Vino la respuesta <,*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:02:20: Mando ACK
+19/09-16:02:20: Error en Numero de Paquete. Lo desecho
+19/09-16:02:20: A esperar la respuesta
+19/09-16:02:22: TIMEOUT esperando STX
+19/09-16:02:22: Envio de STATPRN local
+19/09-16:02:22: Recibo ACK
+19/09-16:02:22: ACK a comando
+19/09-16:02:22: Espero la respuesta
+19/09-16:02:22: Checksum Paquete:   [0x0A93]
+19/09-16:02:22: Checksum Calculado: [0x0A93]
+19/09-16:02:22: Checksum: OK
+19/09-16:02:22: Envio el ACK
+19/09-16:02:22: Fin de STATPRN local
+
+19/09-16:02:22: Envio el comando: <D,*005b.*005d02f1>
+19/09-16:02:22: Espero el ACK
+19/09-16:02:22: Recibo ACK
+19/09-16:02:22: A esperar la respuesta
+19/09-16:02:22: Checksum Paquete:   [0x0A60]
+19/09-16:02:22: Checksum Calculado: [0x0A60]
+19/09-16:02:22: Checksum: OK
+19/09-16:02:22: Vino la respuesta <,*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:02:22: Mando ACK
+19/09-16:02:22: Error en Numero de Paquete. Lo desecho
+19/09-16:02:22: A esperar la respuesta
+19/09-16:02:24: TIMEOUT esperando STX
+19/09-16:02:24: Envio de STATPRN local
+19/09-16:02:24: Recibo ACK
+19/09-16:02:24: ACK a comando
+19/09-16:02:24: Espero la respuesta
+19/09-16:02:24: Checksum Paquete:   [0x0A93]
+19/09-16:02:24: Checksum Calculado: [0x0A93]
+19/09-16:02:24: Checksum: OK
+19/09-16:02:24: Envio el ACK
+19/09-16:02:24: Fin de STATPRN local
+
+19/09-16:02:24: Error de comunicaciones con la impresora
+19/09-16:02:24: Cmd [.*005d]
+19/09-16:02:24: MandaPaqueteFiscal: CmdRetries 3, SndRetries 2, RcvRetries 2, New_Protocol 0
+
+19/09-16:02:24: Envio el comando: <F.*005d01a1>
+19/09-16:02:24: Espero el ACK
+19/09-16:02:24: Recibo ACK
+19/09-16:02:24: A esperar la respuesta
+19/09-16:02:24: Checksum Paquete:   [0x0A62]
+19/09-16:02:24: Checksum Calculado: [0x0A62]
+19/09-16:02:24: Checksum: OK
+19/09-16:02:24: Vino la respuesta <.*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:02:24: Mando ACK
+19/09-16:02:24: Error en Numero de Paquete. Lo desecho
+19/09-16:02:24: A esperar la respuesta
+19/09-16:02:26: Error de comunicaciones con la impresora, Rc -1
+19/09-16:02:26: TIMEOUT esperando STX
+19/09-16:02:26: Envio de STATPRN local
+19/09-16:02:27: Recibo ACK
+19/09-16:02:27: ACK a comando
+19/09-16:02:27: Espero la respuesta
+19/09-16:02:27: Checksum Paquete:   [0x0A95]
+19/09-16:02:27: Checksum Calculado: [0x0A95]
+19/09-16:02:27: Checksum: OK
+19/09-16:02:27: Envio el ACK
+19/09-16:02:27: Fin de STATPRN local
+
+19/09-16:02:27: Envio el comando: <F.*005d01a1>
+19/09-16:02:27: Espero el ACK
+19/09-16:02:27: Recibo ACK
+19/09-16:02:27: A esperar la respuesta
+19/09-16:02:27: Checksum Paquete:   [0x0A62]
+19/09-16:02:27: Checksum Calculado: [0x0A62]
+19/09-16:02:27: Checksum: OK
+19/09-16:02:27: Vino la respuesta <.*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:02:27: Mando ACK
+19/09-16:02:27: Error en Numero de Paquete. Lo desecho
+19/09-16:02:27: A esperar la respuesta
+19/09-16:02:29: TIMEOUT esperando STX
+19/09-16:02:29: Envio de STATPRN local
+19/09-16:02:29: Recibo ACK
+19/09-16:02:29: ACK a comando
+19/09-16:02:29: Espero la respuesta
+19/09-16:02:29: Checksum Paquete:   [0x0A95]
+19/09-16:02:29: Checksum Calculado: [0x0A95]
+19/09-16:02:29: Checksum: OK
+19/09-16:02:29: Envio el ACK
+19/09-16:02:29: Fin de STATPRN local
+
+19/09-16:02:29: Envio el comando: <F.*005d01a1>
+19/09-16:02:29: Espero el ACK
+19/09-16:02:29: Recibo ACK
+19/09-16:02:29: A esperar la respuesta
+19/09-16:02:29: Checksum Paquete:   [0x0A62]
+19/09-16:02:29: Checksum Calculado: [0x0A62]
+19/09-16:02:29: Checksum: OK
+19/09-16:02:29: Vino la respuesta <.*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:02:29: Mando ACK
+19/09-16:02:29: Error en Numero de Paquete. Lo desecho
+19/09-16:02:29: A esperar la respuesta
+19/09-16:02:31: TIMEOUT esperando STX
+19/09-16:02:31: Envio de STATPRN local
+19/09-16:02:31: Recibo ACK
+19/09-16:02:31: ACK a comando
+19/09-16:02:31: Espero la respuesta
+19/09-16:02:31: Checksum Paquete:   [0x0A95]
+19/09-16:02:31: Checksum Calculado: [0x0A95]
+19/09-16:02:31: Checksum: OK
+19/09-16:02:31: Envio el ACK
+19/09-16:02:31: Fin de STATPRN local
+
+19/09-16:02:31: Error de comunicaciones con la impresora
+19/09-16:02:31: Cmd [0*005f]
+19/09-16:02:31: MandaPaqueteFiscal: CmdRetries 3, SndRetries 2, RcvRetries 2, New_Protocol 0
+
+19/09-16:02:31: Envio el comando: <H0*005f01a7>
+19/09-16:02:31: Espero el ACK
+19/09-16:02:31: Recibo ACK
+19/09-16:02:31: A esperar la respuesta
+19/09-16:02:31: Checksum Paquete:   [0x0A64]
+19/09-16:02:31: Checksum Calculado: [0x0A64]
+19/09-16:02:31: Checksum: OK
+19/09-16:02:31: Vino la respuesta <0*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:02:31: Mando ACK
+19/09-16:02:31: Error en Numero de Paquete. Lo desecho
+19/09-16:02:31: A esperar la respuesta
+19/09-16:02:33: TIMEOUT esperando STX
+19/09-16:02:33: Envio de STATPRN local
+19/09-16:02:33: Recibo ACK
+19/09-16:02:33: ACK a comando
+19/09-16:02:33: Espero la respuesta
+19/09-16:02:33: Checksum Paquete:   [0x0A97]
+19/09-16:02:33: Checksum Calculado: [0x0A97]
+19/09-16:02:33: Checksum: OK
+19/09-16:02:33: Envio el ACK
+19/09-16:02:33: Fin de STATPRN local
+
+19/09-16:02:33: Envio el comando: <H0*005f01a7>
+19/09-16:02:33: Espero el ACK
+19/09-16:02:33: Recibo ACK
+19/09-16:02:33: A esperar la respuesta
+19/09-16:02:33: Checksum Paquete:   [0x0A64]
+19/09-16:02:33: Checksum Calculado: [0x0A64]
+19/09-16:02:33: Checksum: OK
+19/09-16:02:33: Vino la respuesta <0*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:02:33: Mando ACK
+19/09-16:02:33: Error en Numero de Paquete. Lo desecho
+19/09-16:02:33: A esperar la respuesta
+19/09-16:02:35: TIMEOUT esperando STX
+19/09-16:02:35: Envio de STATPRN local
+19/09-16:02:35: Recibo ACK
+19/09-16:02:35: ACK a comando
+19/09-16:02:35: Espero la respuesta
+19/09-16:02:35: Checksum Paquete:   [0x0A97]
+19/09-16:02:35: Checksum Calculado: [0x0A97]
+19/09-16:02:35: Checksum: OK
+19/09-16:02:35: Envio el ACK
+19/09-16:02:35: Fin de STATPRN local
+
+19/09-16:02:35: Envio el comando: <H0*005f01a7>
+19/09-16:02:35: Espero el ACK
+19/09-16:02:35: Recibo ACK
+19/09-16:02:35: A esperar la respuesta
+19/09-16:02:35: Checksum Paquete:   [0x0A64]
+19/09-16:02:35: Checksum Calculado: [0x0A64]
+19/09-16:02:35: Checksum: OK
+19/09-16:02:35: Vino la respuesta <0*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:02:35: Mando ACK
+19/09-16:02:35: Error en Numero de Paquete. Lo desecho
+19/09-16:02:35: A esperar la respuesta
+19/09-16:02:36: Error de comunicaciones con la impresora, Rc -1
+19/09-16:02:37: TIMEOUT esperando STX
+19/09-16:02:37: Envio de STATPRN local
+19/09-16:02:37: Recibo ACK
+19/09-16:02:37: ACK a comando
+19/09-16:02:37: Espero la respuesta
+19/09-16:02:37: Checksum Paquete:   [0x0A97]
+19/09-16:02:37: Checksum Calculado: [0x0A97]
+19/09-16:02:37: Checksum: OK
+19/09-16:02:37: Envio el ACK
+19/09-16:02:37: Fin de STATPRN local
+
+19/09-16:02:37: Error de comunicaciones con la impresora
+19/09-16:02:37: Cmd [0*005f2*0061]
+19/09-16:02:37: MandaPaqueteFiscal: CmdRetries 3, SndRetries 2, RcvRetries 2, New_Protocol 0
+
+19/09-16:02:37: Envio el comando: <J0*005f2*006102d1>
+19/09-16:02:37: Espero el ACK
+19/09-16:02:37: Recibo ACK
+19/09-16:02:37: A esperar la respuesta
+19/09-16:02:37: Checksum Paquete:   [0x0A64]
+19/09-16:02:37: Checksum Calculado: [0x0A64]
+19/09-16:02:37: Checksum: OK
+19/09-16:02:37: Vino la respuesta <0*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:02:37: Mando ACK
+19/09-16:02:37: Error en Numero de Paquete. Lo desecho
+19/09-16:02:37: A esperar la respuesta
+19/09-16:02:39: TIMEOUT esperando STX
+19/09-16:02:39: Envio de STATPRN local
+19/09-16:02:40: Recibo ACK
+19/09-16:02:40: ACK a comando
+19/09-16:02:40: Espero la respuesta
+19/09-16:02:40: Checksum Paquete:   [0x0A99]
+19/09-16:02:40: Checksum Calculado: [0x0A99]
+19/09-16:02:40: Checksum: OK
+19/09-16:02:40: Envio el ACK
+19/09-16:02:40: Fin de STATPRN local
+
+19/09-16:02:40: Envio el comando: <J0*005f2*006102d1>
+19/09-16:02:40: Espero el ACK
+19/09-16:02:40: Recibo ACK
+19/09-16:02:40: A esperar la respuesta
+19/09-16:02:40: Checksum Paquete:   [0x0A64]
+19/09-16:02:40: Checksum Calculado: [0x0A64]
+19/09-16:02:40: Checksum: OK
+19/09-16:02:40: Vino la respuesta <0*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:02:40: Mando ACK
+19/09-16:02:40: Error en Numero de Paquete. Lo desecho
+19/09-16:02:40: A esperar la respuesta
+19/09-16:02:42: TIMEOUT esperando STX
+19/09-16:02:42: Envio de STATPRN local
+19/09-16:02:42: Recibo ACK
+19/09-16:02:42: ACK a comando
+19/09-16:02:42: Espero la respuesta
+19/09-16:02:42: Checksum Paquete:   [0x0A99]
+19/09-16:02:42: Checksum Calculado: [0x0A99]
+19/09-16:02:42: Checksum: OK
+19/09-16:02:42: Envio el ACK
+19/09-16:02:42: Fin de STATPRN local
+
+19/09-16:02:42: Envio el comando: <J0*005f2*006102d1>
+19/09-16:02:42: Espero el ACK
+19/09-16:02:42: Recibo ACK
+19/09-16:02:42: A esperar la respuesta
+19/09-16:02:42: Checksum Paquete:   [0x0A64]
+19/09-16:02:42: Checksum Calculado: [0x0A64]
+19/09-16:02:42: Checksum: OK
+19/09-16:02:42: Vino la respuesta <0*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:02:42: Mando ACK
+19/09-16:02:42: Error en Numero de Paquete. Lo desecho
+19/09-16:02:42: A esperar la respuesta
+19/09-16:02:44: TIMEOUT esperando STX
+19/09-16:02:44: Envio de STATPRN local
+19/09-16:02:44: Recibo ACK
+19/09-16:02:44: ACK a comando
+19/09-16:02:44: Espero la respuesta
+19/09-16:02:44: Checksum Paquete:   [0x0A99]
+19/09-16:02:44: Checksum Calculado: [0x0A99]
+19/09-16:02:44: Checksum: OK
+19/09-16:02:44: Envio el ACK
+19/09-16:02:44: Fin de STATPRN local
+
+19/09-16:02:44: Error de comunicaciones con la impresora
+19/09-16:02:44: Cmd [2*0061]
+19/09-16:02:44: MandaPaqueteFiscal: CmdRetries 3, SndRetries 2, RcvRetries 2, New_Protocol 0
+
+19/09-16:02:44: Envio el comando: <L2*00610179>
+19/09-16:02:44: Espero el ACK
+19/09-16:02:44: Recibo ACK
+19/09-16:02:44: A esperar la respuesta
+19/09-16:02:44: Checksum Paquete:   [0x0A66]
+19/09-16:02:44: Checksum Calculado: [0x0A66]
+19/09-16:02:44: Checksum: OK
+19/09-16:02:44: Vino la respuesta <2*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:02:44: Mando ACK
+19/09-16:02:44: Error en Numero de Paquete. Lo desecho
+19/09-16:02:44: A esperar la respuesta
+19/09-16:02:46: TIMEOUT esperando STX
+19/09-16:02:46: Envio de STATPRN local
+19/09-16:02:46: Recibo ACK
+19/09-16:02:46: ACK a comando
+19/09-16:02:46: Espero la respuesta
+19/09-16:02:46: Checksum Paquete:   [0x0A9B]
+19/09-16:02:46: Checksum Calculado: [0x0A9B]
+19/09-16:02:46: Checksum: OK
+19/09-16:02:46: Envio el ACK
+19/09-16:02:46: Fin de STATPRN local
+
+19/09-16:02:46: Envio el comando: <L2*00610179>
+19/09-16:02:46: Espero el ACK
+19/09-16:02:46: Recibo ACK
+19/09-16:02:46: A esperar la respuesta
+19/09-16:02:46: Checksum Paquete:   [0x0A66]
+19/09-16:02:46: Checksum Calculado: [0x0A66]
+19/09-16:02:46: Checksum: OK
+19/09-16:02:46: Vino la respuesta <2*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:02:46: Mando ACK
+19/09-16:02:46: Error en Numero de Paquete. Lo desecho
+19/09-16:02:46: A esperar la respuesta
+19/09-16:02:46: Error de comunicaciones con la impresora, Rc -1
+19/09-16:02:48: TIMEOUT esperando STX
+19/09-16:02:48: Envio de STATPRN local
+19/09-16:02:48: Recibo ACK
+19/09-16:02:48: ACK a comando
+19/09-16:02:48: Espero la respuesta
+19/09-16:02:48: Checksum Paquete:   [0x0A9B]
+19/09-16:02:48: Checksum Calculado: [0x0A9B]
+19/09-16:02:48: Checksum: OK
+19/09-16:02:48: Envio el ACK
+19/09-16:02:48: Fin de STATPRN local
+
+19/09-16:02:48: Envio el comando: <L2*00610179>
+19/09-16:02:48: Espero el ACK
+19/09-16:02:48: Recibo ACK
+19/09-16:02:48: A esperar la respuesta
+19/09-16:02:48: Checksum Paquete:   [0x0A66]
+19/09-16:02:48: Checksum Calculado: [0x0A66]
+19/09-16:02:48: Checksum: OK
+19/09-16:02:48: Vino la respuesta <2*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:02:48: Mando ACK
+19/09-16:02:48: Error en Numero de Paquete. Lo desecho
+19/09-16:02:48: A esperar la respuesta
+19/09-16:02:50: TIMEOUT esperando STX
+19/09-16:02:50: Envio de STATPRN local
+19/09-16:02:50: Recibo ACK
+19/09-16:02:50: ACK a comando
+19/09-16:02:50: Espero la respuesta
+19/09-16:02:50: Checksum Paquete:   [0x0A9B]
+19/09-16:02:50: Checksum Calculado: [0x0A9B]
+19/09-16:02:50: Checksum: OK
+19/09-16:02:50: Envio el ACK
+19/09-16:02:50: Fin de STATPRN local
+
+19/09-16:02:50: Error de comunicaciones con la impresora
+19/09-16:02:50: Cmd [4*0063]
+19/09-16:02:50: MandaPaqueteFiscal: CmdRetries 3, SndRetries 2, RcvRetries 2, New_Protocol 0
+
+19/09-16:02:50: Envio el comando: <N4*0063017f>
+19/09-16:02:50: Espero el ACK
+19/09-16:02:50: Recibo ACK
+19/09-16:02:50: A esperar la respuesta
+19/09-16:02:51: Checksum Paquete:   [0x0A68]
+19/09-16:02:51: Checksum Calculado: [0x0A68]
+19/09-16:02:51: Checksum: OK
+19/09-16:02:51: Vino la respuesta <4*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:02:51: Mando ACK
+19/09-16:02:51: Error en Numero de Paquete. Lo desecho
+19/09-16:02:51: A esperar la respuesta
+19/09-16:02:53: TIMEOUT esperando STX
+19/09-16:02:53: Envio de STATPRN local
+19/09-16:02:53: Recibo ACK
+19/09-16:02:53: ACK a comando
+19/09-16:02:53: Espero la respuesta
+19/09-16:02:53: Checksum Paquete:   [0x0A9D]
+19/09-16:02:53: Checksum Calculado: [0x0A9D]
+19/09-16:02:53: Checksum: OK
+19/09-16:02:53: Envio el ACK
+19/09-16:02:53: Fin de STATPRN local
+
+19/09-16:02:53: Envio el comando: <N4*0063017f>
+19/09-16:02:53: Espero el ACK
+19/09-16:02:53: Recibo ACK
+19/09-16:02:53: A esperar la respuesta
+19/09-16:02:53: Checksum Paquete:   [0x0A68]
+19/09-16:02:53: Checksum Calculado: [0x0A68]
+19/09-16:02:53: Checksum: OK
+19/09-16:02:53: Vino la respuesta <4*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:02:53: Mando ACK
+19/09-16:02:53: Error en Numero de Paquete. Lo desecho
+19/09-16:02:53: A esperar la respuesta
+19/09-16:02:55: TIMEOUT esperando STX
+19/09-16:02:55: Envio de STATPRN local
+19/09-16:02:55: Recibo ACK
+19/09-16:02:55: ACK a comando
+19/09-16:02:55: Espero la respuesta
+19/09-16:02:55: Checksum Paquete:   [0x0A9D]
+19/09-16:02:55: Checksum Calculado: [0x0A9D]
+19/09-16:02:55: Checksum: OK
+19/09-16:02:55: Envio el ACK
+19/09-16:02:55: Fin de STATPRN local
+
+19/09-16:02:55: Envio el comando: <N4*0063017f>
+19/09-16:02:55: Espero el ACK
+19/09-16:02:55: Recibo ACK
+19/09-16:02:55: A esperar la respuesta
+19/09-16:02:55: Checksum Paquete:   [0x0A68]
+19/09-16:02:55: Checksum Calculado: [0x0A68]
+19/09-16:02:55: Checksum: OK
+19/09-16:02:55: Vino la respuesta <4*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:02:55: Mando ACK
+19/09-16:02:55: Error en Numero de Paquete. Lo desecho
+19/09-16:02:55: A esperar la respuesta
+19/09-16:02:56: Error de comunicaciones con la impresora, Rc -1
+19/09-16:02:57: TIMEOUT esperando STX
+19/09-16:02:57: Envio de STATPRN local
+19/09-16:02:57: Recibo ACK
+19/09-16:02:57: ACK a comando
+19/09-16:02:57: Espero la respuesta
+19/09-16:02:57: Checksum Paquete:   [0x0A9D]
+19/09-16:02:57: Checksum Calculado: [0x0A9D]
+19/09-16:02:57: Checksum: OK
+19/09-16:02:57: Envio el ACK
+19/09-16:02:57: Fin de STATPRN local
+
+19/09-16:02:57: Error de comunicaciones con la impresora
+19/09-16:02:57: Cmd [4*00636*0065]
+19/09-16:02:57: MandaPaqueteFiscal: CmdRetries 3, SndRetries 2, RcvRetries 2, New_Protocol 0
+
+19/09-16:02:57: Envio el comando: <P4*00636*006502b1>
+19/09-16:02:57: Espero el ACK
+19/09-16:02:57: Recibo ACK
+19/09-16:02:57: A esperar la respuesta
+19/09-16:02:57: Checksum Paquete:   [0x0A68]
+19/09-16:02:57: Checksum Calculado: [0x0A68]
+19/09-16:02:57: Checksum: OK
+19/09-16:02:57: Vino la respuesta <4*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:02:57: Mando ACK
+19/09-16:02:57: Error en Numero de Paquete. Lo desecho
+19/09-16:02:57: A esperar la respuesta
+19/09-16:02:59: TIMEOUT esperando STX
+19/09-16:02:59: Envio de STATPRN local
+19/09-16:02:59: Recibo ACK
+19/09-16:02:59: ACK a comando
+19/09-16:02:59: Espero la respuesta
+19/09-16:02:59: Checksum Paquete:   [0x0A9F]
+19/09-16:02:59: Checksum Calculado: [0x0A9F]
+19/09-16:02:59: Checksum: OK
+19/09-16:02:59: Envio el ACK
+19/09-16:02:59: Fin de STATPRN local
+
+19/09-16:02:59: Envio el comando: <P4*00636*006502b1>
+19/09-16:02:59: Espero el ACK
+19/09-16:02:59: Recibo ACK
+19/09-16:02:59: A esperar la respuesta
+19/09-16:02:59: Checksum Paquete:   [0x0A68]
+19/09-16:02:59: Checksum Calculado: [0x0A68]
+19/09-16:02:59: Checksum: OK
+19/09-16:02:59: Vino la respuesta <4*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:02:59: Mando ACK
+19/09-16:02:59: Error en Numero de Paquete. Lo desecho
+19/09-16:02:59: A esperar la respuesta
+19/09-16:03:01: TIMEOUT esperando STX
+19/09-16:03:01: Envio de STATPRN local
+19/09-16:03:01: Recibo ACK
+19/09-16:03:01: ACK a comando
+19/09-16:03:01: Espero la respuesta
+19/09-16:03:01: Checksum Paquete:   [0x0A9F]
+19/09-16:03:01: Checksum Calculado: [0x0A9F]
+19/09-16:03:01: Checksum: OK
+19/09-16:03:01: Envio el ACK
+19/09-16:03:01: Fin de STATPRN local
+
+19/09-16:03:01: Envio el comando: <P4*00636*006502b1>
+19/09-16:03:01: Espero el ACK
+19/09-16:03:01: Recibo ACK
+19/09-16:03:01: A esperar la respuesta
+19/09-16:03:01: Checksum Paquete:   [0x0A68]
+19/09-16:03:01: Checksum Calculado: [0x0A68]
+19/09-16:03:01: Checksum: OK
+19/09-16:03:01: Vino la respuesta <4*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:03:01: Mando ACK
+19/09-16:03:01: Error en Numero de Paquete. Lo desecho
+19/09-16:03:01: A esperar la respuesta
+19/09-16:03:03: TIMEOUT esperando STX
+19/09-16:03:03: Envio de STATPRN local
+19/09-16:03:03: Recibo ACK
+19/09-16:03:03: ACK a comando
+19/09-16:03:03: Espero la respuesta
+19/09-16:03:03: Checksum Paquete:   [0x0A9F]
+19/09-16:03:03: Checksum Calculado: [0x0A9F]
+19/09-16:03:03: Checksum: OK
+19/09-16:03:03: Envio el ACK
+19/09-16:03:03: Fin de STATPRN local
+
+19/09-16:03:03: Error de comunicaciones con la impresora
+19/09-16:03:03: Cmd [6*0065]
+19/09-16:03:03: MandaPaqueteFiscal: CmdRetries 3, SndRetries 2, RcvRetries 2, New_Protocol 0
+
+19/09-16:03:03: Envio el comando: <R6*00650187>
+19/09-16:03:03: Espero el ACK
+19/09-16:03:03: Recibo ACK
+19/09-16:03:03: A esperar la respuesta
+19/09-16:03:04: Checksum Paquete:   [0x0A6A]
+19/09-16:03:04: Checksum Calculado: [0x0A6A]
+19/09-16:03:04: Checksum: OK
+19/09-16:03:04: Vino la respuesta <6*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:03:04: Mando ACK
+19/09-16:03:04: Error en Numero de Paquete. Lo desecho
+19/09-16:03:04: A esperar la respuesta
+19/09-16:03:06: TIMEOUT esperando STX
+19/09-16:03:06: Envio de STATPRN local
+19/09-16:03:06: Recibo ACK
+19/09-16:03:06: ACK a comando
+19/09-16:03:06: Espero la respuesta
+19/09-16:03:06: Checksum Paquete:   [0x0AA1]
+19/09-16:03:06: Checksum Calculado: [0x0AA1]
+19/09-16:03:06: Checksum: OK
+19/09-16:03:06: Envio el ACK
+19/09-16:03:06: Fin de STATPRN local
+
+19/09-16:03:06: Envio el comando: <R6*00650187>
+19/09-16:03:06: Espero el ACK
+19/09-16:03:06: Recibo ACK
+19/09-16:03:06: A esperar la respuesta
+19/09-16:03:06: Checksum Paquete:   [0x0A6A]
+19/09-16:03:06: Checksum Calculado: [0x0A6A]
+19/09-16:03:06: Checksum: OK
+19/09-16:03:06: Vino la respuesta <6*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:03:06: Mando ACK
+19/09-16:03:06: Error en Numero de Paquete. Lo desecho
+19/09-16:03:06: A esperar la respuesta
+19/09-16:03:06: Error de comunicaciones con la impresora, Rc -1
+19/09-16:03:08: TIMEOUT esperando STX
+19/09-16:03:08: Envio de STATPRN local
+19/09-16:03:08: Recibo ACK
+19/09-16:03:08: ACK a comando
+19/09-16:03:08: Espero la respuesta
+19/09-16:03:08: Checksum Paquete:   [0x0AA1]
+19/09-16:03:08: Checksum Calculado: [0x0AA1]
+19/09-16:03:08: Checksum: OK
+19/09-16:03:08: Envio el ACK
+19/09-16:03:08: Fin de STATPRN local
+
+19/09-16:03:08: Envio el comando: <R6*00650187>
+19/09-16:03:08: Espero el ACK
+19/09-16:03:08: Recibo ACK
+19/09-16:03:08: A esperar la respuesta
+19/09-16:03:08: Checksum Paquete:   [0x0A6A]
+19/09-16:03:08: Checksum Calculado: [0x0A6A]
+19/09-16:03:08: Checksum: OK
+19/09-16:03:08: Vino la respuesta <6*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:03:08: Mando ACK
+19/09-16:03:08: Error en Numero de Paquete. Lo desecho
+19/09-16:03:08: A esperar la respuesta
+19/09-16:03:10: TIMEOUT esperando STX
+19/09-16:03:10: Envio de STATPRN local
+19/09-16:03:10: Recibo ACK
+19/09-16:03:10: ACK a comando
+19/09-16:03:10: Espero la respuesta
+19/09-16:03:10: Checksum Paquete:   [0x0AA1]
+19/09-16:03:10: Checksum Calculado: [0x0AA1]
+19/09-16:03:10: Checksum: OK
+19/09-16:03:10: Envio el ACK
+19/09-16:03:10: Fin de STATPRN local
+
+19/09-16:03:10: Error de comunicaciones con la impresora
+19/09-16:03:10: Cmd [8*0067]
+19/09-16:03:10: MandaPaqueteFiscal: CmdRetries 3, SndRetries 2, RcvRetries 2, New_Protocol 0
+
+19/09-16:03:10: Envio el comando: <T8*0067018d>
+19/09-16:03:10: Espero el ACK
+19/09-16:03:10: Recibo ACK
+19/09-16:03:10: A esperar la respuesta
+19/09-16:03:10: Checksum Paquete:   [0x0A6C]
+19/09-16:03:10: Checksum Calculado: [0x0A6C]
+19/09-16:03:10: Checksum: OK
+19/09-16:03:10: Vino la respuesta <8*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:03:10: Mando ACK
+19/09-16:03:10: Error en Numero de Paquete. Lo desecho
+19/09-16:03:10: A esperar la respuesta
+19/09-16:03:12: TIMEOUT esperando STX
+19/09-16:03:12: Envio de STATPRN local
+19/09-16:03:12: Recibo ACK
+19/09-16:03:12: ACK a comando
+19/09-16:03:12: Espero la respuesta
+19/09-16:03:12: Checksum Paquete:   [0x0AA3]
+19/09-16:03:12: Checksum Calculado: [0x0AA3]
+19/09-16:03:12: Checksum: OK
+19/09-16:03:12: Envio el ACK
+19/09-16:03:12: Fin de STATPRN local
+
+19/09-16:03:12: Envio el comando: <T8*0067018d>
+19/09-16:03:12: Espero el ACK
+19/09-16:03:12: Recibo ACK
+19/09-16:03:12: A esperar la respuesta
+19/09-16:03:12: Checksum Paquete:   [0x0A6C]
+19/09-16:03:12: Checksum Calculado: [0x0A6C]
+19/09-16:03:12: Checksum: OK
+19/09-16:03:12: Vino la respuesta <8*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:03:12: Mando ACK
+19/09-16:03:12: Error en Numero de Paquete. Lo desecho
+19/09-16:03:12: A esperar la respuesta
+19/09-16:03:14: TIMEOUT esperando STX
+19/09-16:03:14: Envio de STATPRN local
+19/09-16:03:14: Recibo ACK
+19/09-16:03:14: ACK a comando
+19/09-16:03:14: Espero la respuesta
+19/09-16:03:14: Checksum Paquete:   [0x0AA3]
+19/09-16:03:14: Checksum Calculado: [0x0AA3]
+19/09-16:03:14: Checksum: OK
+19/09-16:03:14: Envio el ACK
+19/09-16:03:14: Fin de STATPRN local
+
+19/09-16:03:14: Envio el comando: <T8*0067018d>
+19/09-16:03:14: Espero el ACK
+19/09-16:03:14: Recibo ACK
+19/09-16:03:14: A esperar la respuesta
+19/09-16:03:14: Checksum Paquete:   [0x0A6C]
+19/09-16:03:14: Checksum Calculado: [0x0A6C]
+19/09-16:03:14: Checksum: OK
+19/09-16:03:14: Vino la respuesta <8*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:03:14: Mando ACK
+19/09-16:03:14: Error en Numero de Paquete. Lo desecho
+19/09-16:03:14: A esperar la respuesta
+19/09-16:03:16: TIMEOUT esperando STX
+19/09-16:03:16: Envio de STATPRN local
+19/09-16:03:16: Recibo ACK
+19/09-16:03:16: ACK a comando
+19/09-16:03:16: Espero la respuesta
+19/09-16:03:16: Checksum Paquete:   [0x0AA3]
+19/09-16:03:16: Checksum Calculado: [0x0AA3]
+19/09-16:03:16: Checksum: OK
+19/09-16:03:16: Envio el ACK
+19/09-16:03:16: Fin de STATPRN local
+
+19/09-16:03:16: Error de comunicaciones con la impresora
+19/09-16:03:16: Cmd [8*0067]
+19/09-16:03:16: MandaPaqueteFiscal: CmdRetries 3, SndRetries 2, RcvRetries 2, New_Protocol 0
+
+19/09-16:03:16: Envio el comando: <V8*0067018f>
+19/09-16:03:16: Espero el ACK
+19/09-16:03:16: Recibo ACK
+19/09-16:03:16: A esperar la respuesta
+19/09-16:03:16: Error de comunicaciones con la impresora, Rc -1
+19/09-16:03:17: Checksum Paquete:   [0x0A6C]
+19/09-16:03:17: Checksum Calculado: [0x0A6C]
+19/09-16:03:17: Checksum: OK
+19/09-16:03:17: Vino la respuesta <8*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:03:17: Mando ACK
+19/09-16:03:17: Error en Numero de Paquete. Lo desecho
+19/09-16:03:17: A esperar la respuesta
+19/09-16:03:19: TIMEOUT esperando STX
+19/09-16:03:19: Envio de STATPRN local
+19/09-16:03:19: Recibo ACK
+19/09-16:03:19: ACK a comando
+19/09-16:03:19: Espero la respuesta
+19/09-16:03:19: Checksum Paquete:   [0x0AA5]
+19/09-16:03:19: Checksum Calculado: [0x0AA5]
+19/09-16:03:19: Checksum: OK
+19/09-16:03:19: Envio el ACK
+19/09-16:03:19: Fin de STATPRN local
+
+19/09-16:03:19: Envio el comando: <V8*0067018f>
+19/09-16:03:19: Espero el ACK
+19/09-16:03:19: Recibo ACK
+19/09-16:03:19: A esperar la respuesta
+19/09-16:03:19: Checksum Paquete:   [0x0A6C]
+19/09-16:03:19: Checksum Calculado: [0x0A6C]
+19/09-16:03:19: Checksum: OK
+19/09-16:03:19: Vino la respuesta <8*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:03:19: Mando ACK
+19/09-16:03:19: Error en Numero de Paquete. Lo desecho
+19/09-16:03:19: A esperar la respuesta
+19/09-16:03:21: TIMEOUT esperando STX
+19/09-16:03:21: Envio de STATPRN local
+19/09-16:03:21: Recibo ACK
+19/09-16:03:21: ACK a comando
+19/09-16:03:21: Espero la respuesta
+19/09-16:03:21: Checksum Paquete:   [0x0AA5]
+19/09-16:03:21: Checksum Calculado: [0x0AA5]
+19/09-16:03:21: Checksum: OK
+19/09-16:03:21: Envio el ACK
+19/09-16:03:21: Fin de STATPRN local
+
+19/09-16:03:21: Envio el comando: <V8*0067018f>
+19/09-16:03:21: Espero el ACK
+19/09-16:03:21: Recibo ACK
+19/09-16:03:21: A esperar la respuesta
+19/09-16:03:21: Checksum Paquete:   [0x0A6C]
+19/09-16:03:21: Checksum Calculado: [0x0A6C]
+19/09-16:03:21: Checksum: OK
+19/09-16:03:21: Vino la respuesta <8*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:03:21: Mando ACK
+19/09-16:03:21: Error en Numero de Paquete. Lo desecho
+19/09-16:03:21: A esperar la respuesta
+19/09-16:03:23: TIMEOUT esperando STX
+19/09-16:03:23: Envio de STATPRN local
+19/09-16:03:23: Recibo ACK
+19/09-16:03:23: ACK a comando
+19/09-16:03:23: Espero la respuesta
+19/09-16:03:23: Checksum Paquete:   [0x0AA5]
+19/09-16:03:23: Checksum Calculado: [0x0AA5]
+19/09-16:03:23: Checksum: OK
+19/09-16:03:23: Envio el ACK
+19/09-16:03:23: Fin de STATPRN local
+
+19/09-16:03:23: Error de comunicaciones con la impresora
+19/09-16:03:23: Cmd [:*0069:*0069]
+19/09-16:03:23: MandaPaqueteFiscal: CmdRetries 3, SndRetries 2, RcvRetries 2, New_Protocol 0
+
+19/09-16:03:23: Envio el comando: <X:*0069:*006902cd>
+19/09-16:03:23: Espero el ACK
+19/09-16:03:23: Recibo ACK
+19/09-16:03:23: A esperar la respuesta
+19/09-16:03:23: Checksum Paquete:   [0x0A6E]
+19/09-16:03:23: Checksum Calculado: [0x0A6E]
+19/09-16:03:23: Checksum: OK
+19/09-16:03:23: Vino la respuesta <:*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:03:23: Mando ACK
+19/09-16:03:23: Error en Numero de Paquete. Lo desecho
+19/09-16:03:23: A esperar la respuesta
+19/09-16:03:25: TIMEOUT esperando STX
+19/09-16:03:25: Envio de STATPRN local
+19/09-16:03:25: Recibo ACK
+19/09-16:03:25: ACK a comando
+19/09-16:03:25: Espero la respuesta
+19/09-16:03:25: Checksum Paquete:   [0x0AA7]
+19/09-16:03:25: Checksum Calculado: [0x0AA7]
+19/09-16:03:25: Checksum: OK
+19/09-16:03:25: Envio el ACK
+19/09-16:03:25: Fin de STATPRN local
+
+19/09-16:03:25: Envio el comando: <X:*0069:*006902cd>
+19/09-16:03:25: Espero el ACK
+19/09-16:03:25: Recibo ACK
+19/09-16:03:25: A esperar la respuesta
+19/09-16:03:25: Checksum Paquete:   [0x0A6E]
+19/09-16:03:25: Checksum Calculado: [0x0A6E]
+19/09-16:03:25: Checksum: OK
+19/09-16:03:25: Vino la respuesta <:*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:03:25: Mando ACK
+19/09-16:03:25: Error en Numero de Paquete. Lo desecho
+19/09-16:03:25: A esperar la respuesta
+19/09-16:03:26: Error de comunicaciones con la impresora, Rc -1
+19/09-16:03:27: TIMEOUT esperando STX
+19/09-16:03:27: Envio de STATPRN local
+19/09-16:03:27: Recibo ACK
+19/09-16:03:27: ACK a comando
+19/09-16:03:27: Espero la respuesta
+19/09-16:03:27: Checksum Paquete:   [0x0AA7]
+19/09-16:03:27: Checksum Calculado: [0x0AA7]
+19/09-16:03:27: Checksum: OK
+19/09-16:03:27: Envio el ACK
+19/09-16:03:27: Fin de STATPRN local
+
+19/09-16:03:27: Envio el comando: <X:*0069:*006902cd>
+19/09-16:03:27: Espero el ACK
+19/09-16:03:27: Recibo ACK
+19/09-16:03:27: A esperar la respuesta
+19/09-16:03:27: Checksum Paquete:   [0x0A6E]
+19/09-16:03:27: Checksum Calculado: [0x0A6E]
+19/09-16:03:27: Checksum: OK
+19/09-16:03:27: Vino la respuesta <:*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:03:27: Mando ACK
+19/09-16:03:27: Error en Numero de Paquete. Lo desecho
+19/09-16:03:27: A esperar la respuesta
+19/09-16:03:29: TIMEOUT esperando STX
+19/09-16:03:29: Envio de STATPRN local
+19/09-16:03:29: Recibo ACK
+19/09-16:03:29: ACK a comando
+19/09-16:03:29: Espero la respuesta
+19/09-16:03:29: Checksum Paquete:   [0x0AA7]
+19/09-16:03:29: Checksum Calculado: [0x0AA7]
+19/09-16:03:29: Checksum: OK
+19/09-16:03:29: Envio el ACK
+19/09-16:03:29: Fin de STATPRN local
+
+19/09-16:03:29: Error de comunicaciones con la impresora
+19/09-16:03:29: Cmd [<*006b]
+19/09-16:03:29: MandaPaqueteFiscal: CmdRetries 3, SndRetries 2, RcvRetries 2, New_Protocol 0
+
+19/09-16:03:29: Envio el comando: <Z<*006b01c2>
+19/09-16:03:29: Espero el ACK
+19/09-16:03:29: Recibo ACK
+19/09-16:03:29: A esperar la respuesta
+19/09-16:03:30: Checksum Paquete:   [0x0A70]
+19/09-16:03:30: Checksum Calculado: [0x0A70]
+19/09-16:03:30: Checksum: OK
+19/09-16:03:30: Vino la respuesta <<*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:03:30: Mando ACK
+19/09-16:03:30: Error en Numero de Paquete. Lo desecho
+19/09-16:03:30: A esperar la respuesta
+19/09-16:03:32: TIMEOUT esperando STX
+19/09-16:03:32: Envio de STATPRN local
+19/09-16:03:32: Recibo ACK
+19/09-16:03:32: ACK a comando
+19/09-16:03:32: Espero la respuesta
+19/09-16:03:32: Checksum Paquete:   [0x0AA9]
+19/09-16:03:32: Checksum Calculado: [0x0AA9]
+19/09-16:03:32: Checksum: OK
+19/09-16:03:32: Envio el ACK
+19/09-16:03:32: Fin de STATPRN local
+
+19/09-16:03:32: Envio el comando: <Z<*006b01c2>
+19/09-16:03:32: Espero el ACK
+19/09-16:03:32: Recibo ACK
+19/09-16:03:32: A esperar la respuesta
+19/09-16:03:32: Checksum Paquete:   [0x0A70]
+19/09-16:03:32: Checksum Calculado: [0x0A70]
+19/09-16:03:32: Checksum: OK
+19/09-16:03:32: Vino la respuesta <<*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:03:32: Mando ACK
+19/09-16:03:32: Error en Numero de Paquete. Lo desecho
+19/09-16:03:32: A esperar la respuesta
+19/09-16:03:34: TIMEOUT esperando STX
+19/09-16:03:34: Envio de STATPRN local
+19/09-16:03:34: Recibo ACK
+19/09-16:03:34: ACK a comando
+19/09-16:03:34: Espero la respuesta
+19/09-16:03:34: Checksum Paquete:   [0x0AA9]
+19/09-16:03:34: Checksum Calculado: [0x0AA9]
+19/09-16:03:34: Checksum: OK
+19/09-16:03:34: Envio el ACK
+19/09-16:03:34: Fin de STATPRN local
+
+19/09-16:03:34: Envio el comando: <Z<*006b01c2>
+19/09-16:03:34: Espero el ACK
+19/09-16:03:34: Recibo ACK
+19/09-16:03:34: A esperar la respuesta
+19/09-16:03:34: Checksum Paquete:   [0x0A70]
+19/09-16:03:34: Checksum Calculado: [0x0A70]
+19/09-16:03:34: Checksum: OK
+19/09-16:03:34: Vino la respuesta <<*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:03:34: Mando ACK
+19/09-16:03:34: Error en Numero de Paquete. Lo desecho
+19/09-16:03:34: A esperar la respuesta
+19/09-16:03:36: TIMEOUT esperando STX
+19/09-16:03:36: Envio de STATPRN local
+19/09-16:03:36: Recibo ACK
+19/09-16:03:36: ACK a comando
+19/09-16:03:36: Espero la respuesta
+19/09-16:03:36: Checksum Paquete:   [0x0AA9]
+19/09-16:03:36: Checksum Calculado: [0x0AA9]
+19/09-16:03:36: Checksum: OK
+19/09-16:03:36: Envio el ACK
+19/09-16:03:36: Fin de STATPRN local
+
+19/09-16:03:36: Error de comunicaciones con la impresora
+19/09-16:03:36: Cmd [<*006b]
+19/09-16:03:36: MandaPaqueteFiscal: CmdRetries 3, SndRetries 2, RcvRetries 2, New_Protocol 0
+
+19/09-16:03:36: Envio el comando: <\<*006b01c4>
+19/09-16:03:36: Espero el ACK
+19/09-16:03:36: Recibo ACK
+19/09-16:03:36: A esperar la respuesta
+19/09-16:03:36: Checksum Paquete:   [0x0A70]
+19/09-16:03:36: Checksum Calculado: [0x0A70]
+19/09-16:03:36: Checksum: OK
+19/09-16:03:36: Vino la respuesta <<*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:03:36: Mando ACK
+19/09-16:03:36: Error en Numero de Paquete. Lo desecho
+19/09-16:03:36: A esperar la respuesta
+19/09-16:03:36: Error de comunicaciones con la impresora, Rc -1
+19/09-16:03:38: TIMEOUT esperando STX
+19/09-16:03:38: Envio de STATPRN local
+19/09-16:03:38: Recibo ACK
+19/09-16:03:38: ACK a comando
+19/09-16:03:38: Espero la respuesta
+19/09-16:03:38: Checksum Paquete:   [0x0AAB]
+19/09-16:03:38: Checksum Calculado: [0x0AAB]
+19/09-16:03:38: Checksum: OK
+19/09-16:03:38: Envio el ACK
+19/09-16:03:38: Fin de STATPRN local
+
+19/09-16:03:38: Envio el comando: <\<*006b01c4>
+19/09-16:03:38: Espero el ACK
+19/09-16:03:38: Recibo ACK
+19/09-16:03:38: A esperar la respuesta
+19/09-16:03:38: Checksum Paquete:   [0x0A70]
+19/09-16:03:38: Checksum Calculado: [0x0A70]
+19/09-16:03:38: Checksum: OK
+19/09-16:03:38: Vino la respuesta <<*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:03:38: Mando ACK
+19/09-16:03:38: Error en Numero de Paquete. Lo desecho
+19/09-16:03:38: A esperar la respuesta
+19/09-16:03:40: TIMEOUT esperando STX
+19/09-16:03:40: Envio de STATPRN local
+19/09-16:03:40: Recibo ACK
+19/09-16:03:40: ACK a comando
+19/09-16:03:40: Espero la respuesta
+19/09-16:03:40: Checksum Paquete:   [0x0AAB]
+19/09-16:03:40: Checksum Calculado: [0x0AAB]
+19/09-16:03:40: Checksum: OK
+19/09-16:03:40: Envio el ACK
+19/09-16:03:40: Fin de STATPRN local
+
+19/09-16:03:40: Envio el comando: <\<*006b01c4>
+19/09-16:03:40: Espero el ACK
+19/09-16:03:40: Recibo ACK
+19/09-16:03:40: A esperar la respuesta
+19/09-16:03:40: Checksum Paquete:   [0x0A70]
+19/09-16:03:40: Checksum Calculado: [0x0A70]
+19/09-16:03:40: Checksum: OK
+19/09-16:03:40: Vino la respuesta <<*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:03:40: Mando ACK
+19/09-16:03:40: Error en Numero de Paquete. Lo desecho
+19/09-16:03:40: A esperar la respuesta
+19/09-16:03:42: TIMEOUT esperando STX
+19/09-16:03:42: Envio de STATPRN local
+19/09-16:03:42: Recibo ACK
+19/09-16:03:42: ACK a comando
+19/09-16:03:42: Espero la respuesta
+19/09-16:03:42: Checksum Paquete:   [0x0AAB]
+19/09-16:03:42: Checksum Calculado: [0x0AAB]
+19/09-16:03:42: Checksum: OK
+19/09-16:03:42: Envio el ACK
+19/09-16:03:42: Fin de STATPRN local
+
+19/09-16:03:42: Error de comunicaciones con la impresora
+19/09-16:03:42: Cmd [>*006d>*006d]
+19/09-16:03:42: MandaPaqueteFiscal: CmdRetries 3, SndRetries 2, RcvRetries 2, New_Protocol 0
+
+19/09-16:03:42: Envio el comando: <^>*006d>*006d0331>
+19/09-16:03:42: Espero el ACK
+19/09-16:03:42: Recibo ACK
+19/09-16:03:42: A esperar la respuesta
+19/09-16:03:43: Checksum Paquete:   [0x0A72]
+19/09-16:03:43: Checksum Calculado: [0x0A72]
+19/09-16:03:43: Checksum: OK
+19/09-16:03:43: Vino la respuesta <>*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:03:43: Mando ACK
+19/09-16:03:43: Error en Numero de Paquete. Lo desecho
+19/09-16:03:43: A esperar la respuesta
+19/09-16:03:45: TIMEOUT esperando STX
+19/09-16:03:45: Envio de STATPRN local
+19/09-16:03:45: Recibo ACK
+19/09-16:03:45: ACK a comando
+19/09-16:03:45: Espero la respuesta
+19/09-16:03:45: Checksum Paquete:   [0x0AAD]
+19/09-16:03:45: Checksum Calculado: [0x0AAD]
+19/09-16:03:45: Checksum: OK
+19/09-16:03:45: Envio el ACK
+19/09-16:03:45: Fin de STATPRN local
+
+19/09-16:03:45: Envio el comando: <^>*006d>*006d0331>
+19/09-16:03:45: Espero el ACK
+19/09-16:03:45: Recibo ACK
+19/09-16:03:45: A esperar la respuesta
+19/09-16:03:45: Checksum Paquete:   [0x0A72]
+19/09-16:03:45: Checksum Calculado: [0x0A72]
+19/09-16:03:45: Checksum: OK
+19/09-16:03:45: Vino la respuesta <>*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:03:45: Mando ACK
+19/09-16:03:45: Error en Numero de Paquete. Lo desecho
+19/09-16:03:45: A esperar la respuesta
+19/09-16:03:46: Error de comunicaciones con la impresora, Rc -1
+19/09-16:03:47: TIMEOUT esperando STX
+19/09-16:03:47: Envio de STATPRN local
+19/09-16:03:47: Recibo ACK
+19/09-16:03:47: ACK a comando
+19/09-16:03:47: Espero la respuesta
+19/09-16:03:47: Checksum Paquete:   [0x0AAD]
+19/09-16:03:47: Checksum Calculado: [0x0AAD]
+19/09-16:03:47: Checksum: OK
+19/09-16:03:47: Envio el ACK
+19/09-16:03:47: Fin de STATPRN local
+
+19/09-16:03:47: Envio el comando: <^>*006d>*006d0331>
+19/09-16:03:47: Espero el ACK
+19/09-16:03:47: Recibo ACK
+19/09-16:03:47: A esperar la respuesta
+19/09-16:03:47: Checksum Paquete:   [0x0A72]
+19/09-16:03:47: Checksum Calculado: [0x0A72]
+19/09-16:03:47: Checksum: OK
+19/09-16:03:47: Vino la respuesta <>*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:03:47: Mando ACK
+19/09-16:03:47: Error en Numero de Paquete. Lo desecho
+19/09-16:03:47: A esperar la respuesta
+19/09-16:03:49: TIMEOUT esperando STX
+19/09-16:03:49: Envio de STATPRN local
+19/09-16:03:49: Recibo ACK
+19/09-16:03:49: ACK a comando
+19/09-16:03:49: Espero la respuesta
+19/09-16:03:49: Checksum Paquete:   [0x0AAD]
+19/09-16:03:49: Checksum Calculado: [0x0AAD]
+19/09-16:03:49: Checksum: OK
+19/09-16:03:49: Envio el ACK
+19/09-16:03:49: Fin de STATPRN local
+
+19/09-16:03:49: Error de comunicaciones con la impresora
+19/09-16:03:49: Cmd [@*006f]
+19/09-16:03:49: MandaPaqueteFiscal: CmdRetries 3, SndRetries 2, RcvRetries 2, New_Protocol 0
+
+19/09-16:03:49: Envio el comando: <`@*006f01d0>
+19/09-16:03:49: Espero el ACK
+19/09-16:03:49: Recibo ACK
+19/09-16:03:49: A esperar la respuesta
+19/09-16:03:49: Checksum Paquete:   [0x0A74]
+19/09-16:03:49: Checksum Calculado: [0x0A74]
+19/09-16:03:49: Checksum: OK
+19/09-16:03:49: Vino la respuesta <@*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:03:49: Mando ACK
+19/09-16:03:49: Error en Numero de Paquete. Lo desecho
+19/09-16:03:49: A esperar la respuesta
+19/09-16:03:51: TIMEOUT esperando STX
+19/09-16:03:51: Envio de STATPRN local
+19/09-16:03:51: Recibo ACK
+19/09-16:03:51: ACK a comando
+19/09-16:03:51: Espero la respuesta
+19/09-16:03:51: Checksum Paquete:   [0x0AAF]
+19/09-16:03:51: Checksum Calculado: [0x0AAF]
+19/09-16:03:51: Checksum: OK
+19/09-16:03:51: Envio el ACK
+19/09-16:03:51: Fin de STATPRN local
+
+19/09-16:03:51: Envio el comando: <`@*006f01d0>
+19/09-16:03:51: Espero el ACK
+19/09-16:03:51: Recibo ACK
+19/09-16:03:51: A esperar la respuesta
+19/09-16:03:51: Checksum Paquete:   [0x0A74]
+19/09-16:03:51: Checksum Calculado: [0x0A74]
+19/09-16:03:51: Checksum: OK
+19/09-16:03:51: Vino la respuesta <@*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:03:51: Mando ACK
+19/09-16:03:51: Error en Numero de Paquete. Lo desecho
+19/09-16:03:51: A esperar la respuesta
+19/09-16:03:53: TIMEOUT esperando STX
+19/09-16:03:53: Envio de STATPRN local
+19/09-16:03:53: Recibo ACK
+19/09-16:03:53: ACK a comando
+19/09-16:03:53: Espero la respuesta
+19/09-16:03:53: Checksum Paquete:   [0x0AAF]
+19/09-16:03:53: Checksum Calculado: [0x0AAF]
+19/09-16:03:53: Checksum: OK
+19/09-16:03:53: Envio el ACK
+19/09-16:03:53: Fin de STATPRN local
+
+19/09-16:03:53: Envio el comando: <`@*006f01d0>
+19/09-16:03:53: Espero el ACK
+19/09-16:03:53: Recibo ACK
+19/09-16:03:53: A esperar la respuesta
+19/09-16:03:53: Checksum Paquete:   [0x0A74]
+19/09-16:03:53: Checksum Calculado: [0x0A74]
+19/09-16:03:53: Checksum: OK
+19/09-16:03:53: Vino la respuesta <@*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:03:53: Mando ACK
+19/09-16:03:53: Error en Numero de Paquete. Lo desecho
+19/09-16:03:53: A esperar la respuesta
+19/09-16:03:55: TIMEOUT esperando STX
+19/09-16:03:55: Envio de STATPRN local
+19/09-16:03:55: Recibo ACK
+19/09-16:03:55: ACK a comando
+19/09-16:03:55: Espero la respuesta
+19/09-16:03:55: Checksum Paquete:   [0x0AAF]
+19/09-16:03:55: Checksum Calculado: [0x0AAF]
+19/09-16:03:55: Checksum: OK
+19/09-16:03:55: Envio el ACK
+19/09-16:03:55: Fin de STATPRN local
+
+19/09-16:03:55: Error de comunicaciones con la impresora
+19/09-16:03:55: Cmd [@*006f]
+19/09-16:03:55: MandaPaqueteFiscal: CmdRetries 3, SndRetries 2, RcvRetries 2, New_Protocol 0
+
+19/09-16:03:55: Envio el comando: <b@*006f01d2>
+19/09-16:03:55: Espero el ACK
+19/09-16:03:55: Recibo ACK
+19/09-16:03:55: A esperar la respuesta
+19/09-16:03:56: Checksum Paquete:   [0x0A74]
+19/09-16:03:56: Checksum Calculado: [0x0A74]
+19/09-16:03:56: Checksum: OK
+19/09-16:03:56: Vino la respuesta <@*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:03:56: Mando ACK
+19/09-16:03:56: Error en Numero de Paquete. Lo desecho
+19/09-16:03:56: A esperar la respuesta
+19/09-16:03:57: Error de comunicaciones con la impresora, Rc -1
+19/09-16:03:58: TIMEOUT esperando STX
+19/09-16:03:58: Envio de STATPRN local
+19/09-16:03:58: Recibo ACK
+19/09-16:03:58: ACK a comando
+19/09-16:03:58: Espero la respuesta
+19/09-16:03:58: Checksum Paquete:   [0x0AB1]
+19/09-16:03:58: Checksum Calculado: [0x0AB1]
+19/09-16:03:58: Checksum: OK
+19/09-16:03:58: Envio el ACK
+19/09-16:03:58: Fin de STATPRN local
+
+19/09-16:03:58: Envio el comando: <b@*006f01d2>
+19/09-16:03:58: Espero el ACK
+19/09-16:03:58: Recibo ACK
+19/09-16:03:58: A esperar la respuesta
+19/09-16:03:58: Checksum Paquete:   [0x0A74]
+19/09-16:03:58: Checksum Calculado: [0x0A74]
+19/09-16:03:58: Checksum: OK
+19/09-16:03:58: Vino la respuesta <@*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:03:58: Mando ACK
+19/09-16:03:58: Error en Numero de Paquete. Lo desecho
+19/09-16:03:58: A esperar la respuesta
+19/09-16:04:00: TIMEOUT esperando STX
+19/09-16:04:00: Envio de STATPRN local
+19/09-16:04:00: Recibo ACK
+19/09-16:04:00: ACK a comando
+19/09-16:04:00: Espero la respuesta
+19/09-16:04:00: Checksum Paquete:   [0x0AB1]
+19/09-16:04:00: Checksum Calculado: [0x0AB1]
+19/09-16:04:00: Checksum: OK
+19/09-16:04:00: Envio el ACK
+19/09-16:04:00: Fin de STATPRN local
+
+19/09-16:04:00: Envio el comando: <b@*006f01d2>
+19/09-16:04:00: Espero el ACK
+19/09-16:04:00: Recibo ACK
+19/09-16:04:00: A esperar la respuesta
+19/09-16:04:00: Checksum Paquete:   [0x0A74]
+19/09-16:04:00: Checksum Calculado: [0x0A74]
+19/09-16:04:00: Checksum: OK
+19/09-16:04:00: Vino la respuesta <@*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:04:00: Mando ACK
+19/09-16:04:00: Error en Numero de Paquete. Lo desecho
+19/09-16:04:00: A esperar la respuesta
+19/09-16:04:02: TIMEOUT esperando STX
+19/09-16:04:02: Envio de STATPRN local
+19/09-16:04:02: Recibo ACK
+19/09-16:04:02: ACK a comando
+19/09-16:04:02: Espero la respuesta
+19/09-16:04:02: Checksum Paquete:   [0x0AB1]
+19/09-16:04:02: Checksum Calculado: [0x0AB1]
+19/09-16:04:02: Checksum: OK
+19/09-16:04:02: Envio el ACK
+19/09-16:04:02: Fin de STATPRN local
+
+19/09-16:04:02: Error de comunicaciones con la impresora
+19/09-16:04:02: Cmd [B*0071B*0071]
+19/09-16:04:02: MandaPaqueteFiscal: CmdRetries 3, SndRetries 2, RcvRetries 2, New_Protocol 0
+
+19/09-16:04:02: Envio el comando: <dB*0071B*007102db>
+19/09-16:04:02: Espero el ACK
+19/09-16:04:02: Recibo ACK
+19/09-16:04:02: A esperar la respuesta
+19/09-16:04:02: Checksum Paquete:   [0x0A76]
+19/09-16:04:02: Checksum Calculado: [0x0A76]
+19/09-16:04:02: Checksum: OK
+19/09-16:04:02: Vino la respuesta <B*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:04:02: Mando ACK
+19/09-16:04:02: Error en Numero de Paquete. Lo desecho
+19/09-16:04:02: A esperar la respuesta
+19/09-16:04:04: TIMEOUT esperando STX
+19/09-16:04:04: Envio de STATPRN local
+19/09-16:04:04: Recibo ACK
+19/09-16:04:04: ACK a comando
+19/09-16:04:04: Espero la respuesta
+19/09-16:04:04: Checksum Paquete:   [0x0AB3]
+19/09-16:04:04: Checksum Calculado: [0x0AB3]
+19/09-16:04:04: Checksum: OK
+19/09-16:04:04: Envio el ACK
+19/09-16:04:04: Fin de STATPRN local
+
+19/09-16:04:04: Envio el comando: <dB*0071B*007102db>
+19/09-16:04:04: Espero el ACK
+19/09-16:04:04: Recibo ACK
+19/09-16:04:04: A esperar la respuesta
+19/09-16:04:04: Checksum Paquete:   [0x0A76]
+19/09-16:04:04: Checksum Calculado: [0x0A76]
+19/09-16:04:04: Checksum: OK
+19/09-16:04:04: Vino la respuesta <B*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:04:04: Mando ACK
+19/09-16:04:04: Error en Numero de Paquete. Lo desecho
+19/09-16:04:04: A esperar la respuesta
+19/09-16:04:06: TIMEOUT esperando STX
+19/09-16:04:06: Envio de STATPRN local
+19/09-16:04:06: Recibo ACK
+19/09-16:04:06: ACK a comando
+19/09-16:04:06: Espero la respuesta
+19/09-16:04:06: Checksum Paquete:   [0x0AB3]
+19/09-16:04:06: Checksum Calculado: [0x0AB3]
+19/09-16:04:06: Checksum: OK
+19/09-16:04:06: Envio el ACK
+19/09-16:04:06: Fin de STATPRN local
+
+19/09-16:04:06: Envio el comando: <dB*0071B*007102db>
+19/09-16:04:06: Espero el ACK
+19/09-16:04:06: Recibo ACK
+19/09-16:04:06: A esperar la respuesta
+19/09-16:04:06: Checksum Paquete:   [0x0A76]
+19/09-16:04:06: Checksum Calculado: [0x0A76]
+19/09-16:04:06: Checksum: OK
+19/09-16:04:06: Vino la respuesta <B*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:04:06: Mando ACK
+19/09-16:04:06: Error en Numero de Paquete. Lo desecho
+19/09-16:04:06: A esperar la respuesta
+19/09-16:04:07: Error de comunicaciones con la impresora, Rc -1
+19/09-16:04:08: TIMEOUT esperando STX
+19/09-16:04:08: Envio de STATPRN local
+19/09-16:04:08: Recibo ACK
+19/09-16:04:08: ACK a comando
+19/09-16:04:08: Espero la respuesta
+19/09-16:04:08: Checksum Paquete:   [0x0AB3]
+19/09-16:04:08: Checksum Calculado: [0x0AB3]
+19/09-16:04:08: Checksum: OK
+19/09-16:04:08: Envio el ACK
+19/09-16:04:08: Fin de STATPRN local
+
+19/09-16:04:08: Error de comunicaciones con la impresora
+19/09-16:04:08: Cmd [D*0073]
+19/09-16:04:08: MandaPaqueteFiscal: CmdRetries 3, SndRetries 2, RcvRetries 2, New_Protocol 0
+
+19/09-16:04:08: Envio el comando: <fD*007301a8>
+19/09-16:04:08: Espero el ACK
+19/09-16:04:08: Recibo ACK
+19/09-16:04:08: A esperar la respuesta
+19/09-16:04:09: Checksum Paquete:   [0x0A78]
+19/09-16:04:09: Checksum Calculado: [0x0A78]
+19/09-16:04:09: Checksum: OK
+19/09-16:04:09: Vino la respuesta <D*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:04:09: Mando ACK
+19/09-16:04:09: Error en Numero de Paquete. Lo desecho
+19/09-16:04:09: A esperar la respuesta
+19/09-16:04:11: TIMEOUT esperando STX
+19/09-16:04:11: Envio de STATPRN local
+19/09-16:04:11: Recibo ACK
+19/09-16:04:11: ACK a comando
+19/09-16:04:11: Espero la respuesta
+19/09-16:04:11: Checksum Paquete:   [0x0AB5]
+19/09-16:04:11: Checksum Calculado: [0x0AB5]
+19/09-16:04:11: Checksum: OK
+19/09-16:04:11: Envio el ACK
+19/09-16:04:11: Fin de STATPRN local
+
+19/09-16:04:11: Envio el comando: <fD*007301a8>
+19/09-16:04:11: Espero el ACK
+19/09-16:04:11: Recibo ACK
+19/09-16:04:11: A esperar la respuesta
+19/09-16:04:11: Checksum Paquete:   [0x0A78]
+19/09-16:04:11: Checksum Calculado: [0x0A78]
+19/09-16:04:11: Checksum: OK
+19/09-16:04:11: Vino la respuesta <D*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:04:11: Mando ACK
+19/09-16:04:11: Error en Numero de Paquete. Lo desecho
+19/09-16:04:11: A esperar la respuesta
+19/09-16:04:13: TIMEOUT esperando STX
+19/09-16:04:13: Envio de STATPRN local
+19/09-16:04:13: Recibo ACK
+19/09-16:04:13: ACK a comando
+19/09-16:04:13: Espero la respuesta
+19/09-16:04:13: Checksum Paquete:   [0x0AB5]
+19/09-16:04:13: Checksum Calculado: [0x0AB5]
+19/09-16:04:13: Checksum: OK
+19/09-16:04:13: Envio el ACK
+19/09-16:04:13: Fin de STATPRN local
+
+19/09-16:04:13: Envio el comando: <fD*007301a8>
+19/09-16:04:13: Espero el ACK
+19/09-16:04:13: Recibo ACK
+19/09-16:04:13: A esperar la respuesta
+19/09-16:04:13: Checksum Paquete:   [0x0A78]
+19/09-16:04:13: Checksum Calculado: [0x0A78]
+19/09-16:04:13: Checksum: OK
+19/09-16:04:13: Vino la respuesta <D*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:04:13: Mando ACK
+19/09-16:04:13: Error en Numero de Paquete. Lo desecho
+19/09-16:04:13: A esperar la respuesta
+19/09-16:04:15: TIMEOUT esperando STX
+19/09-16:04:15: Envio de STATPRN local
+19/09-16:04:15: Recibo ACK
+19/09-16:04:15: ACK a comando
+19/09-16:04:15: Espero la respuesta
+19/09-16:04:15: Checksum Paquete:   [0x0AB5]
+19/09-16:04:15: Checksum Calculado: [0x0AB5]
+19/09-16:04:15: Checksum: OK
+19/09-16:04:15: Envio el ACK
+19/09-16:04:15: Fin de STATPRN local
+
+19/09-16:04:15: Error de comunicaciones con la impresora
+19/09-16:04:15: Cmd [D*0073]
+19/09-16:04:15: MandaPaqueteFiscal: CmdRetries 3, SndRetries 2, RcvRetries 2, New_Protocol 0
+
+19/09-16:04:15: Envio el comando: <hD*007301aa>
+19/09-16:04:15: Espero el ACK
+19/09-16:04:15: Recibo ACK
+19/09-16:04:15: A esperar la respuesta
+19/09-16:04:15: Checksum Paquete:   [0x0A78]
+19/09-16:04:15: Checksum Calculado: [0x0A78]
+19/09-16:04:15: Checksum: OK
+19/09-16:04:15: Vino la respuesta <D*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:04:15: Mando ACK
+19/09-16:04:15: Error en Numero de Paquete. Lo desecho
+19/09-16:04:15: A esperar la respuesta
+19/09-16:04:17: Error de comunicaciones con la impresora, Rc -1
+19/09-16:04:17: TIMEOUT esperando STX
+19/09-16:04:17: Envio de STATPRN local
+19/09-16:04:17: Recibo ACK
+19/09-16:04:17: ACK a comando
+19/09-16:04:17: Espero la respuesta
+19/09-16:04:17: Checksum Paquete:   [0x0AB7]
+19/09-16:04:17: Checksum Calculado: [0x0AB7]
+19/09-16:04:17: Checksum: OK
+19/09-16:04:17: Envio el ACK
+19/09-16:04:17: Fin de STATPRN local
+
+19/09-16:04:17: Envio el comando: <hD*007301aa>
+19/09-16:04:17: Espero el ACK
+19/09-16:04:17: Recibo ACK
+19/09-16:04:17: A esperar la respuesta
+19/09-16:04:17: Checksum Paquete:   [0x0A78]
+19/09-16:04:17: Checksum Calculado: [0x0A78]
+19/09-16:04:17: Checksum: OK
+19/09-16:04:17: Vino la respuesta <D*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:04:17: Mando ACK
+19/09-16:04:17: Error en Numero de Paquete. Lo desecho
+19/09-16:04:17: A esperar la respuesta
+19/09-16:04:19: TIMEOUT esperando STX
+19/09-16:04:19: Envio de STATPRN local
+19/09-16:04:19: Recibo ACK
+19/09-16:04:19: ACK a comando
+19/09-16:04:19: Espero la respuesta
+19/09-16:04:19: Checksum Paquete:   [0x0AB7]
+19/09-16:04:19: Checksum Calculado: [0x0AB7]
+19/09-16:04:19: Checksum: OK
+19/09-16:04:19: Envio el ACK
+19/09-16:04:19: Fin de STATPRN local
+
+19/09-16:04:19: Envio el comando: <hD*007301aa>
+19/09-16:04:19: Espero el ACK
+19/09-16:04:19: Recibo ACK
+19/09-16:04:19: A esperar la respuesta
+19/09-16:04:19: Checksum Paquete:   [0x0A78]
+19/09-16:04:19: Checksum Calculado: [0x0A78]
+19/09-16:04:19: Checksum: OK
+19/09-16:04:19: Vino la respuesta <D*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:04:19: Mando ACK
+19/09-16:04:19: Error en Numero de Paquete. Lo desecho
+19/09-16:04:19: A esperar la respuesta
+19/09-16:04:21: TIMEOUT esperando STX
+19/09-16:04:21: Envio de STATPRN local
+19/09-16:04:21: Recibo ACK
+19/09-16:04:21: ACK a comando
+19/09-16:04:21: Espero la respuesta
+19/09-16:04:21: Checksum Paquete:   [0x0AB7]
+19/09-16:04:21: Checksum Calculado: [0x0AB7]
+19/09-16:04:21: Checksum: OK
+19/09-16:04:21: Envio el ACK
+19/09-16:04:21: Fin de STATPRN local
+
+19/09-16:04:21: Error de comunicaciones con la impresora
+19/09-16:04:21: Cmd [F*0075]
+19/09-16:04:21: MandaPaqueteFiscal: CmdRetries 3, SndRetries 2, RcvRetries 2, New_Protocol 0
+
+19/09-16:04:21: Envio el comando: <jF*007501b0>
+19/09-16:04:21: Espero el ACK
+19/09-16:04:22: Recibo ACK
+19/09-16:04:22: A esperar la respuesta
+19/09-16:04:22: Checksum Paquete:   [0x0A7A]
+19/09-16:04:22: Checksum Calculado: [0x0A7A]
+19/09-16:04:22: Checksum: OK
+19/09-16:04:22: Vino la respuesta <F*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:04:22: Mando ACK
+19/09-16:04:22: Error en Numero de Paquete. Lo desecho
+19/09-16:04:22: A esperar la respuesta
+19/09-16:04:24: TIMEOUT esperando STX
+19/09-16:04:24: Envio de STATPRN local
+19/09-16:04:24: Recibo ACK
+19/09-16:04:24: ACK a comando
+19/09-16:04:24: Espero la respuesta
+19/09-16:04:24: Checksum Paquete:   [0x0AB9]
+19/09-16:04:24: Checksum Calculado: [0x0AB9]
+19/09-16:04:24: Checksum: OK
+19/09-16:04:24: Envio el ACK
+19/09-16:04:24: Fin de STATPRN local
+
+19/09-16:04:24: Envio el comando: <jF*007501b0>
+19/09-16:04:24: Espero el ACK
+19/09-16:04:24: Recibo ACK
+19/09-16:04:24: A esperar la respuesta
+19/09-16:04:24: Checksum Paquete:   [0x0A7A]
+19/09-16:04:24: Checksum Calculado: [0x0A7A]
+19/09-16:04:24: Checksum: OK
+19/09-16:04:24: Vino la respuesta <F*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:04:24: Mando ACK
+19/09-16:04:24: Error en Numero de Paquete. Lo desecho
+19/09-16:04:24: A esperar la respuesta
+19/09-16:04:26: TIMEOUT esperando STX
+19/09-16:04:26: Envio de STATPRN local
+19/09-16:04:26: Recibo ACK
+19/09-16:04:26: ACK a comando
+19/09-16:04:26: Espero la respuesta
+19/09-16:04:26: Checksum Paquete:   [0x0AB9]
+19/09-16:04:26: Checksum Calculado: [0x0AB9]
+19/09-16:04:26: Checksum: OK
+19/09-16:04:26: Envio el ACK
+19/09-16:04:26: Fin de STATPRN local
+
+19/09-16:04:26: Envio el comando: <jF*007501b0>
+19/09-16:04:26: Espero el ACK
+19/09-16:04:26: Recibo ACK
+19/09-16:04:26: A esperar la respuesta
+19/09-16:04:26: Checksum Paquete:   [0x0A7A]
+19/09-16:04:26: Checksum Calculado: [0x0A7A]
+19/09-16:04:26: Checksum: OK
+19/09-16:04:26: Vino la respuesta <F*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:04:26: Mando ACK
+19/09-16:04:26: Error en Numero de Paquete. Lo desecho
+19/09-16:04:26: A esperar la respuesta
+19/09-16:04:28: TIMEOUT esperando STX
+19/09-16:04:28: Envio de STATPRN local
+19/09-16:04:28: Recibo ACK
+19/09-16:04:28: ACK a comando
+19/09-16:04:28: Espero la respuesta
+19/09-16:04:28: Checksum Paquete:   [0x0AB9]
+19/09-16:04:28: Checksum Calculado: [0x0AB9]
+19/09-16:04:28: Checksum: OK
+19/09-16:04:28: Envio el ACK
+19/09-16:04:28: Fin de STATPRN local
+
+19/09-16:04:28: Error de comunicaciones con la impresora
+19/09-16:04:28: Finalizando conexi¢n con 127.0.0.1 (40609)
+19/09-16:09:10: **START SPOOLER**
+19/09-16:09:10: Conectando con localhosts, Port 1600
+19/09-16:09:20: Imposible conectarse con localhosts (1600)
+19/09-16:09:24: **START SPOOLER**
+19/09-16:09:24: Conectando con localhost, Port 1600
+19/09-16:09:24: Iniciando conexi¢n con 127.0.0.1 (44322)
+19/09-16:09:24: Cmd [ *004f]
+19/09-16:09:24: MandaPaqueteFiscal: CmdRetries 3, SndRetries 2, RcvRetries 2, New_Protocol 0
+
+19/09-16:09:24: Envio el comando: <l *004f01ba>
+19/09-16:09:24: Espero el ACK
+19/09-16:09:24: Recibo ACK
+19/09-16:09:24: A esperar la respuesta
+19/09-16:09:25: Checksum Paquete:   [0x0A54]
+19/09-16:09:25: Checksum Calculado: [0x0A54]
+19/09-16:09:25: Checksum: OK
+19/09-16:09:25: Vino la respuesta < *|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:09:25: Mando ACK
+19/09-16:09:25: Error en Numero de Paquete. Lo desecho
+19/09-16:09:25: A esperar la respuesta
+19/09-16:09:27: TIMEOUT esperando STX
+19/09-16:09:27: Envio de STATPRN local
+19/09-16:09:27: Recibo ACK
+19/09-16:09:27: ACK a comando
+19/09-16:09:27: Espero la respuesta
+19/09-16:09:27: Checksum Paquete:   [0x0ABB]
+19/09-16:09:27: Checksum Calculado: [0x0ABB]
+19/09-16:09:27: Checksum: OK
+19/09-16:09:27: Envio el ACK
+19/09-16:09:27: Fin de STATPRN local
+
+19/09-16:09:27: Envio el comando: <l *004f01ba>
+19/09-16:09:27: Espero el ACK
+19/09-16:09:27: Recibo ACK
+19/09-16:09:27: A esperar la respuesta
+19/09-16:09:27: Checksum Paquete:   [0x0A54]
+19/09-16:09:27: Checksum Calculado: [0x0A54]
+19/09-16:09:27: Checksum: OK
+19/09-16:09:27: Vino la respuesta < *|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:09:27: Mando ACK
+19/09-16:09:27: Error en Numero de Paquete. Lo desecho
+19/09-16:09:27: A esperar la respuesta
+19/09-16:09:29: TIMEOUT esperando STX
+19/09-16:09:29: Envio de STATPRN local
+19/09-16:09:29: Recibo ACK
+19/09-16:09:29: ACK a comando
+19/09-16:09:29: Espero la respuesta
+19/09-16:09:29: Checksum Paquete:   [0x0ABB]
+19/09-16:09:29: Checksum Calculado: [0x0ABB]
+19/09-16:09:29: Checksum: OK
+19/09-16:09:29: Envio el ACK
+19/09-16:09:29: Fin de STATPRN local
+
+19/09-16:09:29: Envio el comando: <l *004f01ba>
+19/09-16:09:29: Espero el ACK
+19/09-16:09:29: Recibo ACK
+19/09-16:09:29: A esperar la respuesta
+19/09-16:09:29: Checksum Paquete:   [0x0A54]
+19/09-16:09:29: Checksum Calculado: [0x0A54]
+19/09-16:09:29: Checksum: OK
+19/09-16:09:29: Vino la respuesta < *|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:09:29: Mando ACK
+19/09-16:09:29: Error en Numero de Paquete. Lo desecho
+19/09-16:09:29: A esperar la respuesta
+19/09-16:09:31: TIMEOUT esperando STX
+19/09-16:09:31: Envio de STATPRN local
+19/09-16:09:31: Recibo ACK
+19/09-16:09:31: ACK a comando
+19/09-16:09:31: Espero la respuesta
+19/09-16:09:31: Checksum Paquete:   [0x0ABB]
+19/09-16:09:31: Checksum Calculado: [0x0ABB]
+19/09-16:09:31: Checksum: OK
+19/09-16:09:31: Envio el ACK
+19/09-16:09:31: Fin de STATPRN local
+
+19/09-16:09:31: Error de comunicaciones con la impresora
+19/09-16:09:31: Cmd [ *004f]
+19/09-16:09:31: MandaPaqueteFiscal: CmdRetries 3, SndRetries 2, RcvRetries 2, New_Protocol 0
+
+19/09-16:09:31: Envio el comando: <n *004f01bc>
+19/09-16:09:31: Espero el ACK
+19/09-16:09:31: Recibo ACK
+19/09-16:09:31: A esperar la respuesta
+19/09-16:09:31: Checksum Paquete:   [0x0A54]
+19/09-16:09:31: Checksum Calculado: [0x0A54]
+19/09-16:09:31: Checksum: OK
+19/09-16:09:31: Vino la respuesta < *|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:09:31: Mando ACK
+19/09-16:09:31: Error en Numero de Paquete. Lo desecho
+19/09-16:09:31: A esperar la respuesta
+19/09-16:09:33: TIMEOUT esperando STX
+19/09-16:09:33: Envio de STATPRN local
+19/09-16:09:33: Recibo ACK
+19/09-16:09:33: ACK a comando
+19/09-16:09:33: Espero la respuesta
+19/09-16:09:33: Checksum Paquete:   [0x0ABD]
+19/09-16:09:33: Checksum Calculado: [0x0ABD]
+19/09-16:09:33: Checksum: OK
+19/09-16:09:33: Envio el ACK
+19/09-16:09:33: Fin de STATPRN local
+
+19/09-16:09:33: Envio el comando: <n *004f01bc>
+19/09-16:09:33: Espero el ACK
+19/09-16:09:33: Recibo ACK
+19/09-16:09:33: A esperar la respuesta
+19/09-16:09:33: Checksum Paquete:   [0x0A54]
+19/09-16:09:33: Checksum Calculado: [0x0A54]
+19/09-16:09:33: Checksum: OK
+19/09-16:09:33: Vino la respuesta < *|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:09:33: Mando ACK
+19/09-16:09:33: Error en Numero de Paquete. Lo desecho
+19/09-16:09:33: A esperar la respuesta
+19/09-16:09:34: Error de comunicaciones con la impresora, Rc -1
+19/09-16:09:35: TIMEOUT esperando STX
+19/09-16:09:35: Envio de STATPRN local
+19/09-16:09:35: Recibo ACK
+19/09-16:09:35: ACK a comando
+19/09-16:09:35: Espero la respuesta
+19/09-16:09:35: Checksum Paquete:   [0x0ABD]
+19/09-16:09:35: Checksum Calculado: [0x0ABD]
+19/09-16:09:35: Checksum: OK
+19/09-16:09:35: Envio el ACK
+19/09-16:09:35: Fin de STATPRN local
+
+19/09-16:09:35: Envio el comando: <n *004f01bc>
+19/09-16:09:35: Espero el ACK
+19/09-16:09:35: Recibo ACK
+19/09-16:09:35: A esperar la respuesta
+19/09-16:09:35: Checksum Paquete:   [0x0A54]
+19/09-16:09:35: Checksum Calculado: [0x0A54]
+19/09-16:09:35: Checksum: OK
+19/09-16:09:35: Vino la respuesta < *|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:09:35: Mando ACK
+19/09-16:09:35: Error en Numero de Paquete. Lo desecho
+19/09-16:09:35: A esperar la respuesta
+19/09-16:09:37: TIMEOUT esperando STX
+19/09-16:09:37: Envio de STATPRN local
+19/09-16:09:37: Recibo ACK
+19/09-16:09:37: ACK a comando
+19/09-16:09:37: Espero la respuesta
+19/09-16:09:37: Checksum Paquete:   [0x0ABD]
+19/09-16:09:37: Checksum Calculado: [0x0ABD]
+19/09-16:09:37: Checksum: OK
+19/09-16:09:37: Envio el ACK
+19/09-16:09:37: Fin de STATPRN local
+
+19/09-16:09:37: Error de comunicaciones con la impresora
+19/09-16:09:37: Cmd ["*0051]
+19/09-16:09:37: MandaPaqueteFiscal: CmdRetries 3, SndRetries 2, RcvRetries 2, New_Protocol 0
+
+19/09-16:09:37: Envio el comando: <p"*0051018c>
+19/09-16:09:37: Espero el ACK
+19/09-16:09:37: Recibo ACK
+19/09-16:09:37: A esperar la respuesta
+19/09-16:09:38: Checksum Paquete:   [0x0A56]
+19/09-16:09:38: Checksum Calculado: [0x0A56]
+19/09-16:09:38: Checksum: OK
+19/09-16:09:38: Vino la respuesta <"*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:09:38: Mando ACK
+19/09-16:09:38: Error en Numero de Paquete. Lo desecho
+19/09-16:09:38: A esperar la respuesta
+19/09-16:09:40: TIMEOUT esperando STX
+19/09-16:09:40: Envio de STATPRN local
+19/09-16:09:40: Recibo ACK
+19/09-16:09:40: ACK a comando
+19/09-16:09:40: Espero la respuesta
+19/09-16:09:40: Checksum Paquete:   [0x0ABF]
+19/09-16:09:40: Checksum Calculado: [0x0ABF]
+19/09-16:09:40: Checksum: OK
+19/09-16:09:40: Envio el ACK
+19/09-16:09:40: Fin de STATPRN local
+
+19/09-16:09:40: Envio el comando: <p"*0051018c>
+19/09-16:09:40: Espero el ACK
+19/09-16:09:40: Recibo ACK
+19/09-16:09:40: A esperar la respuesta
+19/09-16:09:40: Checksum Paquete:   [0x0A56]
+19/09-16:09:40: Checksum Calculado: [0x0A56]
+19/09-16:09:40: Checksum: OK
+19/09-16:09:40: Vino la respuesta <"*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:09:40: Mando ACK
+19/09-16:09:40: Error en Numero de Paquete. Lo desecho
+19/09-16:09:40: A esperar la respuesta
+19/09-16:09:42: TIMEOUT esperando STX
+19/09-16:09:42: Envio de STATPRN local
+19/09-16:09:42: Recibo ACK
+19/09-16:09:42: ACK a comando
+19/09-16:09:42: Espero la respuesta
+19/09-16:09:42: Checksum Paquete:   [0x0ABF]
+19/09-16:09:42: Checksum Calculado: [0x0ABF]
+19/09-16:09:42: Checksum: OK
+19/09-16:09:42: Envio el ACK
+19/09-16:09:42: Fin de STATPRN local
+
+19/09-16:09:42: Envio el comando: <p"*0051018c>
+19/09-16:09:42: Espero el ACK
+19/09-16:09:42: Recibo ACK
+19/09-16:09:42: A esperar la respuesta
+19/09-16:09:42: Checksum Paquete:   [0x0A56]
+19/09-16:09:42: Checksum Calculado: [0x0A56]
+19/09-16:09:42: Checksum: OK
+19/09-16:09:42: Vino la respuesta <"*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:09:42: Mando ACK
+19/09-16:09:42: Error en Numero de Paquete. Lo desecho
+19/09-16:09:42: A esperar la respuesta
+19/09-16:09:44: TIMEOUT esperando STX
+19/09-16:09:44: Envio de STATPRN local
+19/09-16:09:44: Recibo ACK
+19/09-16:09:44: ACK a comando
+19/09-16:09:44: Espero la respuesta
+19/09-16:09:44: Checksum Paquete:   [0x0ABF]
+19/09-16:09:44: Checksum Calculado: [0x0ABF]
+19/09-16:09:44: Checksum: OK
+19/09-16:09:44: Envio el ACK
+19/09-16:09:44: Fin de STATPRN local
+
+19/09-16:09:44: Error de comunicaciones con la impresora
+19/09-16:09:44: Cmd ["*0051]
+19/09-16:09:44: MandaPaqueteFiscal: CmdRetries 3, SndRetries 2, RcvRetries 2, New_Protocol 0
+
+19/09-16:09:44: Envio el comando: <r"*0051018e>
+19/09-16:09:44: Espero el ACK
+19/09-16:09:44: Recibo ACK
+19/09-16:09:44: A esperar la respuesta
+19/09-16:09:44: Checksum Paquete:   [0x0A56]
+19/09-16:09:44: Checksum Calculado: [0x0A56]
+19/09-16:09:44: Checksum: OK
+19/09-16:09:44: Vino la respuesta <"*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:09:44: Mando ACK
+19/09-16:09:44: Error en Numero de Paquete. Lo desecho
+19/09-16:09:44: A esperar la respuesta
+19/09-16:09:44: Error de comunicaciones con la impresora, Rc -1
+19/09-16:09:46: TIMEOUT esperando STX
+19/09-16:09:46: Envio de STATPRN local
+19/09-16:09:46: Recibo ACK
+19/09-16:09:46: ACK a comando
+19/09-16:09:46: Espero la respuesta
+19/09-16:09:46: Checksum Paquete:   [0x0AC1]
+19/09-16:09:46: Checksum Calculado: [0x0AC1]
+19/09-16:09:46: Checksum: OK
+19/09-16:09:46: Envio el ACK
+19/09-16:09:46: Fin de STATPRN local
+
+19/09-16:09:46: Envio el comando: <r"*0051018e>
+19/09-16:09:46: Espero el ACK
+19/09-16:09:46: Recibo ACK
+19/09-16:09:46: A esperar la respuesta
+19/09-16:09:46: Checksum Paquete:   [0x0A56]
+19/09-16:09:46: Checksum Calculado: [0x0A56]
+19/09-16:09:46: Checksum: OK
+19/09-16:09:46: Vino la respuesta <"*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:09:46: Mando ACK
+19/09-16:09:46: Error en Numero de Paquete. Lo desecho
+19/09-16:09:46: A esperar la respuesta
+19/09-16:09:48: TIMEOUT esperando STX
+19/09-16:09:48: Envio de STATPRN local
+19/09-16:09:48: Recibo ACK
+19/09-16:09:48: ACK a comando
+19/09-16:09:48: Espero la respuesta
+19/09-16:09:48: Checksum Paquete:   [0x0AC1]
+19/09-16:09:48: Checksum Calculado: [0x0AC1]
+19/09-16:09:48: Checksum: OK
+19/09-16:09:48: Envio el ACK
+19/09-16:09:48: Fin de STATPRN local
+
+19/09-16:09:48: Envio el comando: <r"*0051018e>
+19/09-16:09:48: Espero el ACK
+19/09-16:09:48: Recibo ACK
+19/09-16:09:48: A esperar la respuesta
+19/09-16:09:48: Checksum Paquete:   [0x0A56]
+19/09-16:09:48: Checksum Calculado: [0x0A56]
+19/09-16:09:48: Checksum: OK
+19/09-16:09:48: Vino la respuesta <"*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:09:48: Mando ACK
+19/09-16:09:48: Error en Numero de Paquete. Lo desecho
+19/09-16:09:48: A esperar la respuesta
+19/09-16:09:50: TIMEOUT esperando STX
+19/09-16:09:50: Envio de STATPRN local
+19/09-16:09:50: Recibo ACK
+19/09-16:09:50: ACK a comando
+19/09-16:09:50: Espero la respuesta
+19/09-16:09:50: Checksum Paquete:   [0x0AC1]
+19/09-16:09:50: Checksum Calculado: [0x0AC1]
+19/09-16:09:50: Checksum: OK
+19/09-16:09:50: Envio el ACK
+19/09-16:09:50: Fin de STATPRN local
+
+19/09-16:09:50: Error de comunicaciones con la impresora
+19/09-16:09:50: Cmd [$*0053$*0053]
+19/09-16:09:50: MandaPaqueteFiscal: CmdRetries 3, SndRetries 2, RcvRetries 2, New_Protocol 0
+
+19/09-16:09:50: Envio el comando: <t$*0053$*005302af>
+19/09-16:09:50: Espero el ACK
+19/09-16:09:50: Recibo ACK
+19/09-16:09:50: A esperar la respuesta
+19/09-16:09:51: Checksum Paquete:   [0x0A58]
+19/09-16:09:51: Checksum Calculado: [0x0A58]
+19/09-16:09:51: Checksum: OK
+19/09-16:09:51: Vino la respuesta <$*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:09:51: Mando ACK
+19/09-16:09:51: Error en Numero de Paquete. Lo desecho
+19/09-16:09:51: A esperar la respuesta
+19/09-16:09:53: TIMEOUT esperando STX
+19/09-16:09:53: Envio de STATPRN local
+19/09-16:09:53: Recibo ACK
+19/09-16:09:53: ACK a comando
+19/09-16:09:53: Espero la respuesta
+19/09-16:09:53: Checksum Paquete:   [0x0AC3]
+19/09-16:09:53: Checksum Calculado: [0x0AC3]
+19/09-16:09:53: Checksum: OK
+19/09-16:09:53: Envio el ACK
+19/09-16:09:53: Fin de STATPRN local
+
+19/09-16:09:53: Envio el comando: <t$*0053$*005302af>
+19/09-16:09:53: Espero el ACK
+19/09-16:09:53: Recibo ACK
+19/09-16:09:53: A esperar la respuesta
+19/09-16:09:53: Checksum Paquete:   [0x0A58]
+19/09-16:09:53: Checksum Calculado: [0x0A58]
+19/09-16:09:53: Checksum: OK
+19/09-16:09:53: Vino la respuesta <$*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:09:53: Mando ACK
+19/09-16:09:53: Error en Numero de Paquete. Lo desecho
+19/09-16:09:53: A esperar la respuesta
+19/09-16:09:54: Error de comunicaciones con la impresora, Rc -1
+19/09-16:09:55: TIMEOUT esperando STX
+19/09-16:09:55: Envio de STATPRN local
+19/09-16:09:55: Recibo ACK
+19/09-16:09:55: ACK a comando
+19/09-16:09:55: Espero la respuesta
+19/09-16:09:55: Checksum Paquete:   [0x0AC3]
+19/09-16:09:55: Checksum Calculado: [0x0AC3]
+19/09-16:09:55: Checksum: OK
+19/09-16:09:55: Envio el ACK
+19/09-16:09:55: Fin de STATPRN local
+
+19/09-16:09:55: Envio el comando: <t$*0053$*005302af>
+19/09-16:09:55: Espero el ACK
+19/09-16:09:55: Recibo ACK
+19/09-16:09:55: A esperar la respuesta
+19/09-16:09:55: Checksum Paquete:   [0x0A58]
+19/09-16:09:55: Checksum Calculado: [0x0A58]
+19/09-16:09:55: Checksum: OK
+19/09-16:09:55: Vino la respuesta <$*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:09:55: Mando ACK
+19/09-16:09:55: Error en Numero de Paquete. Lo desecho
+19/09-16:09:55: A esperar la respuesta
+19/09-16:09:57: TIMEOUT esperando STX
+19/09-16:09:57: Envio de STATPRN local
+19/09-16:09:57: Recibo ACK
+19/09-16:09:57: ACK a comando
+19/09-16:09:57: Espero la respuesta
+19/09-16:09:57: Checksum Paquete:   [0x0AC3]
+19/09-16:09:57: Checksum Calculado: [0x0AC3]
+19/09-16:09:57: Checksum: OK
+19/09-16:09:57: Envio el ACK
+19/09-16:09:57: Fin de STATPRN local
+
+19/09-16:09:57: Error de comunicaciones con la impresora
+19/09-16:09:57: Cmd [&*0055]
+19/09-16:09:57: MandaPaqueteFiscal: CmdRetries 3, SndRetries 2, RcvRetries 2, New_Protocol 0
+
+19/09-16:09:57: Envio el comando: <v&*0055019a>
+19/09-16:09:57: Espero el ACK
+19/09-16:09:57: Recibo ACK
+19/09-16:09:57: A esperar la respuesta
+19/09-16:09:57: Checksum Paquete:   [0x0A5A]
+19/09-16:09:57: Checksum Calculado: [0x0A5A]
+19/09-16:09:57: Checksum: OK
+19/09-16:09:57: Vino la respuesta <&*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:09:57: Mando ACK
+19/09-16:09:57: Error en Numero de Paquete. Lo desecho
+19/09-16:09:57: A esperar la respuesta
+19/09-16:09:59: TIMEOUT esperando STX
+19/09-16:09:59: Envio de STATPRN local
+19/09-16:09:59: Recibo ACK
+19/09-16:09:59: ACK a comando
+19/09-16:09:59: Espero la respuesta
+19/09-16:09:59: Checksum Paquete:   [0x0AC5]
+19/09-16:09:59: Checksum Calculado: [0x0AC5]
+19/09-16:09:59: Checksum: OK
+19/09-16:09:59: Envio el ACK
+19/09-16:09:59: Fin de STATPRN local
+
+19/09-16:09:59: Envio el comando: <v&*0055019a>
+19/09-16:09:59: Espero el ACK
+19/09-16:09:59: Recibo ACK
+19/09-16:09:59: A esperar la respuesta
+19/09-16:09:59: Checksum Paquete:   [0x0A5A]
+19/09-16:09:59: Checksum Calculado: [0x0A5A]
+19/09-16:09:59: Checksum: OK
+19/09-16:09:59: Vino la respuesta <&*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:09:59: Mando ACK
+19/09-16:09:59: Error en Numero de Paquete. Lo desecho
+19/09-16:09:59: A esperar la respuesta
+19/09-16:10:01: TIMEOUT esperando STX
+19/09-16:10:01: Envio de STATPRN local
+19/09-16:10:01: Recibo ACK
+19/09-16:10:01: ACK a comando
+19/09-16:10:01: Espero la respuesta
+19/09-16:10:01: Checksum Paquete:   [0x0AC5]
+19/09-16:10:01: Checksum Calculado: [0x0AC5]
+19/09-16:10:01: Checksum: OK
+19/09-16:10:01: Envio el ACK
+19/09-16:10:01: Fin de STATPRN local
+
+19/09-16:10:01: Envio el comando: <v&*0055019a>
+19/09-16:10:01: Espero el ACK
+19/09-16:10:01: Recibo ACK
+19/09-16:10:01: A esperar la respuesta
+19/09-16:10:01: Checksum Paquete:   [0x0A5A]
+19/09-16:10:01: Checksum Calculado: [0x0A5A]
+19/09-16:10:01: Checksum: OK
+19/09-16:10:01: Vino la respuesta <&*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:10:01: Mando ACK
+19/09-16:10:01: Error en Numero de Paquete. Lo desecho
+19/09-16:10:01: A esperar la respuesta
+19/09-16:10:03: TIMEOUT esperando STX
+19/09-16:10:03: Envio de STATPRN local
+19/09-16:10:03: Recibo ACK
+19/09-16:10:03: ACK a comando
+19/09-16:10:03: Espero la respuesta
+19/09-16:10:03: Checksum Paquete:   [0x0AC5]
+19/09-16:10:03: Checksum Calculado: [0x0AC5]
+19/09-16:10:03: Checksum: OK
+19/09-16:10:03: Envio el ACK
+19/09-16:10:03: Fin de STATPRN local
+
+19/09-16:10:03: Error de comunicaciones con la impresora
+19/09-16:10:03: Cmd [&*0055]
+19/09-16:10:03: MandaPaqueteFiscal: CmdRetries 3, SndRetries 2, RcvRetries 2, New_Protocol 0
+
+19/09-16:10:03: Envio el comando: <x&*0055019c>
+19/09-16:10:03: Espero el ACK
+19/09-16:10:03: Recibo ACK
+19/09-16:10:03: A esperar la respuesta
+19/09-16:10:04: Checksum Paquete:   [0x0A5A]
+19/09-16:10:04: Checksum Calculado: [0x0A5A]
+19/09-16:10:04: Checksum: OK
+19/09-16:10:04: Vino la respuesta <&*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:10:04: Mando ACK
+19/09-16:10:04: Error en Numero de Paquete. Lo desecho
+19/09-16:10:04: A esperar la respuesta
+19/09-16:10:04: Error de comunicaciones con la impresora, Rc -1
+19/09-16:10:06: TIMEOUT esperando STX
+19/09-16:10:06: Envio de STATPRN local
+19/09-16:10:06: Recibo ACK
+19/09-16:10:06: ACK a comando
+19/09-16:10:06: Espero la respuesta
+19/09-16:10:06: Checksum Paquete:   [0x0AC7]
+19/09-16:10:06: Checksum Calculado: [0x0AC7]
+19/09-16:10:06: Checksum: OK
+19/09-16:10:06: Envio el ACK
+19/09-16:10:06: Fin de STATPRN local
+
+19/09-16:10:06: Envio el comando: <x&*0055019c>
+19/09-16:10:06: Espero el ACK
+19/09-16:10:06: Recibo ACK
+19/09-16:10:06: A esperar la respuesta
+19/09-16:10:06: Checksum Paquete:   [0x0A5A]
+19/09-16:10:06: Checksum Calculado: [0x0A5A]
+19/09-16:10:06: Checksum: OK
+19/09-16:10:06: Vino la respuesta <&*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:10:06: Mando ACK
+19/09-16:10:06: Error en Numero de Paquete. Lo desecho
+19/09-16:10:06: A esperar la respuesta
+19/09-16:10:08: TIMEOUT esperando STX
+19/09-16:10:08: Envio de STATPRN local
+19/09-16:10:08: Recibo ACK
+19/09-16:10:08: ACK a comando
+19/09-16:10:08: Espero la respuesta
+19/09-16:10:08: Checksum Paquete:   [0x0AC7]
+19/09-16:10:08: Checksum Calculado: [0x0AC7]
+19/09-16:10:08: Checksum: OK
+19/09-16:10:08: Envio el ACK
+19/09-16:10:08: Fin de STATPRN local
+
+19/09-16:10:08: Envio el comando: <x&*0055019c>
+19/09-16:10:08: Espero el ACK
+19/09-16:10:08: Recibo ACK
+19/09-16:10:08: A esperar la respuesta
+19/09-16:10:08: Checksum Paquete:   [0x0A5A]
+19/09-16:10:08: Checksum Calculado: [0x0A5A]
+19/09-16:10:08: Checksum: OK
+19/09-16:10:08: Vino la respuesta <&*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:10:08: Mando ACK
+19/09-16:10:08: Error en Numero de Paquete. Lo desecho
+19/09-16:10:08: A esperar la respuesta
+19/09-16:10:10: TIMEOUT esperando STX
+19/09-16:10:10: Envio de STATPRN local
+19/09-16:10:10: Recibo ACK
+19/09-16:10:10: ACK a comando
+19/09-16:10:10: Espero la respuesta
+19/09-16:10:10: Checksum Paquete:   [0x0AC7]
+19/09-16:10:10: Checksum Calculado: [0x0AC7]
+19/09-16:10:10: Checksum: OK
+19/09-16:10:10: Envio el ACK
+19/09-16:10:10: Fin de STATPRN local
+
+19/09-16:10:10: Error de comunicaciones con la impresora
+19/09-16:10:10: Cmd [(*0057(*0057]
+19/09-16:10:10: MandaPaqueteFiscal: CmdRetries 3, SndRetries 2, RcvRetries 2, New_Protocol 0
+
+19/09-16:10:10: Envio el comando: <z(*0057(*005702c5>
+19/09-16:10:10: Espero el ACK
+19/09-16:10:10: Recibo ACK
+19/09-16:10:10: A esperar la respuesta
+19/09-16:10:10: Checksum Paquete:   [0x0A5C]
+19/09-16:10:10: Checksum Calculado: [0x0A5C]
+19/09-16:10:10: Checksum: OK
+19/09-16:10:10: Vino la respuesta <(*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:10:10: Mando ACK
+19/09-16:10:10: Error en Numero de Paquete. Lo desecho
+19/09-16:10:10: A esperar la respuesta
+19/09-16:10:12: TIMEOUT esperando STX
+19/09-16:10:12: Envio de STATPRN local
+19/09-16:10:12: Recibo ACK
+19/09-16:10:12: ACK a comando
+19/09-16:10:12: Espero la respuesta
+19/09-16:10:12: Checksum Paquete:   [0x0AC9]
+19/09-16:10:12: Checksum Calculado: [0x0AC9]
+19/09-16:10:12: Checksum: OK
+19/09-16:10:12: Envio el ACK
+19/09-16:10:12: Fin de STATPRN local
+
+19/09-16:10:12: Envio el comando: <z(*0057(*005702c5>
+19/09-16:10:12: Espero el ACK
+19/09-16:10:12: Recibo ACK
+19/09-16:10:12: A esperar la respuesta
+19/09-16:10:12: Checksum Paquete:   [0x0A5C]
+19/09-16:10:12: Checksum Calculado: [0x0A5C]
+19/09-16:10:12: Checksum: OK
+19/09-16:10:12: Vino la respuesta <(*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:10:12: Mando ACK
+19/09-16:10:12: Error en Numero de Paquete. Lo desecho
+19/09-16:10:12: A esperar la respuesta
+19/09-16:10:14: TIMEOUT esperando STX
+19/09-16:10:14: Envio de STATPRN local
+19/09-16:10:14: Recibo ACK
+19/09-16:10:14: ACK a comando
+19/09-16:10:14: Espero la respuesta
+19/09-16:10:14: Checksum Paquete:   [0x0AC9]
+19/09-16:10:14: Checksum Calculado: [0x0AC9]
+19/09-16:10:14: Checksum: OK
+19/09-16:10:14: Envio el ACK
+19/09-16:10:14: Fin de STATPRN local
+
+19/09-16:10:14: Envio el comando: <z(*0057(*005702c5>
+19/09-16:10:14: Espero el ACK
+19/09-16:10:14: Recibo ACK
+19/09-16:10:14: A esperar la respuesta
+19/09-16:10:14: Checksum Paquete:   [0x0A5C]
+19/09-16:10:14: Checksum Calculado: [0x0A5C]
+19/09-16:10:14: Checksum: OK
+19/09-16:10:14: Vino la respuesta <(*|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:10:14: Mando ACK
+19/09-16:10:14: Error en Numero de Paquete. Lo desecho
+19/09-16:10:14: A esperar la respuesta
+19/09-16:10:14: Error de comunicaciones con la impresora, Rc -1
+19/09-16:10:16: TIMEOUT esperando STX
+19/09-16:10:16: Envio de STATPRN local
+19/09-16:10:16: Recibo ACK
+19/09-16:10:16: ACK a comando
+19/09-16:10:16: Espero la respuesta
+19/09-16:10:16: Checksum Paquete:   [0x0AC9]
+19/09-16:10:16: Checksum Calculado: [0x0AC9]
+19/09-16:10:16: Checksum: OK
+19/09-16:10:16: Envio el ACK
+19/09-16:10:16: Fin de STATPRN local
+
+19/09-16:10:16: Error de comunicaciones con la impresora
+19/09-16:10:16: Cmd [**0059]
+19/09-16:10:16: MandaPaqueteFiscal: CmdRetries 3, SndRetries 2, RcvRetries 2, New_Protocol 0
+
+19/09-16:10:16: Envio el comando: <|**005901a8>
+19/09-16:10:16: Espero el ACK
+19/09-16:10:16: Recibo ACK
+19/09-16:10:16: A esperar la respuesta
+19/09-16:10:17: Checksum Paquete:   [0x0A5E]
+19/09-16:10:17: Checksum Calculado: [0x0A5E]
+19/09-16:10:17: Checksum: OK
+19/09-16:10:17: Vino la respuesta <**|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:10:17: Mando ACK
+19/09-16:10:17: Error en Numero de Paquete. Lo desecho
+19/09-16:10:17: A esperar la respuesta
+19/09-16:10:19: TIMEOUT esperando STX
+19/09-16:10:19: Envio de STATPRN local
+19/09-16:10:19: Recibo ACK
+19/09-16:10:19: ACK a comando
+19/09-16:10:19: Espero la respuesta
+19/09-16:10:19: Checksum Paquete:   [0x0ACB]
+19/09-16:10:19: Checksum Calculado: [0x0ACB]
+19/09-16:10:19: Checksum: OK
+19/09-16:10:19: Envio el ACK
+19/09-16:10:19: Fin de STATPRN local
+
+19/09-16:10:19: Envio el comando: <|**005901a8>
+19/09-16:10:19: Espero el ACK
+19/09-16:10:19: Recibo ACK
+19/09-16:10:19: A esperar la respuesta
+19/09-16:10:19: Checksum Paquete:   [0x0A5E]
+19/09-16:10:19: Checksum Calculado: [0x0A5E]
+19/09-16:10:19: Checksum: OK
+19/09-16:10:19: Vino la respuesta <**|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:10:19: Mando ACK
+19/09-16:10:19: Error en Numero de Paquete. Lo desecho
+19/09-16:10:19: A esperar la respuesta
+19/09-16:10:21: TIMEOUT esperando STX
+19/09-16:10:21: Envio de STATPRN local
+19/09-16:10:21: Recibo ACK
+19/09-16:10:21: ACK a comando
+19/09-16:10:21: Espero la respuesta
+19/09-16:10:21: Checksum Paquete:   [0x0ACB]
+19/09-16:10:21: Checksum Calculado: [0x0ACB]
+19/09-16:10:21: Checksum: OK
+19/09-16:10:21: Envio el ACK
+19/09-16:10:21: Fin de STATPRN local
+
+19/09-16:10:21: Envio el comando: <|**005901a8>
+19/09-16:10:21: Espero el ACK
+19/09-16:10:21: Recibo ACK
+19/09-16:10:21: A esperar la respuesta
+19/09-16:10:21: Checksum Paquete:   [0x0A5E]
+19/09-16:10:21: Checksum Calculado: [0x0A5E]
+19/09-16:10:21: Checksum: OK
+19/09-16:10:21: Vino la respuesta <**|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:10:21: Mando ACK
+19/09-16:10:21: Error en Numero de Paquete. Lo desecho
+19/09-16:10:21: A esperar la respuesta
+19/09-16:10:23: TIMEOUT esperando STX
+19/09-16:10:23: Envio de STATPRN local
+19/09-16:10:23: Recibo ACK
+19/09-16:10:23: ACK a comando
+19/09-16:10:23: Espero la respuesta
+19/09-16:10:23: Checksum Paquete:   [0x0ACB]
+19/09-16:10:23: Checksum Calculado: [0x0ACB]
+19/09-16:10:23: Checksum: OK
+19/09-16:10:23: Envio el ACK
+19/09-16:10:23: Fin de STATPRN local
+
+19/09-16:10:23: Error de comunicaciones con la impresora
+19/09-16:10:23: Cmd [**0059]
+19/09-16:10:23: MandaPaqueteFiscal: CmdRetries 3, SndRetries 2, RcvRetries 2, New_Protocol 0
+
+19/09-16:10:23: Envio el comando: <~**005901aa>
+19/09-16:10:23: Espero el ACK
+19/09-16:10:23: Recibo ACK
+19/09-16:10:23: A esperar la respuesta
+19/09-16:10:23: Checksum Paquete:   [0x0A5E]
+19/09-16:10:23: Checksum Calculado: [0x0A5E]
+19/09-16:10:23: Checksum: OK
+19/09-16:10:23: Vino la respuesta <**|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:10:23: Mando ACK
+19/09-16:10:23: Error en Numero de Paquete. Lo desecho
+19/09-16:10:23: A esperar la respuesta
+19/09-16:10:24: Error de comunicaciones con la impresora, Rc -1
+19/09-16:10:25: TIMEOUT esperando STX
+19/09-16:10:25: Envio de STATPRN local
+19/09-16:10:25: Recibo ACK
+19/09-16:10:25: ACK a comando
+19/09-16:10:25: Espero la respuesta
+19/09-16:10:25: Checksum Paquete:   [0x0ACD]
+19/09-16:10:25: Checksum Calculado: [0x0ACD]
+19/09-16:10:25: Checksum: OK
+19/09-16:10:25: Envio el ACK
+19/09-16:10:25: Fin de STATPRN local
+
+19/09-16:10:25: Envio el comando: <~**005901aa>
+19/09-16:10:25: Espero el ACK
+19/09-16:10:25: Recibo ACK
+19/09-16:10:25: A esperar la respuesta
+19/09-16:10:25: Checksum Paquete:   [0x0A5E]
+19/09-16:10:25: Checksum Calculado: [0x0A5E]
+19/09-16:10:25: Checksum: OK
+19/09-16:10:25: Vino la respuesta <**|C080|0600|00000002|0002|00000000|0000|00000000|00000000>
+19/09-16:10:25: Mando ACK
+19/09-16:10:25: Error en Numero de Paquete. Lo desecho
+19/09-16:10:25: A esperar la respuesta
+19/09-16:10:30: Error de comunicaciones con la impresora, Rc -1
+19/09-16:10:40: Error de comunicaciones con la impresora, Rc -1
+19/09-16:10:50: Error de comunicaciones con la impresora, Rc -1
+19/09-16:11:00: Error de comunicaciones con la impresora, Rc -1
+19/09-16:11:10: Error de comunicaciones con la impresora, Rc -1
+19/09-16:11:20: Error de comunicaciones con la impresora, Rc -1
+19/09-16:11:30: Error de comunicaciones con la impresora, Rc -1
+19/09-16:11:40: Error de comunicaciones con la impresora, Rc -1
+19/09-16:11:50: Error de comunicaciones con la impresora, Rc -1
+19/09-16:12:00: Error de comunicaciones con la impresora, Rc -1
+19/09-16:12:10: Error de comunicaciones con la impresora, Rc -1
+19/09-16:12:20: Error de comunicaciones con la impresora, Rc -1
+19/09-16:12:30: Error de comunicaciones con la impresora, Rc -1
+19/09-16:12:40: Error de comunicaciones con la impresora, Rc -1
+19/09-16:12:50: Error de comunicaciones con la impresora, Rc -1
+19/09-16:13:00: Error de comunicaciones con la impresora, Rc -1
+19/09-16:13:10: Error de comunicaciones con la impresora, Rc -1
+19/09-16:13:20: Error de comunicaciones con la impresora, Rc -1
+19/09-16:13:30: Error de comunicaciones con la impresora, Rc -1
+19/09-16:13:40: Error de comunicaciones con la impresora, Rc -1
+19/09-16:13:50: Error de comunicaciones con la impresora, Rc -1
+19/09-16:14:00: Error de comunicaciones con la impresora, Rc -1
+19/09-16:14:10: Error de comunicaciones con la impresora, Rc -1
+19/09-16:14:21: Error de comunicaciones con la impresora, Rc -1
+19/09-16:14:31: Error de comunicaciones con la impresora, Rc -1
+19/09-16:14:41: Error de comunicaciones con la impresora, Rc -1
+19/09-16:14:51: Error de comunicaciones con la impresora, Rc -1
+19/09-16:15:01: Error de comunicaciones con la impresora, Rc -1
+19/09-16:15:11: Error de comunicaciones con la impresora, Rc -1
+19/09-16:15:21: Error de comunicaciones con la impresora, Rc -1
+19/09-16:15:31: Error de comunicaciones con la impresora, Rc -1
+19/09-16:15:41: Error de comunicaciones con la impresora, Rc -1
+19/09-16:15:51: Error de comunicaciones con la impresora, Rc -1
+19/09-16:16:01: Error de comunicaciones con la impresora, Rc -1
+19/09-16:16:11: Error de comunicaciones con la impresora, Rc -1
+19/09-16:16:21: Error de comunicaciones con la impresora, Rc -1
+19/09-16:16:31: Error de comunicaciones con la impresora, Rc -1
+19/09-16:16:41: Error de comunicaciones con la impresora, Rc -1
+19/09-16:16:51: Error de comunicaciones con la impresora, Rc -1
+19/09-16:17:01: Error de comunicaciones con la impresora, Rc -1
+19/09-16:17:11: Error de comunicaciones con la impresora, Rc -1
+19/09-16:17:21: Error de comunicaciones con la impresora, Rc -1
+19/09-16:17:31: Error de comunicaciones con la impresora, Rc -1
+19/09-16:17:41: Error de comunicaciones con la impresora, Rc -1
+19/09-16:17:51: Error de comunicaciones con la impresora, Rc -1
+19/09-16:18:01: Error de comunicaciones con la impresora, Rc -1
+19/09-16:18:11: Error de comunicaciones con la impresora, Rc -1
+19/09-16:18:21: Error de comunicaciones con la impresora, Rc -1
+19/09-16:18:25: **START SPOOLER**
+19/09-16:18:25: A abrir COM1
+19/09-16:18:31: Error de comunicaciones con la impresora, Rc -1
+19/09-16:18:44: **START SPOOLER**
+19/09-16:18:44: Conectando con localhost, Port 1600
+19/09-16:18:44: Imposible conectarse con localhost (1600)

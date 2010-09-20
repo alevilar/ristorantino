@@ -9,7 +9,8 @@
                         '/adicion/adicionar/mozo_id:'.$mozo['Mozo']['id'],
                         array(
                             'class'=>'boton redondeado letra-grande',
-                            'style'=> 'font-size: xx-large'
+                            'style'=> 'font-size: xx-large',
+                            'onclick' => 'cambiarMozo();'
                         )
                 );
                 ?>
@@ -33,6 +34,10 @@
     });
 
     contenedorMozos.setContent('cambiar-mozos', true, true);
+
+    function cambiarMozo(){
+        //Sound.play(urlSonido,{replace:true});
+    }
 </script>
 
 <a href="#cambiarMozo" id="mozo-numero" class="boton" style="float: left" onclick="contenedorMozos.showCenter();">Mozo</a>
