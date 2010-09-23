@@ -19,6 +19,7 @@
 		echo $javascript->link('prototype');		
 		echo $javascript->link('scriptaculous');
 
+                 echo $javascript->link('ristorantino/generic');
 		echo $javascript->link('php');
 		
 		echo $javascript->link('cajero/cajero');	

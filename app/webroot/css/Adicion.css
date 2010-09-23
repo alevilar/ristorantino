@@ -31,7 +31,7 @@
 /* General Style Info */
 body {
 	background: #003d4c;
-	color: #fff;
+	color: black;
 	font-family: 'lucida grande', verdana, helvetica, arial, sans-serif;
 	font-size: x-large;
 	margin: 0;
@@ -41,7 +41,6 @@ body {
 A {	
 	color: #333;
 	text-decoration: none;
-	background-color:silver;
 	outline: 0;
 }
 
@@ -91,6 +90,7 @@ A:ACTIVE {
 	/*background-color: silver;*/
 	vertical-align: middle;
 	overflow: hidden;
+        background-color: silver;
 }
 .boton:HOVER{
 	background-color: ThreeDLightShadow;
@@ -110,6 +110,7 @@ A:ACTIVE {
 	vertical-align: middle;
 	overflow: hidden;
 	font-size:15pt;
+        background-color: silver;
 }
 .boton-ancho-largo:HOVER{
 	background-color: ThreeDLightShadow;
@@ -153,18 +154,32 @@ A:ACTIVE {
 	color: white;
 }
 
+.redondo{
+	-moz-border-radius:100px;
+        -webkit-border-radius: 100px; /* Safari, Chrome */
+        border-radius: 100px; /* CSS3 */
+
+}
+
 .redondeado{
 	-moz-border-radius:17px;
+        -webkit-border-radius: 17px; /* Safari, Chrome */
+        border-radius: 17px; /* CSS3 */
 }
 
 .redondeado-arriba{
 	-moz-border-radius-topleft:17px;
 	-moz-border-radius-topright:17px;
+        -webkit-border-radius-topright: 17px; /* Safari, Chrome */
+        border-radius-topright: 17px; /* CSS3 */
+         -webkit-border-radius-topleft: 17px; /* Safari, Chrome */
+        border-radius-topleft: 17px; /* CSS3 */
 }
 
 .redondeado-abajo{
 	-moz-border-radius-bottomleft:17px;
 	-moz-border-radius-bottomright:17px;
+
 }
 
 
@@ -182,7 +197,7 @@ A:ACTIVE {
 	font-family: fantasy;
 }
 
-.boton-apretado, A.boton-apretado{
+.boton-apretado, A.boton-apretado, .boton-apretado:HOVER{
 	background-color: lime;
 }
 
@@ -796,6 +811,22 @@ div.code-coverage-results span.result-good {
 	font-family: verdana;
 	overflow: hidden;	
 	margin: 2px;
+        background-color: silver;
+}
+
+
+.boton-mini {
+	display: block;
+	height: 45px;
+	width: 40px;
+	border: 1px solid grey;
+	text-align: center;
+	text-decoration: none;
+	background-color: silver;
+	vertical-align: middle;
+	font-family: verdana;
+	overflow: hidden;
+	margin: 2px;
 }
 
 
@@ -1118,4 +1149,10 @@ outline: 0;
     position:absolute;
     right:4px;
     top:-53px;
+}
+
+
+.clear{
+    float: left;
+    clear: both;
 }

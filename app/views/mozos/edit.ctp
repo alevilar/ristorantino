@@ -4,7 +4,7 @@
  		<legend><?php __('Edit Mozo');?></legend>
 	<?php
 		echo $form->input('id');
-		echo $form->input('user_id');
+		echo $form->input('user_id', array('empty'=>'No relacionar con usuarios del sistema'));
 		echo $form->input('numero');
 		echo $form->input('activo',array('after'=>'Solo mozos activos aparecen en la adiciñon. Nunca se debe BORRAR un mozo, lo que hay que hacer es desactivarlo, de ésta manera no se pierden datos estadísticos.'));
 	?>

@@ -4,7 +4,6 @@ class Mozo extends AppModel {
 	var $name = 'Mozo';
 	var $validate = array(
 		'user_id' => array(
-                    'numeric',
                     'isUnique' => array(
                         'rule' => 'isUnique',
                         'message'=>'El usuario seleccionado ya tiene un numero de mozo asignado'
