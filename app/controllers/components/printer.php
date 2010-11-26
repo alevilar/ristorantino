@@ -1,7 +1,8 @@
 <?php
 
 
-App::import('Vendor', 'comandos_fiscales'.DS.'comandos_fiscales_hasar_441'); // loads example/example.php
+//App::import('Vendor', 'comandos_fiscales'.DS.'comandos_fiscales_hasar_441'); // loads example/example.php
+App::import('Vendor', 'comandos_fiscales'.DS.'comandos_fiscales_hasar_1120f'); // loads example/example.php
 
 
 //define('CORTAR_PAPEL','i');

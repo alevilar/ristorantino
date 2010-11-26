@@ -1156,3 +1156,34 @@ outline: 0;
     float: left;
     clear: both;
 }
+
+
+.mesa-numero {
+    color:#0B3861;
+    display:block;
+    float:left;
+    font-size:32px;
+    height:70px;
+    text-align:center;
+    width:87px;
+    background-image:url("img/mesa.png");
+    background-repeat: no-repeat;
+}
+
+
+.mozo-numero:empty {
+    display: none;
+}
+
+.mozo-numero {
+    background-image:url("img/ico_mozo.png");
+    background-position: 0px 27px;
+    background-repeat: no-repeat;
+    display:block;
+    float:right;
+    height:60px;
+    text-align:center;
+    width:40px;
+    font-size: 16pt;
+    text-align: center;
+}

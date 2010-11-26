@@ -6,8 +6,8 @@ var FabricaMesa = Class.create({
 		if (mesaJSON){
 			this.mesa = new Mesa();
 
-			this.mesa.setId(mesaJSON.Mesa.id);
-			this.mesa.setNumero(mesaJSON.Mesa.numero);
+			this.mesa.id = mesaJSON.Mesa.id;
+			this.mesa.numero = mesaJSON.Mesa.numero;
 			
 			this.mesa.clienteId = mesaJSON.Mesa.cliente_id;
 			this.mesa.created = mesaJSON.Mesa.cliente_id;
@@ -19,10 +19,10 @@ var FabricaMesa = Class.create({
 			this.mesa.total = mesaJSON.Mesa.total;
 			this.mesa.created = mesaJSON.Mesa.created;
 			
-			this.mesa.setProductos(mesaJSON.Producto);
+			this.mesa.productos = mesaJSON.Producto;
 			
 			this.mesa.cliente = mesaJSON.Cliente;
-			this.mesa.setCantComensales(mesaJSON.Mesa.cant_comensales);
+			this.mesa.cantComensales = mesaJSON.Mesa.cant_comensales;
 				
 			
 			return this.mesa;

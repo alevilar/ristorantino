@@ -12,8 +12,10 @@
 <div class="clientes form">
     <?php echo $form->create('Cliente');?>
     <fieldset>
-        <legend><?php __('Editar Nuevo Cliente');?></legend>
+        <legend><?php __('Editar Cliente');?></legend>
         <?php
+        echo $form->hidden('id');
+
         echo $form->input('user_id',
                     array(  'empty'=> 'Seleccione',
                             'label'=>'Usuario',

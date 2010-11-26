@@ -3,6 +3,7 @@
 <div id="todas-las-mesas-abiertas" style="float: left;">
 
     <ul class="menu-horizontal">
+        <li class="boton redondo letra-grande mozo" onclick="seleccionarMesasDeTodos(this);" style="width: 40px"></li>
         <?php foreach ($mozos as $mozo):?>
         <li class="boton redondo letra-grande mozo" onclick="seleccionarMesasDeMozo(this,<?php echo $mozo['Mozo']['id']?>);" style="width: 40px">
             <div style="font-size: 16pt;">
@@ -62,7 +63,18 @@
     function hacer_cambio_rapido_de_mesa_mozo(mesa, mozo){
         //Sound.play(urlSonido,{replace:true});
         contenedorMesasAbiertas.hide();
-        $("btn-cambio-rapido-de-mesa").update("Mesa "+mesa+"<br />Mozo "+mozo);
+    }
+
+    /**
+     * me muestra las mesas de todos los mozos
+     */
+    function seleccionarMesasDeTodos(element){
+        $$('.mozo').each(function(e) {
+            e.removeClassName('boton-apretado');
+        });
+        element.addClassName('boton-apretado');
+        $$('.mesa').each(Element.show);
+        //$$('.mesa[mozo="'+mozoId+'"]').each(Element.show);
     }
 
     /**
@@ -83,8 +95,8 @@
 <ul class="menu-horizontal letra-grande">
     <li>
         <a href="#MostrarMesasABiertas" id="btn-cambio-rapido-de-mesa" class="boton-ancho-largo" onclick="contenedorMesasAbiertas.showCenter()">
-            Mesa<br />
-            Mozo
+            <span class="mesa-numero">¿MESA?</span>
+            <span class="mozo-numero"></span>
         </a>
     </li>
 

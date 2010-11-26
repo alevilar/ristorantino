@@ -48,7 +48,7 @@ Adicion.prototype = {
         new Ajax.Updater(
                     'mesa-scroll',
                     this.urlMesaView+'/'+this.currentMesa.id,
-                    {   asynchronous:true,
+                    {asynchronous:true,
                         evalScripts:true,
                         requestHeaders:['X-Update', 'mesa-scroll']}
                 );
@@ -97,7 +97,12 @@ Adicion.prototype = {
 		
     cambiarMozo: function(mozoCambiar){
         this.currentMozo = mozoCambiar;
-    //$('mozo-numero').update("Mozo "+this.currentMozo.numero);
+
+        // modifico los botones de la DOM que hacen referencia al Mozo
+        $$(".mozo-numero").each(function(e){
+            e.update(this.currentMozo.numero)
+        }.bind(this));
+        
         return this.currentMozo;
     },
 
@@ -117,8 +122,10 @@ Adicion.prototype = {
 				
             // del element imprimir_como_menu.ctp
             $('boton-menu').removeClassName('boton-apretado')
+            $('boton-menu').update('Menú');
             if (this.currentMesa.tieneMenu()){
                 $('boton-menu').addClassName('boton-apretado');
+                $('boton-menu').update('Menú X '+this.currentMesa.menu);
             }
 
             if (this.currentMesa.getCantComensales() > 0) {
@@ -128,6 +135,12 @@ Adicion.prototype = {
             }            
         }
 			
+                        
+        // modifico en la DOM los botones que hcen referencia a esa mesa y mozo
+        console.debug($$(".mesa-numero"));
+        $$(".mesa-numero").each(function(e){
+            e.update(this.currentMesa.numero);
+        }.bind(this));
 
         // si la mesa esta cerrada, el mozo ya nop deberia poder hacer nada hasta que el cajero no confirme el pago, por lo tanto
         // no le permito al usuario que pueda modificarle valores

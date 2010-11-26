@@ -7,3 +7,6 @@ Event.observe(window, 'load', function(){
     document.onselectstart = function() {return false;} // ie
     document.onmousedown = function() {return false;} // mozilla
 });
+
+
+

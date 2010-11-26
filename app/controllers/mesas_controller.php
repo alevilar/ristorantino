@@ -413,5 +413,33 @@ class MesasController extends AppController {
         }
     }
 
+
+    function cerradas(){
+        Configure::write('debug',0);
+        $mesas = $this->Mesa->todasLasCerradas();
+        $this->set('mesas', $mesas);
+        $this->render('mesas');
+    }
+
+
+    function abiertas()
+    {
+        Configure::write('debug',0);
+        $options = array(
+            'conditions' => array(
+                "Mesa.time_cobro" => "0000-00-00 00:00:00",
+                "Mesa.time_cerro" => "0000-00-00 00:00:00",
+            ),
+            'order' => 'Mesa.created DESC',
+            'contain' => array('Mozo',
+                'Cliente' => 'Descuento',
+                'Comanda')
+        );
+
+        $mesas = $this->Mesa->find('all', $options);
+        $this->set('mesas', $mesas);
+        $this->render('mesas');
+    }
+
 }
 ?>

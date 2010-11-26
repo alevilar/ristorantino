@@ -61,7 +61,7 @@
             onSuccess: function(){
                 imprimirComoMenuWindow.hide();
                 $('boton-menu').addClassName('boton-apretado');
-
+                $('boton-menu').update('Menú X '+$F('mesa-menu'));
                 mensajero.show("La mesa "+adicion.currentMesa.numero+" se imprimirá como menú x "+$F('mesa-menu'));
                 //adicion.resetear();
             }
