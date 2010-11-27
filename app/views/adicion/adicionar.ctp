@@ -91,7 +91,9 @@ echo $this->renderElement('adicion/seleccionar_mozo');
             <li><?php echo $html->link(' + ','#AbrirMesa',array('onclick'=>"adicion.abrirMesa(); return false;",
                 'class'=>'boton-simple','id'=>'abrir-mesa'))?></li>
 
-            <?php foreach ($this->data['Mesa'] as $m):?>
+            <?php
+                if (!empty($this->data['Mesa'])) {
+                    foreach ($this->data['Mesa'] as $m):?>
                 <?php $add_class = ($m['time_cerro'] !=  '0000-00-00 00:00:00')?' mesa-cerrada':'';?>
                 <?php echo '<li>'.$ajax->link($m['numero'],'/mesas/view/'.$m['id'], array( 	'update'=>'mesa-scroll',
                         'id'=>'mesa-ver-'.$m['id'],
@@ -99,7 +101,10 @@ echo $this->renderElement('adicion/seleccionar_mozo');
                         'evalScripts'=>true
                         )).'</li>'
                 ?>
-            <?php endforeach; ?>
+            <?php 
+                    endforeach;
+                }
+                ?>
         </ul>
     </div>
 

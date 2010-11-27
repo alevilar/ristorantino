@@ -41,6 +41,12 @@ Configure::write('Restaurante.iva_resp', 'IVA RESPONSABLE INSCRIPTO A CONS. FINA
 
 
 /**
+ * COmandos de la impresora fiscal a utilizar
+ */
+Configure::write('ModeloImpresoraFiscal', 'hasar_1120f');
+//Configure::write('ModeloImpresoraFiscal', 'hasar_441');
+
+/**
  * El Cajero sirve para  saber si el sistema usara cajero o solo adicionista
  * si el cajero esta en true, al cerrar mesa se toma el time_cierre y el time_cobro
  * por separado, permitiendo de esa manera que en la pantalla del cajero aparezcan aquellas

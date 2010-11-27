@@ -1,6 +1,6 @@
 <?php
 
-class PqueryAppController extends AppController
+class CashierAppController extends AppController
 {
 
     function beforeFilter()

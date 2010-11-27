@@ -114,7 +114,7 @@
         if(adicion.tieneMesaSeleccionada()){
 
             adicion.comanda.resetearComanda(adicion.currentMozo, adicion.currentMesa);
-
+            manejadorCategorias.actualizarCategorias(1);
             comandaCocinaWindow.showCenter();
         }
 

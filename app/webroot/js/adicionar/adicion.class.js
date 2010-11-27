@@ -137,7 +137,6 @@ Adicion.prototype = {
 			
                         
         // modifico en la DOM los botones que hcen referencia a esa mesa y mozo
-        console.debug($$(".mesa-numero"));
         $$(".mesa-numero").each(function(e){
             e.update(this.currentMesa.numero);
         }.bind(this));

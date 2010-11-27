@@ -23,7 +23,11 @@ var Mesa = function(json){
         this.protype = json;
     }
 
-    	
+
+    this.setId = function(id){
+        this.id = id;
+    },
+
     /**
      * Me dice si la mesa pidio el cierre y esta pendiente de cobro
      * @return boolean true si ya cerro, false si esta abierta
@@ -37,7 +41,6 @@ var Mesa = function(json){
 
 
     this.tieneCliente = function(){
-        console.debug(this.cliente);
         if (this.cliente.id != null ||this.cliente.id != undefined)
             return true;
         else
