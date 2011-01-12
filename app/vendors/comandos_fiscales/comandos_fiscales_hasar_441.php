@@ -102,6 +102,26 @@ class ComandosHasar441 extends ComandosFiscales
 		
 		return $comando;
 	}
+
+        /**
+            Responde:
+            a. Imprimiendo una línea donde se muestra: descripción del descuento (o recargo), impuestos y monto del
+                descuento (o recargo) -con posterioridad a la impresión de la línea con la leyenda “Descuento (o Recargo)
+                   general”-;
+            b. Restando
+
+         * @param float $porcentaje_descuento
+         * @return string comando
+         */
+        public function generalDiscount($porcentaje_descuento = 0){
+            $comando =  "T".self::FS.
+                        'Descuento'.self::FS.
+                        $porcentaje_descuento.self::FS.
+                        'm'.self::FS.
+                        '0'.self::FS.
+                        'T';
+            return $comando;
+        }
 	
 	
 	/**

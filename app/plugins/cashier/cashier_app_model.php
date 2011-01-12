@@ -1,6 +1,6 @@
 <?php 
 
-class CajeroAppModel extends AppModel{
+class CashierAppModel extends AppModel{
 	
 }
 ?>

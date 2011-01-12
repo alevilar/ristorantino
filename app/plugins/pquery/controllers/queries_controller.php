@@ -1,4 +1,4 @@
-<?php
+    <?php
 App::import('Model','Pquery.CustomQUery');
 
 class QueriesController extends PqueryAppController {
@@ -130,7 +130,7 @@ class QueriesController extends PqueryAppController {
 
 
         function list_view($id="") {
-            $this->layout = "sin_menu";
+            //$this->layout = "sin_menu";
             $this->CustomQuery =& ClassRegistry::init('Pquery.CustomQuery');
 
             if (isset($this->passedArgs['query.id'])) {

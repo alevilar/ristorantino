@@ -1,7 +1,21 @@
 
 <div id="mesa-abrir" style="display: none">
     <?php
-    echo $form->create('Mesa',array('action'=>'abrirMesa'));
+    /* @var $form FormHelper */
+    $form;
+//    echo $ajax->form('abrirMesa', 'post', array(
+//            'model' => 'Mesa',
+//            'id' => 'MesaAbrirMesaForm',
+//            'update'=>'mesa-data',
+//            ));
+
+    
+    echo $form->create('Mesa',  array(
+            //'action' => 'abrirMesa',
+            'url' => 'abrirMesa',
+            'id' => 'MesaAbrirMesaForm',
+            'update'=>'mesa-data',
+            ));
     echo $form->input('mozo_id',array('type'=>'hidden','value'=>$current_mozo_id));
     echo $form->input('numero',array('label'=>'','style'=>'float:left;'));
     echo $form->button('Cancelar',array('onclick'=>'Dialog.closeInfo();'));
@@ -15,22 +29,12 @@
 
     function abrirlaMesa()
     {
-        //Sound.play(urlSonido,{replace:true});
-        if($F('MesaNumero')< 600){
-
-            if (adicion.currentMozo.mozo){
-                $('MesaMozoId').value = adicion.currentMozo.mozo.id;
-            }
-
-            $('MesaAbrirMesaForm').submit();
-            return true;
-        }
-        else{
-            Dialog.closeInfo();
-            mensajero.error("El Nº de mesa debe ser menor a 600");
-            return false;
+        if (adicion.currentMozo.mozo){
+            $('MesaMozoId').value = adicion.currentMozo.mozo.id;
         }
 
+        $('MesaAbrirMesaForm').submit();
+        return true;
     }
     
 </script>

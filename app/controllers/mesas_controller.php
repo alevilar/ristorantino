@@ -78,39 +78,7 @@ class MesasController extends AppController {
         $this->set('mozo_json', json_encode($this->Mesa->Mozo->read(null, $mesa['Mozo']['id'])));
     }
 
-    function abrirMesa() {
-        if (!empty($this->data)) {
-            // si ese numero de mesa no esta abierta continuo
-            $existe = $this->Mesa->numero_de_mesa_existente($this->data['Mesa']['numero']);
-            if(!$existe) {
-                $this->Mesa->create();
-                if ($this->Mesa->save($this->data,$validate = false)) {
-                    $this->Session->setFlash(__('Se abrió la mesa n° '.$this->data['Mesa']['numero'], true));
-                    //debug($this->data);
-                    //	$this->Mesa->Mozo->id = $this->data['Mesa']['mozo_id'];
-                    //	$this->data = $this->Mesa->Mozo->read();
-
-                } else {
-                    $this->Session->setFlash(__('La mesa no pudo ser abierta. Intente nuevamente.', true));
-                }
-
-            }
-            else { // si se encontro una mesa abierta con se numero
-                $this->Session->setFlash(__('Ese número de mesa ya existe. No puede crear 2 mesas con el mismo número', true));
-
-            }
-        }
-
-        $meterMesa = '';
-        if (!empty($this->Mesa->id)){
-            $meterMesa = '/mesa_id:'.$this->Mesa->id;
-        }
-        $this->redirect(array(
-                'controller'=>'Adicion',
-                'action' => 'adicionar/mozo_id:'.$this->data['Mesa']['mozo_id'].$meterMesa));
-
-    }
-
+    
 
 
     private function __imprimir($mesa_id) {
@@ -162,9 +130,14 @@ class MesasController extends AppController {
         $tipoticket = 'Ticket Factura "B"';
         $porcentaje_descuento = 0;
 
+
+        if(!empty($mesa['Cliente']['Descuento']['porcentaje'])) {
+            $porcentaje_descuento = $mesa['Cliente']['Descuento']['porcentaje'];
+        }
+
         if(empty($mesa['Cliente'])):
 
-            $print_success = $this->Printer->imprimirTicket($prod, $mozo_nro, $mesa_nro);
+            $print_success = $this->Printer->imprimirTicket($prod, $mozo_nro, $mesa_nro, $porcentaje_descuento);
             $imprimio_ticket = true;
 
         elseif($mesa['Cliente']['imprime_ticket'] > 0 || $mesa['Cliente']['imprime_ticket'] == ''):
@@ -176,7 +149,7 @@ class MesasController extends AppController {
                     $tipodoc = $this->Mesa->Cliente->getTipoDocumento($mesa['Cliente']['id']);
                     $mesa['Cliente']['tipodocumento'] = $tipodoc['TipoDocumento']['codigo_fiscal'];
 
-                    $print_success = $this->Printer->imprimirTicketFacturaA($prod, $mesa['Cliente'], $mozo_nro, $mesa_nro);
+                    $print_success = $this->Printer->imprimirTicketFacturaA($prod, $mesa['Cliente'], $mozo_nro, $mesa_nro, $porcentaje_descuento);
                     $tipoticket = 'Ticket Factura "A"';
 
                     $this->log("se imprimio una factura A para la mesa $mesa_nro, mozo $mozo_nro",LOG_INFO);
@@ -184,18 +157,12 @@ class MesasController extends AppController {
                     break;
                 case '':
                 case 'B':
-                    $print_success = $this->Printer->imprimirTicket($prod, $mozo_nro, $mesa_nro);
+                    $print_success = $this->Printer->imprimirTicket($prod, $mozo_nro, $mesa_nro, $porcentaje_descuento);
                     $tipoticket = 'Ticket Factura "B"';
                     $this->log("se imprimio una factura B para la mesa $mesa_nro, mozo $mozo_nro",LOG_INFO);
                     $imprimio_ticket = true;
                     break;
                 default:
-                    if(!empty($mesa['Cliente'])) {
-                        if(!empty($mesa['Cliente']['Descuento']['porcentaje'])) {
-                            $porcentaje_descuento = $mesa['Cliente']['Descuento']['porcentaje'];
-                        }
-                    }
-
                     $print_success = $this->Printer->imprimirTicketConComandera($prod, $mozo_nro, $mesa_nro,$porcentaje_descuento);
                     $this->log("se imprimio un ticket no fiscal desde comandera como remito para la mesa $mesa_nro, mozo $mozo_nro",LOG_INFO);
                     $tipoticket = 'Ticket Descuento';
@@ -248,7 +215,7 @@ class MesasController extends AppController {
             $this->Session->setFlash("No se pudo imprimir el $tipoticket Mesa $mesa_nro");
         endif;
 
-        $this->redirect("/adicion/adicionar/mozo_id:".$mesa['Mozo']['id']);
+        $this->redirect($this->referer());
     }
 
 
@@ -405,11 +372,11 @@ class MesasController extends AppController {
     function delete($id = null) {
         if (!$id) {
             $this->Session->setFlash(__('Invalid id for Mesa', true));
-            $this->redirect('/cajero/mesas_abiertas');
+            $this->redirect($this->referer());
         }
         if ($this->Mesa->del($id)) {
             $this->Session->setFlash(__('Mesa deleted', true));
-            $this->redirect('/cajero/mesas_abiertas');
+            $this->redirect($this->referer());
         }
     }
 

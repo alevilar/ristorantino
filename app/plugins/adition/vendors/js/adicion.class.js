@@ -128,6 +128,12 @@ Adicion.prototype = {
                 $('boton-menu').update('Menú X '+this.currentMesa.menu);
             }
 
+            if (!this.currentMesa.estaAbierta()){
+                $('btn-cambio-rapido-de-mesa').addClassName('mesa-cerrada');
+            } else {
+                $('btn-cambio-rapido-de-mesa').removeClassName('mesa-cerrada');
+            }
+
             if (this.currentMesa.getCantComensales() > 0) {
                 $('btn-comensales').update(this.currentMesa.getCantComensales()+" Cubiertos").addClassName('boton-apretado');
             } else {
@@ -141,13 +147,28 @@ Adicion.prototype = {
             e.update(this.currentMesa.numero);
         }.bind(this));
 
-        // si la mesa esta cerrada, el mozo ya nop deberia poder hacer nada hasta que el cajero no confirme el pago, por lo tanto
-        // no le permito al usuario que pueda modificarle valores
-        if(mesaCambiar.pidioCierre())
-        {
-            mensajero.error("La mesa "+mesaCambiar.numero+" ya está cerrada. No se pude modificar");
-            this.borrarCurrentMesa();
-            return -1;
+//        // si la mesa esta cerrada, el mozo ya nop deberia poder hacer nada hasta que el cajero no confirme el pago, por lo tanto
+//        // no le permito al usuario que pueda modificarle valores
+//        if(mesaCambiar.pidioCierre())
+//        {
+//            mensajero.error("La mesa "+mesaCambiar.numero+" ya está cerrada. No se pude modificar");
+//            this.borrarCurrentMesa();
+//            return -1;
+//        }
+    },
+
+
+    reabrirMesa: function(url){
+        if (typeof(this.currentMesa) != 'undefined') {
+            this.currentMesa.reabrir(url);
+        }
+        this.cambiarMesa(this.currentMesa);
+    },
+
+
+    borrarMesa: function(url){
+        if (typeof(this.currentMesa) != 'undefined' && confirm('¿Eliminar la mesa n° '+this.currentMesa.numero+'?')) {
+            this.currentMesa.borrar(url);
         }
     },
 		
@@ -165,7 +186,8 @@ Adicion.prototype = {
             width:400,
             height:400,
             showProgress: false,
-            destroyOnClose: true
+            destroyOnClose: true,
+            opacity:0.99
         };
         $('mesa-abrir').show();
         Dialog.info("<h1>Abrir Mesa</h1>"+$('mesa-abrir').innerHTML, ops);

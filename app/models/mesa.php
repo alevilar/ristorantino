@@ -170,7 +170,7 @@ LEFT JOIN
 	function listado_de_abiertas($recursive = -1){
 		
 		$conditions = array("Mesa.time_cobro" => "0000-00-00 00:00:00",
-							"Mesa.time_cerro" => "0000-00-00 00:00:00");
+                                    "Mesa.time_cerro" => "0000-00-00 00:00:00");
 		
 		if($recursive>-1){
 			$this->recursive = $recursive;			
@@ -179,6 +179,26 @@ LEFT JOIN
 		else{
 			$mesas = $this->find('all', array('conditions'=>$conditions,'contain'=>array('Mozo(numero)')));
 		}
+		return $mesas;
+	}
+
+
+        function listadoAbiertasYSinCobrar($recursive = -1){
+
+		$conditions = array("Mesa.time_cobro" => "0000-00-00 00:00:00");
+
+		if($recursive>-1){
+			$this->recursive = $recursive;
+			$mesas = $this->find('all', array(
+                            'conditions'=>$conditions));
+		}
+		else{
+			$mesas = $this->find('all', array(
+                            'conditions'=>$conditions,
+                            'contain'=>array('Mozo(numero)')));
+		}
+
+            //debug($mesas);
 		return $mesas;
 	}
 	

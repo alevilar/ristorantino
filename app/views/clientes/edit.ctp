@@ -46,6 +46,11 @@
             )
         );
 
+        echo $form->input('descuento_id',array(
+                'div'=>array('id' => 'div-descuento'),
+                'empty'=>'Sin Descuento',
+                'after'=>'El descuento solo es válido cuando se quiere imprimir un remito'));
+
         ?>
 
         <div id="datosParaRemito" style="display:none;">
@@ -56,11 +61,6 @@
                                     'after'=>'Hay ocasiones en las que no es necesario imprimir un remito,
                                         El remito, cuando es impreso sale por una comandera, ya que no es un comprobante fiscal.<br> Si desea imprimir por otra comandera debe dirigirse a la seccion "Comanderas" de la pagina de administracion.'));
 
-
-             echo $form->input('descuento_id',array(
-                'div'=>array('id' => 'div-descuento'),
-                'empty'=>'Sin Descuento',
-                'after'=>'El descuento solo es válido cuando se quiere imprimir un remito'));
             ?>
         </div>
 

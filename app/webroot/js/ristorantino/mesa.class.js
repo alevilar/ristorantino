@@ -69,6 +69,51 @@ var Mesa = function(json){
 
     this.getCantComensales = function(){
         return this.cantComensales;
+    },
+
+
+    this.reimprimir = function(url){
+        var urlcompleta = url+"/"+this.id;
+
+        new Ajax.Request(urlcompleta, {
+            method: 'post'
+        });
+    },
+
+
+
+
+    /**
+	 * Cancela el cierre de una mesa que previamente fue cerrada por el mozo
+	 *
+	 * el ticket ya fue impreso, pero en tal caso se puede modificar el total a mano
+	 * o cancelar el tiquet a mano y volver  aimprimirlo
+	 */
+    this.reabrir = function(url){
+        // "0000-00-00 00:00:00"
+        return new Ajax.Request(url, {
+            method: 'post',
+            parameters: {
+                'data[Mesa][time_cerro]': "0000-00-00 00:00:00",
+                'data[Mesa][id]': this.id
+            },
+            onSuccess: function() {
+                $("mesa-id-"+this.id).remove();
+                return true;
+            }.bind(this),
+            onFailure: function(){
+                alert("No se pudo abrir la mesa nuevamente");
+                return false;
+            }
+        });
+
+    },
+
+
+    this.borrar = function(url){
+            //return new Ajax.Request(url+'/'+this.id);
+            window.location.href = url+'/'+this.id;
     }
+
 
 };

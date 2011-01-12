@@ -43,8 +43,8 @@ Configure::write('Restaurante.iva_resp', 'IVA RESPONSABLE INSCRIPTO A CONS. FINA
 /**
  * COmandos de la impresora fiscal a utilizar
  */
-Configure::write('ModeloImpresoraFiscal', 'hasar_1120f');
-//Configure::write('ModeloImpresoraFiscal', 'hasar_441');
+//Configure::write('ModeloImpresoraFiscal', 'hasar_1120f');
+Configure::write('ModeloImpresoraFiscal', 'hasar_441');
 
 /**
  * El Cajero sirve para  saber si el sistema usara cajero o solo adicionista
@@ -57,6 +57,24 @@ Configure::write('ModeloImpresoraFiscal', 'hasar_1120f');
  *
  */
 Configure::write('usarCajero', true);
+
+
+
+/**
+ *  es el titulo, o nombre de los numeros que se abren, por lo general son MEsas
+ *  pero por ejemplo para el sistema de hoteleria le puse el titulo 'HABITACION'
+ * (notar que los acentos no los puedo imprimir en la fiscal aun)
+ *  EJ: Configure::write('TitleMesa', 'HABITACION');
+ *  Si el camp va vacio, no se imprime nada
+ *  EJ
+ *  Configure::write('TitleMozo', false);
+ */
+Configure::write('TitleMesa', 'Mesa');
+Configure::write('TitleMozo', 'Mozo');
+
+
+
+
 
 
 

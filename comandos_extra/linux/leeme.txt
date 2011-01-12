@@ -1,0 +1,51 @@
+Descripcion de los archivos y directorios incluidos en este 
+diskette:
+
+leeme.txt		Descripcion de este archivo.
+
+*** Directorio 'daemon':
+
+install					Instala el programa unxfis.
+daemon/unxfis			Programa utilizado para la comunicacion con el printer.
+						Utiliza pipes para comunicarse con cualquier aplicacion.
+daemon/ftest			Programa de prueba para probar el unxfis
+daemon/ftest.c			Fuente del programa de prueba.
+
+*** Directorio 'lib':
+
+lib/fislib.a			Libreria fiscal
+lib/fislib.h			Declaracion de las funciones utilizadas para 
+						la comunicacion con el impresor
+lib/testlib.c			Fuente del programa de prueba que utiliza la libreria
+lib/testlib  			Programa de prueba que utiliza la libreria
+
+*** Directorio 'spooler': 
+
+spooler/spooler			Programa que funciona como spooler de comunicacion 
+						con el impresor.
+spooler/tcpip/sndcmd    Programa de ejemplo para enviar comandos por TCP/IP
+spooler/tcpip/sndcmd.c  Fuente del programa de ejemplo
+spooler/tcpip/socket.c	Fuente del programa de ejemplo
+spooler/tcpip/debug.c	Fuente del programa de ejemplo
+spooler/tcpip/werror.h	Fuente del programa de ejemplo
+spooler/tcpip/sock.h	Fuente del programa de ejemplo
+spooler/tcpip/spooler.h	Fuente del programa de ejemplo
+
+*** Directorio 'test': 
+
+test/pr4/cancelar.txt	Archivo que contiene los comandos para cancelar 
+						un ticket
+test/pr4/factura.txt	Archivo que contiene los comandos para realizar una 
+						factura de ejemplo.
+test/pr4/status.txt		Archivo que contiene los comandos para enviar un 
+						pedido de status al impresor.
+test/pr4/ticket.txt		Archivo que contiene los comandos para realizar un 
+						ticket de ejemplo.
+test/pr4/x.txt			Archivo que contiene los comandos para realizar un
+						pedido de reporte X.
+
+test/320/factura        Ejemplo de factura para impresor 262.
+
+*** Directorio 'pruf':
+
+pruf                    Probador de comandos con el impresor fiscal.

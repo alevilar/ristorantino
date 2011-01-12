@@ -45,6 +45,7 @@
         adicion.setCurrentMozo(mozo);
 
         adicion.abrirMesa();
+
     }
 </script>
 

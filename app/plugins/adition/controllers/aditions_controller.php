@@ -1,8 +1,7 @@
 <?php 
 
-class AdicionController extends AppController {
-
-	var $name = 'Adicion';
+class AditionsController extends AditionAppController {
+    
 	var $helpers = array('Html', 'Form');
 	var $uses = array('Mozo','Mesa');
 	var $current_mozo_id;
@@ -42,6 +41,45 @@ class AdicionController extends AppController {
         {
             $this->set('mozos',$this->Mozo->dameActivos());
 	}
+
+
+
+
+        function abrirMesa() {
+        if (!empty($this->data)) {
+            // si ese numero de mesa no esta abierta continuo
+            $existe = $this->Mesa->numero_de_mesa_existente($this->data['Mesa']['numero']);
+            if(!$existe) {
+                $this->Mesa->create();
+                if ($this->Mesa->save($this->data,$validate = false)) {
+                    $this->Session->setFlash(__('Se abrió la mesa n° '.$this->data['Mesa']['numero'], true));
+                    //debug($this->data);
+                    //	$this->Mesa->Mozo->id = $this->data['Mesa']['mozo_id'];
+                    //	$this->data = $this->Mesa->Mozo->read();
+
+                } else {
+                    $this->Session->setFlash(__('La mesa no pudo ser abierta. Intente nuevamente.', true));
+                }
+
+            }
+            else { // si se encontro una mesa abierta con se numero
+                $this->Session->setFlash(__('Ese número de mesa ya existe. No puede crear 2 mesas con el mismo número', true));
+
+            }
+        }
+
+        $meterMesa = '';
+        if (!empty($this->Mesa->id)){
+            $meterMesa = '/mesa_id:'.$this->Mesa->id;
+        }
+        $this->redirect(array(
+                'action' => 'adicionar/mozo_id:'.$this->data['Mesa']['mozo_id'].$meterMesa)
+                );
+
+    }
+
+
+    
 	
 	
 	/**
@@ -67,7 +105,8 @@ class AdicionController extends AppController {
             $this->set('mozos',$this->Mozo->dameActivos());
 
             $this->Mesa->order = "Mesa.numero ASC";
-            $this->set('mesasabiertas',$this->Mesa->listado_de_abiertas($recursividad = -1));
+            //$this->set('mesasabiertas',$this->Mesa->listado_de_abiertas($recursividad = -1));
+            $this->set('mesasabiertas',$this->Mesa->listadoAbiertasYSinCobrar($recursividad = -1));
 	}
 	
 	

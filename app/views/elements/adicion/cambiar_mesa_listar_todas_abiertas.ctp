@@ -22,16 +22,20 @@
     <div class="clear"></div>
     
     <ul class="menu-horizontal">
-        <?php foreach ($mesasabiertas as $mesa): ?>
+        <?php
+            foreach ($mesasabiertas as $mesa):
+        ?>
             <li>
             <?php
+            $caseMesaCerrada = ($mesa['Mesa']['time_cerro'] != '0000-00-00 00:00:00') ? 'mesa-cerrada':'';
+
             echo $ajax->link(
                     $mesa['Mesa']['numero'],
                     '/mesas/view/' . $mesa['Mesa']['id'],
                     array(
                         'update' => 'mesa-scroll',
                         'id' => 'todas-las-mesas-ver-' . $mesa['Mesa']['id'],
-                        'class' => 'boton-mini mesa',
+                        'class' => 'boton-mini mesa '.$caseMesaCerrada,
                         'onclick' => 'hacer_cambio_rapido_de_mesa_mozo(' . $mesa['Mesa']['numero'] . ', ' . $mesa['Mozo']['numero'] . ');',
                         'evalScripts' => true,
                         'mozo' => $mesa['Mesa']['mozo_id'],

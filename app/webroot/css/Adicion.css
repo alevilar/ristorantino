@@ -42,6 +42,7 @@ A {
 	color: #333;
 	text-decoration: none;
 	outline: 0;
+        background-color: silver;
 }
 
 A:HOVER { 	
@@ -342,20 +343,20 @@ ul,li {
 
 #mesa-acciones-2 {
 	margin-top: 12px;
-	float: left;
-        clear: left;
+	float: right;
+        width: 20%;
 }
 #mesa-acciones {
-        clear:both;
 	margin-top: 12px;
 	float: left;
+        width: 20%;
 }
 
 
 #mesa-data {
 	height:398px;
 	overflow:hidden;
-	width:603px;
+	width:60%;
 	margin-top: 14px;
 	background-color: white;
 }
@@ -816,7 +817,7 @@ div.code-coverage-results span.result-good {
 
 
 .boton-mini {
-	display: block;
+	display: table-cell;
 	height: 45px;
 	width: 40px;
 	border: 1px solid grey;
@@ -969,7 +970,6 @@ outline: 0;
 }
 
 .menu-vertical A {
-	width: 160px;
 	display: block;	
 	border:thin solid;
 	margin:2px;
@@ -1039,9 +1039,11 @@ outline: 0;
 .mesa-cerrada{
 	background-color: pink;
 	background-image: url("img/delete.png");
-	background-position: 13px 23px;
+	background-position: 50% 94%;
 	background-repeat: no-repeat;
 	font-size: large;
+        color: white;
+        font-weight: bold;
 }
 
 .mesa-seleccionada{

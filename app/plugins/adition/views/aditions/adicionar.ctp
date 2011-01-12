@@ -143,20 +143,24 @@ echo $this->renderElement('adicion/seleccionar_mozo');
     <div id="mesa-acciones" class="menu-vertical">
         <ul>
             <!--  Los Eventos ONCLICK se manejan desde sus respectivos elements -->
-            <li><a href="#AgregarProducto" id="boton-comanda">  Comanda </a></li>
-            <li><a href="#Comensales"      id="btn-comensales"> Cubiertos</a></li>
+            <li><a href="#AgregarProducto"  id="boton-comanda">  Comanda </a></li>
+            <li><a href="#Comensales"       id="btn-comensales"> Cubiertos</a></li>
             <li><a href="#SeleccionCliente" id="boton-cliente">  Cliente </a></li>
-            <li><a href="#ConvertirEnMenu" id="boton-menu">     Menú    </a></li>
+            <li><a href="#ConvertirEnMenu"  id="boton-menu">     Menú    </a></li>
 
             <li><?php echo $html->link('Cerrar Mesa',"#cerrarMesa",array(
                 'onClick'=>'adicion.cerrarCurrentMesa('.Configure::read('cantidadCubiertosObligatorio').')'));?></li>
+
+            <li><a href="#SacarProducto"    id="boton-sacar-item">  Sacar Item </a></li>
         </ul>
     </div>
 
 
     <div id="mesa-acciones-2" class="menu-vertical">
         <ul>
-                <li><a href="#SacarProducto"    id="boton-sacar-item">  Sacar Item </a></li>
+                <li><a href="#cancelarCierreDeMesa" onclick="adicion.reabrirMesa('<?= $html->url('/mesas/ajax_edit')?>')">Re Abrir Mesa</a></li>
+                <li><a href="#Reimprimir" onclick="adicion.currentMesa.reimprimir('<?= $html->url('/mesas/imprimirTicket')?>')">Re Print Ticket</a></li>
+                <li><a href="#Reimprimir" onclick="adicion.borrarMesa('<?= $html->url('/mesas/delete')?>')">Borrar</a></li>
         </ul>
     </div>
 
