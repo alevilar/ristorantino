@@ -45,22 +45,16 @@
             echo $html->link('Egresos','/egresos').'<br>';
             ?>
 
-
             <h2>Configuración de impresoras</h2>
             <?php
             echo $html->link('CUPS Printer Manager',FULL_BASE_URL.':631').'<br>';
             echo $html->link('Comandera','/Comanderas').'<br>';
-
             ?>
-
             <h2>Informes y Servidor</h2>
             <?php
             echo $html->link('Crear consultas para las estadísticas (avanzado)','/pquery/queries').'<br>';
-
-            echo $html->link('Reiniciar servidor (ojo que esta accion hace que no se pueda operar el sistema hasta que no se reinicie)','/cajero/reiniciar');
-
+            echo $html->link('Reiniciar servidor (ojo que esta accion hace que no se pueda operar el sistema hasta que no se reinicie)','/');
             ?>
-
         </td>
     </tr>
 </table>

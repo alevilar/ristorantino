@@ -17,6 +17,7 @@ echo $paginator->counter(array(
 	<th><?php echo $form->input('Comandera.name',array('label'=>false));?></th>
 	<th><?php echo $form->input('Categoria.name',array('label'=>false));?></th>
 	<th><?php echo $form->input('precio',array('label'=>false));?></th>
+        <th><?php echo $form->input('order',array('label'=>false));?></th>
 	<th>&nbsp;</th>
 	<th>&nbsp;</th>
 	<th class="actions"><?php echo $form->end("Buscar")?></th>
@@ -29,6 +30,7 @@ echo $paginator->counter(array(
 	<th><?php echo $paginator->sort('Comandera','Comandera.name');?></th>
 	<th><?php echo $paginator->sort('Categoria','Categoria.name');?></th>
 	<th><?php echo $paginator->sort('precio');?></th>
+        <th><?php echo $paginator->sort('order');?></th>
 	<th><?php echo $paginator->sort('Creado','created');?></th>
 	<th><?php echo $paginator->sort('Modificado','modified');?></th>
 	<th class="actions"><?php __('Actions');?></th>
@@ -66,6 +68,9 @@ foreach ($productos as $producto):
 		</td>
 		<td>
 			<?php echo "$".$producto['Producto']['precio']; ?>
+		</td>
+                <td>
+			<?php echo $producto['Producto']['order']; ?>
 		</td>
 		<td>
 			<?php echo date('d-m-y',strtotime($producto['Producto']['created'])); ?>

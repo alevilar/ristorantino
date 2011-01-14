@@ -6,7 +6,7 @@
                 <?php
                 echo $html->link(
                         $mozo['Mozo']['numero'],
-                        '/adicion/adicionar/mozo_id:'.$mozo['Mozo']['id'],
+                        '/adition/aditions/adicionar/mozo_id:'.$mozo['Mozo']['id'],
                         array(
                             'class'=>'boton redondeado letra-grande',
                             'style'=> 'font-size: xx-large',

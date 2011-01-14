@@ -111,7 +111,6 @@ class QueriesController extends PqueryAppController {
 	
 	function listado_categorias()
 	{
-		Configure::write('debug', 0);
 		$this->Query->recursive = -1;
 
 		$categorias = array();

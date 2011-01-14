@@ -726,6 +726,20 @@ class PrinterComponent extends Object {
 
 
 
+        /**
+         *
+         * @param integer $numeroTicket numero de tiquet factura original
+         * @param char $tipo A o B segun el tipo de la nota de credito a imprimir
+         */
+        function imprimirNotaDeCredito($numeroTicket, $tipo = 'B'){
+            $tipoId = $tipo == 'B' ? 'S' : 'R';
+            $this->vcomandos[] = $this->generadorComando->setEmbarkNumber($numeroTicket);
+            $this->vcomandos[] = $this->generadorComando->openDNFH($tipoId, $numeroTicket);
+            $this->printHasarFiscal('nota_credito');
+        }
+
+
+
 
 
 	function printFacturaB($vproductos){

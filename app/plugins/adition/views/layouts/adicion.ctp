@@ -61,7 +61,6 @@
 	
 </head>
 <body>
-
 	<div id="container">
 		<div id="content">
 			<?php echo $content_for_layout; ?>

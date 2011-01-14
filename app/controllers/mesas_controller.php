@@ -78,52 +78,63 @@ class MesasController extends AppController {
         $this->set('mozo_json', json_encode($this->Mesa->Mozo->read(null, $mesa['Mozo']['id'])));
     }
 
+
+
+    function ticket_view($id = null) {
+
+        if (!$id) {
+            $this->Session->setFlash(__('Invalid Mesa.', true));
+            $this->redirect(array('action'=>'index'));
+        }
+
+        $this->Mesa->id = $id;
+        $items = $this->Mesa->dameProductosParaTicket();
+
+
+        //$mesa = $this->Mesa->read(null, $id);
+        $mesa = $this->Mesa->find('first',array(
+                'conditions'=>array('Mesa.id'=>$id),
+                'contain'=>array(
+                        'Mozo(id,numero)',
+                        'Cliente(id,nombre,imprime_ticket,tipofactura)',
+                        'Comanda(id,prioridad,observacion)')
+        ));
+
+        $cont = 0;
+        
+        $mesa['Producto'] = $items;
+
+        $this->set('mesa_total', $this->Mesa->calcular_total());
+
+        $this->set(compact('mesa', 'items'));
+        $this->set('mozo_json', json_encode($this->Mesa->Mozo->read(null, $mesa['Mozo']['id'])));
+    }
+
     
 
 
     private function __imprimir($mesa_id) {
         $this->Mesa->id = $mesa_id;
 
-        $productos = $this->Mesa->dameProductosParaTicket();
-
-        //$mesa = $this->Mesa->read();
         $mesa = $this->Mesa->find('first',array('contain'=>array('Mozo','Cliente'=>array('Descuento'))));
 
-        $mesa_nro = $mesa['Mesa']['numero'];
-        $mozo_nro = $mesa['Mozo']['numero'];
-
-        $prod = array();
+        $mesa_nro = $this->Mesa->getNumero();        
+        $mozo_nro = $this->Mesa->getMozoNumero();
 
         $cont  = 0;
         $total = 0;
-        foreach ($productos as $p) {
-            $prod[$cont]['nombre'] 	 =  $p['Producto']['abrev'];
-            $prod[$cont]['precio'] 	 =  $p['Producto']['precio'];
-            $prod[$cont]['cantidad'] =  $p['DetalleComanda']['cant_final'];
-            $cont++;
-            $total += $p['Producto']['precio']*$p['DetalleComanda']['cant_final'];
-
-            //if(!count($p['DetalleSabor'])>0){
-            foreach ($p['DetalleSabor'] as $sabores) {
-                if($sabores['Sabor']['precio']>0) {
-                    $prod[$cont]['nombre'] 	 = $sabores['Sabor']['name'];
-                    $prod[$cont]['precio'] 	 =  $sabores['Sabor']['precio'];
-                    $prod[$cont]['cantidad'] =  $p['DetalleComanda']['cant_final'];
-                    $cont++;
-                    $total += $sabores['Sabor']['precio']*$p['DetalleComanda']['cant_final'];
-                }
-            }
-            //}
-        }
-
+        $prod = array();
         if($mesa['Mesa']['menu']>0) {
             unset($prod);
             $prod[0]['nombre'] = 'Menu';
+            $total = $this->Mesa->calcular_total();
             $total_x_menu = $total/$mesa['Mesa']['menu'];
             $total_x_menu = round($total_x_menu*100) / 100;
             $prod[0]['precio'] = $total_x_menu;
             $prod[0]['cantidad'] = $mesa['Mesa']['menu'];
-        }
+        } else {
+            $prod = $this->Mesa->dameProductosParaTicket();
+        }        
 
         $print_success = true;
         $imprimio_ticket = false;
@@ -382,7 +393,6 @@ class MesasController extends AppController {
 
 
     function cerradas(){
-        Configure::write('debug',0);
         $mesas = $this->Mesa->todasLasCerradas();
         $this->set('mesas', $mesas);
         $this->render('mesas');
@@ -391,7 +401,6 @@ class MesasController extends AppController {
 
     function abiertas()
     {
-        Configure::write('debug',0);
         $options = array(
             'conditions' => array(
                 "Mesa.time_cobro" => "0000-00-00 00:00:00",

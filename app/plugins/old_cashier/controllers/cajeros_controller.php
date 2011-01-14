@@ -24,6 +24,13 @@ class CajerosController extends OldCashierAppController {
 		
 		$this->redirect($this->referer());
 	}
+
+        function nota_credito(){
+		if (!empty($this->data)) {
+                    $this->Printer->imprimirNotaDeCredito($this->data['Cajero']['numero_ticket'], $this->data['Cajero']['tipo']);
+                    $this->Session->setFlash("Se imprimió una nota de crédito");
+                }
+	}
 	
 	
 	function cierre_Z(){		
@@ -64,8 +71,6 @@ imprimirse");
 	
 	
 	function ajax_mesas_x_cobrar(){
-		//die("que paso");
-		Configure::write('debug', 1);
 		$this->RequestHandler->setContent('json', 'text/x-json');
 
 		$this->layout = 'default';

@@ -86,6 +86,8 @@ class ComandosHasar441 extends ComandosFiscales
                    general”-;
             b. Restando
 
+            EJEMPLO: T∟Pago Efectivo...∟5.0∟m∟0∟T
+
          * @param float $porcentaje_descuento
          * @return string comando
          */
@@ -334,6 +336,60 @@ class ComandosHasar441 extends ComandosFiscales
 		} 
 		return $comando;
 	}
+
+
+
+        /**
+         * Longitud
+            ô (93H - ASCII 147)
+            FS
+            No de línea de comprobante original (1-2)
+            0: borra ambas líneas (sólo modelos SMH/P-PR5F -versión 2.01-, SMH/P-715F
+            -versiones 3.02 y posteriores-, y SMH/P-441F)
+            FS
+            Texto de hasta 20 caracteres
+
+            Ejemplo: ô∟1∟00000118
+
+         */
+        public function setEmbarkNumber( $txt, $nlinea = 1){
+            return "ô" . self::FS . $nlinea . self::FS . $txt;
+        }
+
+
+
+
+        /**
+         * Tipo de documento
+            R: Nota de crédito ‘A’
+            S: Nota de crédito ‘B/C’
+            x: Tique recibo ‘X’
+            <: Tique pagaré
+            ,: Tique presupuesto
+            -: Comp. de entrega
+            .: Talón Estacionamiento
+            /: Cobro de Servicios
+            0: Ingreso de Dinero
+            1: Retiro de Dinero
+            2: Talón de Cambio
+            3: Talón de reparto
+            4: Talón de regalo
+            5: Cuenta Corriente
+            6: Avisode Operación de Crédito
+            7: Cupón de Promoción
+            8: Uso Interno Farmacia
+
+            Ejemplo: Ç∟R∟T∟1211241
+
+         */
+        public function openDNFH($tipoDocumento, $identificacion = ''){
+            return  "Ç"             . self::FS .
+                    $tipoDocumento  . self::FS .
+                    "T"             . self::FS .
+                    $identificacion
+                    ;
+        }
+        
 }
 
 

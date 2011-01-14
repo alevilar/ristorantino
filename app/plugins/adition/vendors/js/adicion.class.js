@@ -270,6 +270,17 @@ Adicion.prototype = {
             mensajero.error("Debe seleccionar una mesa para cerrar.");
             return -2;
         }	
+    },
+
+
+    ticketView: function(url){
+        new Ajax.Updater(
+                    'mesa-scroll',
+                    url+'/'+this.currentMesa.id,
+                    {asynchronous:true,
+                        evalScripts:true,
+                        requestHeaders:['X-Update', 'mesa-scroll']}
+                );
     }
 		
 };

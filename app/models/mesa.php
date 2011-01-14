@@ -4,6 +4,10 @@ class Mesa extends AppModel {
 	var $name = 'Mesa';
 	var $actsAs = array('Containable');
 
+
+        var $numero = 0;
+        var $mozoNumero = 0;
+
 	
 	var $validate = array(
 		'numero' => array(
@@ -58,7 +62,24 @@ class Mesa extends AppModel {
 			)
 	);
 	
-	
+
+        
+
+
+        function getMozoNumero($id = null){
+            if (!empty($id)) {
+                $this->id = $id;
+            }
+            if(empty($this->mozoNumero)){
+                $mozo = $this->find('first', array(
+                    'conditions' => array('Mesa.id'=>$this->id),
+                    'contain' => array('Mozo')
+                    ));
+                $this->mozoNumero = $mozo['Mozo']['numero'];
+            }
+
+            return $this->mozoNumero;
+        }
 	
 	
 	function cerrar_mesa($mesa_id = 0)
@@ -83,7 +104,9 @@ class Mesa extends AppModel {
 	 * Calcula el total de la mesa cuyo id fue seteado en $this->Mesa->id 
 	 * return @total el valor
 	 */
-	function calcular_total(){
+	function calcular_total($id = null){
+            if (!empty($id)) $this->id = $id;
+            
             if ($this->cantidadDeProductos() == 0) return 0;
 		$total =  $this->query("
 				select sumadas.mesa_id as mesa_id,sum(total) as total, dd.descuento,  sum(total)*(1-dd.descuento/100) as total_con_descuento 
@@ -253,24 +276,45 @@ LEFT JOIN
 	
 	
 	function dameProductosParaTicket($id = 0){
-		if($id != 0) $this->id = $id;	
+		if($id != 0) $this->id = $id;
+
+
+                $items = $this->query("
+                    select sum(cant-cant_eliminada) as cant, name as 'name', precio as precio from (
+                        select
+                        dc.cant,
+                        dc.cant_eliminada,
+                        p.abrev as name,
+                        p.precio +  IFNULL((
+                                select IFNULL(sum(s.precio),0) from detalle_sabores ds
+                                left join sabores s on s.id = ds.sabor_id
+                                where ds.detalle_comanda_id = dc.id
+                                group by ds.detalle_comanda_id
+                        ),0) precio,
+                        dc.id,
+                        p.order as orden
+                        from
+                        comandas c
+                        left join detalle_comandas dc on dc.comanda_id = c.id
+                        left join detalle_sabores ds on ds.detalle_comanda_id = dc.id
+                        left join productos p on p.id = dc.producto_id
+                        where c.mesa_id = $this->id
+                        group by dc.id
+                ) as DetalleComanda
+                group by name, precio
+                order by orden
+                ");
+                
+                $vItems = array();
+                $cont = 0;
+                foreach ($items as &$i) {
+                    $vItems[$cont]['nombre'] = $i['DetalleComanda']['name'];
+                    $vItems[$cont]['cantidad'] = $i[0]['cant'];
+                    $vItems[$cont]['precio'] = $i['DetalleComanda']['precio'];
+                    $cont++;
+                }		
 		
-		$items = $this->Comanda->DetalleComanda->find('all',array(
-									'conditions'=>array(
-										'Comanda.mesa_id'=>$this->id,
-										'(DetalleComanda.cant - DetalleComanda.cant_eliminada) >'=> 0),
-									'order'=>
-										'Producto.categoria_id ASC, Producto.id ASC',
-									'contain'=>array(
-										'Producto(abrev,precio,categoria_id)',
-										'Comanda(id)',
-										'DetalleSabor'=>array('Sabor(name,precio)'))									
-						));	
-		for($i=0; $i<count($items); $i++){
-			$items[$i]['DetalleComanda']['cant_final'] = $items[$i]['DetalleComanda']['cant']-	$items[$i]['DetalleComanda']['cant_eliminada'];
-		}
-		//debug($items);die();
-		return $items;
+		return $vItems;
 	}
 	
 	

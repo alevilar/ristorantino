@@ -158,9 +158,10 @@ echo $this->renderElement('adicion/seleccionar_mozo');
 
     <div id="mesa-acciones-2" class="menu-vertical">
         <ul>
-                <li><a href="#cancelarCierreDeMesa" onclick="adicion.reabrirMesa('<?= $html->url('/mesas/ajax_edit')?>')">Re Abrir Mesa</a></li>
-                <li><a href="#Reimprimir" onclick="adicion.currentMesa.reimprimir('<?= $html->url('/mesas/imprimirTicket')?>')">Re Print Ticket</a></li>
-                <li><a href="#Reimprimir" onclick="adicion.borrarMesa('<?= $html->url('/mesas/delete')?>')">Borrar</a></li>
+                <li><a href="#vistaPreliminarTicket" onclick="adicion.ticketView('<?= $html->url('/mesas/ticket_view')?>')" id="boton-vistasimple">Vista Simple</a></li>
+                <li><a href="#cancelarCierreDeMesa" onclick="adicion.reabrirMesa('<?= $html->url('/mesas/ajax_edit')?>')" id="boton-cancelar-cierre">Re Abrir Mesa</a></li>
+                <li><a href="#Reimprimir" onclick="adicion.currentMesa.reimprimir('<?= $html->url('/mesas/imprimirTicket')?>')" id="boton-reimprimir">Re Print Ticket</a></li>
+                <li><a href="#Borrar" onclick="adicion.borrarMesa('<?= $html->url('/mesas/delete')?>')" id="boton-borrar">Borrar</a></li>
         </ul>
     </div>
 

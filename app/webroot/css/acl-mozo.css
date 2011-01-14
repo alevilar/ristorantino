@@ -17,3 +17,15 @@
 #mesa-total {
     top:-103px;
 }
+
+#boton-cancelar-cierre{
+    display:none;
+}
+
+#boton-reimprimir{
+    display:none;
+}
+
+#boton-borrar{
+    display:none;
+}

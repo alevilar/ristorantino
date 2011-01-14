@@ -70,24 +70,26 @@ class AppController extends Controller {
             $llAuth = false;
             $this->Auth->allow('display','login','logout');
 
+
+
             if($this->RequestHandler->isAjax()) {
                 $llAuth = true;
                 return $llAuth;
             }
 
             // usuarios remotos sin privilegios grosos son banneados
-            $ipCortada = strtok($this->RequestHandler->getClientIP(),'.');
-            if ( (int)$ipCortada > 192
-                && (
-                    $this->Auth->user('role') != 'gerente' ||
-                    $this->Auth->user('role') != 'superuser')
-            ) {
-                debug($this->RequestHandler->getClientIP());die();
-                return false;
-            }
-            
+//            $ipCortada = strtok($this->RequestHandler->getClientIP(),'.');
+//            if ( (int)$ipCortada > 192
+//                && (
+//                    $this->Auth->user('role') != 'gerente' ||
+//                    $this->Auth->user('role') != 'superuser')
+//            ) {
+//                debug($this->RequestHandler->getClientIP());
+//                return false;
+//            }
 
-            if ($this->name == 'Adicion') {
+
+            if ($this->name == 'Aditions' || $this->name == 'Pages') {
                 $llAuth = true;
             }
 
@@ -127,7 +129,11 @@ class AppController extends Controller {
             else {
                 $this->Session->setFlash('El perfil de usuario suyo no tiene permisos para acceder aquí.', true);
 
-                $this->redirect('/adicion/adicionar');
+                debug($this->name); 
+                debug($this->action);
+                die;
+
+                $this->redirect($this->referer());
 
                 return false;
             }
