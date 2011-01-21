@@ -345,8 +345,8 @@ class ComandosHasar441 extends ComandosFiscales
             Ejemplo: ô∟1∟00000118
 
          */
-        public function setEmbarkNumber($txt, $nlinea = 1){
-            return "ô" . self::FS . $nlinea . self::FS . $txt;
+        public function setEmbarkNumber($numeroTicket, $nlinea = 1){
+            return "ô" . self::FS . $nlinea . self::FS . $numeroTicket;
         }
 
 
@@ -374,12 +374,24 @@ class ComandosHasar441 extends ComandosFiscales
             Ejemplo: Ç∟R∟T∟1211241
 
          */
-        public function openDNFH($tipoDocumento, $identificacion = ''){
+        public function openDNFH($tipoDocumento, $identificacion = '0'){
             return  "Ç"             . self::FS .
                     $tipoDocumento  . self::FS .
                     "T"             . self::FS .
                     $identificacion
                     ;
+        }
+
+
+        /**
+         *
+         *  ASCII 129   ü
+
+         * Ejemplo: ü∟3
+
+         */
+        public function closeDNFH($numCopias = 0){
+            return "ü" . self::FS . $numCopias;
         }
 
 

@@ -51,7 +51,8 @@ class Mozo extends AppModel {
                     'contain' => array(
                         'User',
                         'Mesa' => array('conditions'=> array(
-                            "Mesa.time_cobro" => "0000-00-00 00:00:00"))
+                            "Mesa.time_cobro" => "0000-00-00 00:00:00",
+                         ))
                     ),
                     'conditions'=>array('Mozo.activo'=>1),
                     'order'=>'Mozo.numero ASC'));

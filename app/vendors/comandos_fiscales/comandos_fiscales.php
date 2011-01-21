@@ -180,7 +180,17 @@ abstract class ComandosFiscales
             Ejemplo: ô∟1∟00000118
 
          */
-        public abstract function setEmbarkNumber($txt, $nlinea = 1);
+        public abstract function setEmbarkNumber($numeroTicket, $nlinea = 1);
+
+
+        /**
+         *
+         *  ASCII 129   ü
+
+         * Ejemplo: ü∟3
+
+         */
+        public abstract function closeDNFH();
 }
 
 

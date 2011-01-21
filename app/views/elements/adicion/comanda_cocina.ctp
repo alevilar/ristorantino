@@ -39,10 +39,13 @@
     </div>
 
     <div id="productos-contenedor"></div>
-    <div id="comanda-observacion-div" style="display:none">
+    <div id="comanda-observacion-div" style="display:none; margin-top: 50px;">
+        <br>
         <h2>Escriba una observación sobre ésta comanda</h2>
-        <textarea id="comanda-observacion" name="data[Comanda][observacion]" COLS=40 ROWS=6></textarea>>
- 	</div>
+        <form id="form-comanda-observacion" action="javascript:" style="">
+            <textarea id="comanda-observacion" name="data[Comanda][observacion]" ROWS=8></textarea>
+        </form>
+    </div>
 
 
  </div>

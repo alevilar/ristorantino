@@ -44,6 +44,7 @@
 
 
 function comandosDeReinicializacionServidorImpresion() {
+    
     exec("sudo /etc/init.d/spooler_srv stop");
     exec("sudo /etc/init.d/spooler_srv start");
     exec("cd /");	

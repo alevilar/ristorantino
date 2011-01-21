@@ -2,12 +2,10 @@
 class Query extends PqueryAppModel {
 
 	var $validate = array(
-		'name' => array('notempty',
-						'alphaNumeric' => array(
-							'rule' => 'alphaNumeric',
-							'message'=>'Aqui se escribe el nombre de un archivo, solo se admiten valores alfanum�ricos. No ingresar caracteres raros, ni espacios en blanco, ni acentos.')),
-		'query' => array('notempty')
+		'name' => array('notempty'),
+		'query' => array('notempty'),
 	);
+
 	
 	/**
 	 * Me lista todas las categorias que existen en la Queries

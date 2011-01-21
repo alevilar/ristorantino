@@ -18,7 +18,7 @@ window.onload = function() {
    } else {
       document.onmousedown = function(e)
       {
-         if(e.target.type!='text' && e.target.type!='button') return false;
+         if(e.target.type!='text' && e.target.type!='button' && e.target.type!='textarea') return false;
          else return true;
       } // mozilla
    }

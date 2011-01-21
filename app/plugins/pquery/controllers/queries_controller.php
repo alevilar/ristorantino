@@ -1,11 +1,11 @@
-    <?php
+<?php
 App::import('Model','Pquery.CustomQUery');
 
 class QueriesController extends PqueryAppController {
 
 	var $name = 'Queries';
 	var $helpers = array('Html', 'Form','Ajax');
-	var $components = array('RequestHandler');
+	var $components = array('Auth','RequestHandler');
         
 
 	function index() {
@@ -102,6 +102,11 @@ class QueriesController extends PqueryAppController {
 
 		$precols = array_keys($consulta_ejecutada[0]);
 
+                $quitar_columnas = $consulta_ejecutada[0][0];
+		while(list($key,$value) = each($quitar_columnas)):
+			$columnas[] = $key;
+		endwhile;
+
 		$this->set('nombre',$res['Query']['name']);
 		$this->set('columnas',$columnas);
 		$this->set('filas',$consulta_ejecutada);
@@ -111,15 +116,21 @@ class QueriesController extends PqueryAppController {
 	
 	function listado_categorias()
 	{
+		Configure::write('debug', 0);
 		$this->Query->recursive = -1;
-
+                
 		$categorias = array();
 		if(!empty($this->data['Query']['categoria'])){
 			$categorias = $this->Query->listarCategorias($this->data['Query']['categoria']);
 		}
-		else{
+                if (!empty($this->passedArgs['term'])) {
+                    $categorias = $this->passedArgs['term'];
+                }
+		if (empty($categorias)) {
 			$categorias = $this->Query->listarCategorias('*'); // me trae todas
 		}
+
+
 
 		$this->set('categorias',$categorias);
 		$this->set('string_categoria',$this->data['Query']['categoria']);
@@ -129,7 +140,7 @@ class QueriesController extends PqueryAppController {
 
 
         function list_view($id="") {
-            //$this->layout = "sin_menu";
+            $this->layout = "sin_menu";
             $this->CustomQuery =& ClassRegistry::init('Pquery.CustomQuery');
 
             if (isset($this->passedArgs['query.id'])) {
@@ -155,15 +166,22 @@ class QueriesController extends PqueryAppController {
                 $data = $this->paginate($this->CustomQuery);
                 $viewAll = true;
             }
-            
+
             $precols = array_keys($data[0]);
             //$cols = array_keys($data['0']['0']);
             $this->set('cols', $precols);
             $url_conditions['query.id'] = $id;
             $this->set('queries', $data);
             $this->set('url_conditions', $url_conditions);
+            $this->set('name', $res['Query']['name']);
             $this->set('descripcion', $res['Query']['description']);
             $this->set('viewAll', $viewAll);
+
+
+            if ($this->RequestHandler->ext == 'xls') {
+                $this->layout = 'xls';
+                $this->render('xls/'.$this->action);
+            }
         }
 
 

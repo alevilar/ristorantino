@@ -85,7 +85,7 @@ A:ACTIVE {
 	width: 70px;	
 	\height: 68px;
 	\width: 68px;	
-	border: 1px solid grey;
+	border: 1px outset grey;
 	text-align: center;
 	text-decoration: none;
 	/*background-color: silver;*/
@@ -104,7 +104,7 @@ A:ACTIVE {
 	width: 130px;	
 	\height: 68px;
 	\width: 128px;	
-	border: 1px solid grey;
+	border: 1px outset grey;
 	text-align: center;
 	text-decoration: none;
 	/*background-color: silver;*/
@@ -124,7 +124,7 @@ A:ACTIVE {
 	max-height: 168px;
 	min-height: 48px;
 	\width: 68px;	
-	border: 1px solid grey;
+	border: 1px outset grey;
 	text-align: center;
 	text-decoration: none;
 	/*background-color: silver;*/
@@ -141,7 +141,7 @@ A:ACTIVE {
 	width: 170px;	
 	\height: 68px;
 	\width: 168px;	
-	border: 1px groove grey;
+	border: 1px outset grey;
 	background-color: maroon;
 	color: white;
 	text-align: center;
@@ -150,9 +150,17 @@ A:ACTIVE {
 	overflow: hidden;
 }
 
+
 .btn-comando:HOVER{
 	background-color: silver;
 	color: white;
+}
+
+.btn-desabilitado{
+    background-color: transparent !important;
+    color: #5F5F5F !important;
+    text-shadow: 2px 2px silver;
+    border: 1px inset black !important;
 }
 
 .redondo{
@@ -305,6 +313,7 @@ ul,li {
 	list-style: none;
 	padding: 0px;
 	margin: 0px;
+        width: 305%;
 }
 
 #mesas-listado LI {
@@ -832,7 +841,6 @@ div.code-coverage-results span.result-good {
 
 
 #mesas-contenedor{
-	width: 99999999999999px; /* le puse este valor de width porque sino se me iban para abajo las LI qe estaban adentro y no me servia*/
 }
 
 
@@ -971,9 +979,9 @@ outline: 0;
 
 .menu-vertical A {
 	display: block;	
-	border:thin solid;
 	margin:2px;
 	min-height: 50px;
+        text-align: center;
 }
 
 
@@ -1188,4 +1196,10 @@ outline: 0;
     width:40px;
     font-size: 16pt;
     text-align: center;
+}
+
+
+#cambiar-mozos{
+    float: left;
+    height: 400px;
 }

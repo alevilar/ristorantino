@@ -352,8 +352,8 @@ class ComandosHasar441 extends ComandosFiscales
             Ejemplo: ô∟1∟00000118
 
          */
-        public function setEmbarkNumber( $txt, $nlinea = 1){
-            return "ô" . self::FS . $nlinea . self::FS . $txt;
+        public function setEmbarkNumber( $numeroTicket, $nlinea = 1){
+            return "ô" . self::FS . $nlinea . self::FS . $numeroTicket;
         }
 
 
@@ -388,6 +388,19 @@ class ComandosHasar441 extends ComandosFiscales
                     "T"             . self::FS .
                     $identificacion
                     ;
+        }
+
+
+
+        /**
+         *
+         *  ASCII 129   ü
+
+         * Ejemplo: ü∟3
+
+         */
+        public function closeDNFH($numCopias = 0){
+            return chr(129) . self::FS . $numCopias;
         }
         
 }

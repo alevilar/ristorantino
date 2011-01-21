@@ -134,6 +134,27 @@ Adicion.prototype = {
                 $('btn-cambio-rapido-de-mesa').removeClassName('mesa-cerrada');
             }
 
+            // si la mesa esta cerrada hay que desabilitar los botones correspondientes alas acciones
+            // a realizar cuando la mesa esta abierta
+            if (!this.currentMesa.estaAbierta()){
+
+                $$('#mesa-acciones > UL > LI').each(function(e){
+                    e.firstDescendant().addClassName('btn-desabilitado');
+                });
+
+                $$('#mesa-acciones-2 > UL > LI').each(function(e){
+                    e.firstDescendant().removeClassName('btn-desabilitado');
+                });
+            } else {
+                $$('#mesa-acciones-2 > UL > LI').each(function(e){
+                    e.firstDescendant().addClassName('btn-desabilitado');
+                });
+
+                $$('#mesa-acciones > UL > LI').each(function(e){
+                    e.firstDescendant().removeClassName('btn-desabilitado');
+                });
+            }
+
             if (this.currentMesa.getCantComensales() > 0) {
                 $('btn-comensales').update(this.currentMesa.getCantComensales()+" Cubiertos").addClassName('boton-apretado');
             } else {
@@ -146,15 +167,6 @@ Adicion.prototype = {
         $$(".mesa-numero").each(function(e){
             e.update(this.currentMesa.numero);
         }.bind(this));
-
-//        // si la mesa esta cerrada, el mozo ya nop deberia poder hacer nada hasta que el cajero no confirme el pago, por lo tanto
-//        // no le permito al usuario que pueda modificarle valores
-//        if(mesaCambiar.pidioCierre())
-//        {
-//            mensajero.error("La mesa "+mesaCambiar.numero+" ya está cerrada. No se pude modificar");
-//            this.borrarCurrentMesa();
-//            return -1;
-//        }
     },
 
 
@@ -162,7 +174,13 @@ Adicion.prototype = {
         if (typeof(this.currentMesa) != 'undefined') {
             this.currentMesa.reabrir(url);
         }
+
+        // para que topme la mesa como que esta cerrada sin necesidad de hacer un POST al server
+        this.currentMesa.time_cerro = '0000-00-00 00:00:00';
+        
         this.cambiarMesa(this.currentMesa);
+        $('todas-las-mesas-ver-'+this.currentMesa.id).removeClassName('mesa-cerrada');
+        $('mesa-ver-'+this.currentMesa.id).removeClassName('mesa-cerrada');
     },
 
 

@@ -38,105 +38,32 @@
  */
 class AppController extends Controller {
 	var $helpers = array('Html', 'Form','Javascript','Ajax');
-	var $components = array( 'Auth' , 'RequestHandler');
+        var $components = array('Acl', 'Session', 'Auth', 'Requesthandler');
 	
 	
 	
 	 function beforeFilter()
 	 {
-             $this->Auth->loginError ='Usuario o Password Incorrectos';
-             $this->Auth->authError = 'Debe registrarse para acceder a esta página';
+             /* @var $auth AuthComponent */
+             $auth;
 
-             $this->Auth->logoutRedirect='/users/login';
-             
-             $this->Auth->allow('login','logout');
-             //$this->Auth->allow('*');
-             //$this->Auth->allow('home','login','logout');
-             
-             $this->Auth->authorize = 'controller';
+            $this->Auth->loginError ='Usuario o Contraseña Incorrectos';
+            $this->Auth->authError = 'Usted no tiene permisos para acceder a esta página.';
 
-             /*
-              * Esto hace que cuando se auna peticion ajax, vaya  a buscar la vista den
-              * tro de la carpeta "ajax" de cada controlador
-              */
-             if ($this->RequestHandler->isAjax()) {
-                 Configure::write('debug', 1);
-                 $this->layout = 'ajax';
-             }
+            $this->Auth->authorize = 'actions';
+            //$this->Auth->loginAction = array('controller' => 'users', 'action' => 'login');
+            $this->Auth->logoutRedirect='/users/login';
+            //$this->Auth->autoRedirect = false;
+//$this->Auth->allow('*'); return true;
+            // si es Ajax y no tengo permisos que me tire un error HTTP
+            // asi lo puedo capturar desde jQuery
+            if($this->Requesthandler->isAjax()){
+                Configure::write ( 'debug', 0);
+                if (!$this->Acl->check($this->Auth->user(), $this->action)){
+                    header('HTTP/1.1 401 Unauthorized');
+                }
+            } 
       }       
         
-        
-        function isAuthorized() {
-            $llAuth = false;
-            $this->Auth->allow('display','login','logout');
-
-
-
-            if($this->RequestHandler->isAjax()) {
-                $llAuth = true;
-                return $llAuth;
-            }
-
-            // usuarios remotos sin privilegios grosos son banneados
-//            $ipCortada = strtok($this->RequestHandler->getClientIP(),'.');
-//            if ( (int)$ipCortada > 192
-//                && (
-//                    $this->Auth->user('role') != 'gerente' ||
-//                    $this->Auth->user('role') != 'superuser')
-//            ) {
-//                debug($this->RequestHandler->getClientIP());
-//                return false;
-//            }
-
-
-            if ($this->name == 'Aditions' || $this->name == 'Pages') {
-                $llAuth = true;
-            }
-
-            if ($this->name == 'Mesas') {
-                $llAuth = true;
-            }
-            switch ($this->Auth->user('role')):
-                case 'superuser':
-                    $llAuth = true;
-                    break;
-                case 'gerente':
-                    $llAuth = true;
-                    break;
-                case 'principiante':
-                case 'adicionista':
-                    if($this->name != 'Queries') {
-                        $llAuth = true;
-                    }
-                    break;
-                case 'mozo':
-                    if($this->action == 'home') {
-                        $llAuth = true;
-                    }
-                    if($this->name == 'Adicion') {
-                        $llAuth = true;
-                    }
-                    break;
-                default:
-                    $llAuth = false;
-                    break;
-                endswitch;
-
-
-            if ($llAuth == true) {
-                return true;
-            }
-            else {
-                $this->Session->setFlash('El perfil de usuario suyo no tiene permisos para acceder aquí.', true);
-
-                debug($this->name); 
-                debug($this->action);
-                die;
-
-                $this->redirect($this->referer());
-
-                return false;
-            }
-        }
 }
 ?>

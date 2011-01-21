@@ -145,7 +145,7 @@ LEFT JOIN
 										
 		");
 		
-		$total = round($total[0][0]['total_con_descuento']);
+		$total = round($total[0][0]['total_con_descuento'],2);
 		return $total ;	
 	}
 	
@@ -302,6 +302,7 @@ LEFT JOIN
                         group by dc.id
                 ) as DetalleComanda
                 group by name, precio
+                having cant > 0
                 order by orden
                 ");
                 
@@ -310,7 +311,7 @@ LEFT JOIN
                 foreach ($items as &$i) {
                     $vItems[$cont]['nombre'] = $i['DetalleComanda']['name'];
                     $vItems[$cont]['cantidad'] = $i[0]['cant'];
-                    $vItems[$cont]['precio'] = $i['DetalleComanda']['precio'];
+                    $vItems[$cont]['precio'] = round($i['DetalleComanda']['precio'], 2);
                     $cont++;
                 }		
 		
