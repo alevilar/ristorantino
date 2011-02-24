@@ -28,7 +28,9 @@ class PagosController extends AppController {
 				$this->Session->setFlash(__('The Pago could not be saved. Please, try again.', true));
 			}
 		}
-		$this->redirect(array('controller'=> 'cajero', 'action'=>'cobrar'));
+                if (!$this->Requesthandler->isAjax()) {
+                    $this->redirect($this->referer());
+                }
 	}
 
 	function edit($id = null) {

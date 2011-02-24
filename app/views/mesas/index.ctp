@@ -1,3 +1,6 @@
+<?php
+$paginator->options(array('url' => $this->passedArgs));
+?>
 <div class="mesas index">
 <h2><?php __('Mesas');?></h2>
 <p>
@@ -7,16 +10,17 @@ echo $paginator->counter(array(
 'format' => __('Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%', true)
 ));
 ?></p>
+<?php echo $form->create("Mesa",array("action"=>"index")); ?>
 <table cellpadding="0" cellspacing="0">
 <tr>
-	<th><?php echo $form->create("Mesa",array("action"=>"index")); ?></th>
+	<th></th>
 	<th><?php echo $form->input('Mesa.numero',array('label'=>false));?></th>
 	<th><?php echo $form->input('Mozo.numero',array('label'=>false));?></th>
 	<th><?php echo $form->input('Mesa.total',array('label'=>false));?></th>
 	<th></th>
 	<th></th>
 	<th>&nbsp;</th>
-	<th class="actions"><?php echo $form->end("Buscar")?></th>
+	<th class="actions"></th>
 </tr>
 <tr>
 	<th><?php echo $paginator->sort('id');?></th>
@@ -67,13 +71,17 @@ foreach ($mesas as $mesa):
 			<?php echo date('d-m-y (H:i:s)',strtotime($mesa['Mesa']['time_cobro']));} ?>
 		</td>
 		<td class="actions">
-			<?php echo $html->link(__('View', true), array('action'=>'view', $mesa['Mesa']['id'])); ?>
+			<?php echo $html->link(__('Reabrir', true), array('action'=>'reabrir', $mesa['Mesa']['id'])); ?>
+                        <?php echo $html->link(__('View', true), array('action'=>'view', $mesa['Mesa']['id'])); ?>
 			<?php echo $html->link(__('Edit', true), array('action'=>'edit', $mesa['Mesa']['id'])); ?>
 			<?php echo $html->link(__('Delete', true), array('action'=>'delete', $mesa['Mesa']['id']), null, sprintf(__('Seguro que queres borrar la mesa # %s?\n Hacerlo significa borrarla de la base de datos y no sera computada.\nSe perderan la informacion estadisica de los pedidos\nrealidados para esta mesa.', true), $mesa['Mesa']['numero'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>
 </table>
+
+<?php echo $form->end("Buscar")?>
+
 </div>
 <div class="paging">
 	<?php echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>

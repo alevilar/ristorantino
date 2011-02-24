@@ -90,7 +90,7 @@ class Mesa extends AppModel {
                 
 		$result = $this->saveField('time_cerro', date( "Y-m-d H:i:s",strtotime('now')));
 
-                if (!Configure::read('usarCajero'))  {
+                if (!Configure::read('Adicion.usarCajero'))  {
                     $result = $this->saveField('time_cobro', date( "Y-m-d H:i:s",strtotime('now')));
                 }
 		
@@ -144,9 +144,14 @@ LEFT JOIN
 	group by sumadas.mesa_id				
 										
 		");
-		
-		$total = round($total[0][0]['total_con_descuento'],2);
-		return $total ;	
+
+            if (!empty($total[0]['dd']['descuento'])) {
+		$total = round($total[0][0]['total_con_descuento']);
+            } else {
+                $total = round($total[0][0]['total_con_descuento'],2);
+            }
+
+            return $total ;
 	}
 	
 	
@@ -330,5 +335,37 @@ LEFT JOIN
 							"time_cerro <> '0000-00-00 00:00:00'");
 		return $this->find('all',array('conditions'=>$conditions, 'order'=>'time_cerro'));
 	}
+
+
+
+        /**
+         * Dice si una mesa esta cerrada o no
+         * @param integer $id
+         * @return boolean
+         */
+        function estaCerrada($id = null){
+            if (!empty($id)){
+                $this->id = $id;
+            }
+            $ret = $this->find('count', array(
+                'conditions' => array(
+                    'Mesa.time_cerro' => '0000-00-00 00:00:00',
+                    'Mesa.id' => $this->id,
+
+                )
+            ));
+
+            if ($ret > 0) return false;
+            else return true;
+        }
+
+
+        function reabrir($mesa_id = null){
+            if (!empty($mesa_id)) {
+                $this->id = $mesa_id;
+            }
+            $result = $this->saveField('time_cerro', '0000-00-00 00:00:00');
+            $result = $this->saveField('time_cobro', '0000-00-00 00:00:00');
+        }
 }
 ?>

@@ -2,8 +2,7 @@
 
 
 //App::import('Vendor', 'comandos_fiscales'.DS.'comandos_fiscales_hasar_441'); // loads example/example.php
-$modeloImpresoraFiscal = Configure::read('ModeloImpresoraFiscal');
-App::import('Vendor', 'comandos_fiscales'.DS.'comandos_fiscales_'.$modeloImpresoraFiscal);
+
 
 
 //define('CORTAR_PAPEL','i');
@@ -65,14 +64,20 @@ class PrinterComponent extends Object {
 
 
 
-	function __construct(){
-		$this->generadorComando = new ComandosHasar441();
 
-                // ESTAS CARPTAS SON LLAMADAS DESDE EL SPOOLER, para poder levantar el programita
-                $this->sourceFolder = Configure::read('TempFolder.fuente');
-                $this->destFolder = Configure::read('TempFolder.dest');
-                $this->tempFolder = Configure::read('TempFolder.impfiscal');
-	}
+        function initialize(){
+            $modeloImpresoraFiscal = Configure::read('ImpresoraFiscal.modelo'); 
+            App::import('Vendor', 'comandos_fiscales'.DS.'comandos_fiscales_'.$modeloImpresoraFiscal);
+
+
+            $this->generadorComando = new ComandosImpresora();
+
+            // ESTAS CARPTAS SON LLAMADAS DESDE EL SPOOLER, para poder levantar el programita
+            $this->sourceFolder = Configure::read('ImpresoraFiscal.tempFuente');
+            $this->destFolder = Configure::read('ImpresoraFiscal.tempDest');
+            $this->tempFolder = Configure::read('ImpresoraFiscal.TempImpfiscal');
+
+        }
 
 
 	/**
@@ -369,12 +374,16 @@ class PrinterComponent extends Object {
 		//seteo el pie de pagina con mesa y mozo
 		$this->vcomandos[] = $this->generadorComando->setTrailer(0,"-  -  -  -  -  -  -  -");
                 
-                if ($mozoTitle = Configure::read('TitleMozo')) {
+                if ($mozoTitle = Configure::read('Mesa.tituloMozo')) {
                     $this->vcomandos[] = $this->generadorComando->setTrailer(1,"$mozoTitle $mozo ",true);
+                } else { // no escribir nada
+                    $this->vcomandos[] = $this->generadorComando->setTrailer(1," ",true);
                 }
                 
-                if ( $mesaTitle = Configure::read('TitleMesa')) {
+                if ( $mesaTitle = Configure::read('Mesa.tituloMesa')) {
                     $this->vcomandos[] = $this->generadorComando->setTrailer(2,"$mesaTitle $mesa",true);
+                } else { // no escribir nada
+                    $this->vcomandos[] = $this->generadorComando->setTrailer(2," ",true);
                 }
 		
 		$this->vcomandos[] = $this->generadorComando->setTrailer(3,"-  -  -  -  -  -  -  -");
@@ -606,17 +615,27 @@ class PrinterComponent extends Object {
 					 * 				 ENCABEZADO
 					 */
 					$header = Configure::read('Restaurante.name');
-					fwrite($archivo_comanda,$header);
-					fwrite($archivo_comanda,"\n\n");
-					
-					fwrite($archivo_comanda,Configure::read('Restaurante.razon_social'));
-					fwrite($archivo_comanda,"\n");
-					fwrite($archivo_comanda,Configure::read('Restaurante.cuit'));
-					fwrite($archivo_comanda,"\n");
-					fwrite($archivo_comanda,Configure::read('Restaurante.ib'));
-					fwrite($archivo_comanda,"\n");
-					fwrite($archivo_comanda,Configure::read('Restaurante.iva_resp'));
-					fwrite($archivo_comanda,"\n");
+					if ($header) {
+                                            fwrite($archivo_comanda,$header);
+                                            fwrite($archivo_comanda,"\n\n");
+                                        }
+
+                                        if (Configure::read('Restaurante.razon_social')){
+                                            fwrite($archivo_comanda,Configure::read('Restaurante.razon_social'));
+                                            fwrite($archivo_comanda,"\n");
+                                        }
+                                        if (Configure::read('Restaurante.cuit')){
+                                            fwrite($archivo_comanda,Configure::read('Restaurante.cuit'));
+                                            fwrite($archivo_comanda,"\n");
+                                        }
+                                        if (Configure::read('Restaurante.ib')){
+                                            fwrite($archivo_comanda,Configure::read('Restaurante.ib'));
+                                            fwrite($archivo_comanda,"\n");
+                                        }
+                                        if (Configure::read('Restaurante.iva_resp')){
+                                            fwrite($archivo_comanda,Configure::read('Restaurante.iva_resp'));
+                                            fwrite($archivo_comanda,"\n");
+                                        }
 					fwrite($archivo_comanda,'Fecha: '.date('d/m/y',strtotime('now')).'   Hora: '.date('H:i:s',strtotime('now')));
 					fwrite($archivo_comanda,"\n");
 					fwrite($archivo_comanda,"\n");
@@ -658,11 +677,11 @@ class PrinterComponent extends Object {
 					//  retorno de carro
 					fwrite($archivo_comanda,chr(13));
 					
-					fwrite($archivo_comanda,'-  -  -  -  -  -  -  -  -  -  -  -  -  -  -');
+					fwrite($archivo_comanda,'  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -');
 					fwrite($archivo_comanda,"\n");
-					fwrite($archivo_comanda,' -  - Verifique antes de abonar -  -');
+					fwrite($archivo_comanda,'           Verifique antes de abonar');
 					fwrite($archivo_comanda,"\n");
-					fwrite($archivo_comanda,' -  - NO VALIDO COMO COMPROBANTE FISCAL -');
+					fwrite($archivo_comanda,'        NO VALIDO COMO COMPROBANTE FISCAL');
 					fwrite($archivo_comanda,"\n");
 					fwrite($archivo_comanda,"\n");
 					fwrite($archivo_comanda,"\n");

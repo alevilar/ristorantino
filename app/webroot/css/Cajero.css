@@ -167,6 +167,18 @@ ul,li {
 }
 
 
+#mesajes{
+    position: absolute;
+    top:10px;
+    background-color: red;
+    color: white;
+    height: 100px;
+    width: 500px;
+    z-index: 999;
+    margin-left:  auto;
+    margin-right: auto;
+}
+
 
 #mesas-paginador{
 	position: absolute;

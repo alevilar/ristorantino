@@ -24,6 +24,7 @@ class Producto extends AppModel {
 	);
 
 	var $hasMany = array(
+            'HistoricoPrecio',
 			'DetalleComanda' => array('className' => 'DetalleComanda',
 								'foreignKey' => 'producto_id',
 								'dependent' => false,
@@ -56,6 +57,26 @@ class Producto extends AppModel {
         function buscarPorNombre($texto){
             return $this->find('all',array('conditions'=>array('Producto.name REGEXP'=>"$texto")));
         }
+
+
+        function   beforeSave($options = array()) 
+    {
+        if (!empty($this->data['Producto']['precio'])) {
+            $precioViejo = $this->field('precio', array('Producto.id'=>$this->data['Producto']['id']));
+            if ($this->data['Producto']['precio'] != $precioViejo ){
+                if (!$this->HistoricoPrecio->save(array(
+                    'HistoricoPrecio' => array(
+                        'precio' => $precioViejo ,
+                        'producto_id' => $this->data['Producto']['id'],
+                        )
+                ))){
+                    return false;
+                    }
+            }
+        }
+        return true;
+       
+    }
 	
 	
 

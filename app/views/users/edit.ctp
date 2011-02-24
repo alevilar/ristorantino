@@ -3,10 +3,11 @@
 	<fieldset>
  		<legend><?php __('Edit User');?></legend>
 	<?php
+
+        echo $html->link('Modificarle la Contraseña','/users/cambiar_password/'.$this->data['User']['id']);
 		echo $form->input('id');
-                echo $form->input('role', array('type'=>'select','label'=>'Tipo de Usuario','empty'=>'Seleccione'));
+                echo $form->input('grupo',array('type'=>'select','label'=>'Tipo de Usuario','empty'=>'Seleccione', 'options'=>$aros));
 		echo $form->input('username');
-                echo $form->input('password');
 		echo $form->input('nombre');
 		echo $form->input('apellido');
 		echo $form->input('telefono');

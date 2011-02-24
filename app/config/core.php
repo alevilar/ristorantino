@@ -30,13 +30,20 @@
 
 
 /**
+ * Esta variable sirve para imprimir siempre un comprobante de consumicion
+ * antes de imprimir el ticket
+ * los valores posibles son 1 o 0 (para imprimir directamente la factura)
+ */
+//Configure::write('Mesa.imprimePrimeroRemito', 1);
+
+/**
  * Datos parautilizar en la impresión del ticket
  */
-Configure::write('Restaurante.name', '          - NOMBRE RESTAURANTE-');
-Configure::write('Restaurante.razon_social', 'RAZON SOCIAL');
-Configure::write('Restaurante.cuit', 'C.U.I.T.: 32332323232');
-Configure::write('Restaurante.ib', 'Ing. Brutos: 901-405554-4');
-Configure::write('Restaurante.iva_resp', 'IVA RESPONSABLE INSCRIPTO A CONS. FINAL');
+//Configure::write('Restaurante.name', '          - NOMBRE RESTAURANTE-');
+//Configure::write('Restaurante.razon_social', 'RAZON SOCIAL');
+//Configure::write('Restaurante.cuit', 'C.U.I.T.: 32332323232');
+//Configure::write('Restaurante.ib', 'Ing. Brutos: 901-405554-4');
+//Configure::write('Restaurante.iva_resp', 'IVA RESPONSABLE INSCRIPTO A CONS. FINAL');
 
 
 
@@ -44,7 +51,7 @@ Configure::write('Restaurante.iva_resp', 'IVA RESPONSABLE INSCRIPTO A CONS. FINA
  * COmandos de la impresora fiscal a utilizar
  */
 //Configure::write('ModeloImpresoraFiscal', 'hasar_1120f');
-Configure::write('ModeloImpresoraFiscal', 'hasar_441');
+//Configure::write('ModeloImpresoraFiscal', 'hasar_441');
 
 /**
  * El Cajero sirve para  saber si el sistema usara cajero o solo adicionista
@@ -56,7 +63,7 @@ Configure::write('ModeloImpresoraFiscal', 'hasar_441');
  * automaticamente como cerrada
  *
  */
-Configure::write('usarCajero', true);
+//Configure::write('usarCajero', true);
 
 
 
@@ -69,8 +76,8 @@ Configure::write('usarCajero', true);
  *  EJ
  *  Configure::write('TitleMozo', false);
  */
-Configure::write('TitleMesa', 'Mesa');
-Configure::write('TitleMozo', 'Mozo');
+//Configure::write('TitleMesa', 'Mesa');
+//Configure::write('TitleMozo', 'Mozo');
 
 
 
@@ -82,7 +89,7 @@ Configure::write('TitleMozo', 'Mozo');
  * Indica si es necesario indicar la cantidad de cubiertos para cerrar la mesa
  * no poner false, poner 0 o 1, porque el javascript no anda si le pongo false
  */
-Configure::write('cantidadCubiertosObligatorio', 1);
+//Configure::write('cantidadCubiertosObligatorio', 1);
 
 
 
@@ -95,9 +102,9 @@ Configure::write('cantidadCubiertosObligatorio', 1);
 Configure::write('Dev.printer', 'ttyUSB0'); // Ubicado en "/dev/"
 
 // Carpetas temporales parala impresora fiscal
-Configure::write('TempFolder.fuente', '/tmp/fuente'); // aca se guarda para que el spooler la lea
-Configure::write('TempFolder.dest', '/tmp/dest'); // aca se guarda una vez que el spooler la ejecuto
-Configure::write('TempFolder.impfiscal', '/tmp/impfiscal'); // aca se va armando el archivo
+//Configure::write('TempFolder.fuente', '/tmp/fuente'); // aca se guarda para que el spooler la lea
+//Configure::write('TempFolder.dest', '/tmp/dest'); // aca se guarda una vez que el spooler la ejecuto
+//Configure::write('TempFolder.impfiscal', '/tmp/impfiscal'); // aca se va armando el archivo
 
 
 
@@ -127,7 +134,7 @@ Configure::write('Sound.url', FULL_BASE_URL.DS.'ristorantino'.DS.IMAGES_URL.'cli
  * In production mode, flash messages redirect after a time interval.
  * In development mode, you need to click the flash message to continue.
  */
-	Configure::write('debug', 1);
+	Configure::write('debug', 2);
 /**
  * Application wide charset encoding
  */

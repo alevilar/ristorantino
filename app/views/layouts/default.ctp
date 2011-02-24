@@ -53,8 +53,8 @@
 <body>
 	<div id="container">
 		<div id="header">
-			<h1>El Ristorantino Mágico - versión 10.01.11</h1>
-			<div id="mesajes"><?php $session->flash(); ?></div>
+			<h1>El Ristorantino Mágico - versión 11.01.11</h1>
+			<div id="mesajes"><?php $session->flash(); $session->flash('auth'); ?></div>
 			<?php echo $html->link("Inicio",'/pages/home',array('class'=>'inicio'))?>
 		</div>
 		<div id="content">

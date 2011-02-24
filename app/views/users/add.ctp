@@ -3,9 +3,10 @@
     <fieldset>
         <legend><?php __('Add User');?></legend>
         <?php
-        echo $form->input('role',array('type'=>'select','label'=>'Tipo de Usuario','empty'=>'Seleccione'));
+        echo $form->input('grupo',array('type'=>'select','label'=>'Tipo de Usuario','empty'=>'Seleccione', 'options'=>$aros));
         echo $form->input('username');
         echo $form->input('password');
+        echo $form->input('password_check',array('label'=>'Reingrese Password','type'=>'password'));
         echo $form->input('nombre');
         echo $form->input('apellido');
         echo $form->input('telefono');

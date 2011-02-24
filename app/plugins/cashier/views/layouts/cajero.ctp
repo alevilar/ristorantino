@@ -32,16 +32,23 @@
 			?>
 </head>
 <body>
-	<div id="container">
-	
-		<?php if($session->flash()){?>
-		<div id="mesajes"><?php $session->flash(); ?></div>
+
+                
+		<div id="mesajes" style="display: none">
+                <?php
+                    /* @var $session SessionHelper */
+                    $hayMensaje = $session->flash('auth');
+                    ?>
+                </div>
+                <?php if ($hayMensaje) { ?>
 		<script type="text/javascript">
-			setTimeout(function(){$('mesajes').hide()}, 400);
+                        $('mesajes').show();
+			setTimeout(function(){$('mesajes').hide()}, 3000);
 		</script>
-		<?php }?>
-		
-		
+                <?php } ?>
+	
+
+	<div id="container">
 		<div id="content">
 			
 			<div id="navegador">

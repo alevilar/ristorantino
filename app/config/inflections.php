@@ -57,7 +57,10 @@
         					'adicion'=>'adicion', 
         					'cajero'=>'cajero', 
         					'query'=>'queries',
-        					'action'=>'actions');
+        					'action'=>'actions',
+                                                'category' => 'categories',
+                                                'config_category' => 'config_categories',
+            );
 
 /**
  * This is a key => value array of regex used to match words.

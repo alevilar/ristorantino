@@ -1,0 +1,123 @@
+10
+
+dir
+1258
+https://regetp01.googlecode.com/svn/trunk/app/plugins/acl/vendors/img/tango/scalable
+https://regetp01.googlecode.com/svn
+
+
+
+2010-07-01T16:41:15.435729Z
+494
+pablo.de.alpha
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+e1a5d64a-0cb6-11de-a6e9-d320b29efae0
+
+actions
+dir
+
+devices
+dir
+
+Makefile.in
+file
+
+
+
+
+2009-02-14T16:57:03.000000Z
+1fe16a53e63d8a3c2a374a6afa98ded8
+2010-07-01T16:41:15.435729Z
+494
+pablo.de.alpha
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+16045
+
+apps
+dir
+
+status
+dir
+
+emblems
+dir
+
+categories
+dir
+
+places
+dir
+
+Makefile.am
+file
+
+
+
+
+2009-02-14T16:57:03.000000Z
+399f5c978f119099829f568806ad35f6
+2010-07-01T16:41:15.435729Z
+494
+pablo.de.alpha
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+82
+
+mimetypes
+dir
+
+emotes
+dir
+

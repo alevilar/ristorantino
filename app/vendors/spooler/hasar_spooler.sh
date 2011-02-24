@@ -6,6 +6,14 @@ CARPETA_DESTINO=/tmp/dest
 while true ; do
 	cd /dev
 	DBS=`ls ttyUSB*`
+	CANT=`ls ttyUSB* | wc -w`
+
+	if [ $CANT -gt 1]; then
+		for b in $DBS ;
+		do	
+		       	sudo rm /dev/$b
+		done
+	fi
 
 	if [ -d "$CARPETA_FUENTE" ]; then
 		cd $CARPETA_FUENTE

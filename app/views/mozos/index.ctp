@@ -1,3 +1,8 @@
+<?php
+debug($this->passedArgs);
+$paginator->options(array('url' => $this->passedArgs)); 
+?>
+
 <div class="mozos index">
 <h2><?php __('Mozos');?></h2>
 <p>

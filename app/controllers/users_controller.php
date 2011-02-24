@@ -45,6 +45,9 @@ class UsersController extends AppController {
 				$this->Session->setFlash(__('The User could not be saved. Please, try again.', true));
 			}
 		}
+                $this->Acl->Aro->recursive = 0;
+                $aros = $this->Acl->Aro->find('list', array('fields' => array('alias'), 'conditions'=>array('parent_id'=>1), 'order'=>'alias'));
+                $this->set(compact('aros'));
                 $this->set('roles', $this->roles);
 	}
 
@@ -64,6 +67,9 @@ class UsersController extends AppController {
 		if (empty($this->data)) {
 			$this->data = $this->User->read(null, $id);
 		}
+                $this->Acl->Aro->recursive = 0;
+                $aros = $this->Acl->Aro->find('list', array('fields' => array('alias'), 'conditions'=>array('parent_id'=>1), 'order'=>'alias'));
+                $this->set(compact('aros'));
                 $this->set('roles', $this->roles);
 	}
 
@@ -101,13 +107,13 @@ class UsersController extends AppController {
 	 * @param id del usuario
 	 */
 	function self_user_edit($id){
-		if (!$id && empty($this->data)) {
+		if (!$id && empty($this->data) || $id != $this->Auth->user('id')) {
 			$this->Session->setFlash(__('Usuario Incorrecto', true));
 			$this->redirect('/pages/home');
 		}
 		if (!empty($this->data)) {
 			if ($this->User->save($this->data)) {
-				$this->Session->setFlash(__('Se ha guardado la informacion correctamente', true));
+				$this->Session->setFlash(__('Se ha guardado la información correctamente', true));
 				$this->data = $this->User->read(null, $id);
 			} else {
 				$this->Session->setFlash(__('El usuario no pudo ser guardado. Por favor, intente nuevamente.', true));
@@ -115,6 +121,7 @@ class UsersController extends AppController {
 		}
 		if (empty($this->data)) {
 			$this->data = $this->User->read(null, $id);
+                        $this->data['User']['grupo'] =$this->User->parentNodeId();
 		}
 	}
 
@@ -124,17 +131,14 @@ class UsersController extends AppController {
 	 *
 	 * @param id del usuario
 	 */
-	function cambiar_password($id = 0){
-		if (!$id && empty($this->data)) {
-			$this->Session->setFlash(__('Usuario Incorrecto', true));
-			$this->redirect('/pages/home');
-		}
+	function cambiar_password($id){
 		if (!empty($this->data)) {
 			if($this->comparePasswords()){ //me fijo que los passwords coincidan
-				if ($this->User->save($this->data)) {
+				if ($this->User->save($this->data, $validate = false)) {
 					$this->Session->setFlash(__('Se ha guardado el nuevo password correctamente', true));
-					$this->redirect('/pages/home');
+					$this->redirect('/');
 				} else {
+                                    debug($this->User->validationErrors);
 					$this->Session->setFlash(__('La contraseña no pudo ser guardada. Por favor, intente nuevamente.', true));
 				}
 			}
@@ -162,6 +166,27 @@ class UsersController extends AppController {
 		if ($this->data['User']['password'] == $this->data['User']['password_check']){
 			return true;
 		} else return false;
+	}
+
+
+
+        function verificar(){
+            debug($this->User->Aro->verify());
+            die("termino");
+        }
+
+
+        function arreglar(){
+        debug($this->User->Aro->verify());
+        debug($this->User->Aro->recover());
+        debug($this->User->Aro->verify());
+            die("termino");
+        }
+
+
+	function listadoUsuarios() {
+		$this->User->recursive = 0;
+		$this->set('users', $this->paginate());
 	}
 
 }

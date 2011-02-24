@@ -8,7 +8,7 @@ define("ESC_HASAR441", chr(27));
 define("DOBLE_ANCHO_HASAR441", chr(244));
 define("DEL_HASAR441", chr(127));
 
-class ComandosHasar441 extends ComandosFiscales
+class ComandosImpresora extends ComandosFiscales
 {
 	
 	const FS = FS_HASAR441;

@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/!svn/ver/494/trunk/app/plugins/acl/vendors/img/tango/scalable/emblems
+END
+emblem-unreadable.svg
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/!svn/ver/494/trunk/app/plugins/acl/vendors/img/tango/scalable/emblems/emblem-unreadable.svg
+END
+emblem-system.svg
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/!svn/ver/494/trunk/app/plugins/acl/vendors/img/tango/scalable/emblems/emblem-system.svg
+END
+Makefile.in
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/!svn/ver/494/trunk/app/plugins/acl/vendors/img/tango/scalable/emblems/Makefile.in
+END
+Makefile.am
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/!svn/ver/494/trunk/app/plugins/acl/vendors/img/tango/scalable/emblems/Makefile.am
+END
+emblem-photos.svg
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/!svn/ver/494/trunk/app/plugins/acl/vendors/img/tango/scalable/emblems/emblem-photos.svg
+END
+emblem-symbolic-link.svg
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/!svn/ver/494/trunk/app/plugins/acl/vendors/img/tango/scalable/emblems/emblem-symbolic-link.svg
+END
+emblem-important.svg
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/!svn/ver/494/trunk/app/plugins/acl/vendors/img/tango/scalable/emblems/emblem-important.svg
+END
+emblem-readonly.svg
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/!svn/ver/494/trunk/app/plugins/acl/vendors/img/tango/scalable/emblems/emblem-readonly.svg
+END
+emblem-favorite.svg
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/!svn/ver/494/trunk/app/plugins/acl/vendors/img/tango/scalable/emblems/emblem-favorite.svg
+END

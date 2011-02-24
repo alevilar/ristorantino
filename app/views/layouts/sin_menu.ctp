@@ -59,9 +59,9 @@
 
 
                 <div id="header" >
-                        <h1>
-                                <?php echo $html->link('Ristorantino Mágico', '/pages/home'); ?>
-                        </h1>
+                        <h1>El Ristorantino Mágico - versión 11.01.11</h1>
+			<div id="mesajes"><?php $session->flash(); ?></div>
+			<?php echo $html->link("Inicio",'/pages/home',array('class'=>'inicio'))?>
                 </div>
                 
                 <div  id="content">

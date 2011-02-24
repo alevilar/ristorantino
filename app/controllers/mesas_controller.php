@@ -12,13 +12,28 @@ class MesasController extends AppController {
                 'contain'	 => array('Mozo(numero)','Cliente'=>array('Descuento'))
         );
 
+        if (!empty($this->passedArgs)){
+            if (!empty($this->passedArgs['Mesa.numero'])){
+                $this->data['Mesa']['numero'] = $this->passedArgs['Mesa.numero'];
+            }
+            if (!empty($this->passedArgs['Mozo.numero'])){
+                $this->data['Mozo']['numero'] = $this->passedArgs['Mozo.numero'];
+            }
+            if (!empty($this->passedArgs['Mesa.total'])){
+                $this->data['Mesa']['total'] = $this->passedArgs['Mesa.total'];
+            }
+        }
+
         if(!empty($this->data)) {
             $condiciones = array();
             foreach($this->data as $modelo=>$campos) {
                 foreach($campos as $key=>$val) {
                     if(!is_array($val))
-                        if(!empty($val))
+                        if(!empty($val)) {
                             $condiciones[] = array($modelo.".".$key=>$val);
+
+                            $this->passedArgs["$modelo.$key"] = $val;
+                        }
                 }
             }
             $this->Producto->recursive = 0;
@@ -27,7 +42,7 @@ class MesasController extends AppController {
                     'conditions' => $condiciones,
             );
         }
-
+        
         //debug($this->paginate('Mesa'));
         $this->Mesa->recursive = 0;
         $this->set('mesas', $this->paginate('Mesa'));
@@ -110,8 +125,9 @@ class MesasController extends AppController {
         $this->set('mozo_json', json_encode($this->Mesa->Mozo->read(null, $mesa['Mozo']['id'])));
     }
 
-    
 
+
+    
 
     private function __imprimir($mesa_id) {
         $this->Mesa->id = $mesa_id;
@@ -146,12 +162,20 @@ class MesasController extends AppController {
             $porcentaje_descuento = $mesa['Cliente']['Descuento']['porcentaje'];
         }
 
-        if(empty($mesa['Cliente'])):
-
+        $imprimio = false;
+        if (Configure::read('Mesa.imprimePrimeroRemito') && !$this->Mesa->estaCerrada()){
+                $print_success = $this->Printer->imprimirTicketConComandera($prod, $mozo_nro, $mesa_nro,$porcentaje_descuento);
+                $this->log("se imprimio un ticket no fiscal desde comandera como remito para la mesa $mesa_nro, mozo $mozo_nro",LOG_INFO);
+                $tipoticket = 'Remito';
+                $imprimio_ticket = true;
+                $imprimio = true;
+        }
+        
+        if(empty($mesa['Cliente']) && !$imprimio):
             $print_success = $this->Printer->imprimirTicket($prod, $mozo_nro, $mesa_nro, $porcentaje_descuento);
             $imprimio_ticket = true;
 
-        elseif($mesa['Cliente']['imprime_ticket'] > 0 || $mesa['Cliente']['imprime_ticket'] == ''):
+        elseif(($mesa['Cliente']['imprime_ticket'] > 0 || $mesa['Cliente']['imprime_ticket'] == '') && !$imprimio):
             switch($mesa['Cliente']['tipofactura']):
                 case 'A':
                     $ivaresp = $this->Mesa->Cliente->getResponsabilidadIva($mesa['Cliente']['id']);
@@ -212,9 +236,8 @@ class MesasController extends AppController {
         $mozo_nro = $mesa['Mozo']['numero'];
 
 
+        $this->Mesa->cerrar_mesa();
         if($print_success):
-            $this->Mesa->cerrar_mesa();
-
             if($imprimio_ticket):
                 $this->log("Se envió a imprimir el ticket de la mesa $mozo_nro, mozo $mesa_nro. Mesa ID: $mesa_id",LOG_INFO);
                 $this->Session->setFlash("Se envió a imprimir el $tipoticket Mesa $mesa_nro");
@@ -415,6 +438,13 @@ class MesasController extends AppController {
         $mesas = $this->Mesa->find('all', $options);
         $this->set('mesas', $mesas);
         $this->render('mesas');
+    }
+
+
+    function reabrir($id){
+        $this->Session->setFlash('Se reabrió la mesa', true);
+        $this->Mesa->reabrir($id);
+        $this->redirect($this->referer());
     }
 
 }

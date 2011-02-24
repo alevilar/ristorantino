@@ -1,7 +1,7 @@
 #set -x
 #!/bin/bash
 
-SCRIPT=/var/www/ristorantino/app/vendors/spooler/hasar_spooler.sh
+SCRIPT=hasar_spooler.sh
 DIA=`date +%d-%m-%y`
 SCRIPTKEEPALIVE=/var/www/ristorantino/app/vendors/spooler/hasar_spooler_keep_alive.sh
 
@@ -13,13 +13,13 @@ RETVAL=0
 case "$1" in
     start)
 
-	sh $SCRIPT &
+	$SCRIPT &
 	#sh $SCRIPTKEEPALIVE &
 	echo "se iniciaron los servicios del spooler correctamente";
 	RETVAL=$?
     ;;
     startonlyspooler)
-	sh $SCRIPT &
+	$SCRIPT &
 	echo "se inicio solo el spooler correctamente";
 	RETVAL=$?
     ;;

@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/494/trunk/app/plugins/acl/vendors/img/tango/po
+END
+ChangeLog
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/494/trunk/app/plugins/acl/vendors/img/tango/po/ChangeLog
+END
+Makefile.in.in
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/!svn/ver/494/trunk/app/plugins/acl/vendors/img/tango/po/Makefile.in.in
+END
+POTFILES.in
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/494/trunk/app/plugins/acl/vendors/img/tango/po/POTFILES.in
+END
