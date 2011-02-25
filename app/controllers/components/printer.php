@@ -66,8 +66,13 @@ class PrinterComponent extends Object {
 
 
         function initialize(){
-            $modeloImpresoraFiscal = Configure::read('ImpresoraFiscal.modelo'); 
-            App::import('Vendor', 'comandos_fiscales'.DS.'comandos_fiscales_'.$modeloImpresoraFiscal);
+            $modeloImpresoraFiscal = Configure::read('ImpresoraFiscal.modelo');
+
+            if (!App::import('Vendor', 'comandos_fiscales'.DS.'comandos_fiscales_'.$modeloImpresoraFiscal)){
+                $this->log('Error, el modelo de la impresora fiscal no existe o esta mal configurado');
+                debug('Error, el modelo de la impresora fiscal no existe o esta mal configurado');
+                return -1;
+            }
 
 
             $this->generadorComando = new ComandosImpresora();

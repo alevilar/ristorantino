@@ -94,8 +94,19 @@ class ProductosController extends AppController {
 		}
 		if (!empty($this->data)) {
 			if ($this->Producto->save($this->data)) {
-				$this->Session->setFlash(__('The Producto has been saved', true));
-				$this->redirect(array('action'=>'index'));
+                            $this->Session->setFlash(__('The Producto has been saved', true));
+                            if (!empty($this->data['ProductosPreciosFuturo']['precio'])){
+                                $this->data['ProductosPreciosFuturo']['producto_id'] = $this->data['Producto']['id'];
+                                //debug($this->Producto->ProductosPreciosFuturo);die;
+                                if (!$this->Producto->ProductosPreciosFuturo->save($this->data['ProductosPreciosFuturo'])){
+                                    $this->Session->setFlash(__('No se pudo guardar el precio futuro', true));
+                                }
+                            } elseif(!empty($this->data['ProductosPreciosFuturo']['producto_id'])){
+                                if (!$this->Producto->ProductosPreciosFuturo->del($this->data['ProductosPreciosFuturo']['producto_id'])){
+                                    $this->Session->setFlash(__('No se pudo eliminar el precio futuro', true));
+                                }
+                            }
+                            $this->redirect(array('action'=>'index'));
 			} else {
 				$this->Session->setFlash(__('The Producto could not be saved. Please, try again.', true));
 			}
@@ -125,6 +136,32 @@ class ProductosController extends AppController {
 		$this->render('index');
 		
 	}
+
+
+        function actualizarPreciosFuturos(){
+            $failed = false;
+            $preciosFuturos = $this->Producto->ProductosPreciosFuturo->find('all');
+            foreach ($preciosFuturos as $pf){
+                $productos = array();
+                $productos['Producto']['precio'] = $pf['ProductosPreciosFuturo']['precio'];
+                $productos['Producto']['id'] = $pf['ProductosPreciosFuturo']['producto_id'];
+                if (!$this->Producto->save($productos, array('validate'=>false))){
+                    $failed = true;
+                }
+            }
+            if (!$failed){
+                $this->Producto->query("
+                    truncate productos_precios_futuros
+                ");
+                $this->Session->setFlash('Se han modificado TODOS los precios futuros de los productos');
+            } else {
+                $this->Session->setFlash('Fallo al aplicar los cambios');
+                debug($this->Producto);
+            }
+
+            
+            $this->redirect($this->referer());
+        }
 
 }
 ?>

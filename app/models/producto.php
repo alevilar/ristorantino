@@ -23,6 +23,8 @@ class Producto extends AppModel {
 			)
 	);
 
+        var $hasOne = array('ProductosPreciosFuturo');
+
 	var $hasMany = array(
             'HistoricoPrecio',
 			'DetalleComanda' => array('className' => 'DetalleComanda',

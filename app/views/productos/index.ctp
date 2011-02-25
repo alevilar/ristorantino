@@ -67,7 +67,7 @@ foreach ($productos as $producto):
 			<?php echo $producto['Categoria']['name']; ?>
 		</td>
 		<td>
-			<?php echo "$".$producto['Producto']['precio']; ?>
+			<?php echo "$".$producto['Producto']['precio']; echo !empty($producto['ProductosPreciosFuturo']['precio'])?" <b>[$".$producto['ProductosPreciosFuturo']['precio']."]</b>":''?>
 		</td>
                 <td>
 			<?php echo $producto['Producto']['order']; ?>

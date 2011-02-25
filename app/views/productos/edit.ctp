@@ -10,6 +10,10 @@
 		echo $form->input('categoria_id',array('label'=>'Categoria a la que pertenece este producto'));
 		echo $form->input('comandera_id',array('after'=>'Seleccione en que comandera quiere que se imprima el producto'));
 		echo $form->input('precio',array('label'=>'Precio $','after'=>'los centavos van separados de un punto, NO poner coma ni el signo pesos. Ejemplo de un precio correcto: <b>6.50</b>'));
+
+                echo $form->input('ProductosPreciosFuturo.producto_id', array('type'=>'hidden'));
+                echo $form->input('ProductosPreciosFuturo.precio',array('label'=>'Precio Futuro $'));
+
                 echo $form->input('order', array('label'=>'Orden','after'=>'poner un valor numerico para ordenar como se imprimiran los productos'));
 	?>
 	</fieldset>
