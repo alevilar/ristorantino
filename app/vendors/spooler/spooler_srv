@@ -12,8 +12,12 @@ CARPETA_DESTINO=/tmp/dest
 RETVAL=0
 case "$1" in
     start)
-
-	$SCRIPT &
+	#si no se paso el nombre del dispositivo como 2do parametro
+	if [ -z "$2" ];	then
+		$SCRIPT &
+	else
+		$SCRIPT $2 &
+	fi
 	#sh $SCRIPTKEEPALIVE &
 	echo "se iniciaron los servicios del spooler correctamente";
 	RETVAL=$?

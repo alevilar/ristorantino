@@ -88,6 +88,37 @@ class ClientesController extends AppController {
 			$this->redirect(array('action'=>'index'));
 		}
 	}
+
+
+
+        /**
+	 * me busca clientes
+	 *
+	 */
+	function ajax_buscador(){
+		$this->Cliente->order = 'Cliente.nombre';
+                
+                if (!empty($this->data['Cliente']['busqueda']) || !empty($this->passedArgs)){
+                    if (!empty($this->data['Cliente']['busqueda'])) {
+                        $this->passedArgs['busqueda'] = strtolower($this->data['Cliente']['busqueda']);
+                    }
+                    $busqueda = $this->passedArgs['busqueda'];
+                    
+                    $this->paginate = array('conditions'=>array(
+                        'OR' => array(
+                            'lower(Cliente.nombre) LIKE' => "%$busqueda%",
+                            'lower(Cliente.nrodocumento) LIKE' => "%$busqueda%",
+                        )),
+                        'limit'=> 4,
+                        'contain' => array(
+                                                'Descuento'
+                                            ),
+                    );
+                    $this->set('clientes',$this->paginate());
+                }
+		
+	}
+        
 	
 	
 	/**

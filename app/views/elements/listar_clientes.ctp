@@ -28,6 +28,15 @@
             'class'=>'boton-ancho-largo'));
 ?>
             </li>
+                       <li>
+<?php  echo $ajax->link(
+        'Buscar',
+        '/clientes/ajax_buscador',
+        array(
+            'update'=>'clientes-listado',
+            'class'=>'boton-ancho-largo'));
+?>
+            </li>
         </ul>
        
     </div>

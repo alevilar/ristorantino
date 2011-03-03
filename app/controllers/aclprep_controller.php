@@ -22,6 +22,7 @@ class AclprepController extends AppController {
     }
 
     function buildAcos() {
+        Configure::write('debug',1);
         if (!Configure::read('debug')) {
             return $this->_stop();
         }

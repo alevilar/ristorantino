@@ -43,10 +43,12 @@
 //EOF
 
 
-function comandosDeReinicializacionServidorImpresion() {
+function comandosDeReinicializacionServidorImpresion($devName = null) {
     
     exec("sudo /etc/init.d/spooler_srv stop");
-    exec("sudo /etc/init.d/spooler_srv start");
+    $devName = empty($devName) ? $devName : ' '.$devName;
+    debug($devName);
+    exec("sudo /etc/init.d/spooler_srv start$devName");
     exec("cd /");	
 }
 ?>
