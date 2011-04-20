@@ -2,7 +2,7 @@
 class Mesa extends AppModel {
 
 	var $name = 'Mesa';
-	var $actsAs = array('Containable');
+	var $actsAs = array('Containable', 'SoftDeletable');
 
 
         var $numero = 0;

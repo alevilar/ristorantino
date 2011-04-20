@@ -43,6 +43,8 @@
 //EOF
 
 
+define('DATETIME_NULL', '0000-00-00 00:00:00');
+
 function comandosDeReinicializacionServidorImpresion($devName = null) {
     
     exec("sudo /etc/init.d/spooler_srv stop");
@@ -50,5 +52,10 @@ function comandosDeReinicializacionServidorImpresion($devName = null) {
     debug($devName);
     exec("sudo /etc/init.d/spooler_srv start$devName");
     exec("cd /");	
+}
+
+
+function jsDate($date){
+    return date( 'Y-m-d H:i:s', strtotime($date));
 }
 ?>

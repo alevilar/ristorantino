@@ -1,8 +1,93 @@
 <?php
+
+echo $html->css('protoplasm',false);
+echo $javascript->link('protoplasm/protoplasm', false);
+
+echo $javascript->link('mesas/index_head', false);
+
+
+?>
+
+
+
+<?php
 $paginator->options(array('url' => $this->passedArgs));
 ?>
-<div class="mesas index">
-<h2><?php __('Mesas');?></h2>
+
+
+<div class="mesas index grid_12">
+<h2><?php __('Buscador de Mesas');?></h2>
+
+<?php echo $form->create("Mesa",array("action"=>"index")); ?>
+<div class="alpha grid_1">
+    <strong>#</strong>
+    <?php echo $form->input('Mesa.numero',array('label'=>'N° Mesa', 'class'=>'grid_12 alpha omega'));?>
+    <?php echo $form->input('Mozo.numero',array('label'=>'N° Mozo', 'class'=>'grid_12 alpha omega'));?>
+</div>
+<div class="grid_2">
+    <strong>Mesa</strong>
+    <?php echo $form->input('Mesa.total',array('label'=>'Importe Total', 'class'=>'grid_12  alpha omega'));?>
+    <?php echo $form->input('Mesa.estado_cerrada',array(
+        'label'=> '¿Qué mesas traer?',
+        'type' => 'select',
+        'options' => array(
+            'todas'=>'Todas las mesas',
+            'abiertas' => 'Sólo Abiertas',
+            'cerradas' => 'Sólo Cerradas pero sin Cobrar',
+            'cobradas' => 'Sólo Cerradas y Cobradas'),
+        'class'=>'grid_12 alpha omega'
+        ));?>
+</div>
+    
+
+<div class="grid_3">
+    <strong>Fecha y hora de Apertura</strong>
+    <?php echo $form->input('Mesa.created_from',array(
+        'label'=>'Abierta desde',
+        'class' => 'datepicker',
+        ));
+    ?>
+    <?php echo $form->input('Mesa.created_to',array(
+        'label'=>'Abierta hasta',
+        'class' => 'datepicker',
+        ));
+    ?>
+</div>
+
+<div class="grid_3">
+    <strong>Fecha y hora de Cierre</strong>
+    <?php echo $form->input('Mesa.time_cerro_from',array(
+        'label'=>'Cerró desde',
+        'class' => 'datepicker',
+        ));
+    ?>
+    <?php echo $form->input('Mesa.time_cerro_to',array(
+        'label'=>'Cerró hasta',
+        'class' => 'datepicker',
+        ));
+    ?>
+</div>
+
+<div class="grid_3">
+    <strong>Fecha y hora de Cobro</strong>
+    <?php echo $form->input('Mesa.time_cobro_from',array(
+        'label'=>'Cobrada desde',
+        'class' => 'datepicker',
+        ));
+    ?>
+    <?php echo $form->input('Mesa.time_cobro_to',array(
+        'label'=>'Cobrada hasta',
+        'class' => 'datepicker',
+        ));
+    ?>
+</div>
+<div class="clear"></div>
+    <?php echo $form->input("exportar_excel", array(
+        'label'=>'Exportar a Excel',
+        'type' => 'checkbox',
+        ))?>
+    <?php echo $form->end("Buscar")?>
+
 <p>
 <?php
 
@@ -10,77 +95,9 @@ echo $paginator->counter(array(
 'format' => __('Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%', true)
 ));
 ?></p>
-<?php echo $form->create("Mesa",array("action"=>"index")); ?>
-<table cellpadding="0" cellspacing="0">
-<tr>
-	<th></th>
-	<th><?php echo $form->input('Mesa.numero',array('label'=>false));?></th>
-	<th><?php echo $form->input('Mozo.numero',array('label'=>false));?></th>
-	<th><?php echo $form->input('Mesa.total',array('label'=>false));?></th>
-	<th></th>
-	<th></th>
-	<th>&nbsp;</th>
-	<th class="actions"></th>
-</tr>
-<tr>
-	<th><?php echo $paginator->sort('id');?></th>
-	<th><?php echo $paginator->sort('Mesa','numero');?></th>
-	<th><?php echo $paginator->sort('Mozo (ID) Nº','mozo_id');?></th>
-	<th><?php echo $paginator->sort('total');?></th>
-	<th><?php echo $paginator->sort('Fecha','created');?></th>
-	<th>Cliente</th>
-	<th><?php echo $paginator->sort('Cobró','time_cobro');?></th>
-	<th class="actions"><?php __('Actions');?></th>
-</tr>
-<?php
-$i = 0;
-foreach ($mesas as $mesa):
-	$class = null;
-	if ($i++ % 2 == 0) {
-		$class = ' class="altrow"';
-	}
-?>
-	<tr<?php echo $class;?>>
-		<td>
-			<?php echo $mesa['Mesa']['id']; ?>
-		</td>
-		<td>
-			<?php echo $mesa['Mesa']['numero']; ?>
-		</td>
-		<td>
-			<?php echo $html->link('('.$mesa['Mesa']['mozo_id'].') Nº: '.$mesa['Mozo']['numero'],'/Mozos/view/'.$mesa['Mesa']['mozo_id']); ?>
-		</td>
-		<td>
-			<?php echo $mesa['Mesa']['total']; ?>
-		</td>
-		<td>
-			<?php if ( $mesa['Mesa']['created'] != '0000-00-00 00:00:00'){?>
-			<?php echo date('d-m-y (H:i:s)',strtotime($mesa['Mesa']['created']));} ?>
-		</td>
-		<td>
-			<?php 
-			if(!empty($mesa['Cliente']['Descuento']['porcentaje'])){
-			 	echo $mesa['Cliente']['Descuento']['porcentaje']."%"; }
-			 elseif($mesa['Cliente']['tipofactura']) {
-			 	echo 'factura "'.$mesa['Cliente']['tipofactura'].'"';
-			 }
-			 else echo 'factura "B"'?>
-		</td>
-		<td>
-			<?php if ( $mesa['Mesa']['time_cobro'] != '0000-00-00 00:00:00'){ ?>
-			<?php echo date('d-m-y (H:i:s)',strtotime($mesa['Mesa']['time_cobro']));} ?>
-		</td>
-		<td class="actions">
-			<?php echo $html->link(__('Reabrir', true), array('action'=>'reabrir', $mesa['Mesa']['id'])); ?>
-                        <?php echo $html->link(__('View', true), array('action'=>'view', $mesa['Mesa']['id'])); ?>
-			<?php echo $html->link(__('Edit', true), array('action'=>'edit', $mesa['Mesa']['id'])); ?>
-			<?php echo $html->link(__('Delete', true), array('action'=>'delete', $mesa['Mesa']['id']), null, sprintf(__('Seguro que queres borrar la mesa # %s?\n Hacerlo significa borrarla de la base de datos y no sera computada.\nSe perderan la informacion estadisica de los pedidos\nrealidados para esta mesa.', true), $mesa['Mesa']['numero'])); ?>
-		</td>
-	</tr>
-<?php endforeach; ?>
-</table>
 
-<?php echo $form->end("Buscar")?>
+<?php echo $this->element('mesas/listado_tabla')?>
+
 
 </div>
 <div class="paging">
@@ -93,3 +110,14 @@ foreach ($mesas as $mesa):
 		<li><?php echo $html->link(__('New Mesa', true), array('action'=>'add')); ?></li>
 	</ul>
 </div>
+
+<script type="text/javascript">
+//    calendar.set("MesaCreatedTo");
+//    calendar.set("MesaCreatedFrom");
+//    calendar.set("MesaTimeCerroFrom");
+//    calendar.set("MesaTimeCerroTo");
+//    calendar.set("MesaTimeCobroFrom");
+//    calendar.set("MesaTimeCobroTo");
+
+</script>
+

@@ -90,7 +90,6 @@ ul, li {
 #header h1 {
 	background: #003d4c url('../img/cake.icon.gif') no-repeat left;
 	color: #fff;
-	padding: 0px 30px;
 }
 #header h1 a {
 	color: #fff;
@@ -105,14 +104,10 @@ ul, li {
 }
 #content{
 	background: #fff;
-	clear: both;
 	color: #333;
-	padding: 10px 20px 40px 20px;
 	overflow: auto;
 }
 #footer {
-	clear: both;
-	padding: 6px 10px;
 	text-align: right;
 }
 
@@ -211,15 +206,11 @@ dd {
 
 /* Forms */
 form {
-	clear: both;
 	margin-right: 20px;
 	padding: 0;
-	width: 80%;
 }
 fieldset {
 	border: 1px solid #ccc;
-	margin-top: 30px;
-	padding: 16px 20px;
 }
 fieldset legend {
 	background:#fff;
@@ -228,22 +219,14 @@ fieldset legend {
 	font-weight: bold;
 }
 fieldset fieldset {
-	margin-top: 0px;
-	margin-bottom: 20px;
-	padding: 16px 10px;
 }
 fieldset fieldset legend {
 	font-size: 120%;
 	font-weight: normal;
 }
 fieldset fieldset div {
-	clear: left;
-	margin: 0 20px;
 }
 form div {
-	clear: both;
-	margin-bottom: 1em;
-	padding: .5em;
 	vertical-align: text-top;
 }
 form div.input {
@@ -256,65 +239,33 @@ form div.required {
 form div.submit {
 	border: 0;
 	clear: both;
-	margin-top: 10px;
-	margin-left: 140px;
 }
 label {
-	display: block;
-	font-size: 110%;
-	padding-right: 20px;
 }
 input, textarea {
-	clear: both;
-	font-size: 140%;
-	font-family: "frutiger linotype", "lucida grande", "verdana", sans-serif;
-	padding: 2px;
-	width: 100%;
 }
 select {
-	clear: both;
-	font-size: 120%;
-	vertical-align: text-bottom;
 }
 select[multiple=multiple] {
-	width: 100%;
 }
 option {
-	font-size: 120%;
-	padding: 0 3px;
 }
 input[type=checkbox] {
-	clear: left;
-	float: left;
-	margin: 0px 6px 7px 2px;
-	width: auto;
 }
 input[type=radio] {
-	float:left;
-	width:auto;
-	margin: 0 3px 7px 0;
 }
 div.radio label {
-	margin: 0 0 6px 20px;
 }
 input[type=submit] {
-	display: inline;
-	font-size: 110%;
-	padding: 2px 5px;
-	width: auto;
-	vertical-align: bottom;
 }
 
 /* Notices and Errors */
 div.message {
-	clear: both;
 	color: #900;
 	font-size: 140%;
 	font-weight: bold;
-	margin: 1em 0;
 }
 div.error-message {
-	clear: both;
 	color: #900;
 	font-weight: bold;
 }

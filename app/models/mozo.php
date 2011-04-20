@@ -2,6 +2,9 @@
 class Mozo extends AppModel {
 
 	var $name = 'Mozo';
+
+        var $actsAs = array('SoftDeletable');
+        
 	var $validate = array(
 		'user_id' => array(
                     'isUnique' => array(

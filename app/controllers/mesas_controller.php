@@ -12,6 +12,9 @@ class MesasController extends AppController {
                 'contain'	 => array('Mozo(numero)','Cliente'=>array('Descuento'))
         );
 
+
+        $condiciones = array();
+
         if (!empty($this->passedArgs)){
             if (!empty($this->passedArgs['Mesa.numero'])){
                 $this->data['Mesa']['numero'] = $this->passedArgs['Mesa.numero'];
@@ -22,20 +25,89 @@ class MesasController extends AppController {
             if (!empty($this->passedArgs['Mesa.total'])){
                 $this->data['Mesa']['total'] = $this->passedArgs['Mesa.total'];
             }
+            if (!empty($this->passedArgs['Mesa.created_from'])){
+                $this->data['Mesa']['created_from'] = $this->passedArgs['Mesa.created_from'];
+            }
+            if (!empty($this->passedArgs['Mesa.created_to'])){
+                $this->data['Mesa']['created_to'] = $this->passedArgs['Mesa.created_to'];
+            }
+            if (!empty($this->passedArgs['Mesa.time_cerro_from'])){
+                $this->data['Mesa']['time_cerro_from'] = $this->passedArgs['Mesa.time_cerro_from'];
+            }
+            if (!empty($this->passedArgs['Mesa.time_cerro_to'])){
+                $this->data['Mesa']['time_cerro_to'] = $this->passedArgs['Mesa.time_cerro_to'];
+            }
+            if (!empty($this->passedArgs['Mesa.time_cobro_from'])){
+                $this->data['Mesa']['time_cobro_from'] = $this->passedArgs['Mesa.time_cobro_from'];
+            }
+            if (!empty($this->passedArgs['Mesa.time_cobro_to'])){
+                $this->data['Mesa']['time_cobro_to'] = $this->passedArgs['Mesa.time_cobro_to'];
+            }
+
         }
 
         if(!empty($this->data)) {
-            $condiciones = array();
+
+            // armo para que el paginator mantenga la busqueda
             foreach($this->data as $modelo=>$campos) {
                 foreach($campos as $key=>$val) {
                     if(!is_array($val))
-                        if(!empty($val)) {
-                            $condiciones[] = array($modelo.".".$key=>$val);
-
+                        if(!empty($val)) {                    
                             $this->passedArgs["$modelo.$key"] = $val;
                         }
                 }
             }
+
+
+            // seteo condiciones de busqueda
+            if (!empty($this->data['Mesa']['numero'])){
+                $condiciones['Mesa.numero'] = $this->data['Mesa']['numero'];
+            }
+            if (!empty($this->data['Mozo']['numero'])){
+                $condiciones['Mozo.numero'] = $this->data['Mozo']['numero'];
+            }
+            if (!empty($this->data['Mesa']['total'])){
+                $condiciones['Mesa.total'] = $this->data['Mesa']['total'];
+            }
+            if (!empty($this->data['Mesa']['created_from'])){
+                $condiciones['Mesa.created >'] = jsDate($this->data['Mesa']['created_from']);
+            }
+            if (!empty($this->data['Mesa']['created_to'])){
+                $condiciones['Mesa.created <'] = jsDate($this->data['Mesa']['created_to']);
+            }
+            if (!empty($this->data['Mesa']['time_cerro_from'])){
+                $condiciones['Mesa.time_cerro >'] = jsDate($this->data['Mesa']['time_cerro_from']);
+            }
+            if (!empty($this->data['Mesa']['time_cerro_to'])){
+                $condiciones['Mesa.time_cerro <'] = jsDate($this->data['Mesa']['time_cerro_to']);
+            }
+            if (!empty($this->data['Mesa']['time_cobro_from'])){
+                $condiciones['Mesa.time_cobro >'] = jsDate($this->data['Mesa']['time_cobro_from']);
+            }
+            if (!empty( $this->data['Mesa']['time_cobro_to'])){
+                $condiciones['Mesa.time_cobro <'] = jsDate($this->data['Mesa']['time_cobro_to']);
+            }
+            if (!empty( $this->data['Mesa']['estado_cerrada'])){
+                switch ($this->data['Mesa']['estado_cerrada']) {
+                    case 'abiertas':
+                        $condiciones['Mesa.time_cerro'] = DATETIME_NULL;
+                        $condiciones['Mesa.time_cobro'] = DATETIME_NULL;
+                        break;
+                    case 'cerradas':
+                        $condiciones['Mesa.created <>'] = DATETIME_NULL;
+                        $condiciones['Mesa.time_cerro <>'] = DATETIME_NULL;
+                        $condiciones['Mesa.time_cobro'] = DATETIME_NULL;
+                        break;
+                     case 'cobradas':
+                        $condiciones['Mesa.created <>'] = DATETIME_NULL;
+                         $condiciones['Mesa.time_cerro <>'] = DATETIME_NULL;
+                        $condiciones['Mesa.time_cobro <>'] = DATETIME_NULL;
+                        break;
+                    default:
+                        break;
+                }
+            }
+
             $this->Producto->recursive = 0;
 
             $this->paginate['Mesa'] = array(
@@ -45,7 +117,17 @@ class MesasController extends AppController {
         
         //debug($this->paginate('Mesa'));
         $this->Mesa->recursive = 0;
-        $this->set('mesas', $this->paginate('Mesa'));
+        
+
+
+        if (!empty($this->data['Mesa']['exportar_excel'])){
+            $paginate['Mesa']['limit'] = null;
+            $this->set('mesas', $this->Mesa->find('all',$paginate['Mesa']));
+            $this->layout = 'xls';
+            $this->render('xls/index');
+        } else {
+            $this->set('mesas', $this->paginate('Mesa'));
+        }
     }
 
 

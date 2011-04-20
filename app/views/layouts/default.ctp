@@ -36,12 +36,9 @@
 
 		//echo $html->css('ristorantino.generic');
 		echo $html->css('cake');
-
-                
-
+                echo $html->css('fluid_grid');
 
 		echo $scripts_for_layout;
-		
 		
 		echo $javascript->link('prototype');		
 		echo $javascript->link('scriptaculous');	
@@ -51,18 +48,22 @@
 	?>
 </head>
 <body>
-	<div id="container">
-		<div id="header">
+	<div id="container" class="container_12">
+            <div id="header" class="grid_12">
 			<h1>El Ristorantino Mágico - versión 11.01.11</h1>
 			<div id="mesajes"><?php $session->flash(); $session->flash('auth'); ?></div>
 			<?php echo $html->link("Inicio",'/pages/home',array('class'=>'inicio'))?>
 		</div>
-		<div id="content">
+            <div id="content" class="grid_12">
 			<?php echo $content_for_layout; ?>
-		</div>
+	    </div>
 		
 	</div>
+
+    <div class="clear"></div>
+    <div class="container_12">
 	<?php echo $cakeDebug; ?>
+        </div>
 	
 </body>
 </html>
