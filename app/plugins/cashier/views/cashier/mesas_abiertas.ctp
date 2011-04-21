@@ -1,8 +1,22 @@
+<script type="text/javascript">
+var cajero = new Cajero();
+
+cajero.urlGuardar = "<?php echo $html->url('/pagos/add');?>";
+
+
+function abrirVentana(mesa, total){
+    var t = total || 0;
+    cajero.cobrarMesa(mesa, t);
+    return false;
+}
+</script>
+
+
 <div id="listado-mesas" class="listado-mesas">
 	<ul>
 		<?php foreach($mesas_abiertas as $m):?>
 		
-			<li id="mesa-id-<?=  $m['Mesa']['id']?>" onclick="window.location.href='<?=  $html->url('/Mesas/edit/'.$m['Mesa']['id']);?>'; return false;">
+			<li id="mesa-id-<?=  $m['Mesa']['id']?>" onclick="return abrirVentana(<?=  $m['Mesa']['id']?>);">
 					
 				<span class="mesa-numero"><?= $m['Mesa']['numero']?></span>
 				<span class="mozo-numero"><?= $m['Mozo']['numero']?></span>
@@ -24,3 +38,6 @@
 	<?php echo $paginator->numbers(); ?> 
 	<?php echo $paginator->next(); ?>
 </div>
+
+
+<?php echo $this->renderElement('cierre_efectivo_tarjeta');?>

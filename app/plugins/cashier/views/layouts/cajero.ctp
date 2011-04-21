@@ -57,6 +57,7 @@
 				<?php echo $html->link('Cajero','cobrar',array('class'=> 'boton letra-chica '.$agrega_clase));?>
 				<?php $agrega_clase = ($this->action == 'mesas_abiertas')?' boton-apretado':''?>
 				<?php echo $html->link('Mesas Abiertas','mesas_abiertas',array('class'=> 'boton letra-chica '.$agrega_clase));?>
+                            <?php echo $html->link('Ultimas Cobradas','ultimas_cobradas',array('class'=> 'boton letra-chica '.$agrega_clase));?>
                                 <?php echo $html->link('Nota de Crédito','nota_credito',array('class'=> 'boton letra-chica '));?>
                         </div>
 			

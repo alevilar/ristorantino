@@ -3,7 +3,7 @@ class MesasController extends AppController {
 
     var $name = 'Mesas';
     var $helpers = array('Html', 'Form');
-    var $components = array('Printer');
+    var $components = array('Printer','RequestHandler');
 
 
 
@@ -304,21 +304,30 @@ class MesasController extends AppController {
     }
 
 
-    function cerrarMesa($mesa_id) {
+    function cerrarMesa($mesa_id, $imprimir_ticket = true) {
 
         $this->Mesa->id = $mesa_id;
-        $vreturn = $this->__imprimir($mesa_id);
-//		debug($vreturn);
+        $imprimio_ticket = $imprimir_ticket;
+        $print_success = false;
+        if ($imprimir_ticket){
+            $vreturn = $this->__imprimir($mesa_id);
 
-        $print_success   = $vreturn['print_success'];
-        $imprimio_ticket = $vreturn['imprimio_ticket'];
-        $tipoticket      = $vreturn['tipoticket'];
-        $mesa = $vreturn['Mesa'];
-        $mesa_nro = $mesa['Mesa']['numero'];
-        $mozo_nro = $mesa['Mozo']['numero'];
+            $print_success   = $vreturn['print_success'];
+            $imprimio_ticket = $vreturn['imprimio_ticket'];
+            $tipoticket      = $vreturn['tipoticket'];
+            $mesa = $vreturn['Mesa'];
+            $mesa_nro = $mesa['Mesa']['numero'];
+            $mozo_nro = $mesa['Mozo']['numero'];
+        }
 
+        if(empty($mesa)){
+            $mesa = $this->Mesa->read();
+            $mesa_nro = $mesa['Mesa']['numero'];
+            $mozo_nro = $mesa['Mozo']['numero'];
+        }
 
         $this->Mesa->cerrar_mesa();
+        
         if($print_success):
             if($imprimio_ticket):
                 $this->log("Se envió a imprimir el ticket de la mesa $mozo_nro, mozo $mesa_nro. Mesa ID: $mesa_id",LOG_INFO);
@@ -327,11 +336,17 @@ class MesasController extends AppController {
                 $this->Session->setFlash("Se cerró la Mesa $mesa_nro sin imprimir ticket");
             endif;
         else:
-            $this->log("No se pudo imprimir el ticket de la mesa $mozo_nro, mozo $mesa_nro. Mesa ID: $mesa_id",LOG_ERROR);
-            $this->Session->setFlash("No se pudo imprimir el $tipoticket Mesa $mesa_nro");
+            $this->log("No se pudo imprimir el ticket de la mesa $mesa_nro, mozo $mozo_nro. Mesa ID: $mesa_id",LOG_ERROR);
+            $this->Session->setFlash("No se pudo imprimir el ticket de la mesa $mesa_nro, mozo $mozo_nro.");
         endif;
 
-        $this->redirect($this->referer());
+        if($this->RequestHandler->isAjax()){
+            $this->autoRender = false;
+            $this->layout = 'ajax';
+            return 1;
+        } else {
+            $this->redirect($this->referer());
+        }
     }
 
 
@@ -361,13 +376,6 @@ class MesasController extends AppController {
         endif;
 
     }
-
-
-
-
-
-
-
 
 
     function add() {
@@ -408,6 +416,7 @@ class MesasController extends AppController {
      */
     function ajax_edit() {
         $this->autoRender = false;
+        $returnFlag = 1;
 
         if (!empty($this->data)) {
             if(isset($this->data['Mesa']['id'])) {
@@ -415,35 +424,21 @@ class MesasController extends AppController {
                     $this->Mesa->recursive = -1;
                     $this->Mesa->id = $this->data['Mesa']['id'];
 
-                    /*
-					$mesa = $this->Mesa->read();
-
-					while(list($k,$v) = each($this->data['Mesa'])){
-						if($k!='modified'){ // para que no me sobreescriba el campo modified
-							$mesa['Mesa'][$k] = $v;
-						}
-					}
-					
-					if ($this->Mesa->save($mesa)) {
-						return 1;
-					} else {
-						debug($this->Mesa->validationErrors);
-						return 0;
-					}
-                    */
                     foreach($this->data['Mesa'] as $field=>$valor):
                         if($field == 'id') continue;// el id no lo tengo que actualizar
-                        if ($this->Mesa->saveField($field, $valor, $validate = true)) {
-                            return 1;
-                        } else {
+                        $valor = (strtolower($valor) == 'now()') ? strftime('%Y-%m-%d %H:%M:%S', time()) : $valor;
+                        if (!$this->Mesa->saveField($field, $valor, $validate = true)) {
                             debug($this->Mesa->validationErrors);
-                            return 0;
-                    }
+                            if($returnFlag == 1){
+                                $returnFlag = 0;
+                            }
+                            $returnFlag--;
+                        }
                     endforeach;
                 }
             }
         }
-        return -1;
+        return $returnFlag;
     }
 
 

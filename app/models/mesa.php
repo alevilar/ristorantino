@@ -84,19 +84,25 @@ class Mesa extends AppModel {
 	
 	function cerrar_mesa($mesa_id = 0)
 	{
-		$this->id = ($mesa_id == 0)?$this->id:$mesa_id;	
+		$this->id = ($mesa_id == 0)?$this->id:$mesa_id;
+                $cant = $this->find('count',array('conditions'=>array(
+                    'Mesa.id' => $this->id,
+                )));
+                if ($cant == 0) return 0;
 				
-		$result = $this->saveField('total', $this->calcular_total());
+		$this->saveField('total', $this->calcular_total());
                 
-		$result = $this->saveField('time_cerro', date( "Y-m-d H:i:s",strtotime('now')));
+		$this->saveField('time_cerro', date( "Y-m-d H:i:s",strtotime('now')));
 
+                // si no estoy usando cajero, entonces poner como que ya esta cerrada
                 if (!Configure::read('Adicion.usarCajero'))  {
-                    $result = $this->saveField('time_cobro', date( "Y-m-d H:i:s",strtotime('now')));
+                    $this->saveField('time_cobro', date( "Y-m-d H:i:s",strtotime('now')));
+                } else {
+                    $this->saveField('time_cobro', DATETIME_NULL);
                 }
+                return 1;
 		
 	}
-	
-	
 	
 
 	
@@ -191,6 +197,20 @@ LEFT JOIN
 		}
 		
 		return $items;
+	}
+
+
+        function ultimasCobradas($limit = 20){
+
+		$conditions = array("Mesa.time_cobro <>" => "0000-00-00 00:00:00",
+                                    "Mesa.time_cerro <>" => "0000-00-00 00:00:00");
+
+                $mesas = $this->find('all', array(
+                    'conditions'=>$conditions,
+                    'limit' => $limit,
+                    ));
+		
+		return $mesas;
 	}
 	
 	

@@ -220,6 +220,7 @@ Cajero.prototype = {
         new Ajax.Request(url, {
             method: 'post',
             parameters: {
+                'data[Mesa][time_cobro]': "0000-00-00 00:00:00",
                 'data[Mesa][time_cerro]': "0000-00-00 00:00:00",
                 'data[Mesa][id]': this.mesa_id
             },
@@ -232,10 +233,27 @@ Cajero.prototype = {
             }
         });
 		
+    },
+
+
+    enviarACajero: function(url){
+        // "0000-00-00 00:00:00"
+        new Ajax.Request(url, {
+            method: 'post',
+            parameters: {
+                'data[Mesa][time_cobro]': "0000-00-00 00:00:00",
+                'data[Mesa][time_cerro]': "NOW()",
+                'data[Mesa][id]': this.mesa_id
+            },
+            onSuccess: function() {
+                $("mesa-id-"+this.mesa_id).remove();
+                ventanaSeleccionPago.hide();
+            }.bind(this),
+            onFailure: function(){
+                alert("No se pudo abrir la mesa nuevamente")
+            }
+        });
     }
-	
-	
-	
 	
 		
 }

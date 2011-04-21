@@ -102,30 +102,41 @@ imprimirse");
 	
 	
 	function mesas_abiertas(){
-	//	$conditions = array("Mesa.time_cobro = '0000-00-00 00:00:00'",
-	//						"Mesa.time_cerro = '0000-00-00 00:00:00'");
-		
 		$conditions = array("Mesa.time_cobro" => "0000-00-00 00:00:00",
-							"Mesa.time_cerro" => "0000-00-00 00:00:00");
+                                    "Mesa.time_cerro" => "0000-00-00 00:00:00");
 		
 		$this->paginate['Mesa'] = array(
-							'limit' => 28,
-							'conditions'=>$conditions, 
-							'order'=>'Mesa.created DESC',
-							'contain'=>	array(	'Mozo',
-												'Cliente'=>'Descuento',
-												'Comanda')				
+                        'limit' => 28,
+                        'conditions'=>$conditions,
+                        'order'=>'Mesa.created DESC',
+                        'contain'=>	array(	'Mozo',
+                        'Cliente'=>'Descuento',
+                        'Comanda')				
 		);
 		
 		 $mesas = $this->paginate('Mesa');
-		 /*
-		 for ($i = 0; $i<count($mesas); $i++):
-		 	$this->Mesa->id = $mesas[$i]['Mesa']['id'];
-		 	$mesas[$i]['subtotal'] = $this->Mesa->calcular_total();
-		 endfor;
-		 */
-		$this->set('mesas_abiertas',$mesas);
+ 		 $this->set('mesas_abiertas',$mesas);
 	}
+
+
+
+        function ultimas_cobradas(){
+            $conditions = array("Mesa.time_cobro >" => "0000-00-00 00:00:00",
+                                    "Mesa.time_cerro >" => "0000-00-00 00:00:00");
+
+		$this->paginate['Mesa'] = array(
+                        'limit' => 28,
+                        'conditions'=>$conditions,
+                        'order'=>'Mesa.time_cobro DESC',
+                        'contain'=> array(
+                            'Mozo',
+                            'Cliente'=>'Descuento',
+                            'Comanda'),
+		);
+
+		 $mesas = $this->paginate('Mesa');
+ 		 $this->set('mesas',$mesas);
+        }
 
 
 

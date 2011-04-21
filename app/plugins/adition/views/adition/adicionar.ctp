@@ -164,6 +164,7 @@ echo $this->renderElement('adicion/cambiar_mozo_de_mesa');
         </div>
         <ul>
                 <li><a href="#cancelarCierreDeMesa" onclick="adicion.reabrirMesa('<?= $html->url('/mesas/ajax_edit')?>')" id="boton-cancelar-cierre">Re Abrir Mesa</a></li>
+                <a href="#cerrarMesa" onclick="adicion.enviarACajero('<?= $html->url('/mesas/cerrarMesa')?>')">Cerrar (envia al cajero)</a>
                 <li><a href="#Reimprimir" onclick="adicion.currentMesa.reimprimir('<?= $html->url('/mesas/imprimirTicket')?>')" id="boton-reimprimir">Re Print Ticket</a></li>
                 <li><a href="#Borrar" onclick="adicion.borrarMesa('<?= $html->url('/mesas/delete')?>')" id="boton-borrar">Borrar</a></li>
         </ul>

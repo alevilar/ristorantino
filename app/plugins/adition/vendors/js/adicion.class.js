@@ -1,3 +1,4 @@
+
 var Adicion = Class.create();
 
 Adicion.prototype = {
@@ -183,6 +184,19 @@ Adicion.prototype = {
         $('mesa-ver-'+this.currentMesa.id).removeClassName('mesa-cerrada');
     },
 
+    enviarACajero: function(url){
+        // "0000-00-00 00:00:00"
+        url = url + '/' + this.currentMesa.id + '/0';
+        new Ajax.Request(url, {
+            onSuccess: function() {
+                this.__aplicarCierre();
+            }.bind(this),
+            onFailure: function(){
+                alert("No se pudo cerrar la mesa")
+            }
+        });
+    },
+
 
     borrarMesa: function(url){
         if (typeof(this.currentMesa) != 'undefined' && confirm('¿Eliminar la mesa n° '+this.currentMesa.numero+'?')) {
@@ -247,7 +261,11 @@ Adicion.prototype = {
 		
 		
 
-    // envia la mesa para ser cerrada
+
+    /**
+     * // envia la mesa para ser cerrada
+     * @param Boolean cubiertosObligatorios
+     **/
     cerrarCurrentMesa: function(cubiertosObligatorios ){
         var confirma = false;
         
