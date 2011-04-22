@@ -353,7 +353,7 @@ class ComandosImpresora extends ComandosFiscales
 
          */
         public function setEmbarkNumber( $numeroTicket, $nlinea = 1){
-            return "ô" . self::FS . $nlinea . self::FS . $numeroTicket;
+            return chr(147).self::FS.$nlinea.self::FS.$numeroTicket;
         }
 
 

@@ -305,16 +305,17 @@ class ComandosImpresora extends ComandosFiscales
 	 * 					'2' DNI
 	 * 					'3' Pasaporte
 	 * 					'4' Cedula de Identidad
+         *                                      ' ' Sin clasificar (espacio en blanco)
 	 * @param string $domicilio
 	 */
-	public function setCustomerData($nombre_cliente,$documento,$respo_iva, $tipo_documento, $domicilio = ''){
+	public function setCustomerData($nombre_cliente = " ",$documento = " ",$respo_iva = 'C', $tipo_documento = " ", $domicilio = '-'){
 		$nombre_cliente = substr($nombre_cliente,0,45);
 		$respo_iva = strtoupper($respo_iva);
 		$tipo_documento = strtoupper($tipo_documento);
 		
 		
 		if($respo_iva == 'I' || $respo_iva == 'E' || $respo_iva == 'A' || $respo_iva == 'C' || $respo_iva == 'T'){
-			if( $tipo_documento == 'C' || $tipo_documento == 'L' || $tipo_documento == '0' || $tipo_documento == '1' || $tipo_documento == '2' || $tipo_documento == '3' || $tipo_documento == '4')
+			if( $tipo_documento == 'C' || $tipo_documento == 'L' || $tipo_documento == '0' || $tipo_documento == '1' || $tipo_documento == '2' || $tipo_documento == '3' || $tipo_documento == '4' || $tipo_documento == ' ')
 			{	
 				$comando = "b".self::FS.$nombre_cliente.self::FS.$documento.self::FS.$respo_iva.self::FS.$tipo_documento;
 				if($domicilio){
@@ -346,7 +347,7 @@ class ComandosImpresora extends ComandosFiscales
 
          */
         public function setEmbarkNumber($numeroTicket, $nlinea = 1){
-            return "ô" . self::FS . $nlinea . self::FS . $numeroTicket;
+            return chr(147).self::FS . $nlinea . self::FS . $numeroTicket;
         }
 
 
@@ -374,12 +375,12 @@ class ComandosImpresora extends ComandosFiscales
             Ejemplo: Ç∟R∟T∟1211241
 
          */
-        public function openDNFH($tipoDocumento, $identificacion = '0'){
-            return  "Ç"             . self::FS .
-                    $tipoDocumento  . self::FS .
-                    "T"             . self::FS .
-                    $identificacion
-                    ;
+        public function openDNFH($tipoDocumento, $identificacion = 0){
+            $comando = chr(128). self::FS .$tipoDocumento  . self::FS ."T";
+            if (!empty ($identificacion)){
+                $comando .= self::FS .$identificacion;
+            }
+            return  $comando;
         }
 
 
@@ -391,7 +392,7 @@ class ComandosImpresora extends ComandosFiscales
 
          */
         public function closeDNFH($numCopias = 0){
-            return "ü" . self::FS . $numCopias;
+            return chr(129) . self::FS . $numCopias;
         }
 
 

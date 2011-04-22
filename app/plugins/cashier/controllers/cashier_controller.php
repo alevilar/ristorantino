@@ -42,11 +42,20 @@ class CashierController extends CashierAppController {
 
         function nota_credito(){
 		if (!empty($this->data)) {
+                    $cliente = array();
+                    if(!empty($this->data['Cliente']) && $this->data['Cajero']['tipo'] == 'A'){
+                        $cliente['razonsocial'] = $this->data['Cliente']['razonsocial'];
+                        $cliente['numerodoc'] = $this->data['Cliente']['numerodoc'];
+                        $cliente['respo_iva'] = $this->data['Cliente']['respo_iva'];
+                        $cliente['tipodoc'] = $this->data['Cliente']['tipodoc'];
+                    }
                     
                     $this->Printer->imprimirNotaDeCredito(
                             $this->data['Cajero']['numero_ticket'],
                             $this->data['Cajero']['importe'],
-                            $this->data['Cajero']['tipo']
+                            $this->data['Cajero']['tipo'],
+                            $this->data['Cajero']['descripcion'],
+                            $cliente
                             );
                     $this->Session->setFlash("Se imprimió una nota de crédito");
                 }

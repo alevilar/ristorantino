@@ -38,7 +38,6 @@
     contenedorCambiarMozosDeMesa.setContent('cambiar-mozo-de-mesa', true, true);
 
 
-
     function cambiarMozoDeMesa(nuevoMozoId){
         if (nuevoMozoId == null) {
             contenedorCambiarMozosDeMesa.showCenter();

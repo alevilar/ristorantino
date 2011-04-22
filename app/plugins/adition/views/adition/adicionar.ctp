@@ -157,14 +157,14 @@ echo $this->renderElement('adicion/cambiar_mozo_de_mesa');
 
     <div id="mesa-acciones-2" class="menu-vertical">
         <div id="mesa-acciones-siempreactivas">
-            <ul>
                 <li><a href="#vistaPreliminarTicket" onclick="adicion.ticketView('<?= $html->url('/mesas/ticket_view')?>')" id="boton-vistasimple">Vista Simple</a></li>
                 <li><a href="#CambiarMozo"    id="boton-cambiar-mozo" onclick="cambiarMozoDeMesa()">Cambiar de Mozo</a></li>
+                <li><a href="#CambiarNumeroMesa"    id="boton-cambiar-nromesa" onclick="adicion.cambiarNumeroMesa('<?php echo $html->url('/mesas/ajax_edit')?>')">Cambiar N° Mesa</a></li>
             </ul>
         </div>
         <ul>
                 <li><a href="#cancelarCierreDeMesa" onclick="adicion.reabrirMesa('<?= $html->url('/mesas/ajax_edit')?>')" id="boton-cancelar-cierre">Re Abrir Mesa</a></li>
-                <a href="#cerrarMesa" onclick="adicion.enviarACajero('<?= $html->url('/mesas/cerrarMesa')?>')">Cerrar (envia al cajero)</a>
+                <a href="#cerrarMesa" onclick="adicion.enviarACajero('<?= $html->url('/mesas/cerrarMesa')?>')">Cerrado Veloz</a>
                 <li><a href="#Reimprimir" onclick="adicion.currentMesa.reimprimir('<?= $html->url('/mesas/imprimirTicket')?>')" id="boton-reimprimir">Re Print Ticket</a></li>
                 <li><a href="#Borrar" onclick="adicion.borrarMesa('<?= $html->url('/mesas/delete')?>')" id="boton-borrar">Borrar</a></li>
         </ul>

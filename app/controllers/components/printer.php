@@ -751,21 +751,21 @@ class PrinterComponent extends Object {
 
 
         /**
-         *
          * @param integer $numeroTicket numero de tiquet factura original
          * @param char $tipo A o B segun el tipo de la nota de credito a imprimir
          */
-        function imprimirNotaDeCredito($numeroTicket, $importe, $tipo = 'B', $cliente = array()){
+        function imprimirNotaDeCredito($numeroTicket, $importe, $tipo = 'B', $descrip, $cliente = array()){
             $tipoId = $tipo == 'B' ? 'S' : 'R';
-            if (!empty($cliente)) {
+            if (!empty($cliente) && $tipo == 'A') {
                 $this->vcomandos[] = $this->generadorComando->setCustomerData($cliente['razonsocial'], $cliente['numerodoc'], $cliente['respo_iva'], $cliente['tipodoc']);
+            } else {
+                //condumidor Final
+                $this->vcomandos[] = $this->generadorComando->setCustomerData();
             }
             $this->vcomandos[] = $this->generadorComando->setEmbarkNumber($numeroTicket);
             $this->vcomandos[] = $this->generadorComando->openDNFH($tipoId);
-            $this->vcomandos[] = $this->generadorComando->printLineItem('PRODUCTO MENU', 1, $importe);
+            $this->vcomandos[] = $this->generadorComando->printLineItem($descrip, 1, $importe);
             $this->vcomandos[] = $this->generadorComando->closeDNFH();
-            debug($this->vcomandos);
-
             $this->printHasarFiscal('nota_credito');
         }
 

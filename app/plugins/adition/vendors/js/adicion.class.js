@@ -317,6 +317,28 @@ Adicion.prototype = {
                         evalScripts:true,
                         requestHeaders:['X-Update', 'mesa-scroll']}
                 );
+    },
+
+
+
+    cambiarNumeroMesa: function(urlEdit){
+        var numero = prompt('Nuevo Número de Mesa',this.currentMesa.numero);
+        var mesaId = this.currentMesa.id;
+        new Ajax.Request(urlEdit,
+        {
+            parameters: {
+                'data[Mesa][id]': mesaId,
+                'data[Mesa][numero]': numero
+            },
+            method: 'post',
+            onSuccess: function(){
+                parent.location.reload();
+            },
+            onFailure: function(){
+                alert("Se ha perdido conexion con el servidor. Reintente.");
+                contenedorCambiarMozosDeMesa.hide();
+            }
+        });
     }
 		
 };
