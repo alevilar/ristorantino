@@ -418,14 +418,14 @@ class PrinterComponent extends Object {
 	 * @param array $productos
 	 * @return void
 	 */
-	function __setProductosYCerrar($productos, $porcentaje_descuento = 0){
+	function __setProductosYCerrar($productos, $importe_descuento = 0){
 		foreach ($productos as $p):
 		$this->vcomandos[] = $this->generadorComando->printLineItem($p['nombre'],$p['cantidad'],$p['precio']);
 		//$this->vcomandos[] = "B".FS.$p['nombre'].FS.$p['cantidad'].FS.$p['precio'].FS."21.00".FS."M".FS."0.11".FS."1".FS."T";
 		endforeach;
 
-                if ($porcentaje_descuento > 0) {
-                    $this->vcomandos[] = $this->generadorComando->generalDiscount($porcentaje_descuento);
+                if ($importe_descuento > 0) {
+                    $this->vcomandos[] = $this->generadorComando->generalDiscount($importe_descuento);
                 }
 
 		$this->vcomandos[] = $this->generadorComando->closeFiscalReceipt();
@@ -442,7 +442,7 @@ class PrinterComponent extends Object {
 	 * @param number $mesa
 	 * @return boolean true si pudo enviar a imprimiir, false en caso contrario
 	 */
-	function imprimirTicket($productos, $mozo, $mesa, $porcentaje_descuento = 0)
+	function imprimirTicket($productos, $mozo, $mesa, $importe_descuento = 0)
 	{
 		//setteo el pie de pagina con el numero de mozo y mesa
 		$this->__setMozoMesa($mozo, $mesa);
@@ -451,7 +451,7 @@ class PrinterComponent extends Object {
 		$this->vcomandos[] = $this->generadorComando->openFiscalReceipt("T");
 
 		//inserto los productos en vcomandas y cierro la mesa
-		$this-> __setProductosYCerrar($productos, $porcentaje_descuento);
+		$this-> __setProductosYCerrar($productos, $importe_descuento);
 
 		return $this->printHasarFiscal("ticketMesa$mesa");
 	}
@@ -497,7 +497,7 @@ class PrinterComponent extends Object {
 	 * @param number $mesa
 	 * @return boolean true si pudo enviar a imprimir o false sino pudo
 	 */
-	function imprimirTicketFacturaA($productos, $cliente, $mozo, $mesa, $porcentaje_descuento = 0)
+	function imprimirTicketFacturaA($productos, $cliente, $mozo, $mesa, $importe_descuento = 0)
 	{
 		//setteo el pie de pagina con el numero de mozo y mesa
 		$this->__setMozoMesa($mozo, $mesa);
@@ -525,7 +525,7 @@ class PrinterComponent extends Object {
 		$this->vcomandos[] = $this->generadorComando->openFiscalReceipt("A");
 
 		//inserto los productos en vcomandas y cierro la mesa
-		$this-> __setProductosYCerrar($productos, $porcentaje_descuento);
+		$this-> __setProductosYCerrar($productos, $importe_descuento);
 		
 		if($this->printHasarFiscal("ticketMesa$mesa")){
 			$this->log("Se imprimió una factura A correctamente", LOG_INFO);	
@@ -579,7 +579,7 @@ class PrinterComponent extends Object {
 				$prod_cant = $detalle['cantidad'];
 				$prod_name = $detalle['nombre'];
 				$prod_precio = $detalle['precio'];
-				$prod_precio_total = round($prod_cant*$prod_precio*100)/100; // esto se hace para que siempre me devualva con 2 ddecimales
+				$prod_precio_total = cqs_round($prod_cant*$prod_precio*100)/100; // esto se hace para que siempre me devualva con 2 ddecimales
 				$total += $prod_precio_total;
 				$prod_a_imprimir[$j] =	"$prod_cant x $prod_precio: $prod_name";
 				if(strlen($prod_a_imprimir[$j])>30){
@@ -658,7 +658,7 @@ class PrinterComponent extends Object {
 						
 
 					$descuento = $porcentaje_descuento/100;
-					$total_c_descuento = round($total - ($total*$descuento));
+					$total_c_descuento = cqs_round($total - ($total*$descuento));
 						
 					if($porcentaje_descuento){
 						$tail = " -     SUBTOTAL                $$total";

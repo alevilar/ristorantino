@@ -110,13 +110,13 @@ class ComandosImpresora extends ComandosFiscales
                    general”-;
             b. Restando
 
-         * @param float $porcentaje_descuento
+         * @param float $importe_descuento
          * @return string comando
          */
-        public function generalDiscount($porcentaje_descuento = 0){
+        public function generalDiscount($importe_descuento = 0){
             $comando =  "T".self::FS.
                         'Descuento'.self::FS.
-                        $porcentaje_descuento.self::FS.
+                        $importe_descuento.self::FS.
                         'm'.self::FS.
                         '0'.self::FS.
                         'T';

@@ -18,6 +18,14 @@ class Mesa extends AppModel {
                          'message'=> 'El número ya existe.'
             )	
 	));
+
+
+        /*
+         * Valor total de una mesa Objeto en particular.
+         * Es el array que devuelve la funcion calcular_total()
+         * @var $total float
+         */
+        var $total = array();
 	
 	
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
@@ -91,6 +99,7 @@ class Mesa extends AppModel {
                 if ($cant == 0) return 0;
 				
 		$this->saveField('total', $this->calcular_total());
+                $this->saveField('subtotal', $this->calcular_subtotal());
                 
 		$this->saveField('time_cerro', date( "Y-m-d H:i:s",strtotime('now')));
 
@@ -103,6 +112,13 @@ class Mesa extends AppModel {
                 return 1;
 		
 	}
+
+
+        function calcular_subtotal($id = null){
+            if (!empty($id)) $this->id = $id;
+            $this->calcular_total();
+            return $this->total['Mesa']['subtotal'];
+        }
 	
 
 	
@@ -112,10 +128,14 @@ class Mesa extends AppModel {
 	 */
 	function calcular_total($id = null){
             if (!empty($id)) $this->id = $id;
+
+            if (!empty($this->total)) {
+                return $this->total['Mesa']['total'];
+            }
             
             if ($this->cantidadDeProductos() == 0) return 0;
 		$total =  $this->query("
-				select sumadas.mesa_id as mesa_id,sum(total) as total, dd.descuento,  sum(total)*(1-dd.descuento/100) as total_con_descuento 
+				select sumadas.mesa_id as mesa_id,sum(total) as subtotal, dd.descuento,  sum(total)*(1-dd.descuento/100) as total
 from (
 	select c.mesa_id as mesa_id, sum(s.precio*(dc.cant-dc.cant_eliminada)) as total
 	from comandas c
@@ -151,13 +171,11 @@ LEFT JOIN
 										
 		");
 
-            if (!empty($total[0]['dd']['descuento'])) {
-		$total = round($total[0][0]['total_con_descuento']);
-            } else {
-                $total = round($total[0][0]['total_con_descuento'],2);
-            }
+            $this->total['Mesa']['subtotal'] = $total[0][0]['subtotal'];
+            $this->total['Mesa']['total'] = cqs_round($total[0][0]['total']);
+            $this->total['Mesa']['descuento'] = $total[0]['dd']['descuento'];
 
-            return $total ;
+            return $this->total['Mesa']['total'];
 	}
 	
 	
@@ -298,7 +316,28 @@ LEFT JOIN
 		
 	}
 	
-	
+
+        /**
+         *
+         * Esta funcion sirve para los casos en que no se quiere mostrar
+         * el detalle de los productos consumidos en el ticket.
+         * En ese caso sale impresa la leyenda "X MENU". La cantidad de menues
+         * (en este caso "X") viene dado por el parametro $cantMenues.
+         * El total de la mesa hay que pasarlo para luego dividirlo por la cantMenues
+         *
+         * @param integer $cantMenues cantidad, por ejemplo
+         * @param float $total
+         */
+        function getProductosSinDescripcion($cantMenues, $descripcion = 'Menu'){
+            if ($descripcion == 'Menu' && ($descAux = Configure::read('Mesa.descripcionSinProductos'))){
+                $descripcion = $descAux;
+            }
+            $prod[0]['nombre'] = $descripcion;
+            $total = $this->calcular_subtotal();
+            $prod[0]['precio'] = $total/$cantMenues;
+            $prod[0]['cantidad'] = $cantMenues;
+            return $prod;
+        }
 	
 	function dameProductosParaTicket($id = 0){
 		if($id != 0) $this->id = $id;
@@ -336,7 +375,7 @@ LEFT JOIN
                 foreach ($items as &$i) {
                     $vItems[$cont]['nombre'] = $i['DetalleComanda']['name'];
                     $vItems[$cont]['cantidad'] = $i[0]['cant'];
-                    $vItems[$cont]['precio'] = round($i['DetalleComanda']['precio'], 2);
+                    $vItems[$cont]['precio'] = cqs_round($i['DetalleComanda']['precio'],2);
                     $cont++;
                 }		
 		

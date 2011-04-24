@@ -1,0 +1,276 @@
+---
+id: "Control.FileChooser"
+parent_id: "Control"
+type: class
+line_number: 27
+description: |
+  Displays a file chooser when a user clicks on the file select icon in
+  the input control.  Requires a user-provided function to provide directory
+  queries (static or via AJAX).
+  
+  Control ID: `filechooser`
+  
+  Features:
+   - Image preview
+   - Integrated file upload
+   - Create and delete directories and files
+   - Customizable by CSS
+  
+  Example: <a href="http://jongsma.org/software/protoplasm/control/filechooser">File
+  Chooser demo</a>
+
+file: ./src/filechooser/filechooser.js
+
+---
+id: "new Control.FileChooser"
+parent_id: "Control.FileChooser"
+type: constructor
+line_number: 49
+description: |
+  Create a new file chooser from the given `<input type="text">`
+  element.
+  
+  For details on the fileHandler specifications, see
+  the <a href="http://jongsma.org/software/protoplasm/control/filechooser#filehandler">online
+  documentation</a>.
+  
+  Additional options:
+  
+  * icon: The icon to display in the input box
+  * fileImage: The file icon to use in the chooser
+  * directoryImage: The directory icon to use in the chooser
+  * parentImage: The parent directory icon to use in the chooser
+
+signatures:
+ -
+  signature: "new Control.FileChooser(element, fileHandler[, options])"
+arguments:
+ -
+  name: element
+  types: [String, Element]
+  description: >
+    A `<input type="text">` element (or DOM ID).
+
+ -
+  name: fileHandler
+  types: [Function]
+  description: >
+    The file lister callback.
+
+ -
+  name: options
+  types: [Hash]
+  description: >
+    Additional options for the control.
+
+file: ./src/filechooser/filechooser.js
+
+---
+id: "Control.FileChooser#element"
+parent_id: "Control.FileChooser"
+type: instance property
+line_number: 56
+description: |
+  The underlying `<input>` element passed to the constructor.
+
+signatures:
+ -
+  signature: "Control.FileChooser#element"
+  return_value: "Element"
+file: ./src/filechooser/filechooser.js
+
+---
+id: "Control.FileChooser#panel"
+parent_id: "Control.FileChooser"
+type: instance property
+line_number: 83
+description: |
+  The panel dialog box linked to this control.  This may be
+  null if the control is not open.
+
+signatures:
+ -
+  signature: "Control.FileChooser#panel"
+  return_value: "Control.FileChooser.Panel"
+file: ./src/filechooser/filechooser.js
+
+---
+id: "Control.FileChooser#destroy"
+parent_id: "Control.FileChooser"
+type: instance method
+line_number: 113
+description: |
+  Destroy this control and return the underlying element to
+  its original behavior.
+
+signatures:
+ -
+  signature: "Control.FileChooser#destroy()"
+  return_value: "null"
+file: ./src/filechooser/filechooser.js
+
+---
+id: "Control.FileChooser#toggle"
+parent_id: "Control.FileChooser"
+type: instance method
+line_number: 138
+description: |
+  Toggle the visibility of the file chooser panel for this control.
+
+signatures:
+ -
+  signature: "Control.FileChooser#toggle()"
+  return_value: "null"
+file: ./src/filechooser/filechooser.js
+
+---
+id: "Control.FileChooser#show"
+parent_id: "Control.FileChooser"
+type: instance method
+line_number: 148
+description: |
+  Show the file chooser panel for this control.
+
+signatures:
+ -
+  signature: "Control.FileChooser#show()"
+  return_value: "null"
+file: ./src/filechooser/filechooser.js
+
+---
+id: "Control.FileChooser#hide"
+parent_id: "Control.FileChooser"
+type: instance method
+line_number: 179
+description: |
+  Hide the file chooser panel for this control.
+
+signatures:
+ -
+  signature: "Control.FileChooser#hide()"
+  return_value: "null"
+file: ./src/filechooser/filechooser.js
+
+---
+id: "Control.FileChooser.Panel"
+parent_id: "Control.FileChooser"
+type: class
+line_number: 227
+description: |
+  The dialog panel that is displayed when the file chooser is opened.
+
+file: ./src/filechooser/filechooser.js
+
+---
+id: "new Control.FileChooser.Panel"
+parent_id: "Control.FileChooser.Panel"
+type: constructor
+line_number: 252
+description: |
+  Create a new file chooser panel.
+  
+  For details on the fileHandler specifications, see
+  the <a href="http://jongsma.org/software/protoplasm/control/filechooser#filehandler">online
+  documentation</a>.
+  
+  Additional options:
+  
+  * icon: The icon to display in the input box
+  * className: The class name for the main panel container
+  * width: The panel width
+  * width: The panel height
+  * fileImage: The file icon to use in the chooser
+  * directoryImage: The directory icon to use in the chooser
+  * parentImage: The parent directory icon to use in the chooser
+  * uploadHandler: The upload handler function, called when "Upload"
+    is clicked
+
+signatures:
+ -
+  signature: "new Control.FileChooser.Panel([options])"
+arguments:
+ -
+  name: fileHandler
+  types: [Function]
+  description: >
+    The file lister callback.
+
+ -
+  name: options
+  types: [Hash]
+  description: >
+    Additional options for the control.
+
+file: ./src/filechooser/filechooser.js
+
+---
+id: "Control.FileChooser.Panel#element"
+parent_id: "Control.FileChooser.Panel"
+type: instance property
+line_number: 272
+description: |
+  The root Element of this dialog panel.
+
+signatures:
+ -
+  signature: "Control.FileChooser.Panel#element"
+  return_value: "Element"
+file: ./src/filechooser/filechooser.js
+
+---
+id: "Control.FileChooser.Panel#select"
+parent_id: "Control.FileChooser.Panel"
+type: instance method
+line_number: 392
+description: |
+  Navigate to the directory containing the given file and select
+  it.
+
+signatures:
+ -
+  signature: "Control.FileChooser.Panel#select(file)"
+  return_value: "null"
+arguments:
+ -
+  name: file
+  types: [String]
+  description: >
+    The file path to select (relative to your file manager root)
+
+file: ./src/filechooser/filechooser.js
+
+---
+id: "Control.FileChooser.Panel#selectByUrl"
+parent_id: "Control.FileChooser.Panel"
+type: instance method
+line_number: 408
+description: |
+  Navigate to the directory containing the file represented by the
+  given url and select it.
+
+signatures:
+ -
+  signature: "Control.FileChooser.Panel#selectByUrl(url)"
+  return_value: "null"
+arguments:
+ -
+  name: file
+  types: [String]
+  description: >
+    The file URL to select
+
+file: ./src/filechooser/filechooser.js
+
+---
+id: "Control.FileChooser.Panel#refresh"
+parent_id: "Control.FileChooser.Panel"
+type: instance method
+line_number: 429
+description: |
+  Refresh the current directory.
+
+signatures:
+ -
+  signature: "Control.FileChooser.Panel#refresh()"
+  return_value: "null"
+file: ./src/filechooser/filechooser.js

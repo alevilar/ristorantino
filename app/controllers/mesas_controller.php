@@ -214,7 +214,15 @@ class MesasController extends AppController {
     private function __imprimir($mesa_id) {
         $this->Mesa->id = $mesa_id;
 
-        $mesa = $this->Mesa->find('first',array('contain'=>array('Mozo','Cliente'=>array('Descuento'))));
+        $mesa = $this->Mesa->find('first',array(
+            'contain'=>array(
+                'Mozo',
+                'Cliente'=>array(
+                    'Descuento'
+                    )
+                )
+            )
+                );
 
         $mesa_nro = $this->Mesa->getNumero();        
         $mozo_nro = $this->Mesa->getMozoNumero();
@@ -223,13 +231,7 @@ class MesasController extends AppController {
         $total = 0;
         $prod = array();
         if($mesa['Mesa']['menu']>0) {
-            unset($prod);
-            $prod[0]['nombre'] = 'Menu';
-            $total = $this->Mesa->calcular_total();
-            $total_x_menu = $total/$mesa['Mesa']['menu'];
-            $total_x_menu = round($total_x_menu*100) / 100;
-            $prod[0]['precio'] = $total_x_menu;
-            $prod[0]['cantidad'] = $mesa['Mesa']['menu'];
+            $prod = $this->Mesa->getProductosSinDescripcion($mesa['Mesa']['menu']);
         } else {
             $prod = $this->Mesa->dameProductosParaTicket();
         }        
@@ -238,12 +240,13 @@ class MesasController extends AppController {
         $imprimio_ticket = false;
         $tipoticket = 'Ticket Factura "B"';
         $porcentaje_descuento = 0;
-
+        $importe_descuento = 0;
 
         if(!empty($mesa['Cliente']['Descuento']['porcentaje'])) {
             $porcentaje_descuento = $mesa['Cliente']['Descuento']['porcentaje'];
+            $importe_descuento = cqs_round(($porcentaje_descuento/100)*$mesa['Mesa']['total']);
         }
-
+debug($importe_descuento);
         $imprimio = false;
         if (Configure::read('Mesa.imprimePrimeroRemito') && !$this->Mesa->estaCerrada()){
                 $print_success = $this->Printer->imprimirTicketConComandera($prod, $mozo_nro, $mesa_nro,$porcentaje_descuento);
@@ -254,7 +257,7 @@ class MesasController extends AppController {
         }
         
         if(empty($mesa['Cliente']) && !$imprimio):
-            $print_success = $this->Printer->imprimirTicket($prod, $mozo_nro, $mesa_nro, $porcentaje_descuento);
+            $print_success = $this->Printer->imprimirTicket($prod, $mozo_nro, $mesa_nro, $importe_descuento);
             $imprimio_ticket = true;
 
         elseif(($mesa['Cliente']['imprime_ticket'] > 0 || $mesa['Cliente']['imprime_ticket'] == '') && !$imprimio):
@@ -266,7 +269,7 @@ class MesasController extends AppController {
                     $tipodoc = $this->Mesa->Cliente->getTipoDocumento($mesa['Cliente']['id']);
                     $mesa['Cliente']['tipodocumento'] = $tipodoc['TipoDocumento']['codigo_fiscal'];
 
-                    $print_success = $this->Printer->imprimirTicketFacturaA($prod, $mesa['Cliente'], $mozo_nro, $mesa_nro, $porcentaje_descuento);
+                    $print_success = $this->Printer->imprimirTicketFacturaA($prod, $mesa['Cliente'], $mozo_nro, $mesa_nro, $importe_descuento);
                     $tipoticket = 'Ticket Factura "A"';
 
                     $this->log("se imprimio una factura A para la mesa $mesa_nro, mozo $mozo_nro",LOG_INFO);
@@ -274,7 +277,7 @@ class MesasController extends AppController {
                     break;
                 case '':
                 case 'B':
-                    $print_success = $this->Printer->imprimirTicket($prod, $mozo_nro, $mesa_nro, $porcentaje_descuento);
+                    $print_success = $this->Printer->imprimirTicket($prod, $mozo_nro, $mesa_nro, $importe_descuento);
                     $tipoticket = 'Ticket Factura "B"';
                     $this->log("se imprimio una factura B para la mesa $mesa_nro, mozo $mozo_nro",LOG_INFO);
                     $imprimio_ticket = true;
@@ -466,18 +469,14 @@ class MesasController extends AppController {
             ));
         }
 
-        //$this->Mesa->id = $id;
-        //$items = $this->Mesa->listado_de_productos();
         $items = $this->data['Comanda'];
-
         $mesa = $this->data;
-        $this->set(compact('mesa', 'items'));
-
-        $this->set('subtotal',$this->Mesa->calcular_total());
-
-
         $mozos = $this->Mesa->Mozo->find('list',array('fields'=>array('id','numero')));
-        $this->set(compact('mozos'));
+        
+        $this->id = $id;
+        $this->set('subtotal',$this->Mesa->calcular_subtotal());
+        $this->set('total',$this->Mesa->calcular_total());
+        $this->set(compact('mozos','mesa', 'items'));
     }
 
     function delete($id = null) {

@@ -58,7 +58,7 @@ echo "Abrió a las ".date('H:i', strtotime($this->data['Mesa']['created']));
 <ul>
 
 <?php
-$total = 0; 
+$totalSumado = 0;
 foreach($items as $comanda):
 	 echo "<li>ID: ";
 	 echo "#".$comanda['id']."</li>";
@@ -88,12 +88,12 @@ foreach($items as $comanda):
 	 			 	}
 	 			 	$primero = false;
 	 			 	echo $sabor['Sabor']['name']." [ $".$sabor['Sabor']['precio']."]";
-	 			 	$total += ($detalle['cant']-$detalle['cant_eliminada'])*$sabor['Sabor']['precio'];
+	 			 	$totalSumado += ($detalle['cant']-$detalle['cant_eliminada'])*$sabor['Sabor']['precio'];
 	 			 }
 	 			 echo ")";
 	 	}
 	 	
-		$total += ($detalle['cant']-$detalle['cant_eliminada'])*$detalle['Producto']['precio'];
+		$totalSumado += ($detalle['cant']-$detalle['cant_eliminada'])*$detalle['Producto']['precio'];
 	 	}?>
 	 </ul>
 	 
@@ -112,8 +112,18 @@ endforeach;
 
 <?php 
 
-echo "<h3>SUBTOTAL = $$total</h3>";
-echo "<h4>Total almacenado en Base de Datos: $$subtotal<h4> (este valor debe conicidir con el de arriba)";
+echo "<p>La suma de los productos da: $$totalSumado</p>";
+
+echo "<p><br><br>Segun funciones especiales:";
+echo "<h3>SUBTOTAL = $$subtotal</h3>";
+$dto = empty($mesa['Cliente']['Descuento']['porcentaje'])?0:$mesa['Cliente']['Descuento']['porcentaje'];
+echo "<h4>TOTAL = $$total (Dto: $dto%)</h4>";
+echo "</p>";
+
+echo "<p><br><br>Segun base de datos: <br>";
+echo "<h5>Subtotal almacenado en Base de Datos: $".$mesa['Mesa']['subtotal']."<h5>";
+echo "<h5>Total almacenado en Base de Datos: $".$mesa['Mesa']['total']."<h5>";
+echo "</p>";
 ?>
 
 
