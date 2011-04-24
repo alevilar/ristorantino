@@ -58,4 +58,16 @@ function comandosDeReinicializacionServidorImpresion($devName = null) {
 function jsDate($date){
     return date( 'Y-m-d H:i:s', strtotime($date));
 }
+
+
+/**
+ * Mejora segun politicas del negocio para la funcion de redondeo
+ *
+ * @param double $number
+ * @param integer $precision
+ * @param const $extra flags de la funcion round() de PHP ver: http://php.net/manual/es/function.round.php
+ */
+function cqs_round($number, $precision = 0, $extra = PHP_ROUND_HALF_UP){
+    return round($number, $precision, $extra);
+}
 ?>

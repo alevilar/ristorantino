@@ -97,19 +97,21 @@ class Mesa extends AppModel {
                     'Mesa.id' => $this->id,
                 )));
                 if ($cant == 0) return 0;
-				
-		$this->saveField('total', $this->calcular_total());
-                $this->saveField('subtotal', $this->calcular_subtotal());
-                
-		$this->saveField('time_cerro', date( "Y-m-d H:i:s",strtotime('now')));
+
+                $mesaData['Mesa'] = array(
+                    'total'     => $this->calcular_total(),
+                    'subtotal'  => $this->calcular_subtotal(),
+                    'time_cerro'=> date( "Y-m-d H:i:s",strtotime('now')),
+                );
 
                 // si no estoy usando cajero, entonces poner como que ya esta cerrada
                 if (!Configure::read('Adicion.usarCajero'))  {
-                    $this->saveField('time_cobro', date( "Y-m-d H:i:s",strtotime('now')));
+                    $mesaData['Mesa']['time_cobro'] = date( "Y-m-d H:i:s",strtotime('now'));
                 } else {
-                    $this->saveField('time_cobro', DATETIME_NULL);
+                    $mesaData['Mesa']['time_cobro'] = DATETIME_NULL;
                 }
-                return 1;
+
+                return $this->save($mesaData, false);
 		
 	}
 

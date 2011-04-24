@@ -13,15 +13,11 @@
 <?php echo $form->end('Guardar Cambios');?>
 </div>
 
-
-
-
 <h2>Detalles de la Mesa</h2>
 
 <h3>Cliente</h3>
 <dl>
 <?php
-
 	echo "<dt>Tipo Factura</dt>";
 	if ($mesa['Cliente']['tipofactura'] == ''){
 		$tipofac = "B";
@@ -105,10 +101,6 @@ endforeach;
 ?>
 
 </ul>
-
-
-	 
-
 
 <?php 
 

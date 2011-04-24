@@ -62,10 +62,23 @@ class PrinterComponent extends Object {
 	var $destFolder = '';
 	var $tempFolder = '';
 
+        /* @var $Controller AppController */
+        var $Controller;
 
 
+        /* @var $Mesa array Mesa->find('first') */
+        var $Mesa = array();
 
-        function initialize(){
+        /* variables de estado de impresion */
+        var $print_success = true;
+        var $imprimio_ticket = false;
+        var $tipoticket = 'Ticket Factura "B"';
+        var $porcentaje_descuento = 0;
+        var $importe_descuento = 0;
+
+
+        function initialize(&$controller, $settings){
+            $this->Controller =& $controller;
             $modeloImpresoraFiscal = Configure::read('ImpresoraFiscal.modelo');
 
             if (!App::import('Vendor', 'comandos_fiscales'.DS.'comandos_fiscales_'.$modeloImpresoraFiscal)){
@@ -75,6 +88,8 @@ class PrinterComponent extends Object {
             }
 
 
+
+
             $this->generadorComando = new ComandosImpresora();
 
             // ESTAS CARPTAS SON LLAMADAS DESDE EL SPOOLER, para poder levantar el programita
@@ -82,6 +97,91 @@ class PrinterComponent extends Object {
             $this->destFolder = Configure::read('ImpresoraFiscal.tempDest');
             $this->tempFolder = Configure::read('ImpresoraFiscal.TempImpfiscal');
 
+        }
+
+
+        function doPrint($mesa_id){
+            $this->Controller->Mesa->id = $mesa_id;
+
+            $this->Mesa = $this->Controller->Mesa->find('first',array(
+                'contain'=>array(
+                    'Mozo',
+                    'Cliente'=>array(
+                        'Descuento'
+                        )
+                    )
+                )
+                    );
+            if(empty($this->Mesa['Cliente'])){
+                $this->Mesa['Cliente']['tipofactura'] = 'B';
+                $this->Mesa['Cliente']['imprime_ticket'] = '';
+            }
+
+            $mesa_nro = $this->Controller->Mesa->getNumero();
+            $mozo_nro = $this->Controller->Mesa->getMozoNumero();
+
+            $cont  = 0;
+            $total = 0;
+            $prod = array();
+            if($this->Mesa['Mesa']['menu']>0) {
+                $prod = $this->Controller->Mesa->getProductosSinDescripcion($this->Mesa['Mesa']['menu']);
+            } else {
+                $prod = $this->Controller->Mesa->dameProductosParaTicket();
+            }
+
+            if(!empty($this->Mesa['Cliente']['Descuento']['porcentaje'])) {
+                $this->porcentaje_descuento = $this->Mesa['Cliente']['Descuento']['porcentaje'];
+                $this->importe_descuento = cqs_round(($this->porcentaje_descuento/100)*$this->Mesa['Mesa']['total']);
+            }
+
+            $imprimio = false;
+            
+            //imprimir pre-ticket en caso de que este configurado asi
+            if (Configure::read('Mesa.imprimePrimeroRemito') && !$this->Controller->Mesa->estaCerrada()){
+                    $this->print_success = $this->imprimirTicketConComandera($prod, $mozo_nro, $mesa_nro,$this->porcentaje_descuento);
+                    $this->log("se imprimio un ticket no fiscal desde comandera como remito para la mesa $mesa_nro, mozo $mozo_nro",LOG_INFO);
+                    $this->tipoticket = 'Remito';
+                    $this->imprimio_ticket = true;
+                    $imprimio = true;
+            }
+
+            if(($this->Mesa['Cliente']['imprime_ticket'] > 0 || $this->Mesa['Cliente']['imprime_ticket'] == '') && !$imprimio):
+                switch($this->Mesa['Cliente']['tipofactura']):
+                    case 'A':
+                        $ivaresp = $this->Controller->Mesa->Cliente->getResponsabilidadIva($this->Mesa['Cliente']['id']);
+                        $this->Mesa['Cliente']['responsabilidad_iva'] = $ivaresp['IvaResponsabilidad']['codigo_fiscal'];
+
+                        $tipodoc = $this->Controller->Mesa->Cliente->getTipoDocumento($this->Mesa['Cliente']['id']);
+                        $this->Mesa['Cliente']['tipodocumento'] = $tipodoc['TipoDocumento']['codigo_fiscal'];
+
+                        $this->print_success = $this->imprimirTicketFacturaA($prod, $this->Mesa['Cliente'], $mozo_nro, $mesa_nro, $this->importe_descuento);
+                        $this->tipoticket = 'Ticket Factura "A"';
+
+                        $this->log("se imprimio una factura A para la mesa $mesa_nro, mozo $mozo_nro",LOG_INFO);
+                        $this->imprimio_ticket = true;
+                        break;
+                    case '':
+                    case 'B':
+                        $this->print_success = $this->imprimirTicket($prod, $mozo_nro, $mesa_nro, $this->importe_descuento);
+                        $this->tipoticket = 'Ticket Factura "B"';
+                        $this->log("se imprimio una factura B para la mesa $mesa_nro, mozo $mozo_nro",LOG_INFO);
+                        $this->imprimio_ticket = true;
+                        break;
+                    default:
+                        $this->print_success = $this->imprimirTicketConComandera($prod, $mozo_nro, $mesa_nro,$this->porcentaje_descuento);
+                        $this->log("se imprimio un ticket no fiscal desde comandera como remito para la mesa $mesa_nro, mozo $mozo_nro",LOG_INFO);
+                        $this->tipoticket = 'Ticket Descuento';
+                        $this->imprimio_ticket = true;
+                    endswitch;
+            endif;
+
+            $vreturn['print_success'] = $this->print_success;
+            $vreturn['imprimio_ticket'] = $this->imprimio_ticket;
+            $vreturn['tipoticket'] = $this->tipoticket;
+            $vreturn['porcentaje_descuento'] = $this->porcentaje_descuento;
+            $vreturn['Mesa'] = $this->Mesa = $this->Mesa;
+
+            return $vreturn;
         }
 
 

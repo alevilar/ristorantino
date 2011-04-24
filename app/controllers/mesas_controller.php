@@ -5,6 +5,9 @@ class MesasController extends AppController {
     var $helpers = array('Html', 'Form');
     var $components = array('Printer','RequestHandler');
 
+    /* @var $Printer PrinterComponent */
+    var $Printer;
+
 
 
     function index() {
@@ -212,136 +215,18 @@ class MesasController extends AppController {
     
 
     private function __imprimir($mesa_id) {
-        $this->Mesa->id = $mesa_id;
-
-        $mesa = $this->Mesa->find('first',array(
-            'contain'=>array(
-                'Mozo',
-                'Cliente'=>array(
-                    'Descuento'
-                    )
-                )
-            )
-                );
-
-        $mesa_nro = $this->Mesa->getNumero();        
-        $mozo_nro = $this->Mesa->getMozoNumero();
-
-        $cont  = 0;
-        $total = 0;
-        $prod = array();
-        if($mesa['Mesa']['menu']>0) {
-            $prod = $this->Mesa->getProductosSinDescripcion($mesa['Mesa']['menu']);
-        } else {
-            $prod = $this->Mesa->dameProductosParaTicket();
-        }        
-
-        $print_success = true;
-        $imprimio_ticket = false;
-        $tipoticket = 'Ticket Factura "B"';
-        $porcentaje_descuento = 0;
-        $importe_descuento = 0;
-
-        if(!empty($mesa['Cliente']['Descuento']['porcentaje'])) {
-            $porcentaje_descuento = $mesa['Cliente']['Descuento']['porcentaje'];
-            $importe_descuento = cqs_round(($porcentaje_descuento/100)*$mesa['Mesa']['total']);
-        }
-debug($importe_descuento);
-        $imprimio = false;
-        if (Configure::read('Mesa.imprimePrimeroRemito') && !$this->Mesa->estaCerrada()){
-                $print_success = $this->Printer->imprimirTicketConComandera($prod, $mozo_nro, $mesa_nro,$porcentaje_descuento);
-                $this->log("se imprimio un ticket no fiscal desde comandera como remito para la mesa $mesa_nro, mozo $mozo_nro",LOG_INFO);
-                $tipoticket = 'Remito';
-                $imprimio_ticket = true;
-                $imprimio = true;
-        }
-        
-        if(empty($mesa['Cliente']) && !$imprimio):
-            $print_success = $this->Printer->imprimirTicket($prod, $mozo_nro, $mesa_nro, $importe_descuento);
-            $imprimio_ticket = true;
-
-        elseif(($mesa['Cliente']['imprime_ticket'] > 0 || $mesa['Cliente']['imprime_ticket'] == '') && !$imprimio):
-            switch($mesa['Cliente']['tipofactura']):
-                case 'A':
-                    $ivaresp = $this->Mesa->Cliente->getResponsabilidadIva($mesa['Cliente']['id']);
-                    $mesa['Cliente']['responsabilidad_iva'] = $ivaresp['IvaResponsabilidad']['codigo_fiscal'];
-
-                    $tipodoc = $this->Mesa->Cliente->getTipoDocumento($mesa['Cliente']['id']);
-                    $mesa['Cliente']['tipodocumento'] = $tipodoc['TipoDocumento']['codigo_fiscal'];
-
-                    $print_success = $this->Printer->imprimirTicketFacturaA($prod, $mesa['Cliente'], $mozo_nro, $mesa_nro, $importe_descuento);
-                    $tipoticket = 'Ticket Factura "A"';
-
-                    $this->log("se imprimio una factura A para la mesa $mesa_nro, mozo $mozo_nro",LOG_INFO);
-                    $imprimio_ticket = true;
-                    break;
-                case '':
-                case 'B':
-                    $print_success = $this->Printer->imprimirTicket($prod, $mozo_nro, $mesa_nro, $importe_descuento);
-                    $tipoticket = 'Ticket Factura "B"';
-                    $this->log("se imprimio una factura B para la mesa $mesa_nro, mozo $mozo_nro",LOG_INFO);
-                    $imprimio_ticket = true;
-                    break;
-                default:
-                    $print_success = $this->Printer->imprimirTicketConComandera($prod, $mozo_nro, $mesa_nro,$porcentaje_descuento);
-                    $this->log("se imprimio un ticket no fiscal desde comandera como remito para la mesa $mesa_nro, mozo $mozo_nro",LOG_INFO);
-                    $tipoticket = 'Ticket Descuento';
-                    $imprimio_ticket = true;
-                endswitch;
-        endif;
-
-        $vreturn['print_success'] = false;
-        $vreturn['imprimio_ticket'] = false;
-        $vreturn['tipoticket'] = $tipoticket;
-        $vreturn['porcentaje_descuento'] = $porcentaje_descuento;
-        $vreturn['Mesa'] = $mesa;
-
-        if($print_success):
-            $vreturn['print_success'] = true;
-            if($imprimio_ticket):
-                $vreturn['imprimio_ticket'] = true;
-            endif;
-        endif;
-
-        return $vreturn;
+        $this->Printer->doPrint($mesa_id);
     }
 
 
     function cerrarMesa($mesa_id, $imprimir_ticket = true) {
-
         $this->Mesa->id = $mesa_id;
-        $imprimio_ticket = $imprimir_ticket;
-        $print_success = false;
+
         if ($imprimir_ticket){
-            $vreturn = $this->__imprimir($mesa_id);
-
-            $print_success   = $vreturn['print_success'];
-            $imprimio_ticket = $vreturn['imprimio_ticket'];
-            $tipoticket      = $vreturn['tipoticket'];
-            $mesa = $vreturn['Mesa'];
-            $mesa_nro = $mesa['Mesa']['numero'];
-            $mozo_nro = $mesa['Mozo']['numero'];
-        }
-
-        if(empty($mesa)){
-            $mesa = $this->Mesa->read();
-            $mesa_nro = $mesa['Mesa']['numero'];
-            $mozo_nro = $mesa['Mozo']['numero'];
+            $this->Printer->doPrint($mesa_id);
         }
 
         $this->Mesa->cerrar_mesa();
-        
-        if($print_success):
-            if($imprimio_ticket):
-                $this->log("Se envió a imprimir el ticket de la mesa $mozo_nro, mozo $mesa_nro. Mesa ID: $mesa_id",LOG_INFO);
-                $this->Session->setFlash("Se envió a imprimir el $tipoticket Mesa $mesa_nro");
-            else:
-                $this->Session->setFlash("Se cerró la Mesa $mesa_nro sin imprimir ticket");
-            endif;
-        else:
-            $this->log("No se pudo imprimir el ticket de la mesa $mesa_nro, mozo $mozo_nro. Mesa ID: $mesa_id",LOG_ERROR);
-            $this->Session->setFlash("No se pudo imprimir el ticket de la mesa $mesa_nro, mozo $mozo_nro.");
-        endif;
 
         if($this->RequestHandler->isAjax()){
             $this->autoRender = false;
@@ -353,31 +238,19 @@ debug($importe_descuento);
     }
 
 
-
-
     function imprimirTicket($mesa_id) {
-        $vreturn = $this->__imprimir($mesa_id);
-        $print_success   = $vreturn['print_success'];
-        $imprimio_ticket = $vreturn['imprimio_ticket'];
-        $tipoticket      = $vreturn['tipoticket'];
-        $mesa = $vreturn['Mesa'];
-        $mesa_nro = $mesa['Mesa']['numero'];
-        $mozo_nro = $mesa['Mozo']['numero'];
-
-        if($print_success):
-            $this->Mesa->cerrar_mesa();
-
-            if($imprimio_ticket):
-                $this->log("Se envió a imprimir el ticket de la mesa $mozo_nro, mozo $mesa_nro. Mesa ID: $mesa_id",LOG_INFO);
-                $this->Session->setFlash("Se envió a imprimir el $tipoticket Mesa $mesa_nro");
-            else:
-                $this->Session->setFlash("Se cerró la Mesa $mesa_nro sin imprimir ticket");
-            endif;
-        else:
-            $this->log("No se pudo imprimir el ticket de la mesa $mozo_nro, mozo $mesa_nro. Mesa ID: $mesa_id",LOG_ERROR);
-            $this->Session->setFlash("No se pudo imprimir el $tipoticket Mesa $mesa_nro");
-        endif;
-
+        $this->Printer->doPrint($mesa_id);
+        if($this->RequestHandler->isAjax()){
+            $this->autoRender = false;
+            $this->layout = 'ajax';
+            return 1;
+        } else {
+            if(Configure::read('debug') == 0){
+                $this->redirect($this->referer());
+            } else {
+                $this->flash('Se imprimio comanda de mesa ID: '.$mesa_id.' (click para reimprimir)', $this->action.'/'.$mesa_id);
+            }
+        }
     }
 
 
