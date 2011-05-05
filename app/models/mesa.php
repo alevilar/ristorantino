@@ -392,8 +392,9 @@ LEFT JOIN
 	 */
 	function todasLasCerradas(){
 		$this->recursive = 0;
-		$conditions = array("time_cobro = '0000-00-00 00:00:00'",
-							"time_cerro <> '0000-00-00 00:00:00'");
+		$conditions = array(
+                    "time_cobro = '0000-00-00 00:00:00'",
+                    "time_cerro <> '0000-00-00 00:00:00'");
 		return $this->find('all',array('conditions'=>$conditions, 'order'=>'time_cerro'));
 	}
 

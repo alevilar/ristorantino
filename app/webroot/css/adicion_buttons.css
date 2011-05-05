@@ -1,0 +1,38 @@
+.boton-apretado{
+    background-color: orange;
+}
+
+
+.acciones button{
+    width: 100%;
+    padding: 10px 0px;
+    font-size: 100%;
+}
+
+button.cuadrado{
+    height: 68px;
+    min-width: 68px;
+    font-size: 100%;
+}
+
+.li-mesas button{
+    height: 68px;
+    min-width: 68px;
+    font-size: 100%;
+}
+
+
+#abrir-mesa{
+	background-image: url("img/new_tab.png");
+	background-repeat: no-repeat;
+	text-indent: -100px;
+}
+
+
+
+#f5-refresh{
+	background-image: url("img/refresh.png");
+	background-repeat: no-repeat;
+	background-position: 2px 4px;
+	text-indent: -1000px;
+}

@@ -138,7 +138,7 @@ abstract class ComandosFiscales
 	 * 					'4' Cedula de Identidad
 	 * @param string $domicilio
 	 */
-	public abstract function setCustomerData($nombre_cliente,$documento,$respo_iva, $tipo_documento, $domicilio = '');
+	public abstract function setCustomerData($nombre_cliente = " ",$documento = " ",$respo_iva = 'C', $tipo_documento = " ", $domicilio = '-');
 
 
         /**

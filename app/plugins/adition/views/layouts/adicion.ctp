@@ -8,15 +8,13 @@
 	<?php
 		echo $html->meta('icon');
 
-		//echo $html->css('cake');
-		echo $html->css('Adicion');
 		
 		// para los modal window
 		echo $html->css(array(
-                    'windowthemes/default',
-                    'windowthemes/alert',
-                    'windowthemes/alert_simple',
-                    'windowthemes/spread',
+                    'fluid_grid',
+                    'ristorantino',
+                    'adicion_buttons',
+                    'jquery-ui/blitzer/jquery-ui-1.8.12.custom',
                     ));
 	//	echo $html->css('windowthemes/ligthing');
 
@@ -26,14 +24,11 @@
                 }
 
                 
-
-		echo $scripts_for_layout;
-		
 		echo $javascript->link(array(
-                    'prototype',
-                    'scriptaculous',
+                    'jquery/jquery-1.5.1.min',
+                    'jquery/jquery-ui-1.8.12.custom.min',
                     'ristorantino/generic',
-                    'adicionar/head',
+                    
                     'ristorantino/categorias.class',
                     'ristorantino/producto.class',
                     'ristorantino/fabrica_mozo.class',
@@ -46,28 +41,27 @@
                     'ristorantino/comanda_sacar.class',
                     'ristorantino/comanda_cocina.class',
                     '/adition/js/adicion.class',
+                    '/adition/js/adition.events',
                     'adicionar/producto_comanda.class',
-                    'adicionar/eventos_observados',
-                    'numpad', // PAD numerico
-                    'window', // Modal window  Prototype window by http://prototype-window.xilinus.com/index.html
-                    ));		
+                    'jquery.pagesman',
+                    ));
+
+                echo $scripts_for_layout;
 	?>
 	
 <script type="text/javascript">
 <!--
-	var urlMesaCerrarMesa = "<?php echo $html->url('/mesas/cerrarMesa');?>" 
+        var urlDomain = "<?php echo $html->url('/',true);?>";
 -->
 </script>
 	
 </head>
 <body>
-	<div id="container">
-		<div id="content">
+    <div id="container" class="container_12">
 			<?php echo $content_for_layout; ?>
-		</div>
-	</div>
-	<?php echo $javascript->link('adicionar/tail'); ?>
-	<?php echo $cakeDebug; ?>
+    </div>
+    <div class="clear"></div>
+<?php echo $javascript->link('adicionar/tail'); ?>
 	
 </body>
 </html>

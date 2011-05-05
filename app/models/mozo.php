@@ -3,7 +3,7 @@ class Mozo extends AppModel {
 
 	var $name = 'Mozo';
 
-        var $actsAs = array('SoftDeletable');
+        var $actsAs = array('SoftDeletable', 'Containable');
         
 	var $validate = array(
 		'user_id' => array(
@@ -76,6 +76,26 @@ class Mozo extends AppModel {
 		$mozo = $this->read();
 		return $mozo['Mozo']['numero'];	
 	}
+
+
+        function mesasAbiertas($mozo_id = null){
+            $options = array(
+                'contain' => array(
+                    'Mesa' => array(
+                        'Cliente' => 'Descuento',
+                        'Comanda',
+                        'conditions' => array(
+                            "Mesa.time_cobro" => "0000-00-00 00:00:00",
+                            "Mesa.time_cerro" => "0000-00-00 00:00:00",
+                        ),
+                        'order' => 'Mesa.created DESC',
+                    ),
+                    
+                    )
+            );
+
+            return $this->find('all', $options);
+        }
 
 }
 ?>

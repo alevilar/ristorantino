@@ -1,42 +1,43 @@
-var ComandaCocina = Class.create(Comanda);
+// funciones de herencia
+function ComandaCocina(varMozo){
+    this.mozo = varMozo;
+//    Comanda.apply(this, arguments);
+//
+//    //@ GLOBAL comandaCocinaWindow: es la ventana que cree en el  elemento comanda_cocina
+//    this.setWindow(comandaCocinaWindow);
+}
+
+ComandaCocina.prototype = new Comanda();
 
 	
 		
 /**
  *  En esta clase que arma la comanda con cada producto sque se le va haciendo click
  */
-ComandaCocina = Class.create(Comanda, {
+ComandaCocina.prototype = {
 	
-		
-    initialize: function($super,varMozo) {
-	
-        $super(varMozo);
-		
-        this.urlEnviarComanda = null;
+				
+        urlEnviarComanda : null,
 
-        //@ GLOBAL comandaCocinaWindow: es la ventana que cree en el  elemento comanda_cocina
-        this.setWindow(comandaCocinaWindow);
-	    
 	    
         // este atributpo s el producto mientras se le van agregando los distintos sabores
         // es una variable de estado intermedio
-        this.productoCreandoSabores = null;//new ProductoComanda();
+        productoCreandoSabores : null, //new ProductoComanda();
+
         // es la ventana de seleccion de sabores
-        this.winSeleccion = null;
+        winSeleccion : null,
 	    
         /**
 	     * este atributo sirve para identificar si la comanda va con prioridad o no
 	     * @var prioridad default false = 0
 	     */
-        this.prioridad = 0;
+        prioridad : 0,
 	    
 	    
         /**
 	     * es un boolean que nos dice si los productos seleccionados son entradas o no 
 	     */
-        this.entrada = false;
-	    
-    },
+        entrada : false,
 	  
 	  
 	  
@@ -408,5 +409,5 @@ ComandaCocina = Class.create(Comanda, {
         this.winSeleccion.showCenter();
     }
 	  
-});
+};
 

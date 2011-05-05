@@ -1,17 +1,17 @@
-var Producto = Class.create();
+var Producto = {};
 
 Producto.prototype ={
-	  initialize: function() {
-	    this.id = 0;
-	    this.name = "";
-	    this.abrev = "";
-	    this.description = "";
-	    this.categoria_id = 0;
-	    this.precio = 0;
-	    this.created = "";
-	    this.modified = ""; 
-	    this.comandera_id = 0;
-	  },
+	  
+	id : 0,
+	name : "",
+	abrev : "",
+	description : "",
+	categoria_id : 0,
+	precio : 0,
+	created : "",
+	modified : "",
+	comandera_id : 0,
+	  
 	  
 	esIgual: function(otroProducto){
 		return (this.getId == otroProducto.getId)?true:false;

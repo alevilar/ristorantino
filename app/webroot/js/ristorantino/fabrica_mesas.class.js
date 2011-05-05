@@ -1,37 +1,9 @@
 
+var FabricaMesa = function(mesaJSON){
+    this.mesa = new Mesa(mesaJSON);
 
-var FabricaMesa = Class.create({
-	
-	  initialize: function(mesaJSON) {
-		if (mesaJSON){
-			this.mesa = new Mesa();
-
-			this.mesa.id = mesaJSON.Mesa.id;
-			this.mesa.numero = mesaJSON.Mesa.numero;
-			
-			this.mesa.clienteId = mesaJSON.Mesa.cliente_id;
-			this.mesa.created = mesaJSON.Mesa.cliente_id;
-
-			this.mesa.menu = mesaJSON.Mesa.menu;
-			this.mesa.modified = mesaJSON.Mesa.modified;
-			this.mesa.time_cerro = mesaJSON.Mesa.time_cerro;
-			this.mesa.time_cobro = mesaJSON.Mesa.time_cobro;
-			this.mesa.total = mesaJSON.Mesa.total;
-			this.mesa.created = mesaJSON.Mesa.created;
-			
-			this.mesa.productos = mesaJSON.Producto;
-			
-			this.mesa.cliente = mesaJSON.Cliente;
-			this.mesa.cantComensales = mesaJSON.Mesa.cant_comensales;
-				
-			
-			return this.mesa;
-		}
-		else return null;
-	  },
-	  
-	  getMesa: function(){
-		  return this.mesa;
-	  }
-
-});
+    function getMesa(){
+        return this.mesa;
+    }
+    
+};

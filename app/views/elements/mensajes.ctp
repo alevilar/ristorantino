@@ -16,12 +16,12 @@ mensajero.setImageLoading('<? echo $html->url('/img/loader.gif',true)?>');
 
 
 	<!--  Este es el DIV que contine los mensajes delo que va ocurriendo y que el usuario verá-->
-	<div id="mensajes"></div>
+        <div id="mensajes" class="grid_4"></div>
 	
 	<script type="text/javascript">
 		var canMesas = "<?= sizeof($this->data['Mesa'])?>";
 
-		Event.observe(window,'load',function(){
+		$(window).load(function(){
 			mensajero.show(canMesas+" Mesas");
 
 			mensajero.show('<?php $session->flash(); ?>');

@@ -7,22 +7,20 @@
  *  vendrioa a ser la equivalencia con la tabla mesas-productos -> comanda de cada mesa
  * 
  */
+var ProductoComanda = {};
 
-var ProductoComanda = Class.create(Producto,{
+ProductoComanda = {
 	
-	initialize: function($super) {
-		$super();
-		this.detalle_comanda_id = null;
-		this.cantidad = 0;
-		this.cant_sacar = 0 ;
-		this.modificado = false; // esto es un flag, para solo submitear los productos modificados
-		this.entrada = false;
-		this.sabores =  new Array();
-		this.saboresSeleccionados =  new Array();
-		
-		this.elementolink = null;
-		this.elementoCantidad = null;
-	},
+    detalle_comanda_id : null,
+    cantidad : 0,
+    cant_sacar : 0 ,
+    modificado : false, // esto es un flag, para solo submitear los productos modificados
+    entrada : false,
+    sabores : [],
+    saboresSeleccionados : [],
+
+    elementolink : null,
+    elementoCantidad : null,
 	
 	
 	getCantidadEliminada: function(){
@@ -159,4 +157,4 @@ var ProductoComanda = Class.create(Producto,{
 		return this.elementoLink;
 	}
 	
-});
+};

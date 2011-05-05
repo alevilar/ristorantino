@@ -8,7 +8,9 @@
  * 
  * 
  */
-var Comanda = Class.create();
+var Comanda = function(varMozo){
+    this.mozo = varMozo;
+};
 
 	
 		
@@ -17,12 +19,13 @@ var Comanda = Class.create();
  */
 Comanda.prototype = {
 	
-	  initialize: function(varMozo) {
-	    this.productos = new Array(); 
-	    this.mozo = varMozo;	
-	    this.window = null; // esla ventana que contiene a la vista correspondiente a la comanda
+	  
+    productos : [],
 
-	  },
+    // esla ventana que contiene a la vista correspondiente a la comanda
+    window : null, 
+
+	  
 	  
 	  
 	  setWindow: function(contenedorWindow){

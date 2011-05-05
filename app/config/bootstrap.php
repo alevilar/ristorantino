@@ -67,7 +67,12 @@ function jsDate($date){
  * @param integer $precision
  * @param const $extra flags de la funcion round() de PHP ver: http://php.net/manual/es/function.round.php
  */
-function cqs_round($number, $precision = 0, $extra = PHP_ROUND_HALF_UP){
-    return round($number, $precision, $extra);
+function cqs_round($number, $precision = 0){
+    if($precision == 0){
+        $num =  ceil($number);
+    } else {
+        $num =  round($number, $precision);
+    }
+    return $num;
 }
 ?>

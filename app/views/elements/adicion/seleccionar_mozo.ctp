@@ -1,9 +1,11 @@
 
-<div id="seleccionar-mozos" class="menu-horizontal" style="display: none; width: 300px">
+<div id="seleccionar-mozos" style="display: none">
     <h1>Seleccione Mozo</h1>
+    
     <ul>
         <?php foreach ($mozos as $mozo):?>
         <li>
+           
                 <?php
                 $mozojson = json_encode($mozo);
                 echo $html->link(

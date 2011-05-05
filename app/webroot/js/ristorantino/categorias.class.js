@@ -1,5 +1,5 @@
 
-var Categorias = Class.create();
+var Categorias = {};
 	
 
 Categorias.prototype = {	

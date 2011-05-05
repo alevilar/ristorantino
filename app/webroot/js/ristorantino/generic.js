@@ -1,15 +1,8 @@
-
 /**
- * Con esto evito que al usar la pantalla touchscreen puedan seleccionar texto haciendo
- * que la vista quede horrible y nadie entienda lo que paso
+ *
+ * @var Constant DATETIME_CERO
  */
-//Event.observe(window, 'load', function(){
-//    document.onselectstart = function() {return false;} // ie
-//    document.onmousedown = function() {return false;} // mozilla
-//});
-
-
-
+var DATETIME_CERO = '0000-00-00 00:00:00';
 
 
 window.onload = function() {

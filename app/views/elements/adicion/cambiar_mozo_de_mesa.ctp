@@ -8,6 +8,7 @@
                         $mozo['Mozo']['numero'],
                         '/adition/adicionar/mozo_id:'.$mozo['Mozo']['id'],
                         array(
+                            'mozo' => $mozo['Mozo']['id'],
                             'class'=>'boton redondeado letra-grande',
                             'style'=> 'font-size: xx-large',
                             'onclick' => 'cambiarMozoDeMesa('.$mozo['Mozo']['id'].');'

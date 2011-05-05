@@ -1,18 +1,12 @@
 
 <script type="text/javascript">
 <!--
-fabricaMesa = new FabricaMesa(<?php echo json_encode($mesa)?>);
-mesaCambiar = fabricaMesa.getMesa();
+var mesaCambiar = new Mesa(<?php echo json_encode($mesa)?>);
 
-
-var fabricaMozo = new FabricaMozo(<?php echo $mozo_json?>);
-var mozoCambiar = fabricaMozo.getMozo();
+var mozoCambiar = new Mozo(<?php echo $mozo_json?>);
 
 adicion.cambiarMesa(mesaCambiar);
 adicion.cambiarMozo(mozoCambiar);
-
-
-
 //-->
 </script>
 

@@ -238,6 +238,8 @@ class MesasController extends AppController {
     }
 
 
+
+
     function imprimirTicket($mesa_id) {
         $this->Printer->doPrint($mesa_id);
         if($this->RequestHandler->isAjax()){
@@ -254,6 +256,18 @@ class MesasController extends AppController {
     }
 
 
+    function ajaxAbrirMesa(){
+        $this->autoRender = false;
+        $this->layout = 'ajax';
+        if (!empty($this->data['Mesa'])){
+            if (!$this->Mesa->save($this->data)){
+                return $this->Mesa->id;
+            }
+            return -1;
+        }
+        return 0;
+    }
+    
     function add() {
         if (!empty($this->data)) {
             $this->Mesa->create();
@@ -355,12 +369,11 @@ class MesasController extends AppController {
     function delete($id = null) {
         if (!$id) {
             $this->Session->setFlash(__('Invalid id for Mesa', true));
-            $this->redirect($this->referer());
         }
         if ($this->Mesa->del($id)) {
-            $this->Session->setFlash(__('Mesa deleted', true));
-            $this->redirect($this->referer());
+            $this->Session->setFlash(__('Mesa deleted', true));            
         }
+        $this->redirect($this->referer());
     }
 
 
@@ -379,12 +392,22 @@ class MesasController extends AppController {
                 "Mesa.time_cerro" => "0000-00-00 00:00:00",
             ),
             'order' => 'Mesa.created DESC',
-            'contain' => array('Mozo',
+            'contain' => array(
+                'Mozo',
                 'Cliente' => 'Descuento',
-                'Comanda')
+                'Comanda'
+                )
         );
 
         $mesas = $this->Mesa->find('all', $options);
+        $this->set('mesas', $mesas);
+        $this->render('mesas');
+    }
+
+
+    function abiertasPorMozo()
+    {
+        $mesas = $this->Mesa->Mozo->mesasAbiertas();
         $this->set('mesas', $mesas);
         $this->render('mesas');
     }

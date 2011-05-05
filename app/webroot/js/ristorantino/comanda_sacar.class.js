@@ -1,9 +1,13 @@
-	
+
+function ComandaSacar(varMozo){
+    this.mozo = varMozo;
+}
+
 		
 /**
  *  En esta clase que arma la comanda con cada producto sque se le va haciendo click
  */
-var ComandaSacar = Class.create(Comanda ,{
+var ComandaSacar = {
 	
 	   initialize: function($super,varMozo) 
 	   {		
@@ -97,5 +101,5 @@ var ComandaSacar = Class.create(Comanda ,{
 			
 	  }	  
 
-	});
+	};
 
