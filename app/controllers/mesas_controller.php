@@ -3,7 +3,7 @@ class MesasController extends AppController {
 
     var $name = 'Mesas';
     var $helpers = array('Html', 'Form');
-    var $components = array('Printer','RequestHandler');
+    var $components = array('Printer');
 
     /* @var $Printer PrinterComponent */
     var $Printer;

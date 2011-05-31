@@ -1,0 +1,9 @@
+---
+id: "Control.RatingBar"
+parent_id: "Control"
+type: class
+line_number: 12
+description: |
+  Create a click-a-star style rating bar.
+
+file: ./src/ratingbar/ratingbar.js

@@ -21,34 +21,21 @@ var MOZOS_POSIBLES_ESTADOS =  {
     seleccionado: {
         msg: 'El mozo fue seleccionado',
         event: 'mozoSeleccionado'
-    },
+    }
 };
 
 
 
-function Mozo(json){
-    if (json) {
-        this.prototype = json;
-    }
-    return this;
+function Mozo(){
 }
 
 
 Mozo.prototype = {
-	
     id : 0,
     numero : 0,
     mesas: [],
     seleccionado: false,
 
-
-    __triggerEventCambioDeEstado: function(){
-        if (!$.isEmptyObject(this.getEstado())) {
-            var event =  $.Event(this.getEstado().event);
-            event.mesa = this;
-            $(document).trigger(event);
-        }
-    },
 
     cloneFromJson: function(json){
         //copio solo lo decclarado en el prototype del objecto Mozo
@@ -65,7 +52,7 @@ Mozo.prototype = {
         this.mesas.push(nuevaMesa);
         var evento = $.Event(MOZOS_POSIBLES_ESTADOS.agragaMesa.event);
         evento.mozo = this;
-        $.trigger(evento);
+        $(document).trigger(evento);
     },
 
 
@@ -74,7 +61,7 @@ Mozo.prototype = {
         this.mesas.splice(i,1);
         var evento = $.Event(MOZOS_POSIBLES_ESTADOS.sacaMesa.event);
         evento.mozo = this;
-        $.trigger(evento);
+        $(document).trigger(evento);
     },
 
     /**
@@ -85,6 +72,6 @@ Mozo.prototype = {
         this.seleccionado = true;
         var eventoMozoSeleccionado = $.Event(MOZOS_POSIBLES_ESTADOS.seleccionado.event);
         eventoMozoSeleccionado.mozo = this;
-        $.trigger(eventoMozoSeleccionado);
+        $(document).trigger(eventoMozoSeleccionado);
     }
 };

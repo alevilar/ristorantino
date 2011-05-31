@@ -1,0 +1,10 @@
+---
+id: "Control.Ticker"
+parent_id: "Control"
+type: class
+line_number: 11
+description: |
+  Creates a scrolling ticker (for stock quotes, etc) out of a series
+  of elements.
+
+file: ./src/ticker/ticker.js

@@ -56,8 +56,6 @@ class AppController extends Controller {
             //$this->Auth->autoRedirect = false;
 //$this->Auth->allow('*'); return true;
 
-           //$this->RequestHandler->setContent('json', 'text/x-json');
-
             // si es Ajax y no tengo permisos que me tire un error HTTP
             // asi lo puedo capturar desde jQuery
             if($this->Requesthandler->isAjax()){

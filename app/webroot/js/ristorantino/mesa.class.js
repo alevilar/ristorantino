@@ -25,6 +25,10 @@ var MESA_ESTADOS_POSIBLES =  {
     borrada: {
         msg: 'Mesa Borrada',
         event: 'mesaBorrada'
+    },
+    seleccionada: {
+        msg: 'Mesa Seleccionada',
+        event: 'mesaSeleccionada'
     }
 };
 
@@ -36,7 +40,9 @@ var MESA_ESTADOS_POSIBLES =  {
  *Definicion de la Clase Mesa
  *
  **/
-function Mesa() {}
+function Mesa() {
+    this.objtype = 'mesa';
+}
 
 
 
@@ -59,14 +65,21 @@ Mesa.prototype = {
     /** estado de la mesa
      * @var __estado Private
      **/
-    __estado: {},
+    __estado: [],
     
 
+    /**
+     * con el estado actual __estado, va tirando triggers para el evento
+     *
+     **/
     __triggerEventCambioDeEstado: function(){
         if (!$.isEmptyObject(this.getEstado())) {
-            var event =  $.Event(this.getEstado().event);
-            event.mesa = this;
-            $(document).trigger(event);
+            var estados = this.getEstado();
+            for each (estado in estados ) {
+                var event =  $.Event(estado.event);
+                event.mesa = this;
+                $(document).trigger(event);
+            }
         }
     },
 
@@ -96,28 +109,45 @@ Mesa.prototype = {
         }
         return this;
     },
+
+    seleccionar: function() {
+        this.__estado.push(MESA_ESTADOS_POSIBLES.seleccionada);
+        this.__triggerEventCambioDeEstado();
+        return this;
+    },
     
 
     setEstadoAbierta : function(){
-        this.__estado = MESA_ESTADOS_POSIBLES.abierta;
+        this.__estado = [];
+        this.__estado.push(MESA_ESTADOS_POSIBLES.abierta);
         this.__triggerEventCambioDeEstado();
         return this;
     },
 
     setEstadoCerrada : function(){
-        this.__estado = MESA_ESTADOS_POSIBLES.cerrada;
+        this.__estado = [];
+        this.__estado.push(MESA_ESTADOS_POSIBLES.cerrada);
+        this.__triggerEventCambioDeEstado();
+        return this;
+    },
+
+    setEstadoBorrada: function() {
+        this.__estado = [];
+        this.__estado.push(MESA_ESTADOS_POSIBLES.borrada);
         this.__triggerEventCambioDeEstado();
         return this;
     },
 
     setEstadoCuponPendiente : function(){
-        this.__estado = MESA_ESTADOS_POSIBLES.cuponPendiente;
+        this.__estado = [];
+        this.__estado.push(MESA_ESTADOS_POSIBLES.cuponPendiente);
         this.__triggerEventCambioDeEstado();
         return this;
     },
 
     setCobrada : function(){
-        this.__estado = MESA_ESTADOS_POSIBLES.cobrada;
+        this.__estado = [];
+        this.__estado.push(MESA_ESTADOS_POSIBLES.cobrada);
         this.__triggerEventCambioDeEstado();
         return this;
     },
@@ -131,7 +161,8 @@ Mesa.prototype = {
      * @return boolean true si ya cerro, false si esta abierta
      */
     estaAbierta : function(){
-        return (this.getEstado() == MESA_ESTADOS_POSIBLES.abierta);
+
+        return ( $.inArray(MESA_ESTADOS_POSIBLES.abierta, this.getEstado()) );
     },
 
     /**
@@ -148,7 +179,7 @@ Mesa.prototype = {
      * @return boolean
      **/
     estaCerrada : function(){
-        return (this.getEstado() == MESA_ESTADOS_POSIBLES.cerrada);
+        return ( $.inArray(MESA_ESTADOS_POSIBLES.cerrada, this.getEstado()));
     },
 
 
@@ -179,7 +210,7 @@ Mesa.prototype = {
 
 
     reimprimir : function(){
-        var url = urlDomain+'/mesas/imprimirTicket';
+        var url = document.referrer+'mesas/imprimirTicket';
         $.post( url+"/"+this.id);
     },
 
@@ -200,36 +231,42 @@ Mesa.prototype = {
     },
 
 
-    borrar : function(url){
-        this.setEstadoBorrada();
+    cerrar: function(){
+        var url = document.referrer + 'mesas/cerrarMesa' + '/' + this.currentMesa.id + '/0';
+        var context = this;
+        $.get(url, {}, function(){context.setEstadoCerrada();});
     },
 
-    __handleMesaAbiertaCallback: function(responseText,s){
-        console.info("vino el callback");
-        this.setEstadoAbierta();
+
+    borrar : function(){
+        var url = document.referrer + 'mesas/delete/' +this.id;
+        var context = this;
+        $.get(url, {}, function(){context.setEstadoBorrada()});
     },
+
 
     abrir: function(){
         if (this.id) {
             alert('no se puede abrir una mesa que ya esta abierta. El ID ya existe. Consulte con el administrador del Sistema');
             return;
         }
-        var context = this;
-        $.post(urlDomain + 'mesas/ajaxAbrirMesa',
+        var context = this;        
+        $.post(document.referrer + 'mesas/ajaxAbrirMesa',
                 {'data[Mesa][numero]': this.numero, 'data[Mesa][mozo_id]': this.mozo.id},
                 function(t, e){
-                    context.__handleMesaAbiertaCallback.call(context, t, e);
+                     context.setEstadoAbierta();
                 });
     },
 
-    setMozo: function(nuevoMozo){
+    setMozo: function(nuevoMozo, agregarMesa){
         if (!$.isEmptyObject(this.mozo)){
             var mozoViejo = this.mozo;
             mozoViejo.sacarMesa(this);
         }
         this.mozo = nuevoMozo;
-        this.mozo.agregarMesa(this);
-        
+        if (agregarMesa) {
+            this.mozo.agregarMesa(this);
+        }
     },
 
 

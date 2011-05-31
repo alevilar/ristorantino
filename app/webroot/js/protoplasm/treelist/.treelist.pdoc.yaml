@@ -1,0 +1,101 @@
+---
+id: "Control.TreeList"
+parent_id: "Control"
+type: class
+line_number: 32
+description: |
+  Creates a collapsible tree out of an unordered list
+  element.
+  
+  Control ID: `treelist`
+  
+  For the layout to work correctly, the list should be formatted
+  like the following (note that the sub-list items FOLLOW the
+  item they collapse under, rather than being inside the &lt;li&gt;):
+  
+  	<ul class="treelist">
+  	    <li>Item 1</li>
+  	    <li>Item 2</li>
+  	    <li>Submenu</li>
+  	    <ul id="submenu">
+  	        <li>Item 3</li>
+  	        <li>Item 4</li>
+  	    </ul>
+  	</ul>
+  
+  Example: <a href="http://jongsma.org/software/protoplasm/control/treelist">Tree
+  List demo</a>
+
+file: ./src/treelist/treelist.js
+
+---
+id: "new Control.TreeList"
+parent_id: "Control.TreeList"
+type: constructor
+line_number: 58
+description: |
+  Create a new tree list from the given `<ul>`
+  element.
+  
+  Additional options:
+  
+  * selectable: Allow clicking to select and highlight an item (default: true)
+  * onSelect: A function to call when an item is clicked on.
+    Two arguments are passed: the opened item's `id` (or text content),
+    and the `<li>` element itself.
+  * onOpen: A function to call when an item is double-clicked on.
+    Two arguments are passed: the opened item's `id` (or text content),
+    and the `<li>` element itself.
+  * childLoader: A callback function that dynamically loads submenu
+    elements when a submenu is expanded.  The function takes two
+    arguments: the submenu `<ul>` element's `id`, and a
+    callback function to pass the child elements (as an array of
+    `<li>` and `<ul>` elements.)  Only called the first time a
+    menu is opened.
+
+signatures:
+ -
+  signature: "new Control.TreeList(element[, options])"
+arguments:
+ -
+  name: element
+  types: [String, Element]
+  description: >
+    A `<ul>` element (or DOM ID).
+
+ -
+  name: options
+  types: [Hash]
+  description: >
+    Additional options for the control.
+
+file: ./src/treelist/treelist.js
+
+---
+id: "Control.TreeList#element"
+parent_id: "Control.TreeList"
+type: instance property
+line_number: 84
+description: |
+  The underlying `<ul>` element passed to the constructor.
+
+signatures:
+ -
+  signature: "Control.TreeList#element"
+  return_value: "Element"
+file: ./src/treelist/treelist.js
+
+---
+id: "Control.TreeList#destroy"
+parent_id: "Control.TreeList"
+type: instance method
+line_number: 110
+description: |
+  Destroy this control and return the underlying element to
+  its original behavior.
+
+signatures:
+ -
+  signature: "Control.TreeList#destroy()"
+  return_value: "null"
+file: ./src/treelist/treelist.js

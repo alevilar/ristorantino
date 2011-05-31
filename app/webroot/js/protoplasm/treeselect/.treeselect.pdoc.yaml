@@ -1,0 +1,11 @@
+---
+id: "Control.TreeSelect"
+parent_id: "Control"
+type: class
+line_number: 12
+description: |
+  Creates a heirarchical select list.
+  
+  Written and maintained by Jeremy Jongsma (jeremy@jongsma.org)
+
+file: ./src/treeselect/treeselect.js

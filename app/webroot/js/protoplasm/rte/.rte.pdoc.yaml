@@ -1,0 +1,20 @@
+---
+id: "Control.RTE"
+parent_id: "Control"
+type: class
+line_number: 25
+description: |
+  An in-browser WYSIWYG rich text editor for IE 6+, Firefox 1.0+.
+  Designed for AJAX applications based on the Prototype library.
+  
+  Features:
+   - Lightweight & easy to use - doesn't try to be a Word replacement
+   - Can be created/destroyed on the fly, to function in an constantly
+     changing page environment (TinyMCE et. al. fail miserably here)
+   - Use external hooks for showing directory lists for
+     inserting images
+  
+  Example: <a href="http://jongsma.org/software/protoplasm/control/rte">Rich
+  Text Editor demo</a>
+
+file: ./src/rte/rte.js

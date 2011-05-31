@@ -1,0 +1,9 @@
+---
+id: "Control.Expander"
+parent_id: "Control"
+type: class
+line_number: 10
+description: |
+  Expands / hides a content panel when the header is clicked.
+
+file: ./src/expander/expander.js

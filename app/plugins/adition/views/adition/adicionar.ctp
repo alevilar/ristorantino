@@ -1,19 +1,14 @@
 <script type="text/javascript">
 
     var adicion = new Adicion();
-
-    adicion.setMozos(<?php echo json_encode($mozos)?>);
-
-    adicion.getMesasAbiertas();
     
-    /********** PERMISOS DE VISTA DE LOS ELEMENTOS *****/
-
-    var currentUser = <? echo json_encode($session->read('Auth.User'));?>;
+    adicion.setMozos(<?php echo json_encode($mozos)?>);
+    adicion.getMesasAbiertas();
     
 </script>
 
 <?php
-//debug($mozos);
+
 /*------------------------------------------------------------------------------------------------------------------------------------*/
 /*-****************************************************-------------------
  * ACA RENDERIZO ELEMENTOS QUE NO SE VEN HASTA QUE SON LLAMADOS
@@ -36,11 +31,8 @@
 
 
 <div id="menu-top" class="grid_12">
-    <button type="button" id="f5-refresh" class="cuadrado"  onclick="parent.location.reload();">
-        Refresh
-    </button>
     <?php
-    echo $this->renderElement('buttons/abrir_mesa');
+    
     ////echo $this->renderElement('mensajes');
     ?>
 </div>
@@ -61,7 +53,7 @@
 
         <div  id="mesa-scroll" class="grid_8">bbbbd</div>
 
-        <div id="mesa-2" class="acciones grid_2">&nbsp;cccccd
+        <div id="menu-2" class="acciones grid_2">&nbsp;cccccd
     <!--        <button type="button" value="adicion.ticketView" id="boton-vistasimple">Vista Simple</button>
             <button type="button" value="cambiarMozoDeMesa" id="boton-cambiar-mozo">Cambiar de Mozo</button>
             <button type="button" value="adicion.cambiarNumeroMesa" id="boton-cambiar-nromesa">Cambiar N° Mesa</button>

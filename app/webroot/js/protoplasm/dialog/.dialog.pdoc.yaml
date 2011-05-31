@@ -1,0 +1,329 @@
+---
+id: "Dialog"
+parent_id: "Controls section"
+type: namespace
+line_number: 11
+description: |
+  Namespace for all dialog classes.
+
+file: ./src/dialog/dialog.js
+
+---
+id: "Dialog.active"
+parent_id: "Dialog"
+type: class property
+line_number: 18
+description: |
+  The currently displayed dialog window.
+
+signatures:
+ -
+  signature: "Dialog.active"
+  return_value: "Dialog.Base"
+file: ./src/dialog/dialog.js
+
+---
+id: "Dialog.close"
+parent_id: "Dialog"
+type: class method
+line_number: 27
+description: |
+  Close the currently active dialog window.
+  
+  Calls `Dialog.active.close()`
+
+signatures:
+ -
+  signature: "Dialog.close()"
+  return_value: "null"
+file: ./src/dialog/dialog.js
+
+---
+id: "Dialog.success"
+parent_id: "Dialog"
+type: class method
+line_number: 40
+description: |
+  Close the active dialog window, and call any onSuccess callbacks.
+  
+  Internally calls `Dialog.active.success(value)`
+
+signatures:
+ -
+  signature: "Dialog.success(value)"
+  return_value: "null"
+arguments:
+ -
+  name: value
+  types: [Object]
+  description: >
+    The success callback value
+
+file: ./src/dialog/dialog.js
+
+---
+id: "Dialog.failure"
+parent_id: "Dialog"
+type: class method
+line_number: 53
+description: |
+  Close the active dialog window, and call any onFailure callbacks.
+  
+  Internally calls `Dialog.active.failure(value)`
+
+signatures:
+ -
+  signature: "Dialog.failure(value)"
+  return_value: "null"
+arguments:
+ -
+  name: value
+  types: [Object]
+  description: >
+    The failure callback value
+
+file: ./src/dialog/dialog.js
+
+---
+id: "Dialog.Base"
+parent_id: "Dialog"
+type: class
+line_number: 64
+description: |
+  Base class for all overlay dialogs.
+
+file: ./src/dialog/dialog.js
+
+---
+id: "new Dialog.Base"
+parent_id: "Dialog.Base"
+type: constructor
+line_number: 86
+description: |
+  Create a new dialog window, using the given element as its
+  contents.
+  
+  Available options:
+  
+  * width: The dialog width in pixels
+  * height: The dialog width in pixels
+  * ignoreClicks: Ignore clicks outside the dialog
+    (default: clicks close the dialog)
+  * ignoreEsc: Ignore presses of the ESC key
+    (default: ESC closes the dialog)
+  * dialogClass: The class name to assign the dialog container
+  * onOpen: A callback function that is called when the dialog opens
+  * onClose: A callback function that is called when the dialog closes
+  * onSuccess: A callback function that is called when the dialog succeeds
+  * onFailure: A callback function that is called when the dialog fails
+
+signatures:
+ -
+  signature: "new Dialog.Base(elt[, options])"
+file: ./src/dialog/dialog.js
+
+---
+id: "Dialog.Base#baseShow"
+parent_id: "Dialog.Base"
+type: instance method
+line_number: 167
+description: |
+  Displays the dialog on the screen.  Subclasses that need
+  to override [[Dialog.Base#show]] should always call this
+  method.
+
+signatures:
+ -
+  signature: "Dialog.Base#baseShow()"
+  return_value: "null"
+file: ./src/dialog/dialog.js
+
+---
+id: "Dialog.Base#show"
+parent_id: "Dialog.Base"
+type: instance method
+line_number: 209
+alias_of: "Dialog.Base#baseShow"
+description: |
+  Display the dialog on the screen.
+
+signatures:
+ -
+  signature: "Dialog.Base#show()"
+  return_value: "null"
+file: ./src/dialog/dialog.js
+
+---
+id: "Dialog.Base#close"
+parent_id: "Dialog.Base"
+type: instance method
+line_number: 240
+description: |
+  Close the dialog window, and call any onClose callbacks.
+
+signatures:
+ -
+  signature: "Dialog.Base#close()"
+  return_value: "null"
+file: ./src/dialog/dialog.js
+
+---
+id: "Dialog.Base#success"
+parent_id: "Dialog.Base"
+type: instance method
+line_number: 284
+description: |
+  Close the dialog window, and call any onSuccess callbacks.
+
+signatures:
+ -
+  signature: "Dialog.Base#success(value)"
+  return_value: "null"
+arguments:
+ -
+  name: value
+  types: [Object]
+  description: >
+    The success callback value
+
+file: ./src/dialog/dialog.js
+
+---
+id: "Dialog.Base#failure"
+parent_id: "Dialog.Base"
+type: instance method
+line_number: 296
+description: |
+  Close the dialog window, and call any onFailure callbacks.
+
+signatures:
+ -
+  signature: "Dialog.Base#failure(value)"
+  return_value: "null"
+arguments:
+ -
+  name: value
+  types: [Object]
+  description: >
+    The failure callback value
+
+file: ./src/dialog/dialog.js
+
+---
+id: "Dialog.HTML"
+parent_id: "Dialog"
+type: class
+superclass_id: "Dialog.Base"
+line_number: 309
+description: |
+  An overlay dialog with static HTML content.
+
+file: ./src/dialog/dialog.js
+
+---
+id: "new Dialog.HTML"
+parent_id: "Dialog.HTML"
+type: constructor
+line_number: 330
+description: |
+  Create a new dialog window, using the given element as its
+  contents.
+  
+  Available options:
+  
+  * width: The dialog width in pixels
+  * height: The dialog width in pixels
+  * ignoreClicks: Ignore clicks outside the dialog
+    (default: clicks close the dialog)
+  * ignoreEsc: Ignore presses of the ESC key
+    (default: ESC closes the dialog)
+  * dialogClass: The class name to assign the dialog container
+  * onClose: A callback function that is called when the dialog closes
+  * onSuccess: A callback function that is called when the dialog succeeds
+  * onFailure: A callback function that is called when the dialog fails
+
+signatures:
+ -
+  signature: "new Dialog.HTML(elt[, options])"
+file: ./src/dialog/dialog.js
+
+---
+id: "Dialog.Frame"
+parent_id: "Dialog"
+type: class
+superclass_id: "Dialog.Base"
+line_number: 345
+description: |
+  An overlay dialog with static HTML content, styled using
+  the default window frame.
+
+file: ./src/dialog/dialog.js
+
+---
+id: "new Dialog.Frame"
+parent_id: "Dialog.Frame"
+type: constructor
+line_number: 366
+description: |
+  Create a new dialog window, using the given element or HTML
+  as its contents.
+  
+  Available options:
+  
+  * width: The dialog width in pixels
+  * height: The dialog width in pixels
+  * ignoreClicks: Ignore clicks outside the dialog
+    (default: clicks close the dialog)
+  * ignoreEsc: Ignore presses of the ESC key
+    (default: ESC closes the dialog)
+  * dialogClass: The class name to assign the dialog container
+  * onClose: A callback function that is called when the dialog closes
+  * onSuccess: A callback function that is called when the dialog succeeds
+  * onFailure: A callback function that is called when the dialog fails
+
+signatures:
+ -
+  signature: "new Dialog.Frame(elt[, options])"
+file: ./src/dialog/dialog.js
+
+---
+id: "Dialog.Ajax"
+parent_id: "Dialog"
+type: class
+superclass_id: "Dialog.Base"
+line_number: 386
+description: |
+  An overlay dialog that fetches content from the server
+  via AJAX calls.
+
+file: ./src/dialog/dialog.js
+
+---
+id: "new Dialog.Ajax"
+parent_id: "Dialog.Ajax"
+type: constructor
+line_number: 410
+description: |
+  Create a new dialog window, loading content from the
+  specified URL via XHR.  Any forms in the dialog will
+  be modified to submit via XHR, and the response will
+  be passed back to onSuccess or onFailure callbacks.
+  
+  Available options:
+  
+  * width: The dialog width in pixels
+  * height: The dialog width in pixels
+  * ignoreClicks: Ignore clicks outside the dialog
+    (default: clicks close the dialog)
+  * ignoreEsc: Ignore presses of the ESC key
+    (default: ESC closes the dialog)
+  * dialogClass: The class name to assign the dialog container
+  * loadingIcon: A loading icon to display while waiting for contents
+  * onClose: A callback function that is called when the dialog closes
+  * onSuccess: A callback function that is called when the dialog succeeds
+  * onFailure: A callback function that is called when the dialog fails
+
+signatures:
+ -
+  signature: "new Dialog.Ajax(url[, options])"
+file: ./src/dialog/dialog.js

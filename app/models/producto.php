@@ -63,7 +63,7 @@ class Producto extends AppModel {
 
         function   beforeSave($options = array()) 
     {
-        if (!empty($this->data['Producto']['precio'])) {
+        if ( !empty($this->data['Producto']['id']) && !empty($this->data['Producto']['precio'])) {
             $precioViejo = $this->field('precio', array('Producto.id'=>$this->data['Producto']['id']));
             if ($this->data['Producto']['precio'] != $precioViejo ){
                 if (!$this->HistoricoPrecio->save(array(

@@ -1,0 +1,13 @@
+---
+id: "Control.LiveGrid"
+parent_id: "Control"
+type: class
+line_number: 16
+description: |
+  Transforms a table into a dynamically updating, scrolling viewport
+  that can be populated via AJAX queries.
+  
+  Example: <a href="http://jongsma.org/software/protoplasm/control/livegrid">Live
+  Grid demo</a>
+
+file: ./src/livegrid/livegrid.js

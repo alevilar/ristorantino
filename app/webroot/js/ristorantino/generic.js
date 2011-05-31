@@ -5,6 +5,7 @@
 var DATETIME_CERO = '0000-00-00 00:00:00';
 
 
+// para que no titile el cursor. Que no se pueda hacer click
 window.onload = function() {
    if(document.all){
       document.onselectstart = function(e) { return false; } // ie

@@ -1,0 +1,181 @@
+---
+id: "Control.TimePicker"
+parent_id: "Control"
+type: class
+line_number: 21
+description: |
+  Transforms an ordinary input textbox into a time picker.
+  
+  Control ID: `timepicker`
+  
+  Features:
+  
+  * Allows user to specify a time format
+  
+  Example: <a href="http://jongsma.org/software/protoplasm/control/timepicker">Time
+  Picker demo</a>
+
+file: ./src/timepicker/timepicker.js
+
+---
+id: "new Control.TimePicker"
+parent_id: "Control.TimePicker"
+type: constructor
+line_number: 42
+description: |
+  Create a new time picker from the given `<input type="text">`
+  element.
+  
+  Additional options:
+  
+  * icon: The URL of the icon to display on the control
+  * format: The time format (default 'HH:mm:ss')
+  * use24hrs: Show 24 hours in the time picker instead of
+    AM/PM (default false)
+  * onChange: Callback function when the time is changed.
+    A Date object is passed as the parameter.
+  * onSelect: Callback function when the time is selected.
+    A Date object is passed as the parameter.
+
+signatures:
+ -
+  signature: "new Control.TimePicker(element[, options])"
+arguments:
+ -
+  name: element
+  types: [String, Element]
+  description: >
+    A `<input type="text">` element (or DOM ID).
+
+ -
+  name: options
+  types: [Hash]
+  description: >
+    Additional options for the control.
+
+file: ./src/timepicker/timepicker.js
+
+---
+id: "Control.TimePicker#element"
+parent_id: "Control.TimePicker"
+type: instance property
+line_number: 64
+description: |
+  The underlying `<input>` element passed to the constructor.
+
+signatures:
+ -
+  signature: "Control.TimePicker#element"
+  return_value: "Element"
+file: ./src/timepicker/timepicker.js
+
+---
+id: "Control.TimePicker#panel"
+parent_id: "Control.TimePicker"
+type: instance property
+line_number: 78
+description: |
+  The panel dialog box linked to this control.  This may be
+  null if the control is not open.
+
+signatures:
+ -
+  signature: "Control.TimePicker#panel"
+  return_value: "Control.TimePicker.Panel"
+file: ./src/timepicker/timepicker.js
+
+---
+id: "Control.TimePicker#destroy"
+parent_id: "Control.TimePicker"
+type: instance method
+line_number: 117
+description: |
+  Destroy this control and return the underlying element to
+  its original behavior.
+
+signatures:
+ -
+  signature: "Control.TimePicker#destroy()"
+  return_value: "null"
+file: ./src/timepicker/timepicker.js
+
+---
+id: "Control.TimePicker#toggle"
+parent_id: "Control.TimePicker"
+type: instance method
+line_number: 178
+description: |
+  Toggle the visibility of the picker panel for this control.
+
+signatures:
+ -
+  signature: "Control.TimePicker#toggle()"
+  return_value: "null"
+file: ./src/timepicker/timepicker.js
+
+---
+id: "Control.DatePicker#open"
+parent_id: "Control.DatePicker"
+type: instance method
+line_number: 225
+description: |
+  Show the picker panel for this control.
+
+signatures:
+ -
+  signature: "Control.DatePicker#open()"
+  return_value: "null"
+file: ./src/timepicker/timepicker.js
+
+---
+id: "Control.TimePicker#close"
+parent_id: "Control.TimePicker"
+type: instance method
+line_number: 280
+description: |
+  Hide the picker panel for this control.
+
+signatures:
+ -
+  signature: "Control.TimePicker#close()"
+  return_value: "null"
+file: ./src/timepicker/timepicker.js
+
+---
+id: "Control.TimePicker.Panel"
+parent_id: "Control.TimePicker"
+type: class
+line_number: 297
+description: |
+  The dialog panel that is displayed when the time picker is opened.
+
+file: ./src/timepicker/timepicker.js
+
+---
+id: "new Control.TimePicker.Panel"
+parent_id: "Control.TimePicker.Panel"
+type: constructor
+line_number: 314
+description: |
+  Create a new time picker panel.
+  
+  Additional options:
+  
+  * use24hrs: Show 24 hours in the time picker instead of
+    AM/PM (default false)
+  * onChange: Callback function when the time is changed.
+    A Date object is passed as the parameter.
+  * onSelect: Callback function when the time is selected.
+    A Date object is passed as the parameter.
+
+signatures:
+ -
+  signature: "new Control.TimePicker.Panel([options])"
+arguments:
+ -
+  name: options
+  types: [Hash]
+  description: >
+    Additional options for the panel.
+
+file: ./src/timepicker/timepicker.js

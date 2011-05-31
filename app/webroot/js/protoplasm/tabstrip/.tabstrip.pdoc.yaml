@@ -1,0 +1,155 @@
+---
+id: "Control.TabStrip"
+parent_id: "Control"
+type: class
+line_number: 32
+description: |
+  Converts a tree of elements into a tab strip widget to switch between
+  panels of content.
+  
+  Control ID: `tabstrip`
+  
+  For the control to work correctly, the element tree should be formatted
+  like the following:
+  
+  	<div class="tabstrip">
+  		<ul>
+  	    	<li>Tab 1</li>
+  	    	<li>Tab 2</li>
+  		</ul>
+  		<div>
+  	    	<div>Panel 1</div>
+  	    	<div>Panel 2</div>
+  		</div>
+  	</div>
+  
+  Example: <a href="http://jongsma.org/software/protoplasm/control/tabstrip">Tab
+  Strip demo</a>
+
+file: ./src/tabstrip/tabstrip.js
+
+---
+id: "new Control.TabStrip"
+parent_id: "Control.TabStrip"
+type: constructor
+line_number: 49
+description: |
+  Create a new tab strip from the given element.
+  
+  Additional options:
+  
+  * activeClass: The CSS class to assign to the active tab (default: 'active')
+  * disabledClass: The CSS class to assign to the active tab (default: 'disabled')
+  * onClick: A function to call when a tab is clicked.  The argument will be
+    the tab element.
+  * disabled: A list of DOM id's of tabs that should start out disabled.
+
+signatures:
+ -
+  signature: "new Control.TabStrip(element[, options])"
+arguments:
+ -
+  name: element
+  types: [String, Element]
+  description: >
+    A base `<div>` element (or DOM ID).
+
+ -
+  name: options
+  types: [Hash]
+  description: >
+    Additional options for the control.
+
+file: ./src/tabstrip/tabstrip.js
+
+---
+id: "Control.TabStrip#element"
+parent_id: "Control.TabStrip"
+type: instance property
+line_number: 70
+description: |
+  The underlying `<ul>` element passed to the constructor.
+
+signatures:
+ -
+  signature: "Control.TabStrip#element"
+  return_value: "Element"
+file: ./src/tabstrip/tabstrip.js
+
+---
+id: "Control.TabStrip#enable"
+parent_id: "Control.TabStrip"
+type: instance method
+line_number: 222
+description: |
+  Enable a previously disabled tab.
+
+signatures:
+ -
+  signature: "Control.TabStrip#enable(tab)"
+  return_value: "null"
+arguments:
+ -
+  name: tab
+  types: [Element, String]
+  description: >
+    The tab to enable (element or DOM id)
+
+file: ./src/tabstrip/tabstrip.js
+
+---
+id: "Control.TabStrip#disable"
+parent_id: "Control.TabStrip"
+type: instance method
+line_number: 236
+description: |
+  Disable a tab so that it cannot be clicked.
+
+signatures:
+ -
+  signature: "Control.TabStrip#disable(tab)"
+  return_value: "null"
+arguments:
+ -
+  name: tab
+  types: [Element, String]
+  description: >
+    The tab to disable (element or DOM id)
+
+file: ./src/tabstrip/tabstrip.js
+
+---
+id: "Control.TabStrip#destroy"
+parent_id: "Control.TabStrip"
+type: instance method
+line_number: 251
+description: |
+  Destroy this control and return the underlying element to
+  its original behavior.
+
+signatures:
+ -
+  signature: "Control.TabStrip#destroy()"
+  return_value: "null"
+file: ./src/tabstrip/tabstrip.js
+
+---
+id: "Control.TabStrip#switchTab"
+parent_id: "Control.TabStrip"
+type: instance method
+line_number: 269
+description: |
+  Switch the view to the specified tab.
+
+signatures:
+ -
+  signature: "Control.TabStrip#switchTab(tab)"
+  return_value: "null"
+arguments:
+ -
+  name: tab
+  types: [Element, String]
+  description: >
+    The tab to switch to (element or DOM id)
+
+file: ./src/tabstrip/tabstrip.js

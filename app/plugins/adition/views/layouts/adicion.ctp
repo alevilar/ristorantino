@@ -27,23 +27,38 @@
 		echo $javascript->link(array(
                     'jquery/jquery-1.5.1.min',
                     'jquery/jquery-ui-1.8.12.custom.min',
+                    'jquery/jquery.tmpl.min',
                     'ristorantino/generic',
-                    
-                    'ristorantino/categorias.class',
-                    'ristorantino/producto.class',
-                    'ristorantino/fabrica_mozo.class',
-                    'ristorantino/fabrica_mesas.class',
+                    '/adition/js/adicion.class',
                     'ristorantino/mesa.class',
                     'ristorantino/mozo.class',
+
                     'ristorantino/mensaje.class',
+
+                    'ristorantino/categorias.class',
+                    'ristorantino/producto.class',
+                    //'ristorantino/fabrica_mozo.class',
+                    //'ristorantino/fabrica_mesas.class',
+                    
+                    
                     'ristorantino/cliente.class',
                     'ristorantino/comanda.class',
                     'ristorantino/comanda_sacar.class',
                     'ristorantino/comanda_cocina.class',
-                    '/adition/js/adicion.class',
+                    
+                    'ristorantino/ventanas',
                     '/adition/js/adition.events',
                     'adicionar/producto_comanda.class',
+
                     'jquery.pagesman',
+                    ));
+
+
+                // botones
+                echo $javascript->link(array(
+                    'buttons/refresh',
+                    'buttons/abrir_mesa',
+                    'buttons/seleccionar_mesa',
                     ));
 
                 echo $scripts_for_layout;

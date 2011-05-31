@@ -1,0 +1,128 @@
+---
+id: "Control.FileUpload"
+parent_id: "Control"
+type: class
+line_number: 24
+description: |
+  Creates a user-friendly file upload control out of a
+  normal &lt;input type="file"&gt; field.
+  
+  Control ID: `upload`
+  
+  Features:
+  
+  * Supports uploading multiple files.
+  * Allows inline uploading without reloading the page.
+  * Displays upload progress in Chrome, FF, Safari.
+  
+  Example: <a href="http://jongsma.org/software/protoplasm/control/upload">File
+  Upload demo</a>
+
+file: ./src/upload/upload.js
+
+---
+id: "new Control.FileUpload"
+parent_id: "Control.FileUpload"
+type: constructor
+line_number: 59
+description: |
+  Create a new file upload control.  This control can handle
+  uploading multiple files at one time, and will display upload
+  progress for each file (with a server-side callback script.)
+  
+  Additional options:
+  
+  * `multiple`: Allow multiple uploads (default: false)
+  * `inline`: Upload files immediately without reloading the
+    page instead of submitting with the parent form. (default: false)
+  * `progress`: Display upload progress in supported browsers.
+    Has no effect if `inline` is false.  This requires submitting
+    data to the server in a different format - see the
+    <a href="/software/protoplasm/control/upload#handler">online
+    documentation</a> for further details. (default: true)
+  * `batch`: Use batch mode. Requires manually submission instead
+    of uploading files as they are selected.  Has no effect
+    if `inline` is false. (default: false)
+  * `onSuccess`: Callback function when a file upload succeeds.
+  * `onFailure`: Callback function when a file upload fails.
+  * `onComplete`: Callback function when all file uploads are complete.
+  
+  Callback functions take the uploaded filename as a parameter.
+
+signatures:
+ -
+  signature: "new Control.FileUpload(element, options)"
+arguments:
+ -
+  name: element
+  types: [Element, String]
+  description: >
+    A DOM element (or element ID)
+
+ -
+  name: options
+  types: [Hash]
+  description: >
+    Additional options for the control.
+
+file: ./src/upload/upload.js
+
+---
+id: "Control.FileUpload#element"
+parent_id: "Control.FileUpload"
+type: instance property
+line_number: 106
+description: |
+  The currently active file input element for this control.
+  
+  Note: this is not static and may change over time for
+  multiple-file upload controls.
+
+signatures:
+ -
+  signature: "Control.FileUpload#element"
+  return_value: "Element"
+file: ./src/upload/upload.js
+
+---
+id: "Control.FileUpload#destroy"
+parent_id: "Control.FileUpload"
+type: instance method
+line_number: 203
+description: |
+  Destroy this control and return the underlying element to
+  its original behavior.
+
+signatures:
+ -
+  signature: "Control.FileUpload#destroy()"
+  return_value: "null"
+file: ./src/upload/upload.js
+
+---
+id: "Control.FileUpload#submit"
+parent_id: "Control.FileUpload"
+type: instance method
+line_number: 216
+description: |
+  Upload all added files (has no effect unless batch mode is on.)
+
+signatures:
+ -
+  signature: "Control.FileUpload#submit()"
+  return_value: "null"
+file: ./src/upload/upload.js
+
+---
+id: "Control.FileUpload#cancel"
+parent_id: "Control.FileUpload"
+type: instance method
+line_number: 236
+description: |
+  Cancel all current uploads.
+
+signatures:
+ -
+  signature: "Control.FileUpload#cancel()"
+  return_value: "null"
+file: ./src/upload/upload.js

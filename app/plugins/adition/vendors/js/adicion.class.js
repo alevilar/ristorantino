@@ -4,6 +4,14 @@
  *  constructor
  *
  */
+
+
+/**
+ * extencion del objeto array
+ *
+ *
+ * */
+    
 var Adicion = function(mozo){
     
     this.urlMesaView = document.domain + '/Mesas/view';
@@ -13,6 +21,8 @@ var Adicion = function(mozo){
     this.currentMesa = null;
 
     this.mozos = [];
+
+    this.mesas = [];
 
 
     // esta es la comanda que se genera al sacar un Item de un DetalleMesa
@@ -24,9 +34,34 @@ var Adicion = function(mozo){
      */
     this.comanda = null;  //este objeto se crea con el evento window onload
 
+
+
 }
 
 Adicion.prototype = {
+
+    /**
+     *  devuelve un listado de Buttons (form buttons)
+     *  del listado de objetos "objname" que le pase como parametro
+     */
+    butonizar: function(list, objname){
+        var obj = objname || 'obj';
+        var btns = [];
+        for each(var i in list) {
+            var el = document.createElement('button');            
+            el[obj] = i;
+            btns.push(el);
+        }
+        return btns;
+    },
+
+    nombrificar: function(list, text) {
+        for each (var i in list) {
+            i.innerHTML = i.obj[text];
+        }
+        return list;
+    },
+
     /**
      * Me dice si tiene una mesa setteada
      * @return boolean
@@ -46,145 +81,16 @@ Adicion.prototype = {
     },
     	
 		
-    /**
-     * Inicializa la adicion volviendo a resetear los aspectos visuales
-     * @return
-     */
-    resetear: function(){
-        var idMesa = this.currentMesa.getId();
-
-        this.borrarCurrentMesa();
-        
-        // saca la pestaña de la mesa activada y la pone como las demas
-        $('#mesa-ver-'+idMesa).removeClass('mesa-seleccionada');
-			
-        // el contenedor de items actuales de una mesa
-        $('#mesa-scroll').html("Seleccione una mesa");
-			
-        $('#boton-cliente').removeClass('boton-apretado');
-
-        $('#boton-menu').removeClass('boton-apretado');
-        $('#boton-menu').html('Menú');
-        
-        $('#btn-comensales').html('Cubiertos');
-        $('#btn-comensales').removeClass('boton-apretado');
-    },
-		
-		
     borrarCurrentMesa: function(){
         this.currentMesa = null
     },
-		
-		
-    cambiarMozo: function(mozoCambiar){
-        this.currentMozo = mozoCambiar;
 
-        // modifico los botones de la DOM que hacen referencia al Mozo
-        $(".mozo-numero").each(function(e){
-            e.update(this.currentMozo.numero)
-        }.bind(this));
-        
-        return this.currentMozo;
-    },
-
-    //cambia de mesa
-    cambiarMesa: function(mesaCambiar){
-        this.setCurrentMesa(mesaCambiar);
-
-        this.comanda.resetearComanda(this.currentMozo, this.currentMesa);
-					
-        if(this.currentMesa)
-        {            
-            // del element listar_clientes.ctp
-            $('#boton-cliente').removeClass('boton-apretado')
-            if (this.currentMesa.tieneCliente()){
-                $('#boton-cliente').addClass('boton-apretado');
-            }
-				
-            // del element imprimir_como_menu.ctp
-            $('#boton-menu').removeClass('boton-apretado')
-            $('#boton-menu').html('Menú');
-            if (this.currentMesa.tieneMenu()){
-                $('#boton-menu').addClass('boton-apretado');
-                $('#boton-menu').html('Menú X '+this.currentMesa.menu);
-            }
-
-            if (!this.currentMesa.estaAbierta()){
-                $('#btn-cambio-rapido-de-mesa').addClass('mesa-cerrada');
-            } else {
-                $('#btn-cambio-rapido-de-mesa').removeClass('mesa-cerrada');
-            }
-
-            if (this.currentMesa.getCantComensales() > 0) {
-                $('#btn-comensales').html(this.currentMesa.getCantComensales()+" Cubiertos").addClass('boton-apretado');
-            } else {
-                $('#btn-comensales').html('Indicar Cubiertos').removeClass('boton-apretado');
-            }            
-        }
-			
-                        
-        // modifico en la DOM los botones que hcen referencia a esa mesa y mozo
-        var mesaAux = this;
-        $(".mesa-numero").each(function(e){
-            e.html(mesaAux.currentMesa.numero);
-        });
-    },
-
-
-    reabrirMesa: function(){
-        var url = document.domain+'/mesas/ajax_edit';
-        if (typeof(this.currentMesa) != 'undefined') {
-            this.currentMesa.reabrir(url);
-        }
-
-        // para que topme la mesa como que esta cerrada sin necesidad de hacer un POST al server
-        this.currentMesa.time_cerro = '0000-00-00 00:00:00';
-        
-        this.cambiarMesa(this.currentMesa);
-        $('#todas-las-mesas-ver-'+this.currentMesa.id).removeClassName('mesa-cerrada');
-        $('#mesa-ver-'+this.currentMesa.id).removeClassName('mesa-cerrada');
-    },
-
-    enviarACajero: function(){
-        var url = document.domain+'/mesas/cerrarMesa';
-        url = url + '/' + this.currentMesa.id + '/0';
-        new Ajax.Request(url, {
-            onSuccess: function() {
-                this.__aplicarCierre();
-            }.bind(this),
-            onFailure: function(){
-                alert("No se pudo cerrar la mesa")
-            }
-        });
-    },
-
-
-    borrarMesa: function(){
-        var url = document.domain+'/mesas/delete';
-        if (typeof(this.currentMesa) != 'undefined' && confirm('¿Eliminar la mesa n° '+this.currentMesa.numero+'?')) {
-            this.currentMesa.borrar(url);
+    setCurrentMesa: function(mesa) {
+        this.currentMesa = mesa;
+        if (mesa.Mozo) {
+            this.currentMesa = mesa.Mozo;
         }
     },
-
-
-		
-		
-    /**
-		 * con sta funcion se efectiviza el cierre de la currentMesa 
-		 * enviando el mensaje al server e introduciendo mensajes
-		 * por pantalla para el usuario
-		 * 
-		 */
-    __aplicarCierre: function(){
-        //  urlMesaCerrarMesa es una variable global creada en la adicion layout
-        Dialog.info("Cerrando Mesa...", {
-            width:250,
-            height:100,
-            showProgress: true
-        });
-        window.location.href = urlMesaCerrarMesa+"/"+this.currentMesa.id+"/mozo_id:"+this.currentMozo.id;
-    },
-		
 		
 
 
@@ -204,27 +110,16 @@ Adicion.prototype = {
             } else {
                 if(this.tieneMesaSeleccionada()){
                     if(this.currentMesa.productos){
-                        var windowConfirma  = Dialog.confirm(
-                            "Se va a cerrar la mesa Nº "+this.currentMesa.numero,
-                            {
-                                width:300,
-                                okLabel: "Aceptar",
-                                /*	buttonClass: "myButtonClass",*/
-                                id: "mesa-confirma-cierre",
-                                onCancel: function(win) {
-                                    confirma = false;
-                                    return false
-                                },
-                                onOk:function(win) {
-                                    this.__aplicarCierre();
-                                    confirma = true;
-                                    return true;
-                                }.bind(this)
-                            });
-                        return confirma;
+                        var okCerrar = window.confirm("Se va a cerrar la mesa Nº "+this.currentMesa.numero);
+
+                        if ( okCerrar ) {
+                            this.currentMesa.cerrar()
+                        }
+                        return okCerrar;
                     }
                     else{
                         mensajero.error("No se puede cerrar una mesa que no tiene productos cargados.");
+                        return -1;
                     }
                 }
             } 
@@ -276,6 +171,56 @@ Adicion.prototype = {
 /*******************------------ NUEVA VERSION --------------------------------************/
 /*********----------------------------------------------------------------------*************/
 
+    /**
+     *  Agrega un nuevo boton al menu indicado
+     *  @param String|Object btnElementId Id del boton. Si es un bojecto tenjgo que pasarle un json con lso atributos del elemento. El atributo "text" escribe el tecxo a mostrar en el boton
+     *  @param String menuContainerElementId Id del menu
+     *  @param String display default 'inline', puede ser block. es la propiedad CSS
+     */
+    addButton: function(btnElementId, menuContainerElementId, display) {
+        return $(function(){
+            var dis = display || 'inline';
+            var btn = {};
+            console.info("addButton");
+            if (typeof btnElementId == 'object') {
+                btn = document.createElement('button');
+                for (var i in btnElementId) {
+                    if (typeof btnElementId[i] == 'function') {
+                        btn[i] = btnElementId[i];
+                    } else {
+                        if (i == 'text') {
+                            $(btn).html(btnElementId[i]);
+                        } else {
+                            $(btn).attr(i, btnElementId[i]);
+                        }
+                        
+                    }
+                    
+                }
+            } else {
+                btn = document.getElementById(btnElementId);
+            }
+            console.debug(btn);
+            var menu = document.getElementById(menuContainerElementId);
+            menu.appendChild(btn);
+            btn.style.display = dis;
+            return btn;
+        })
+    },
+
+    /**
+     * Extiende la adicion agregando nuevos metodos
+     * arroja error si el nombre del metodo ya existe
+     */
+    addMethod: function(methodName, fn) {
+        if ( this.hasOwnProperty(methodName) ) {
+            $.error("no se puede sobreescribir un metodo. EL metodo o propiedad "+methodName+" ya existe.");
+        } else {
+            this[methodName] = fn;
+        }
+        return this;
+    },
+
     setMozos: function(mozos){
         var mozoaux;
         for each(var m in mozos){
@@ -297,30 +242,38 @@ Adicion.prototype = {
         event.mozo = mozo;
         $(document).trigger(event);
     },
-
-
-    /**
-    * Esta funcion es para cuando yo abro una nueva mesa, me muestra el form input con un PAD numerico
-    */
-    abrirMesa: function(){
-        var mesa = new Mesa();
-        this.currentMesa = mesa;
-        mesa.numero = window.prompt('introduzca número de mesa');
-
-        // si no puso numero salir
-        if (!mesa.numero) return;
-
-        ventanas.ventanaSeleccionDeMozo(mesa.abrirlaConMozo, mesa);
-    },
+    
 
 
     getMesasAbiertas: function(){
-        $.get(urlDomain + 'mesas/abiertasPorMozo', this.__handleMesasAbiertas);
+        var context = this;
+        var ajaxResp = $.get(urlDomain + 'mesas/abiertasPorMozo.json', function(e,t){
+            context.__handleMesasAbiertas.call(context, e, t)
+        });
+        console.info('Mesas abiertas');
+        console.debug(ajaxResp);
+        
+        ajaxResp.error = function(){alert("fallo conexión")}
     },
+    
 
-    __handleMesasAbiertas: function(data){
-        console.info('mesas abiertas');
-        console.debug(data);
+    __handleMesasAbiertas: function( data ) {
+        var mozos = [];
+        var mesas = [];
+        for each (d in data) {
+            var mo = new Mozo();
+            mo.cloneFromJson(d.Mozo)
+            mozos.push(mo);
+            for each (a in d.Mesa) {
+                var me = new Mesa();
+                me.cloneFromJson(a)
+                me.setMozo(mo);
+                mo.mesas.push(me);
+                mesas.push(me);
+            }
+        }
+        this.mozos = mozos;
+        this.mesas = mesas;
     }
 
 		

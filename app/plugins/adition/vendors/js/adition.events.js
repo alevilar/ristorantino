@@ -3,13 +3,12 @@ $(document).ready(function() {
 
     $(document).bind("mesaSeleccionada", mesaSeleccionada);
 
-
     // cambios de estado de la mesa
-    $(document).bind("mesaAbierta", $.noop); //funcion vacia de jQuery
-    $(document).bind("mesaCerrada", fnVacia);
-    $(document).bind("mesaCuponPendiente", fnVacia);
-    $(document).bind("mesaCobrada", fnVacia);
-    $(document).bind("mesaBorrada", fnVacia);
+    $(document).bind("mesaAbierta", abrirMesa); //funcion vacia de jQuery
+    $(document).bind("mesaCerrada", mesaCerrada);
+    $(document).bind("mesaCuponPendiente", mesaCuponPendiente);
+    $(document).bind("mesaCobrada", mesaCobrada);
+    $(document).bind("mesaBorrada", mesaBorrada);
 
     $(document).bind("adicionCambioMozo", cambioMozo);
 });
@@ -23,8 +22,21 @@ $(window).load(function(){
     }
 });
 
+function mesaCerrada(){
+    alert('mesa cerrada');
+}
 
-function fnVacia(){return;}
+function mesaCuponPendiente(){
+    alert('mesa cupon pendiente');
+}
+
+function mesaBorrada(){
+    alert('mesa borrada');
+}
+
+function mesaCobrada(){
+    alert('mesa cobrada');
+}
 
 
 
@@ -32,12 +44,15 @@ function cambioMozo(e){
 }
 
 
-function mesaSeleccionada(){
+function mesaSeleccionada(e){
     alert("mesa seleccionada");
-    var elementoContenedorMesa = '#mesa-view';
-    var paginaContenedorMesa = '#mesa-scroll';
-    var tgt = $(e.target);
-    $(elementoContenedorMesa).load(urlDomain+'mesas/view/'+tgt.attr('mesaid'));
-    $(paginaContenedorMesa).pagesman();
+    console.info('mesa seleccionada');
+    console.debug(e);
 }
 
+
+
+function abrirMesa(e) {
+    alert("mesa abierta");
+    adicion.mesas.push(e.mesa);
+}

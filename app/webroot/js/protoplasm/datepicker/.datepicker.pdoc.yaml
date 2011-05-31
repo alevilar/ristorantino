@@ -1,0 +1,555 @@
+---
+id: "Control.DatePicker"
+parent_id: "Control"
+type: class
+line_number: 25
+description: |
+  Transforms an ordinary input textbox into an interactive date picker.
+  When the textbox is clicked (or the down arrow is pressed), a calendar
+  appears that the user can browse through and select a date.
+  
+  Control ID: `datepicker`
+  
+  Features:
+  
+  * Allows user to specify a date format
+  * Easy to localize
+  
+  Example: <a href="http://jongsma.org/software/protoplasm/control/datepicker">Date
+  Picker demo</a>
+
+file: ./src/datepicker/datepicker.js
+
+---
+id: "new Control.DatePicker"
+parent_id: "Control.DatePicker"
+type: constructor
+line_number: 60
+description: |
+  Create a new date picker from the given `<input type="text">`
+  element.
+  
+  Additional options:
+  
+  * icon: The URL of the icon to display on the control
+  * monthCount: The number of calendar months to display at one time
+  * layout: Layout mode for multiple calendars: 'horizontal' (default) or 'vertical'
+  * range: Use date range selection instead of a single date.
+    Requires multiple `<input>` elements (see rangeEnd below).
+  * rangeEnd: The element for storing a date range's end date in. If a rangeEnd
+    element is not specified, it will automatically look for one as a next
+    sibling of `element`.
+  * minDate: The minimum date that is allowed to be selected
+  * maxDate: The maximum date that is allowed to be selected
+  * locale: Set the internationalization locale code
+  * manual: Allow manual date entry by typing (default true)
+  * epoch: The date posted to the server will be as a unix
+    timestamp representing the milliseconds since 1-1-1970
+  * timePicker: Display a time picker (default false)
+  * use24hrs: Show 24 hours in the time picker instead of
+    AM/PM (default false)
+  * onSelect: Callback function when a date/time is selected.
+    A Date object is passed as the parameter.
+  * onHover: Callback function when the active date changes
+    via keyboard navigation.  A Date object is passed as
+    the parameter.
+
+signatures:
+ -
+  signature: "new Control.DatePicker(element[, options])"
+arguments:
+ -
+  name: element
+  types: [String, Element]
+  description: >
+    A `<input type="text">` element (or DOM ID).
+
+ -
+  name: options
+  types: [Hash]
+  description: >
+    Additional options for the control.
+
+file: ./src/datepicker/datepicker.js
+
+---
+id: "Control.DatePicker#element"
+parent_id: "Control.DatePicker"
+type: instance property
+line_number: 84
+description: |
+  The underlying `<input>` element passed to the constructor.
+
+signatures:
+ -
+  signature: "Control.DatePicker#element"
+  return_value: "Element"
+file: ./src/datepicker/datepicker.js
+
+---
+id: "Control.DatePicker#panel"
+parent_id: "Control.DatePicker"
+type: instance property
+line_number: 93
+description: |
+  The panel dialog box linked to this control.  This may be
+  null if the control is not open.
+
+signatures:
+ -
+  signature: "Control.DatePicker#panel"
+  return_value: "Control.DatePicker.Panel"
+file: ./src/datepicker/datepicker.js
+
+---
+id: "Control.DatePicker#destroy"
+parent_id: "Control.DatePicker"
+type: instance method
+line_number: 225
+description: |
+  Destroy this control and return the underlying element to
+  its original behavior.
+
+signatures:
+ -
+  signature: "Control.DatePicker#destroy()"
+  return_value: "null"
+file: ./src/datepicker/datepicker.js
+
+---
+id: "Control.DatePicker#toggle"
+parent_id: "Control.DatePicker"
+type: instance method
+line_number: 280
+description: |
+  Toggle the visibility of the picker panel for this control.
+
+signatures:
+ -
+  signature: "Control.DatePicker#toggle()"
+  return_value: "null"
+file: ./src/datepicker/datepicker.js
+
+---
+id: "Control.DatePicker#close"
+parent_id: "Control.DatePicker"
+type: instance method
+line_number: 347
+description: |
+  Hide the picker panel for this control.
+
+signatures:
+ -
+  signature: "Control.DatePicker#close()"
+  return_value: "null"
+file: ./src/datepicker/datepicker.js
+
+---
+id: "Control.DatePicker#open"
+parent_id: "Control.DatePicker"
+type: instance method
+line_number: 364
+description: |
+  Show the picker panel for this control.
+
+signatures:
+ -
+  signature: "Control.DatePicker#open()"
+  return_value: "null"
+file: ./src/datepicker/datepicker.js
+
+---
+id: "Control.DatePicker.activePicker"
+parent_id: "Control.DatePicker"
+type: class property
+line_number: 403
+description: |
+  A reference to the last opened date picker.
+
+signatures:
+ -
+  signature: "Control.DatePicker.activePicker"
+  return_value: "Control.DatePicker"
+file: ./src/datepicker/datepicker.js
+
+---
+id: "Control.DatePicker.create"
+parent_id: "Control.DatePicker"
+type: class method
+line_number: 429
+description: |
+  Creates a new date picker from scratch instead of transforming
+  an existing DOM element.  Returns the root element for the
+  date picker control, suitable for inserting into your page.
+  You can retrieve the Control.DatePicker instance behind the
+  returned element with `element.retrieve('datepicker')`.
+  
+  Options:
+  
+  * `className`: The CSS class to assign the &lt;input&gt; element
+  * `name`: The field name to assign the &lt;input&gt; element
+  
+  Additional options are passed through to `new Control.DatePicker()`.
+  See [[Control.DatePicker]] constructor for available options.
+  
+  Example:
+  
+  	var dp = Control.DatePicker.create();
+  	panel.appendChild(dp);
+  	dp.open();
+
+signatures:
+ -
+  signature: "Control.DatePicker.create(options)"
+  return_value: "Element"
+arguments:
+ -
+  name: options
+  types: [Hash]
+  description: >
+    Additional options for the control.
+
+file: ./src/datepicker/datepicker.js
+
+---
+id: "Control.DatePicker.i18n"
+parent_id: "Control.DatePicker"
+type: class
+line_number: 445
+description: |
+  Internationalization settings for a [[Control.DatePicker]] instance.
+
+file: ./src/datepicker/datepicker.js
+
+---
+id: "Control.DatePicker.i18n.createLocale"
+parent_id: "Control.DatePicker.i18n"
+type: class method
+line_number: 480
+description: |
+  Create a new locale combining a standard base locale ("us", "eu", "iso8601")
+  and a new language code.
+
+signatures:
+ -
+  signature: "Control.DatePicker.i18n.createLocale(base, lang)"
+  return_value: "Object"
+arguments:
+ -
+  name: base
+  types: [String]
+  description: >
+    The base locale (one of "us", "eu", "iso8601").
+
+ -
+  name: lang
+  types: [String]
+  description: >
+    The language to use.
+
+file: ./src/datepicker/datepicker.js
+
+---
+id: "new Control.DatePicker.i18n"
+parent_id: "Control.DatePicker.i18n"
+type: constructor
+line_number: 521
+description: |
+  Create a new internationalization settings  based on the
+  specified locale code (i.e. "en_US").
+  
+  Locales that are supported by default are:
+  
+  * es
+  * en
+  * en_US
+  * en_GB
+  * de
+  * es_iso8601
+  * en_iso8601
+  * de_iso8601
+  
+  Additionally, there are other locales which are not included
+  but will be loaded on demand via an AJAX call if requested:
+  
+  * cs_CZ
+  * el_GR
+  * fr_FR
+  * it_IT
+  * lt_LT
+  * nl_NL
+  * pl_PL
+  * pt_BR
+  * ru_RU
+  
+  For details on creating new locales, see the
+  <a href="http://jongsma.org/software/protoplasm/datepicker#locales">Protoplasm
+  web site</a>.
+
+signatures:
+ -
+  signature: "new Control.DatePicker.i18n([code])"
+arguments:
+ -
+  name: code
+  types: [String]
+  description: >
+    The locale code.  This can be a language code ("es") or a full locale ("es_AR").
+
+file: ./src/datepicker/datepicker.js
+
+---
+id: "Control.DatePicker.i18n#tr"
+parent_id: "Control.DatePicker.i18n"
+type: instance method
+line_number: 547
+description: |
+  Translates the given text into the language linked to
+  this instance.
+
+signatures:
+ -
+  signature: "Control.DatePicker.i18n#tr(text)"
+  return_value: "String"
+arguments:
+ -
+  name: text
+  types: [String]
+  description: >
+    The string to translate.
+
+file: ./src/datepicker/datepicker.js
+
+---
+id: "Control.DatePicker.Locale"
+parent_id: "Control.DatePicker"
+type: class property
+line_number: 560
+description: |
+  Hash object that stores available locale definitions.
+  
+  Bundled locales: es, en, en\_US, en\_GB, de, es\_iso8601,
+  en\_iso8601, de\_iso8601
+
+signatures:
+ -
+  signature: "Control.DatePicker.Locale"
+  return_value: "Hash"
+file: ./src/datepicker/datepicker.js
+
+---
+id: "Control.DatePicker.Language"
+parent_id: "Control.DatePicker"
+type: class property
+line_number: 581
+description: |
+  Hash object that stores available language definitions.
+  
+  Bundled languages: en, es, de
+
+signatures:
+ -
+  signature: "Control.DatePicker.Language"
+  return_value: "Hash"
+file: ./src/datepicker/datepicker.js
+
+---
+id: "Control.DatePicker.Panel"
+parent_id: "Control.DatePicker"
+type: class
+line_number: 615
+description: |
+  The dialog panel that is displayed when the date picker is opened.
+
+file: ./src/datepicker/datepicker.js
+
+---
+id: "new Control.DatePicker.Panel"
+parent_id: "Control.DatePicker.Panel"
+type: constructor
+line_number: 650
+description: |
+  Create a new date picker panel.
+  
+  Additional options:
+  
+  * className: The CSS class of the panel element
+  * monthCount: The number of calendar months to display at one time
+  * layout: Layout mode for multiple calendars: 'horizontal' (default) or 'vertical'
+  * range: Use date range selection instead of single dates
+  * minDate: The minimum date that is allowed to be selected
+  * maxDate: The maximum date that is allowed to be selected
+  * timePicker: Display a time picker (default false) - <i>not
+    compatible with "range" option</i>
+  * use24hrs: Show 24 hours in the time picker instead of
+    AM/PM (default false)
+  * firstWeekDay: The first day of the week (default 0 - Sunday)
+  * weekend: An array of day numbers that are considered the
+    weekend (default [0,6] - Saturday/Sunday)
+  * months: An array of 12 month names
+  * days: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
+  * closeOnToday: Close picker when the "Today" link is clicked
+    (default true)
+  * selectToday: Automatically select today's date initially
+
+signatures:
+ -
+  signature: "new Control.DatePicker.Panel([options])"
+arguments:
+ -
+  name: options
+  types: [Hash]
+  description: >
+    Additional options for the panel.
+
+file: ./src/datepicker/datepicker.js
+
+---
+id: "Control.DatePicker.Panel#element"
+parent_id: "Control.DatePicker.Panel"
+type: instance property
+line_number: 694
+description: |
+  The root Element of this dialog panel.
+
+signatures:
+ -
+  signature: "Control.DatePicker.Panel#element"
+  return_value: "Element"
+file: ./src/datepicker/datepicker.js
+
+---
+id: "Control.DatePicker.DateFormat"
+parent_id: "Control.DatePicker"
+type: class
+line_number: 1282
+description: |
+  A date formatting utility class.
+
+file: ./src/datepicker/datepicker.js
+
+---
+id: "new Control.DatePicker.DateFormat"
+parent_id: "Control.DatePicker.DateFormat"
+type: constructor
+line_number: 1290
+description: |
+  Create a new DateFormat object the uses the specified format string.
+
+signatures:
+ -
+  signature: "new Control.DatePicker.DateFormat(format)"
+arguments:
+ -
+  name: format
+  types: [String]
+  description: >
+    The format string (see [[Control.DatePicker.DateFormat.format]]).
+
+file: ./src/datepicker/datepicker.js
+
+---
+id: "Control.DatePicker.DateFormat#parse"
+parent_id: "Control.DatePicker.DateFormat"
+type: instance method
+line_number: 1299
+description: |
+  Attempt to parse a string into a Date object according to this
+  object's formatting rules.
+
+signatures:
+ -
+  signature: "Control.DatePicker.DateFormat#parse(text)"
+  return_value: "Date"
+arguments:
+ -
+  name: text
+  types: [String]
+  description: >
+    The text to parse into a Date.
+
+file: ./src/datepicker/datepicker.js
+
+---
+id: "Control.DatePicker.DateFormat#format"
+parent_id: "Control.DatePicker.DateFormat"
+type: instance method
+line_number: 1308
+description: |
+  Format a date into a string according to this object's formatting
+  rules.
+
+signatures:
+ -
+  signature: "Control.DatePicker.DateFormat#format(date)"
+  return_value: "String"
+arguments:
+ -
+  name: date
+  types: [Date]
+  description: >
+    The date to format.
+
+file: ./src/datepicker/datepicker.js
+
+---
+id: "Control.DatePicker.DateFormat.format"
+parent_id: "Control.DatePicker.DateFormat"
+type: class method
+line_number: 1334
+description: |
+  Convert a date to a string representation according to the specified
+  format string.
+  
+  Formatting tokens:
+  TODO
+
+signatures:
+ -
+  signature: "Control.DatePicker.DateFormat.format(date, format)"
+  return_value: "String"
+arguments:
+ -
+  name: date
+  types: [Date]
+  description: >
+    The date to format.
+
+ -
+  name: format
+  types: [String]
+  description: >
+    The format definition.
+
+file: ./src/datepicker/datepicker.js
+
+---
+id: "Control.DatePicker.DateFormat.parse"
+parent_id: "Control.DatePicker.DateFormat"
+type: class method
+line_number: 1548
+description: |
+  Attempt to parse a string to a Date, given the specified
+  format string.  If `format` is omitted, DateFormat will
+  try some common formats.
+  
+  See [[Control.DatePicker.DateFormat.format]] for formatting string details.
+
+signatures:
+ -
+  signature: "Control.DatePicker.DateFormat.parse(date[, format])"
+  return_value: "Date"
+arguments:
+ -
+  name: text
+  types: [String]
+  description: >
+    The text to parse.
+
+ -
+  name: format
+  types: [String]
+  description: >
+    The format definition to match against.
+
+file: ./src/datepicker/datepicker.js
