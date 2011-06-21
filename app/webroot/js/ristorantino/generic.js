@@ -8,7 +8,7 @@ var DATETIME_CERO = '0000-00-00 00:00:00';
 // para que no titile el cursor. Que no se pueda hacer click
 window.onload = function() {
    if(document.all){
-      document.onselectstart = function(e) { return false; } // ie
+      document.onselectstart = function(e) {return false;} // ie
    } else {
       document.onmousedown = function(e)
       {
@@ -20,3 +20,14 @@ window.onload = function() {
 
 
 
+jQuery(document).ready(function($){
+
+    $.history.init(function(hash){
+        if(hash == "") {
+            // initialize your app
+        } else {
+            // restore the state from hash
+        }
+    },
+    { unescape: ",/" });
+});

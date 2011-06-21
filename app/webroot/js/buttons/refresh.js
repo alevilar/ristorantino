@@ -2,13 +2,14 @@ $(function(){
 
     // Agregar el boton el menu-top
     var btn = {
-        'text': 'Seleccionar Mesa',
+        'text': 'F5',
         'id' : 'f5-refresh',
-        'class': 'cuadrado',
+        'class': 'cuadrado f5-refresh',
+        'menu' : '.mega_controlls',
         'onclick': function(){parent.location.reload();}
     }
 
-   adicion.addButton(btn, 'menu-top');
+   adicion.addButton(btn);
 
 
 

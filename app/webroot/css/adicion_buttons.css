@@ -1,28 +1,102 @@
-.boton-apretado{
+a{
+    display: inline-block;
+    background-color: #CDCDCD;
+    color: #4C4C4C;
+font-size:	16px;
+font-weight:	400;
+font-style:	normal;
+color:	#4C4C4C;
+text-transform:	none;
+text-decoration:	none;
+letter-spacing	:normal;
+word-spacing	:0;
+line-height	:19px;
+text-align	:center;
+vertical-align	:baseline;
+direction	:ltr;
+
+background-color	:#F7F6F6;
+background-image	:none;
+background-repeat	:repeat;
+background-position	:0 0;
+background-attachment	:scroll;
+opacity	:1;
+
+width	:52px;
+height	:62px;
+top	:auto;
+right	:auto;
+bottom	:auto;
+left	:auto;
+margin-top	:0;
+margin-right	:0;
+margin-bottom	:0;
+margin-left	:0;
+padding-top	:0;
+padding-right	:6px;
+padding-bottom	:0;
+padding-left	:6px;
+border-top-width	:3px;
+border-right-width	:3px;
+border-bottom-width	:3px;
+border-left-width	:3px;
+border-top-color	:#CDCDCD;
+border-right-color	:#CDCDCD;
+border-bottom-color	:#CDCDCD;
+border-left-color	:#CDCDCD;
+border-top-style	:outset;
+border-right-style	:outset;
+border-bottom-style	:outset;
+border-left-style	:outset;
+box-shadow	:none;
+
+
+position	:static;
+display	:inline;
+visibility	:visible;
+z-index	:auto;
+overflow-x	:visible;
+overflow-y	:visible;
+white-space	:normal;
+clip	:auto;
+float	:none;
+clear	:none;
+
+
+cursor	:default;
+list-style-image	:none;
+list-style-position	:outside;
+list-style-type	:disc;
+
+
+}
+
+a, button{
+    height: 68px;
+    min-width: 68px;
+    font-size: 100%;
+}
+
+.apretado, a:ACTIVE, button:ACTIVE{
     background-color: orange;
 }
 
 
-.acciones button{
+.acciones button, .acciones a{
     width: 100%;
     padding: 10px 0px;
     font-size: 100%;
 }
 
-button.cuadrado{
+
+.li-mesas button, li-mesas a{
     height: 68px;
     min-width: 68px;
     font-size: 100%;
 }
 
-.li-mesas button{
-    height: 68px;
-    min-width: 68px;
-    font-size: 100%;
-}
 
-
-#abrir-mesa{
+.abrir-mesa{
 	background-image: url("img/new_tab.png");
 	background-repeat: no-repeat;
 	text-indent: -100px;
@@ -30,7 +104,7 @@ button.cuadrado{
 
 
 
-#f5-refresh{
+.f5-refresh{
 	background-image: url("img/refresh.png");
 	background-repeat: no-repeat;
 	background-position: 2px 4px;

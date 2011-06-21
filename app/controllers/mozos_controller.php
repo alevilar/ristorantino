@@ -66,5 +66,11 @@ class MozosController extends AppController {
 		}
 	}
 
+
+        function mesas_abiertas() {
+            $mesas = $this->Mozo->mesasAbiertas();
+            $this->set('mesas', $mesas);
+        }
+
 }
 ?>

@@ -61,6 +61,27 @@ Mesa.prototype = {
     cliente : null,
     cantComensales : 0,
     mozo: {},
+    button: null,
+
+    /**
+     * devuelve un Button con el elemento mesa
+     * @return jQuery Element button
+     */
+    getButton: function(){
+        if (this.hasOwnProperty('mozo') && !this.button) {
+            var btn = document.createElement('button');
+            btn.setAttribute('mozo_id', this.mozo.id);
+            btn.mesa_id = this.id;
+            btn.innerHTML = this.numero;
+            btn.mesa = this;
+            this.button = btn;
+            var cntx = this;
+            this.button.onclick = function(){
+                cntx.seleccionar.call(cntx)
+            }
+        }
+        return this.button;
+    },
 
     /** estado de la mesa
      * @var __estado Private
@@ -110,9 +131,20 @@ Mesa.prototype = {
         return this;
     },
 
+    deseleccionar: function() {
+        for each(var e in this.__estado){
+            if (e == MESA_ESTADOS_POSIBLES.seleccionada) {
+                var idx = this.__estado.indexOf(e);
+                if(idx!=-1) this.__estado.splice(idx, 1);
+            }
+        }
+
+    },
+
     seleccionar: function() {
-        this.__estado.push(MESA_ESTADOS_POSIBLES.seleccionada);
-        this.__triggerEventCambioDeEstado();
+        var event =  $.Event(MESA_ESTADOS_POSIBLES.seleccionada.event);
+        event.mesa = this;
+        $(document).trigger(event);
         return this;
     },
     
@@ -245,17 +277,23 @@ Mesa.prototype = {
     },
 
 
-    abrir: function(){
+    __abrir: function(){
         if (this.id) {
             alert('no se puede abrir una mesa que ya esta abierta. El ID ya existe. Consulte con el administrador del Sistema');
             return;
         }
-        var context = this;        
-        $.post(document.referrer + 'mesas/ajaxAbrirMesa',
+        var context = this;
+        alert("voy a abrir");
+        var response = $.post( urlDomain + 'mesas/abrirMesa.json',
                 {'data[Mesa][numero]': this.numero, 'data[Mesa][mozo_id]': this.mozo.id},
-                function(t, e){
-                     context.setEstadoAbierta();
-                });
+                function() {
+                    context.setEstadoAbierta();
+                },
+            'json');
+            
+         response.error = function(t) {
+             alert("error de ajax: "+t);
+         }
     },
 
     setMozo: function(nuevoMozo, agregarMesa){
@@ -272,8 +310,17 @@ Mesa.prototype = {
 
     abrirlaConMozo: function(nuevoMozo){
         this.setMozo(nuevoMozo);
-        this.abrir();
+        return this.__abrir();
+    },
+
+
+    editar: function(data) {
+        if (!data['data[Mesa][id]']){
+            data['data[Mesa][id]'] = this.id;
+        }
+        $.post(document.referrer+'mesas/ajax_edit', data);
     }
+
 
 
 };

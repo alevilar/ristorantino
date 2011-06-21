@@ -14,14 +14,6 @@ $(document).ready(function() {
 });
 
 
-$(window).load(function(){
-    if (adicion.currentMesa) {
-        var mesa = adicion.currentMesa;
-        var url = document.domain+'mesas/view/'+mesa.id;
-        $('#mesa-scroll').load(url);
-    }
-});
-
 function mesaCerrada(){
     alert('mesa cerrada');
 }
@@ -45,14 +37,21 @@ function cambioMozo(e){
 
 
 function mesaSeleccionada(e){
-    alert("mesa seleccionada");
     console.info('mesa seleccionada');
-    console.debug(e);
+    adicion.currentMesa = e.mesa;
+    adicion.currentMozo = e.mesa.mozo;
+    var mesaContainer = $('<div>');
+    mesaContainer.mesa = e.mesa;
+    mesaContainer.load(document.referrer+'mesas/view/'+e.mesa.id);
+    mesaContainer.pagesman();
 }
 
 
 
 function abrirMesa(e) {
-    alert("mesa abierta");
-    adicion.mesas.push(e.mesa);
+    if (!e.mesa.id) {
+        setTimeout(function(){abrirMesa(e)},1000);
+    } else {
+        mesaSeleccionada(e);
+    }
 }

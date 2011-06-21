@@ -12,17 +12,19 @@
  *
  * */
     
-var Adicion = function(mozo){
-    
-    this.urlMesaView = document.domain + '/Mesas/view';
+var Adicion = function(mozo) {
 
     this.currentMozo = mozo || new Mozo();
-
     this.currentMesa = null;
 
     this.mozos = [];
-
     this.mesas = [];
+
+    // list de botones que van como controllers en los menu
+    this.__buttons = [];
+    
+
+    this.productos = [];
 
 
     // esta es la comanda que se genera al sacar un Item de un DetalleMesa
@@ -35,22 +37,27 @@ var Adicion = function(mozo){
     this.comanda = null;  //este objeto se crea con el evento window onload
 
 
+    this.cubiertosObligatorios = true;
+
+
 
 }
 
 Adicion.prototype = {
 
-    /**
-     *  devuelve un listado de Buttons (form buttons)
-     *  del listado de objetos "objname" que le pase como parametro
-     */
-    butonizar: function(list, objname){
-        var obj = objname || 'obj';
+
+    mesasButonizadas: function() {
         var btns = [];
-        for each(var i in list) {
-            var el = document.createElement('button');            
-            el[obj] = i;
-            btns.push(el);
+        for each(var m in this.mesas) {
+            btns.push(m.getButton());
+        }
+        return btns;
+    },
+
+    mozosButonizados: function() {
+        var btns = [];
+        for each(var m in this.mozos) {
+            btns.push(m.getButton());
         }
         return btns;
     },
@@ -99,9 +106,7 @@ Adicion.prototype = {
      * @param Boolean cubiertosObligatorios
      **/
     cerrarCurrentMesa: function(cubiertosObligatorios ){
-        var confirma = false;
-        
-        cubiertosObligatorios = typeof(cubiertosObligatorios) === 'undefined' ? true : cubiertosObligatorios;
+        var cubiertosObligatorios = cubiertosObligatorios || 'undefined';
 
         if (this.tieneMesaSeleccionada()) {
             // si aun no se settearon la cantidad de comensales DEBE HACERLO !!
@@ -130,82 +135,151 @@ Adicion.prototype = {
     },
 
 
-    ticketView: function(){
-        var url = document.domain+'/mesas/ticket_view';
-        new Ajax.Updater(
-                    'mesa-scroll',
-                    url+'/'+this.currentMesa.id,
-                    {asynchronous:true,
-                        evalScripts:true,
-                        requestHeaders:['X-Update', 'mesa-scroll']}
-                );
+    ticketView: function(elementToUpdate){
+        var url = document.referrer+'mesas/ticket_view' + '/'+this.currentMesa.id ;
+        $(elementToUpdate).load(url);
     },
-
 
 
     cambiarNumeroMesa: function(){
-        var urlEdit = document.domain+'/mesas/ajax_edit';
         var numero = prompt('Nuevo Número de Mesa',this.currentMesa.numero);
-        var mesaId = this.currentMesa.id;
-        new Ajax.Request(urlEdit,
-        {
-            parameters: {
-                'data[Mesa][id]': mesaId,
+        var ops = {
                 'data[Mesa][numero]': numero
-            },
-            method: 'post',
-            onSuccess: function(){
-                parent.location.reload();
-            },
-            onFailure: function(){
-                alert("Se ha perdido conexion con el servidor. Reintente.");
-                contenedorCambiarMozosDeMesa.hide();
-            }
-        });
+            };
+        this.currentMesa.editar(ops);
     },
 
 
 
+    /**
+     * Le agrega al boton la logica corerspondiente para manejar
+     * un evento "click"
+     *
+     * @param btn boton
+     */
+    __addButtonOnclickLogic: function (btn){
+        var adicion = this;
+        if (btn.id ) {
+            $( btn ).click(function(){
+               var container = adicion['onclick'].call();
+               container.pagesman();
+            });
 
+            
+        } else {
+            if (window.console){
+                console.error("Ojo! el boton no tiene ID, debe tenerlo para que funcione");
+                console.debug(btn);
+            }
+        }
+        return btn;
+    },
 
-/*******************------------ NUEVA VERSION --------------------------------************/
-/*********----------------------------------------------------------------------*************/
 
     /**
      *  Agrega un nuevo boton al menu indicado
-     *  @param String|Object btnElementId Id del boton. Si es un bojecto tenjgo que pasarle un json con lso atributos del elemento. El atributo "text" escribe el tecxo a mostrar en el boton
-     *  @param String menuContainerElementId Id del menu
-     *  @param String display default 'inline', puede ser block. es la propiedad CSS
+     *  @param btnElementId String|Object Id del boton. Si es un bojecto tenjgo que pasarle un json con lso atributos del elemento. El atributo "text" escribe el tecxo a mostrar en el boton
+     *  @param onClick function event handler
+     *  @param ops Object
+     *              display default 'inline', puede ser block. es la propiedad CSS
+     *              menu nombre del elemnto donde voy a atachar el boton
+     *
+     *  @return Element button Devuelve el nuevo boton creado
      */
-    addButton: function(btnElementId, menuContainerElementId, display) {
-        return $(function(){
+    addButton: function(btnElementId, onClick,  display) {
             var dis = display || 'inline';
+            if (btnElementId && btnElementId.display ) {
+                dis = btnElementId.display;
+            }
+            
+            var menuName = '.window_controll';
+            if (btnElementId && btnElementId.menu ) {
+                menuName = btnElementId.menu;
+            }            
+            var menu = $(menuName);
+            if ( $('.page:visible > ' + menuName).length ) {
+                menu = $('.page:visible > '+menuName);
+            }
+            
             var btn = {};
-            console.info("addButton");
             if (typeof btnElementId == 'object') {
+                // genero un nuevo boton
                 btn = document.createElement('button');
+                // inserto todos los atributos que vinieron en el objeto btnElementId
                 for (var i in btnElementId) {
                     if (typeof btnElementId[i] == 'function') {
                         btn[i] = btnElementId[i];
                     } else {
+                        // si el atributo tiene el nombre "text" quiere decir que voy
+                        // a ingresarlo como texto dentro del html
                         if (i == 'text') {
                             $(btn).html(btnElementId[i]);
+                        } else if ('id') {
+                            continue;
                         } else {
                             $(btn).attr(i, btnElementId[i]);
                         }
-                        
                     }
-                    
                 }
-            } else {
-                btn = document.getElementById(btnElementId);
+                // si no existe el type que sea button por default
+                if ( !btn.type ) {
+                    btn.type = 'button';
+                }
+                // lo agrego al listado de botones generados, para no generar 2 veces
+                this.__pushButton(btnElementId.id, btn);
+            } else if ( typeof btnElementId == 'string' ) {
+                // si vino un string en lugar de un objeto es porque
+                // quiero agarrar un boton previamente generado
+                btn = this.__getButton(btnElementId);
             }
-            console.debug(btn);
-            var menu = document.getElementById(menuContainerElementId);
-            menu.appendChild(btn);
-            btn.style.display = dis;
-            return btn;
-        })
+
+            // meto el boton en el menu
+            $(btn).appendTo(menu);
+            $(btn).css({display: dis});
+
+            $( btn ).click(function(e){
+                if (onClick) {
+                    // ejecutar el evento oclick y luego, con el contenedor que devuelve
+                    // meterlo en algun contenedr con pagesman
+                    var ret = onClick();
+                    if (ret) {
+                        ret.pagesman();
+                    }
+                }
+            });
+            
+            return $(btn);
+    },
+
+
+    /**
+     *  Devuelve el boton del listado de botones segun el ID del elemento
+     */
+    __getButton: function (elId) {
+        return this.__buttons[elId];
+    },
+
+    /**
+     * AGrega un boton al listado de botones de la adicion
+     *
+     */
+    __pushButton: function(elId, btn){
+        this.__buttons[elId] = btn;
+        return btn;
+    },
+
+
+    /**
+     * Me indica si un metodo existe
+     * @param  methodName string nombre del metodo
+     * @returns boolean
+     */
+    methodExists: function(methodName) {
+        var ret = false;
+        if ( this.hasOwnProperty(methodName) ) {
+            ret = true;
+        }
+        return ret;
     },
 
     /**
@@ -247,12 +321,15 @@ Adicion.prototype = {
 
     getMesasAbiertas: function(){
         var context = this;
-        var ajaxResp = $.get(urlDomain + 'mesas/abiertasPorMozo.json', function(e,t){
-            context.__handleMesasAbiertas.call(context, e, t)
-        });
-        console.info('Mesas abiertas');
-        console.debug(ajaxResp);
-        
+
+        var ajaxResp = $.get(
+                urlDomain + 'mozos/mesas_abiertas.json',
+                function(e,t){
+                    context.__handleMesasAbiertas(e, t)
+                },
+                'json'
+            );
+                
         ajaxResp.error = function(){alert("fallo conexión")}
     },
     

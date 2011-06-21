@@ -1,21 +1,16 @@
 
+
+<div class="grid_12 window_controll"></div>
 <script type="text/javascript">
-<!--
-var mesaCambiar = new Mesa(<?php echo json_encode($mesa)?>);
-
-var mozoCambiar = new Mozo(<?php echo $mozo_json?>);
-
-adicion.cambiarMesa(mesaCambiar);
-adicion.cambiarMozo(mozoCambiar);
-//-->
+    adicion.addButton('abrirMesa');
+    adicion.addButton('seleccionarMesa');
 </script>
 
-
 <div class="mesas view">
-    <h4 id="mesa-total">
-        <?php echo "Total: $".$mesa_total; ?>
-        </h4>
-	<ul>
+    <h1>Mesa N° <? echo $mesa['Mesa']['numero']?> - Mozo <? echo $mesa['Mozo']['numero']?></h1>
+    <div class="">
+    <h4 id="mesa-total"><?php echo "Total: $".$mesa_total; ?></h4>
+    <ul>
 	
  	<?php 
  	echo (sizeof($items)== 0)?"NO HAY ITEMS<br>":"";
@@ -56,5 +51,6 @@ adicion.cambiarMozo(mozoCambiar);
 	endforeach;
 	?>
 	</ul>
+    </div>
 	
 </div>

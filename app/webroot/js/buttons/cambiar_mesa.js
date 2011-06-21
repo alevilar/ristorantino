@@ -8,7 +8,7 @@
         'onclick': function(){adicion.seleccionarMesa.call(adicion)}
     }
 
-   var strContenedorMesasAbiertas = adicion.addButton(btn, 'menu-top');
+   var strContenedorMesasAbiertas = adicion.addButton(btn);
 
     var strContenedorMesasAbiertas = '#listado-de-mesas-abiertas';
     var html = '<span class="mesa-numero">¿MESA?</span><span class="mozo-numero"></span>';

@@ -28,27 +28,29 @@
                     'jquery/jquery-1.5.1.min',
                     'jquery/jquery-ui-1.8.12.custom.min',
                     'jquery/jquery.tmpl.min',
+                    'jquery/jquery.history',
                     'ristorantino/generic',
                     '/adition/js/adicion.class',
                     'ristorantino/mesa.class',
                     'ristorantino/mozo.class',
 
-                    'ristorantino/mensaje.class',
-
-                    'ristorantino/categorias.class',
-                    'ristorantino/producto.class',
+//                    'ristorantino/mensaje.class',
+//
+//                    'ristorantino/categorias.class',
+//                    'ristorantino/producto.class',
                     //'ristorantino/fabrica_mozo.class',
                     //'ristorantino/fabrica_mesas.class',
                     
                     
-                    'ristorantino/cliente.class',
-                    'ristorantino/comanda.class',
-                    'ristorantino/comanda_sacar.class',
-                    'ristorantino/comanda_cocina.class',
+//                    'ristorantino/cliente.class',
+//                    'ristorantino/comanda.class',
+//                    'ristorantino/comanda_sacar.class',
+//                    'ristorantino/comanda_cocina.class',
                     
-                    'ristorantino/ventanas',
+                   // 'ristorantino/ventanas',
+                    
                     '/adition/js/adition.events',
-                    'adicionar/producto_comanda.class',
+//                    'adicionar/producto_comanda.class',
 
                     'jquery.pagesman',
                     ));
@@ -57,6 +59,7 @@
                 // botones
                 echo $javascript->link(array(
                     'buttons/refresh',
+                    'buttons/back',
                     'buttons/abrir_mesa',
                     'buttons/seleccionar_mesa',
                     ));
@@ -66,15 +69,30 @@
 	
 <script type="text/javascript">
 <!--
-        var urlDomain = "<?php echo $html->url('/',true);?>";
+    // Inicializacion de variables y objetos Core
+    var urlDomain = "<?php echo $html->url('/',true);?>";
+
+    var adicion = new Adicion();
+
+    //adicion.setMozos(<?php echo json_encode($mozos)?>);
+    adicion.getMesasAbiertas();
+
 -->
 </script>
+
 	
 </head>
 <body>
-    <div id="container" class="container_12">
-			<?php echo $content_for_layout; ?>
+
+    <div class="mega_controlls"></div>
+    <div id="pages" class="container_12">
+        <div class="page" style="display: block">
+            <div class="grid_12 window_controll"></div>
+            <?php echo $content_for_layout; ?>
+        </div>
     </div>
+
+
     <div class="clear"></div>
 <?php echo $javascript->link('adicionar/tail'); ?>
 	

@@ -36,6 +36,18 @@ Mozo.prototype = {
     mesas: [],
     seleccionado: false,
 
+    /**
+     * devuelve un Button con el elemento mozo
+     * @return jQuery Element button
+     */
+    getButton: function(){
+        var btn = document.createElement('button');
+        btn.mozo_id = this.id;
+        btn.innerHTML = this.numero;
+        btn.mozo = this;
+        return btn;
+    },
+
 
     cloneFromJson: function(json){
         //copio solo lo decclarado en el prototype del objecto Mozo

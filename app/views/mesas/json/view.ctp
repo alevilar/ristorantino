@@ -1,8 +1,6 @@
 <?php
-
 $mesa['total'] = $mesa_total;
 $mesa['items'] = array();
-
 
 $comanda_ant = '';
 $prod_borrados = array();

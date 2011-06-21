@@ -135,7 +135,6 @@ class MesasController extends AppController {
 
 
     function view($id = null) {
-        $this->layout='ajax';
 
         if (!$id) {
             $this->Session->setFlash(__('Invalid Mesa.', true));
@@ -256,16 +255,15 @@ class MesasController extends AppController {
     }
 
 
-    function ajaxAbrirMesa(){
-        $this->autoRender = false;
-        $this->layout = 'ajax';
+    function abrirMesa(){
+        $insertedId = 0;
         if (!empty($this->data['Mesa'])){
-            if (!$this->Mesa->save($this->data)){
-                return $this->Mesa->id;
+            if ($this->Mesa->save($this->data)){
+                $insertedId = $this->Mesa->id;
             }
-            return -1;
         }
-        return 0;
+        $this->set('insertedId', $insertedId);
+        $this->set('validationErrors', $this->Mesa->validationErrors);
     }
     
     function add() {
@@ -404,13 +402,6 @@ class MesasController extends AppController {
         $this->render('mesas');
     }
 
-
-    function abiertasPorMozo()
-    {
-        $mesas = $this->Mesa->Mozo->mesasAbiertas();
-        $this->set('mesas', $mesas);
-        $this->render('mesas');
-    }
 
 
     function reabrir($id){
