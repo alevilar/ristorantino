@@ -1,16 +1,16 @@
 //on ready
-$(function(){
+(function(){
 
     // Agregar el boton el menu-top
     var btn = {
         'text' : 'Volver',
-        'id'   : 'volver',
+        'id'   : 'back',
         'class': 'cuadrado',
         'menu' : '.mega_controlls'
     };
 
-    adicion.addButton(btn, function(){
+    adicion.registerButton(btn, function(){
         $(document).pagesmanBack();
 
     });
-});
+})();

@@ -1,11 +1,11 @@
 
-
-<div class="grid_12 window_controll"></div>
 <script type="text/javascript">
-    adicion.addButton('abrirMesa');
-    adicion.addButton('seleccionarMesa');
+    //adicion.reinitMenuController();
+    //adicion.addButton(['back', 'abrirMesa', 'seleccionarMesa']);
 </script>
 
+
+<div class="window_controll"></div>
 <div class="mesas view">
     <h1>Mesa N° <? echo $mesa['Mesa']['numero']?> - Mozo <? echo $mesa['Mozo']['numero']?></h1>
     <div class="">

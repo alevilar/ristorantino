@@ -1,6 +1,6 @@
     
 //on ready
-$(function(){
+(function(){
     
     // Agregar el boton el menu-top
     var btn = {
@@ -9,7 +9,7 @@ $(function(){
         'class': 'cuadrado'
     };
 
-    adicion.addButton(btn, function(){
+    adicion.registerButton(btn, function(){
         var mesa = new Mesa();
         mesa.numero = window.prompt('introduzca número de mesa');
 
@@ -32,4 +32,4 @@ $(function(){
         return $(container);
 
     });
-});
+})();

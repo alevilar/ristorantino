@@ -40,6 +40,12 @@ var Adicion = function(mozo) {
     this.cubiertosObligatorios = true;
 
 
+    this.defaults = {
+        // menu controlls para poner los botones, aca se debe especificar el selector DOM
+        menuControlls: '.window_controll'
+    }
+
+
 
 }
 
@@ -48,23 +54,23 @@ Adicion.prototype = {
 
     mesasButonizadas: function() {
         var btns = [];
-        for each(var m in this.mesas) {
-            btns.push(m.getButton());
+        for(var m in this.mesas) {
+            btns.push(this.mesas[m].getButton());
         }
         return btns;
     },
 
     mozosButonizados: function() {
         var btns = [];
-        for each(var m in this.mozos) {
-            btns.push(m.getButton());
+        for(var m in this.mozos) {
+            btns.push(this.mozos[m].getButton());
         }
         return btns;
     },
 
     nombrificar: function(list, text) {
-        for each (var i in list) {
-            i.innerHTML = i.obj[text];
+        for (var i in list) {
+            list[i].innerHTML = list[i].obj[text];
         }
         return list;
     },
@@ -136,7 +142,7 @@ Adicion.prototype = {
 
 
     ticketView: function(elementToUpdate){
-        var url = document.referrer+'mesas/ticket_view' + '/'+this.currentMesa.id ;
+        var url = window.urlDomain+'mesas/ticket_view' + '/'+this.currentMesa.id ;
         $(elementToUpdate).load(url);
     },
 
@@ -176,9 +182,46 @@ Adicion.prototype = {
     },
 
 
+
+    reinitMenuController: function(menuSelector) {
+        var menu = menuSelector || this.defaults.menuControlls;
+        $(menu).html('');
+    },
+
     /**
-     *  Agrega un nuevo boton al menu indicado
-     *  @param btnElementId String|Object Id del boton. Si es un bojecto tenjgo que pasarle un json con lso atributos del elemento. El atributo "text" escribe el tecxo a mostrar en el boton
+     * Mete el boton registrado previamente con registerButon
+     * en el menu indicado
+     * @param btnSelector String ID o identificacion del boton
+     * @param menuSelector String id o identificacion DOM del menu donde voy a appendear el boton
+     */
+    addButton: function(btnSelector, menuSelector) {
+        var menu = menuSelector || this.defaults.menuControlls;
+
+        if(typeof btnSelector == 'string') {
+            btnSelector = [btnSelector];
+        }
+        
+        
+        for (var b in btnSelector ) {
+            var btnSel = btnSelector[b];
+            var btn = this.__getButton(btnSel);
+            if ( btn ) {
+                btn.appendTo(menu);
+            } else {
+                console.info('El boton no existe');
+                console.debug(btnSel);
+            }
+        }
+        
+        return btn;
+    },
+
+
+    /**
+     *  Agrega un nuevo al listado de botones disponibles para
+     *  luego llamarlo con la funcion addButton
+     *  
+     *  @param jsBtn Object del boton. Es un json con los atributos del elemento. El atributo "text" escribe el tecxo a mostrar en el boton
      *  @param onClick function event handler
      *  @param ops Object
      *              display default 'inline', puede ser block. es la propiedad CSS
@@ -186,38 +229,39 @@ Adicion.prototype = {
      *
      *  @return Element button Devuelve el nuevo boton creado
      */
-    addButton: function(btnElementId, onClick,  display) {
+    registerButton: function(jsBtn, onClick,  display) {
             var dis = display || 'inline';
-            if (btnElementId && btnElementId.display ) {
-                dis = btnElementId.display;
+            if (jsBtn && jsBtn.display ) {
+                dis = jsBtn.display;
             }
-            
-            var menuName = '.window_controll';
-            if (btnElementId && btnElementId.menu ) {
-                menuName = btnElementId.menu;
-            }            
-            var menu = $(menuName);
-            if ( $('.page:visible > ' + menuName).length ) {
-                menu = $('.page:visible > '+menuName);
-            }
-            
+                        
             var btn = {};
-            if (typeof btnElementId == 'object') {
-                // genero un nuevo boton
-                btn = document.createElement('button');
+
+            if (typeof jsBtn == 'object') {
+
+                if ( jsBtn.hasOwnProperty('href') ) {
+                    // genero un link
+                    btn = document.createElement('a');
+                    btn.href = jsBtn.href;
+                    btn['class'] = 'button';
+                } else {
+                    // genero un boton
+                    btn = document.createElement('button');
+                }
+                
                 // inserto todos los atributos que vinieron en el objeto btnElementId
-                for (var i in btnElementId) {
-                    if (typeof btnElementId[i] == 'function') {
-                        btn[i] = btnElementId[i];
+                for (var i in jsBtn) {
+                    if (typeof jsBtn[i] == 'function') {
+                        btn[i] = jsBtn[i];
                     } else {
                         // si el atributo tiene el nombre "text" quiere decir que voy
                         // a ingresarlo como texto dentro del html
                         if (i == 'text') {
-                            $(btn).html(btnElementId[i]);
+                            $(btn).html(jsBtn[i]);
                         } else if ('id') {
                             continue;
                         } else {
-                            $(btn).attr(i, btnElementId[i]);
+                            $(btn).attr(i, jsBtn[i]);
                         }
                     }
                 }
@@ -226,29 +270,44 @@ Adicion.prototype = {
                     btn.type = 'button';
                 }
                 // lo agrego al listado de botones generados, para no generar 2 veces
-                this.__pushButton(btnElementId.id, btn);
+
+                 // meto el boton en el menu
+                $(btn).appendTo(this.defaults.menuControlls);
+                btn.style.display = dis;
+
+                btn.onclick = function(e){
+                    e.preventDefault();
+                    if (onClick) {
+                        // ejecutar el evento oclick y luego, con el contenedor que devuelve
+                        // meterlo en algun contenedr con pagesman
+                        var ret = onClick();
+                        if (ret) {
+                            ret.pagesman();
+                        }
+                    }
+
+                    // si es un link, entonces el evento click, sera
+                    // un ajax que llame al href
+                    if ( jsBtn.hasOwnProperty('href') ) {
+                        $.get(jsBtn.href, function(t){
+                            var newdiv = $('<div>');
+                            newdiv.append(t);
+                            newdiv.pagesman();
+                        });
+                    }
+                    return false;
+                };
+                btn = $( btn );
+
+                this.__pushButton(jsBtn.id, btn);
             } else if ( typeof btnElementId == 'string' ) {
                 // si vino un string en lugar de un objeto es porque
                 // quiero agarrar un boton previamente generado
-                btn = this.__getButton(btnElementId);
+                btn = this.__getButton(jsBtn);
             }
-
-            // meto el boton en el menu
-            $(btn).appendTo(menu);
-            $(btn).css({display: dis});
-
-            $( btn ).click(function(e){
-                if (onClick) {
-                    // ejecutar el evento oclick y luego, con el contenedor que devuelve
-                    // meterlo en algun contenedr con pagesman
-                    var ret = onClick();
-                    if (ret) {
-                        ret.pagesman();
-                    }
-                }
-            });
-            
-            return $(btn);
+            console.info("boton registrado");
+            console.debug(jsBtn);
+            return btn;
     },
 
 
@@ -297,13 +356,13 @@ Adicion.prototype = {
 
     setMozos: function(mozos){
         var mozoaux;
-        for each(var m in mozos){
-            if (!$.isEmptyObject(m)) {
+        for (var m in mozos){
+            if (!$.isEmptyObject(mozos[m])) {
                 
                 mozoaux = new Mozo();
-                mozoaux.cloneFromJson(m.Mozo);
+                mozoaux.cloneFromJson(mozos[m].Mozo);
                 
-                mozoaux.User = m.User;
+                mozoaux.User = mozos[m].User;
                 this.mozos.push(mozoaux);
             }
         }
@@ -329,7 +388,6 @@ Adicion.prototype = {
                 },
                 'json'
             );
-                
         ajaxResp.error = function(){alert("fallo conexión")}
     },
     
@@ -337,13 +395,13 @@ Adicion.prototype = {
     __handleMesasAbiertas: function( data ) {
         var mozos = [];
         var mesas = [];
-        for each (d in data) {
+        for (d in data) {
             var mo = new Mozo();
-            mo.cloneFromJson(d.Mozo)
+            mo.cloneFromJson(data[d].Mozo)
             mozos.push(mo);
-            for each (a in d.Mesa) {
+            for (a in data[d].Mesa) {
                 var me = new Mesa();
-                me.cloneFromJson(a)
+                me.cloneFromJson(data[d].Mesa[a])
                 me.setMozo(mo);
                 mo.mesas.push(me);
                 mesas.push(me);

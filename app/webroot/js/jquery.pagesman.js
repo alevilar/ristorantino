@@ -19,6 +19,9 @@
     var current;
 
 
+    /**
+     * Esta funcion es la que hace el cambio de pagina dentro del innerHTML
+     */
     var __doChange = function(pageToInsert){
         $(pagesContainer + ' > '+pagesSelector).hide().removeClass('current');
         $(pagesContainer).append(pageToInsert);

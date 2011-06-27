@@ -96,8 +96,8 @@ Mesa.prototype = {
     __triggerEventCambioDeEstado: function(){
         if (!$.isEmptyObject(this.getEstado())) {
             var estados = this.getEstado();
-            for each (estado in estados ) {
-                var event =  $.Event(estado.event);
+            for (estado in estados ) {
+                var event =  $.Event(estados[estado].event);
                 event.mesa = this;
                 $(document).trigger(event);
             }
@@ -132,9 +132,9 @@ Mesa.prototype = {
     },
 
     deseleccionar: function() {
-        for each(var e in this.__estado){
-            if (e == MESA_ESTADOS_POSIBLES.seleccionada) {
-                var idx = this.__estado.indexOf(e);
+        for (var e in this.__estado){
+            if (this.__estado[e] == MESA_ESTADOS_POSIBLES.seleccionada) {
+                var idx = this.__estado.indexOf(this.__estado[e]);
                 if(idx!=-1) this.__estado.splice(idx, 1);
             }
         }
@@ -242,7 +242,7 @@ Mesa.prototype = {
 
 
     reimprimir : function(){
-        var url = document.referrer+'mesas/imprimirTicket';
+        var url = window.urlDomain+'mesas/imprimirTicket';
         $.post( url+"/"+this.id);
     },
 
@@ -264,14 +264,14 @@ Mesa.prototype = {
 
 
     cerrar: function(){
-        var url = document.referrer + 'mesas/cerrarMesa' + '/' + this.currentMesa.id + '/0';
+        var url = window.urlDomain + 'mesas/cerrarMesa' + '/' + this.currentMesa.id + '/0';
         var context = this;
         $.get(url, {}, function(){context.setEstadoCerrada();});
     },
 
 
     borrar : function(){
-        var url = document.referrer + 'mesas/delete/' +this.id;
+        var url = window.urlDomain + 'mesas/delete/' +this.id;
         var context = this;
         $.get(url, {}, function(){context.setEstadoBorrada()});
     },
@@ -318,7 +318,7 @@ Mesa.prototype = {
         if (!data['data[Mesa][id]']){
             data['data[Mesa][id]'] = this.id;
         }
-        $.post(document.referrer+'mesas/ajax_edit', data);
+        $.post( window.urlDomain +'mesas/ajax_edit', data);
     }
 
 

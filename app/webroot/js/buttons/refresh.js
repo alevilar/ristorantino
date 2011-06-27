@@ -1,16 +1,14 @@
-$(function(){
+(function(){
 
     // Agregar el boton el menu-top
     var btn = {
         'text': 'F5',
-        'id' : 'f5-refresh',
+        'id' : 'refresh',
         'class': 'cuadrado f5-refresh',
         'menu' : '.mega_controlls',
-        'onclick': function(){parent.location.reload();}
+        'onclick': function(){ parent.location.reload(); }
     }
 
-   adicion.addButton(btn);
+   adicion.registerButton(btn);
 
-
-
-});
+})();

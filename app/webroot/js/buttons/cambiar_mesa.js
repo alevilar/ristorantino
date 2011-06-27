@@ -3,12 +3,12 @@
 // Agregar el boton el menu-top
     var btn = {
         'text': '¿Mozo o Mesa?',
-        'id' : 'listadoMozosyMesas',
+        'id' : 'cambiarMesa',
         'class': 'cuadrado',
         'onclick': function(){adicion.seleccionarMesa.call(adicion)}
     }
 
-   var strContenedorMesasAbiertas = adicion.addButton(btn);
+   var strContenedorMesasAbiertas = adicion.registerButton(btn);
 
     var strContenedorMesasAbiertas = '#listado-de-mesas-abiertas';
     var html = '<span class="mesa-numero">¿MESA?</span><span class="mozo-numero"></span>';

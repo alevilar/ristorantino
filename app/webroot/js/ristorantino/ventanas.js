@@ -28,11 +28,11 @@ var ventanas = {
         var ulCont = document.createElement('ul');
         container.appendChild(ulCont);
 
-        for each (var m in cosas){
+        for (var m in cosas){
             var li = document.createElement('li');
             var but = document.createElement('button');
-            but.textContent = m[fieldMostrar];
-            but.objeto = m;
+            but.textContent = cosas[m][fieldMostrar];
+            but.objeto = cosas[m];
             li.appendChild(but);
             ulCont.appendChild(li);
         }

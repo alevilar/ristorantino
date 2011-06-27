@@ -1,4 +1,4 @@
-$(function(){
+(function(){
 
     // Agregar el boton el menu-top
     var btn = {
@@ -7,7 +7,7 @@ $(function(){
         'class':  'cuadrado'
     }
 
-   adicion.addButton(btn, function(){
+   adicion.registerButton(btn, function(){
             // genero el nombre de la clase del contenedor a generar
             var containerclassName = this.id +  'Container';
 
@@ -46,10 +46,4 @@ $(function(){
             container.append(mozosContainer).append(mesasContainer);
             return container;
         });
-
-
-
-
-
-    
-});
+})();

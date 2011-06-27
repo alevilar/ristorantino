@@ -7,23 +7,21 @@ class ComandasController extends AppController {
 	
 	
 	function add(){
-		$this->autoRender = false;
-		//Configure::write('debug',0);
-		
-		if (isset($this->data)):
-				$this->Comanda->create();
-				if ($this->Comanda->save($this->data)) {					
-					$j = 1;
-					?><script type="text/javascript">
-						<!--
-						mensajero.show("comanda enviada");
-						//-->
-						</script>
-					<?php 			
-				} else {
-					$this->Session->setFlash(__('The Comanda could not be saved. Please, try again.', true));
-				}
-		endif;
+
+            //Configure::write('debug',0);
+
+            if (isset($this->data)):
+                $this->Comanda->create();
+                if ($this->Comanda->save($this->data)) {
+                    $j = 1;
+                    $this->autoRender = false;
+                    $this->Session->setFlash( __("Comanda Enviada") );
+                } else {
+                    $this->Session->setFlash(__('The Comanda could not be saved. Please, try again.', true));
+                }
+            endif;
+
+            $this->set('productos', $this->Comanda->Producto->find('all'));
 	}
 	
 	

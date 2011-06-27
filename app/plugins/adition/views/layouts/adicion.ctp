@@ -56,40 +56,46 @@
                     ));
 
 
-                // botones
-                echo $javascript->link(array(
-                    'buttons/refresh',
-                    'buttons/back',
-                    'buttons/abrir_mesa',
-                    'buttons/seleccionar_mesa',
-                    ));
 
-                echo $scripts_for_layout;
-	?>
-	
-<script type="text/javascript">
-<!--
-    // Inicializacion de variables y objetos Core
-    var urlDomain = "<?php echo $html->url('/',true);?>";
 
-    var adicion = new Adicion();
+                ?>
 
-    //adicion.setMozos(<?php echo json_encode($mozos)?>);
-    adicion.getMesasAbiertas();
+    <script type="text/javascript">
+    <!--
+        // Inicializacion de variables y objetos Core
+        var urlDomain = "<?php echo $html->url('/',true);?>";
 
--->
-</script>
+        // instancio el objeto adicion que sera el kernel de la app
+        var adicion = new Adicion();
 
+        //adicion.setMozos(<?php echo json_encode($mozos)?>);
+        adicion.getMesasAbiertas();
+    -->
+    </script>
+
+<?php
+    // Registro de botones a utilizar
+    echo $javascript->link(array(
+        'buttons/refresh',
+        'buttons/back',
+        'buttons/abrir_mesa',
+        'buttons/seleccionar_mesa',
+        'buttons/mesas_index',
+        ));
+
+    //scripts de Cake
+    echo $scripts_for_layout;
+?>
 	
 </head>
 <body>
 
-    <div class="mega_controlls"></div>
+    <div class="mega_controlls">
+        <?php echo $html->link('SALIR','/pages/home')?>
+    </div>
+
     <div id="pages" class="container_12">
-        <div class="page" style="display: block">
-            <div class="grid_12 window_controll"></div>
             <?php echo $content_for_layout; ?>
-        </div>
     </div>
 
 
