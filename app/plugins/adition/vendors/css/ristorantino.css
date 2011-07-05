@@ -1,0 +1,30 @@
+
+
+ul.listado-mesas{
+    list-style: none;
+    padding: 0px;
+}
+
+ul.listado-mesas li{
+    height: 45px;
+    margin: 0.5em 5px;
+}
+
+ul.listado-mesas li a, ul.listado-mesas li button{
+    text-decoration: none;
+    display: block;
+    padding: 0.6em 25px;
+    cursor: pointer;
+    
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+    background-clip: padding-box;
+    border-radius: 1em 1em 1em 1em;
+    font-family: Helvetica,Arial,sans-serif;
+    text-decoration: none;
+    background:  url(img/mesa_16.png)  95% 50% no-repeat, -moz-linear-gradient(center top , #FEFEFE, #EEEEEE) repeat scroll 0 0 #EEEEEE;
+    border: 1px solid #CCCCCC;
+    color: #444444;
+    font-weight: bold;
+    text-shadow: 0 1px 1px #F6F6F6;
+    
+}

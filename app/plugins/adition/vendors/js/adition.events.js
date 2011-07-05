@@ -38,12 +38,7 @@ function cambioMozo(e){
 
 function mesaSeleccionada(e){
     console.info('mesa seleccionada');
-    adicion.currentMesa = e.mesa;
-    adicion.currentMozo = e.mesa.mozo;
-    var mesaContainer = $('<div>');
-    mesaContainer.mesa = e.mesa;
-    mesaContainer.load(window.urlDomain+'mesas/view/'+e.mesa.id);
-    mesaContainer.pagesman();
+    adicion.setCurrentMesa(e.mesa);
 }
 
 

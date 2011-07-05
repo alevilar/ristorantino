@@ -1,3 +1,4 @@
+
 <?php
 
 echo $html->css('protoplasm',false);
@@ -14,7 +15,7 @@ echo $javascript->link('mesas/index_head', false);
 $paginator->options(array('url' => $this->passedArgs));
 ?>
 
-
+<div id="mesas-index" class="container_12">
 <div class="mesas index grid_12">
 <h2><?php __('Buscador de Mesas');?></h2>
 
@@ -121,3 +122,4 @@ echo $paginator->counter(array(
 
 </script>
 
+</div>  

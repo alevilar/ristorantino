@@ -18,16 +18,3 @@ window.onload = function() {
    }
 }
 
-
-
-jQuery(document).ready(function($){
-
-    $.history.init(function(hash){
-        if(hash == "") {
-            // initialize your app
-        } else {
-            // restore the state from hash
-        }
-    },
-    { unescape: ",/" });
-});

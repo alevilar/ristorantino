@@ -263,7 +263,7 @@ LEFT JOIN
 		else{
 			$mesas = $this->find('all', array(
                             'conditions'=>$conditions,
-                            'contain'=>array('Mozo(numero)')));
+                            'contain'=>array('Mozo(numero, id)')));
 		}
 
             //debug($mesas);

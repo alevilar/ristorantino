@@ -4,9 +4,23 @@
     //adicion.addButton(['back', 'abrirMesa', 'seleccionarMesa']);
 </script>
 
+<div class="grid_3">
+    <ul data-role="listview">
+        <li><a href="#hacer-comanda" ><?= $html->image('/adition/css/img/chef_64.png')?>Comanda</a></li>
+        <li><a href="#sacar-item" >Sacar Item</a></li>
+        <li><a href="#Agregar Cliente" >Agragar Cliente</a></li>
+        <li><a href="#Agragar Descuento" >Agregar Descuento</a></li>
+        <li><a href="#Cerrar-mesa" >Cerrar Mesa</a></li>
+        <li><a href="#cambiar-mozo" >Cambiar Mozo</a></li>
+        <li><a href="#Cambiar N° Mesa" >Cambiar N°</a></li>
+        <li><a href="#re-print" >Re imprimir Ticket</a></li>
+        <li><a href="#Borrar-mesa" >Borrar Mesa</a></li>
+        <li><a href="#testiesto" >De la pagina de atras</a></li>
 
-<div class="window_controll"></div>
-<div class="mesas view">
+    </ul>
+</div>
+
+<div class="mesas view grid_8 prefix_1" >
     <h1>Mesa N° <? echo $mesa['Mesa']['numero']?> - Mozo <? echo $mesa['Mozo']['numero']?></h1>
     <div class="">
     <h4 id="mesa-total"><?php echo "Total: $".$mesa_total; ?></h4>

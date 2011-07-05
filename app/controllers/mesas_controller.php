@@ -171,6 +171,7 @@ class MesasController extends AppController {
             $cont++;
         endforeach;
 
+        $this->pageTitle = 'Mesa N° '.$mesa['Mesa']['numero'];
         $this->set('mesa_total', $this->Mesa->calcular_total());
 
         $this->set(compact('mesa', 'items'));

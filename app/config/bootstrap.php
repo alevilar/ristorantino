@@ -75,4 +75,21 @@ function cqs_round($number, $precision = 0){
     }
     return $num;
 }
+
+
+
+//
+//function jqmGrid_getBlockNumber($grid, $currentNumber) {
+//
+//    $grid = array(
+//        'a' => array('a', 'b'),
+//        'b' => array('a', 'b', 'c'),
+//        'c' => array('a', 'b', 'c', 'd'),
+//        'd' => array('a', 'b', 'c', 'd', 'e'),
+//        );
+//
+//
+//    $currentNumber+1 % $gridToNumber[strtolower($grid)]
+//
+//}
 ?>
