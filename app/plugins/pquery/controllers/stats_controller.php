@@ -9,11 +9,11 @@ class StatsController extends PqueryAppController {
         function year() {
             
          //SELECT SUM(total),YEAR(mesas.created) FROM `mesas` GROUP BY YEAR(mesas.created) ORDER BY YEAR(mesas.created) asc
-            
+           /*
             $group = array(
                                    'YEAR(mesas.created)',
                                );
-                    
+           */
             $this->Mesa->recursive=-1;
             
             $mesasporaño = $this->Mesa->find('all',array(
@@ -30,15 +30,11 @@ class StatsController extends PqueryAppController {
         
         function mes() {
             
-          
-            $group = array(
-                                   'MONTH(mesas.created)',
-                               );
-                    
+                   
             $this->Mesa->recursive=-1;
             
             $mesaspormes = $this->Mesa->find('all',array(
-                                              'fields'=> array('SUM(total) AS total','MONTH(Mesa.created) AS anio'), 
+                                              'fields'=> array('SUM(total) AS total','MONTH(Mesa.created) AS mes', 'YEAR(Mesa.created) AS year'), 
                                               'group'=>'MONTH(Mesa.created)',
                                               'order'=>'MONTH(Mesa.created) asc'
                                         ));
@@ -46,7 +42,25 @@ class StatsController extends PqueryAppController {
             
            $this->set('mesas', $mesaspormes);
             
-        }     
+        } 
+        
+        
+        function dia() {
+            
+
+                    
+            $this->Mesa->recursive=-1;
+            
+            $mesaspordia = $this->Mesa->find('all',array(
+                                              'fields'=> array('SUM(total) AS total','DAY(Mesa.created) AS dia'), 
+                                              'group'=>'DAY(Mesa.created)',
+                                              'order'=>'DAY(Mesa.created) asc'
+                                        ));
+            
+            
+           $this->set('mesas', $mesaspordia);
+            
+        }  
         
         
         
