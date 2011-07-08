@@ -3,18 +3,6 @@
                 echo $html->css('/pquery/css/examples.css');
                 echo $javascript->link('/pquery/js/jquery.min.js'); 
 		echo $javascript->link('/pquery/js/jquery.jqplot.js');
-foreach ($mesas as $i=>$mesa){
-    
-    echo $mesa[0]['total'];
-        echo '<br>';
-    echo $mesa[0]['mes'];
-        echo '<br>';
-    echo $mesa[0]['year'];
-        echo '<br>';
-        echo '<br>';
-}
-echo ++$i; // cantidad de elementos!
-
 		echo $javascript->link('/pquery/js/plugins/jqplot.dateAxisRenderer.js');
 		echo $javascript->link('/pquery/js/plugins/jqplot.highlighter.js');
 
@@ -33,30 +21,12 @@ function editit(str, si, pi, plot) {
 
 jQuery(document).ready(function(){
     jQuery.jqplot.config.enablePlugins = true;
-    s1 = [<?php foreach ($mesas as $i=>$mesa){
-        echo '[';
-        echo '\'';
-        echo $mesa[0]['year'];
-        echo '-';
-        if ($mesa[0]['mes']<10) {
-            echo'0';
-        }
-        echo $mesa[0]['mes'];
-        echo '\'';
-        echo ',';
-        echo $mesa[0]['total'];
-        echo ']';
-            if ($i!=2){
-                echo ',';
-            }
-    }
-    ?>];
-                
-    //s1 = [['2011-03',300],['2011-04',290],['2011-05',150]];
+                    
+    s1 = [['2011-03',220],['2011-04',290],['2011-05',330],['2011-06',330]];
     //foreach con datos
 		
    plot1 = jQuery.jqplot('chart1',[s1],{
-       title: 'Mesas por mes',
+       title: 'Ganancia de mesas',
        axes: {
            xaxis: {
                renderer: jQuery.jqplot.DateAxisRenderer,
@@ -78,7 +48,7 @@ jQuery(document).ready(function(){
            sizeAdjust: 10,
            tooltipLocation: 'n',
            useAxesFormatters: false,
-           formatString: 'Mes %s dayglow %d',
+           formatString: 'Mes %s %d',
            useAxesFormatters: true
        },
        cursor: {
@@ -93,9 +63,18 @@ jQuery(document).ready(function(){
 
   </head>
   <body>
-    <div id="chart1" style="margin-top:20px; margin-left:20px; width:300px; height:300px;"></div>
-    
-    <pre id="code_1"></pre>
+    <div id="chart1" style="margin-top:20px; margin-left:300px; width:500px; height:300px;"></div>
 
-<?php exit;
-?>
+    
+    
+    
+<div class="grid_2 push_5">
+<p>Ganancias de mesas por dias, meses o años</p>
+
+
+<label>Elija el rango de fechas</label>
+<input type="text" maxlength="11" ></input>
+<input type="text" maxlength="11" ></input>
+</br></br></br>
+</br></br></br>
+</div>

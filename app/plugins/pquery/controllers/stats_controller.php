@@ -28,7 +28,7 @@ class StatsController extends PqueryAppController {
         }
         
         
-        function mes() {
+        function mesastotal() {
             
                    
             $this->Mesa->recursive=-1;
@@ -63,6 +63,65 @@ class StatsController extends PqueryAppController {
         }  
         
         
-        
+        function estadisticas() {
+            
+        }
+        function mozosmesas() {
+            
+        }
+        function mozospagos() {
+            
+        }
+        function mozosproductos() {
+            
+        }
+        function mesasranking() {
+            
+        }
+        /*function mesastotal() {
+            
+        }*/
+        function mesasfactura() {
+            
+        }
+        function mesaspago() {
+            
+        }
+        function mesasclientes() {
+            
+        }
+        function contingresos() {
+            
+        }
+        function contingr() {
+            
+        }
+        function contcaja() {
+            
+        }
+        function prodranking() {
+            
+        }
+        function prodingresos() {
+            
+        }
+        function prodpedidos() {
+            
+        }
+        function prodlistado() {
+            
+        }
+        function realmesasabiertas() {
+            
+        }
+        function realcomandas() {
+            
+        }
+        function realcomensales() {
+            
+        }
+        function realmesasmozos() {
+            
+        }
 }
 ?>
