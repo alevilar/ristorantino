@@ -30,6 +30,7 @@
                     'jquery/jquery.mobile-1.0b1.min',
                     'jquery/jquery.tmpl.min',
                     'knockout-1.2.1',
+                    'knockout.mapping',
                     'ristorantino/generic',
                     '/adition/js/adicion.class',
                     'ristorantino/mesa.class',

@@ -3,9 +3,8 @@ class ComandasController extends AppController {
 
 	var $name = 'Comandas';
 	var $components = array( 'Printer');
-	
-	
-	
+
+        
 	function add(){
 
             //Configure::write('debug',0);
@@ -20,14 +19,13 @@ class ComandasController extends AppController {
                     $this->Session->setFlash(__('The Comanda could not be saved. Please, try again.', true));
                 }
             endif;
-
+            
             $this->set('productos', $this->Comanda->Producto->find('all'));
 	}
 	
 	
 	function index(){
 		$this->set('comandas',$comandas = $this->Comanda->dame_las_comandas_abiertas());
-		
 	}
 	
 	/**
