@@ -13,8 +13,8 @@
 <?php echo $html->link('<h1>Mesas de clientes<h1>', '/pquery/stats/mesasclientes', array('escape' => false))?>
         </br>
     <h3>CONTABILIDAD</h3>
-<?php echo $html->link('<h1>Ingresos<h1>', '/pquery/stats/contingr', array('escape' => false))?>
-<?php echo $html->link('<h1>Egresos<h1>', '/pquery/stats/contingresos', array('escape' => false))?>
+<?php echo $html->link('<h1>Ingresos<h1>', '/pquery/stats/contingresos', array('escape' => false))?>
+<?php echo $html->link('<h1>Egresos<h1>', '/pquery/stats/contegresos', array('escape' => false))?>
 <?php echo $html->link('<h1>Cierres de caja<h1>', '/pquery/stats/contcaja', array('escape' => false))?>
         </br>
     <h3>PRODUCTOS</h3>

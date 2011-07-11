@@ -48,8 +48,9 @@ jQuery(document).ready(function(){
            sizeAdjust: 10,
            tooltipLocation: 'n',
            useAxesFormatters: false,
-           formatString: 'Mes %s %d',
-           useAxesFormatters: true
+           tooltipFormatString: '<b>Total:<span style="color:red;"> %.2f</span></b>',
+           useAxesFormatters: false,
+           tooltipAxes: 'y'
        },
        cursor: {
            show: false,

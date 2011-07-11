@@ -34,7 +34,7 @@
 
 <script id="example_1" type="text/javascript">
     $(document).ready(function(){
-    s1 = [['B',22], ['R',15.3], ['A',10.7], ['Otros',5]];
+    s1 = [['Mesas',22], ['Delivery',15.3], ['Publicidad',10.7], ['Extras',3]];
         
     plot1 = $.jqplot('chart1', [s1], {
         grid: {
@@ -67,14 +67,10 @@
 <div id="chart1" style="margin-top:20px; margin-left:20px; width:400px; height:400px;"></div>
 </div>
 <div class="grid_2 push_5">
-<p>Total ventas por factura</p>
+<p>Total ingresos</p>
 <select>
-<option value="">Dia</option>
-<option value="Contabilidad">Semana</option>
-<option value="mesas">Mes</option>
-<option value="mozos">Ultimos 3 meses</option>
-<option value="ranking">Ultimos 6 meses</option>
-<option value="ventas totales">Ultimo año</option>
+<option value="">Mes</option>
+<option value="Contabilidad">Año</option>
 </select>
 
 
@@ -84,76 +80,51 @@
 
 <div class="grid_12">
 <table cellspacing="0" cellpadding="0">
-        <caption class="editable">VentasPorTipoFactura</caption>
+        <caption class="editable">Total de ingresos</caption>
         <thead>
         <tr>
-                        <th class="editable">cant. mesas</th>
-                        <th class="editable">cubiertos</th>
-                        <th class="editable">total</th>
-                        <th class="editable">promedio x cubierto</th>
-                        <th class="editable">fecha</th>
-                        <th class="editable">tipofactura</th>
+                        <th class="editable">Concepto</th>
+                        <th class="editable">Total</th>
+                        <th class="editable">Porcentaje</th>
                     </tr>
         </thead>
         <tbody>
                 <tr class="altrow">
                             <td>
-                        3            </td>
+                        Mesas             </td>
                             <td>
-                        8            </td>
+                        $80000            </td>
                             <td>
-                        2160.00            </td>
-                            <td>
-                        270.000000            </td>
-                            <td>
-                        08/07/2011 - Fri July            </td>
-                            <td>
-                        B            </td>
+                        43%               </td>
                         </tr>
                 <tr>
                             <td>
-                        1            </td>
+                        Delivery             </td>
                             <td>
-                        5            </td>
+                        $28000            </td>
                             <td>
-                        147.00            </td>
-                            <td>
-                        29.400000            </td>
-                            <td>
-                        20/04/2011 - Wed April            </td>
-                            <td>
-                        B            </td>
+                        30%            </td>
                         </tr>
                 <tr class="altrow">
                             <td>
-                        1            </td>
+                        Publicidad            </td>
                             <td>
-                        3            </td>
+                        $10000            </td>
                             <td>
-                        122.00            </td>
-                            <td>
-                        40.666667            </td>
-                            <td>
-                        19/04/2011 - Tue April            </td>
-                            <td>
-                        R            </td>
+                        21%            </td>
                         </tr>
                 <tr>
                             <td>
-                        1            </td>
+                        Extras            </td>
                             <td>
-                        23            </td>
+                        $6000            </td>
                             <td>
-                        110.00            </td>
-                            <td>
-                        4.782609            </td>
-                            <td>
-                        23/03/2011 - Wed March            </td>
-                            <td>
-                        B            </td>
+                        6%            </td>
                         </tr>
+                
                 </tbody>
     </table>
+
 
 </div>
 

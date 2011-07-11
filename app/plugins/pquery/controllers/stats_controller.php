@@ -93,7 +93,7 @@ class StatsController extends PqueryAppController {
         function contingresos() {
             
         }
-        function contingr() {
+        function contegresos() {
             
         }
         function contcaja() {
