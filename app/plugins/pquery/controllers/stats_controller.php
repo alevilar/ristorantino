@@ -89,7 +89,7 @@ SELECT count(*) as "cant_mesas",
         }  
         
         
-        function estadisticas() {
+        function index() {
             
         }
         function mozosmesas() {
