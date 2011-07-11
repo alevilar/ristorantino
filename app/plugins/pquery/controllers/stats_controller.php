@@ -28,19 +28,45 @@ class StatsController extends PqueryAppController {
         }
         
         
-        function mes() {
+        function mesastotal() {
+            $horarioCorte = Configure::read('Horario.corte_del_dia');
+            $desdeHasta = '1 = 1';
             
-                   
-            $this->Mesa->recursive=-1;
+            if ( !empty($this->data) ) {
+                $desde = $this->data['Mesa']['desde'];
+                $hasta = $this->data['Mesa']['hasta'];
+                $desdeHasta = "m.created BETWEEN $desde AND $hasta";
+            }
             
-            $mesaspormes = $this->Mesa->find('all',array(
-                                              'fields'=> array('SUM(total) AS total','MONTH(Mesa.created) AS mes', 'YEAR(Mesa.created) AS year'), 
-                                              'group'=>'MONTH(Mesa.created)',
-                                              'order'=>'MONTH(Mesa.created) asc'
-                                        ));
+            $query = '
+SELECT count(*) as "cant_mesas", 
+        sum(m.cant_comensales) as "cant_cubiertos" ,
+        sum(m.total) as "total", 
+        sum(m.total)/sum(m.cant_comensales) as "promedio_cubiertos",
+        DATE(m.created) as "fecha" FROM (
+        
+            SELECT id,numero,mozo_id,total, cant_comensales, cliente_id,menu, ADDDATE(m.created,-1) as created, modified, time_cerro, time_cobro from mesas m
+            WHERE
+                HOUR(m.created) BETWEEN 0 AND '.$horarioCorte.'
             
+            UNION
             
-           $this->set('mesas', $mesaspormes);
+            SELECT id,numero,mozo_id,total, cant_comensales, cliente_id,menu, created, modified, time_cerro, time_cobro from mesas m
+            WHERE
+                HOUR(m.created) BETWEEN '.$horarioCorte.' AND 24) as m
+        WHERE '.$desdeHasta.'                    
+        GROUP BY DATE(m.created)
+        ORDER BY m.created DESC                
+';
+            
+            $mesas = $this->Mesa->query($query);
+            
+            foreach ($mesas as &$m) {
+                $m['Mesa'] = $m[0];
+                unset($m[0]);
+            }
+            
+           $this->set('mesas', $mesas);
             
         } 
         
@@ -63,7 +89,7 @@ class StatsController extends PqueryAppController {
         }  
         
         
-        function index() {
+        function estadisticas() {
             
         }
         function mozosmesas() {
