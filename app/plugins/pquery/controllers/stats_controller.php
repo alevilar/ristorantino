@@ -28,7 +28,7 @@ class StatsController extends PqueryAppController {
         }
         
         
-        function mesastotal() {
+        function mes() {
             
                    
             $this->Mesa->recursive=-1;
@@ -63,7 +63,7 @@ class StatsController extends PqueryAppController {
         }  
         
         
-        function estadisticas() {
+        function index() {
             
         }
         function mozosmesas() {

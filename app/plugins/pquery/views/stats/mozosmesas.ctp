@@ -63,7 +63,7 @@
 </script>
 
 <div class="grid_3 push_3">
-<div id="chart1" style="margin-top:20px; margin-left:20px; width:300px; height:300px;"></div>
+<div id="chart1" style="margin-top:20px; margin-left:20px; width:400px; height:400px;"></div>
 </div>
 <div class="grid_2 push_5">
 <p>Suma del total de las mesas correspondientes a cada mozo</p>
