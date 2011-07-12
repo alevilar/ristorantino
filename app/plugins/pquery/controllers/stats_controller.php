@@ -31,11 +31,14 @@ class StatsController extends PqueryAppController {
         function mesas_total() {
             $horarioCorte = Configure::read('Horario.corte_del_dia');
             $desdeHasta = '1 = 1';
+            $limit = '';
             
             if ( !empty($this->data) ) {
                 $desde = $this->data['Mesa']['desde'];
                 $hasta = $this->data['Mesa']['hasta'];
                 $desdeHasta = "m.created BETWEEN $desde AND $hasta";
+            } else {
+                $limit = ' LIMIT 7 ';
             }
             
             $query = '
@@ -56,8 +59,8 @@ SELECT count(*) as "cant_mesas",
                 HOUR(m.created) BETWEEN '.$horarioCorte.' AND 24) as m
         WHERE '.$desdeHasta.'                    
         GROUP BY DATE(m.created)
-        ORDER BY m.created DESC                
-';
+        ORDER BY m.created DESC     
+        '. $limit;
             
             $mesas = $this->Mesa->query($query);
             
