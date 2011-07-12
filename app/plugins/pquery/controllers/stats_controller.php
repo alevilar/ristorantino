@@ -28,7 +28,7 @@ class StatsController extends PqueryAppController {
         }
         
         
-        function mesastotal() {
+        function mesas_total() {
             $horarioCorte = Configure::read('Horario.corte_del_dia');
             $desdeHasta = '1 = 1';
             
@@ -92,61 +92,58 @@ SELECT count(*) as "cant_mesas",
         function index() {
             
         }
-        function mozosmesas() {
+        function mozos_mesas() {
             
         }
-        function mozospagos() {
+        function mozos_pagos() {
             
         }
-        function mozosproductos() {
+        function mozos_productos() {
             
         }
-        function mesasranking() {
+        function mesas_ranking() {
             
         }
         /*function mesastotal() {
             
         }*/
-        function mesasfactura() {
+        function mesas_factura() {
             
         }
-        function mesaspago() {
+        function mesas_pago() {
             
         }
-        function mesasclientes() {
+        function mesas_clientes() {
             
         }
-        function contingresos() {
+        function cont_ingresos() {
             
         }
-        function contingr() {
+        function cont_caja() {
             
         }
-        function contcaja() {
+        function prod_ranking() {
             
         }
-        function prodranking() {
+        function prod_ingresos() {
             
         }
-        function prodingresos() {
+        function prod_pedidos() {
             
         }
-        function prodpedidos() {
+        function prod_listado() {
             
         }
-        function prodlistado() {
+        function real_mesasabiertas() {
             
         }
-        function realmesasabiertas() {
+        function real_comandas() {
             
         }
-        function realcomandas() {
+        function real_comensales() {
             
         }
-        function realcomensales() {
-            
-        }
-        function realmesasmozos() {
+        function real_mesasmozos() {
             
         }
 }
