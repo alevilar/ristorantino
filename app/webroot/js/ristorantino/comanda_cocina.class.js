@@ -1,7 +1,6 @@
 // funciones de herencia
-function ComandaCocina(varMozo){
-    this.mozo = varMozo;
-//    Comanda.apply(this, arguments);
+function ComandaCocina(){
+    this.initialize();
 //
 //    //@ GLOBAL comandaCocinaWindow: es la ventana que cree en el  elemento comanda_cocina
 //    this.setWindow(comandaCocinaWindow);
@@ -293,11 +292,11 @@ ComandaCocina.prototype = {
 	  
 
     /**
-	   * 
-	   * me agrega un producto a la  comanda
-	   * 
-	   * @param Producto producto es el objeto producto qe quiero agregar
-	   */
+    * 
+    * me agrega un producto a la  comanda
+    * 
+    * @param Producto producto es el objeto producto qe quiero agregar
+    */
     addProduct: function(producto){
         var prod_busq = new ProductoComanda();
 		  

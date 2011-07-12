@@ -47,6 +47,10 @@ var Mesa = function(mozo, jsonData) {
 
 Mesa.prototype = {
     
+    //urls
+    comandaAdd: function(){ return urlDomain+'/comandas/add/' + this.id(); },
+    
+    
     // attributos
     mozo: ko.observable(null),
 
