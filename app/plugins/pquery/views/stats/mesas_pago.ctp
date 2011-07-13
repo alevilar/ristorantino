@@ -34,7 +34,7 @@
 
 <script id="example_1" type="text/javascript">
     $(document).ready(function(){
-    s1 = [['Efectivo',22], ['Debito',15.3], ['Visa',10.7], ['Mastercard',5.2], ['Otros', 5.2]];
+    s1 = [['Efectivo',32], ['Debito',15.3], ['Visa',10.7], ['Mastercard',5.2], ['Otros', 5.2]];
         
     plot1 = $.jqplot('chart1', [s1], {
         grid: {
