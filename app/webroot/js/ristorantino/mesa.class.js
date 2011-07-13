@@ -32,36 +32,44 @@ var MESA_ESTADOS_POSIBLES =  {
     }
 };
 
-
-
-
 /**
  *
  *Definicion de la Clase Mesa
  *
  **/
-function Mesa() {
-    this.objtype = 'mesa';
+var Mesa = function(mozo, jsonData) {
+        if (jsonData && mozo) {
+            return this.initialize(mozo, jsonData);
+        }        
 }
 
 
 
 Mesa.prototype = {
+    
+    //urls
+    comandaAdd: function(){ return urlDomain+'/comandas/add/' + this.id(); },
+    
+    
+    // attributos
+    mozo: ko.observable(null),
 
-    id : 0,
-    numero : 0,
-    clienteId : null,
-    created : null,
-    menu : 0,
-    modified : null,
-    time_cerro : null,
-    time_cobro : null,
-    total : 0,
-    productos : null,
-    cliente : null,
-    cantComensales : 0,
-    mozo: {},
-    button: null,
+    initialize: function(mozo, jsonData){
+        this.mozo = ko.observable(mozo);
+        
+        // si vino jsonData mapeo con koMapp
+        if ( mozo && jsonData ) {
+            ko.mapping.fromJS(jsonData, {}, this);
+        }
+        
+        return this;
+    },
+    
+    url: {
+        view: 'mesas/view/'+this.id,
+        edit: 'mesas/edit/'+this.id
+    },
+
 
     /**
      * devuelve un Button con el elemento mesa
@@ -122,10 +130,14 @@ Mesa.prototype = {
     },
 
     cloneFromJson: function(json){
-        //copio solo lo decclarado en el prototype del objecto Mozo
+        //copio solo lo decclarado en el prototype de este modelo
         for (var i in this){
             if ((typeof this[i] != 'function') && (typeof this[i] != 'object')){
                 this[i] = json[i];
+            }
+
+            if ((typeof this[i] == 'function') && json.hasOwnProperty(i) && (typeof this[i] != 'object')){
+                this[i](json[i]);
             }
         }
         return this;
@@ -237,7 +249,7 @@ Mesa.prototype = {
 
 
     getCantComensales : function(){
-        return this.cantComensales;
+        return this.cantComensales();
     },
 
 
@@ -296,14 +308,20 @@ Mesa.prototype = {
          }
     },
 
+    /**
+     * Setea el mozo a la mesa.
+     * si agregarMesa es true, se agrega la mesa al listado de mesas del mozo
+     * @param nuevoMozo Mozo es el mozo que voy a setear
+     * @param agregarMesa Boolean indica si agrego la mesa al listado de mesas que tiene el mozo
+     */
     setMozo: function(nuevoMozo, agregarMesa){
-        if (!$.isEmptyObject(this.mozo)){
-            var mozoViejo = this.mozo;
+        if ( this.mozo() ){
+            var mozoViejo = this.mozo();
             mozoViejo.sacarMesa(this);
         }
-        this.mozo = nuevoMozo;
+        this.mozo(nuevoMozo);
         if (agregarMesa) {
-            this.mozo.agregarMesa(this);
+            this.mozo().agregarMesa(this);
         }
     },
 

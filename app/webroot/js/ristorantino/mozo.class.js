@@ -26,15 +26,35 @@ var MOZOS_POSIBLES_ESTADOS =  {
 
 
 
-function Mozo(){
+var Mozo = function(jsonData){    
+    return this.initialize(jsonData);
 }
 
 
 Mozo.prototype = {
-    id : 0,
-    numero : 0,
-    mesas: [],
-    seleccionado: false,
+//    id : 0,
+//    numero : 0,
+      mesas: null,
+//    seleccionado: false,
+
+
+    initialize: function(jsonData){
+        var mozoNuevo = this;
+
+        // si aun no fue mappeado
+        mapOps = {
+            'mesas': {
+                create: function(ops) {
+                    return new Mesa(mozoNuevo, ops.data);
+                },
+                key: function(data) {
+                    return ko.utils.unwrapObservable(data.id);
+                }
+            }
+        }
+
+        return ko.mapping.fromJS(jsonData, mapOps, this);
+    },
 
     /**
      * devuelve un Button con el elemento mozo
@@ -69,11 +89,13 @@ Mozo.prototype = {
 
 
     sacarMesa: function(mesa){
-        var i = $.inArray(mesa, this.mesas);
-        this.mesas.splice(i,1);
-        var evento = $.Event(MOZOS_POSIBLES_ESTADOS.sacaMesa.event);
-        evento.mozo = this;
-        $(document).trigger(evento);
+        if ( this.mesas ) { 
+            var i = $.inArray(mesa, this.mesas());
+            this.mesas.splice(i,1);
+            var evento = $.Event(MOZOS_POSIBLES_ESTADOS.sacaMesa.event);
+            evento.mozo = this;
+            $(document).trigger(evento);
+        }
     },
 
     /**

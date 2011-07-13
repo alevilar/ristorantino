@@ -83,15 +83,16 @@ class Mozo extends AppModel {
                 'contain' => array(
                     'Mesa' => array(
                         'Cliente' => 'Descuento',
-                        'Comanda',
+                        'Comanda' => array(
+                            'DetalleComanda.Producto',
+                        ),
                         'conditions' => array(
                             "Mesa.time_cobro" => "0000-00-00 00:00:00",
                             "Mesa.time_cerro" => "0000-00-00 00:00:00",
                         ),
                         'order' => 'Mesa.created DESC',
                     ),
-                    
-                    )
+                 )
             );
 
             return $this->find('all', $options);

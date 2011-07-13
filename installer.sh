@@ -18,7 +18,3 @@ chmod 755 /usr/bin/spooler_srv
 update-rc.d -f spooler_srv defaults
 
 
-
-
-
-

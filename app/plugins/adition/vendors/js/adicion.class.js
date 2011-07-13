@@ -1,4 +1,55 @@
 /**
+ *
+ *
+ *  KO Model
+ *  Aca van todos los bindings que se realizaran en la vista
+ *
+ *  tambien el mapeo de datos entre arrays que vienen del servidor
+ *
+ *
+ */
+var koAdicionModel = {
+    currentMozo: ko.observable(),
+    currentMesa: ko.observable(),
+    
+    // listado de mozos
+    mozos: ko.observableArray(),
+    
+    // a continuacion indicar el Campo del Model Mesa que sera utilizado para ordenar el listado de mesas
+    mozosOrder: ko.observable('mozo_id')
+    
+//    mesas: ko.observableArray()
+//    mesas: ko.dependentObservable( function(){
+//                var mesasList = [];
+//                console.debug(this);
+//                for (var m in this.mozos()) {
+//                    mesasList = array.concat(mesasList, this.mozos().mesas());
+//                }
+//                return mesasList;
+//           }, this)
+}
+// Dependientes
+// listado de mesas, depende de las mesas de cada mozo, y el orden que le haya indicado
+koAdicionModel.mesas = ko.dependentObservable( function(){
+                var mesasList = [];
+                var order = this.mozosOrder();
+
+                for (var m in this.mozos()) {
+                    mesasList = mesasList.concat(this.mozos()[m].mesas());
+                }
+                
+                if ( order ) {
+                    mesasList.sort(function(left, right) {
+                        return left[order]() == right[order]() ? 0 : (parseInt(left[order]()) < parseInt(right[order]()) ? -1 : 1) 
+                    })
+                }
+                return mesasList;
+
+           }, koAdicionModel);
+           
+
+
+/**
  *  Adicion Class
  *
  *  constructor
@@ -12,8 +63,6 @@ var Adicion = function() {
 
 //Parametros de configuracion
 Adicion.cubiertosObligatorios   = true;
-Adicion.menuControlls           = '.window_controll';
-
 
 
 /**
@@ -21,20 +70,42 @@ Adicion.menuControlls           = '.window_controll';
  *
  *
  * */
-    
 Adicion.prototype = {
 
-    currentMozo: null,
-    currentMesa: null,
-
-    mozos: [],
-    mesas: [],
+    yaMapeado: false,
+    
+    __model: function(){
+        return koAdicionModel;
+    },
+    
+    currentMozo: function(){
+        return koAdicionModel.currentMozo.apply(koAdicionModel, arguments);
+    },
+    
+    currentMesa: function(){
+        return koAdicionModel.currentMesa.apply(koAdicionModel, arguments);
+    },
+    
+    mesas: function(){
+        return koAdicionModel.mesas.apply(koAdicionModel, arguments);
+    },
+    
+    mozos: function(){
+        return koAdicionModel.mozos.apply(koAdicionModel, arguments);
+    },
+    
+    mozosOrder: function(){
+        return koAdicionModel.mozosOrder.apply(koAdicionModel, arguments);
+    },
 
     /**
      * Constructor
      */
     initialize: function() {
         this.getMesasAbiertas();
+        $(function(){
+            ko.applyBindings(koAdicionModel);
+        });
     },
 
     /**
@@ -60,6 +131,7 @@ Adicion.prototype = {
         }
         return mesasTags;
     },
+    
     mozosEnTag: function(tagName) {
         var mozosTags = [];
         for(var m in this.mozos) {
@@ -111,6 +183,23 @@ Adicion.prototype = {
         }
         return retornar;
     },
+    
+    
+    /**
+     * Busca una mesa por su ID en el listado de mesas
+     * devuelve la mesa en caso de encontrarla.
+     * caso contrario devuelve false
+     * @param id Integer id de la mesa a buscar
+     * @return Mesa en caso de encontrarla, false caso contrario
+     */
+    findMesaById: function(id){
+        for (var m in this.mesas()) {
+            if ( this.mesas()[m].id() == id ) {
+                return this.mesas()[m];
+            }            
+        }
+        return false;
+    },
     	
 		
     borrarCurrentMesa: function(){
@@ -119,10 +208,15 @@ Adicion.prototype = {
     },
 
     setCurrentMesa: function(mesa) {
-        this.currentMesa = mesa;
-        console.debug(mesa);
-        if (mesa.Mozo) {
-            this.setCurrentMozo(mesa.Mozo);
+        if ( typeof mesa == 'number') { // en caso que le paso un ID en lugar del objeto mesa
+            mesa = this.findMesaById(mesa);
+            if ( mesa === false ) {
+                return false;
+            }
+        }
+        this.currentMesa( mesa );
+        if (mesa.mozo) {
+            this.setCurrentMozo(mesa.mozo());
         }
     },
 		
@@ -199,7 +293,7 @@ Adicion.prototype = {
 
 
     setCurrentMozo: function(mozo){
-        this.currentMozo = mozo;
+        this.currentMozo( mozo );
         var event = $.Event('adicionCambioMozo');
         event.mozo = mozo;
         $(document).trigger(event);
@@ -208,37 +302,52 @@ Adicion.prototype = {
 
 
     getMesasAbiertas: function(){
-        var context = this;
-
         var ajaxResp = $.get(
                 urlDomain + 'mozos/mesas_abiertas.json',
-                function(e,t){
-                    context.__handleMesasAbiertasRecibidas(e, t);
-                    $(document).trigger('adicionMesasActualizadas');
-                },
+                this.__actualizarMozosConMesasAbiertas,
                 'json'
             );
         ajaxResp.error = function(){alert("fallo conexión")}
     },
     
 
-    __handleMesasAbiertasRecibidas: function( data ) {
-        var mozos = [];
-        var mesas = [];
-        for (d in data) {
-            var mo = new Mozo();
-            mo.cloneFromJson(data[d].Mozo)
-            mozos.push(mo);
-            for (a in data[d].Mesa) {
-                var me = new Mesa();
-                me.cloneFromJson(data[d].Mesa[a])
-                me.setMozo(mo);
-                mo.mesas.push(me);
-                mesas.push(me);
+    /**
+     * 
+     * Recibiendo un json con el listado de mozos, que a su vez 
+     * cada uno tiene el listado de mesas abiertas de c/u, actualiza 
+     * el listado de mesas de la adicion
+     * 
+     */
+    __actualizarMozosConMesasAbiertas: function( data ) {
+        
+        if ( !this.yaMapeado ) {
+            // si aun no fue mappeado
+            mapOps = {
+                'mozos': {
+                    create: function(ops) {
+                        return new Mozo(ops.data);
+                    },
+                    key: function(data) {
+                        return ko.utils.unwrapObservable(data.id);
+                    }
+                }
             }
+
+            koAdicionModel = ko.mapping.fromJS(data, mapOps, koAdicionModel );
+            this.yaMapeado = true;
+        } else {
+            ko.mapping.updateFromJS(koAdicionModel, data);
         }
-        this.mozos = mozos;
-        this.mesas = mesas;
+        $(document).trigger('adicionMesasActualizadas');
+    },
+    
+    
+    
+    ordenarMesasPorNumero: function(){
+        return this.mesas().sort(function(left, right) {
+            console.debug(left.numero());
+            return left.numero() == right.numero() ? 0 : (parseInt(left.numero()) < parseInt(right.numero()) ? -1 : 1) 
+        })
     }
 
 		

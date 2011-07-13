@@ -28,6 +28,19 @@
  */
 
 
+/**
+ *  Indica el horario en el que se debe terminar el dia y comenzar otro
+ * Por lo general en un restaurante el dia no termina a las 12 hs, sino que 
+ * finaliza cuando se retira la ultima mesa. En ese caso, el total de las ventas se debe
+ * tomar hasta la hora indicada.
+ * 
+ * Por default es a las 6 de la mañana
+ * debe ser un numero del 1 al 23
+ * 
+ */
+Configure::write('Horario.corte_del_dia', '6');
+
+
 
 /**
  * Esta variable sirve para imprimir siempre un comprobante de consumicion

@@ -1,12 +1,15 @@
 
 <script type="text/javascript">
-    //adicion.reinitMenuController();
-    //adicion.addButton(['back', 'abrirMesa', 'seleccionarMesa']);
+    <?php if ( !empty($mesa['Mesa']['id']) ) { ?>
+    adicion.setCurrentMesa( <? echo $mesa['Mesa']['id']?> );
+    <?php }?>
+        
+    ko.applyBindings(koAdicionModel);
 </script>
 
 <div class="grid_3">
     <ul data-role="listview">
-        <li><a href="#hacer-comanda" ><?= $html->image('/adition/css/img/chef_64.png')?>Comanda</a></li>
+        <li><a data-bind="attr: {href: currentMesa().comandaAdd()}" ><?= $html->image('/adition/css/img/chef_64.png')?>Comanda</a></li>
         <li><a href="#sacar-item" >Sacar Item</a></li>
         <li><a href="#Agregar Cliente" >Agragar Cliente</a></li>
         <li><a href="#Agragar Descuento" >Agregar Descuento</a></li>
@@ -16,12 +19,11 @@
         <li><a href="#re-print" >Re imprimir Ticket</a></li>
         <li><a href="#Borrar-mesa" >Borrar Mesa</a></li>
         <li><a href="#testiesto" >De la pagina de atras</a></li>
-
     </ul>
 </div>
 
 <div class="mesas view grid_8 prefix_1" >
-    <h1>Mesa N° <? echo $mesa['Mesa']['numero']?> - Mozo <? echo $mesa['Mozo']['numero']?></h1>
+    <h1>Mesa N° <span data-bind="text: currentMesa().numero"><? echo $mesa['Mesa']['numero']?></span> - Mozo <? echo $mesa['Mozo']['numero']?></h1>
     <div class="">
     <h4 id="mesa-total"><?php echo "Total: $".$mesa_total; ?></h4>
     <ul>

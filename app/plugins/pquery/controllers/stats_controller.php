@@ -175,4 +175,5 @@ class StatsController extends PqueryAppController {
     }
 
 }
+
 ?>

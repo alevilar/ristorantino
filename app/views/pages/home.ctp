@@ -9,7 +9,7 @@
     <div class="grid_5">
         <?php echo $html->link('Caja','/cashier/cobrar',array('class'=>'boton redondeado','style'=>'margin:auto;', 'id'=>'bton-caja'));?>
 
-        <?php echo $html->link('Estadisticas','/pquery/queries/descargar_queries',array('class'=>'boton redondeado','style'=>'margin:auto;', 'id'=>'bton-estadisticas'));?>
+        <?php echo $html->link('Estadisticas','/pquery/stats',array('class'=>'boton redondeado','style'=>'margin:auto;', 'id'=>'bton-estadisticas'));?>
         <div class="grid_6">
             <?php echo $html->link('Ventas','/pquery/queries/list_view/5',array('class'=>'boton 		redondeado','style'=>'margin:auto;', 'class'=>'boton'));?>
         </div>
