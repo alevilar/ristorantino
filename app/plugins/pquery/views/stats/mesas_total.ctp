@@ -1,7 +1,8 @@
 <?php
                 echo $html->css('/pquery/css/examples.css');
                 echo $html->css('cake.css');
-                echo $html->css('ui-lightness/jquery-ui-1.8.14.custom');
+                echo $html->css('jquery-ui/jquery-ui-1.8.14.custom');
+                echo $html->css('ristorantino.generic');
                 
                 echo $javascript->link('/pquery/js/jquery.min.js'); 
                 echo $javascript->link('jquery/jquery-ui-1.8.14.custom.min'); //datapicker
@@ -135,8 +136,8 @@ jQuery(document).ready(function(){
           
           ?>
 <div id="2dalinea">
-    <?php
-          echo $form->input('Linea.1.desde', array('label'=>'Desde','id'=>'from2', 'class' =>'datepicker'));
+<?php
+         echo $form->input('Linea.1.desde', array('label'=>'Desde','id'=>'from2', 'class' =>'datepicker'));
          echo $form->input('Linea.1.hasta', array('label'=>'Hasta','id'=>'to2', 'class' =>'datepicker'));
          ?>
          </div>
@@ -144,12 +145,6 @@ jQuery(document).ready(function(){
         echo $form->end('Submit');
         
 ?>
-<!--
-<label for="from">Desde</label>
-<input type="text" id="from" name="from"/>
-<label for="to">Hasta</label>
-<input type="text" id="to" name="to"/>
--->
 </div>
     
 
@@ -158,6 +153,10 @@ jQuery(document).ready(function(){
 <div id="chart1" class="grid_8" style="margin-top:20px; height:400px;"></div>
 
 
+<?php
+    foreach($mesas as $mesa){
+        if(!empty ($mesa['desde']))
+?>
 <div class="grid_3">
 <table cellspacing="0" cellpadding="0" style="text-align: center">
     <thead>
@@ -167,19 +166,18 @@ jQuery(document).ready(function(){
                     </tr>
     </thead>
     <tbody>
-<?php
-
-
         
-    if(!empty($mesas)){
-
-            foreach($mesas as $mesa){
+<?php     
+    if(!empty($mesa)){
+            
+            foreach($mesa as $m){
                 echo('<tr>');
                 echo('<td>');
-                echo($mesa['Mesa']['fecha']);
+                echo($m['Mesa']['fecha']);
                 echo('</td>');
                 echo('<td>');
-                echo($mesa['Mesa']['total']);
+                echo('$');
+                echo($m['Mesa']['total']);
                 echo('</td>');
                 echo('</tr>');
         }        
@@ -187,10 +185,19 @@ jQuery(document).ready(function(){
             echo('<td>');
                 echo('No se encontraron mesas');   
             echo('</td>');
+            echo('<td>');
+                echo('-');  
+            echo('</td>');
         
     }    
         echo('</tr>');
 ?>  
- </tbody>              
+</tbody>              
 </table>
-</div>    
+ 
+    
+</div>  
+
+<?php
+        }
+?>

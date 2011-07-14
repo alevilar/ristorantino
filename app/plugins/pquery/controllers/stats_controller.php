@@ -34,14 +34,17 @@ class StatsController extends PqueryAppController {
         if ( !empty($this->data['Linea'] )) {
             $lineas = array();
             foreach ($this->data['Linea'] as $linea) {
-                list($dia, $mes, $anio) = explode("/", $linea['desde']);
-                $desde = $anio."-".$mes."-".$dia;
+                if(!empty($linea['desde']) && !empty($linea['hasta']))
+                    {
+                    list($dia, $mes, $anio) = explode("/", $linea['desde']);
+                    $desde = $anio."-".$mes."-".$dia;
 
-                list($dia, $mes, $anio) = explode("/", $linea['hasta']);
-                $hasta = $anio."-".$mes."-".$dia;
+                    list($dia, $mes, $anio) = explode("/", $linea['hasta']);
+                    $hasta = $anio."-".$mes."-".$dia;
 
-                $desdeHasta = "m.created BETWEEN '$desde' AND '$hasta'";
-                $lineas[] = $desdeHasta;
+                    $desdeHasta = "m.created BETWEEN '$desde' AND '$hasta'";
+                    $lineas[] = $desdeHasta;
+                }
             }
         } else {
             $limit = ' LIMIT 7 ';
@@ -78,7 +81,6 @@ class StatsController extends PqueryAppController {
             }
             $mesasLineas[] = $mesas;
         }
-        debug($mesasLineas);
         $this->set('mesas', $mesasLineas);
     }
 
