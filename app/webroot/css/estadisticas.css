@@ -1,0 +1,80 @@
+@CHARSET "UTF-8";
+
+/* Seccion estadisticas */
+
+li {
+    text-decoration: none; !important
+    margin: 0;
+    padding: 0;
+}
+ul {
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+}
+
+.menu_stats {
+    background-color: #C2D2DE;
+    height: 100%;
+    border-top-style: solid;
+    border-top-width: 1px;
+    border-top-color: #949494;
+    border-right-style: solid;
+    border-right-width: 1px;
+    border-right-color: #949494;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: #949494;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 0;
+    
+    -moz-border-radius-topright: 10px;
+    -moz-border-radius-bottomright: 10px;
+    -webkit-border-radius: px 10px 10px px;
+    border-radius: px 10px 10px px; 
+
+-webkit-box-shadow: inset -1px 1px 1px 1px #949494;
+-moz-box-shadow: inset -1px 1px 1px 1px #949494;
+box-shadow: inset -1px 1px 1px 1px #949494; 
+}
+
+#prim_fecha input, #seg_fecha input {
+    width: 90px;    
+}
+
+#prim_fecha input[type="checkbox"] {
+    width: auto;
+}
+
+.menu_stats ul {
+    font-size: 120%;
+    margin-left: 20px;
+}
+
+.menu_stats ul li {
+    margin: 0;
+    padding: 0;
+    margin-bottom: 10px;
+}
+
+.menu_stats ul li a{
+    text-decoration: none;
+    color: #6b6b6e;
+    font-size: 80%;
+    font-weight: bold;
+}
+
+.menu_stats ul li a:hover{
+    color: #000000;
+}
+
+.menu_stats ul li.sep {
+    border-bottom-color: #6b6b6e;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
