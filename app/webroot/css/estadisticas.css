@@ -30,10 +30,12 @@ ul {
     padding-bottom: 10px;
     padding-left: 0;
     
-    -moz-border-radius-topright: 10px;
-    -moz-border-radius-bottomright: 10px;
-    -webkit-border-radius: px 10px 10px px;
-    border-radius: px 10px 10px px; 
+-moz-border-radius-topleft: 0px;
+-moz-border-radius-topright: 10px;
+-moz-border-radius-bottomright: 10px;
+-moz-border-radius-bottomleft: 0px;
+-webkit-border-radius: 0px 10px 10px 0px;
+border-radius: 0px 10px 10px 0px; 
 
 -webkit-box-shadow: inset -1px 1px 1px 1px #949494;
 -moz-box-shadow: inset -1px 1px 1px 1px #949494;
