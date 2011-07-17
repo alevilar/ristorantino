@@ -1,72 +1,84 @@
-
-<script type="text/javascript">
-    <?php if ( !empty($mesa['Mesa']['id']) ) { ?>
-    adicion.setCurrentMesa( <? echo $mesa['Mesa']['id']?> );
-    <?php }?>
-        
-    ko.applyBindings(koAdicionModel);
+<!-- Template: listado de comandas con sus productos-->
+<script id="listaComandas" type="text/x-jquery-tmpl">
+    <li>        
+       <span>Comanda ${id}</span>
+       <ul>          
+           <li></li>
+       </ul>
+    </li>
 </script>
 
-<div class="grid_3">
-    <ul data-role="listview">
-        <li><a data-bind="attr: {href: currentMesa().comandaAdd()}" ><?= $html->image('/adition/css/img/chef_64.png')?>Comanda</a></li>
-        <li><a href="#sacar-item" >Sacar Item</a></li>
-        <li><a href="#Agregar Cliente" >Agragar Cliente</a></li>
-        <li><a href="#Agragar Descuento" >Agregar Descuento</a></li>
-        <li><a href="#Cerrar-mesa" >Cerrar Mesa</a></li>
-        <li><a href="#cambiar-mozo" >Cambiar Mozo</a></li>
-        <li><a href="#Cambiar N° Mesa" >Cambiar N°</a></li>
-        <li><a href="#re-print" >Re imprimir Ticket</a></li>
-        <li><a href="#Borrar-mesa" >Borrar Mesa</a></li>
-        <li><a href="#testiesto" >De la pagina de atras</a></li>
-    </ul>
-</div>
 
-<div class="mesas view grid_8 prefix_1" >
-    <h1>Mesa N° <span data-bind="text: currentMesa().numero"><? echo $mesa['Mesa']['numero']?></span> - Mozo <? echo $mesa['Mozo']['numero']?></h1>
-    <div class="">
-    <h4 id="mesa-total"><?php echo "Total: $".$mesa_total; ?></h4>
-    <ul>
-	
- 	<?php 
- 	echo (sizeof($items)== 0)?"NO HAY ITEMS<br>":"";
- 	//debug($items);
- 	$comanda_ant = '';
- 	
- 	$prod_borrados = array();
-	foreach ($items as $i):
-		$cantidad = $i['DetalleComanda']['cant']-$i['DetalleComanda']['cant_eliminada'];
-		$producto = $i['Producto']['name'];
-		
-		if($comanda_ant != $i['DetalleComanda']['comanda_id'] ){
-			$comanda_ant = $i['DetalleComanda']['comanda_id'];
-                        $comandaHorario = date("H:i:s",strtotime($i['DetalleComanda']['created']));
-                        $txtComanda = "Comanda #$comanda_ant ($comandaHorario)";
-			if($session->read('Auth.User.role') == 'mozo'){
-				echo "<h2>$txtComanda</h2>";
-			}
-			else{
-				echo "<h2>".$html->link($txtComanda,array('controller'=>'comandas','action'=>'imprimir',$comanda_ant),null, "¿Seguro que queres reimprimir la comanda?")."</h2>";
-			}
-		}
-		
-			echo "<li><b>$cantidad - </b>$producto</li>";
-			if(count($i['DetalleSabor'])>0){
-				$esPrimero = true;
-				echo "(";
-				foreach($i['DetalleSabor'] as $sabor):
-					
-					if(!$esPrimero){
-						echo ", ";
-					}
-					else $esPrimero = false;
-					echo $sabor['Sabor']['name'];
-				endforeach;
-				echo ")";
-			}		
-	endforeach;
-	?>
-	</ul>
-    </div>
-	
+    
+<div data-role="page" data-add-back-btn="true" id="mesa-view">
+
+	<div  data-role="header" data-position="inline">
+
+            <h1>Mesa N°<span data-bind="text: currentMesa().numero"></span>, Mozo <span data-bind="text: currentMesa().mozo().numero"></span></h1>
+
+                <a rel="external" href='#listado-mesas' data-icon="home" data-iconpos="notext" data-direction="reverse" class="">Home</a>
+                
+                <div data-role="navbar">
+                        <ul>
+                            <li><a href="#mesa-view" class="ui-btn-active">Vista Común</a></li>
+                            <li><a href="#mesa-view-ticket">Vista Ticket</a></li>
+                        </ul>
+                </div>
+        </div>
+
+        <div  data-role="content" class="">
+
+            <script type="text/javascript">
+                (function($){
+                    <?php if ( !empty($mesa['Mesa']['id']) ) { ?>
+                    var mesa = adicion.setCurrentMesa( <? echo $mesa['Mesa']['id']?> );
+                    mesa.comandas( <?= $javascript->object($items);?> );
+                    <?php }?>
+
+                    ko.applyBindings(koAdicionModel);
+                })(jQuery);
+                
+            </script>
+
+            <div class="" style="width: 28%; float: left;">
+                <ul data-role="listview" style="width: 100%">
+                    <li><a data-bind="attr: {href: currentMesa().urlComandaAdd()}" ><?= $html->image('/adition/css/img/chef_64.png')?>Comanda</a></li>
+                    <li><a href="<?= $html->url('/pages/panel')?>" >PAnel</a></li>
+                    <li><a href="#sacar-item" >Sacar Item</a></li>
+                    <li><a href="#Agregar Cliente" >Agragar Cliente</a></li>
+                    <li><a href="#Agragar Descuento" >Agregar Descuento</a></li>
+                    <li><a href="#Cerrar-mesa" >Cerrar Mesa</a></li>
+                    <li><a href="#cambiar-mozo" >Cambiar Mozo</a></li>
+                    <li><a href="#Cambiar N° Mesa" >Cambiar N°</a></li>
+                    <li><a href="#re-print" >Re imprimir Ticket</a></li>
+                    <li><a href="#Borrar-mesa" >Borrar Mesa</a></li>
+                    <li><a href="#testiesto" >De la pagina de atras</a></li>
+                </ul>
+            </div>
+
+            <div class="mesas view " style="width: 70%; float:right;" >
+                <h1>Mesa N° <span data-bind="text: currentMesa().numero"><? echo $mesa['Mesa']['numero']?></span> - Mozo <? echo $mesa['Mozo']['numero']?></h1>
+                <div class="">
+                    <h4 id="mesa-total"><?php echo "Total: $".$mesa_total; ?></h4>
+
+                    <div>
+                        <form action="form.php" method="post">
+                            <div data-role="fieldcontain">
+                                <label for="search">Search Input:</label>
+                                <input type="search" name="password" id="search" value="" />
+                            </div>
+                        </form>
+
+                    </div>
+
+                    <ul data-bind="template: {name: 'listaComandas', foreach: currentMesa().comandas}"></ul>
+
+              
+                </div>
+
+            </div>
+            
+        </div>
+    
+    <div data-role="footer">Pie de página</div>
 </div>

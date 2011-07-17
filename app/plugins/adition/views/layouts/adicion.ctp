@@ -10,7 +10,6 @@
         
 	<?php
 		echo $html->meta('icon');
-
 		
 		// para los modal window
 		echo $html->css(array(
@@ -24,13 +23,21 @@
                     echo $html->css($cssUserRole,'stylesheet', array('media'=>'screen'));
                 }
 
-                
 		echo $javascript->link(array(
                     'jquery/jquery-1.6.1.min',
-                    'jquery/jquery.mobile-1.0b1.min',
                     'jquery/jquery.tmpl.min',
+                    'jquery/jquery.periodicalupdater',
                     'knockout-1.2.1',
                     'knockout.mapping',
+                    
+//                    'jquery/jquery.mobile.splitview',
+                    'jquery/jquery.mobile-1.0b1.min',
+                    'jquery/jquery.easing.1.3',
+//                    'jquery/jquery.mobile.scrollview',
+//                    'jquery/scrollview',
+                    
+                    'jquery/fg.menu',
+
                     'ristorantino/generic',
                     '/adition/js/adicion.class',
                     'ristorantino/mesa.class',
@@ -42,7 +49,7 @@
 
     <script type="text/javascript">
     <!--
-        //$.mobile.page.prototype.options.backBtnText = "Volver";
+        $.mobile.page.prototype.options.backBtnText = "Volver";
 
         // Inicializacion de variables y objetos Core
         var urlDomain = "<?php echo $html->url('/',true);?>";
@@ -53,24 +60,12 @@
     </script>
 
 <?php
-    // Registro de botones a utilizar
-   // echo $javascript->link(array(
-        //'buttons/refresh',
-       // 'buttons/back',
-        //'buttons/abrir_mesa',
-        //'buttons/seleccionar_mesa',
-        //'buttons/mesas_index',
-   //     ));
-
     //scripts de Cake
     echo $scripts_for_layout;
 ?>
-	
 </head>
-<body>
 
-    
+<body>
 	<?php echo $content_for_layout; ?>
-	
 </body>
 </html>

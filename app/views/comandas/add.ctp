@@ -1,5 +1,3 @@
-<?php echo $this->pageTitle= 'Nueva comanda' ?>
-
 <script type="text/javascript">
     
     <?php if ( !empty($mesa_id) ) { ?>
@@ -17,59 +15,95 @@
         }
     }
     
-    $(function(){
-        $( "#listaProductos" ).tmpl( comanda , {agregarleElObjeto: function(){
-                var prod = this;
-                return comanda.seleccionarProducto;
-            }})
-            .appendTo( "#ul-productos" );
-    });
+//    $(function(){
+//        $( "#listaProductos" ).tmpl( comanda , {agregarleElObjeto: function(){
+//                var prod = this;
+//                return comanda.seleccionarProducto;
+//            }})
+//            .appendTo( "#ul-productos" );
+//    });
 </script>
 
-
-<script id="listaProductos" type="text/x-jquery-tmpl">
     
-    <div><h1 data-bind="text: currentMesa().numero">numero de mesa</h1></div>
-        {{each menu}}
-        <div>
-            <li class="">
-                <h2>${Categoria.name}</h2>
-                {{if Sabor.length > 0}}
-                <h3>Sabores</h3>
-                <ul>
-                    {{each Sabor}}
-                    <li>${name}</li>
-                    {{/each}}
-                </ul>
-                {{/if}}
-                
-                <h3>Productos</h3>
-                <ul>
-                    {{each Producto}}
-                    
-                    <li data-producto-id="${id}" onclick="${$item.agregarleElObjeto()}">${name}</li>
-                    {{/each}}
-                </ul>
-            </li>
+    <div  data-role="page"  data-add-back-btn="true" id="comanda-add-menu">
+        <div  data-role="header"  data-position="inline">
+
+            <h1>Menu</h1>
+            <a rel="external" href="#listado-mesas" data-icon="home" data-iconpos="notext" data-direction="reverse" class="ui-btn-right">Home</a>
         </div>
-        {{/each}}
-</script>
+
+        <div data-role="content">
+            <script>
+                $(function(){
+                    $('#link-cat').menu({
+			content: $('#cat-tree').html(),
+			crumbDefaultText: ' '
+                    });
+                
+                })
+            </script>
+            <a id="link-cat"  href="#cat-tree">Categorias Tree</a>
+            <div id="cat-tree" style="display: none">
+            <ul>
+                <li><a href="#">Coso N|122</a>
+                    <ul>
+                        <li><a  data-panel="menu" href="<?= $html->url('/mesas/view/2')?>">Mesa Id 2</a></li>
+                        <li><a href="#">Segundo</a></li>
+                    </ul>
+                </li>
+            <?php
+            foreach ($categorias_tree as $k=>$c) {
+                echo "<li><a href='#categoria-$k' class='catlink'>". $c ."</a></li>";
+            }
+            ?>
+            </ul>
+            </div>
+        </div>
+        
+        <div data-role="footer"><h2>Menu footer</h2></div>
+    </div>
+</div>  
+
+    
+
+    <div  data-role="page"  data-add-back-btn="true" id="comanda-data">
+        <div  data-role="header"  data-position="inline">
+
+            <h1>Nueva Comanda</h1>
+            <a rel="external" href="#listado-mesas" data-icon="home" data-iconpos="notext" data-direction="reverse" class="ui-btn-right">Home</a>
+        </div>
+
+        <div  data-role="content" class="">
+
+            
+
+            <div class="categorias-productos-listado">
+                <ul id="ul-productos" class="listado-productos" data-role="listview">
+                    <?php foreach ($categorias as $c) { ?>
+                        <li class="">                
+                            <h2><?= $c['Categoria']['name'] ?></h2>
+                            <?php if ( count($c['Sabor']) > 0 ) {?>                
+                            <h3>Sabores</h3>
+                            <ul>
+                                <?php foreach ( $c['Sabor'] as $s ) { ?>
+                                <li><?= $s['name'] ?></li>
+                                <?php } ?>
+                            </ul>
+                            <?php } ?>
+
+                            <h3>Productos</h3>
+                            <ul>
+                                <?php foreach ($c['Producto'] as $p) { ?>
+                                <li data-producto-id="${id}" onclick=""><?= $p['name']?></li>
+                                <?php } ?>
+                            </ul>
+                        </li>
+                        <?php }?>
+                </ul>
+            </div>
 
 
-<div id="categorias-container" class="categorias-listado">
-    <ul>
-    <?php
-//    debug($categorias_tree);
-//    foreach ($categorias_tree as $k=>$c) {
-//        echo "<li><a href='#categoria-$k' class='catlink' onclick='console.debug(this.href);$(this.href).show();'>". $c ."</a></li>";
-//    }
+        </div>
+        <div  data-role="footer">Ristorantino Mágico</div>
+    </div>
 
-    ?>
-    </ul>
-</div>
-
-<div class="categorias-productos-listado">
-    <ul id="ul-productos" class="listado-productos"
-        >
-    </ul>
-</div>
