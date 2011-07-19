@@ -52,8 +52,7 @@ class StatsController extends PqueryAppController {
 
         $mesasLineas = array();
         foreach ( $lineas as $l ) {
-            $query = '
-    SELECT count(*) as "cant_mesas", 
+            $query = '    SELECT count(*) as "cant_mesas", 
             sum(m.cant_comensales) as "cant_cubiertos" ,
             sum(m.total) as "total", 
             sum(m.total)/sum(m.cant_comensales) as "promedio_cubiertos",
@@ -83,6 +82,77 @@ class StatsController extends PqueryAppController {
         }
         $this->set('mesas', $mesasLineas);
     }
+    
+    
+    function mesas_factura() {
+        /*
+        debug($this->passedArgs['p']);
+        if(!empty($this->passedArgs['p']))
+        
+                
+        $desdeHasta = '1 = 1';
+        $limit = '';
+        $lineas = array($desdeHasta);
+        if ( !empty($this->data['Linea'] )) {
+            $linea = array();
+            foreach ($this->data['Linea'] as $linea) {
+                if(!empty($linea['desde']) && !empty($linea['hasta']))
+                    {
+                    list($dia, $mes, $anio) = explode("/", $linea['desde']);
+                    $desde = $anio."-".$mes."-".$dia;
+
+                    list($dia, $mes, $anio) = explode("/", $linea['hasta']);
+                    $hasta = $anio."-".$mes."-".$dia;
+
+                    $desdeHasta = "m.created BETWEEN '$desde' AND '$hasta'";
+                    $lineas[] = $desdeHasta;
+                }
+            }
+        } else {
+            $limit = ' LIMIT 7 ';
+        }
+
+        $mesasLineas = array();
+        foreach ( $lineas as $l ) {
+            $query = '    SELECT count(*) as "cant_mesas", 
+            sum(m.cant_comensales) as "cant_cubiertos" ,
+            sum(m.total) as "total", 
+            sum(m.total)/sum(m.cant_comensales) as "promedio_cubiertos",
+            DATE(m.created) as "fecha" FROM (
+
+                SELECT id,numero,mozo_id,total, cant_comensales, cliente_id,menu, ADDDATE(m.created,-1) as created, modified, time_cerro, time_cobro from mesas m
+                WHERE
+                    HOUR(m.created) BETWEEN 0 AND ' . $horarioCorte . '
+
+                UNION
+
+                SELECT id,numero,mozo_id,total, cant_comensales, cliente_id,menu, created, modified, time_cerro, time_cobro from mesas m
+                WHERE
+                    HOUR(m.created) BETWEEN ' . $horarioCorte . ' AND 24) as m
+            WHERE ' . $l . '                    
+            GROUP BY DATE(m.created)
+            ORDER BY m.created DESC     
+            ' . $limit;
+
+            $mesas = $this->Mesa->query($query);
+
+            foreach ($mesas as &$m) {
+                $m['Mesa'] = $m[0];
+                unset($m[0]);
+            }
+            $mesasLineas[] = $mesas;
+        }
+        $this->set('mesas', $mesasLineas);
+        */
+    }
+    
+    
+    
+    
+      
+    
+    
+    
 
     function dia() {
 
@@ -124,9 +194,7 @@ class StatsController extends PqueryAppController {
 
       } */
 
-    function mesas_factura() {
-        
-    }
+
 
     function mesas_pago() {
         

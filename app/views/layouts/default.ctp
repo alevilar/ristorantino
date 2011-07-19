@@ -50,7 +50,7 @@
 	<div id="container" class="container_12">
             <div id="header" class="grid_12">
                 <?php echo $html->link("Inicio",'/pages/home',array('class'=>'inicio'))?>
-                <h1>El Ristorantino Mágico - versión 11.01.11</h1>
+                <!-- <h1>Titulo</h1> -->
                 <div id="mesajes"><?php $session->flash(); $session->flash('auth'); ?></div>
                 
 

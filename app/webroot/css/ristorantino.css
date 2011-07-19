@@ -9,7 +9,7 @@
 
 */
 UL.horizontal, .horizontal LI {
-    display: inline;
+        display: inline;
 	list-style: none;
 	float: left;
 	list-style: none;
