@@ -356,51 +356,56 @@ li.selected    {
 #bton-estadisticas{
 	background-image: url("img/stats.png");
 	background-repeat: no-repeat;
-	background-position: 10px 0px;
-	height: 63px;
+	background-position: 10px 34px;
+	height: 114px;
 	width: 147px;
-	padding-top: 62px;
+	padding-top: 11px;
         -webkit-box-shadow: inset 0px 0px 4px 0px #FFFFFF;
         -moz-box-shadow: inset 0px 0px 4px 0px #FFFFFF;
         box-shadow: inset 0px 0px 4px 0px #FFFFFF; 
+        font-weight: bold;
 }
 
 #bton-adicion{
 	background-image: url("img/calculator_yellow.png");
 	background-repeat: no-repeat;
 	background-position: 10px 0px;
-	height: 105px;
+	height: 103px;
 	width: 147px;
-	padding-top: 20px;
+	padding-top: 22px;
         margin-bottom: 20px;
         -webkit-box-shadow: inset 0px 0px 4px 0px #FFFFFF;
         -moz-box-shadow: inset 0px 0px 4px 0px #FFFFFF;
         box-shadow: inset 0px 0px 4px 0px #FFFFFF; 
+        font-weight: bold;
 }
 
 #bton-caja{
 	background-image: url("img/cash_register.png");
 	background-repeat: no-repeat;
 	background-position: 10px 0px;
-	height: 125px;
+	height: 115px;
 	width: 147px;
 	text-indent: -69px;
         margin-bottom: 20px;
         -webkit-box-shadow: inset 0px 0px 4px 0px #FFFFFF;
         -moz-box-shadow: inset 0px 0px 4px 0px #FFFFFF;
         box-shadow: inset 0px 0px 4px 0px #FFFFFF; 
+        font-weight: bold;
+        padding-top: 10px;
 }
 
 #bton-admin{
 	background-image: url("img/Administrative_Tools.png");
 	background-repeat: no-repeat;
 	background-position: 10px 0px;
-	height: 111px;
+	height: 108px;
 	width: 147px;
-	padding-top: 14px;
+	padding-top: 17px;
         -webkit-box-shadow: inset 0px 0px 4px 0px #FFFFFF;
         -moz-box-shadow: inset 0px 0px 4px 0px #FFFFFF;
         box-shadow: inset 0px 0px 4px 0px #FFFFFF; 
+        font-weight: bold;
 }
 
 
