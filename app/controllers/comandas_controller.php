@@ -5,7 +5,7 @@ class ComandasController extends AppController {
 	var $components = array( 'Printer');
 
         
-	function add(){
+	function add($mesa_id = null){
 
             //Configure::write('debug',0);
 
@@ -19,8 +19,11 @@ class ComandasController extends AppController {
                     $this->Session->setFlash(__('The Comanda could not be saved. Please, try again.', true));
                 }
             endif;
+            $this->set('mesa_id', $mesa_id);
             
-            $this->set('productos', $this->Comanda->Producto->find('all'));
+            $this->set('categorias_tree', $this->Comanda->DetalleComanda->Producto->Categoria->generatetreelist(null, null, null, '&nbsp;&nbsp;&nbsp;'));
+            $this->set('categorias', $this->Comanda->DetalleComanda->Producto->Categoria->find('all'));
+            //$this->set('productos', $this->Comanda->DetalleComanda->Producto->find('all'));
 	}
 	
 	

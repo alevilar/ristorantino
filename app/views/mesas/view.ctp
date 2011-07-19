@@ -9,7 +9,7 @@
 
 <div class="grid_3">
     <ul data-role="listview">
-        <li><a href="#hacer-comanda" ><?= $html->image('/adition/css/img/chef_64.png')?>Comanda</a></li>
+        <li><a data-bind="attr: {href: currentMesa().comandaAdd()}" ><?= $html->image('/adition/css/img/chef_64.png')?>Comanda</a></li>
         <li><a href="#sacar-item" >Sacar Item</a></li>
         <li><a href="#Agregar Cliente" >Agragar Cliente</a></li>
         <li><a href="#Agragar Descuento" >Agregar Descuento</a></li>

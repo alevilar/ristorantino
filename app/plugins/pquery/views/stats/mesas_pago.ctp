@@ -34,7 +34,7 @@
 
 <script id="example_1" type="text/javascript">
     $(document).ready(function(){
-    s1 = [['Efectivo',22], ['Debito',15.3], ['Visa',10.7], ['Mastercard',5.2], ['Otros', 5.2]];
+    s1 = [['Efectivo',32], ['Debito',15.3], ['Visa',10.7], ['Mastercard',5.2], ['Otros', 5.2]];
         
     plot1 = $.jqplot('chart1', [s1], {
         grid: {
@@ -64,7 +64,7 @@
 </script>
 
 <div class="grid_3 push_3">
-<div id="chart1" style="margin-top:20px; margin-left:20px; width:300px; height:300px;"></div>
+<div id="chart1" style="margin-top:20px; margin-left:20px; width:400px; height:400px;"></div>
 </div>
 <div class="grid_2 push_5">
 <p>Total ventas por tipo de pago</p>

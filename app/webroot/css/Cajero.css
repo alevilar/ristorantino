@@ -31,12 +31,12 @@
 
 /* General Style Info */
 body {
-	background: #003d4c;
-	color: #fff;
-	font-family: 'lucida grande', verdana, helvetica, arial, sans-serif;
-	font-size: x-large;
+	background-color: #6b6b6e;
+	color: #e3e3e4;
+	font-family:'lucida grande',verdana,helvetica,arial,sans-serif;
+	font-size:90%;
 	margin: 0;
-	overflow: hidden;
+        /* Css degrade */
 }
 
 A,A:VISITED {	
