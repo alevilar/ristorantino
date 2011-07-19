@@ -6,7 +6,7 @@ ul.listado-mesas{
 }
 
 ul.listado-mesas li{
-    height: 45px;
+    height: auto;
     margin: 0.5em 5px;
 }
 
