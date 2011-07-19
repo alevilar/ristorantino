@@ -57,7 +57,7 @@
                     <h1>El Ristorantino Mágico - versión 11.01.11</h1>
                     <div id="mesajes"><?php $session->flash(); $session->flash('auth'); ?></div>
 
-                <?php echo $html->link('Cambiar de usuario', array('controller' => 'users', 'action' => 'logout'), array('style' => 'float: right;')); ?>
+                <?php echo $html->link('Cambiar de usuario', array('controller' => 'users', 'action' => 'logout', 'plugin' => null), array('style' => 'float: right;')); ?>
                 </div>
                 <div id="content" class="grid_12">
                     <?php echo $content_for_layout; ?>

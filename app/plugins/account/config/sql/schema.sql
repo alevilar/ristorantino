@@ -1,0 +1,8 @@
+CREATE TABLE `coqus`.`vales` (
+`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`persona` VARCHAR( 50 ) NOT NULL ,
+`monto` FLOAT NOT NULL ,
+`modified` DATETIME NULL ,
+`created` DATETIME NOT NULL
+) ENGINE = MYISAM ;
+
