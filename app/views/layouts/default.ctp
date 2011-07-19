@@ -6,8 +6,8 @@
  *
  * CakePHP(tm) :  Rapid Development Framework <http://www.cakephp.org/>
  * Copyright 2005-2008, Cake Software Foundation, Inc.
- *								1785 E. Sahara Avenue, Suite 490-204
- *								Las Vegas, Nevada 89104
+ * 								1785 E. Sahara Avenue, Suite 490-204
+ * 								Las Vegas, Nevada 89104
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
@@ -26,46 +26,49 @@
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-	<?php echo $html->charset(); ?>
-	<title>
-		<?php echo $title_for_layout; ?>
-	</title>
-	<?php
-		echo $html->meta('icon');
+    <head>
+        <?php echo $html->charset(); ?>
+        <title>
+            <?php echo $title_for_layout; ?>
+        </title>
+        <?php
+            echo $html->meta('icon');
 
-		echo $html->css('ristorantino.generic');
-                echo $html->css('fluid_grid');
+            echo $html->css('ristorantino.generic');
+            echo $html->css('cake.generic.croogo');
+            echo $html->css('fluid_grid');
 
-		echo $scripts_for_layout;
-		
-		echo $javascript->link('prototype');		
-		echo $javascript->link('scriptaculous');	
-		
-		//echo $javascript->link('Controls'); // PAD numerico
-		
-	?>
-</head>
-<body>
-	<div id="container" class="container_12">
-            <div id="header" class="grid_12">
-                <?php echo $html->link("Inicio",'/pages/home',array('class'=>'inicio'))?>
-                <h1>El Ristorantino Mágico - versión 11.01.11</h1>
-                <div id="mesajes"><?php $session->flash(); $session->flash('auth'); ?></div>
-                
+            echo $scripts_for_layout;
 
-                <?php echo $html->link('Cambiar de usuario', array('controller'=>'users', 'action'=>'logout'), array('style'=>'float: right;')); ?>
-		</div>
-            <div id="content" class="grid_12">
-			<?php echo $content_for_layout; ?>
-	    </div>
-		
-	</div>
+            echo $javascript->link('prototype');
+            echo $javascript->link('scriptaculous');
+            echo $javascript->link('jquery/jquery-1.6.1.min');
 
-    <div class="clear"></div>
-    <div class="container_12">
-	<?php echo $cakeDebug; ?>
+            //echo $javascript->link('Controls'); // PAD numerico
+        ?>
+            <script type="text/javascript">
+                jQuery.noConflict();
+            </script>
+        </head>
+        <body>
+            <div id="container" class="container_12">
+                <div class="grid_12">
+                <?php echo $html->link("Inicio", '/pages/home', array('class' => 'inicio')) ?>
+                    <h1>El Ristorantino Mágico - versión 11.01.11</h1>
+                    <div id="mesajes"><?php $session->flash(); $session->flash('auth'); ?></div>
+
+                <?php echo $html->link('Cambiar de usuario', array('controller' => 'users', 'action' => 'logout'), array('style' => 'float: right;')); ?>
+                </div>
+                <div id="content" class="grid_12">
+                    <?php echo $content_for_layout; ?>
+                </div>
+
         </div>
-	
-</body>
+
+        <div class="clear"></div>
+        <div class="container_12">
+            <?php echo $cakeDebug; ?>
+        </div>
+
+    </body>
 </html>
