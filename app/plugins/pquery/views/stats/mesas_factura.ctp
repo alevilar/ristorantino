@@ -1,15 +1,22 @@
 <?php
+                echo $html->css('cake.css');   
                 echo $javascript->link('/pquery/js/jquery.min.js'); 
 		echo $javascript->link('/pquery/js/jquery.jqplot.js');
 		echo $javascript->link('/pquery/js/plugins/jqplot.pieRenderer.js');
-                echo $html->css('/pquery/css/examples.css');
-                echo $html->css('/pquery/css/examples.css');
-                echo $html->css('cake.css');         
+                
+                echo $html->css('/pquery/css/examples.css');   
                 echo $html->css('/pquery/css/jquery.jqplot.css');
-
+                echo $html->css('estadisticas');
+                
+                $mesas = array ( 
+                               array('Mesa'=> array('tipo'=> 'A','total'=>'300')),
+                               array('Mesa'=> array('tipo'=> 'B','total'=>'250')),
+                               array('Mesa'=> array('tipo'=> 'C','total'=>'150')),
+                               array('Mesa'=> array('tipo'=> 'Otros','total'=>'50'))
+                             ); 
 ?>
 
-  <style type="text/css">
+<style type="text/css">
     #code {
         font: 10pt "Andale Mono", Monaco, "Courier New", sans-serif ;
         white-space: pre;
@@ -29,62 +36,72 @@
     p {
         margin: 2em 0;
     }
-
-  </style>
+    
+</style>
 
 <script id="example_1" type="text/javascript">
-    $(document).ready(function(){
-    s1 = [['B',22], ['R',15.3], ['A',10.7], ['Otros',5]];
-        
-    plot1 = $.jqplot('chart1', [s1], {
-        grid: {
-            drawBorder: false, 
-            drawGridlines: false,
-            background: '#ffffff',
-            shadow:false
-        },
-        axesDefaults: {
-            
-        },
-        seriesDefaults:{
-            renderer:$.jqplot.PieRenderer,
-            rendererOptions: {
-                showDataLabels: true
-            }
-        },
-        legend: {
-            show: true,
-            rendererOptions: {
-                numberRows: 1
-            },
-            location: 's'
+    jQuery.noConflict(); 
+    
+    var mesas= <?php echo json_encode($mesas); ?>;
+    
+    mesas.getCoordenadas = function(){
+           
+        var linea = [];
+            jQuery.each(mesas,function(i){
+                var coordMesa = [mesas[i].Mesa.tipo, parseFloat(mesas[i].Mesa.total)];
+                linea.push(coordMesa);  
+            })
+            return linea; 
         }
-    }); 
-});
+
+    jQuery(document).ready(function(){
+        s1 = mesas.getCoordenadas();
+
+        plot1 = jQuery.jqplot('chart1', [s1], {
+            grid: {
+                drawBorder: false, 
+                drawGridlines: false,
+                background: '#ffffff',
+                shadow:false
+            },
+            axesDefaults: {
+
+            },
+            seriesDefaults:{
+                renderer:jQuery.jqplot.PieRenderer,
+                rendererOptions: {
+                    showDataLabels: true
+                }
+            },
+            legend: {
+                show: true,
+                rendererOptions: {
+                    numberRows: 1
+                },
+                location: 's'
+            }
+        }); 
+    });
 </script>
 
-<div class="grid_3 push_3">
-<div id="chart1" style="margin-top:20px; margin-left:20px; width:400px; height:400px;"></div>
+<?php echo $this->element('menustats'); ?>
+
+<div class="grid_6 push_1">
+    <div id="chart1" style="margin-top:20px; margin-left:20px; width:400px; height:400px;"></div>
 </div>
-<div class="grid_2 push_5">
-<p>Total ventas por factura</p>
-<select>
-<option value="">Dia</option>
-<option value="Contabilidad">Semana</option>
-<option value="mesas">Mes</option>
-<option value="mozos">Ultimos 3 meses</option>
-<option value="ranking">Ultimos 6 meses</option>
-<option value="ventas totales">Ultimo año</option>
-</select>
+<div class="grid_2 push_1 select_periodo">
 
-
+    <a class="menu_periodo">Dia</a>
+    <a class="menu_periodo">Semana</a>
+    <a class="menu_periodo">Mes</a>
+    <a class="menu_periodo">Año</a>
 
 </div>
 
 
 <div class="grid_12">
 <table cellspacing="0" cellpadding="0">
-        <caption class="editable">VentasPorTipoFactura</caption>
+        <caption class="editable">Ventas Por Tipo de Factura</caption>
         <thead>
         <tr>
                         <th class="editable">cant. mesas</th>

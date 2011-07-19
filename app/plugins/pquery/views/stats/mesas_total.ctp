@@ -14,17 +14,16 @@
 
 
                 
-             /* $mesas = array ( 
+             /* 
+                            $mesas = array ( 
                                array('Mesa'=> array('fecha'=> '2011-06','total'=>'330')),
                                array('Mesa'=> array('fecha'=> '2011-05','total'=>'330')),
                                array('Mesa'=> array('fecha'=> '2011-04','total'=>'290')),
                                array('Mesa'=> array('fecha'=> '2011-03','total'=>'900'))
-                             );
-                
-                */
-                
+                             );     
+             */
+        
 ?>
-
 
 
 <script language="javascript" type="text/javascript">
@@ -34,7 +33,6 @@
     mesas.getCoordenadas = function(){
            
         var lineas = [];
-        console.debug(mesas);
         jQuery.each(mesas,function(l){  
            var coordxLinea = [];
             jQuery.each(mesas[l],function(i){
@@ -49,16 +47,8 @@
           
     }    
     
-</script>
 
-    
-<script language="javascript" type="text/javascript">
-
-function editit(str, si, pi, plot) {
-    return "<b><i>Mesa: "+plot.targetId+', Series: '+si+', Point: '+pi+', '+str+"</b></i>";
-}
-
-jQuery(document).ready(function(){
+        jQuery(document).ready(function(){
       
     	dates = jQuery( ".datepicker" ).datepicker({
                 defaultDate: "+1w",
