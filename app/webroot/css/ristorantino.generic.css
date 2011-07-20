@@ -112,8 +112,8 @@ ul, li {
         -webkit-border-radius: 15px;
         -moz-border-radius: 15px;
         border-radius: 15px; 
-        padding-top: 15px;
-        padding-bottom: 15px;
+        padding-top: 20px;
+        padding-bottom: 20px;
 }
 #footer {
 	text-align: right;
