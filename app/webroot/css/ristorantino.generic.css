@@ -7,7 +7,7 @@
 /* General Style Info */
 body {
 	background-color: #6b6b6e;
-	color: #e3e3e4;
+	color: #000000;
 	font-family:'lucida grande',verdana,helvetica,arial,sans-serif;
 	font-size:80%;
 	margin: 0;
@@ -73,37 +73,32 @@ ul, li {
 	text-align: left;
 }
 
-#header{
+.header{
 	padding-top: 10px;
         padding-bottom: 20px;
 }
+.header a {
+	color: #CCCCCC;
+	text-decoration: none;
+	font-weight: normal;
+}
 
-#header a {
+.header a {
+	color: #CCCCCC;
+	text-decoration: none;
+	font-weight: normal;
+}
+
+.header a:hover {
+	color: #000000;
+	font-weight: normal;
+	text-decoration: none;
+}
+
+.header h1 {
 	color: #e3e3e4;
-	text-decoration: none;
-	font-weight: normal;
-}
-#header a:hover {
-	color: #ffffff;
-	font-weight: normal;
-	text-decoration: none;
 }
 
-#header h1 {
-	color: #e3e3e4;
-}
-
-
-
-#header h1 a {
-	color: #fff;
-	font-weight: normal;
-	text-decoration: none;
-}
-#header h1 a:hover {
-	color: #fff;
-	text-decoration: underline;
-}
 #content{
 	background: #fff;
 	color: #333;
@@ -288,6 +283,7 @@ li.selected    {
 #botonera_home{
 	text-align: center;
 	margin: auto;
+        padding-bottom: 80px;
 }
 
 
@@ -351,62 +347,62 @@ li.selected    {
 }
 
 
+.divboton{
+    margin-top: 220px;
+    font-weight: bold;
+    font-size: 150%;
+}
+
 
 #bton-estadisticas{
-	background-image: url("img/stats.png");
+	background-image: url("../img/stats.png");
+        background-position: center top;
 	background-repeat: no-repeat;
-	background-position: 10px 34px;
-	height: 114px;
-	width: 147px;
-	padding-top: 11px;
-        -webkit-box-shadow: inset 0px 0px 4px 0px #FFFFFF;
-        -moz-box-shadow: inset 0px 0px 4px 0px #FFFFFF;
-        box-shadow: inset 0px 0px 4px 0px #FFFFFF; 
-        font-weight: bold;
+        padding-bottom: 0px;
+        padding-left: 50px;
+        padding-right: 50px;
+        padding-top: 150px;
 }
 
 #bton-adicion{
-	background-image: url("img/calculator_yellow.png");
+	background-image: url("../img/adicion.png");
+        background-position: center top;
 	background-repeat: no-repeat;
-	background-position: 10px 0px;
-	height: 103px;
-	width: 147px;
-	padding-top: 22px;
-        margin-bottom: 20px;
-        -webkit-box-shadow: inset 0px 0px 4px 0px #FFFFFF;
-        -moz-box-shadow: inset 0px 0px 4px 0px #FFFFFF;
-        box-shadow: inset 0px 0px 4px 0px #FFFFFF; 
-        font-weight: bold;
+        padding-bottom: 0px;
+        padding-left: 50px;
+        padding-right: 50px;
+        padding-top: 150px;
 }
 
 #bton-caja{
-	background-image: url("img/cash_register.png");
+	background-image: url("../img/caja.png");
+        background-position: center top;
 	background-repeat: no-repeat;
-	background-position: 10px 0px;
-	height: 115px;
-	width: 147px;
-	text-indent: -69px;
-        margin-bottom: 20px;
-        -webkit-box-shadow: inset 0px 0px 4px 0px #FFFFFF;
-        -moz-box-shadow: inset 0px 0px 4px 0px #FFFFFF;
-        box-shadow: inset 0px 0px 4px 0px #FFFFFF; 
-        font-weight: bold;
-        padding-top: 10px;
+        padding-bottom: 0px;
+        padding-left: 50px;
+        padding-right: 50px;
+        padding-top: 150px;
 }
 
 #bton-admin{
-	background-image: url("img/Administrative_Tools.png");
+	background-image: url("../img/admin.png");
+        background-position: center top;
 	background-repeat: no-repeat;
-	background-position: 10px 0px;
-	height: 108px;
-	width: 147px;
-	padding-top: 17px;
-        -webkit-box-shadow: inset 0px 0px 4px 0px #FFFFFF;
-        -moz-box-shadow: inset 0px 0px 4px 0px #FFFFFF;
-        box-shadow: inset 0px 0px 4px 0px #FFFFFF; 
-        font-weight: bold;
+        padding-bottom: 0px;
+        padding-left: 50px;
+        padding-right: 50px;
+        padding-top: 150px;
 }
 
+#bton-contabilidad{
+	background-image: url("../img/contable.png");
+        background-position: center top;
+	background-repeat: no-repeat;
+        padding-bottom: 0px;
+        padding-left: 50px;
+        padding-right: 50px;
+        padding-top: 150px;
+}
 
 /* CSS PARA FORMULARIOS */
 
