@@ -1,8 +1,6 @@
 <?php
                 echo $html->css('/pquery/css/examples');
-                echo $html->css('cake.css');
                 echo $html->css('jquery-ui/jquery-ui-1.8.14.custom');
-                echo $html->css('ristorantino.generic');
                 echo $html->css('estadisticas');
                 
                 echo $javascript->link('/pquery/js/jquery.min.js'); 
@@ -26,8 +24,11 @@
 ?>
 
 
-<script language="javascript" type="text/javascript">
-    jQuery.noConflict();    
+<script language="javascript" type="text/javascript">    
+    
+        
+
+
     
     var mesas= <?php echo json_encode($mesas); ?>;
     mesas.getCoordenadas = function(){
@@ -109,6 +110,10 @@
    
 });
 
+jQuery("button").click(function () {
+    jQuery("#seg_fecha").show("slow");
+});
+
 </script>
 
 
@@ -118,8 +123,10 @@
 
     <div class="grid_11 push_1">
             <h4 class="grid_6">Elija el rango de fechas para visualizar</h4>
-            <div class="grid_6" style="margin-top: 10px;"><input type="checkbox" style="vertical-align: middle;position: relative;"><span>Añadir otras fechas para comparar</span></div>
-
+            <div class="grid_6" style="margin-top: 10px;">
+                <!--<input id="otrafecha" type="checkbox" style="vertical-align: middle;position: relative;"><span>Añadir otras fechas para comparar</span>-->
+                <?php echo $html->link('Añadir otra fecha para comparar','#',array('id'=>'otrafecha'));?>
+            </div>
             <div class="clear"></div>
 
                 <?php echo $form->create('Mesa',array('url'=>'/pquery/stats/mesas_total')); ?>
@@ -133,7 +140,7 @@
 
             </div>    
 
-            <div id="seg_fecha" class="grid_4 push_1">
+            <div id="seg_fecha" class="grid_4 push_1" style="display: none;">
             <?php
                      echo $form->input('Linea.1.desde', array('label'=>'Desde','id'=>'from2', 'class' =>'datepicker'));
                      echo $form->input('Linea.1.hasta', array('label'=>'Hasta','id'=>'to2', 'class' =>'datepicker'));
@@ -142,7 +149,7 @@
             <div class="clear"></div>
                     <div class="grid_2">
             <?php
-                      echo $form->end('Submit');
+                      echo $form->end('Enviar');
             ?>
                      </div>
      </div>
