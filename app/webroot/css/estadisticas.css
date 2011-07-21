@@ -136,3 +136,7 @@ table.jqplot-table-legend tr td {
 .select_periodo {
     margin-top: 70px;
 }
+
+.desaparecer {
+    display: none;
+}

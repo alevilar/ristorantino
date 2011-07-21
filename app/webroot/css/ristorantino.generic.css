@@ -10,7 +10,7 @@ body {
 	color: #000000;
 	font-family:'lucida grande',verdana,helvetica,arial,sans-serif;
 	font-size:80%;
-	margin: 0;
+	margin: 5px;
         /* Css degrade */
 }
 span {
@@ -74,8 +74,8 @@ ul, li {
 }
 
 .header{
-	padding-top: 10px;
-        padding-bottom: 20px;
+	padding-top: 0;
+        padding-bottom: 5px;
 }
 .header a {
 	color: #CCCCCC;
@@ -329,7 +329,7 @@ li.selected    {
 }
 
 .inicio{
-	margin-top: 10px;
+	margin-top: 0;
 	background-color: transparent;
 	background-image: url("../img/home.png");
 	background-repeat: no-repeat;
@@ -348,7 +348,7 @@ li.selected    {
 
 
 .divboton{
-    margin-top: 220px;
+    margin-top: 200px;
     font-weight: bold;
     font-size: 150%;
 }
