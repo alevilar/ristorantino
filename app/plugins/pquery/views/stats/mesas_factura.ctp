@@ -9,35 +9,12 @@
                 echo $html->css('estadisticas');
                 
                 $mesas = array ( 
-                               array('Mesa'=> array('tipo'=> 'A','total'=>'300')),
-                               array('Mesa'=> array('tipo'=> 'B','total'=>'250')),
-                               array('Mesa'=> array('tipo'=> 'C','total'=>'150')),
-                               array('Mesa'=> array('tipo'=> 'Otros','total'=>'50'))
+                               array('Mesa'=> array('tipo'=> 'A','total'=>'300','cant'=>'1500')),
+                               array('Mesa'=> array('tipo'=> 'B','total'=>'250','cant'=>'1200')),
+                               array('Mesa'=> array('tipo'=> 'C','total'=>'150','cant'=>'600')),
+                               array('Mesa'=> array('tipo'=> 'Otros','total'=>'50','cant'=>'150'))
                              ); 
 ?>
-
-<style type="text/css">
-    #code {
-        font: 10pt "Andale Mono", Monaco, "Courier New", sans-serif ;
-        white-space: pre;
-    }
-    
-    pre {
-        background: #D8F4DC;
-        border: 1px solid rgb(200, 200, 200);
-        padding-top: 1em;
-        padding-left: 3em;
-        padding-bottom: 1em;
-        margin-top: 1em;
-        margin-bottom: 3em;
-        
-    }
-    
-    p {
-        margin: 2em 0;
-    }
-    
-</style>
 
 <script id="example_1" type="text/javascript">
     jQuery.noConflict(); 
@@ -87,90 +64,59 @@
 <?php echo $this->element('menustats'); ?>
 
 <div class="grid_6 push_1">
-    <div id="chart1" style="margin-top:20px; margin-left:20px; width:400px; height:400px;"></div>
+        <div id="chart1" style="width: 80%; height: 450px; margin-left: 10%;"></div>
 </div>
+
 <div class="grid_2 push_1 select_periodo">
-
-    <a class="menu_periodo">Dia</a>
-    <a class="menu_periodo">Semana</a>
-    <a class="menu_periodo">Mes</a>
-    <a class="menu_periodo">Año</a>
-
+    <?php echo $html->link("Dia", 'mesas_factura/dia', array('class' => 'menu_periodo')) ?>
+    <?php echo $html->link("Semana", 'mesas_factura/semana', array('class' => 'menu_periodo')) ?>
+    <?php echo $html->link("Mes", 'mesas_factura/mes', array('class' => 'menu_periodo')) ?>
+    <?php echo $html->link("Año", 'mesas_factura/anio', array('class' => 'menu_periodo')) ?>
 </div>
 
 
-<div class="grid_12">
-<table cellspacing="0" cellpadding="0">
-        <caption class="editable">Ventas Por Tipo de Factura</caption>
+<div class="grid_10 push_2 omega">
+    
+    <table cellspacing="0" cellpadding="0" style="text-align: left; font-size: 17px;">
         <thead>
-        <tr>
-                        <th class="editable">cant. mesas</th>
-                        <th class="editable">cubiertos</th>
-                        <th class="editable">total</th>
-                        <th class="editable">promedio x cubierto</th>
-                        <th class="editable">fecha</th>
-                        <th class="editable">tipofactura</th>
-                    </tr>
+                        <tr>
+                            <th class="editable">Tipo de factura</th>
+                            <th class="editable">Cantidad de mesas</th>
+                            <th class="editable">Total</th>
+                        </tr>
         </thead>
         <tbody>
-                <tr class="altrow">
-                            <td>
-                        3            </td>
-                            <td>
-                        8            </td>
-                            <td>
-                        2160.00            </td>
-                            <td>
-                        270.000000            </td>
-                            <td>
-                        08/07/2011 - Fri July            </td>
-                            <td>
-                        B            </td>
-                        </tr>
-                <tr>
-                            <td>
-                        1            </td>
-                            <td>
-                        5            </td>
-                            <td>
-                        147.00            </td>
-                            <td>
-                        29.400000            </td>
-                            <td>
-                        20/04/2011 - Wed April            </td>
-                            <td>
-                        B            </td>
-                        </tr>
-                <tr class="altrow">
-                            <td>
-                        1            </td>
-                            <td>
-                        3            </td>
-                            <td>
-                        122.00            </td>
-                            <td>
-                        40.666667            </td>
-                            <td>
-                        19/04/2011 - Tue April            </td>
-                            <td>
-                        R            </td>
-                        </tr>
-                <tr>
-                            <td>
-                        1            </td>
-                            <td>
-                        23            </td>
-                            <td>
-                        110.00            </td>
-                            <td>
-                        4.782609            </td>
-                            <td>
-                        23/03/2011 - Wed March            </td>
-                            <td>
-                        B            </td>
-                        </tr>
-                </tbody>
-    </table>
+
+    <?php     
+        if(!empty($mesas)){
+
+                foreach($mesas as $m){
+                    echo('<tr>');
+                    echo('<td>');
+                    ?><strong><?php
+                    echo($m['Mesa']['tipo']);
+                    ?></strong><?php
+                    echo('</td>');
+                    echo('<td>');
+                    echo($m['Mesa']['cant']);
+                    echo('</td>');
+                    echo('<td>');
+                    echo('$');
+                    echo($m['Mesa']['total']);
+                    echo('</td>');
+                    echo('</tr>');
+            }        
+        }else{
+                echo('<td>');
+                    echo('No se encontraron mesas');   
+                echo('</td>');
+                echo('<td>');
+                    echo('-');  
+                echo('</td>');
+
+        }    
+            echo('</tr>');
+    ?>
 
 </div>
 

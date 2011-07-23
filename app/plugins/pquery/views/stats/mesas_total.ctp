@@ -149,7 +149,7 @@ jQuery("button").click(function () {
             <div class="clear"></div>
                     <div class="grid_2">
             <?php
-                      echo $form->end('Enviar');
+              echo $form->end('Enviar');
             ?>
                      </div>
      </div>
