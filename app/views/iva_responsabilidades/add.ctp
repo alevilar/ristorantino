@@ -6,11 +6,12 @@
 		echo $form->input('codigo_fiscal');
 		echo $form->input('name');
 	?>
-	</fieldset>
 <?php echo $form->end('Submit');?>
+	</fieldset>
+
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $html->link(__('List IvaResponsabilidades', true), array('action' => 'index'));?></li>
+		<li><?php echo $html->link(__('Listar IVA responsabilidad', true), array('action' => 'index'));?></li>
 	</ul>
 </div>

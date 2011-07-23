@@ -1,5 +1,5 @@
 <div class="users view">
-<h2><?php  __('User');?></h2>
+<h2><?php  __('Usuario');?></h2>
 	<dl><?php $i = 0; $class = ' class="altrow"';?>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Id'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
@@ -35,16 +35,16 @@
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $html->link(__('Edit User', true), array('action'=>'edit', $user['User']['id'])); ?> </li>
-		<li><?php echo $html->link(__('Delete User', true), array('action'=>'delete', $user['User']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $user['User']['id'])); ?> </li>
-		<li><?php echo $html->link(__('List Users', true), array('action'=>'index')); ?> </li>
-		<li><?php echo $html->link(__('New User', true), array('action'=>'add')); ?> </li>
-		<li><?php echo $html->link(__('List Mozos', true), array('controller'=> 'mozos', 'action'=>'index')); ?> </li>
-		<li><?php echo $html->link(__('New Mozo', true), array('controller'=> 'mozos', 'action'=>'add')); ?> </li>
+		<li><?php echo $html->link(__('Editar Usuario', true), array('action'=>'edit', $user['User']['id'])); ?> </li>
+		<li><?php echo $html->link(__('Borrar Usuario', true), array('action'=>'delete', $user['User']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $user['User']['id'])); ?> </li>
+		<li><?php echo $html->link(__('Listar Usuario', true), array('action'=>'index')); ?> </li>
+		<li><?php echo $html->link(__('Crear Usuario', true), array('action'=>'add')); ?> </li>
+		<li><?php echo $html->link(__('Listar Mozos', true), array('controller'=> 'mozos', 'action'=>'index')); ?> </li>
+		<li><?php echo $html->link(__('Crear Mozo', true), array('controller'=> 'mozos', 'action'=>'add')); ?> </li>
 	</ul>
 </div>
 	<div class="related">
-		<h3><?php  __('Related Mozos');?></h3>
+		<h3><?php  __('Mozos Relacionados');?></h3>
 	<?php if (!empty($user['Mozo'])):?>
 		<dl>	<?php $i = 0; $class = ' class="altrow"';?>
 			<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Id');?></dt>
@@ -63,7 +63,7 @@
 	<?php endif; ?>
 		<div class="actions">
 			<ul>
-				<li><?php echo $html->link(__('Edit Mozo', true), array('controller'=> 'mozos', 'action'=>'edit', $user['Mozo']['id'])); ?></li>
+				<li><?php echo $html->link(__('Editar Mozo', true), array('controller'=> 'mozos', 'action'=>'edit', $user['Mozo']['id'])); ?></li>
 			</ul>
 		</div>
 	</div>

@@ -1,14 +1,14 @@
 <div class="tipoDocumentos form">
 <?php echo $form->create('TipoDocumento');?>
 	<fieldset>
- 		<legend><?php __('Edit TipoDocumento');?></legend>
+ 		<legend><?php __('Editar tipo de documento');?></legend>
 	<?php
 		echo $form->input('id');
 		echo $form->input('codigo_fiscal');
 		echo $form->input('name');
 	?>
-	</fieldset>
 <?php echo $form->end('Submit');?>
+	</fieldset>
 </div>
 <div class="actions">
 	<ul>

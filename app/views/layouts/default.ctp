@@ -55,9 +55,10 @@
                 <div class="grid_12 header">
                 <?php echo $html->link("Inicio", '/pages/home', array('class' => 'inicio')) ?>
                     
-                    <div id="mesajes"><?php $session->flash(); $session->flash('auth'); ?></div>
+                    
 
                 <?php echo $html->link('Cambiar de usuario', array('controller' => 'users', 'action' => 'logout', 'plugin' => null), array('style' => 'float: right; margin-top:45px; font-size: 135%;')); ?>
+                <div id="mesajes"><?php $session->flash(); $session->flash('auth'); ?></div>
                 </div>
                 <div id="content" class="grid_12">
                     <?php echo $content_for_layout; ?>

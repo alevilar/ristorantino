@@ -10,10 +10,11 @@
 		echo $form->input('apellido');
 		
 		
-		?><h2>Información de Contacto</h2><?
+		?><h2 style="float: left; clear:both;">Información de Contacto</h2><?
 		echo $form->input('telefono');
 		echo $form->input('domicilio');
 	?>
-	</fieldset>
 <?php echo $form->end('Guardar');?>
+	</fieldset>
+
 </div>

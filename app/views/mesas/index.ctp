@@ -108,7 +108,7 @@ echo $paginator->counter(array(
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $html->link(__('New Mesa', true), array('action'=>'add')); ?></li>
+		<li><?php echo $html->link(__('Crear Mesa', true), array('action'=>'add')); ?></li>
 	</ul>
 </div>
 

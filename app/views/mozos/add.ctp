@@ -5,10 +5,11 @@
 	<?php
 		echo $form->input('user_id', array('empty'=>'No relacionar con usuarios del sistema'));
 		echo $form->input('numero');
-		echo $form->input('activo',array('after'=>'Solo mozos activos aparecen en la adiciñon. Nunca se debe BORRAR un mozo, lo que hay que hacer es desactivarlo, de ésta manera no se pierden datos estadísticos.'));
+		echo $form->input('activo',array('after'=>'Solo mozos activos aparecen en la adición. Si BORRA un mozo se pierden los datos estadisticos, puede desactivarlo para no perder información.'));
 	?>
+        <?php echo $form->end('Submit');?>
 	</fieldset>
-<?php echo $form->end('Submit');?>
+
 </div>
 <div class="actions">
 	<ul>
