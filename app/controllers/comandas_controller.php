@@ -28,7 +28,9 @@ class ComandasController extends AppController {
 	
 	
 	function index(){
-		$this->set('comandas',$comandas = $this->Comanda->dame_las_comandas_abiertas());
+            if(!empty($this->data)){
+                $this->set('comandas',$comandas = $this->Comanda->dame_las_comandas_abiertas());
+            }
 	}
 	
 	/**
