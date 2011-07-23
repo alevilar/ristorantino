@@ -8,7 +8,7 @@
 .message { padding: .8em; margin-bottom: 1em; border: 2px solid #ddd; }
 .error { background: #FBE3E4; color: #D12F19; border-color: #FBC2C4; }
 .notice,
-.message { background: #FFF6BF; color: #817134; border-color: #FFD324; }
+.message { background: #000000; color: #FF0000 !important; border-color: #CCCCCC; }
 .success { background: #E6EFC2; color: #529214; border-color: #C6D880; }
 .error a { color: #D12F19; }
 .notice a,
@@ -27,7 +27,7 @@ div.counter { margin-top: 10px; }
 /**
  * Tables
  */
-table { width: 100%; border: 1px solid #dfdfdf; background-color: #fff; clear: both; }
+table { width: 100%; border: 1px solid #dfdfdf; background-color: #fff; clear: both;  margin-top: 10px;}
 table tr th { padding: 10px; background-color: #e7e7e7; color: #464646; border-bottom: 0px; text-align: left; }
 table tr td { padding: 10px; border-bottom: 1px solid #dfdfdf; vertical-align: middle; }
 table tr td a { font-weight: normal; text-decoration: none; padding: 0px 5px 0px 0px; }
@@ -196,11 +196,11 @@ div.extensions-themes .available-themes .actions a { margin-right: 10px; }
 div.tabs { margin-bottom: 10px; }
 div.tabs p { margin: 50px 0px 0px 0px; }
 
-div.actions { padding: 0px 0px 50px 0px; }
+div.actions { padding: 10px 0px 50px 0px; }
 div.actions ul { float: left; }
 div.actions ul li { margin: 0px 10px 0px 0px; padding: 0px; list-style: none; float: left; }
-div.actions ul li a { padding: 10px; margin-right: 10px; text-decoration: none; background-color: #eee; font-weight: bold; float: left; }
-div.actions ul li a:hover { background-color: #f2f2f2; }
+div.actions ul li a { padding: 10px; margin-right: 10px; text-decoration: none; background-color: #f2f2f2; font-weight: bold; float: left; border: #cccccc 1px solid; }
+div.actions ul li a:hover { background-color: #DADADA; }
 div.actions ul li span { }
 
 div.bulk-actions .input { float: left; padding: 4px; }

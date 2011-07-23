@@ -2,6 +2,18 @@
 
 /* Seccion estadisticas */
 
+#content{
+	background: #fff;
+	color: #333;
+	overflow: auto;
+        -webkit-border-radius: 15px;
+        -moz-border-radius: 15px;
+        border-radius: 15px; 
+        padding-left: 0px;
+        padding-right: 30px;
+        left:-15px;
+}
+
 li {
     text-decoration: none; !important
     margin: 0;
@@ -15,7 +27,8 @@ ul {
 
 .menu_stats {
     background-color: #C2D2DE;
-    height: 100%;
+    height: 80%;
+    margin-top: 50px;
     border-top-style: solid;
     border-top-width: 1px;
     border-top-color: #949494;
@@ -43,7 +56,7 @@ ul {
 }
 
 #prim_fecha input, #seg_fecha input {
-    width: 90px;    
+    width: 120px;    
 }
 
 #prim_fecha input[type="checkbox"] {
@@ -52,13 +65,15 @@ ul {
 
 .menu_stats ul {
     font-size: 120%;
-    margin-left: 20px;
+    margin-left: 0;
 }
 
 .menu_stats ul li {
     margin: 0;
     padding: 0;
     margin-bottom: 10px;
+    display: block;
+
 }
 
 .menu_stats ul li a{
@@ -66,6 +81,7 @@ ul {
     color: #6b6b6e;
     font-size: 80%;
     font-weight: bold;
+    margin-left: 5px;
 }
 
 .menu_stats ul li a:hover{
@@ -92,12 +108,14 @@ table.jqplot-table-legend {
 table.jqplot-table-legend tr td {
     padding: 0;
     border-right: none;
+    border-bottom: none;
+    font-size: 16px;
 }
 
 .menu_periodo {
     width: 60px;
-    padding-top: 3px;
-    height: 19px;
+    padding-top: 5px;
+    height: 22px;
     background-color: grey;
     border: none;
     float: left;
@@ -130,11 +148,12 @@ table.jqplot-table-legend tr td {
 }
 
 .menu_periodo:hover {
-    color: #000000;
+    color: #FFFFFF;
 }
 
 .select_periodo {
     margin-top: 70px;
+    text-align: right;
 }
 
 .desaparecer {
