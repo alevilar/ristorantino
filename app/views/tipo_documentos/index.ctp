@@ -3,7 +3,7 @@
 <p>
 <?php
 echo $paginator->counter(array(
-'format' => __('Pagina %page% de %pages%, mostrando %current% elementos de %count%', true)
+'format' => __('Página %page% de %pages%, mostrando %current% elementos de %count%', true)
 ));
 ?></p>
 <table cellpadding="0" cellspacing="0">

@@ -8,7 +8,7 @@ echo $paginator->counter(array(
 'format' => __('Pagina %page% de %pages%, mostrando %current% elementos de %count%.', true)
 ));
 ?></p>
-<table cellpadding="0" cellspacing="0">
+<table class="productos" cellpadding="0" cellspacing="0">
 
 <tr>
 	<th><?php echo $form->create("Producto",array("action"=>"index")); echo $form->input("id") ?></th>
@@ -88,9 +88,9 @@ foreach ($productos as $producto):
 </table>
 </div>
 <div class="paging">
-	<?php echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
+	<?php echo $paginator->prev('<< '.__('anterior', true), array(), null, array('class'=>'disabled'));?>
  | 	<?php echo $paginator->numbers();?>
-	<?php echo $paginator->next(__('next', true).' >>', array(), null, array('class'=>'disabled'));?>
+	<?php echo $paginator->next(__('próximo', true).' >>', array(), null, array('class'=>'disabled'));?>
 </div>
 <div class="actions">
 	<ul>

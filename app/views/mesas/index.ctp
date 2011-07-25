@@ -6,7 +6,6 @@ echo $javascript->link('protoplasm/protoplasm', false);
 
 echo $javascript->link('mesas/index_head', false);
 
-
 ?>
 
 
@@ -15,28 +14,28 @@ echo $javascript->link('mesas/index_head', false);
 $paginator->options(array('url' => $this->passedArgs));
 ?>
 
-<div id="mesas-index" class="container_12">
-<div class="mesas index grid_12">
+<div id="mesas-index">
+<div>
 <h2><?php __('Buscador de Mesas');?></h2>
 
 <?php echo $form->create("Mesa",array("action"=>"index")); ?>
 <div class="alpha grid_1">
     <strong>#</strong>
-    <?php echo $form->input('Mesa.numero',array('label'=>'N° Mesa', 'class'=>'grid_12 alpha omega'));?>
-    <?php echo $form->input('Mozo.numero',array('label'=>'N° Mozo', 'class'=>'grid_12 alpha omega'));?>
+    <?php echo $form->input('Mesa.numero',array('label'=>'N°Mesa', 'style'=>'width: 47px;'));?>
+    <?php echo $form->input('Mozo.numero',array('label'=>'N°Mozo', 'style'=>'width: 47px;'));?>
 </div>
 <div class="grid_2">
     <strong>Mesa</strong>
-    <?php echo $form->input('Mesa.total',array('label'=>'Importe Total', 'class'=>'grid_12  alpha omega'));?>
+    <?php echo $form->input('Mesa.total',array('label'=>'Importe Total', 'style'=>'width: 100px;'));?>
     <?php echo $form->input('Mesa.estado_cerrada',array(
-        'label'=> '¿Qué mesas traer?',
+        'label'=> '¿Qué mesas?',
         'type' => 'select',
         'options' => array(
             'todas'=>'Todas las mesas',
             'abiertas' => 'Sólo Abiertas',
             'cerradas' => 'Sólo Cerradas pero sin Cobrar',
             'cobradas' => 'Sólo Cerradas y Cobradas'),
-        'class'=>'grid_12 alpha omega'
+            'style'=>'width: 112px;'
         ));?>
 </div>
     
@@ -46,11 +45,13 @@ $paginator->options(array('url' => $this->passedArgs));
     <?php echo $form->input('Mesa.created_from',array(
         'label'=>'Abierta desde',
         'class' => 'datepicker',
+        'style' => 'width: 130px;'
         ));
     ?>
     <?php echo $form->input('Mesa.created_to',array(
         'label'=>'Abierta hasta',
         'class' => 'datepicker',
+        'style' => 'width: 130px;'
         ));
     ?>
 </div>
@@ -60,11 +61,13 @@ $paginator->options(array('url' => $this->passedArgs));
     <?php echo $form->input('Mesa.time_cerro_from',array(
         'label'=>'Cerró desde',
         'class' => 'datepicker',
+        'style' => 'width: 130px;'
         ));
     ?>
     <?php echo $form->input('Mesa.time_cerro_to',array(
         'label'=>'Cerró hasta',
         'class' => 'datepicker',
+        'style' => 'width: 130px;'
         ));
     ?>
 </div>
@@ -74,11 +77,13 @@ $paginator->options(array('url' => $this->passedArgs));
     <?php echo $form->input('Mesa.time_cobro_from',array(
         'label'=>'Cobrada desde',
         'class' => 'datepicker',
+        'style' => 'width: 130px;'
         ));
     ?>
     <?php echo $form->input('Mesa.time_cobro_to',array(
         'label'=>'Cobrada hasta',
         'class' => 'datepicker',
+        'style' => 'width: 130px;'
         ));
     ?>
 </div>
@@ -90,10 +95,12 @@ $paginator->options(array('url' => $this->passedArgs));
     <?php echo $form->end("Buscar")?>
 
 <p>
+</br>
+</br>        
 <?php
 
 echo $paginator->counter(array(
-'format' => __('Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%', true)
+'format' => __('Pagina %page% de %pages%, mostrando %current% elementos de %count%', true)
 ));
 ?></p>
 
@@ -102,9 +109,9 @@ echo $paginator->counter(array(
 
 </div>
 <div class="paging">
-	<?php echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
+	<?php echo $paginator->prev('<< '.__('anterior', true), array(), null, array('class'=>'disabled'));?>
  | 	<?php echo $paginator->numbers();?>
-	<?php echo $paginator->next(__('next', true).' >>', array(), null, array('class'=>'disabled'));?>
+	<?php echo $paginator->next(__('próximo', true).' >>', array(), null, array('class'=>'disabled'));?>
 </div>
 <div class="actions">
 	<ul>
