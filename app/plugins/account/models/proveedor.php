@@ -1,8 +1,8 @@
 <?php
-class TipoImpuesto extends AccountAppModel {
+class Proveedor extends AccountAppModel {
 
-	var $name = 'TipoImpuesto';
-        var $order = array('TipoImpuesto.name' => 'ASC');
+	var $name = 'Proveedor';
+        var $order = array('Proveedor.name' => 'ASC');
         
         var $validate = array(
 		'name' => array(
@@ -15,21 +15,19 @@ class TipoImpuesto extends AccountAppModel {
 	);
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
-	var $hasAndBelongsToMany = array(
+	var $hasMany = array(
 		'Gasto' => array(
 			'className' => 'Account.Gasto',
-			'joinTable' => 'gastos_tipo_impuestos',
-			'foreignKey' => 'tipo_impuesto_id',
-			'associationForeignKey' => 'gasto_id',
-			'unique' => true,
+			'foreignKey' => 'proveedor_id',
+			'dependent' => false,
 			'conditions' => '',
 			'fields' => '',
 			'order' => '',
 			'limit' => '',
 			'offset' => '',
+			'exclusive' => '',
 			'finderQuery' => '',
-			'deleteQuery' => '',
-			'insertQuery' => ''
+			'counterQuery' => ''
 		)
 	);
 

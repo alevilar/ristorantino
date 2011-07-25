@@ -17,7 +17,7 @@
         </div>     
     
         <div class="grid_3 push_1 divboton">  
-        <?php echo $html->link('Contabilidad','/pquery/stats/mesas_total',array('style'=>'margin-left:auto;margin-right:auto;', 'id'=>'bton-contabilidad'));?>
+        <?php echo $html->link('Contabilidad','/account',array('style'=>'margin-left:auto;margin-right:auto;', 'id'=>'bton-contabilidad'));?>
         </div>       
         <!--
         <div class="grid_6">

@@ -1,29 +1,34 @@
 <?php 
-    echo $javascript->link('jquery/jquery-ui-1.8.12.custom.min'); 
-    echo $html->css('jquery-ui/blitzer/jquery-ui-1.8.12.custom');
+    echo $javascript->link('jquery/jquery-ui-1.8.14.custom.min'); 
+    echo $html->css('jquery-ui/jquery-ui-1.8.14.custom');
 ?>
 <script type="text/javascript">
-jQuery(function() {
-    jQuery( "#facturaFecha" ).datepicker({ dateFormat: 'dd/mm/yy' });
-});
+    jQuery(function() {
+        jQuery( "#facturaFecha" ).datepicker({ dateFormat: 'dd/mm/yy' });
+    });
 </script>
 <div class="gastos form">
 <?php echo $form->create('Gasto');?>
 	<fieldset>
- 		<legend><?php __('Add Gasto');?></legend>
-	<?php
-		echo $form->input('cliente_id');
+ 		<legend><?php __('Nuevo Gasto');?></legend>
+	<?php 
+		echo $form->input('proveedor_id');
 		echo $form->input('clasificacion');
 		echo $form->input('tipo_factura_id');
 		echo $form->input('factura_nro');
                 echo $form->input('factura_fecha', array('id'=>'facturaFecha', 'type'=>'text'));
 		echo $form->input('importe_neto');
-		echo $form->input('iva_a');
-		echo $form->input('iva_b');
-		echo $form->input('iibb');
-		echo $form->input('imp_int');
-		echo $form->input('percep_iva');
-		echo $form->input('no_gravado');
+                ?>
+                <legend>Impuestos</legend>
+                <div id="impuestos">
+
+                <?php
+                echo $form->input('TipoImpuesto.TipoImpuesto', array('multiple' => 'checkbox', 
+                                                        'type' => 'select',
+                                                        'options' => $tipo_impuestos));
+                ?>
+                </div>
+                <?php
 		echo $form->input('otros');
 	?>
 	</fieldset>
