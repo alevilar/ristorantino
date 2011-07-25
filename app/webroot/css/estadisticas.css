@@ -3,11 +3,7 @@
 /* Seccion estadisticas */
 
 #content{
-	background: #fff;
-	color: #333;
-	overflow: auto;
-        -webkit-border-radius: 15px;
-        -moz-border-radius: 15px;
+	background: #ffffff;
         border-radius: 15px; 
         padding-left: 0px;
         padding-right: 30px;

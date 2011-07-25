@@ -11,6 +11,7 @@ body {
 	font-family:'lucida grande',verdana,helvetica,arial,sans-serif;
 	font-size:80%;
 	margin: 5px;
+        
         /* Css degrade */
 }
 span {
@@ -108,6 +109,12 @@ ul, li {
         border-radius: 15px; 
         padding: 15px;
         left: -15px;
+        background: #f0f0f0;
+	background-image: -moz-linear-gradient(top,#eeeeee,#dddddd);
+	background-image: -webkit-gradient(linear,left top,left bottom,
+		color-stop(0, 		#eeeeee),
+		color-stop(1, 		#dddddd));
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#eeeeee', EndColorStr='#dddddd')";
 }
 #footer {
 	text-align: right;
@@ -116,7 +123,6 @@ ul, li {
 
 /* Paging */
 div.paging {
-	background:#fff;
 	color: #ccc;
 	margin-bottom: 2em;
 }
@@ -163,7 +169,6 @@ fieldset {
         margin-bottom: 15px;
 }
 fieldset legend {
-	background:#fff;
 	color: #C61400;
 	font-size: 160%;
 	font-weight: bold;
@@ -226,6 +231,7 @@ div.radio label {
 .submit {
     float: left;
     clear: both;
+    margin-top: 10px;
 }
 .cambiopass:hover {
     color: #000000;
@@ -423,4 +429,124 @@ li.selected    {
         padding-left: 50px;
         padding-right: 50px;
         padding-top: 150px;
+}
+
+/* administracion */
+
+.administracion_menu {
+    font-family: Verdana, sans-serif;
+}
+
+.administracion_menu h2 {
+    font-size: 140%;
+    width: 100%;
+    float: left;
+    clear: both;
+    text-align: center;
+    text-shadow: 2px 2px 4px #FFFFFF;
+    filter: dropshadow(color=#FFFFFF, offx=2, offy=2); 
+}
+
+.administracion_menu a {
+    font-size: 100%;
+    font-family: Verdana, sans-serif;
+    padding-bottom: 2%;
+    padding-top: 2%;
+    padding-left: 2%;
+    padding-right: 5%;
+    float: left;
+    clear: both;
+    width: 100%;
+    margin-bottom: 1px; 
+    
+    border: 1px solid #ccc;
+    background: #eee;
+    font-weight: bold;
+    color: #444;
+    text-shadow: 0 1px 1px #f6f6f6;
+    background-image: -moz-linear-gradient(top, #fefefe, #eeeeee);
+    background-image: -webkit-gradient(linear,left top,left bottom,	color-stop(0,#fdfdfd), color-stop(1,#eeeeee));
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#fdfdfd', EndColorStr='#eeeeee')";
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px; 
+    -moz-box-shadow: 0px 1px 4px rgba(0,0,0,.3);
+    -webkit-box-shadow: 0px 1px 4px rgba(0,0,0,.3);
+    box-shadow: 0px 1px 4px rgba(0,0,0,.3);
+
+}
+
+.administracion_menu a:hover{
+	border: 1px solid 		#bbb;
+	background: 			#dadada;
+	font-weight: bold;
+	color: 					#101010;
+	text-shadow: 0 1px 1px 	#fff;
+	background-image: -moz-linear-gradient(top, 
+							#ededed, 
+							#dadada);
+	background-image: -webkit-gradient(linear,left top,left bottom,
+		color-stop(0, 		#ededed),
+		color-stop(1, 		#dadada));
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#ededed', EndColorStr='#dadada')";
+        
+}        
+
+
+#MesaIndexForm{
+    text-align: left;
+     font-size: 12px;
+}
+
+#MesaIndexForm label{
+     font-size: 14px;
+     font-weight: normal;
+     padding: 0;
+     margin: 0;
+ }
+ 
+#MesaIndexForm input {
+    font-size: 10px;
+ } 
+ 
+#MesaIndexForm div.input{
+    float: none;
+}
+#MesaIndexForm select{
+    font-size: 12px;
+    margin: 0;
+}
+ 
+.mesas {
+     font-size: 15px;
+ }
+ 
+.MesaEstadoCerrada{
+     font-size: 10px;
+}
+
+
+/* seccion productos */
+
+.productos tbody tr th {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.productos tbody tr td {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.productos input[type=text]{
+     width: 70px;
+}
+#ProductoName{
+    width: 80px;
+}
+
+#ProductoOrder{
+    width: 35px;
+}
+#ProductoPrecio{
+    width: 40px;
 }
