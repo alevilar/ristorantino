@@ -1,29 +1,3 @@
-<script type="text/javascript">
-    
-    <?php if ( !empty($mesa_id) ) { ?>
-    adicion.setCurrentMesa( <? echo $mesa_id?> );
-    <?php }?>
-
-    var comanda = {
-        test: 'Ale probando',
-        categorias: <?php echo $javascript->object($categorias_tree)?>,
-        menu: <?php echo $javascript->object($categorias)?>,
-        
-        seleccionarProducto: function(prod){
-            console.info("adentroooo");
-            console.debug(prod);
-        }
-    }
-    
-//    $(function(){
-//        $( "#listaProductos" ).tmpl( comanda , {agregarleElObjeto: function(){
-//                var prod = this;
-//                return comanda.seleccionarProducto;
-//            }})
-//            .appendTo( "#ul-productos" );
-//    });
-</script>
-
     
     <div  data-role="page"  data-add-back-btn="true" id="comanda-add-menu">
         <div  data-role="header"  data-position="inline">
@@ -33,31 +7,48 @@
         </div>
 
         <div data-role="content">
-            <script>
-                $(function(){
-                    $('#link-cat').menu({
-			content: $('#cat-tree').html(),
-			crumbDefaultText: ' '
-                    });
+            <script id="listaCategoriasTree" type="text/x-jquery-tmpl">
+                 <button data-icon="left" data-inline="true" data-theme="c" 
+                         data-categoria-id="${Categoria.id}" data-categoria-parent-id="${Categoria.parent_id}" onclick="">${Categoria.name}</button>
                 
-                })
+                {{each Hijos}}
+                    <button data-icon="left" data-inline="true" data-theme="b" 
+                         data-categoria-id="${$value.Categoria.id}" data-categoria-parent-id="${$value.Categoria.parent_id}">${$value.Categoria.name}</button>
+                {{/each}}
+                
+                <div class="productos" data-categoria-id="${Categoria.id}">
+                {{each Producto}}
+                    <button data-icon="left" data-inline="true" data-theme="e" 
+                            data-categoria-id="${categoria_id}" onclick="">${name}</button>
+                {{/each}}
+                </div>
+
             </script>
-            <a id="link-cat"  href="#cat-tree">Categorias Tree</a>
-            <div id="cat-tree" style="display: none">
-            <ul>
-                <li><a href="#">Coso N|122</a>
-                    <ul>
-                        <li><a  data-panel="menu" href="<?= $html->url('/mesas/view/2')?>">Mesa Id 2</a></li>
-                        <li><a href="#">Segundo</a></li>
-                    </ul>
-                </li>
-            <?php
-            foreach ($categorias_tree as $k=>$c) {
-                echo "<li><a href='#categoria-$k' class='catlink'>". $c ."</a></li>";
-            }
-            ?>
-            </ul>
-            </div>
+            
+            <script id="listaCategoriasHijos" type="text/x-jquery-tmpl">
+                 <button data-type="categoria" data-icon="left" data-inline="true" data-theme="b" 
+                            data-categoria-id="${Categoria.id}">${Categoria.name}</button>
+            </script>
+            
+            
+            <script id="listaProductosDeCategoria" type="text/x-jquery-tmpl">
+                    <button data-type="producto" data-icon="left" data-inline="true" data-theme="b" 
+                            data-categoria-id="${$index}">${$item}</button>
+            </script>
+            
+        
+            <script type="text/javascript">
+    
+                <?php if ( !empty($mesa_id) ) { ?>
+                adicion.setCurrentMesa( <? echo $mesa_id?> );
+                <?php }?>
+                    
+                comanda.initialize(<?php echo $javascript->object($categorias)?>, <?php echo $javascript->object($productos)?>);
+            </script>
+
+
+            <h2>Categorias</h2>
+           <div id="ul-categorias" data-bind="template: {name: 'listaCategoriasTree', data: currentCategorias, afterRender: refreshPage} "></div>
         </div>
         
         <div data-role="footer"><h2>Menu footer</h2></div>
@@ -75,31 +66,8 @@
 
         <div  data-role="content" class="">
 
-            
-
             <div class="categorias-productos-listado">
-                <ul id="ul-productos" class="listado-productos" data-role="listview">
-                    <?php foreach ($categorias as $c) { ?>
-                        <li class="">                
-                            <h2><?= $c['Categoria']['name'] ?></h2>
-                            <?php if ( count($c['Sabor']) > 0 ) {?>                
-                            <h3>Sabores</h3>
-                            <ul>
-                                <?php foreach ( $c['Sabor'] as $s ) { ?>
-                                <li><?= $s['name'] ?></li>
-                                <?php } ?>
-                            </ul>
-                            <?php } ?>
-
-                            <h3>Productos</h3>
-                            <ul>
-                                <?php foreach ($c['Producto'] as $p) { ?>
-                                <li data-producto-id="${id}" onclick=""><?= $p['name']?></li>
-                                <?php } ?>
-                            </ul>
-                        </li>
-                        <?php }?>
-                </ul>
+                
             </div>
 
 

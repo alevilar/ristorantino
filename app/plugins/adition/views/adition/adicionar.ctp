@@ -91,21 +91,3 @@
 
 
 
-
-<!-- Pagina Comanda -->
-<div data-role="page" data-add-back-btn="true" id="hacer-comanda">
-
-	<div  data-role="header" data-position="inline">
-            <h1>Comanda de la Mesa <span class="mesa-numero" data-bind="text: currentMesa.numero">Nu</span></h1>
-        </div>
-
-        <div  data-role="content" class="">
-            Probannndodoooo
-        </div><!-- /navbar -->
-
-        <div  data-role="footer" data-position="fixed">Ristorantino Mágico</div>
-
-</div>
-<!-- Fin Pagina 1 -->
-
-

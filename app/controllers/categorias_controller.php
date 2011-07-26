@@ -10,9 +10,7 @@ class CategoriasController extends AppController {
 
 	function index() {
 		$this->Categoria->recursive = 0;	
-			
 		$this->set('categorias',$this->Categoria->generatetreelist(null, null, null, '&nbsp;&nbsp;&nbsp;'));	
-			
 	}
 	
 	
@@ -95,14 +93,9 @@ class CategoriasController extends AppController {
 	
 	
 	function listar(){
-		//$this->cacheAction = true;
-
-            $this->layout = 'ajax';
-		
+            $this->cacheAction = true;		
             $categorias = $this->Categoria->array_listado();
-            $varjson =  json_encode($categorias);
-            $this->set(compact('varjson'));
+            $this->set('categorias', $categorias);
 	}
-
 }
 ?>

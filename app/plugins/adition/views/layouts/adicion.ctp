@@ -44,6 +44,8 @@
                     'ristorantino/mozo.class',
 
                     '/adition/js/adition.events',
+                    '/adition/js/comanda',
+
                     ));
                 ?>
 

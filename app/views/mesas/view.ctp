@@ -1,13 +1,3 @@
-<!-- Template: listado de comandas con sus productos-->
-<script id="listaComandas" type="text/x-jquery-tmpl">
-    <li>        
-       <span>Comanda ${id}</span>
-       <ul>          
-           <li></li>
-       </ul>
-    </li>
-</script>
-
 
     
 <div data-role="page" data-add-back-btn="true" id="mesa-view">
@@ -27,6 +17,16 @@
         </div>
 
         <div  data-role="content" class="">
+            
+            <!-- Template: listado de comandas con sus productos-->
+            <script id="listaComandas" type="text/x-jquery-tmpl">
+                <li>        
+                   <span>Comanda ${id}</span>
+                   <ul>          
+                       <li></li>
+                   </ul>
+                </li>
+            </script>
 
             <script type="text/javascript">
                 (function($){

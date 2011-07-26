@@ -12,6 +12,14 @@ var koAdicionModel = {
     currentMozo: ko.observable(),
     currentMesa: ko.observable(),
     
+    tieneCurrentMesa: function(){
+        if ( typeof this.currentMesa() == 'object')  {
+            return true;
+        } else {
+            return false;
+        }
+    },
+    
     // listado de mozos
     mozos: ko.observableArray(),
     
@@ -85,6 +93,7 @@ Adicion.prototype = {
     currentMesa: function(){
         return koAdicionModel.currentMesa.apply(koAdicionModel, arguments);
     },
+    
     
     mesas: function(){
         return koAdicionModel.mesas.apply(koAdicionModel, arguments);

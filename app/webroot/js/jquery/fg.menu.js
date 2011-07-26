@@ -2,7 +2,8 @@
 Scripts for creating and manipulating custom menus based on standard <ul> markup
 Version: 3.0, 03.31.2009
 
-By: Maggie Costello Wachs (maggie@filamentgroup.com) and Scott Jehl (scott@filamentgroup.com)
+Forked By: Ale Vilar http://www.alevilar.com.ar
+Original By: Maggie Costello Wachs (maggie@filamentgroup.com) and Scott Jehl (scott@filamentgroup.com)
 	http://www.filamentgroup.com
 	* reference articles: http://www.filamentgroup.com/lab/jquery_ipod_style_drilldown_menu/
 		
@@ -13,21 +14,17 @@ Dual licensed under the MIT (filamentgroup.com/examples/mit-license.txt) and GPL
 
 var allUIMenus = [];
 
-$.fn.menu = function(options){
+$.fn.menu = function(ops){
 	var caller = this;
-	var options = options;
+	var options = ops || null;
 	var m = new Menu(caller, options);	
 	allUIMenus.push(m);
 	
-	$(this)
-	.mousedown(function(){
-		if (!m.menuOpen) { m.showLoading(); };
-	})	
-	.click(function(){
-		if (m.menuOpen == false) { m.showMenu(); }
-		else { m.kill(); };
-		return false;
-	});	
+        m.showLoading();
+        $(function(){
+           
+            m.showMenu();
+        });
 };
 
 function Menu(caller, options){
@@ -97,16 +94,16 @@ function Menu(caller, options){
 	};
 
 	this.showMenu = function(){
-		killAllMenus();
+//		killAllMenus();
 		if (!menu.menuExists) { menu.create() };
 		caller
 			.addClass('fg-menu-open')
 			.addClass(options.callerOnState);
-		container.parent().show().click(function(){ menu.kill(); return false; });
-		container.hide().slideDown(options.showSpeed).find('.fg-menu:eq(0)');
+//		container.parent().show().click(function(){ menu.kill(); return false; });
+//		container.hide().slideDown(options.showSpeed).find('.fg-menu:eq(0)');
 		menu.menuOpen = true;
 		caller.removeClass(options.loadingState);
-		$(document).click(killAllMenus);
+                
 		
 		// assign key events
 		$(document).keydown(function(event){
@@ -236,8 +233,8 @@ function Menu(caller, options){
 				function(){ $(this).removeClass(options.linkHoverSecondary); }
 			);
 		};	
-		
-		menu.setPosition(container, caller, options);
+		caller.append(container);
+//		menu.setPosition(container, caller, options);
 		menu.menuExists = true;
 	};
 	
