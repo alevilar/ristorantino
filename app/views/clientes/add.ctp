@@ -30,7 +30,7 @@
                                   'after'=>'Ej: La Serenissima S.A.'));
 
         echo $form->input('domicilio');
-        echo $form->input('codigo', array('after'=>'<br>Aqui se debe ingresar el código de cliente'));
+        echo $form->input('codigo', array('after'=>'<br>Aquí se debe ingresar el código de cliente'));
         echo $form->input('mail');
         echo $form->input('telefono');
 
@@ -40,8 +40,7 @@
             array(
                 'label'=>'Tipo Factura',
                 'options'=>array('B'=>'"B"', '0'=>'Remito','A'=>'"A"'),
-                'after'=> '<br>Tipo de comprobante a imprimir.
-                            Se puede imprimir una factura "A", "B", o un remito.'
+                'after'=> '<br>Tipo de comprobante a imprimir.'
             )
         );
 
@@ -49,7 +48,7 @@
              echo $form->input('descuento_id',array(
                 'div'=>array('id' => 'div-descuento'),
                 'empty'=>'Sin Descuento',
-                'after'=>'El descuento solo es válido cuando se quiere imprimir un remito'));
+                'after'=>'<br>El descuento solo es válido cuando se quiere imprimir un remito'));
         
         ?>
         
@@ -109,11 +108,9 @@
             });
         </script>
 
-
-
-       
-    </fieldset>
     <?php echo $form->end('Submit');?>
+    </fieldset>
+
 </div>
 <div class="actions">
     <ul>

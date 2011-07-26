@@ -7,12 +7,13 @@
 		echo $form->input('codigo_fiscal');
 		echo $form->input('name');
 	?>
+                <?php echo $form->end('Submit');?>
 	</fieldset>
-<?php echo $form->end('Submit');?>
+
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $html->link(__('Delete', true), array('action' => 'delete', $form->value('IvaResponsabilidad.id')), null, sprintf(__('Are you sure you want to delete # %s?', true), $form->value('IvaResponsabilidad.id'))); ?></li>
-		<li><?php echo $html->link(__('List IvaResponsabilidades', true), array('action' => 'index'));?></li>
+		<li><?php echo $html->link(__('Borrar', true), array('action' => 'delete', $form->value('IvaResponsabilidad.id')), null, sprintf(__('Esta seguro que desea borrar # %s?', true), $form->value('IvaResponsabilidad.id'))); ?></li>
+		<li><?php echo $html->link(__('Listar IVA responsabilidad', true), array('action' => 'index'));?></li>
 	</ul>
 </div>

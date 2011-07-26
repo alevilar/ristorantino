@@ -1,7 +1,8 @@
 
-<h1>Logueo De usuario</h1>
+
 
 <div class="grid_4 prefix_4 login">
+    <h2>Logueo De usuario</h2>
 <?php
 if($session->check('Message.auth')) $session->flash('auth');
 

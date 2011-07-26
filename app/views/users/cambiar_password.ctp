@@ -9,6 +9,6 @@
         echo $form->input('password_check',array('label'=>'Reingrese su contraseña','type'=>'password'));
 
         ?>
+    <?php echo $form->end('Guardar');?>        
     </fieldset>
-    <?php echo $form->end('Guardar');?>
 </div>

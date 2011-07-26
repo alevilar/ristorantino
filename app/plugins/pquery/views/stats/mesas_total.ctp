@@ -1,70 +1,81 @@
 <?php
-//debug($mesas);
-                echo $html->css('/pquery/css/examples.css');
-                echo $html->css('cake.css');
+                echo $html->css('/pquery/css/examples');
+                echo $html->css('jquery-ui/jquery-ui-1.8.14.custom');
+                echo $html->css('estadisticas');
+                
                 echo $javascript->link('/pquery/js/jquery.min.js'); 
-                echo $javascript->link('jquery/jquery-ui-1.8.12.custom.min'); //datapicker
+                echo $javascript->link('jquery/jquery-ui-1.8.14.custom.min'); //datapicker
 		echo $javascript->link('/pquery/js/jquery.jqplot.js'); //plugin estadisticas
 		echo $javascript->link('/pquery/js/plugins/jqplot.dateAxisRenderer.js');
 		echo $javascript->link('/pquery/js/plugins/jqplot.highlighter.js');
+		echo $javascript->link('/pquery/js/plugins/jqplot.trendline.js');
 
-//var cosaLocaEnJs = echo json_decode( $cosaLocaEnPHP )
-//json_decode y json_encode convierten los datos            
+
                 
-                
-             /* $mesas = array ( 
+             /* 
+                            $mesas = array ( 
                                array('Mesa'=> array('fecha'=> '2011-06','total'=>'330')),
                                array('Mesa'=> array('fecha'=> '2011-05','total'=>'330')),
                                array('Mesa'=> array('fecha'=> '2011-04','total'=>'290')),
                                array('Mesa'=> array('fecha'=> '2011-03','total'=>'900'))
-                             );
-                
-                */
-                debug($mesas);
+                             );     
+             */
+        
 ?>
 
 
-
-<script language="javascript" type="text/javascript">
-    jQuery.noConflict();    
+<script language="javascript" type="text/javascript">    
     
+        
 
 
+    
     var mesas= <?php echo json_encode($mesas); ?>;
     mesas.getCoordenadas = function(){
            
-           var coord = [];
+        var lineas = [];
+        jQuery.each(mesas,function(l){  
+           var coordxLinea = [];
+            jQuery.each(mesas[l],function(i){
+                
+                var coordMesa = [mesas[l][i].Mesa.fecha, parseFloat(mesas[l][i].Mesa.total)];
+                coordxLinea.push(coordMesa);  
+            })
+            lineas.push(coordxLinea);
+        });
 
-           jQuery.each(mesas,function(i){
-                var coordMesa = [mesas[i].Mesa.fecha, parseFloat(mesas[i].Mesa.total)];
-                coord.push(coordMesa);  
-           })
-           return coord; 
+        return lineas; 
           
     }    
     
-</script>
 
-    
-<script language="javascript" type="text/javascript">
-
-function editit(str, si, pi, plot) {
-    return "<b><i>Mesa: "+plot.targetId+', Series: '+si+', Point: '+pi+', '+str+"</b></i>";
-}
-
-jQuery(document).ready(function(){
+        jQuery(document).ready(function(){
       
-    jQuery("#datepicker").datepicker();
+    	dates = jQuery( ".datepicker" ).datepicker({
+                defaultDate: "+1w",
+                changeMonth: true,
+                numberOfMonths: 1,              
+                dateFormat: 'dd/mm/yy',
+                onSelect: function( selectedDate ) {
+//                    var option = this.id == "from" ? "minDate" : "maxDate",
+//                    instance = jQuery( this ).data( "datepicker" ),
+//                    date = jQuery.datepicker.parseDate(
+//                    instance.settings.dateFormat ||
+//                    jQuery.datepicker._defaults.dateFormat,
+//                    selectedDate, instance.settings );
+//                    dates.not( this ).datepicker( "option", option, date );
+                }
+                
+        }); 
 
  
     jQuery.jqplot.config.enablePlugins = true;    
             
-     s1 = mesas.getCoordenadas();
+   
      
     //s1 = [['2011-03',220],['2011-04',290],['2011-05',330],['2011-06',330]];
-    //foreach con datos
-		
-   plot1 = jQuery.jqplot('chart1',[s1],{
+   
+   plot1 = jQuery.jqplot('chart1', mesas.getCoordenadas() ,{
        title: 'Ganancia de mesas',
        axes: {
            xaxis: {
@@ -73,7 +84,7 @@ jQuery(document).ready(function(){
                    formatString: '%b %Y'
 				   //formato de la fecha
                },
-               numberTicks: 4
+               numberTicks: 7
 			   //cantidad de elementos
            },
            yaxis: {
@@ -99,122 +110,102 @@ jQuery(document).ready(function(){
    
 });
 
-
-
+jQuery("button").click(function () {
+    jQuery("#seg_fecha").show("slow");
+});
 
 </script>
 
-<div class="grid_8 push_3">
-<p>Ganancias de mesas por dias, meses o años</p>
-<label>Elija el rango de fechas</label>
-<input type="text" id="datepicker" class="hasDatepicker">
-</br>
-</div>
-    
 
-<div class="clear"></div>
+<?php echo $this->element('menustats'); ?>
 
-<div class="grid_8">
-    <div id="chart1" style="margin-top:20px; margin-left:0; width:800px; height:500px;"></div>
-</div>
+<div class="grid_10 omega content_stats">
+
+    <div class="grid_11 push_1">
+            <h4 class="grid_6">Elija el rango de fechas para visualizar</h4>
+            <div class="grid_6" style="margin-top: 10px;">
+                <!--<input id="otrafecha" type="checkbox" style="vertical-align: middle;position: relative;"><span>Añadir otras fechas para comparar</span>-->
+                <?php echo $html->link('Añadir otra fecha para comparar','#',array('id'=>'otrafecha'));?>
+            </div>
+            <div class="clear"></div>
+
+                <?php echo $form->create('Mesa',array('url'=>'/pquery/stats/mesas_total')); ?>
+
+            <div id="prim_fecha" class="grid_4">
+
+                      <?php   
+                      echo $form->input('Linea.0.desde', array('label'=>'Desde','id'=>'from', 'class' =>'datepicker'));
+                      echo $form->input('Linea.0.hasta', array('label'=>'Hasta','id'=>'to', 'class' =>'datepicker'));  
+                      ?>
+
+            </div>    
+
+            <div id="seg_fecha" class="grid_4 push_1" style="display: none;">
+            <?php
+                     echo $form->input('Linea.1.desde', array('label'=>'Desde','id'=>'from2', 'class' =>'datepicker'));
+                     echo $form->input('Linea.1.hasta', array('label'=>'Hasta','id'=>'to2', 'class' =>'datepicker'));
+                     ?>
+            </div>
+            <div class="clear"></div>
+                    <div class="grid_2">
+            <?php
+              echo $form->end('Enviar');
+            ?>
+                     </div>
+     </div>
 
 
-<div class="grid_3">
-<table cellspacing="0" cellpadding="0" style="text-align: center">
-    <thead>
-                    <tr>
-                        <th class="editable">Fecha</th>
-                        <th class="editable">Total</th>
-                    </tr>
-    </thead>
-    <tbody>
-<?php
+    <div class="clear"></div>
+
+    <div id="chart1" class="grid_9 alpha omega" style="margin-top:20px; height:350px;"></div>
 
 
-        
-    if(!empty($mesas)){
-
-            foreach($mesas as $mesa){
-                echo('<tr>');
-                echo('<td>');
-                echo($mesa['Mesa']['fecha']);
-                echo('</td>');
-                echo('<td>');
-                echo($mesa['Mesa']['total']);
-                echo('</td>');
-                echo('</tr>');
-        }        
-    }else{
-            echo('<td>');
-                echo('No se encontraron mesas');   
-            echo('</td>');
-        
-    }    
-        echo('</tr>');
-?>  
- </tbody>              
-</table>
-</div>    
-    
-<div class="grid_3">
-    <table cellspacing="0" cellpadding="0">
-        <caption class="editable">--</caption>
+    <?php
+        foreach($mesas as $mesa){
+            if(!empty ($mesa['desde']))
+    ?>
+    <div class="grid_3" style="margin-top:35px;">
+    <table cellspacing="0" cellpadding="0" style="text-align: center">
         <thead>
-                    <tr>
-                        <th class="editable">Fecha</th>
-                        <th class="editable">Total</th>
-                    </tr>
+                        <tr>
+                            <th class="editable">Fecha</th>
+                            <th class="editable">Total</th>
+                        </tr>
         </thead>
         <tbody>
-                <tr class="altrow">
-                            <td>
-                        20            </td>
-                            <td>
-                        $6000            </td>
-           
-                <tr>
-                            <td>
-                        60            </td>
-                            <td>
-                        $3950            </td>
-                            
-                        </tr>
-                <tr class="altrow">
-                            <td>
-                        7            </td>
-                            <td>
-                        $6200            </td>
-                            
-                        </tr>
-                <tr>
-                </tr><tr class="altrow">
-                            <td>
-                        25            </td>
-                            <td>
-                        $5500            </td>
-                            
-                        </tr>
-                <tr>    
-                            <td>
-                        12            </td>
-                            <td>
-                        $2000            </td>
-                            
-                        </tr>
-                <tr class="altrow">
-                            <td>
-                        32            </td>
-                            <td>
-                        $4200            </td>
-                            
-                        </tr>
-                </tbody>
+
+    <?php     
+        if(!empty($mesa)){
+
+                foreach($mesa as $m){
+                    echo('<tr>');
+                    echo('<td>');
+                    echo($m['Mesa']['fecha']);
+                    echo('</td>');
+                    echo('<td>');
+                    echo('$');
+                    echo($m['Mesa']['total']);
+                    echo('</td>');
+                    echo('</tr>');
+            }        
+        }else{
+                echo('<td>');
+                    echo('No se encontraron mesas');   
+                echo('</td>');
+                echo('<td>');
+                    echo('-');  
+                echo('</td>');
+
+        }    
+            echo('</tr>');
+    ?>  
+    </tbody>              
     </table>
-</div>
 
-    
-    
-    
 
-    
+    </div>  
+    <?php
+            }
+    ?>
 
+</div> <!-- cierra div content_stats -->

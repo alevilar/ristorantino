@@ -109,10 +109,10 @@
         </script>
 
 
-
+    <?php echo $form->end('Submit');?>
 
     </fieldset>
-    <?php echo $form->end('Submit');?>
+
 </div>
 <div class="actions">
     <ul>
