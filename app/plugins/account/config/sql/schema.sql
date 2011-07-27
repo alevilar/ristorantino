@@ -46,5 +46,3 @@ CREATE TABLE `proveedores` (
 `created` DATETIME NOT NULL ,
 `modified` DATETIME NULL
 ) ENGINE = MYISAM ;
-
-ALTER TABLE `gastos` CHANGE `cliente_id` `proveedor_id` INT( 11 ) NOT NULL;
