@@ -12,6 +12,14 @@ var koAdicionModel = {
     currentMozo: ko.observable(),
     currentMesa: ko.observable(),
     
+    tieneCurrentMesa: function(){
+        if ( typeof this.currentMesa() == 'object')  {
+            return true;
+        } else {
+            return false;
+        }
+    },
+    
     // listado de mozos
     mozos: ko.observableArray(),
     
@@ -85,6 +93,7 @@ Adicion.prototype = {
     currentMesa: function(){
         return koAdicionModel.currentMesa.apply(koAdicionModel, arguments);
     },
+    
     
     mesas: function(){
         return koAdicionModel.mesas.apply(koAdicionModel, arguments);
@@ -207,17 +216,20 @@ Adicion.prototype = {
         this.currentMesa = null;
     },
 
+    /**
+     * Setter de la currentMesa
+     * @param mesa Mesa or Number . Le puedo pasar una Mesa o un Id de la mesa, da lo mismo.
+     * @return Mesa o false en caso de que el ID pasado no exista
+     */
     setCurrentMesa: function(mesa) {
         if ( typeof mesa == 'number') { // en caso que le paso un ID en lugar del objeto mesa
-            mesa = this.findMesaById(mesa);
-            if ( mesa === false ) {
-                return false;
-            }
+            mesa = this.findMesaById(mesa);           
         }
         this.currentMesa( mesa );
         if (mesa.mozo) {
             this.setCurrentMozo(mesa.mozo());
         }
+        return this.currentMesa();
     },
 		
 

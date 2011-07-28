@@ -21,16 +21,15 @@ class ComandasController extends AppController {
             endif;
             $this->set('mesa_id', $mesa_id);
             
+            $this->set('categorias', $this->Comanda->DetalleComanda->Producto->Categoria->array_listado() ) ;
             $this->set('categorias_tree', $this->Comanda->DetalleComanda->Producto->Categoria->generatetreelist(null, null, null, '&nbsp;&nbsp;&nbsp;'));
-            $this->set('categorias', $this->Comanda->DetalleComanda->Producto->Categoria->find('all'));
+            $this->set('productos', $this->Comanda->DetalleComanda->Producto->Categoria->find('all'));
             //$this->set('productos', $this->Comanda->DetalleComanda->Producto->find('all'));
 	}
 	
 	
-	function index(){
-            if(!empty($this->data)){
-                $this->set('comandas',$comandas = $this->Comanda->dame_las_comandas_abiertas());
-            }
+	function index() {
+		$this->set('comandas',$comandas = $this->Comanda->dame_las_comandas_abiertas());
 	}
 	
 	/**

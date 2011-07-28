@@ -20,8 +20,6 @@ class Categoria extends AppModel {
                              ));
 	
 	
-	
-	
 	/**
 	 * Me devuelve un array lindo con sub arrays para cada subarbol
 	 * 

@@ -46,10 +46,10 @@ var Mesa = function(mozo, jsonData) {
 
 
 Mesa.prototype = {
+    id: 0,
+    comandas: ko.observableArray(),
     
-    //urls
-    comandaAdd: function(){ return urlDomain+'/comandas/add/' + this.id(); },
-    
+  
     
     // attributos
     mozo: ko.observable(null),
@@ -65,10 +65,15 @@ Mesa.prototype = {
         return this;
     },
     
-    url: {
-        view: 'mesas/view/'+this.id,
-        edit: 'mesas/edit/'+this.id
-    },
+    urlView: function(){return urlDomain+'mesas/view/'+this.id()},
+    urlEdit: function(){return urlDomain+'mesas/edit/'+this.id()},
+    urlComandaAdd: function(){return urlDomain+'comandas/add/'+this.id()},
+    
+    /**
+     *  Id del elemento que contiene los datos de esta mesa
+     *  es utilizada en el action mesas/view
+     */
+    domElementContainer: function(){ return 'mesa-' + this.id(); },
 
 
     /**
@@ -337,6 +342,16 @@ Mesa.prototype = {
             data['data[Mesa][id]'] = this.id;
         }
         $.post( window.urlDomain +'mesas/ajax_edit', data);
+    },
+    
+    
+    
+    keepUpdated: function() {
+        $.PeriodicalUpdater({
+            url: urlDomain+'/comandas/de_mesa/'+this.id()
+        }, function(data) {
+            console.debug(data);
+        });
     }
 
 
