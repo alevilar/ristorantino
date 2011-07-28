@@ -50,9 +50,9 @@ foreach ($clientes as $cliente):
 			<?php echo date('d/m/Y H:i',strtotime($cliente['Cliente']['created'])); ?>
 		</td>
 		<td class="actions">
-			<?php echo $html->link(__('View', true), array('action'=>'view', $cliente['Cliente']['id'])); ?>
-			<?php echo $html->link(__('Edit', true), array('action'=>'edit', $cliente['Cliente']['id'])); ?>
-			<?php echo $html->link(__('Delete', true), array('action'=>'delete', $cliente['Cliente']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $cliente['Cliente']['id'])); ?>
+			<?php echo $html->link(__('Ver', true), array('action'=>'view', $cliente['Cliente']['id'])); ?>
+			<?php echo $html->link(__('Editar', true), array('action'=>'edit', $cliente['Cliente']['id'])); ?>
+			<?php echo $html->link(__('Borrar', true), array('action'=>'delete', $cliente['Cliente']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $cliente['Cliente']['id'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>
