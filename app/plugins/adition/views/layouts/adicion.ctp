@@ -24,6 +24,7 @@
                 }
 
 		echo $javascript->link(array(
+                    'risto/risto',
                     'jquery/jquery-1.6.1.min',
                     'jquery/jquery.tmpl.min',
                     'jquery/jquery.periodicalupdater',
@@ -40,11 +41,14 @@
 
                     'ristorantino/generic',
                     '/adition/js/adicion.class',
-                    'ristorantino/mesa.class',
-                    'ristorantino/mozo.class',
+                    'risto/mesa.class',
+                    'risto/mozo.class',
 
+                     
                     '/adition/js/adition.events',
                     '/adition/js/comanda',
+                    '/adition/js/categoria',
+                    '/adition/js/producto',
 
                     ));
                 ?>

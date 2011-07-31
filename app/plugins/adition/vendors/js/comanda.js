@@ -1,13 +1,14 @@
 
 
-var comanda = {
+Risto.Adition.comanda = {
     categorias: ko.observableArray(), // listado de categorias anidadas
     categoriasPlain: [], // listado donde el KEY del array es el ID de la categoria. Es un hash de categorias
+    
     path: ko.observableArray([]), // array con el path de cada categoria seleccionada
-    productos : ko.observableArray(),
+   
     currentCategoriaId: ko.observable(1), // id de la categoria actual,
     
-    productosSeleccionados: ko.observableArray(),
+    productosSeleccionados: ko.observableArray(), // productos que se les hizo click o se los seleccionó
     
     refreshPage: function() {
         
@@ -27,21 +28,47 @@ var comanda = {
         });
     },
     
-    
-    initialize: function(categorias, productos){
-        this.categorias(categorias);
-        this.productos(productos);
+    // mapea las categorias y los productos con knockout mapping
+    mapp: function(categorias) {
+        var ob = {
+            categorias : categorias
+        }
         
+        var mappingOps = {
+            'categorias': {
+                key: function(data) {
+                    return ko.utils.unwrapObservable(data.id);
+                },
+                create: function(options) {
+                    return new Risto.Adition.categoria(options.data);
+                }
+            }
+        }        
+        
+        var viewModel = ko.mapping.fromJS(ob, mappingOps);
+        
+        console.debug(viewModel);
+        
+        this.categorias(new Risto.Adition.categoria(categorias));
+    },
+    
+    
+    initialize: function(categorias){
+        var comanda = Risto.Adition.comanda;
+        console.debug(categorias);
+        this.mapp(categorias);
         
         this.aplanarCategorias();
-        this.currentCategoriaId(this.categorias().Categoria.id);
+        this.currentCategoriaId(this.categorias().Categoria.id() );
         
-        
-        
-//        var este = this;
-//        $.get(urlDomain+'categorias/listar.json', function(d){
-//            este.categorias(d);
-//        });
+        // si no hay categorias las cargo via AJAX
+        if ( !this.categorias() ) {
+            var este = this;
+            $.get(urlDomain+'categorias/listar.json', function(d){
+                este.categorias(d);
+            });
+        }
+       
         
         // onload
         $(function(){
@@ -53,7 +80,6 @@ var comanda = {
             
             
             $('#ul-categorias').live('click', function(e){
-                console.debug($(e.target));
                 if ($(e.target).attr('data-categoria-id')) {
                     comanda.seleccionarCategoria( $(e.target).attr('data-categoria-id') );
                     return false
@@ -89,7 +115,7 @@ var comanda = {
         for (var c in categorias){
             var cat = categorias[c];
             // meto en array como KEY el ID de categoria
-            this.categoriasPlain[cat.Categoria.id] = cat;
+            this.categoriasPlain[cat.id()] = cat;
 
             // si tiene hijos, hago recursividad
             if (cat.hasOwnProperty('Hijos')){
@@ -101,16 +127,16 @@ var comanda = {
         }
     },
     
-    seleccionarProducto: function(prod){
-        if ( !prod.hasOwnProperty('cant')) {
-            prod.cant = 1;
-            this.productosSeleccionados.push(prod);
-        } else {
-            prod.cant++;
-        }
+    seleccionarProducto: function(index){
+        
+        var prod = this.productosDeCategoriaSeleccionada()[index];
+        
+        prod.seleccionar();
     },
     
     updatePath: function(catId){     
+        var comanda = Risto.Adition.comanda;
+        
         console.debug(catId);
         console.debug(this.categoriasPlain[catId]);
         var categ = this.categoriasPlain[catId];
@@ -141,20 +167,20 @@ var comanda = {
         this.updatePath(catId); // actualizo el path
         this.currentCategoriaId(catId); // setteo el observable
     }
-                    
+
 }
 
 
-comanda.currentCategorias = ko.dependentObservable(function() {
+Risto.Adition.comanda.currentCategorias = ko.dependentObservable(function() {
         return this.categoriasPlain[this.currentCategoriaId()];
-    }, comanda);
+    }, Risto.Adition.comanda);
 
 
-comanda.productosDeCategoriaSeleccionada = ko.dependentObservable(function(){
+Risto.Adition.comanda.productosDeCategoriaSeleccionada = ko.dependentObservable(function(){
     if ( this.categoriasPlain[this.currentCategoriaId()] && this.categoriasPlain[this.currentCategoriaId()].Producto ) {
         return this.categoriasPlain[this.currentCategoriaId()].Producto;
     }
-}, comanda);
+}, Risto.Adition.comanda);
 
 
 

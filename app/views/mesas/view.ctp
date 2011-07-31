@@ -20,9 +20,9 @@
             
             <!-- Template: listado de comandas con sus productos-->
             <script id="listaComandas" type="text/x-jquery-tmpl">
-                <li>        
+                <li>   
                    <span>Comanda ${id}</span>
-                   <ul>          
+                   <ul>
                        <li></li>
                    </ul>
                 </li>
@@ -72,7 +72,6 @@
                     </div>
 
                     <ul data-bind="template: {name: 'listaComandas', foreach: currentMesa().comandas}"></ul>
-
               
                 </div>
 
