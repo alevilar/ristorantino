@@ -8,7 +8,6 @@
 		echo $javascript->link('/pquery/js/jquery.jqplot.js'); //plugin estadisticas
 		echo $javascript->link('/pquery/js/plugins/jqplot.dateAxisRenderer.js');
 		echo $javascript->link('/pquery/js/plugins/jqplot.highlighter.js');
-		echo $javascript->link('/pquery/js/plugins/jqplot.trendline.js');
 
 
                 
@@ -161,15 +160,15 @@ jQuery("button").click(function () {
 
 
     <?php
-        foreach($mesas as $mesa){
+        foreach($mesas as $i=>$mesa){
             if(!empty ($mesa['desde']))
     ?>
     <div class="grid_3" style="margin-top:35px;">
     <table cellspacing="0" cellpadding="0" style="text-align: center">
         <thead>
                         <tr>
-                            <th class="editable">Fecha</th>
-                            <th class="editable">Total</th>
+                            <th <?php if($i==0){echo('class="coloruno"'); }else{echo('class="colordos"');}?>>Fecha</th>
+                            <th <?php if($i==0){echo('class="coloruno"'); }else{echo('class="colordos"');}?>>Total</th>
                         </tr>
         </thead>
         <tbody>
