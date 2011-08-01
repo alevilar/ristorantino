@@ -24,7 +24,7 @@
                     <span>
                     <button
                              data-bind="attr: {'data-icon': esUltimoDelPath()?'':'back', 'data-theme': esUltimoDelPath()?'a':''}" data-icon="back" data-inline="true" data-theme="c" 
-                            data-categoria-id="${Categoria.id}" data-categoria-parent-id="${Categoria.parent_id}" >${Categoria.name}</button>
+                            data-categoria-id="${id}" data-categoria-parent-id="${parent_id}" >${name}</button>
                     </span>
                 </script>
            </div> 
@@ -35,7 +35,7 @@
                 >
                <!-- Productos  Seleccionados template           -->
                  <script id="categorias-productos-seleccionados" type="text/x-jquery-tmpl">
-                     <li data-bind="click: deseleccionar"><span data-bind="text: name"></span> - <span data-bind="text: cant"></span></li>
+                     <li data-bind="click: deseleccionar, visible: cant() > 0"><span data-bind="text: name"></span> - <span data-bind="text: cant"></span></li>
                  </script>
            </div>
            
@@ -48,8 +48,8 @@
                     <div>
                         {{each Hijos}}
                         <button style="width: 100px;"  data-icon="forward"  data-role="button" data-inline="true" data-theme="b" 
-                                 data-categoria-id="${$value.Categoria.id}" data-categoria-parent-id="${$value.Categoria.parent_id}">
-                            <?php echo $html->image('ico_mozo.png', array('height'=>'40px'));?>${$value.Categoria.name}
+                                 data-categoria-id="${$value.id}" data-categoria-parent-id="${$value.parent_id}">
+                            <?php echo $html->image('ico_mozo.png', array('height'=>'40px'));?>${$value.name}
                             </button>
                         {{/each}}
                     </div>
@@ -60,20 +60,18 @@
            
            
            <div id="ul-productos" style="clear: both" 
-                data-bind="template: {name: 'categorias-productos', afterRender: refreshPage} ">
+                data-bind="template: {name: 'categorias-productos', foreach: currentProductos,afterRender: refreshPage} ">
                 
                 <!-- Productos de Categorias template           -->
                  <script id="categorias-productos" type="text/x-jquery-tmpl">
-                     {{each productosDeCategoriaSeleccionada()}}
                      <span>
                         <button 
-                             data-bind="click: function(){seleccionarProducto($index);}, text: $value.name"
+                            data-bind="click: seleccionar, text: name"
                              data-icon="right" data-inline="true" data-theme="e" >
                              </button>
                         
                      </span>
                      
-                     {{/each}}
                  </script>
 
            </div>

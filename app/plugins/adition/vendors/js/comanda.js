@@ -1,14 +1,16 @@
 
 
 Risto.Adition.comanda = {
-    categorias: ko.observableArray(), // listado de categorias anidadas
+    categoriasTree: ko.observableArray(), // listado de categorias anidadas
+    
     categoriasPlain: [], // listado donde el KEY del array es el ID de la categoria. Es un hash de categorias
     
     path: ko.observableArray([]), // array con el path de cada categoria seleccionada
    
     currentCategoriaId: ko.observable(1), // id de la categoria actual,
     
-    productosSeleccionados: ko.observableArray(), // productos que se les hizo click o se los seleccionó
+    productosSeleccionados: ko.observableArray(),
+    __idProductosSeleccionados: {}, // listado de IDs de productos seleccionados, sirve para optimiazr la velocidad de js
     
     refreshPage: function() {
         
@@ -29,7 +31,7 @@ Risto.Adition.comanda = {
     },
     
     // mapea las categorias y los productos con knockout mapping
-    mapp: function(categorias) {
+    __mapp: function(categorias) {
         var ob = {
             categorias : categorias
         }
@@ -47,25 +49,22 @@ Risto.Adition.comanda = {
         
         var viewModel = ko.mapping.fromJS(ob, mappingOps);
         
-        console.debug(viewModel);
-        
-        this.categorias(new Risto.Adition.categoria(categorias));
+        this.categoriasTree(new Risto.Adition.categoria(categorias));
     },
     
     
     initialize: function(categorias){
         var comanda = Risto.Adition.comanda;
-        console.debug(categorias);
-        this.mapp(categorias);
+        this.__mapp(categorias);
         
-        this.aplanarCategorias();
-        this.currentCategoriaId(this.categorias().Categoria.id() );
+        this.__aplanarCategorias();
+        this.currentCategoriaId(this.categoriasTree().id() );
         
         // si no hay categorias las cargo via AJAX
-        if ( !this.categorias() ) {
+        if ( !this.categoriasTree() ) {
             var este = this;
             $.get(urlDomain+'categorias/listar.json', function(d){
-                este.categorias(d);
+                este.categoriasTree(d);
             });
         }
        
@@ -109,30 +108,41 @@ Risto.Adition.comanda = {
     },
     
     
-    aplanarCategorias: function(catList){
+    /**
+     * Recorre recursivemante las categoras para listaras en un HASH y optimizar su busqueda
+     * @param catList Array Tree de categorias, si no le paso nada toma el atruibuto "categoriasTree" 
+     * 
+     */
+    __aplanarCategorias: function(catList){
         // para la recursividad tomo catList, la primera vez tomo this.categorias()
-        var categorias = catList || [this.categorias()];
+        var categorias = catList || [this.categoriasTree()];
         for (var c in categorias){
             var cat = categorias[c];
             // meto en array como KEY el ID de categoria
             this.categoriasPlain[cat.id()] = cat;
-
+            
             // si tiene hijos, hago recursividad
             if (cat.hasOwnProperty('Hijos')){
                 if (cat.Hijos.length) {
                     this.aplanarCategorias(cat.Hijos);
                 }
             }
-            
         }
     },
     
-    seleccionarProducto: function(index){
-        
-        var prod = this.productosDeCategoriaSeleccionada()[index];
-        
-        prod.seleccionar();
+    
+    /**
+     * Agrega un producto al listado de productos seleccionados
+     */
+    seleccionarProducto: function(prod){
+        if ( !this.__idProductosSeleccionados[prod.id()] ) {
+            this.productosSeleccionados.push(prod);
+            this.__idProductosSeleccionados[prod.id()] = true;
+        } else {
+            return false;
+        }
     },
+
     
     updatePath: function(catId){     
         var comanda = Risto.Adition.comanda;
@@ -176,11 +186,12 @@ Risto.Adition.comanda.currentCategorias = ko.dependentObservable(function() {
     }, Risto.Adition.comanda);
 
 
-Risto.Adition.comanda.productosDeCategoriaSeleccionada = ko.dependentObservable(function(){
+Risto.Adition.comanda.currentProductos = ko.dependentObservable(function(){
     if ( this.categoriasPlain[this.currentCategoriaId()] && this.categoriasPlain[this.currentCategoriaId()].Producto ) {
-        return this.categoriasPlain[this.currentCategoriaId()].Producto;
+        return Risto.Adition.comanda.currentCategorias().Producto();
+    } else {
+        return [];
     }
 }, Risto.Adition.comanda);
-
 
 
