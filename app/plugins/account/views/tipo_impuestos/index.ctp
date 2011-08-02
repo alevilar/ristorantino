@@ -1,9 +1,9 @@
 <div class="tipoImpuestos index">
-<h2><?php __('TipoImpuestos');?></h2>
+<h2><?php __('Tipo de Impuestos');?></h2>
 <p>
 <?php
 echo $paginator->counter(array(
-'format' => __('Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%', true)
+'format' => __('Página %page% de %pages%, mostrando %current% de %count% elementos', true)
 ));
 ?></p>
 <table cellpadding="0" cellspacing="0">

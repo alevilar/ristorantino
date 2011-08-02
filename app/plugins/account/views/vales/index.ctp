@@ -11,7 +11,7 @@
             <th><?php echo $paginator->sort('persona'); ?></th>
             <th><?php echo $paginator->sort('monto'); ?></th>
             <th><?php echo $paginator->sort('created'); ?></th>
-            <th class="actions"><?php __('Actions'); ?></th>
+            <th class="actions"><?php __('Acciones'); ?></th>
         </tr>
         <?php
         $i = 0;
