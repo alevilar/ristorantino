@@ -13,17 +13,17 @@
                 adicion.setCurrentMesa( <? echo $mesa_id?> );
                 <?php }?>
                     
-                Risto.Adition.comanda.initialize(<?php echo $javascript->object($categorias)?>);
+                Risto.Adition.comanda.initialize();
             </script>
             
             
             
-           <div id="path" data-bind="template: {name: 'boton', foreach: path, afterRender: refreshPage}">
+           <div id="path" data-bind="template: {name: 'boton', foreach: path, afterRender: refreshPathPage}">
                <!--  Path buttons template           -->
                 <script id="boton" type="text/x-jquery-tmpl">
                     <span>
                     <button
-                             data-bind="attr: {'data-icon': esUltimoDelPath()?'':'back', 'data-theme': esUltimoDelPath()?'a':''}" data-icon="back" data-inline="true" data-theme="c" 
+                            data-bind="attr: {'data-icon': esUltimoDelPath()?'':'back', 'data-theme': esUltimoDelPath()?'a':''}, click: seleccionar" data-icon="back" data-inline="true" data-theme="c" 
                             data-categoria-id="${id}" data-categoria-parent-id="${parent_id}" >${name}</button>
                     </span>
                 </script>
@@ -41,26 +41,23 @@
            
            <div style="width: 70%; display: inline; float: right;" 
                 id="ul-categorias" 
-                data-bind="template: {name: 'listaCategoriasTree', data: currentCategorias, afterRender: refreshPage} ">
+                data-bind="template: {name: 'listaCategoriasTree', foreach: currentSubCategorias, afterRender: refreshCategoriasPage} ">
                
                 <!-- Template de categorias       -->
                <script id="listaCategoriasTree" type="text/x-jquery-tmpl">
-                    <div>
-                        {{each Hijos}}
-                        <button style="width: 100px;"  data-icon="forward"  data-role="button" data-inline="true" data-theme="b" 
-                                 data-categoria-id="${$value.id}" data-categoria-parent-id="${$value.parent_id}">
-                            <?php echo $html->image('ico_mozo.png', array('height'=>'40px'));?>${$value.name}
-                            </button>
-                        {{/each}}
-                    </div>
+                    <span>
+                        <a data-role="button" data-inline="true" data-theme="b" 
+                                 data-bind="click: seleccionar"
+                                 >
+                            <?php echo $html->image('ico_mozo.png', array('height'=>'40px'));?><span  data-bind="text: name"></span>
+                        </a>
+                    </span>
                 </script>
-            
-            
            </div>
            
            
            <div id="ul-productos" style="clear: both" 
-                data-bind="template: {name: 'categorias-productos', foreach: currentProductos,afterRender: refreshPage} ">
+                data-bind="template: {name: 'categorias-productos', foreach: currentProductos, afterRender: refreshProductosPage} ">
                 
                 <!-- Productos de Categorias template           -->
                  <script id="categorias-productos" type="text/x-jquery-tmpl">
@@ -69,9 +66,7 @@
                             data-bind="click: seleccionar, text: name"
                              data-icon="right" data-inline="true" data-theme="e" >
                              </button>
-                        
                      </span>
-                     
                  </script>
 
            </div>
