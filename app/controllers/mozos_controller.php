@@ -15,7 +15,7 @@ class MozosController extends AppController {
 			$this->redirect(array('action'=>'index'));
 		}
 		$this->set('mozo', $this->Mozo->read(null, $id));
-		$this->layout='frames';
+		/*$this->layout='frames';*/
 	}
 
 	function add() {
