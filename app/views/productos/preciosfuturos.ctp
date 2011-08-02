@@ -1,5 +1,5 @@
 <div class="productos index">
-<h2><?php __('Productos');?></h2>
+<h2><?php __('Productos con precios futuros');?></h2>
 <p>
 <?php
 echo $paginator->options(array('url'=>$this->params['PaginateConditions']));
@@ -12,12 +12,10 @@ echo $paginator->counter(array(
 
 <tr>
 	<th><?php echo $form->create("Producto",array("action"=>"index")); echo $form->input("id") ?></th>
-	<th><?php echo $form->input('name',array('style'=>'width:170px;', 'label'=>false));?></th>
-	<th><?php echo $form->input('abrev',array('style'=>'width:145px;','label'=>false));?></th>
-	<th><?php echo $form->input('Comandera.name',array('style'=>'width:85px;','label'=>false));?></th>
-	<th><?php echo $form->input('Categoria.name',array('style'=>'width:85px;','label'=>false));?></th>
-	<th><?php echo $form->input('precio',array('style'=>'width:40px;','label'=>false));?></th>
-        <th><?php echo $form->input('order',array('style'=>'width:20px;','label'=>false));?></th>
+	<th><?php echo $form->input('name',array('style'=>'width:170px;','label'=>false));?></th>
+	<th><?php echo $form->input('abrev',array('style'=>'width:150px;','label'=>false));?></th>
+	<th><?php echo $form->input('Categoria.name',array('style'=>'width:100px;','label'=>false));?></th>
+	<th><?php echo $form->input('precio',array('style'=>'width:60px;','label'=>false));?></th>
 	<th>&nbsp;</th>
 	<th class="actions"><?php echo $form->end("Buscar")?></th>
 </tr>
@@ -26,11 +24,9 @@ echo $paginator->counter(array(
 	<th></th>
 	<th><?php echo $paginator->sort('Nombre','name');?></th>
 	<th><?php echo $paginator->sort('abreviatura','abrev');?></th>
-	<th><?php echo $paginator->sort('Comandera','Comandera.name');?></th>
 	<th><?php echo $paginator->sort('Categoria','Categoria.name');?></th>
 	<th><?php echo $paginator->sort('precio');?></th>
-        <th><?php echo $paginator->sort('order');?></th>
-	<th><?php echo $paginator->sort('Creado','created');?></th>
+	<th><?php echo $paginator->sort('Modificado','modified');?></th>
 	<th class="actions"><?php __('Acciones');?></th>
 </tr>
 <?php
@@ -40,10 +36,11 @@ foreach ($productos as $producto):
 	if ($i++ % 2 == 0) {
 		$class = ' class="altrow"';
 	}
+        if(!empty($producto['ProductosPreciosFuturo']['precio'])) {
 ?>
 	<tr<?php echo $class;?>>
 		<td>
-		
+			
 		</td>
 		<td>
 			<?php 
@@ -59,26 +56,22 @@ foreach ($productos as $producto):
 			<?php echo $producto['Producto']['abrev']; ?>
 		</td>
 		<td>
-			<?php echo $producto['Comandera']['name']; ?>
-		</td>
-		<td>
 			<?php echo $producto['Categoria']['name']; ?>
 		</td>
 		<td>
 			<?php echo "$".$producto['Producto']['precio']; echo !empty($producto['ProductosPreciosFuturo']['precio'])?" <b>[$".$producto['ProductosPreciosFuturo']['precio']."]</b>":''?>
 		</td>
-                <td>
-			<?php echo $producto['Producto']['order']; ?>
-		</td>
 		<td>
-			<?php echo date('d-m-y',strtotime($producto['Producto']['created'])); ?>
+			<?php echo date('d-m-y',strtotime($producto['Producto']['modified'])); ?>
 		</td>
 		<td class="actions">
 			<?php echo $html->link(__('Editar', true), array('action'=>'edit', $producto['Producto']['id'])); ?>
-			<?php echo $html->link(__('Borrar', true), array('action'=>'delete', $producto['Producto']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $producto['Producto']['id'])); ?>
+			<?php echo $html->link(__('Borrar', true), array('action'=>'delete', $producto['Producto']['id']), null, sprintf(__('Esta seguro que desea borrar # "%s"?', true), $producto['Producto']['id'])); ?>
 		</td>
 	</tr>
-<?php endforeach; ?>
+<?php
+        }
+endforeach; ?>
 </table>
 </div>
 <div class="paging">
@@ -88,8 +81,7 @@ foreach ($productos as $producto):
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $html->link(__('Nuevo Producto', true), array('action'=>'add')); ?></li>
-		<li><?php echo $html->link(__('Listar Categorias', true), '/Categorias/index'); ?></li>
-		<li><?php echo $html->link(__('Agregar Nueva Categoria', true), '/Categorias/add'); ?></li>
+		<li><?php echo $html->link(__('Aplicar precios futuros', true), array('action'=>'actualizarPreciosFuturos'), null, sprintf(__('Esta seguro que desea actualizar los precios futuros?', true))); ?></li>
+		<li><?php echo $html->link(__('Listar Productos', true), '/productos/index'); ?></li>
 	</ul>
 </div>

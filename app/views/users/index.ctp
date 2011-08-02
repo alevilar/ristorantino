@@ -3,13 +3,12 @@
 <p>
 <?php
 echo $paginator->counter(array(
-'format' => __('Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%', true)
+'format' => __('Pagina %page% de %pages%, mostrando %current% elementos de %count%', true)
 ));
 ?></p>
 <table cellpadding="0" cellspacing="0">
 <tr>
-	<th><?php echo $paginator->sort('id');?></th>
-	<th><?php echo $paginator->sort('usuario');?></th>
+	<th><?php echo $paginator->sort('Usuario','username');?></th>
 	<th><?php echo $paginator->sort('nombre');?></th>
 	<th><?php echo $paginator->sort('apellido');?></th>
 	<th><?php echo $paginator->sort('telefono');?></th>
@@ -24,9 +23,6 @@ foreach ($users as $user):
 	}
 ?>
 	<tr<?php echo $class;?>>
-		<td>
-			<?php echo $user['User']['id']; ?>
-		</td>
 		<td>
 			<?php echo $user['User']['username']; ?>
 		</td>

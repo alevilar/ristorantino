@@ -30,9 +30,9 @@
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $html->link(__('Edit Sabor', true), array('action'=>'edit', $sabor['Sabor']['id'])); ?> </li>
-		<li><?php echo $html->link(__('Delete Sabor', true), array('action'=>'delete', $sabor['Sabor']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $sabor['Sabor']['id'])); ?> </li>
-		<li><?php echo $html->link(__('List Sabores', true), array('action'=>'index')); ?> </li>
-		<li><?php echo $html->link(__('New Sabor', true), array('action'=>'add')); ?> </li>
+		<li><?php echo $html->link(__('Editar Sabor', true), array('action'=>'edit', $sabor['Sabor']['id'])); ?> </li>
+		<li><?php echo $html->link(__('Borrar Sabor', true), array('action'=>'delete', $sabor['Sabor']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $sabor['Sabor']['id'])); ?> </li>
+		<li><?php echo $html->link(__('Listar Sabores', true), array('action'=>'index')); ?> </li>
+		<li><?php echo $html->link(__('Crear Sabor', true), array('action'=>'add')); ?> </li>
 	</ul>
 </div>
