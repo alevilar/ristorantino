@@ -1,9 +1,9 @@
 
 
 Risto.Adition.comanda = {
-    categoriasTree: ko.observableArray(), // listado de categorias anidadas
+    categoriasTree: ko.observable(), // listado de categorias anidadas
     
-    currentCategoria: ko.observable({}), // categoria actualmente activa o seleccionada
+    currentCategoria: ko.observable(), // categoria actualmente activa o seleccionada
    
     productosSeleccionados: ko.observableArray([]),
     
@@ -11,7 +11,6 @@ Risto.Adition.comanda = {
     
     
     initialize: function(){
-        
         this.__armarMenu();
         
         // onload
@@ -26,54 +25,46 @@ Risto.Adition.comanda = {
     },
     
     __armarMenu: function(){
-        if ( localStorage.categoriasTree ) {
+        if ( localStorage.categoriasTree) {
             this.__iniciarCategoriasTreeLocalStorage();
         } else {
             var este = this;
             // si no hay categorias las cargo via AJAX
-            $.get( urlDomain+'categorias/listar.json', function(data){ este.__iniciarCategoriasTreeServer(data)} );
+            $.getJSON( urlDomain+'categorias/listar.json', function(data){
+                este.__iniciarCategoriasTreeServer(data)
+            } );
         }
     },
     
     
     __iniciarCategoriasTreeLocalStorage: function(){
-         console.info('edsde local');
-         this.categoriasTree( JSON.parse( localStorage.categoriasTree ) );
+         this.categoriasTree( new Risto.Adition.categoria(JSON.parse(localStorage.categoriasTree) ) );
          
           // pongo la primer categoria como current
          this.currentCategoria( this.categoriasTree() );
     },
     
     __iniciarCategoriasTreeServer: function(cats){
-//        localStorage.setItem('categoriasTree', JSON.stringify( this.categoriasTree() ) );
-        // mapeo con knockout las categorias, productos, hijos (subcategorias), etc
-        this.categoriasTree(new Risto.Adition.categoria( cats ));
-       
-
-        // pongo la primer categoria como current
-        this.currentCategoria( this.categoriasTree() );
+        localStorage.categoriasTree = ko.toJSON(cats);
+        this.__iniciarCategoriasTreeLocalStorage();
     },
     
     
-    
     refreshProductosPage: function() {
-        var prodDiv = $("#ul-productos");
-        prodDiv.find('*').each(function(d, p){
+        $("#ul-productos").find('*').each(function(d, p){
             $(p).page();
         });
         
     },
     
     refreshPathPage: function() {
-        var otroDiv = $("#path");
-        otroDiv.find('*').each(function(d, p){
+        $("#path").find('*').each(function(d, p){
             $(p).page();
         });
     },
     
     refreshCategoriasPage: function() {
-        var newDiv = $("#ul-categorias");
-        newDiv.find('*').each(function(d, p){
+        $("#ul-categorias").find('*').each(function(d, p){
             $(p).page();
         });
     },
@@ -98,7 +89,6 @@ Risto.Adition.comanda = {
      * @param cat Categoria
      */
     updatePath: function(cat, pathArg, first ){
-        console.info("actualizando path");
         var path = pathArg || [];
         var isFirst = true;
         if (first === false) {

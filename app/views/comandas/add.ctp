@@ -47,7 +47,7 @@
                <script id="listaCategoriasTree" type="text/x-jquery-tmpl">
                     <span>
                         <a data-role="button" data-inline="true" data-theme="b" 
-                                 data-bind="click: seleccionar"
+                                 data-bind=""
                                  >
                             <?php echo $html->image('ico_mozo.png', array('height'=>'40px'));?><span  data-bind="text: name"></span>
                         </a>

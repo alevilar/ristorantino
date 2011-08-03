@@ -5,38 +5,29 @@ Risto.Adition.categoria = function(data, parent){
 
 Risto.Adition.categoria.prototype = {
     id : 0,
+    Hijos: [],
+    Producto: [], 
     
     initialize: function(jsonData, parent){
-        var ops = {
-            'Hijos': {
-                key: function(data) {
-                    return ko.utils.unwrapObservable(data.id);
-                },
-                create: function(options) {
-                    return new Risto.Adition.categoria(options.data, options.parent);
-                }
-            },
-            'Producto': {
-                key: function(data) {
-                    return ko.utils.unwrapObservable(data.id);
-                },
-                create: function(options) {
-                    return new Risto.Adition.producto(options.data);
-                }
-            }
+              
+        for (var p in jsonData.Producto){
+            this.Producto.push( new Risto.Adition.producto(jsonData.Producto[p], this) );
+        }
+        
+        for (var h in jsonData.Hijos){
+            this.Hijos.push( new Risto.Adition.categoria(jsonData.Hijos[h], this) );
         }
         
         for (var i in jsonData.Categoria){
             this[i] = jsonData.Categoria[i];            
         }
-        console.info(this);
-        console.debug(parent);
+        
         if (parent) {
             this.Padre = parent;
         }
-        ko.mapping.fromJS(jsonData, ops, this);
         
-        return this;
+        
+        return ko.mapping.fromJS(jsonData, null, this);
     },
     
     seleccionar: function() {
