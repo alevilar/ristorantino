@@ -20,8 +20,10 @@ class MozosController extends AppController {
 
 	function add() {
 		if (!empty($this->data)) {
-			$this->Mozo->create();
-			if ($this->Mozo->save($this->data)) {
+			//$this->Mozo->create();
+
+                        
+			if ($this->Mozo->saveAll($this->data)) {
 				$this->Session->setFlash(__('The Mozo has been saved', true));
 				$this->redirect(array('action'=>'index'));
 			} else {

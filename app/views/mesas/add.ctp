@@ -10,7 +10,7 @@
 		//echo $form->input('created');
 		//echo $form->input('time_paso_pedido');
 		//echo $form->input('time_cerro');
-		echo $form->input('time_cobro', array('label'=>'Indicar Fecha y otra aproximada',
+		echo $form->input('time_cobro', array('label'=>'Indicar Fecha y hora aproximada',
                     'after'=>'<br>Tener en cuenta que esto puede repercutir en la estadistica general. Hay que intentar poner horarios dispersos a lo largo del dia. Por ejemplo, seria malo si se pone que todas las mesas vinieron a las 22hs. Por otro lado, se puede poner un horario raro, asi cuando se sacan las estadisticas se sabe que por ejemplo, todas las mesas que ocmieron a las 18hs son puestas por nosotros a mano. Esta es quizas la mejor opcion.'));
 
                 echo $form->input('tipo_de_pago',array('options'=>$tipo_pagos))

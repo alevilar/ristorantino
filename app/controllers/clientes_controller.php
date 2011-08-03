@@ -80,11 +80,11 @@ class ClientesController extends AppController {
 
 	function delete($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for Cliente', true));
+			$this->Session->setFlash(__('Cliente invalido', true));
 			$this->redirect(array('action'=>'index'));
 		}
 		if ($this->Cliente->del($id)) {
-			$this->Session->setFlash(__('Cliente deleted', true));
+			$this->Session->setFlash(__('Cliente eliminado', true));
 			$this->redirect(array('action'=>'index'));
 		}
 	}

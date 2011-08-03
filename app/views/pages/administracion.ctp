@@ -36,7 +36,7 @@
     echo $html->link('Categorias','/categorias').'<br>';
     echo $html->link('Productos','/productos').'<br>';
     echo $html->link('Gustos y Sabores','/sabores').'<br>';
-    echo $html->link('Aplicar Cambios de Precios Futuros','/productos/preciosfuturos').'<br>';
+    echo $html->link('Aplicar Cambios de Precios Futuros','/productos_precios_futuros').'<br>';
     ?>
 
     <!--
