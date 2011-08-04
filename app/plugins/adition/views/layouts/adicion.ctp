@@ -13,7 +13,7 @@
 		
 		// para los modal window
 		echo $html->css(array(
-                    'jquery-mobile/jquery.mobile-1.0b1.min',
+                    'jquery-mobile/jquery.mobile-1.0b2.min',
                     'jquery-mobile/jquery-mobile-fluid960',
                     '/adition/css/ristorantino'
                     ));
@@ -28,12 +28,13 @@
                     'jquery/jquery-1.6.1.min',
                     'jquery/jquery.tmpl.min',
                     'jquery/jquery.periodicalupdater',
+                     'jquery/jquery.mobile-1.0b2',
+                    'jquery/jquery.easing.1.3',
                     'knockout-1.2.1',
                     'knockout.mapping',
                     
 //                    'jquery/jquery.mobile.splitview',
-                    'jquery/jquery.mobile-1.0b1.min',
-                    'jquery/jquery.easing.1.3',
+
 //                    'jquery/jquery.mobile.scrollview',
 //                    'jquery/scrollview',
                     
@@ -50,6 +51,7 @@
                     '/adition/js/categoria',
                     '/adition/js/producto',
 
+                   
                     ));
                 ?>
 

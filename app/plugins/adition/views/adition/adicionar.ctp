@@ -1,3 +1,8 @@
+
+    
+      
+    
+
 <!-- Template: listado de mesas que será refrescado continuamente mediante el ajax que verifica el estado de las mesas (si fue abierta o cerrada alguna. -->
 <script id="listaMesas" type="text/x-jquery-tmpl">
     <li class="grid_1">
@@ -91,3 +96,16 @@
 
 
 
+<div  data-role="page"  id="obss">
+     <div  data-role="header"  data-position="inline">
+        <h1>Observacion</h1>
+    </div>
+    <div data-role="content">
+        <form name="comanda" id="comanda-producto-observacion">
+            <textarea name="obs">
+            </textarea>
+            <input type="submit" value="guardar" data-rel="back">>Agregar observación</input>
+        </form>
+        <a href="#" data-rel="back">Volver sin agregar observación</a>
+    </div>
+</div> 

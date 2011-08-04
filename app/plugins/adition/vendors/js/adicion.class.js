@@ -12,6 +12,8 @@ var koAdicionModel = {
     currentMozo: ko.observable(),
     currentMesa: ko.observable(),
     
+    comanda: ko.observable(),
+    
     tieneCurrentMesa: function(){
         if ( typeof this.currentMesa() == 'object')  {
             return true;

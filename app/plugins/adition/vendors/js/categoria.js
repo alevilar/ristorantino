@@ -1,33 +1,44 @@
 
 Risto.Adition.categoria = function(data, parent){
-    return this.initialize(data, parent)
+    var lala = this.initialize(data, parent);
+   
+    return lala;
 }
 
 Risto.Adition.categoria.prototype = {
-    id : 0,
+    Padre: {},
     Hijos: [],
-    Producto: [], 
+    Producto: [],
+    
     
     initialize: function(jsonData, parent){
-              
+        for (var i in jsonData){
+            if ( typeof this[i] == 'undefined' ) {
+                this[i] = jsonData[i];
+            } 
+        }
+        
+        if (jsonData.Producto) {
+            this.Producto = [];
+        }
         for (var p in jsonData.Producto){
-            this.Producto.push( new Risto.Adition.producto(jsonData.Producto[p], this) );
+            this.Producto.push( new Risto.Adition.producto( jsonData.Producto[p], this) );
         }
         
+        if (jsonData.Hijos) {
+            this.Hijos = [];
+        }
         for (var h in jsonData.Hijos){
-            this.Hijos.push( new Risto.Adition.categoria(jsonData.Hijos[h], this) );
-        }
-        
-        for (var i in jsonData.Categoria){
-            this[i] = jsonData.Categoria[i];            
+            if ( jsonData.Hijos[h].id ) {
+                this.Hijos.push( new Risto.Adition.categoria( jsonData.Hijos[h], this) );
+            }
         }
         
         if (parent) {
             this.Padre = parent;
         }
         
-        
-        return ko.mapping.fromJS(jsonData, null, this);
+        return this;
     },
     
     seleccionar: function() {

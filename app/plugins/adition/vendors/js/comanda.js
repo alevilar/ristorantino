@@ -13,14 +13,14 @@ Risto.Adition.comanda = {
     initialize: function(){
         this.__armarMenu();
         
+        koAdicionModel.comanda( this );
         // onload
-        $(function(){
-            ko.applyBindings(Risto.Adition.comanda, document.getElementById('ul-categorias'));
-            ko.applyBindings(Risto.Adition.comanda, document.getElementById('path'));
-            ko.applyBindings(Risto.Adition.comanda, document.getElementById('ul-productos'));            
-            ko.applyBindings(Risto.Adition.comanda, document.getElementById('ul-productos-seleccionados'));            
-            
-        });
+//        $(function(){
+//            ko.applyBindings(Risto.Adition.comanda, document.getElementById('ul-categorias'));
+//            ko.applyBindings(Risto.Adition.comanda, document.getElementById('path'));
+//            ko.applyBindings(Risto.Adition.comanda, document.getElementById('ul-productos'));            
+//            ko.applyBindings(Risto.Adition.comanda, document.getElementById('ul-productos-seleccionados'));    
+//        });
         return this;
     },
     
@@ -38,7 +38,8 @@ Risto.Adition.comanda = {
     
     
     __iniciarCategoriasTreeLocalStorage: function(){
-         this.categoriasTree( new Risto.Adition.categoria(JSON.parse(localStorage.categoriasTree) ) );
+         var cats = JSON.parse(localStorage.categoriasTree);
+         this.categoriasTree( new Risto.Adition.categoria( cats ) );
          
           // pongo la primer categoria como current
          this.currentCategoria( this.categoriasTree() );
@@ -69,14 +70,21 @@ Risto.Adition.comanda = {
         });
     },
     
-    
-    
+    refreshProductosSeleccionadosPage: function() {
+        $("#ul-productos-seleccionados").find('*').each(function(d, p){
+            $(p).page();
+        });
+        
+        $('#ul-productos-seleccionados').listview('refresh');
+    },
+   
+   
     /**
      * Agrega un producto al listado de productos seleccionados
      */
     seleccionarProducto: function(prod){
-        if ( !jQuery.inArray(prod, this.productosSeleccionados) ) {
-            this.productosSeleccionados.push(prod);
+        if ( jQuery.inArray( prod, this.productosSeleccionados() ) < 0 ) {
+            this.productosSeleccionados.unshift(prod);
             return true;
         } else {
             return false;
@@ -110,7 +118,8 @@ Risto.Adition.comanda = {
         return path;
     },
     
-    seleccionarCategoria: function( cat ){        
+    seleccionarCategoria: function( cat ){   
+
         this.currentCategoria( cat );
         
         // actualizo el path
@@ -125,7 +134,7 @@ Risto.Adition.comanda = {
 
 Risto.Adition.comanda.currentSubCategorias = ko.dependentObservable(function() {
         if (this.currentCategoria() && this.currentCategoria().Hijos ) {
-            return this.currentCategoria().Hijos();
+            return this.currentCategoria().Hijos;
         }
         return [];
     }, Risto.Adition.comanda);
@@ -133,7 +142,7 @@ Risto.Adition.comanda.currentSubCategorias = ko.dependentObservable(function() {
 
 Risto.Adition.comanda.currentProductos = ko.dependentObservable(function(){
     if (this.currentCategoria() && this.currentCategoria().Producto ) {
-        return this.currentCategoria().Producto();
+        return this.currentCategoria().Producto;
     }
     return [];
 }, Risto.Adition.comanda);
