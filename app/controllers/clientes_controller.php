@@ -5,8 +5,56 @@ class ClientesController extends AppController {
 	var $helpers = array('Html', 'Form', 'Ajax');
 
 	function index() {
+           
+            $this->params['PaginateConditions'] = array();
+		
+		if(!empty($this->data)){
+			$condiciones = array();
+			$pagCondiciones = array();
+			foreach($this->data as $modelo=>$campos){
+				foreach($campos as $key=>$val){
+						if(!is_array($val))
+							$condiciones[$modelo.".".$key." LIKE"] = '%'.$val.'%';
+							$pagCondiciones[$modelo.".".$key] = $val;
+				}
+			}
+			$this->Cliente->recursive = 0;
+			$this->paginate['Clientes'] = array(
+				'conditions' => $condiciones
+			);
+			debug($condiciones);
+			$this->params['PaginateConditions'] = $pagCondiciones;
+                        debug($this->paginate('Cliente'));
+			$this->set('clientes', $this->paginate('Cliente'));
+		}
+		
+		
+		if(!empty($this->passedArgs) && empty($this->data)){ 
+		 	$condiciones = array();
+			$pagCondiciones = array();
+			foreach($this->passedArgs as $campo=>$valor){
+				if($campo == 'page' || $campo == 'sort' || $campo == 'direction'){ 
+					continue;
+				}
+				$condiciones["$campo LIKE"] = '%'.$valor.'%';
+				$pagCondiciones[$campo] = $valor;
+				$this->data[$campo] = $valor;
+				
+			}
+			$this->Cliente->recursive = 0;
+			$this->paginate['Clientes'] = array(
+				'conditions' => $condiciones
+			);
+                        
+			$this->params['PaginateConditions'] = $pagCondiciones;
+			$this->set('clientes', $this->paginate('Cliente'));
+		 }   
+ 
+                /* <- Esto es lo original -> */
+                
 		$this->Cliente->recursive = 0;
 		$this->set('clientes', $this->paginate());
+                
 	}
 
 	function view($id = null) {
