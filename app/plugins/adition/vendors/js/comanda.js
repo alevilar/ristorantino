@@ -20,10 +20,13 @@ Risto.Adition.comanda = {
         return Risto.Adition.koAdicionModel.currentSubCategorias.apply(Risto.Adition.koAdicionModel, arguments);
     }, 
    
+   productosSeleccionados: Risto.Adition.koAdicionModel.productosSeleccionados,
+   /*
     productosSeleccionados: function(){
+        return 
         return Risto.Adition.koAdicionModel.productosSeleccionados.apply(Risto.Adition.koAdicionModel, arguments);
     }, 
-    
+    */
     path: function(){
         return Risto.Adition.koAdicionModel.path.apply(Risto.Adition.koAdicionModel, arguments);
     }, 
@@ -77,7 +80,7 @@ Risto.Adition.comanda = {
      */
     seleccionarProducto: function(prod){
         if ( jQuery.inArray( prod, this.productosSeleccionados() ) < 0 ) {
-            this.productosSeleccionados().unshift(prod);
+            this.productosSeleccionados.unshift(prod);
             return true;
         } else {
             return false;

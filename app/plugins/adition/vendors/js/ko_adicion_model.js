@@ -68,11 +68,7 @@ Risto.Adition.koAdicionModel = {
     },
     
     refreshProductosSeleccionadosPage: function() {
-//        $("#ul-productos-seleccionados").find('*').each(function(d, p){
-//            $(p).page();
-//        });
-//        
-        $('#ul-productos-seleccionados').listview('refresh');
+//        $('#ul-productos-seleccionados').listview('refresh');
     }
     
     
