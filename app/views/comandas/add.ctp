@@ -1,5 +1,3 @@
-   
-        
         
 <div data-role="page" id="comanda-add-menu">
     <div  data-role="header"  data-position="inline">
@@ -10,33 +8,35 @@
     <div data-role="content">
         
          <script type="text/javascript">
-            $('#comanda-add-menu').live('pagecreate',function(event){    
-                <?php if ( !empty($mesa_id) ) { ?>
-                adicion.setCurrentMesa( <? echo $mesa_id?> );
-                <?php }?>
+              (function($){
+                    <?php if ( !empty($mesa['Mesa']['id']) ) { ?>
+                    var mesa = Risto.Adition.adicionar.setCurrentMesa( <? echo $mesa['Mesa']['id']?> );
+//                    mesa.comandas( <?= $javascript->object($items);?> );
+                    <?php }?>
 
-                Risto.Adition.comanda.initialize();
-            });
+                    Risto.Adition.koAdicionModel.refreshBinding();
+                    
+                    
+                     ko.applyBindings(Risto.Adition.koAdicionModel, document.getElementById('ul-categorias'));
+                })(jQuery);
         </script>
-    
-    
             
-       <div id="path" data-bind="template: {name: 'boton', foreach: comanda().path, afterRender: comanda().refreshPathPage}">
-           <!--  Path buttons template           -->
+       <div id="path" data-bind="template: {name: 'boton', foreach: path, afterRender: refreshPathPage}">
             <script id="boton" type="text/x-jquery-tmpl">
-                <span>
-                <button
-                        data-bind="attr: {'data-icon': esUltimoDelPath()?'':'back', 'data-theme': esUltimoDelPath()?'a':''}, click: seleccionar" data-icon="back" data-inline="true" data-theme="c" 
-                        data-categoria-id="${id}" data-categoria-parent-id="${parent_id}" >${name}</button>
-                </span>
+                
+                    <a data-bind="attr: {'data-icon': esUltimoDelPath()?'':'back', 'data-theme': esUltimoDelPath()?'a':''}, click: seleccionar" data-bind="click: seleccionar" class="ui-btn ui-btn-inline ui-btn-icon-left ui-btn-corner-all ui-shadow ui-btn-up-c">
+                         <span class="ui-btn-inner ui-btn-corner-all">
+                             <span class="ui-btn-text" data-bind="text: name" ></span>
+                             <span class="ui-icon ui-icon-right ui-icon-shadow"></span>
+                         </span>
+                     </a>
             </script>
        </div> 
             
             
        <div id="ul-productos-seleccionados" style="width: 30%; display: inline; float: left;" data-role="listview"
-            data-bind="template: {name: 'categorias-productos-seleccionados', foreach: comanda().productosSeleccionados, afterRender: comanda().refreshProductosSeleccionadosPage}"
+            data-bind="template: {name: 'categorias-productos-seleccionados', foreach: productosSeleccionados, afterRender: refreshProductosSeleccionadosPage}"
             >
-           <!-- Productos  Seleccionados template           -->
              <script id="categorias-productos-seleccionados" type="text/x-jquery-tmpl">
                  <li>
                      <span data-role="controlgroup" data-type="horizontal">
@@ -51,38 +51,37 @@
                      <span data-bind="text: cant" class="ui-li-count"></span>
                  </li>
              </script>
+
        </div>
             
            
         <div style="width: 70%; display: inline; float: right;">
 
            <div id="ul-categorias" 
-                data-bind="template: {name: 'listaCategoriasTree', foreach: comanda().currentSubCategorias, afterRender: comanda().refreshCategoriasPage} ">
-
+                data-bind="template: {name: 'listaCategoriasTree', foreach: currentSubCategorias, afterRender: refreshCategoriasPage} ">
                 <!-- Template de categorias       -->
                <script id="listaCategoriasTree" type="text/x-jquery-tmpl">
-                    <span>
-                        <a data-role="button" data-inline="true" data-theme="b" 
-                                 data-bind="click: seleccionar"
-                                 >
-                            <?php echo $html->image('ico_mozo.png', array('height'=>'40px'));?><span  data-bind="text: name"></span>
-                        </a>
-                    </span>
+                   <a  href="#" data-bind="click: seleccionar" data-theme="b" data-inline="true" data-role="button" class="ui-btn ui-btn-inline ui-btn-corner-all ui-shadow ui-btn-up-b">
+                       <span class="ui-btn-inner ui-btn-corner-all">
+                           <span class="ui-btn-text">
+                               <?php echo $html->image('ico_mozo.png', array('height'=>'40px'));?>
+                               <span data-bind="text: name">Bebidas con Alcohol</span>                         
+                           </span>
+                       </span>
+                   </a>
                 </script>
-                
            </div>
            
            
            <div id="ul-productos" style="clear: both" 
-                data-bind="template: {name: 'categorias-productos', foreach: comanda().currentProductos, afterRender: comanda().refreshProductosPage} ">
-
-                <!-- Productos de Categorias template           -->
+                data-bind="template: {name: 'categorias-productos', foreach: currentProductos, afterRender: refreshProductosPage} ">
                  <script id="categorias-productos" type="text/x-jquery-tmpl">
-                     <span>
-                        <button data-bind="click: seleccionar, text: name"
-                                data-icon="right" data-inline="true" data-theme="e" >
-                             </button>
-                     </span>
+                     <a href="#" data-bind="" class="ui-btn ui-btn-inline ui-btn-icon-left ui-btn-corner-all ui-shadow ui-btn-up-e">
+                         <span class="ui-btn-inner ui-btn-corner-all">
+                             <span class="ui-btn-text" data-bind="text: name" ></span>
+                             <span class="ui-icon ui-icon-right ui-icon-shadow"></span>
+                         </span>
+                     </a>
                  </script>
            </div>
         </div>
@@ -91,7 +90,4 @@
     <div data-role="footer"><h2>Menu footer</h2></div>
     
 </div>  
-
-
-
 

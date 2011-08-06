@@ -1,63 +1,3 @@
-/**
- *
- *
- *  KO Model
- *  Aca van todos los bindings que se realizaran en la vista
- *
- *  tambien el mapeo de datos entre arrays que vienen del servidor
- *
- *
- */
-var koAdicionModel = {
-    currentMozo: ko.observable(),
-    currentMesa: ko.observable(),
-    
-    comanda: ko.observable(),
-    
-    tieneCurrentMesa: function(){
-        if ( typeof this.currentMesa() == 'object')  {
-            return true;
-        } else {
-            return false;
-        }
-    },
-    
-    // listado de mozos
-    mozos: ko.observableArray(),
-    
-    // a continuacion indicar el Campo del Model Mesa que sera utilizado para ordenar el listado de mesas
-    mozosOrder: ko.observable('mozo_id')
-    
-//    mesas: ko.observableArray()
-//    mesas: ko.dependentObservable( function(){
-//                var mesasList = [];
-//                console.debug(this);
-//                for (var m in this.mozos()) {
-//                    mesasList = array.concat(mesasList, this.mozos().mesas());
-//                }
-//                return mesasList;
-//           }, this)
-}
-// Dependientes
-// listado de mesas, depende de las mesas de cada mozo, y el orden que le haya indicado
-koAdicionModel.mesas = ko.dependentObservable( function(){
-                var mesasList = [];
-                var order = this.mozosOrder();
-
-                for (var m in this.mozos()) {
-                    mesasList = mesasList.concat(this.mozos()[m].mesas());
-                }
-                
-                if ( order ) {
-                    mesasList.sort(function(left, right) {
-                        return left[order]() == right[order]() ? 0 : (parseInt(left[order]()) < parseInt(right[order]()) ? -1 : 1) 
-                    })
-                }
-                return mesasList;
-
-           }, koAdicionModel);
-           
-
 
 /**
  *  Adicion Class
@@ -66,13 +6,10 @@ koAdicionModel.mesas = ko.dependentObservable( function(){
  *
  */
 
-var Adicion = function() {
-    this.initialize();
-}
 
 
 //Parametros de configuracion
-Adicion.cubiertosObligatorios   = true;
+Risto.Adition.cubiertosObligatorios   = true;
 
 
 /**
@@ -80,33 +17,33 @@ Adicion.cubiertosObligatorios   = true;
  *
  *
  * */
-Adicion.prototype = {
+Risto.Adition.adicionar = {
 
     yaMapeado: false,
     
     __model: function(){
-        return koAdicionModel;
+        return Risto.Adition.koAdicionModel;
     },
     
     currentMozo: function(){
-        return koAdicionModel.currentMozo.apply(koAdicionModel, arguments);
+        return Risto.Adition.koAdicionModel.currentMozo.apply(Risto.Adition.koAdicionModel, arguments);
     },
     
     currentMesa: function(){
-        return koAdicionModel.currentMesa.apply(koAdicionModel, arguments);
+        return Risto.Adition.koAdicionModel.currentMesa.apply(Risto.Adition.koAdicionModel, arguments);
     },
     
     
     mesas: function(){
-        return koAdicionModel.mesas.apply(koAdicionModel, arguments);
+        return Risto.Adition.koAdicionModel.mesas.apply(Risto.Adition.koAdicionModel, arguments);
     },
     
     mozos: function(){
-        return koAdicionModel.mozos.apply(koAdicionModel, arguments);
+        return Risto.Adition.koAdicionModel.mozos.apply(Risto.Adition.koAdicionModel, arguments);
     },
     
     mozosOrder: function(){
-        return koAdicionModel.mozosOrder.apply(koAdicionModel, arguments);
+        return Risto.Adition.koAdicionModel.mozosOrder.apply(Risto.Adition.koAdicionModel, arguments);
     },
 
     /**
@@ -115,7 +52,7 @@ Adicion.prototype = {
     initialize: function() {
         this.getMesasAbiertas();
         $(function(){
-            ko.applyBindings(koAdicionModel);
+           Risto.Adition.koAdicionModel.refreshBinding();
         });
     },
 
@@ -183,8 +120,8 @@ Adicion.prototype = {
      */
     tieneMesaSeleccionada: function(){
         var retornar = false;
-        if(adicion.currentMesa){
-            if(adicion.currentMesa.estaAbierta())
+        if(this.currentMesa){
+            if(this.currentMesa.estaAbierta())
                 retornar = true;
             else
                 retornar = false;
@@ -347,14 +284,13 @@ Adicion.prototype = {
                 }
             }
 
-            koAdicionModel = ko.mapping.fromJS(data, mapOps, koAdicionModel );
+            Risto.Adition.koAdicionModel = ko.mapping.fromJS(data, mapOps, Risto.Adition.koAdicionModel );
             this.yaMapeado = true;
         } else {
-            ko.mapping.updateFromJS(koAdicionModel, data);
+            ko.mapping.updateFromJS(Risto.Adition.koAdicionModel, data);
         }
         $(document).trigger('adicionMesasActualizadas');
     },
-    
     
     
     ordenarMesasPorNumero: function(){
@@ -363,6 +299,4 @@ Adicion.prototype = {
             return left.numero() == right.numero() ? 0 : (parseInt(left.numero()) < parseInt(right.numero()) ? -1 : 1) 
         })
     }
-
-		
 };

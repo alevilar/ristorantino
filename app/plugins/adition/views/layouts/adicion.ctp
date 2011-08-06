@@ -32,26 +32,16 @@
                     'jquery/jquery.easing.1.3',
                     'knockout-1.2.1',
                     'knockout.mapping',
-                    
-//                    'jquery/jquery.mobile.splitview',
-
-//                    'jquery/jquery.mobile.scrollview',
-//                    'jquery/scrollview',
-                    
                     'jquery/fg.menu',
-
                     'ristorantino/generic',
                     '/adition/js/adicion.class',
                     'risto/mesa.class',
                     'risto/mozo.class',
-
-                     
+                     '/adition/js/ko_adicion_model',
                     '/adition/js/adition.events',
                     '/adition/js/comanda',
                     '/adition/js/categoria',
                     '/adition/js/producto',
-
-                   
                     ));
                 ?>
 
@@ -63,7 +53,9 @@
         var urlDomain = "<?php echo $html->url('/',true);?>";
 
         // instancio el objeto adicion que sera el kernel de la app
-        var adicion = new Adicion();
+        Risto.Adition.adicionar.initialize();
+        
+        Risto.Adition.comanda.initialize();
     -->
     </script>
 

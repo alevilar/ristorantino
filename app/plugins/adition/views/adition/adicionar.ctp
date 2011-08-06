@@ -1,6 +1,3 @@
-
-    
-      
     
 
 <!-- Template: listado de mesas que será refrescado continuamente mediante el ajax que verifica el estado de las mesas (si fue abierta o cerrada alguna. -->
@@ -22,8 +19,8 @@
         </a>
     </li>
 </script>
-
-
+                
+                
 
 <!-- Pagina 1, Home Page por default segun JQM: Listado de Mesas -->
 <div data-role="page" data-add-back-btn="true" id="listado-mesas">
@@ -54,11 +51,11 @@
         <div  data-role="footer" data-position="fixed">
             <div data-role="navbar">
                     <ul>
-                        <li><a onclick="adicion.mozosOrder('numero')">Ordenar Por Numero</a></li>
-                        <li><a onclick="adicion.mozosOrder('mozo_id')">Ordenar Por Mozo</a></li>
-                        <li><a onclick="adicion.mozosOrder('created')">Ordenar Por Cierre</a></li>
+                        <li><a onclick="Risto.Adition.adicionar.mozosOrder('numero')">Ordenar Por Numero</a></li>
+                        <li><a onclick="Risto.Adition.adicionar.mozosOrder('mozo_id')">Ordenar Por Mozo</a></li>
+                        <li><a onclick="Risto.Adition.adicionar.mozosOrder('created')">Ordenar Por Cierre</a></li>
                     </ul>
-                </div>
+            </div>
             Ristorantino Mágico</div>
 
 </div>

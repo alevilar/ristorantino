@@ -31,11 +31,12 @@
             <script type="text/javascript">
                 (function($){
                     <?php if ( !empty($mesa['Mesa']['id']) ) { ?>
-                    var mesa = adicion.setCurrentMesa( <? echo $mesa['Mesa']['id']?> );
+                    var mesa = Risto.Adition.adicionar.setCurrentMesa( <? echo $mesa['Mesa']['id']?> );
                     mesa.comandas( <?= $javascript->object($items);?> );
                     <?php }?>
 
-                    ko.applyBindings(koAdicionModel);
+                    Risto.Adition.koAdicionModel.refreshBinding();
+                    
                 })(jQuery);
                 
             </script>
@@ -45,7 +46,7 @@
                     <li><a data-bind="attr: {href: currentMesa().urlComandaAdd()}" ><?= $html->image('/adition/css/img/chef_64.png')?>Comanda</a></li>
                     <li><a href="<?= $html->url('/pages/panel')?>" >PAnel</a></li>
                     <li><a href="#sacar-item" >Sacar Item</a></li>
-                    <li><a href="#Agregar Cliente" >Agragar Cliente</a></li>
+                    <li><a href="#Agregar Cliente" >Agregar Cliente</a></li>
                     <li><a href="#Agragar Descuento" >Agregar Descuento</a></li>
                     <li><a href="#Cerrar-mesa" >Cerrar Mesa</a></li>
                     <li><a href="#cambiar-mozo" >Cambiar Mozo</a></li>
