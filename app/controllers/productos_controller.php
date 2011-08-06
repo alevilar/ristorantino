@@ -48,8 +48,26 @@ class ProductosController extends AppController {
 		 }   
 		 
 		 
-		
-		
+		/***
+                 * 
+                 * ES PARA BORRARRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+                 * 
+                 */
+                 $prodsConPrecioFuturo = $this->Producto->ProductosPreciosFuturo->find('all', array(
+                     'fields' => 'producto_id'
+                 ));
+                 if ( count($prodsConPrecioFuturo) > 1 ) {
+                    $this->paginate['Producto']['conditions']['Producto.id NOT IN'] = array('874','3267');
+                 } else {
+                     $this->paginate['Producto']['conditions']['Producto.id <>'] = array('874');
+                 }
+		 /****************************
+                  * 
+                  * ------------------------------------------------------
+                  */
+                 
+                 
+                 
 		$this->Producto->recursive = 0;
 		$this->set('productos', $this->paginate());
 	}
@@ -162,6 +180,10 @@ class ProductosController extends AppController {
             
             $this->redirect($this->referer());
         }
-
+        
+        
+        
+      
 }
+
 ?>

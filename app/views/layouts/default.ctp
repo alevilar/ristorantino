@@ -38,12 +38,12 @@
             echo $html->css('cake.generic.croogo');
             echo $html->css('fluid_grid');
 
-            echo $scripts_for_layout;
 
             echo $javascript->link('prototype');
             echo $javascript->link('scriptaculous');
             echo $javascript->link('jquery/jquery-1.6.1.min');
-
+            echo $javascript->link('jquery/jquery-ui-1.8.14.custom.min');
+            echo $scripts_for_layout;
             //echo $javascript->link('Controls'); // PAD numerico
         ?>
             <script type="text/javascript">
@@ -55,6 +55,9 @@
                 <div class="grid_12 header">
                 <?php echo $html->link("Inicio", '/pages/home', array('class' => 'inicio')) ?>
                     
+                <?php  
+                echo($session->read('Auth.User.username'));
+                 ?>
                     
 
                 <?php echo $html->link('Cambiar de usuario', array('controller' => 'users', 'action' => 'logout', 'plugin' => null), array('style' => 'float: right; margin-top:45px; font-size: 135%;')); ?>

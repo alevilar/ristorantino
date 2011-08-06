@@ -32,8 +32,8 @@
                 <?php
 		echo $form->input('otros');
 	?>
-	</fieldset>
 <?php echo $form->end('Guardar');?>
+	</fieldset>
 </div>
 <div class="actions">
 	<ul>

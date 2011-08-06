@@ -538,15 +538,47 @@ li.selected    {
 }
 
 .productos input[type=text]{
-     width: 70px;
+     width: 90px;
+     font-size: 85%;
+     height: 17px;
 }
+
 #ProductoName{
-    width: 80px;
+    width: 350px;
+}
+#ProductoAbrev {
+    width: 350px;
 }
 
 #ProductoOrder{
     width: 35px;
 }
 #ProductoPrecio{
-    width: 40px;
+    width: 70px;
+}
+#ProductosPreciosFuturoPrecio {
+    width: 70px;
+}
+
+#ProductoEditForm input {
+    font-size: 150%;
+    height: 25px;
+    margin-bottom: 0;
+}
+
+#ProductoEditForm input[type=submit] {
+    font-size: auto;
+    height: auto;
+    margin-bottom: 0;
+}
+
+
+.altrow {
+    background-color: #F2F2F2;
+}
+
+
+.categorias-table span{
+    font-size: 90%;
+    font: Arial, sans-serif;
 }

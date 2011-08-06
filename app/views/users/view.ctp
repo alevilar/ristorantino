@@ -11,11 +11,6 @@
 			<?php echo $user['User']['username']; ?>
 			&nbsp;
 		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Password'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $user['User']['password']; ?>
-			&nbsp;
-		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Nombre'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 			<?php echo $user['User']['nombre']; ?>
@@ -45,11 +40,7 @@
 	<div class="related">
 		<h3><?php  __('Mozos Relacionados');?></h3>
 	<?php if (!empty($user['Mozo'])):?>
-		<dl>	<?php $i = 0; $class = ' class="altrow"';?>
-			<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Id');?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-	<?php echo $user['Mozo']['id'];?>
-&nbsp;</dd>
+		<dl>	
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('User Id');?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 	<?php echo $user['Mozo']['user_id'];?>

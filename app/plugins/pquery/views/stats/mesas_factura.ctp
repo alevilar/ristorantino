@@ -8,12 +8,13 @@
                 echo $html->css('/pquery/css/jquery.jqplot.css');
                 echo $html->css('estadisticas');
                 
-                $mesas = array ( 
+                $mesastest = array ( 
                                array('Mesa'=> array('tipo'=> 'A','total'=>'300','cant'=>'1500')),
                                array('Mesa'=> array('tipo'=> 'B','total'=>'250','cant'=>'1200')),
                                array('Mesa'=> array('tipo'=> 'C','total'=>'150','cant'=>'600')),
                                array('Mesa'=> array('tipo'=> 'Otros','total'=>'50','cant'=>'150'))
                              ); 
+                debug($mesastest);
 ?>
 
 <script id="example_1" type="text/javascript">
@@ -94,15 +95,15 @@
                     echo('<tr>');
                     echo('<td>');
                     ?><strong><?php
-                    echo($m['Mesa']['tipo']);
+                    echo($m['mesas']['tipo']);
                     ?></strong><?php
                     echo('</td>');
                     echo('<td>');
-                    echo($m['Mesa']['cant']);
+                    echo($m['mesas']['cant']);
                     echo('</td>');
                     echo('<td>');
                     echo('$');
-                    echo($m['Mesa']['total']);
+                    echo($m['mesas']['total']);
                     echo('</td>');
                     echo('</tr>');
             }        

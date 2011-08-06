@@ -14,7 +14,7 @@
 	<th><?php echo $paginator->sort('telefono');?></th>
 	<th><?php echo $paginator->sort('domicilio');?></th>
 	<th><?php echo $paginator->sort('created');?></th>
-	<th class="actions"><?php __('Actions');?></th>
+	<th class="actions"><?php __('Acciones');?></th>
 </tr>
 <?php
 $i = 0;
@@ -44,9 +44,9 @@ foreach ($proveedores as $proveedor):
 			<?php echo date("d/m/Y H:i", strtotime($proveedor['Proveedor']['created'])); ?>
 		</td>
 		<td class="actions">
-			<?php echo $html->link(__('View', true), array('action' => 'view', $proveedor['Proveedor']['id'])); ?>
-			<?php echo $html->link(__('Edit', true), array('action' => 'edit', $proveedor['Proveedor']['id'])); ?>
-			<?php echo $html->link(__('Delete', true), array('action' => 'delete', $proveedor['Proveedor']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $proveedor['Proveedor']['id'])); ?>
+			<?php echo $html->link(__('Ver', true), array('action' => 'view', $proveedor['Proveedor']['id'])); ?>
+			<?php echo $html->link(__('Editar', true), array('action' => 'edit', $proveedor['Proveedor']['id'])); ?>
+			<?php echo $html->link(__('Borrar', true), array('action' => 'delete', $proveedor['Proveedor']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $proveedor['Proveedor']['id'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>

@@ -45,9 +45,9 @@
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $html->link(__('Edit Proveedor', true), array('action' => 'edit', $proveedor['Proveedor']['id'])); ?> </li>
-		<li><?php echo $html->link(__('Delete Proveedor', true), array('action' => 'delete', $proveedor['Proveedor']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $proveedor['Proveedor']['id'])); ?> </li>
-		<li><?php echo $html->link(__('List Proveedores', true), array('action' => 'index')); ?> </li>
-		<li><?php echo $html->link(__('New Proveedor', true), array('action' => 'add')); ?> </li>
+		<li><?php echo $html->link(__('Editar Proveedor', true), array('action' => 'edit', $proveedor['Proveedor']['id'])); ?> </li>
+		<li><?php echo $html->link(__('Borrar Proveedor', true), array('action' => 'delete', $proveedor['Proveedor']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $proveedor['Proveedor']['id'])); ?> </li>
+		<li><?php echo $html->link(__('Listar Proveedores', true), array('action' => 'index')); ?> </li>
+		<li><?php echo $html->link(__('Nuevo Proveedor', true), array('action' => 'add')); ?> </li>
 	</ul>
 </div>

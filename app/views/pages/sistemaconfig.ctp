@@ -14,7 +14,7 @@
     <h2>Configuración</h2>
     <?php
     echo $html->link('Parametros de configuracion','/configs').'<br>';
-    /*echo $html->link('Crear consultas para las estadísticas (avanzado)','/pquery/queries').'<br>';*/
+    echo $html->link('Crear consultas para las estadísticas (avanzado)','/pquery/queries').'<br>';
     ?>
     </div>
     

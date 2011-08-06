@@ -1,14 +1,14 @@
 <div class="sabores form">
 <?php echo $form->create('Sabor');?>
 	<fieldset>
- 		<legend><?php __('Add Sabor');?></legend>
+ 		<legend><?php __('Crear Sabor');?></legend>
 	<?php
 		echo $form->input('name');
 		echo $form->input('categoria_id');
 		echo $form->input('precio');
 	?>
-	</fieldset>
 <?php echo $form->end('Submit');?>
+</fieldset>
 </div>
 <div class="actions">
 	<ul>

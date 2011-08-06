@@ -12,7 +12,7 @@ echo $paginator->counter(array(
 ?></p>
 <table cellpadding="0" cellspacing="0">
 <tr>
-	<th><?php echo $paginator->sort('id');?></th>
+	<th><?php echo $paginator->sort('activo');?></th>
 	<th><?php echo $paginator->sort('Nombre','User.nombre');?></th>
 	<th><?php echo $paginator->sort('numero');?></th>
 	<th class="actions"><?php __('Acciones');?></th>
@@ -27,7 +27,13 @@ foreach ($mozos as $mozo):
 ?>
 	<tr<?php echo $class;?>>
 		<td>
-			<?php echo $mozo['Mozo']['id']; ?>
+			<?php 
+                                if($mozo['Mozo']['activo']==1){
+                                     echo('Si');
+                                     }else{
+                                     echo('No');    
+                                     }
+                        ?>
 		</td>
 		<td>
 			<?php echo $html->link($mozo['User']['nombre']." ".$mozo['User']['apellido'], array('controller'=> 'users', 'action'=>'view', $mozo['User']['id'])); ?>

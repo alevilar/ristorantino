@@ -94,9 +94,9 @@ $paginator->options(array('url' => $this->passedArgs));
         ))?>
     <?php echo $form->end("Buscar")?>
 
+
+</br></br></br>
 <p>
-</br>
-</br>        
 <?php
 
 echo $paginator->counter(array(
