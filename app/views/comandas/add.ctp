@@ -1,24 +1,27 @@
         
 <div data-role="page" id="comanda-add-menu">
     <div  data-role="header"  data-position="inline">
-        <h1>Comanda</h1>
-        <a href="#listado-mesas" data-icon="home" data-iconpos="notext" data-direction="reverse" class="ui-btn-right">Home</a>
+        <a data-rel="back" data-transition="reverse" href="#">Cancelar</a>
+	<h1>Nueva Comanda</h1>
+	<a href="#mesa-view" data-icon="check">Guardar</a>        
     </div>
 
     <div data-role="content">
         
          <script type="text/javascript">
-              (function($){
-                    <?php if ( !empty($mesa['Mesa']['id']) ) { ?>
-                    var mesa = Risto.Adition.adicionar.setCurrentMesa( <? echo $mesa['Mesa']['id']?> );
-//                    mesa.comandas( <?= $javascript->object($items);?> );
-                    <?php }?>
-
+             if ( !Risto.Adition.koAdicionModel.tieneCurrentMesa() ) {
+                            document.location = urlDomain+'adition/adicionar';
+             }
+             
+             Risto.Adition.comanda.initialize();
+             
+             (function($){
                     Risto.Adition.koAdicionModel.refreshBinding();
-                })(jQuery);
+             })(jQuery);
         </script>
+        
             
-       <div id="path" data-bind="template: {name: 'boton', foreach: path, afterRender: refreshPathPage}">
+       <div id="path" data-bind="template: {name: 'boton', foreach: currentMesa().currentComanda().path}">
             <script id="boton" type="text/x-jquery-tmpl">
                     <a data-bind="attr: {'data-icon': esUltimoDelPath()?'':'back', 'data-theme': esUltimoDelPath()?'a':''}, click: seleccionar" data-bind="click: seleccionar" class="ui-btn ui-btn-inline ui-btn-icon-left ui-btn-corner-all ui-shadow ui-btn-up-c">
                          <span class="ui-btn-inner ui-btn-corner-all">
@@ -33,7 +36,7 @@
             
         <div  style="width: 28%; margin-right: 2%; display: inline; float: left;">
            <ul id="ul-productos-seleccionados" class=" ui-listview " data-role="listview"
-               data-bind="template: {name: 'categorias-productos-seleccionados', foreach: productosSeleccionados, afterRender: refreshProductosSeleccionadosPage}"
+               data-bind="template: {name: 'categorias-productos-seleccionados', foreach: currentMesa().currentComanda().productosSeleccionados}"
                 >
                  <script id="categorias-productos-seleccionados" type="text/x-jquery-tmpl">
                      <li data-bind="visible: cant()"  class="ui-li ui-li-static ui-body-c">
@@ -55,7 +58,7 @@
         <div style="width: 70%; display: inline; float: right;">
 
            <div id="ul-categorias" 
-                data-bind="template: {name: 'listaCategoriasTree', foreach: currentSubCategorias, afterRender: refreshCategoriasPage} ">
+                data-bind="template: {name: 'listaCategoriasTree', foreach: currentMesa().currentComanda().currentSubCategorias} ">
                 <!-- Template de categorias       -->
                <script id="listaCategoriasTree" type="text/x-jquery-tmpl">
                    <a  href="#" data-bind="click: seleccionar" data-theme="b" data-inline="true" data-role="button" class="ui-btn ui-btn-inline ui-btn-corner-all ui-shadow ui-btn-up-b">
@@ -71,7 +74,7 @@
            
            
            <div id="ul-productos" style="clear: both" 
-                data-bind="template: {name: 'categorias-productos', foreach: currentProductos, afterRender: refreshProductosPage} ">
+                data-bind="template: {name: 'categorias-productos', foreach: currentMesa().currentComanda().currentProductos} ">
                  <script id="categorias-productos" type="text/x-jquery-tmpl">
                      <a href="#" data-bind="click: seleccionar" class="ui-btn ui-btn-inline ui-btn-icon-left ui-btn-corner-all ui-shadow ui-btn-up-e">
                          <span class="ui-btn-inner ui-btn-corner-all">

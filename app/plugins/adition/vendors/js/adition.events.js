@@ -37,8 +37,7 @@ function cambioMozo(e){
 
 
 function mesaSeleccionada(e){
-    console.info('mesa seleccionada');
-    adicion.setCurrentMesa(e.mesa);
+    Risto.Adition.adicionar.setCurrentMesa(e.mesa);
 }
 
 

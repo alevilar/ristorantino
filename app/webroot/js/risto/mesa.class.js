@@ -47,12 +47,16 @@ var Mesa = function(mozo, jsonData) {
 
 Mesa.prototype = {
     id: 0,
+    total: 0,
+    numero: 0,
+    
+    
+    // es la comanda que actualmente se esta haciendo
+    currentComanda: ko.observable(), 
     comandas: ko.observableArray(),
     
-  
-    
     // attributos
-    mozo: ko.observable(null),
+    mozo: ko.observable(new Mozo()),
 
     initialize: function(mozo, jsonData){
         this.mozo = ko.observable(mozo);
@@ -65,6 +69,13 @@ Mesa.prototype = {
         return this;
     },
     
+    getData: function(){
+        $.get(this.urlGetData(), function(){
+            
+        });
+    },
+    
+    urlGetData: function(){return urlDomain+'mesas/ticket_view/'+this.id()},
     urlView: function(){return urlDomain+'mesas/view/'+this.id()},
     urlEdit: function(){return urlDomain+'mesas/edit/'+this.id()},
     urlComandaAdd: function(){return urlDomain+'comandas/add/'+this.id()},

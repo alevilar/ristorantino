@@ -1,49 +1,27 @@
 
 
 Risto.Adition.comanda = {
+    id: 0,
     
-     // listado de categorias anidadas
-    categoriasTree: function(){
-        return Risto.Adition.koAdicionModel.categoriasTree.apply(Risto.Adition.koAdicionModel, arguments);
-    }, 
+      //------------ Comanda ----------------------------------------------//
+    
+    // listado de categorias anidadas
+    categoriasTree: ko.observable(), 
     
     // categoria actualmente activa o seleccionada
-    currentCategoria: function(){
-        return Risto.Adition.koAdicionModel.currentCategoria.apply(Risto.Adition.koAdicionModel, arguments);
-    }, 
+    currentCategoria: ko.observable(), 
     
-    currentProductos: function(){
-        return Risto.Adition.koAdicionModel.currentProductos.apply(Risto.Adition.koAdicionModel, arguments);
-    }, 
+    productosSeleccionados: ko.observableArray([]),
     
-    currentSubCategorias: function(){
-        return Risto.Adition.koAdicionModel.currentSubCategorias.apply(Risto.Adition.koAdicionModel, arguments);
-    }, 
-   
-   productosSeleccionados: Risto.Adition.koAdicionModel.productosSeleccionados,
-   /*
-    productosSeleccionados: function(){
-        return 
-        return Risto.Adition.koAdicionModel.productosSeleccionados.apply(Risto.Adition.koAdicionModel, arguments);
-    }, 
-    */
-    path: function(){
-        return Risto.Adition.koAdicionModel.path.apply(Risto.Adition.koAdicionModel, arguments);
-    }, 
+    path: ko.observableArray([]),
     
     
     initialize: function(){
         this.__armarMenu();
-        
-        // onload
-//        $(function(){
-//            ko.applyBindings(Risto.Adition.comanda, document.getElementById('ul-categorias'));
-//            ko.applyBindings(Risto.Adition.comanda, document.getElementById('path'));
-//            ko.applyBindings(Risto.Adition.comanda, document.getElementById('ul-productos'));            
-//            ko.applyBindings(Risto.Adition.comanda, document.getElementById('ul-productos-seleccionados'));    
-//        });
+        Risto.Adition.koAdicionModel.currentMesa().currentComanda(this);
         return this;
     },
+    
     
     __armarMenu: function(){
         if ( localStorage.categoriasTree) {
@@ -70,9 +48,6 @@ Risto.Adition.comanda = {
         localStorage.categoriasTree = ko.toJSON(cats);
         this.__iniciarCategoriasTreeLocalStorage();
     },
-    
-    
-   
    
    
     /**
@@ -122,3 +97,20 @@ Risto.Adition.comanda = {
         return true;
     }
 }
+
+
+/******---      COMANDA         -----******/
+Risto.Adition.comanda.currentSubCategorias = ko.dependentObservable(function() {
+        if (this.currentCategoria() && this.currentCategoria().Hijos ) {
+            return this.currentCategoria().Hijos;
+        }
+        return [];
+    }, Risto.Adition.comanda);
+
+
+Risto.Adition.comanda.currentProductos = ko.dependentObservable(function(){
+    if (this.currentCategoria() && this.currentCategoria().Producto ) {
+        return this.currentCategoria().Producto;
+    }
+    return [];
+}, Risto.Adition.comanda);

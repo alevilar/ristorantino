@@ -9,10 +9,8 @@
  *
  */
 Risto.Adition.koAdicionModel = {
-    currentMozo: ko.observable(),
-    currentMesa: ko.observable(),
-    
-    comanda: ko.observable(),
+    currentMozo: ko.observable(new Mozo()),
+    currentMesa: ko.observable(new Mesa()),
     
     tieneCurrentMesa: function(){
         if ( typeof this.currentMesa() == 'object')  {
@@ -28,49 +26,9 @@ Risto.Adition.koAdicionModel = {
     // a continuacion indicar el Campo del Model Mesa que sera utilizado para ordenar el listado de mesas
     mozosOrder: ko.observable('mozo_id'),
     
-    
-    //------------ Comanda ----------------------------------------------//
-    
-    // listado de categorias anidadas
-    categoriasTree: ko.observable(), 
-    
-    // categoria actualmente activa o seleccionada
-    currentCategoria: ko.observable(), 
-    
-    productosSeleccionados: ko.observableArray([]),
-    
-    path: ko.observableArray([]),
-    
     refreshBinding: function(){
         ko.applyBindings( Risto.Adition.koAdicionModel );
-    },
-    
-    
-     refreshProductosPage: function() {
-//        $("#ul-productos").find('*').each(function(d, p){
-//            $(p).page();
-//        });
-        
-    },
-    
-    refreshPathPage: function() {
-//        $("#path").find('*').each(function(d, p){
-//            $(p).page();
-//        });
-    },
-    
-    refreshCategoriasPage: function() {
-//        $("#ul-categorias").find('*').each(function(d, p){
-//            $(p).page('refresh');
-//        });
-       // $("#ul-categorias").page('refresh');
-   
-    },
-    
-    refreshProductosSeleccionadosPage: function() {
-//        $('#ul-productos-seleccionados').listview('refresh');
     }
-    
     
 }
 
@@ -95,20 +53,4 @@ Risto.Adition.koAdicionModel.mesas = ko.dependentObservable( function(){
                 return mesasList;
 
            }, Risto.Adition.koAdicionModel);
-      
-      
-/******---      COMANDA         -----******/
-Risto.Adition.koAdicionModel.currentSubCategorias = ko.dependentObservable(function() {
-        if (this.currentCategoria() && this.currentCategoria().Hijos ) {
-            return this.currentCategoria().Hijos;
-        }
-        return [];
-    }, Risto.Adition.koAdicionModel);
-
-
-Risto.Adition.koAdicionModel.currentProductos = ko.dependentObservable(function(){
-    if (this.currentCategoria() && this.currentCategoria().Producto ) {
-        return this.currentCategoria().Producto;
-    }
-    return [];
-}, Risto.Adition.koAdicionModel);
+     

@@ -35,8 +35,9 @@
                     'jquery/fg.menu',
                     'ristorantino/generic',
                     '/adition/js/adicion.class',
-                    'risto/mesa.class',
                     'risto/mozo.class',
+                    'risto/mesa.class',
+                    
                      '/adition/js/ko_adicion_model',
                     '/adition/js/adition.events',
                     '/adition/js/comanda',
@@ -54,8 +55,6 @@
 
         // instancio el objeto adicion que sera el kernel de la app
         Risto.Adition.adicionar.initialize();
-        
-        Risto.Adition.comanda.initialize();
     -->
     </script>
 
