@@ -26,6 +26,8 @@ Risto.Adition.koAdicionModel = {
     // a continuacion indicar el Campo del Model Mesa que sera utilizado para ordenar el listado de mesas
     mozosOrder: ko.observable('mozo_id'),
     
+    menu: ko.observable( Risto.Adition.menu ),
+    
     refreshBinding: function(){
         ko.applyBindings( Risto.Adition.koAdicionModel );
     }

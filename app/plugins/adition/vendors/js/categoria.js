@@ -42,6 +42,6 @@ Risto.Adition.categoria.prototype = {
     },
     
     seleccionar: function() {
-        Risto.Adition.comanda.seleccionarCategoria( this );
+        Risto.Adition.menu.seleccionarCategoria( this );
     }
 }

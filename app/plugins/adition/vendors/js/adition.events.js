@@ -9,8 +9,22 @@ $(document).ready(function() {
     $(document).bind("mesaCuponPendiente", mesaCuponPendiente);
     $(document).bind("mesaCobrada", mesaCobrada);
     $(document).bind("mesaBorrada", mesaBorrada);
+    
+    
+    //creacion de comandas
+    $(document).bind(  MENU_ESTADOS_POSIBLES.productoSeleccionado.event , productoSeleccionado);
+    
+    
 
     $(document).bind("adicionCambioMozo", cambioMozo);
+    
+    
+    
+    // CLICKS
+    $('A[href="#comanda-add-menu"]').click(function(){
+        Risto.Adition.adicionar.nuevaComandaParaCurrentMesa();
+    })
+                 
 });
 
 
@@ -48,4 +62,14 @@ function abrirMesa(e) {
     } else {
         mesaSeleccionada(e);
     }
+}
+
+
+
+/**
+ * Cuando estoy creando una comanda se selecciona un producto y 
+ * este debe ser agregado al listado de productos de la currentMesa()
+ */
+function productoSeleccionado(e) {
+    Risto.Adition.adicionar.currentMesa().agregarProducto(e.producto);
 }

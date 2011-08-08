@@ -1,24 +1,31 @@
+/**
+ * @var Static MESAS_POSIBLES_ESTADOS
+ * 
+ *  esta variable es simplemenete un catalogo de estados posibles que
+ *  la mesa pude adoptar en su variable privada this.__estado
+ *
+ **/
+var MENU_ESTADOS_POSIBLES =  {
+    productoSeleccionado: {
+        msg: 'Producto Seleccionado',
+        event: 'productoSeleccionada'
+    }
+};
 
-
-Risto.Adition.comanda = {
-    id: 0,
-    
-      //------------ Comanda ----------------------------------------------//
-    
+Risto.Adition.menu = {
     // listado de categorias anidadas
     categoriasTree: ko.observable(), 
     
     // categoria actualmente activa o seleccionada
     currentCategoria: ko.observable(), 
     
-    productosSeleccionados: ko.observableArray([]),
     
+    // path de categorias del menu en la que estoy Ej: "/ - Gaseosas - Sin Alcohol""
     path: ko.observableArray([]),
-    
     
     initialize: function(){
         this.__armarMenu();
-        Risto.Adition.koAdicionModel.currentMesa().currentComanda(this);
+        Risto.Adition.koAdicionModel.menu(this);
         return this;
     },
     
@@ -48,20 +55,18 @@ Risto.Adition.comanda = {
         localStorage.categoriasTree = ko.toJSON(cats);
         this.__iniciarCategoriasTreeLocalStorage();
     },
-   
-   
+    
+    
     /**
      * Agrega un producto al listado de productos seleccionados
      */
     seleccionarProducto: function(prod){
-        if ( jQuery.inArray( prod, this.productosSeleccionados() ) < 0 ) {
-            this.productosSeleccionados.unshift(prod);
-            return true;
-        } else {
-            return false;
-        }
+        var event =  $.Event(MENU_ESTADOS_POSIBLES.productoSeleccionado.event);
+        event.producto = prod; 
+        $(document).trigger(event);
     },
-
+    
+    
     /**
      * Actualiza la variable observable path
      * en base a la categoria seleccionda
@@ -87,6 +92,7 @@ Risto.Adition.comanda = {
         return path;
     },
     
+    
     seleccionarCategoria: function( cat ){   
 
         this.currentCategoria( cat );
@@ -99,18 +105,27 @@ Risto.Adition.comanda = {
 }
 
 
+
+
 /******---      COMANDA         -----******/
-Risto.Adition.comanda.currentSubCategorias = ko.dependentObservable(function() {
-        if (this.currentCategoria() && this.currentCategoria().Hijos ) {
-            return this.currentCategoria().Hijos;
+Risto.Adition.menu.currentSubCategorias = ko.dependentObservable(function() {
+        if ( this.currentCategoria ) {
+            if (this.currentCategoria() && this.currentCategoria().Hijos ) {
+                return this.currentCategoria().Hijos;
+            }
+            return [];
+        }
+}, Risto.Adition.menu);
+
+
+Risto.Adition.menu.currentProductos = ko.dependentObservable(function(){
+    if ( this.currentCategoria ) {
+        if (this.currentCategoria() && this.currentCategoria().Producto ) {
+            return this.currentCategoria().Producto;
         }
         return [];
-    }, Risto.Adition.comanda);
-
-
-Risto.Adition.comanda.currentProductos = ko.dependentObservable(function(){
-    if (this.currentCategoria() && this.currentCategoria().Producto ) {
-        return this.currentCategoria().Producto;
     }
-    return [];
-}, Risto.Adition.comanda);
+}, Risto.Adition.menu);
+
+
+Risto.Adition.menu.initialize();

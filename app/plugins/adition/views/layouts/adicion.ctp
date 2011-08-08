@@ -34,15 +34,21 @@
                     'knockout.mapping',
                     'jquery/fg.menu',
                     'ristorantino/generic',
+                    
+                    // OJO !! EL ORDEN IMPORTA !!
+                    '/adition/js/adition.package',
                     '/adition/js/adicion.class',
                     'risto/mozo.class',
                     'risto/mesa.class',
-                    
-                     '/adition/js/ko_adicion_model',
-                    '/adition/js/adition.events',
-                    '/adition/js/comanda',
-                    '/adition/js/categoria',
                     '/adition/js/producto',
+                    '/adition/js/categoria',
+                    '/adition/js/comanda_fabrica.class',
+                    '/adition/js/ko_adicion_model',
+                    '/adition/js/adition.events',
+                    '/adition/js/menu',
+                    
+                    
+                   
                     ));
                 ?>
 

@@ -33,6 +33,14 @@ Risto.Adition.adicionar = {
         return Risto.Adition.koAdicionModel.currentMesa.apply(Risto.Adition.koAdicionModel, arguments);
     },
     
+    nuevaComandaParaCurrentMesa: function(){
+        this.currentMesa().nuevaComanda();
+    },
+    
+    
+    menu: function(){
+        return Risto.Adition.koAdicionModel.menu.apply(Risto.Adition.koAdicionModel, arguments);
+    },
     
     mesas: function(){
         return Risto.Adition.koAdicionModel.mesas.apply(Risto.Adition.koAdicionModel, arguments);

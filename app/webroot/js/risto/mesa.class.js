@@ -69,6 +69,21 @@ Mesa.prototype = {
         return this;
     },
     
+    
+    /**
+     * agregar un producto a la comanda que actualmente se esta haciendo
+     * no implica que se haya agregado un producto a la mesa.
+     * es un estado intermedio de generacion de la comanda
+     * @param prod Producto  
+     **/
+    agregarProducto: function(prod){
+        this.currentComanda().agregarProducto(prod);
+    },
+    
+    nuevaComanda: function(){
+        this.currentComanda( new Risto.Adition.comandaFabrica()  );
+    },
+    
     getData: function(){
         $.get(this.urlGetData(), function(){
             

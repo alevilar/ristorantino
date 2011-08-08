@@ -99,33 +99,31 @@
 
 
 <div  data-role="page"  id="obss">
-     <div  data-role="header"  data-position="inline">
+    <div  data-role="header"  data-position="inline">
         <h1>Observacion</h1>
+        <a href="#"  data-rel="back"  onclick="$('#form-comanda-producto-observacion').submit();" data-theme="b">Guardar Observación</a>
     </div>
     <div data-role="content">
-        <form name="comanda" id="comanda-producto-observacion">
-            <textarea name="obs">
-            </textarea>
-            <input type="submit" value="guardar" data-rel="back">>Agregar observación</input>
+        <form name="comanda" id="form-comanda-producto-observacion">
+            <textarea name="obs" id="obstext"></textarea>
         </form>
-        <a href="#" data-rel="back">Volver sin agregar observación</a>
     </div>
 </div> 
 
 
 <div data-role="page" id="mesa-view">
 	<div  data-role="header" data-position="inline">
-            <a data-rel="back" data-transition="reverse" href="#">Back</a>
+            <a data-rel="back" data-transition="reverse" href="#">Volver</a>
             
             <h1>Mesa N°<span data-bind="text: currentMesa().numero"></span>, Mozo <span data-bind="text: currentMesa().mozo().numero"></span>
                 <span class="mesa-total" style="color: red;">$<span data-bind="text: currentMesa().total"></span></span>
             </h1>
-            <div data-role="navbar">
+<!--            <div data-role="navbar">
                     <ul>
                         <li><a href="#mesa-view" class="ui-btn-active">Vista Común</a></li>
                         <li><a href="#mesa-view-ticket">Vista Ticket</a></li>
                     </ul>
-            </div>
+            </div>-->
         </div>
 
         <div  data-role="content" class="">
@@ -146,20 +144,9 @@
                 </li>
             </script>
 
-            <script type="text/javascript">
-                if ( !Risto.Adition.koAdicionModel.tieneCurrentMesa() ) {
-//                            document.location = urlDomain+'adition/adicionar';
-                }
-                    
-                (function($){
-                    Risto.Adition.koAdicionModel.refreshBinding();
-                })(jQuery);
-                
-            </script>
-
             <div class="" style="width: 28%; float: left;">
                 <ul data-role="listview" style="width: 100%">
-                    <li><a href="#comanda-add-menu" data-rel="dialog" daxta-bind="attr: {href: currentMesa().urlComandaAdd()}" ><?= $html->image('/adition/css/img/chef_64.png')?>Comanda</a></li>
+                    <li><a href="#comanda-add-menu" data-rel="dialog"><?= $html->image('/adition/css/img/chef_64.png')?>Comanda</a></li>
                     <li><a href="<?= $html->url('/pages/panel')?>" >PAnel</a></li>
                     <li><a href="#sacar-item" >Sacar Item</a></li>
                     <li><a href="#Agregar Cliente" >Agregar Cliente</a></li>
@@ -174,7 +161,7 @@
             </div>
 
             <div class="mesas view " style="width: 70%; float:right;" >
-                <h1>Detalle de comsumición</h1>
+                <h1>Detalle de Consumición</h1>
                 <div class="">
 
                     <ul data-bind="template: {name: 'listaComandas', foreach: currentMesa().Comanda}"></ul>
@@ -190,32 +177,22 @@
 
 
 
-
-
         
 <div data-role="page" id="comanda-add-menu">
     <div  data-role="header"  data-position="inline">
 <!--        <a data-rel="back" data-transition="reverse" href="#">Cancelar</a>-->
 	<h1>Nueva Comanda</h1>
-	<a href="#mesa-view" data-icon="check">Guardar</a>        
+	<a href="#mesa-view" data-icon="check" data-theme="b">Guardar</a>        
     </div>
 
     <div data-role="content">
         
          <script type="text/javascript">
-             if ( !Risto.Adition.koAdicionModel.tieneCurrentMesa() ) {
-                            document.location = urlDomain+'adition/adicionar';
-             }
-             
-             Risto.Adition.comanda.initialize();
-             
-             (function($){
-                    Risto.Adition.koAdicionModel.refreshBinding();
-             })(jQuery);
+             Risto.Adition.adicionar.nuevaComandaParaCurrentMesa();
         </script>
         
             
-       <div id="path" data-bind="template: {name: 'boton', foreach: currentMesa().currentComanda().path}">
+       <div id="path" data-bind="template: {name: 'boton', foreach: menu().path}">
             <script id="boton" type="text/x-jquery-tmpl">
                     <a data-bind="attr: {'data-icon': esUltimoDelPath()?'':'back', 'data-theme': esUltimoDelPath()?'a':''}, click: seleccionar" data-bind="click: seleccionar" class="ui-btn ui-btn-inline ui-btn-icon-left ui-btn-corner-all ui-shadow ui-btn-up-c">
                          <span class="ui-btn-inner ui-btn-corner-all">
@@ -237,7 +214,20 @@
                          <span data-type="horizontal" data-role="controlgroup" class="ui-corner-all ui-controlgroup ui-controlgroup-horizontal">
                             <a data-bind="click: seleccionar" data-role="button" data-icon="plus" data-iconpos="notext" href="#" title="+" data-theme="c" class="ui-btn ui-btn-icon-notext ui-corner-left ui-btn-up-c"><span class="ui-btn-inner ui-corner-left"><span class="ui-btn-text" >+</span><span class="ui-icon ui-icon-plus ui-icon-shadow"></span></span></a>
                             <a data-bind="click: deseleccionar" data-role="button" data-icon="minus" data-iconpos="notext" href="#" title="-" data-theme="c" class="ui-btn ui-btn-icon-notext ui-btn-up-c"><span class="ui-btn-inner"><span class="ui-btn-text">-</span><span class="ui-icon ui-icon-minus ui-icon-shadow"></span></span></a>
-                            <a data-bind="click: addObservacion, style: { background: observacion() ? '#437FBE' : ''}" data-rel="dialog"  data-role="button" data-iconpos="notext" data-icon="grid" data-rel="dialog" href="#" title="Observación" data-theme="c" class="ui-btn ui-btn-icon-notext ui-btn-up-c"><span class="ui-btn-inner"><span class="ui-btn-text">Observación</span><span class="ui-icon ui-icon-grid ui-icon-shadow"></span></span></a>
+                            <a data-bind="click: addObservacion, style: { background: observacion() ? '#437FBE' : ''}" 
+                               data-rel="dialog"  
+                               data-role="button"
+                               data-iconpos="notext" 
+                               data-icon="grid" 
+                               href="#obss" 
+                               title="Observación" 
+                               data-theme="c" class="ui-btn ui-btn-icon-notext ui-btn-up-c">
+                                <span class="ui-btn-inner">
+                                    <span class="ui-btn-text">Observación
+                                    </span>
+                                    <span class="ui-icon ui-icon-grid ui-icon-shadow"></span>
+                                </span>
+                            </a>
                             <a data-bind="click: esEntrada() ? unsetEsEntrada : setEsEntrada, style: { background: esEntrada() ? '#437FBE' : ''}" data-role="button" data-iconpos="notext" data-icon="star" href="#" title="Entrada" data-theme="c" class="ui-btn ui-btn-icon-notext ui-corner-right ui-controlgroup-last ui-btn-up-c"><span class="ui-btn-inner ui-corner-right ui-controlgroup-last"><span class="ui-btn-text">Entrada</span><span class="ui-icon ui-icon-star ui-icon-shadow"></span></span></a>
                          </span>
 
@@ -252,7 +242,7 @@
         <div style="width: 70%; display: inline; float: right;">
 
            <div id="ul-categorias" 
-                data-bind="template: {name: 'listaCategoriasTree', foreach: currentMesa().currentComanda().currentSubCategorias} ">
+                data-bind="template: {name: 'listaCategoriasTree', foreach: menu().currentSubCategorias} ">
                 <!-- Template de categorias       -->
                <script id="listaCategoriasTree" type="text/x-jquery-tmpl">
                    <a  href="#" data-bind="click: seleccionar" data-theme="b" data-inline="true" data-role="button" class="ui-btn ui-btn-inline ui-btn-corner-all ui-shadow ui-btn-up-b">
@@ -268,7 +258,7 @@
            
            
            <div id="ul-productos" style="clear: both" 
-                data-bind="template: {name: 'categorias-productos', foreach: currentMesa().currentComanda().currentProductos} ">
+                data-bind="template: {name: 'categorias-productos', foreach: menu().currentProductos} ">
                  <script id="categorias-productos" type="text/x-jquery-tmpl">
                      <a href="#" data-bind="click: seleccionar" class="ui-btn ui-btn-inline ui-btn-icon-left ui-btn-corner-all ui-shadow ui-btn-up-e">
                          <span class="ui-btn-inner ui-btn-corner-all">

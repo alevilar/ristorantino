@@ -28,7 +28,7 @@ Risto.Adition.producto.prototype = {
     
     seleccionar: function(){
         this.cant( this.cant()+1 );
-        Risto.Adition.comanda.seleccionarProducto(this);
+        Risto.Adition.menu.seleccionarProducto(this);
     },
     
     deseleccionar: function(){     
@@ -47,13 +47,14 @@ Risto.Adition.producto.prototype = {
     
     addObservacion: function(e){
         var cntx = this;
-        $('#comanda-producto-observacion').submit( function(){
-            cntx.observacion = $(this).children().val();
-            $('.ui-dialog').dialog('close');
+        $('#obstext').val( this.observacion() );
+        $('#form-comanda-producto-observacion').submit( function(){
+            cntx.observacion( $('#obstext').val() );
+            $('#form-comanda-producto-observacion').unbind();
             return false;
         });
         
-        $.mobile.changePage( $("#obss"), {transition: "slideup"} );	
+//        $.mobile.changePage( $("#obss"), {transition: "slideup"} );	
     }
     
 }
