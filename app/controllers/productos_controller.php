@@ -52,7 +52,7 @@ class ProductosController extends AppController {
                  * 
                  * ES PARA BORRARRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
                  * 
-                 */
+               
                  $prodsConPrecioFuturo = $this->Producto->ProductosPreciosFuturo->find('all', array(
                      'fields' => 'producto_id'
                  ));

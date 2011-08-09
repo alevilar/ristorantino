@@ -19,12 +19,11 @@ class ClientesController extends AppController {
 				}
 			}
 			$this->Cliente->recursive = 0;
-			$this->paginate['Clientes'] = array(
+			$this->paginate['Cliente'] = array(
 				'conditions' => $condiciones
 			);
-			debug($condiciones);
+			
 			$this->params['PaginateConditions'] = $pagCondiciones;
-                        debug($this->paginate('Cliente'));
 			$this->set('clientes', $this->paginate('Cliente'));
 		}
 		
