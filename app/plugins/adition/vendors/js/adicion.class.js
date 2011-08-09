@@ -156,6 +156,23 @@ Risto.Adition.adicionar = {
         }
         return false;
     },
+    
+    
+    /**
+     * Busca un mozo por su ID en el listado de mozos
+     * devuelve al objeto Mozo en caso de encontrarlo.
+     * caso contrario devuelve false
+     * @param id Integer id del Mozo a buscar
+     * @return Mozo en caso de encontrarlo, false caso contrario
+     */
+    findMozoById: function(id){
+        for (var m in this.mozos()) {
+            if ( this.mozos()[m].id() == id ) {
+                return this.mozos()[m];
+            }            
+        }
+        return false;
+    },
     	
 		
     borrarCurrentMesa: function(){
@@ -306,5 +323,15 @@ Risto.Adition.adicionar = {
             console.debug(left.numero());
             return left.numero() == right.numero() ? 0 : (parseInt(left.numero()) < parseInt(right.numero()) ? -1 : 1) 
         })
+    },
+    
+    
+    crearNuevaMesa: function(mesaNumero, mozoId){
+        var mozo = this.findMozoById(mozoId);
+        var mesa = new Mesa(mozo)
+       
+        mesa.numero( mesaNumero );       
+        return mesa;        
     }
 };
+

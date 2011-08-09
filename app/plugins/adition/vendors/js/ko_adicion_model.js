@@ -21,7 +21,7 @@ Risto.Adition.koAdicionModel = {
     },
     
     // listado de mozos
-    mozos: ko.observableArray(),
+    mozos: ko.observableArray( [] ),
     
     // a continuacion indicar el Campo del Model Mesa que sera utilizado para ordenar el listado de mesas
     mozosOrder: ko.observable('mozo_id'),
@@ -35,6 +35,18 @@ Risto.Adition.koAdicionModel = {
 }
 
 
+Risto.Adition.koAdicionModel.todasLasMesas = ko.dependentObservable( function(){
+    var mesasList = [];
+    console.debug(this.mozos);
+    if ( this.mozos ) {
+        for ( var m in this.mozos() ) {
+            mesasList = mesasList.concat( this.mozos()[m].mesas() );
+        }
+    }
+    
+    return mesasList;
+}, Risto.Adition.koAdicionModel);
+
   /*____________________________________ OBSERVABLES DEPENDIENTES ___________________________*/
 
 /******---      ADICION         -----******/
@@ -43,9 +55,7 @@ Risto.Adition.koAdicionModel.mesas = ko.dependentObservable( function(){
                 var mesasList = [];
                 var order = this.mozosOrder();
 
-                for (var m in this.mozos()) {
-                    mesasList = mesasList.concat(this.mozos()[m].mesas());
-                }
+                mesasList = this.todasLasMesas();
                 
                 if ( order ) {
                     mesasList.sort(function(left, right) {
@@ -54,5 +64,5 @@ Risto.Adition.koAdicionModel.mesas = ko.dependentObservable( function(){
                 }
                 return mesasList;
 
-           }, Risto.Adition.koAdicionModel);
+}, Risto.Adition.koAdicionModel);
      

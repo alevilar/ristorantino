@@ -2,10 +2,9 @@ Risto.Adition.comandaFabrica = function(mesa){
     return this.initialize(mesa);
 }
 
-cant = 0;
 Risto.Adition.comandaFabrica.prototype = {
     id: 0,
-    mesa: new Mesa(),
+    mesa: {},
 //    productosSeleccionados: ko.observableArray([]),
     detallesComandas: ko.observableArray([]),
     
@@ -21,7 +20,6 @@ Risto.Adition.comandaFabrica.prototype = {
     save: function() {
         if ( this.mesa && this.detallesComandas() ) {
             var newComanda = new Risto.Adition.comanda();
-            console.debug( this.detallesComandas() );
             newComanda.DetalleComanda( this.detallesComandas() );
             this.mesa.Comanda.unshift( newComanda );
         }

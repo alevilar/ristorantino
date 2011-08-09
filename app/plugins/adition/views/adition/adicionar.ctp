@@ -1,37 +1,12 @@
-    
-
-<!-- Template: listado de mesas que será refrescado continuamente mediante el ajax que verifica el estado de las mesas (si fue abierta o cerrada alguna. -->
-<script id="listaMesas" type="text/x-jquery-tmpl">
-    <li class="grid_1">
-        <a href="#mesa-view" data-role="none" class="mesa" data-bind="click: seleccionar" >
-            (<span class="mesa-mozo" data-bind="text: mozo().numero" style="color: red"></span>)
-            <span class="mesa-numero" data-bind="text: numero"></span>
-        </a>
-    </li>
-</script>
-
-
-<script id="listaMozos" type="text/x-jquery-tmpl">
-    <li data-mesa-numero="${numero}" data-mozo-id="${id}" class="grid_1">
-        <a href="mozos/view/${id}" data-role="none" class="mesa" >
-            (<span class="mozo-numero" data-bind="text: numero()" style="color: red"></span>)
-            <span class="mozo-cant-mesas" data-bind="text: mesas().length"></span> mesas
-        </a>
-    </li>
-</script>
-
-
-<script id="names" type="text/x-jquery-tmpl">
-    <li data-bind="text: name"></li>
-</script>
                 
-                
+<!--
+                        LISTADO MESAS
 
+-->
 <!-- Pagina 1, Home Page por default segun JQM: Listado de Mesas -->
 <div data-role="page" data-add-back-btn="true" id="listado-mesas">
 
 	<div  data-role="header" data-position="inline">
-
                 <h1><strong data-bind="text: mesas().length"></strong> Mesas Abiertas</h1>
 
                 <a rel="external" href='#listado-mesas' data-icon="home" data-iconpos="notext" data-direction="reverse" class="">Home</a>
@@ -45,34 +20,45 @@
         </div>
 
         <div  data-role="content" class="">
-
-            <div> </div>
-            
-            <span>
-                <a href="#mesa-add" class="mesa" data-rel="dialog">
-                        Abrir Mesa
-                </a>
-            </span>
-            <!-- aca va el listado de mesas que se carga dinamicamente en un script de abajo -->
-            <ul id="mesas_container" class="container_12 listado-mesas"
-                data-bind='template: { name: "listaMesas", foreach: mesas }'>
-            </ul>
+                <a href="#mesa-add" class="mesa" data-rel="dialog">Abrir Mesa</a>
+                
+                <!-- aca va el listado de mesas que se carga dinamicamente en un script de abajo -->
+                <ul id="mesas_container" class="container_12 listado-mesas" data-bind='template: { name: "listaMesas", foreach: mesas }'>
+                        <!-- Template: 
+                            listado de mesas que será refrescado continuamente mediante 
+                            el ajax que verifica el estado de las mesas (si fue abierta o cerrada alguna. -->
+                        <script id="listaMesas" type="text/x-jquery-tmpl">
+                            <li class="grid_1">
+                                <a href="#mesa-view" data-role="none" class="mesa" data-bind="click: seleccionar" >
+                                    (<span class="mesa-mozo" data-bind="text: mozo().numero" style="color: red"></span>)
+                                    <span class="mesa-numero" data-bind="text: numero"></span>
+                                </a>
+                            </li>
+                        </script>
+                </ul>
         </div><!-- /navbar -->
             
         <div  data-role="footer" data-position="fixed">
-            <div data-role="navbar">
-                    <ul>
-                        <li><a onclick="Risto.Adition.adicionar.mozosOrder('numero')">Ordenar Por Numero</a></li>
-                        <li><a onclick="Risto.Adition.adicionar.mozosOrder('mozo_id')">Ordenar Por Mozo</a></li>
-                        <li><a onclick="Risto.Adition.adicionar.mozosOrder('created')">Ordenar Por Cierre</a></li>
-                    </ul>
-            </div>
-            Ristorantino Mágico</div>
+                <div data-role="navbar">
+                        <ul>
+                            <li><a onclick="Risto.Adition.adicionar.mozosOrder('numero')">Ordenar Por Numero</a></li>
+                            <li><a onclick="Risto.Adition.adicionar.mozosOrder('mozo_id')">Ordenar Por Mozo</a></li>
+                            <li><a onclick="Risto.Adition.adicionar.mozosOrder('created')">Ordenar Por Cierre</a></li>
+                        </ul>
+                </div>
+                Ristorantino Mágico
+        </div>
 
 </div>
 <!-- Fin Pagina 1 -->
 
 
+
+
+<!--
+                        LISTADO MOZOS
+
+-->
 <!-- Pagina 2: Listado de Mozos -->
 <div data-role="page" data-add-back-btn="true" id="listado-mozos">
 
@@ -90,50 +76,75 @@
         </div>
 
         <div data-role="content" class="container_12">
-
                 <!-- aca va el listado de mesas que se carga dinamicamente en un script de abajo -->
                 <ul id="mesas_container" class="container_12 listado-mesas"
                     data-bind='template: { name: "listaMozos", foreach: mozos }'>
+                    <script id="listaMozos" type="text/x-jquery-tmpl">
+                        <li data-mesa-numero="${numero}" data-mozo-id="${id}" class="grid_1">
+                            <a href="mozos/view/${id}" data-role="none" class="mesa" >
+                                (<span class="mozo-numero" data-bind="text: numero()" style="color: red"></span>)
+                                <span class="mozo-cant-mesas" data-bind="text: mesas().length"></span> mesas
+                            </a>
+                        </li>
+                    </script>
+
                 </ul>
         </div>
 
-        <div  data-role="footer" data-position="fixed">
-            Ristorantino Mágico</div>
+        <div  data-role="footer" data-position="fixed">Ristorantino Mágico</div>
 </div>
 <!-- Fin Pagina 2: Listado de Mozos -->
 
 
-<div  data-role="page"  id="mesa-add">
-    <div  data-role="header"  data-position="inline">
-        <h1>Abrir Mesa</h1>
-        <a href="#"  data-rel="back"  onclick="$('#form-comanda-producto-observacion').submit();" data-theme="b">Guardar Observación</a>
-    </div>
-    <div data-role="content">
-        <form name="comanda" id="form-comanda-producto-observacion">
-            <div data-role="fieldcontain">
-                <fieldset data-role="controlgroup"  data-type="horizontal">
-                    <legend>Seleccionar Mozo:</legend>
-                    <?php
-                        foreach ($mozos as $m) {
-                            $k = $m['Mozo']['id'];
-                            $n = $m['Mozo']['numero'];
-                            echo "<input type='radio' name='mozo_id' id='radio-choice-$k' value='choice-$k' checked='checked' />";
-                            echo "<label for='radio-choice-$k'>$n</label>";
-                        }
-                    ?>
-                </fieldset>
-                
-                <fieldset data-role="controlgroup"  data-type="horizontal">
-                    <legend>Número de Mesa:</legend>
-                    <input type="text" name="mesa_numero" autofocus></input>
-                    <label for="mesa_numero">Mesa</label>
-                </fieldset>
-            </div>
-        </form>
-    </div>
+
+
+
+<!--
+                        MESA-ADD
+
+-->
+<div  data-role="page"  id="mesa-add" data-theme="e">
+        <div  data-role="header"  data-position="inline">
+            <h1>Abrir Mesa</h1>
+            <a href="#"  data-rel="back" data-direction="reverse">Cancelar</a>
+        </div>
+    
+        <div data-role="content">
+            <form name="form-mesa-add" action="#mesa-view" id="form-mesa-add" data-ajax="false">
+                <div data-role="">
+                    <fieldset data-role="controlgroup" data-type="horizontal">
+                        <legend style="display: block; clear: both;">Seleccionar Mozo:</legend>
+                        <?php
+                            foreach ($mozos as $m) {
+                                $k = $m['Mozo']['id'];
+                                $n = $m['Mozo']['numero'];
+                                echo "<input  type='radio' name='mozo_id' id='radio-mozo-id-$k' value='$k'/>";
+                                echo "<label for='radio-mozo-id-$k'>$n</label>";
+                            }
+                        ?>
+                    </fieldset>
+
+                    <fieldset data-role="fieldcontain">
+                        <label for="numero">Escribir Número de Mesa:</label>
+                        <input type="number" name="numero" value="" maxlength="5" data-risto="mesa"/>
+                    </fieldset>
+                    
+                    <fieldset>                        
+                        <button type="submit"  data-theme="b">Abrir Mesa</button>
+                    </fieldset>
+                </div>
+            </form>
+        </div>
 </div> 
 
 
+
+
+
+<!--
+                        OBSERVACIONES
+
+-->
 <div  data-role="page"  id="obss">
     <div  data-role="header"  data-position="inline">
         <h1>Observacion</h1>
@@ -147,6 +158,12 @@
 </div> 
 
 
+
+
+<!--
+                        MESA_VIEW
+
+-->
 <div data-role="page" id="mesa-view">
 	<div  data-role="header" data-position="inline">
             <a data-rel="back" data-transition="reverse" href="#">Volver</a>
@@ -211,6 +228,11 @@
 
 
         
+
+<!--
+                        COMANDA-ADD
+
+-->
 <div data-role="page" id="comanda-add-menu">
     <div  data-role="header"  data-position="inline">
 <!--        <a data-rel="back" data-transition="reverse" href="#">Cancelar</a>-->
