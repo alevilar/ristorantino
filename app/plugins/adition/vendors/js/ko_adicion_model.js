@@ -9,60 +9,19 @@
  *
  */
 Risto.Adition.koAdicionModel = {
-    currentMozo: ko.observable(new Mozo()),
-    currentMesa: ko.observable(new Mesa()),
+    
+    adn     : ko.observable( Risto.Adition.adicionar ),
+    menu    : ko.observable( Risto.Adition.menu ),
     
     tieneCurrentMesa: function(){
-        if ( typeof this.currentMesa() == 'object')  {
+        if ( typeof this.adn().currentMesa() == 'object')  {
             return true;
         } else {
             return false;
         }
     },
     
-    // listado de mozos
-    mozos: ko.observableArray( [] ),
-    
-    // a continuacion indicar el Campo del Model Mesa que sera utilizado para ordenar el listado de mesas
-    mozosOrder: ko.observable('mozo_id'),
-    
-    menu: ko.observable( Risto.Adition.menu ),
-    
     refreshBinding: function(){
         ko.applyBindings( Risto.Adition.koAdicionModel );
     }
-    
 }
-
-
-Risto.Adition.koAdicionModel.todasLasMesas = ko.dependentObservable( function(){
-    var mesasList = [];
-    console.debug(this.mozos);
-    if ( this.mozos ) {
-        for ( var m in this.mozos() ) {
-            mesasList = mesasList.concat( this.mozos()[m].mesas() );
-        }
-    }
-    
-    return mesasList;
-}, Risto.Adition.koAdicionModel);
-
-  /*____________________________________ OBSERVABLES DEPENDIENTES ___________________________*/
-
-/******---      ADICION         -----******/
-// listado de mesas, depende de las mesas de cada mozo, y el orden que le haya indicado
-Risto.Adition.koAdicionModel.mesas = ko.dependentObservable( function(){
-                var mesasList = [];
-                var order = this.mozosOrder();
-
-                mesasList = this.todasLasMesas();
-                
-                if ( order ) {
-                    mesasList.sort(function(left, right) {
-                        return left[order]() == right[order]() ? 0 : (parseInt(left[order]()) < parseInt(right[order]()) ? -1 : 1) 
-                    })
-                }
-                return mesasList;
-
-}, Risto.Adition.koAdicionModel);
-     

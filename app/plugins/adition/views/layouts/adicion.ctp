@@ -28,8 +28,7 @@
                     'jquery/jquery-1.6.1.min',
                     'jquery/jquery.tmpl.min',
                     'jquery/jquery.periodicalupdater',
-                     'jquery/jquery.mobile-1.0b2',
-                    'jquery/jquery.easing.1.3',
+                   
                     'knockout-1.2.1',
                     'knockout.mapping',
                     'jquery/fg.menu',
@@ -37,11 +36,14 @@
                     
                     // OJO !! EL ORDEN IMPORTA !!
                     '/adition/js/adition.package',
-                    '/adition/js/adicion.class',
-                    
                     'risto/mozo.class',
                     'risto/mesa.class',
                     '/adition/js/comanda_fabrica.class',
+                    '/adition/js/adicion.class',
+                    
+                    
+                    
+                    
                     '/adition/js/producto',
                     '/adition/js/categoria',
                     
@@ -51,6 +53,9 @@
                     '/adition/js/adition.events',
                     '/adition/js/menu',
                     
+                    
+                     'jquery/jquery.mobile-1.0b2',
+                    'jquery/jquery.easing.1.3',
                     
                    
                     ));

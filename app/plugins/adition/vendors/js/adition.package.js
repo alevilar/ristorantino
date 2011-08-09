@@ -8,7 +8,7 @@ Risto.Adition = {
 };
 
 
- (function($){
-           Risto.Adition.koAdicionModel.refreshBinding();
-    })(jQuery);
-
+$(document).ready(function(){
+    Risto.Adition.koAdicionModel.refreshBinding();
+});
+  

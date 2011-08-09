@@ -7,7 +7,7 @@
 <div data-role="page" data-add-back-btn="true" id="listado-mesas">
 
 	<div  data-role="header" data-position="inline">
-                <h1><strong data-bind="text: mesas().length"></strong> Mesas Abiertas</h1>
+                <h1><strong data-bind="text: adn().mesas().length"></strong> Mesas Abiertas</h1>
 
                 <a rel="external" href='#listado-mesas' data-icon="home" data-iconpos="notext" data-direction="reverse" class="">Home</a>
                 
@@ -23,7 +23,7 @@
                 <a href="#mesa-add" class="mesa" data-rel="dialog">Abrir Mesa</a>
                 
                 <!-- aca va el listado de mesas que se carga dinamicamente en un script de abajo -->
-                <ul id="mesas_container" class="container_12 listado-mesas" data-bind='template: { name: "listaMesas", foreach: mesas }'>
+                <ul id="mesas_container" class="container_12 listado-mesas" data-bind='template: { name: "listaMesas", foreach: adn().mesas }'>
                         <!-- Template: 
                             listado de mesas que será refrescado continuamente mediante 
                             el ajax que verifica el estado de las mesas (si fue abierta o cerrada alguna. -->
@@ -78,7 +78,7 @@
         <div data-role="content" class="container_12">
                 <!-- aca va el listado de mesas que se carga dinamicamente en un script de abajo -->
                 <ul id="mesas_container" class="container_12 listado-mesas"
-                    data-bind='template: { name: "listaMozos", foreach: mozos }'>
+                    data-bind='template: { name: "listaMozos", foreach: adn().mozos }'>
                     <script id="listaMozos" type="text/x-jquery-tmpl">
                         <li data-mesa-numero="${numero}" data-mozo-id="${id}" class="grid_1">
                             <a href="mozos/view/${id}" data-role="none" class="mesa" >
@@ -168,8 +168,8 @@
 	<div  data-role="header" data-position="inline">
             <a data-rel="back" data-transition="reverse" href="#">Volver</a>
             
-            <h1>Mesa N°<span data-bind="text: currentMesa().numero"></span>, Mozo <span data-bind="text: currentMesa().mozo().numero"></span>
-                <span class="mesa-total" style="color: red;">$<span data-bind="text: currentMesa().total"></span></span>
+            <h1>Mesa N°<span data-bind="text: adn().currentMesa().numero"></span>, Mozo <span data-bind="text: adn().currentMesa().mozo().numero"></span>
+                <span class="mesa-total" style="color: red;">$<span data-bind="text: adn().currentMesa().total"></span></span>
             </h1>
 <!--            <div data-role="navbar">
                     <ul>
@@ -200,7 +200,7 @@
                 <h1>Detalle de Consumición</h1>
                 <div class="">
 
-                    <ul data-bind="template: {name: 'listaComandas', foreach: currentMesa().Comanda}">
+                    <ul data-bind="template: {name: 'listaComandas', foreach: adn().currentMesa().Comanda}">
                         <!-- Template: listado de comandas con sus productos-->
                         <script id="listaComandas" type="text/x-jquery-tmpl">
                             <li>   
@@ -237,7 +237,7 @@
     <div  data-role="header"  data-position="inline">
 <!--        <a data-rel="back" data-transition="reverse" href="#">Cancelar</a>-->
 	<h1>Nueva Comanda</h1>
-	<a href="#mesa-view" data-icon="check" data-theme="b" data-bind="click: function(){currentMesa().currentComanda().save()}">Guardar</a>        
+	<a href="#mesa-view" data-icon="check" data-theme="b" data-bind="click: function(){adn().currentMesa().currentComanda().save()}">Guardar</a>        
     </div>
 
     <div data-role="content">
@@ -262,7 +262,7 @@
             
         <div  style="width: 28%; margin-right: 2%; display: inline; float: left;">
            <ul id="ul-productos-seleccionados" class=" ui-listview " data-role="listview"
-               data-bind="template: {name: 'categorias-productos-seleccionados', foreach: currentMesa().currentComanda().detallesComandas}"
+               data-bind="template: {name: 'categorias-productos-seleccionados', foreach: adn().currentMesa().currentComanda().detallesComandas}"
                 >
                  <script id="categorias-productos-seleccionados" type="text/x-jquery-tmpl">
                      <li data-bind="visible: cant()"  class="ui-li ui-li-static ui-body-c">
