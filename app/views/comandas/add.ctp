@@ -1,84 +1,93 @@
-    
-    <div  data-role="page"  data-add-back-btn="true" id="comanda-add-menu">
-        <div  data-role="header"  data-position="inline">
-            <h1>Comanda</h1>
-            <a rel="external" href="#listado-mesas" data-icon="home" data-iconpos="notext" data-direction="reverse" class="ui-btn-right">Home</a>
-        </div>
-
-        <div data-role="content">
         
-            <script type="text/javascript">
-    
-                <?php if ( !empty($mesa_id) ) { ?>
-                adicion.setCurrentMesa( <? echo $mesa_id?> );
-                <?php }?>
-                    
-                Risto.Adition.comanda.initialize(<?php echo $javascript->object($categorias)?>);
+<div data-role="page" id="comanda-add-menu">
+    <div  data-role="header"  data-position="inline">
+        <a data-rel="back" data-transition="reverse" href="#">Cancelar</a>
+	<h1>Nueva Comanda</h1>
+	<a href="#mesa-view" data-icon="check">Guardar</a>        
+    </div>
+
+    <div data-role="content">
+        
+         <script type="text/javascript">
+             if ( !Risto.Adition.koAdicionModel.tieneCurrentMesa() ) {
+                            document.location = urlDomain+'adition/adicionar';
+             }
+             
+             Risto.Adition.comanda.initialize();
+             
+             (function($){
+                    Risto.Adition.koAdicionModel.refreshBinding();
+             })(jQuery);
+        </script>
+        
+            
+       <div id="path" data-bind="template: {name: 'boton', foreach: currentMesa().currentComanda().path}">
+            <script id="boton" type="text/x-jquery-tmpl">
+                    <a data-bind="attr: {'data-icon': esUltimoDelPath()?'':'back', 'data-theme': esUltimoDelPath()?'a':''}, click: seleccionar" data-bind="click: seleccionar" class="ui-btn ui-btn-inline ui-btn-icon-left ui-btn-corner-all ui-shadow ui-btn-up-c">
+                         <span class="ui-btn-inner ui-btn-corner-all">
+                             <span class="ui-btn-text" data-bind="text: name" ></span>
+                             <span class="ui-icon ui-icon-right ui-icon-shadow"></span>
+                         </span>
+                     </a>
             </script>
+       </div> 
+        
+        
             
-            
-            
-           <div id="path" data-bind="template: {name: 'boton', foreach: path, afterRender: refreshPage}">
-               <!--  Path buttons template           -->
-                <script id="boton" type="text/x-jquery-tmpl">
-                    <span>
-                    <button
-                             data-bind="attr: {'data-icon': esUltimoDelPath()?'':'back', 'data-theme': esUltimoDelPath()?'a':''}" data-icon="back" data-inline="true" data-theme="c" 
-                            data-categoria-id="${Categoria.id}" data-categoria-parent-id="${Categoria.parent_id}" >${Categoria.name}</button>
-                    </span>
-                </script>
-           </div> 
-            
-            
-           <div id="ul-productos-seleccionados" style="width: 30%; display: inline; float: left;"
-                data-bind="template: {name: 'categorias-productos-seleccionados', foreach: productosSeleccionados}"
+        <div  style="width: 28%; margin-right: 2%; display: inline; float: left;">
+           <ul id="ul-productos-seleccionados" class=" ui-listview " data-role="listview"
+               data-bind="template: {name: 'categorias-productos-seleccionados', foreach: currentMesa().currentComanda().productosSeleccionados}"
                 >
-               <!-- Productos  Seleccionados template           -->
                  <script id="categorias-productos-seleccionados" type="text/x-jquery-tmpl">
-                     <li data-bind="click: deseleccionar"><span data-bind="text: name"></span> - <span data-bind="text: cant"></span></li>
+                     <li data-bind="visible: cant()"  class="ui-li ui-li-static ui-body-c">
+                         <span data-type="horizontal" data-role="controlgroup" class="ui-corner-all ui-controlgroup ui-controlgroup-horizontal">
+                            <a data-bind="click: seleccionar" data-role="button" data-icon="plus" data-iconpos="notext" href="#" title="+" data-theme="c" class="ui-btn ui-btn-icon-notext ui-corner-left ui-btn-up-c"><span class="ui-btn-inner ui-corner-left"><span class="ui-btn-text" >+</span><span class="ui-icon ui-icon-plus ui-icon-shadow"></span></span></a>
+                            <a data-bind="click: deseleccionar" data-role="button" data-icon="minus" data-iconpos="notext" href="#" title="-" data-theme="c" class="ui-btn ui-btn-icon-notext ui-btn-up-c"><span class="ui-btn-inner"><span class="ui-btn-text">-</span><span class="ui-icon ui-icon-minus ui-icon-shadow"></span></span></a>
+                            <a data-bind="click: addObservacion, style: { background: observacion() ? '#437FBE' : ''}" data-rel="dialog"  data-role="button" data-iconpos="notext" data-icon="grid" data-rel="dialog" href="#" title="Observación" data-theme="c" class="ui-btn ui-btn-icon-notext ui-btn-up-c"><span class="ui-btn-inner"><span class="ui-btn-text">Observación</span><span class="ui-icon ui-icon-grid ui-icon-shadow"></span></span></a>
+                            <a data-bind="click: esEntrada() ? unsetEsEntrada : setEsEntrada, style: { background: esEntrada() ? '#437FBE' : ''}" data-role="button" data-iconpos="notext" data-icon="star" href="#" title="Entrada" data-theme="c" class="ui-btn ui-btn-icon-notext ui-corner-right ui-controlgroup-last ui-btn-up-c"><span class="ui-btn-inner ui-corner-right ui-controlgroup-last"><span class="ui-btn-text">Entrada</span><span class="ui-icon ui-icon-star ui-icon-shadow"></span></span></a>
+                         </span>
+
+                         <span data-bind="text: name"></span>
+
+                         <span data-bind="text: cant" class="ui-li-count ui-btn-up-c ui-btn-corner-all"></span>
+                     </li>
                  </script>
-           </div>
+           </ul>
+        </div>    
            
-           <div style="width: 70%; display: inline; float: right;" 
-                id="ul-categorias" 
-                data-bind="template: {name: 'listaCategoriasTree', data: currentCategorias, afterRender: refreshPage} ">
-               
+        <div style="width: 70%; display: inline; float: right;">
+
+           <div id="ul-categorias" 
+                data-bind="template: {name: 'listaCategoriasTree', foreach: currentMesa().currentComanda().currentSubCategorias} ">
                 <!-- Template de categorias       -->
                <script id="listaCategoriasTree" type="text/x-jquery-tmpl">
-                    <div>
-                        {{each Hijos}}
-                        <button style="width: 100px;"  data-icon="forward"  data-role="button" data-inline="true" data-theme="b" 
-                                 data-categoria-id="${$value.Categoria.id}" data-categoria-parent-id="${$value.Categoria.parent_id}">
-                            <?php echo $html->image('ico_mozo.png', array('height'=>'40px'));?>${$value.Categoria.name}
-                            </button>
-                        {{/each}}
-                    </div>
+                   <a  href="#" data-bind="click: seleccionar" data-theme="b" data-inline="true" data-role="button" class="ui-btn ui-btn-inline ui-btn-corner-all ui-shadow ui-btn-up-b">
+                       <span class="ui-btn-inner ui-btn-corner-all">
+                           <span class="ui-btn-text">
+                               <?php echo $html->image('ico_mozo.png', array('height'=>'40px'));?>
+                               <span data-bind="text: name">Bebidas con Alcohol</span>                         
+                           </span>
+                       </span>
+                   </a>
                 </script>
-            
-            
            </div>
            
            
            <div id="ul-productos" style="clear: both" 
-                data-bind="template: {name: 'categorias-productos', afterRender: refreshPage} ">
-                
-                <!-- Productos de Categorias template           -->
+                data-bind="template: {name: 'categorias-productos', foreach: currentMesa().currentComanda().currentProductos} ">
                  <script id="categorias-productos" type="text/x-jquery-tmpl">
-                     {{each productosDeCategoriaSeleccionada()}}
-                     <span>
-                        <button 
-                             data-bind="click: function(){seleccionarProducto($index);}, text: $value.name"
-                             data-icon="right" data-inline="true" data-theme="e" >
-                             </button>
-                        
-                     </span>
-                     
-                     {{/each}}
+                     <a href="#" data-bind="click: seleccionar" class="ui-btn ui-btn-inline ui-btn-icon-left ui-btn-corner-all ui-shadow ui-btn-up-e">
+                         <span class="ui-btn-inner ui-btn-corner-all">
+                             <span class="ui-btn-text" data-bind="text: name" ></span>
+                             <span class="ui-icon ui-icon-right ui-icon-shadow"></span>
+                         </span>
+                     </a>
                  </script>
-
            </div>
         </div>
-        
-        <div data-role="footer"><h2>Menu footer</h2></div>
     </div>
+        
+    <div data-role="footer"><h2>Menu footer</h2></div>
+    
 </div>  
+

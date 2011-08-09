@@ -38,33 +38,80 @@ var MESA_ESTADOS_POSIBLES =  {
  *
  **/
 var Mesa = function(mozo, jsonData) {
+        
+        this.total = ko.observable(0);
+        this.numero = ko.observable(0);
+        this.currentComanda= ko.observable();
+        this.Comanda= ko.observableArray();
+        
         if (jsonData && mozo) {
             return this.initialize(mozo, jsonData);
         }        
+        return this;
 }
 
 
 
 Mesa.prototype = {
     id: 0,
-    comandas: ko.observableArray(),
+    total: ko.observable(0),
+    numero: ko.observable(0),
     
-  
+    // es la comanda que actualmente se esta haciendo
+    currentComanda: ko.observable(), 
+    Comanda: ko.observableArray(),
     
     // attributos
-    mozo: ko.observable(null),
+    mozo: ko.observable(new Mozo()),
 
-    initialize: function(mozo, jsonData){
-        this.mozo = ko.observable(mozo);
-        
-        // si vino jsonData mapeo con koMapp
-        if ( mozo && jsonData ) {
-            ko.mapping.fromJS(jsonData, {}, this);
+    initialize: function( mozo, jsonData ) {
+        if (mozo) {
+            this.mozo = ko.observable(mozo);
         }
         
+        this.currentComanda(new Risto.Adition.comandaFabrica());
+        
+        // si vino jsonData mapeo con koMapp
+        if ( jsonData ) {
+            // si aun no fue mappeado
+            var mapOps = {
+                'Comanda': {
+                    create: function(ops) {
+                        return new Risto.Adition.comanda(ops.data);
+                    },
+                    key: function(data) {
+                        return ko.utils.unwrapObservable(data.id);
+                    }
+                }
+            }
+            
+            ko.mapping.fromJS(jsonData, mapOps, this);
+        }
         return this;
     },
     
+    
+    /**
+     * agregar un producto a la comanda que actualmente se esta haciendo
+     * no implica que se haya agregado un producto a la mesa.
+     * es un estado intermedio de generacion de la comanda
+     * @param prod Producto  
+     **/
+    agregarProducto: function(prod){
+        this.currentComanda().agregarProducto(prod);
+    },
+    
+    nuevaComanda: function(){
+        this.currentComanda( new Risto.Adition.comandaFabrica(this)  );
+    },
+    
+    getData: function(){
+        $.get(this.urlGetData(), function(){
+            
+        });
+    },
+    
+    urlGetData: function(){return urlDomain+'mesas/ticket_view/'+this.id()},
     urlView: function(){return urlDomain+'mesas/view/'+this.id()},
     urlEdit: function(){return urlDomain+'mesas/edit/'+this.id()},
     urlComandaAdd: function(){return urlDomain+'comandas/add/'+this.id()},
@@ -73,7 +120,7 @@ Mesa.prototype = {
      *  Id del elemento que contiene los datos de esta mesa
      *  es utilizada en el action mesas/view
      */
-    domElementContainer: function(){ return 'mesa-' + this.id(); },
+    domElementContainer: function(){return 'mesa-' + this.id();},
 
 
     /**

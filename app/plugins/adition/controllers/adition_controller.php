@@ -62,7 +62,7 @@ class AditionController extends AditionAppController {
 	 */
 	function adicionar()
         {
-            
+            $this->set('mozos', $this->Mozo->dameActivos());
 	}
 	
 	

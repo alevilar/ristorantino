@@ -33,7 +33,7 @@ var Mozo = function(jsonData){
 
 Mozo.prototype = {
 //    id : 0,
-//    numero : 0,
+      numero : 0,
       mesas: null,
 //    seleccionado: false,
 
@@ -42,7 +42,7 @@ Mozo.prototype = {
         var mozoNuevo = this;
 
         // si aun no fue mappeado
-        mapOps = {
+        var mapOps = {
             'mesas': {
                 create: function(ops) {
                     return new Mesa(mozoNuevo, ops.data);
@@ -52,7 +52,6 @@ Mozo.prototype = {
                 }
             }
         }
-
         return ko.mapping.fromJS(jsonData, mapOps, this);
     },
 

@@ -13,7 +13,7 @@
 		
 		// para los modal window
 		echo $html->css(array(
-                    'jquery-mobile/jquery.mobile-1.0b1.min',
+                    'jquery-mobile/jquery.mobile-1.0b2.min',
                     'jquery-mobile/jquery-mobile-fluid960',
                     '/adition/css/ristorantino'
                     ));
@@ -23,33 +23,36 @@
                     echo $html->css($cssUserRole,'stylesheet', array('media'=>'screen'));
                 }
 
-		echo $javascript->link(array(
+		echo $javascript->link( array(
                     'risto/risto',
                     'jquery/jquery-1.6.1.min',
                     'jquery/jquery.tmpl.min',
                     'jquery/jquery.periodicalupdater',
+                     'jquery/jquery.mobile-1.0b2',
+                    'jquery/jquery.easing.1.3',
                     'knockout-1.2.1',
                     'knockout.mapping',
-                    
-//                    'jquery/jquery.mobile.splitview',
-                    'jquery/jquery.mobile-1.0b1.min',
-                    'jquery/jquery.easing.1.3',
-//                    'jquery/jquery.mobile.scrollview',
-//                    'jquery/scrollview',
-                    
                     'jquery/fg.menu',
-
                     'ristorantino/generic',
+                    
+                    // OJO !! EL ORDEN IMPORTA !!
+                    '/adition/js/adition.package',
                     '/adition/js/adicion.class',
-                    'risto/mesa.class',
+                    
                     'risto/mozo.class',
-
-                     
-                    '/adition/js/adition.events',
-                    '/adition/js/comanda',
-                    '/adition/js/categoria',
+                    'risto/mesa.class',
+                    '/adition/js/comanda_fabrica.class',
                     '/adition/js/producto',
-
+                    '/adition/js/categoria',
+                    
+                    '/adition/js/detalle_comanda.class',
+                    '/adition/js/comanda.class',
+                    '/adition/js/ko_adicion_model',
+                    '/adition/js/adition.events',
+                    '/adition/js/menu',
+                    
+                    
+                   
                     ));
                 ?>
 
@@ -61,7 +64,7 @@
         var urlDomain = "<?php echo $html->url('/',true);?>";
 
         // instancio el objeto adicion que sera el kernel de la app
-        var adicion = new Adicion();
+        Risto.Adition.adicionar.initialize();
     -->
     </script>
 
