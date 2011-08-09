@@ -41,9 +41,6 @@
                     '/adition/js/comanda_fabrica.class',
                     '/adition/js/adicion.class',
                     
-                    
-                    
-                    
                     '/adition/js/producto',
                     '/adition/js/categoria',
                     

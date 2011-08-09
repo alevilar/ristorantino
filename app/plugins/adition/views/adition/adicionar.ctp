@@ -1,4 +1,20 @@
-                
+
+<script id="li-productos-detallecomanda" type="text/x-jquery-tmpl">
+     <li  class="ui-li ui-li-static ui-body-c">
+         <span data-type="horizontal" data-role="controlgroup" class="ui-corner-all ui-controlgroup ui-controlgroup-horizontal">
+            <a data-bind="click: deseleccionar" data-role="button" data-icon="minus" data-iconpos="notext" href="#" title="-" data-theme="c" class="ui-btn ui-btn-icon-notext ui-btn-up-c"><span class="ui-btn-inner"><span class="ui-btn-text">-</span><span class="ui-icon ui-icon-minus ui-icon-shadow"></span></span></a>
+            <a data-bind="style: { background: esEntrada() ? '#437FBE' : ''}" data-role="button" data-iconpos="notext" data-icon="star" href="#" title="Entrada" data-theme="c" class="ui-btn ui-btn-icon-notext ui-corner-right ui-controlgroup-last ui-btn-up-c"><span class="ui-btn-inner ui-corner-right ui-controlgroup-last"><span class="ui-btn-text">Entrada</span><span class="ui-icon ui-icon-star ui-icon-shadow"></span></span></a>
+         </span>
+
+         
+         <span data-bind="text: cant" style="right: auto" class="ui-li-count ui-btn-up-c ui-btn-corner-all"></span>
+         <span data-bind="text: Producto().name" style="margin-left: 20px;"></span>
+     </li>
+</script>
+                                         
+                                         
+                                         
+                                         
 <!--
                         LISTADO MESAS
 
@@ -7,7 +23,7 @@
 <div data-role="page" data-add-back-btn="true" id="listado-mesas">
 
 	<div  data-role="header" data-position="inline">
-                <h1><strong data-bind="text: adn().mesas().length"></strong> Mesas Abiertas</h1>
+            <h1><span style="color: #fcf0b5" data-bind="text: adn().mesas().length">0</span> Mesas Abiertas</h1>
 
                 <a rel="external" href='#listado-mesas' data-icon="home" data-iconpos="notext" data-direction="reverse" class="">Home</a>
                 
@@ -129,7 +145,7 @@
                         <input type="number" name="numero" value="" maxlength="5" data-risto="mesa"/>
                     </fieldset>
                     
-                    <fieldset>                        
+                    <fieldset>
                         <button type="submit"  data-theme="b">Abrir Mesa</button>
                     </fieldset>
                 </div>
@@ -180,7 +196,6 @@
         </div>
 
         <div  data-role="content" class="">
-            
             <div class="" style="width: 28%; float: left;">
                 <ul data-role="listview" style="width: 100%">
                     <li><a href="#comanda-add-menu" data-rel="dialog"><?= $html->image('/adition/css/img/chef_64.png')?>Comanda</a></li>
@@ -198,24 +213,26 @@
 
             <div class="mesas view " style="width: 70%; float:right;" >
                 <h1>Detalle de Consumición</h1>
-                <div class="">
+                
+                <div data-bind="visible: adn().currentMesa().mesaEditada">
+                    Mesa Modificada !!
+                    <button>Guardar</button>
+                    <button>Cancelar</button>
+                </div>
 
-                    <ul data-bind="template: {name: 'listaComandas', foreach: adn().currentMesa().Comanda}">
+                <div id="comanda-detalle-collapsible" data-role="collapsible-set" data-bind="template: {name: 'listaComandas', foreach: adn().currentMesa().Comanda}">
                         <!-- Template: listado de comandas con sus productos-->
                         <script id="listaComandas" type="text/x-jquery-tmpl">
-                            <li>   
-                               <span>Comanda ${id}</span> <span>${created}</span>
-                               <ul>
-                               {{each DetalleComanda}}
-                                   <li>
-                                       <b>${$value.cant() - $value.cant_eliminada()}</b>- ${$value.Producto().name}
-                                   </li>
-                               {{/each}}
-                               </ul>
-                            </li>
+                           <div data-role="collapsible">
+                                <h3><span>Comanda ${id}</span> <span>${created}</span></h3>
+
+                                <ul class="ui-listview " data-role="listview"
+                                   data-bind="template: {name: 'li-productos-detallecomanda', foreach: DetalleComanda}"
+                                   style="margin: 0px;"                                    >
+                                        
+                                </ul>                                                                           
+                           </div>
                         </script>
-                    </ul>
-              
                 </div>
 
             </div>

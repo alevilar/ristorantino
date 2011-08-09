@@ -6,7 +6,7 @@ Risto.Adition.detalleComanda = function(jsonData) {
 
 Risto.Adition.detalleComanda.prototype = {
     Producto: ko.observable(),
-
+    
     // cant de este producto seleccionado
     cant: ko.observable(0),
     cant_eliminada: ko.observable(0),
@@ -31,12 +31,12 @@ Risto.Adition.detalleComanda.prototype = {
     /**
      * Dispara un evento de producto seleccionado
      */
-    seleccionar: function(){
+    seleccionar: function(){        
         this.cant( this.cant()+1 );
     },
     
     
-    deseleccionar: function(){     
+    deseleccionar: function(){
         if (this.cant() > 0 ) {
             this.cant( this.cant()-1 );
         }

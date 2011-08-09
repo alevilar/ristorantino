@@ -305,7 +305,6 @@ Risto.Adition.adicionar = {
     crearNuevaMesa: function(mesaNumero, mozoId){
         var mozo = this.findMozoById(mozoId);
         var mesa = new Mesa(mozo)
-       
         mesa.numero( mesaNumero );       
         return mesa;        
     }
@@ -327,7 +326,6 @@ Risto.Adition.adicionar.todasLasMesas = ko.dependentObservable( function(){
             mesasList = mesasList.concat( this.mozos()[m].mesas() );
         }
     }
-    
     return mesasList;
 }, Risto.Adition.adicionar);
 
