@@ -13,12 +13,12 @@ class CashierController extends CashierAppController {
 	
 	function reiniciar(){
 		debug(exec('sudo reboot'));
-		die("aguarde que el server esta reiniciandose. Esto puede demorar unos minutos....");
+		die("Aguarde, el servidor esta reiniciando. Esto puede demorar unos minutos...");
 	}
 
         function apagar(){
 		debug(exec('sudo halt'));
-		die("El server se esta apagando");
+		die("El servidor se esta apagando");
 	}
 
 
