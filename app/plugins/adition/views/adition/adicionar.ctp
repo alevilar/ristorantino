@@ -47,6 +47,12 @@
         <div  data-role="content" class="">
 
             <div> </div>
+            
+            <span>
+                <a href="#mesa-add" class="mesa" data-rel="dialog">
+                        Abrir Mesa
+                </a>
+            </span>
             <!-- aca va el listado de mesas que se carga dinamicamente en un script de abajo -->
             <ul id="mesas_container" class="container_12 listado-mesas"
                 data-bind='template: { name: "listaMesas", foreach: mesas }'>
@@ -97,6 +103,36 @@
 <!-- Fin Pagina 2: Listado de Mozos -->
 
 
+<div  data-role="page"  id="mesa-add">
+    <div  data-role="header"  data-position="inline">
+        <h1>Abrir Mesa</h1>
+        <a href="#"  data-rel="back"  onclick="$('#form-comanda-producto-observacion').submit();" data-theme="b">Guardar Observación</a>
+    </div>
+    <div data-role="content">
+        <form name="comanda" id="form-comanda-producto-observacion">
+            <div data-role="fieldcontain">
+                <fieldset data-role="controlgroup"  data-type="horizontal">
+                    <legend>Seleccionar Mozo:</legend>
+                    <?php
+                        foreach ($mozos as $m) {
+                            $k = $m['Mozo']['id'];
+                            $n = $m['Mozo']['numero'];
+                            echo "<input type='radio' name='mozo_id' id='radio-choice-$k' value='choice-$k' checked='checked' />";
+                            echo "<label for='radio-choice-$k'>$n</label>";
+                        }
+                    ?>
+                </fieldset>
+                
+                <fieldset data-role="controlgroup"  data-type="horizontal">
+                    <legend>Número de Mesa:</legend>
+                    <input type="text" name="mesa_numero" autofocus></input>
+                    <label for="mesa_numero">Mesa</label>
+                </fieldset>
+            </div>
+        </form>
+    </div>
+</div> 
+
 
 <div  data-role="page"  id="obss">
     <div  data-role="header"  data-position="inline">
@@ -105,7 +141,7 @@
     </div>
     <div data-role="content">
         <form name="comanda" id="form-comanda-producto-observacion">
-            <textarea name="obs" id="obstext"></textarea>
+            <textarea name="obs" id="obstext" autofocus="true"></textarea>
         </form>
     </div>
 </div> 
@@ -128,26 +164,9 @@
 
         <div  data-role="content" class="">
             
-            <!-- Template: listado de comandas con sus productos-->
-            <script id="listaComandas" type="text/x-jquery-tmpl">
-                <li>   
-                   <span>Comanda ${id}</span> <span>${created}</span>
-                   
-                   <ul>
-                   {{each DetalleComanda}}
-                       <li>
-                           <b>${$value.cant() - $value.cant_eliminada()}</b>) ${$value.Producto.name}
-                       </li>
-                   {{/each}}
-                   </ul>
-                   
-                </li>
-            </script>
-
             <div class="" style="width: 28%; float: left;">
                 <ul data-role="listview" style="width: 100%">
                     <li><a href="#comanda-add-menu" data-rel="dialog"><?= $html->image('/adition/css/img/chef_64.png')?>Comanda</a></li>
-                    <li><a href="<?= $html->url('/pages/panel')?>" >PAnel</a></li>
                     <li><a href="#sacar-item" >Sacar Item</a></li>
                     <li><a href="#Agregar Cliente" >Agregar Cliente</a></li>
                     <li><a href="#Agragar Descuento" >Agregar Descuento</a></li>
@@ -164,7 +183,21 @@
                 <h1>Detalle de Consumición</h1>
                 <div class="">
 
-                    <ul data-bind="template: {name: 'listaComandas', foreach: currentMesa().Comanda}"></ul>
+                    <ul data-bind="template: {name: 'listaComandas', foreach: currentMesa().Comanda}">
+                        <!-- Template: listado de comandas con sus productos-->
+                        <script id="listaComandas" type="text/x-jquery-tmpl">
+                            <li>   
+                               <span>Comanda ${id}</span> <span>${created}</span>
+                               <ul>
+                               {{each DetalleComanda}}
+                                   <li>
+                                       <b>${$value.cant() - $value.cant_eliminada()}</b>- ${$value.Producto().name}
+                                   </li>
+                               {{/each}}
+                               </ul>
+                            </li>
+                        </script>
+                    </ul>
               
                 </div>
 
@@ -182,7 +215,7 @@
     <div  data-role="header"  data-position="inline">
 <!--        <a data-rel="back" data-transition="reverse" href="#">Cancelar</a>-->
 	<h1>Nueva Comanda</h1>
-	<a href="#mesa-view" data-icon="check" data-theme="b">Guardar</a>        
+	<a href="#mesa-view" data-icon="check" data-theme="b" data-bind="click: function(){currentMesa().currentComanda().save()}">Guardar</a>        
     </div>
 
     <div data-role="content">
@@ -207,7 +240,7 @@
             
         <div  style="width: 28%; margin-right: 2%; display: inline; float: left;">
            <ul id="ul-productos-seleccionados" class=" ui-listview " data-role="listview"
-               data-bind="template: {name: 'categorias-productos-seleccionados', foreach: currentMesa().currentComanda().productosSeleccionados}"
+               data-bind="template: {name: 'categorias-productos-seleccionados', foreach: currentMesa().currentComanda().detallesComandas}"
                 >
                  <script id="categorias-productos-seleccionados" type="text/x-jquery-tmpl">
                      <li data-bind="visible: cant()"  class="ui-li ui-li-static ui-body-c">
@@ -231,7 +264,7 @@
                             <a data-bind="click: esEntrada() ? unsetEsEntrada : setEsEntrada, style: { background: esEntrada() ? '#437FBE' : ''}" data-role="button" data-iconpos="notext" data-icon="star" href="#" title="Entrada" data-theme="c" class="ui-btn ui-btn-icon-notext ui-corner-right ui-controlgroup-last ui-btn-up-c"><span class="ui-btn-inner ui-corner-right ui-controlgroup-last"><span class="ui-btn-text">Entrada</span><span class="ui-icon ui-icon-star ui-icon-shadow"></span></span></a>
                          </span>
 
-                         <span data-bind="text: name"></span>
+                         <span data-bind="text: Producto().name"></span>
 
                          <span data-bind="text: cant" class="ui-li-count ui-btn-up-c ui-btn-corner-all"></span>
                      </li>

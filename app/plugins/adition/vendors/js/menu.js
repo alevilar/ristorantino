@@ -57,15 +57,6 @@ Risto.Adition.menu = {
     },
     
     
-    /**
-     * Agrega un producto al listado de productos seleccionados
-     */
-    seleccionarProducto: function(prod){
-        var event =  $.Event(MENU_ESTADOS_POSIBLES.productoSeleccionado.event);
-        event.producto = prod; 
-        $(document).trigger(event);
-    },
-    
     
     /**
      * Actualiza la variable observable path

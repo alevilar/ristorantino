@@ -23,7 +23,7 @@
                     echo $html->css($cssUserRole,'stylesheet', array('media'=>'screen'));
                 }
 
-		echo $javascript->link(array(
+		echo $javascript->link( array(
                     'risto/risto',
                     'jquery/jquery-1.6.1.min',
                     'jquery/jquery.tmpl.min',
@@ -38,11 +38,15 @@
                     // OJO !! EL ORDEN IMPORTA !!
                     '/adition/js/adition.package',
                     '/adition/js/adicion.class',
+                    
                     'risto/mozo.class',
                     'risto/mesa.class',
+                    '/adition/js/comanda_fabrica.class',
                     '/adition/js/producto',
                     '/adition/js/categoria',
-                    '/adition/js/comanda_fabrica.class',
+                    
+                    '/adition/js/detalle_comanda.class',
+                    '/adition/js/comanda.class',
                     '/adition/js/ko_adicion_model',
                     '/adition/js/adition.events',
                     '/adition/js/menu',

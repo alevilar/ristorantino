@@ -281,7 +281,7 @@ Risto.Adition.adicionar = {
         
         if ( !this.yaMapeado ) {
             // si aun no fue mappeado
-            mapOps = {
+            var mapOps = {
                 'mozos': {
                     create: function(ops) {
                         return new Mozo(ops.data);
