@@ -26,14 +26,16 @@ foreach ($mozos as $mozo):
 	}
 ?>
 	<tr<?php echo $class;?>>
-		<td>
-			<?php 
-                                if($mozo['Mozo']['activo']==1){
-                                     echo('Si');
-                                     }else{
-                                     echo('No');    
-                                     }
-                        ?>
+		<td class="mozo_active"
+		<?php 
+                        if($mozo['Mozo']['activo']==1){
+                            echo(' style="color:green;">');
+                                     echo('■');
+                        }else{
+                            echo(' style="color:##000000;">');
+                                     echo('■');    
+                        }
+                ?>
 		</td>
 		<td>
 			<?php echo $html->link($mozo['User']['nombre']." ".$mozo['User']['apellido'], array('controller'=> 'users', 'action'=>'view', $mozo['User']['id'])); ?>
@@ -46,7 +48,7 @@ foreach ($mozos as $mozo):
 			<?php echo $html->link(__('Editar', true), array('action'=>'edit', $mozo['Mozo']['id'])); ?>
 			<?php
                         if ($session->read('Auth.User.role') == 'superuser') {
-                            echo $html->link(__('Delete', true), array('action'=>'delete', $mozo['Mozo']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $mozo['Mozo']['id']));
+                            echo $html->link(__('Delete', true), array('action'=>'delete', $mozo['Mozo']['id']), null, sprintf(__('¿Desea borrar el mozo nº # %s?. Si borra el mozo desaparecerá de las estadísticas.', true), $mozo['Mozo']['numero']));
                         }
                         ?>
 		</td>

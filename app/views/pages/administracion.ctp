@@ -13,8 +13,6 @@
    <h2>Clientes</h2>
     <?php
     echo $html->link('Clientes','/clientes').'<br>';
-    echo $html->link('Tipos de Documentos','/tipo_documentos').'<br>';
-    echo $html->link('IVA Responsabilidades','/iva_responsabilidades').'<br>';
     echo $html->link('Descuentos','/descuentos').'<br>';
     echo $html->link('Tipo de Pagos','/TipoDePagos').'<br>';
     ?>   
@@ -52,13 +50,15 @@
     
     <?php
     echo $html->link('Usuarios','/users/index').'<br>';
-    echo $html->link('Permisos','/admin/acl').'<br>';
     echo $html->link('Mozos','/mozos/index').'<br>';
     ?>
     </div>  
       
     <div class="grid_7 alpha omega">
     <h2>Sistema</h2>
+    <?php
+    echo $html->link('Configuraciones del sistema','configavanzadas').'<br>';
+    ?>
     <?php
     echo $html->link('Acciones del sistema','sistemaconfig').'<br>';
     ?>

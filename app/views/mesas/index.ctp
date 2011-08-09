@@ -1,4 +1,3 @@
-
 <?php
 
 echo $html->css('protoplasm',false);
@@ -8,16 +7,14 @@ echo $javascript->link('mesas/index_head', false);
 
 ?>
 
-
-
 <?php
 $paginator->options(array('url' => $this->passedArgs));
 ?>
 
 <div id="mesas-index">
 <div>
-<h2><?php __('Buscador de Mesas');?></h2>
-
+<h2 style="text-align: center;"><?php __('Buscador de Mesas');?></h2>
+</br>
 <?php echo $form->create("Mesa",array("action"=>"index")); ?>
 <div class="alpha grid_1">
     <strong>#</strong>
@@ -88,10 +85,7 @@ $paginator->options(array('url' => $this->passedArgs));
     ?>
 </div>
 <div class="clear"></div>
-    <?php echo $form->input("exportar_excel", array(
-        'label'=>'Exportar a Excel',
-        'type' => 'checkbox',
-        ))?>
+
     <?php echo $form->end("Buscar")?>
 
 
@@ -103,8 +97,13 @@ echo $paginator->counter(array(
 'format' => __('Pagina %page% de %pages%, mostrando %current% elementos de %count%', true)
 ));
 ?></p>
-
-<?php echo $this->element('mesas/listado_tabla')?>
+<?php 
+if ($paginator->params['paging']['Mesa']['count']!=0) { 
+            echo $this->element('mesas/listado_tabla');
+}else{
+    echo('</br><strong>No se encontraron mesas</strong>');
+}                  
+?>
 
 
 </div>

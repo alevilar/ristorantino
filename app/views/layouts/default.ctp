@@ -55,12 +55,18 @@
                 <div class="grid_12 header">
                 <?php echo $html->link("Inicio", '/pages/home', array('class' => 'inicio')) ?>
                     
-                <?php  
-                echo($session->read('Auth.User.username'));
-                 ?>
-                    
+                    <div style="float:right; font-size: 140%;">
+                         <div style="text-align: right;">
+                            <?php  
+                            echo($session->read('Auth.User.nombre'));
+                            echo(' ');
+                            echo($session->read('Auth.User.apellido'));
+                            ?>
+                        </div>     
 
-                <?php echo $html->link('Cambiar de usuario', array('controller' => 'users', 'action' => 'logout', 'plugin' => null), array('style' => 'float: right; margin-top:45px; font-size: 135%;')); ?>
+                            <?php echo $html->link('Cambiar de usuario', array('controller' => 'users', 'action' => 'logout', 'plugin' => null), array('style' => 'float: right; margin-top:20px;')); ?>
+                    </div>
+                        
                 <div id="mesajes"><?php $session->flash(); $session->flash('auth'); ?></div>
                 </div>
                 <div id="content" class="grid_12">

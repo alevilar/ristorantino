@@ -19,6 +19,8 @@ echo $paginator->counter(array(
 	<th class="actions"><?php __('Acciones');?></th>
 </tr>
 <?php
+
+if ($paginator->params['paging']['Cliente']['count']!=0) {
 $i = 0;
 foreach ($clientes as $cliente):
 	$class = null;
@@ -48,7 +50,9 @@ foreach ($clientes as $cliente):
 		</td>
 		
 		<td>
-			<?php echo $cliente['Cliente']['nrodocumento']." (".$cliente['TipoDocumento']['name'].")"; ?>
+			<?php 
+                         echo (!empty($cliente['TipoDocumento']['name']))?$cliente['Cliente']['nrodocumento']." (".$cliente['TipoDocumento']['name'].")":''; 
+                         ?>
 		</td>
 		<td>
 			<?php echo date('d/m/Y H:i',strtotime($cliente['Cliente']['created'])); ?>
@@ -56,11 +60,31 @@ foreach ($clientes as $cliente):
 		<td class="actions">
 			<?php echo $html->link(__('Ver', true), array('action'=>'view', $cliente['Cliente']['id'])); ?>
 			<?php echo $html->link(__('Editar', true), array('action'=>'edit', $cliente['Cliente']['id'])); ?>
-			<?php echo $html->link(__('Borrar', true), array('action'=>'delete', $cliente['Cliente']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $cliente['Cliente']['id'])); ?>
+			<?php echo $html->link(__('Borrar', true), array('action'=>'delete', $cliente['Cliente']['id']), null, sprintf(__('¿Está seguro que desea borrar el cliente: %s?', true), $cliente['Cliente']['nombre'])); ?>
 		</td>
 	</tr>
-<?php endforeach; ?>
+<?php endforeach; 
+}else{
+    echo('<td>No se encontraron clientes</td>');
+}
+?>
+
+        <tr>
+	<?php echo $form->create("Cliente",array("action"=>"index")); echo $form->input("id") ?>
+	<th><?php echo $form->input('nombre',array('style'=>'width:170px;','placeholder'=>'Nombre del cliente', 'label'=>false));?></th>
+	<th></th>
+	<th></th>
+	<th></th>
+        <th></th>
+        <th></th>
+	<th><?php echo $form->input('nrodocumento',array('style'=>'width:120px;','placeholder'=>'CUIT / CUIL / DNI','label'=>false));?></th>
+        <th></th>
+	<th class="actions"><?php echo $form->end("Buscar")?></th>
+        </tr>
+   
+        
 </table>
+
 </div>
 <div class="paging">
 	<?php echo $paginator->prev('<< '.__('anterior', true), array(), null, array('class'=>'disabled'));?>

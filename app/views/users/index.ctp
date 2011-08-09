@@ -38,7 +38,7 @@ foreach ($users as $user):
 		<td class="actions">
 			<?php echo $html->link(__('Ver', true), array('action'=>'view', $user['User']['id'])); ?>
 			<?php echo $html->link(__('Editar', true), array('action'=>'edit', $user['User']['id'])); ?>
-			<?php echo $html->link(__('Borrar', true), array('action'=>'delete', $user['User']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $user['User']['id'])); ?>
+			<?php echo $html->link(__('Borrar', true), array('action'=>'delete', $user['User']['id']), null, sprintf(__('¿Está seguro que desea borrar el usuario: %s?', true), $user['User']['username'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>

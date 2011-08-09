@@ -32,9 +32,8 @@ foreach ($tipoDePagos as $tipoDePago):
 			<?php echo $tipoDePago['TipoDePago']['description']; ?>
 		</td>
 		<td class="actions">
-			<?php echo $html->link(__('Ver', true), array('action'=>'view', $tipoDePago['TipoDePago']['id'])); ?>
 			<?php echo $html->link(__('Editar', true), array('action'=>'edit', $tipoDePago['TipoDePago']['id'])); ?>
-			<?php echo $html->link(__('Borrar', true), array('action'=>'delete', $tipoDePago['TipoDePago']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $tipoDePago['TipoDePago']['id'])); ?>
+			<?php echo $html->link(__('Borrar', true), array('action'=>'delete', $tipoDePago['TipoDePago']['id']), null, sprintf(__('¿Está seguro que desea borrar el tipo de pago: %s?', true), $tipoDePago['TipoDePago']['name'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>
