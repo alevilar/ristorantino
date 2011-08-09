@@ -48,8 +48,26 @@ class ProductosController extends AppController {
 		 }   
 		 
 		 
-		
-		
+		/***
+                 * 
+                 * ES PARA BORRARRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+                 * 
+                 */
+                 $prodsConPrecioFuturo = $this->Producto->ProductosPreciosFuturo->find('all', array(
+                     'fields' => 'producto_id'
+                 ));
+                 if ( count($prodsConPrecioFuturo) > 1 ) {
+                    $this->paginate['Producto']['conditions']['Producto.id NOT IN'] = array('874','3267');
+                 } else {
+                     $this->paginate['Producto']['conditions']['Producto.id <>'] = array('874');
+                 }
+		 /****************************
+                  * 
+                  * ------------------------------------------------------
+                  */
+                 
+                 
+                 
 		$this->Producto->recursive = 0;
 		$this->set('productos', $this->paginate());
 	}
@@ -162,61 +180,10 @@ class ProductosController extends AppController {
             
             $this->redirect($this->referer());
         }
-
-
-	function preciosfuturos() {
-		$this->params['PaginateConditions'] = array();
-		
-		if(!empty($this->data)){
-			$condiciones = array();
-			$pagCondiciones = array();
-			foreach($this->data as $modelo=>$campos){
-				foreach($campos as $key=>$val){
-						if(!is_array($val))
-							$condiciones[$modelo.".".$key." LIKE"] = '%'.$val.'%';
-							$pagCondiciones[$modelo.".".$key] = $val;
-				}
-			}
-			$this->Producto->recursive = 0;
-			$this->paginate['Producto'] = array(
-				'conditions' => $condiciones
-			);
-			
-			$this->params['PaginateConditions'] = $pagCondiciones;
-			$this->set('productos', $this->paginate('Producto'));
-		}
-		
-		
-		if(!empty($this->passedArgs) && empty($this->data)){ 
-		 	$condiciones = array();
-			$pagCondiciones = array();
-			foreach($this->passedArgs as $campo=>$valor){
-				if($campo == 'page' || $campo == 'sort' || $campo == 'direction'){ 
-					continue;
-				}
-				$condiciones["$campo LIKE"] = '%'.$valor.'%';
-				$pagCondiciones[$campo] = $valor;
-				$this->data[$campo] = $valor;
-				
-			}
-			$this->Producto->recursive = 0;
-			$this->paginate['Producto'] = array(
-				'conditions' => $condiciones
-			);
-			$this->params['PaginateConditions'] = $pagCondiciones;
-			$this->set('productos', $this->paginate('Producto'));
-		 }   
-		 
-		 
-		
-		
-		$this->Producto->recursive = 0;
-		$this->set('productos', $this->paginate());
-	}
+        
+        
+        
       
-        
-
-        
 }
 
 ?>

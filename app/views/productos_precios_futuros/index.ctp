@@ -2,6 +2,7 @@
 <h2><?php __('Productos con precios futuros');?></h2>
 <p>
 <?php
+
 echo $paginator->options(array('url'=>$this->params['PaginateConditions']));
 
 echo $paginator->counter(array(
@@ -10,21 +11,23 @@ echo $paginator->counter(array(
 ?></p>
 <table class="productos" cellpadding="0" cellspacing="0">
 
+    <?php echo $form->create("ProductosPreciosFuturo",array("action"=>"index")); ?>
+    
+    <?php echo $form->input('ProductosPreciosFuturos.no_tiene_precio_asignado', array(
+                                'type' => 'radio',
+                                'options'=>array(0=>'NO', 1=>'SI' ),
+                                'label'=>'Con precio futuro o no'));?>
 <tr>
-	<th><?php echo $form->create("Producto",array("action"=>"index")); echo $form->input("id") ?></th>
-	<th><?php echo $form->input('name',array('style'=>'width:170px;','label'=>false));?></th>
-	<th><?php echo $form->input('abrev',array('style'=>'width:150px;','label'=>false));?></th>
-	<th><?php echo $form->input('Categoria.name',array('style'=>'width:100px;','label'=>false));?></th>
-	<th><?php echo $form->input('precio',array('style'=>'width:60px;','label'=>false));?></th>
+	<th><?php echo $form->input('Producto.name',array('style'=>'width:170px;','label'=>false));?></th>
+	<th><?php echo $form->input('Producto.abrev',array('style'=>'width:150px;','label'=>false));?></th>
+	<th><?php echo $form->input('Producto.precio',array('style'=>'width:60px;','label'=>false));?></th>
 	<th>&nbsp;</th>
 	<th class="actions"><?php echo $form->end("Buscar")?></th>
 </tr>
 
 <tr>
-	<th></th>
 	<th><?php echo $paginator->sort('Nombre','name');?></th>
 	<th><?php echo $paginator->sort('abreviatura','abrev');?></th>
-	<th><?php echo $paginator->sort('Categoria','Categoria.name');?></th>
 	<th><?php echo $paginator->sort('precio');?></th>
 	<th><?php echo $paginator->sort('Modificado','modified');?></th>
 	<th class="actions"><?php __('Acciones');?></th>
@@ -39,9 +42,8 @@ foreach ($productos as $producto):
         if(!empty($producto['ProductosPreciosFuturo']['precio'])) {
 ?>
 	<tr<?php echo $class;?>>
-		<td>
-			
-		</td>
+		
+            
 		<td>
 			<?php 
                          $name = ($producto['Producto']['deleted'])? 
@@ -55,9 +57,8 @@ foreach ($productos as $producto):
 		<td>
 			<?php echo $producto['Producto']['abrev']; ?>
 		</td>
-		<td>
-			<?php echo $producto['Categoria']['name']; ?>
-		</td>
+		
+                
 		<td>
 			<?php echo "$".$producto['Producto']['precio']; echo !empty($producto['ProductosPreciosFuturo']['precio'])?" <b>[$".$producto['ProductosPreciosFuturo']['precio']."]</b>":''?>
 		</td>
@@ -66,7 +67,7 @@ foreach ($productos as $producto):
 		</td>
 		<td class="actions">
 			<?php echo $html->link(__('Editar', true), array('action'=>'edit', $producto['Producto']['id'])); ?>
-			<?php echo $html->link(__('Borrar', true), array('action'=>'delete', $producto['Producto']['id']), null, sprintf(__('Esta seguro que desea borrar # "%s"?', true), $producto['Producto']['id'])); ?>
+			<?php echo $html->link(__('Borrar', true), array('action'=>'delete', $producto['Producto']['id']), null, sprintf(__('Esta seguro que desea borrar "%s"?', true), $producto['Producto']['name'])); ?>
 		</td>
 	</tr>
 <?php
