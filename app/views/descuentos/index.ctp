@@ -8,7 +8,6 @@ echo $paginator->counter(array(
 ?></p>
 <table cellpadding="0" cellspacing="0">
 <tr>
-	<th><?php echo $paginator->sort('id');?></th>
 	<th><?php echo $paginator->sort('Nombre');?></th>
 	<th><?php echo $paginator->sort('Descripción');?></th>
 	<th><?php echo $paginator->sort('Porcentaje');?></th>
@@ -26,9 +25,6 @@ foreach ($descuentos as $descuento):
 ?>
 	<tr<?php echo $class;?>>
 		<td>
-			<?php echo $descuento['Descuento']['id']; ?>
-		</td>
-		<td>
 			<?php echo $descuento['Descuento']['name']; ?>
 		</td>
 		<td>
@@ -44,9 +40,8 @@ foreach ($descuentos as $descuento):
 			<?php echo $descuento['Descuento']['modified']; ?>
 		</td>
 		<td class="actions">
-			<?php echo $html->link(__('Ver', true), array('action'=>'view', $descuento['Descuento']['id'])); ?>
 			<?php echo $html->link(__('Editar', true), array('action'=>'edit', $descuento['Descuento']['id'])); ?>
-			<?php echo $html->link(__('Borrar', true), array('action'=>'delete', $descuento['Descuento']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $descuento['Descuento']['id'])); ?>
+			<?php echo $html->link(__('Borrar', true), array('action'=>'delete', $descuento['Descuento']['id']), null, sprintf(__('¿Está seguro que desea borrar el descuento: %s?', true), $descuento['Descuento']['name'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>

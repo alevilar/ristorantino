@@ -3,37 +3,23 @@
 <p>
 <?php
 echo $paginator->options(array('url'=>$this->params['PaginateConditions']));
-
-echo $paginator->counter(array(
-'format' => __('Pagina %page% de %pages%, mostrando %current% elementos de %count%.', true)
-));
-?></p>
+//debug($paginator->params['paging']['Producto']['count']);
+echo $paginator->counter(array('format' => __('Pagina %page% de %pages%, mostrando %current% elementos de %count%.', true)));?></p>
 <table class="productos" cellpadding="0" cellspacing="0">
 
 <tr>
-	<th><?php echo $form->create("Producto",array("action"=>"index")); echo $form->input("id") ?></th>
-	<th><?php echo $form->input('name',array('style'=>'width:170px;', 'label'=>false));?></th>
-	<th><?php echo $form->input('abrev',array('style'=>'width:145px;','label'=>false));?></th>
-	<th><?php echo $form->input('Comandera.name',array('style'=>'width:85px;','label'=>false));?></th>
-	<th><?php echo $form->input('Categoria.name',array('style'=>'width:85px;','label'=>false));?></th>
-	<th><?php echo $form->input('precio',array('style'=>'width:40px;','label'=>false));?></th>
-        <th><?php echo $form->input('order',array('style'=>'width:20px;','label'=>false));?></th>
-	<th>&nbsp;</th>
-	<th class="actions"><?php echo $form->end("Buscar")?></th>
-</tr>
-
-<tr>
-	<th></th>
 	<th><?php echo $paginator->sort('Nombre','name');?></th>
-	<th><?php echo $paginator->sort('abreviatura','abrev');?></th>
+	<th><?php echo $paginator->sort('Abreviatura','abrev');?></th>
 	<th><?php echo $paginator->sort('Comandera','Comandera.name');?></th>
 	<th><?php echo $paginator->sort('Categoria','Categoria.name');?></th>
-	<th><?php echo $paginator->sort('precio');?></th>
-        <th><?php echo $paginator->sort('order');?></th>
+	<th><?php echo $paginator->sort('Precio');?></th>
+        <th><?php echo $paginator->sort('Orden','order');?></th>
 	<th><?php echo $paginator->sort('Creado','created');?></th>
 	<th class="actions"><?php __('Acciones');?></th>
 </tr>
 <?php
+
+if ($paginator->params['paging']['Producto']['count']!=0) {
 $i = 0;
 foreach ($productos as $producto):
 	$class = null;
@@ -42,9 +28,6 @@ foreach ($productos as $producto):
 	}
 ?>
 	<tr<?php echo $class;?>>
-		<td>
-		
-		</td>
 		<td>
 			<?php 
                          $name = ($producto['Producto']['deleted'])? 
@@ -75,11 +58,31 @@ foreach ($productos as $producto):
 		</td>
 		<td class="actions">
 			<?php echo $html->link(__('Editar', true), array('action'=>'edit', $producto['Producto']['id'])); ?>
-			<?php echo $html->link(__('Borrar', true), array('action'=>'delete', $producto['Producto']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $producto['Producto']['id'])); ?>
+			<?php echo $html->link(__('Borrar', true), array('action'=>'delete', $producto['Producto']['id']), null, sprintf(__('¿Esta seguro que desea borrar el producto: %s?', true), $producto['Producto']['name'])); ?>
 		</td>
 	</tr>
-<?php endforeach; ?>
+<?php 
+endforeach; 
+
+}else{
+    echo('<td>No se encontraron elementos</td>');
+}
+    
+?>
+        <tr>
+	<?php echo $form->create("Producto",array("action"=>"index")); echo $form->input("id") ?>
+	<th><?php echo $form->input('name',array('style'=>'width:170px;','placeholder'=>'Nombre del producto', 'label'=>false));?></th>
+	<th><?php echo $form->input('abrev',array('style'=>'width:145px;','placeholder'=>'Abreviatura','label'=>false));?></th>
+	<th><?php echo $form->input('Comandera.name',array('style'=>'width:85px;','placeholder'=>'Comandera','label'=>false));?></th>
+	<th><?php echo $form->input('Categoria.name',array('style'=>'width:85px;','placeholder'=>'Categoria','label'=>false));?></th>
+	<th><?php echo $form->input('precio',array('style'=>'width:40px;','placeholder'=>'Precio','label'=>false));?></th>
+        <th><?php echo $form->input('order',array('style'=>'width:35px;','placeholder'=>'Orden','label'=>false));?></th>
+	<th>&nbsp;</th>
+	<th class="actions"><?php echo $form->end("Buscar")?></th>
+        </tr>
 </table>
+
+
 </div>
 <div class="paging">
 	<?php echo $paginator->prev('<< '.__('anterior', true), array(), null, array('class'=>'disabled'));?>

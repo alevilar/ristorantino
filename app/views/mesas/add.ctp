@@ -3,8 +3,10 @@
 	<fieldset>
  		<legend><?php __('Agregar Mesa');?></legend>
 	<?php
+        debug($mozos);
 		echo $form->input('numero', array('label'=>'Numero de Mesa', 'after'=>'<br>Este dato modifica el valor estadistico acumulado por mesa. Lo ideal es poner el numero de mesa verdadero, caso contrario poner un numero alto.'));
-		echo $form->input('mozo_id');
+		//$options = array('mozo_id'.'user.nombre');
+                echo $form->input('mozo_id');
 		echo $form->input('total', array('label'=>'Importe Total'));
 		//echo $form->input('descuento_id');
 		//echo $form->input('created');
