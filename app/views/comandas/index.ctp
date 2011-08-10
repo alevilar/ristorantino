@@ -1,4 +1,9 @@
+        <?php    
+        $menubread=array();
+        echo $this->element('menuadmin', array('menubread'=>$menubread));
+        ?>
 <div class="comandas index">
+
 <h2>Listado de Comandas Activas</h2>
 
 <div>

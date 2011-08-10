@@ -1,3 +1,11 @@
+        <?php    
+        $menubread=array();
+        $menubread[1]['name'] = 'Productos';
+        $menubread[1]['link'] = '/productos';     
+        echo $this->element('menuadmin', array('menubread'=>$menubread));
+        ?>
+
+
 <div class="productos form">
 <?php echo $form->create('Producto');?>
 	<fieldset>

@@ -1,3 +1,9 @@
+        <?php    
+            $menubread=array();    
+            echo $this->element('menuadmin', array('menubread'=>$menubread));
+        ?>
+        
+        
 <?php
 $paginator->options(array('url' => $this->passedArgs)); 
 ?>

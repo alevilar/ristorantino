@@ -182,6 +182,71 @@ class ProductosController extends AppController {
         }
         
         
+        function sinpreciosfuturos(){
+            
+		$this->params['PaginateConditions'] = array();
+		if(!empty($this->data)){
+			$condiciones = array();
+			$pagCondiciones = array();
+			foreach($this->data as $modelo=>$campos){
+				foreach($campos as $key=>$val){
+                                                                        
+                                    if(!is_array($val)) {
+                                            $condiciones[$modelo.".".$key." LIKE"] = '%'.$val.'%';
+                                            $pagCondiciones[$modelo.".".$key] = $val;
+                                    }
+				}
+			}
+                        
+			$this->paginate[$this->modelClass] = array(
+				'conditions' => $condiciones,
+			);
+		}
+		
+		
+		if(!empty($this->passedArgs) && empty($this->data)){ 
+		 	$condiciones = array();
+			$pagCondiciones = array();
+			foreach($this->passedArgs as $campo=>$valor){
+				if($campo == 'page' || $campo == 'sort' || $campo == 'direction'){ 
+					continue;
+				}
+				$condiciones["$campo LIKE"] = '%'.$valor.'%';
+				$pagCondiciones[$campo] = $valor;
+				$this->data[$campo] = $valor;
+				
+			}
+			$this->paginate[$this->modelClass] = array(
+				'conditions' => $condiciones
+			);
+		 }   
+                                                
+                 $query = 'SELECT * FROM `productos` WHERE `id` NOT IN 
+                                (SELECT DISTINCT `producto_id` FROM `productos_precios_futuros`) 
+                                        ORDER BY `productos`.`id` ASC';
+                 
+                 $prod_sinpf = $this->Producto->query($query);
+                 
+//                 //debug($prod_sinpf);
+//                 
+//                 $condiciones["productos_precios NOT IN"] = '(SELECT DISTINCT `producto_id` FROM `productos_precios_futuros`)';
+//                 
+//                 	$this->paginate['Producto'] = array(
+//				'conditions' => $condiciones
+//			);
+                 
+                 
+		$this->Producto->recursive = 0;
+		$this->set('productos', $prod_sinpf);
+           
+            
+            
+        }
+        
+        
+        
+        
+        
         
       
 }

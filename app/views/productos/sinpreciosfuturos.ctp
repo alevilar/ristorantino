@@ -1,18 +1,14 @@
-        <?php    
-        $menubread=array();
-        echo $this->element('menuadmin', array('menubread'=>$menubread));
-        ?>
-
 <div class="productos index">
-<h2><?php __('Productos con precios futuros');?></h2>
+<h2><?php __('Productos sin precios futuros');?></h2>
 <p>
 <?php
-
+/*
 echo $paginator->options(array('url'=>$this->params['PaginateConditions']));
 
 echo $paginator->counter(array(
 'format' => __('Pagina %page% de %pages%, mostrando %current% elementos de %count%.', true)
 ));
+*/
 ?></p>
 <table class="productos" cellpadding="0" cellspacing="0">
 
@@ -23,7 +19,6 @@ echo $paginator->counter(array(
                                 'options'=>array(0=>'NO', 1=>'SI' ),
                                 'label'=>'Con precio futuro o no'))*/ ;?>
     
-    
 <tr>
 	<th><?php echo $form->input('Producto.name',array('style'=>'width:170px;','label'=>false));?></th>
 	<th><?php echo $form->input('Producto.abrev',array('style'=>'width:150px;','label'=>false));?></th>
@@ -33,14 +28,15 @@ echo $paginator->counter(array(
 </tr>
 
 <tr>
-	<th><?php echo $paginator->sort('Nombre','name');?></th>
-	<th><?php echo $paginator->sort('abreviatura','abrev');?></th>
-	<th><?php echo $paginator->sort('Precio','precio');?></th>
-	<th><?php echo $paginator->sort('Modificado','modified');?></th>
+	<th><?php //echo $paginator->sort('Nombre','name');?></th>
+	<th><?php //echo $paginator->sort('abreviatura','abrev');?></th>
+	<th><?php //echo $paginator->sort('Precio','precio');?></th>
+	<th><?php //echo $paginator->sort('Modificado','modified');?></th>
 	<th class="actions"><?php __('Acciones');?></th>
 </tr>
 <?php
 $i = 0;
+debug($productos);
 foreach ($productos as $producto):
 	$class = null;
 	if ($i++ % 2 == 0) {
@@ -83,14 +79,14 @@ endforeach; ?>
 </table>
 </div>
 <div class="paging">
-	<?php echo $paginator->prev('<< '.__('anterior', true), array(), null, array('class'=>'disabled'));?>
- | 	<?php echo $paginator->numbers();?>
-	<?php echo $paginator->next(__('próximo', true).' >>', array(), null, array('class'=>'disabled'));?>
+	<?php //echo $paginator->prev('<< '.__('anterior', true), array(), null, array('class'=>'disabled'));?>
+ | 	<?php //echo $paginator->numbers();?>
+	<?php //echo $paginator->next(__('próximo', true).' >>', array(), null, array('class'=>'disabled'));?>
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $html->link(__('Aplicar precios futuros', true), array('controller'=>'productos','action'=>'actualizarPreciosFuturos'), null, sprintf(__('¿Esta seguro que desea actualizar los precios futuros?', true))); ?></li>
+		<li><?php echo $html->link(__('Aplicar precios futuros', true), array('action'=>'actualizarPreciosFuturos'), null, sprintf(__('¿Esta seguro que desea actualizar los precios futuros?', true))); ?></li>
 		<li><?php echo $html->link(__('Listar Productos', true), '/productos/index'); ?></li>
-                <?php //echo $html->link(__('Productos sin precios futuros', true), array('controller'=>'productos','action'=>'sinpreciosfuturos')); ?>
+                <li><?php echo $html->link(__('Productos con precios futuros', true), array('controller'=>'productos_precios_futuros','action'=>'index')); ?></li>
         </ul>
 </div>

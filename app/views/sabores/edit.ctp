@@ -1,3 +1,11 @@
+        <?php    
+        $menubread=array();
+        $menubread[1]['name'] = 'Sabores';
+        $menubread[1]['link'] = '/sabores';     
+        echo $this->element('menuadmin', array('menubread'=>$menubread));
+        ?>
+
+
 <div class="sabores form">
 <?php echo $form->create('Sabor');?>
 <fieldset>

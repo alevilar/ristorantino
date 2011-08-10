@@ -1,11 +1,23 @@
+        <?php    
+        $menubread=array();
+        $menubread[1]['name'] = 'Usuarios';
+        $menubread[1]['link'] = '/users';     
+        echo $this->element('menuadmin', array('menubread'=>$menubread));
+        ?>
+
+
 <div class="users form">
 <?php echo $form->create('User');?>
 	<fieldset>
  		<legend><?php __('Editar Usuario');?></legend>
 	<?php
+        
         echo $html->link('Modificarle la Contraseña','/users/cambiar_password/'.$this->data['User']['id'], array('class'=>'cambiopass'));?>
         <?php
 		echo $form->input('id');
+                    echo "</br></br><h3>Rol del usuario: <strong> ";
+                    echo ($this->data['User']['role']);
+                    echo "</strong></h3>";
                 echo $form->input('grupo',array('type'=>'select','label'=>'Tipo de Usuario','empty'=>'Seleccione', 'options'=>$aros));
 		echo $form->input('username');
 		echo $form->input('nombre');

@@ -1,3 +1,14 @@
+    <?php    
+    $i=0;
+    $menubread[$i]['name'] = 'Admin';
+    $menubread[$i]['link'] = '/pages/administracion';
+
+    echo $this->element('menuadmin', array('menubread'=>$menubread));
+    ?>
+
+
+
+
 <div class="mesas form">
 <?php echo $form->create('Mesa');?>
 	<fieldset>

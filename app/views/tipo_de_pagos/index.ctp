@@ -1,3 +1,10 @@
+    <?php  
+        $menubread=array();
+        echo $this->element('menuadmin', array('menubread'=>$menubread));
+     ?>
+
+
+
 <div class="tipoDePagos index">
 <h2><?php __('Tipo de Pagos');?></h2>
 <p>

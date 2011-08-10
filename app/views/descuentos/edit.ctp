@@ -1,11 +1,19 @@
+     <?php  
+        $menubread=array();
+        $menubread[1]['name'] = 'Descuentos';
+        $menubread[1]['link'] = '/descuentos';
+        echo $this->element('menuadmin', array('menubread'=>$menubread));
+     ?>
+
+
 <div class="descuentos form">
 <?php echo $form->create('Descuento');?>
 	<fieldset>
  		<legend><?php __('Editar Descuento');?></legend>
 	<?php
 		echo $form->input('id');
-		echo $form->input('name');
-		echo $form->input('description');
+		echo $form->input('name',array('label'=>'Nombre'));
+		echo $form->input('description',array('label'=>'Descripción'));
 		echo $form->input('porcentaje',array('after'=>'Sólo introducir el número, sin el signo de porcentaje.'));
 			?>
 <?php echo $form->end('Submit');?>

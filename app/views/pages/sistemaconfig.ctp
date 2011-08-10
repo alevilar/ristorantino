@@ -1,3 +1,7 @@
+        <?php    
+        $menubread=array();
+        echo $this->element('menuadmin', array('menubread'=>$menubread));
+        ?>
 
 <div class="grid_6 administracion_menu push_4">
     <h1>Acciones del sistema</h1>

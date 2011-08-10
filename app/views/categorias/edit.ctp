@@ -1,3 +1,10 @@
+        <?php    
+        $menubread=array();
+        $menubread[1]['name'] = 'Categorias';
+        $menubread[1]['link'] = '/categorias';     
+        echo $this->element('menuadmin', array('menubread'=>$menubread));
+        ?>
+
 <div class="categorias form">
 <?php echo $form->create('Categoria');?>
 	<fieldset>
@@ -6,8 +13,8 @@
 	
 		echo $form->input('id');
 		echo $form->input('parent_id',array('type'=>'select', 'options'=> $categorias, 'default'=>1,'label'=>'Categoria Padre'));
-		echo $form->input('name');
-		echo $form->input('description');
+		echo $form->input('name',array('label'=>'Nombre'));
+		echo $form->input('description',array('label'=>'Descripción'));
 	?>
 <?php echo $form->end('Submit');?>
 </fieldset>

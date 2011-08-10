@@ -12,7 +12,8 @@ class MesasController extends AppController {
 
     function index() {
         $this->paginate['Mesa'] = array(
-                'contain'	 => array('Mozo(numero)','Cliente'=>array('Descuento'))
+                'contain'	 => array('Mozo(numero)','Cliente'=>array('Descuento')),
+                'order' => array('Mesa.created' => 'asc')
         );
 
 

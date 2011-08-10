@@ -1,3 +1,8 @@
+        <?php    
+        $menubread=array();   
+        echo $this->element('menuadmin', array('menubread'=>$menubread));
+        ?>
+
 <div class="productos index">
 <h2><?php __('Productos');?></h2>
 <p>
@@ -12,7 +17,7 @@ echo $paginator->counter(array('format' => __('Pagina %page% de %pages%, mostran
 	<th><?php echo $paginator->sort('Abreviatura','abrev');?></th>
 	<th><?php echo $paginator->sort('Comandera','Comandera.name');?></th>
 	<th><?php echo $paginator->sort('Categoria','Categoria.name');?></th>
-	<th><?php echo $paginator->sort('Precio');?></th>
+	<th><?php echo $paginator->sort('Precio','precio');?></th>
         <th><?php echo $paginator->sort('Orden','order');?></th>
 	<th><?php echo $paginator->sort('Creado','created');?></th>
 	<th class="actions"><?php __('Acciones');?></th>

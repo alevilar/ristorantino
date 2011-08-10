@@ -1,3 +1,8 @@
+        <?php    
+        $menubread=array();
+        echo $this->element('menuadmin', array('menubread'=>$menubread));
+        ?>
+
 <div class="users index">
 <h2><?php __('Usuarios');?></h2>
 <p>
@@ -11,6 +16,7 @@ echo $paginator->counter(array(
 	<th><?php echo $paginator->sort('Usuario','username');?></th>
 	<th><?php echo $paginator->sort('nombre');?></th>
 	<th><?php echo $paginator->sort('apellido');?></th>
+        <th><?php echo $paginator->sort('Rol','role');?></th>
 	<th><?php echo $paginator->sort('telefono');?></th>
 	<th class="actions"><?php __('Acciones');?></th>
 </tr>
@@ -31,6 +37,9 @@ foreach ($users as $user):
 		</td>
 		<td>
 			<?php echo $user['User']['apellido']; ?>
+		</td>
+                <td>
+			<?php echo $user['User']['role']; ?>
 		</td>
 		<td>
 			<?php echo $user['User']['telefono']; ?>

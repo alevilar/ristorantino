@@ -1,3 +1,13 @@
+    <?php    
+    $i=0;
+    $menubread[$i]['name'] = 'Admin';
+    $menubread[$i]['link'] = '/pages/administracion';
+
+    echo $this->element('menuadmin', array('menubread'=>$menubread));
+    ?>
+
+
+
 <div class="clientes index">
 <h2><?php __('Clientes');?></h2>
 <p>

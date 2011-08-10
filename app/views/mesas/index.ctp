@@ -7,6 +7,11 @@ echo $javascript->link('mesas/index_head', false);
 
 ?>
 
+    <?php 
+        $menubread=array();
+        echo $this->element('menuadmin', array('menubread'=>$menubread));
+    ?>
+
 <?php
 $paginator->options(array('url' => $this->passedArgs));
 ?>

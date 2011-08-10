@@ -1,3 +1,9 @@
+    <?php 
+        $menubread=array();
+        echo $this->element('menuadmin', array('menubread'=>$menubread));
+    ?>
+
+
 <div class="categorias index">
 <h2><?php __('Categorias');?></h2>
 
@@ -19,7 +25,6 @@ while(list($categoria_id, $categoria_name) = each($categorias)):
 			<span style="text-align: left;"><?php echo $html->image('right.png',array('width'=>'22px;'))."($categoria_id) $categoria_name"; ?></span>
 		</td>
 		<td class="actions" align="left">
-			<?php echo $html->link(__('Ver', true), array('action'=>'view', $categoria_id)); ?>
 			<?php echo $html->link(__('Editar', true), array('action'=>'edit', $categoria_id)); ?>
 			<?php echo $html->link(__('Borrar', true), array('action'=>'delete', $categoria_id), null, sprintf(__('Seguro que querés borrar la categoria # %s?', true), $categoria_name)); ?>
 		</td>

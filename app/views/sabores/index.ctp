@@ -1,3 +1,8 @@
+        <?php    
+        $menubread=array();
+        echo $this->element('menuadmin', array('menubread'=>$menubread));
+        ?>
+
 <div class="sabores index">
 <h2><?php __('Sabores');?></h2>
 <p>

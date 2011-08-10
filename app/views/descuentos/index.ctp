@@ -1,3 +1,10 @@
+    <?php  
+        $menubread=array();
+        echo $this->element('menuadmin', array('menubread'=>$menubread));
+     ?>
+
+
+
 <div class="descuentos index">
 <h2><?php __('Descuentos');?></h2>
 <p>
