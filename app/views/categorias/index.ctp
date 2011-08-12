@@ -1,6 +1,5 @@
     <?php 
-        $menubread=array();
-        echo $this->element('menuadmin', array('menubread'=>$menubread));
+        echo $this->element('menuadmin');
     ?>
 
 

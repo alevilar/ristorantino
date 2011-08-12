@@ -1,8 +1,5 @@
      <?php  
-        $menubread=array();
-        $menubread[1]['name'] = 'Descuentos';
-        $menubread[1]['link'] = '/descuentos';
-        echo $this->element('menuadmin', array('menubread'=>$menubread));
+        echo $this->element('menuadmin');
      ?>
 
 

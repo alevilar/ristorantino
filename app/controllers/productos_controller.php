@@ -4,6 +4,12 @@ class ProductosController extends AppController {
 	var $name = 'Productos';
 	var $helpers = array('Html', 'Form');
 
+        function beforeFilter() {
+            parent::beforeFilter();
+            $this->rutaUrl_for_layout[] =array('name'=> 'Admin','link'=>'/pages/administracion' );
+        }
+        
+        
 	function index() {
 		$this->params['PaginateConditions'] = array();
 		
@@ -91,6 +97,7 @@ class ProductosController extends AppController {
 	}
 
 	function add() {
+            $this->rutaUrl_for_layout[] =array('name'=> 'Productos','link'=>'/productos' );
 		if (!empty($this->data)) {
 			$this->Producto->create();
 			if ($this->Producto->save($this->data)) {
@@ -106,6 +113,7 @@ class ProductosController extends AppController {
 	}
 
 	function edit($id = null) {
+            $this->rutaUrl_for_layout[] =array('name'=> 'Productos','link'=>'/productos' );
 		if (!$id && empty($this->data)) {
 			$this->Session->setFlash(__('Invalid Producto', true));
 			$this->redirect(array('action'=>'index'));
@@ -183,7 +191,7 @@ class ProductosController extends AppController {
         
         
         function sinpreciosfuturos(){
-            
+             $this->rutaUrl_for_layout[] =array('name'=> 'Precios Futuros','link'=>'/productos_precios_futuros' );
 		$this->params['PaginateConditions'] = array();
 		if(!empty($this->data)){
 			$condiciones = array();

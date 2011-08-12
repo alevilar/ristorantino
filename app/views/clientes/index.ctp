@@ -1,9 +1,5 @@
     <?php    
-    $i=0;
-    $menubread[$i]['name'] = 'Admin';
-    $menubread[$i]['link'] = '/pages/administracion';
-
-    echo $this->element('menuadmin', array('menubread'=>$menubread));
+    echo $this->element('menuadmin');
     ?>
 
 

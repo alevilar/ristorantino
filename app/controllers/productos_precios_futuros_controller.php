@@ -1,6 +1,11 @@
 <?php
 
 class ProductosPreciosFuturosController extends AppController {
+    
+            function beforeFilter() {
+            parent::beforeFilter();
+            $this->rutaUrl_for_layout[] =array('name'=> 'Admin','link'=>'/pages/administracion' );
+        }
 
     function index() {
 		$this->params['PaginateConditions'] = array();

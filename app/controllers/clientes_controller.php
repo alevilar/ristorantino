@@ -3,7 +3,13 @@ class ClientesController extends AppController {
 
 	var $name = 'Clientes';
 	var $helpers = array('Html', 'Form', 'Ajax');
-
+        
+        
+        function beforeFilter() {
+            parent::beforeFilter();
+            $this->rutaUrl_for_layout[] =array('name'=> 'Admin','link'=>'/pages/administracion' );
+        }
+        
 	function index() {
            
             $this->params['PaginateConditions'] = array();
@@ -57,6 +63,7 @@ class ClientesController extends AppController {
 	}
 
 	function view($id = null) {
+            $this->rutaUrl_for_layout[] =array('name'=> 'Clientes','link'=>'/clientes' );
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid Cliente.', true));
 			$this->redirect(array('action'=>'index'));
@@ -65,6 +72,7 @@ class ClientesController extends AppController {
 	}
 
 	function add() {
+            $this->rutaUrl_for_layout[] =array('name'=> 'Clientes','link'=>'/clientes' );
 		if (!empty($this->data)) {
 			$this->Cliente->create();
 			if ($this->Cliente->save($this->data)) {
@@ -102,6 +110,7 @@ class ClientesController extends AppController {
 	}
 
 	function edit($id = null) {
+            $this->rutaUrl_for_layout[] =array('name'=> 'Clientes','link'=>'/clientes' );
 		if (!$id && empty($this->data)) {
 			$this->Session->setFlash(__('Cliente incorrecto', true));
 			$this->redirect(array('action'=>'index'));

@@ -8,8 +8,7 @@ echo $javascript->link('mesas/index_head', false);
 ?>
 
     <?php 
-        $menubread=array();
-        echo $this->element('menuadmin', array('menubread'=>$menubread));
+        echo $this->element('menuadmin');
     ?>
 
 <?php

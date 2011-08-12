@@ -4,11 +4,14 @@ class ComandasController extends AppController {
 	var $name = 'Comandas';
 	var $components = array( 'Printer');
 
-        
+        function beforeFilter() {
+            parent::beforeFilter();
+            $this->rutaUrl_for_layout[] =array('name'=> 'Admin','link'=>'/pages/administracion' );
+        }
+    
 	function add($mesa_id = null){
 
             //Configure::write('debug',0);
-
             if (isset($this->data)):
                 $this->Comanda->create();
                 if ($this->Comanda->save($this->data)) {

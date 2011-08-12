@@ -1,3 +1,7 @@
+        <?php     
+            echo $this->element('menuadmin');
+        ?>
+
 <div class="mozos form">
 <?php echo $form->create('Mozo');?>
 	<fieldset>

@@ -247,8 +247,9 @@ table tr th a{
 div.message {
 	clear: both;
 	color: #e3e3e4;
-	font-weight: bold;
-	margin: 1em 0;
+	font-weight: normal;
+	margin: 0;
+        font-size: 110%;
 }
 div.error-message {
 	clear: both;

@@ -3,7 +3,12 @@ class SaboresController extends AppController {
 
 	var $name = 'Sabores';
 	var $helpers = array('Html', 'Form');
-
+        
+        function beforeFilter() {
+            parent::beforeFilter();
+            $this->rutaUrl_for_layout[] =array('name'=> 'Admin','link'=>'/pages/administracion' );
+        }
+        
 	function index() {
 		if(!empty($this->data)){
 			$condiciones = array();
@@ -36,6 +41,7 @@ class SaboresController extends AppController {
 	}
 
 	function add() {
+            $this->rutaUrl_for_layout[] =array('name'=> 'Gustos y Sabores','link'=>'/sabores' );
 		if (!empty($this->data)) {
 			$this->Sabor->create();
 			if ($this->Sabor->save($this->data)) {
@@ -50,6 +56,7 @@ class SaboresController extends AppController {
 	}
 
 	function edit($id = null) {
+            $this->rutaUrl_for_layout[] =array('name'=> 'Gustos y Sabores','link'=>'/sabores' );
 		if (!$id && empty($this->data)) {
 			$this->Session->setFlash(__('Invalid Sabor', true));
 			$this->redirect(array('action'=>'index'));

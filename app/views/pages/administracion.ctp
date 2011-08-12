@@ -1,4 +1,4 @@
-
+<div class="grid_11 push_1">
 <div class="grid_6 administracion_menu">
     <div class="grid_7 alpha omega">
     <h2>Mesas</h2>
@@ -34,7 +34,7 @@
     echo $html->link('Categorias','/categorias').'<br>';
     echo $html->link('Productos','/productos').'<br>';
     echo $html->link('Gustos y Sabores','/sabores').'<br>';
-    echo $html->link('Aplicar Cambios de Precios Futuros','/productos_precios_futuros').'<br>';
+    echo $html->link('Precios Futuros','/productos_precios_futuros').'<br>';
     ?>
 
     <!--
@@ -65,4 +65,5 @@
     </div>
     
 
+</div>
 </div>

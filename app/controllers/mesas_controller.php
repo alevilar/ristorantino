@@ -8,8 +8,11 @@ class MesasController extends AppController {
     /* @var $Printer PrinterComponent */
     var $Printer;
 
-
-
+    function beforeFilter() {
+        parent::beforeFilter();
+        $this->rutaUrl_for_layout[] =array('name'=> 'Admin','link'=>'/pages/administracion' );
+    }
+    
     function index() {
         $this->paginate['Mesa'] = array(
                 'contain'	 => array('Mozo(numero)','Cliente'=>array('Descuento')),
@@ -349,6 +352,8 @@ $tipo_pagos = $this->Mesa->Pago->TipoDePago->find('list');
 
 
     function edit($id = null) {
+        
+        $this->rutaUrl_for_layout[] =array('name'=> 'Mesas','link'=>'/mesas' );
         if (!$id && empty($this->data)) {
             $this->Session->setFlash(__('Invalid Mesa', true));
             $this->redirect(array('action'=>'index'));

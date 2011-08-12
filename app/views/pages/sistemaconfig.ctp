@@ -1,6 +1,5 @@
         <?php    
-        $menubread=array();
-        echo $this->element('menuadmin', array('menubread'=>$menubread));
+        echo $this->element('menuadmin');
         ?>
 
 <div class="grid_6 administracion_menu push_4">

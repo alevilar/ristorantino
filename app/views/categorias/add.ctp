@@ -1,3 +1,8 @@
+
+        <?php    
+        echo $this->element('menuadmin');
+        ?>
+
 <div class="categorias form">
 <?php echo $form->create('Categoria');?>
 	<fieldset>

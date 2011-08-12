@@ -1,3 +1,7 @@
+        <?php    
+        echo $this->element('menuadmin');
+        ?>
+
 <div class="productos form">
 <?php echo $form->create('Producto');?>
 	<fieldset>

@@ -1,11 +1,5 @@
     <?php    
-    $i=0;
-    $menubread[$i]['name'] = 'Admin';
-    $menubread[$i]['link'] = '/pages/administracion';
-    $i++;
-    $menubread[$i]['name'] = 'Clientes';
-    $menubread[$i]['link'] = '/clientes';
-    echo $this->element('menuadmin', array('menubread'=>$menubread));
+    echo $this->element('menuadmin');
     ?>
 
 

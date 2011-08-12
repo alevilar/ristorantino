@@ -1,9 +1,7 @@
-        <?php    
-        $menubread=array();
-        $menubread[1]['name'] = 'Mozos';
-        $menubread[1]['link'] = '/mozos';     
-        echo $this->element('menuadmin', array('menubread'=>$menubread));
+        <?php     
+            echo $this->element('menuadmin');
         ?>
+        
 
 <div class="mozos form">
 <?php echo $form->create('Mozo');?>
