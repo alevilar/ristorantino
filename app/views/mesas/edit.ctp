@@ -82,7 +82,7 @@
                 <?php //debug($comanda); ?>
              <?php foreach($comanda['DetalleComanda'] as $detalle){ ?>
                     <li>
-                            <?php echo "Cant Pedida: ".$detalle['cant']." Sacada: ".$detalle['cant_eliminada'] ?>
+                            <?php echo "Cant Pedida: ".$detalle['cant'].($detalle['cant_eliminada']!='0'?" Sacada: ".$detalle['cant_eliminada']:'') ?>
                             <br>
                             <span style="color: #AD0101; font-weight: normal; font-size: 120%; <?php  if(($detalle['cant']-$detalle['cant_eliminada'])==0) echo "text-decoration: line-through;"?> ">
                                     <?php  echo $detalle['cant']-$detalle['cant_eliminada'].")  ".(!empty($detalle['Producto']['name'])?$detalle['Producto']['name']:'')." [p-u $ ".$detalle['Producto']['precio']."]"?>
