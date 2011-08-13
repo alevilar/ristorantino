@@ -54,6 +54,5 @@ foreach ($tipoDePagos as $tipoDePago):
 	<ul>
 		<li><?php echo $html->link(__('Crear Tipo de pago', true), array('action'=>'add')); ?></li>
 		<li><?php echo $html->link(__('Listar Pagos', true), array('controller'=> 'pagos', 'action'=>'index')); ?> </li>
-		<li><?php echo $html->link(__('Nuevo Pago', true), array('controller'=> 'pagos', 'action'=>'add')); ?> </li>
 	</ul>
 </div>

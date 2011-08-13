@@ -95,7 +95,7 @@ foreach ($mesas as $mesa):
 		</td>
 
 		<td class="actions">
-			<?php if($mesa['Mesa']['time_cobro'] != '0000-00-00 00:00:00'){
+			<?php if($mesa['Mesa']['time_cerro'] != '0000-00-00 00:00:00'){
                                 echo $html->link(__('Reabrir', true), array('action'=>'reabrir', $mesa['Mesa']['id'])); 
                                 echo ('</br>');
                         }?>
