@@ -1,3 +1,7 @@
+    <?php  
+        echo $this->element('menuadmin');
+     ?>
+
 <div class="tipoDePagos form">
 <?php echo $form->create('TipoDePago');?>
 	<fieldset>

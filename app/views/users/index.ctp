@@ -1,3 +1,7 @@
+        <?php    
+        echo $this->element('menuadmin');
+        ?>
+
 <div class="users index">
 <h2><?php __('Usuarios');?></h2>
 <p>
@@ -11,6 +15,7 @@ echo $paginator->counter(array(
 	<th><?php echo $paginator->sort('Usuario','username');?></th>
 	<th><?php echo $paginator->sort('nombre');?></th>
 	<th><?php echo $paginator->sort('apellido');?></th>
+        <th><?php echo $paginator->sort('Rol','role');?></th>
 	<th><?php echo $paginator->sort('telefono');?></th>
 	<th class="actions"><?php __('Acciones');?></th>
 </tr>
@@ -32,13 +37,16 @@ foreach ($users as $user):
 		<td>
 			<?php echo $user['User']['apellido']; ?>
 		</td>
+                <td>
+			<?php echo $user['User']['role']; ?>
+		</td>
 		<td>
 			<?php echo $user['User']['telefono']; ?>
 		</td>
 		<td class="actions">
 			<?php echo $html->link(__('Ver', true), array('action'=>'view', $user['User']['id'])); ?>
 			<?php echo $html->link(__('Editar', true), array('action'=>'edit', $user['User']['id'])); ?>
-			<?php echo $html->link(__('Borrar', true), array('action'=>'delete', $user['User']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $user['User']['id'])); ?>
+			<?php echo $html->link(__('Borrar', true), array('action'=>'delete', $user['User']['id']), null, sprintf(__('¿Está seguro que desea borrar el usuario: %s?', true), $user['User']['username'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>

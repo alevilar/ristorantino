@@ -27,6 +27,13 @@ Risto.Adition.comandaFabrica.prototype = {
     save: function() {
         this.mesa.Comanda.unshift( this.comanda );
         return this.comanda;
+
+        if ( this.mesa && this.detallesComandas() ) {
+            var newComanda = new Risto.Adition.comanda();
+            newComanda.DetalleComanda( this.detallesComandas() );
+            this.mesa.Comanda.unshift( newComanda );
+        }
+        
     },
     
     

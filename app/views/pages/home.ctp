@@ -8,15 +8,15 @@
         <?php echo $html->link('Caja','/cashier/cobrar',array('style'=>'margin-left:auto;margin-right:auto;', 'id'=>'bton-caja'));?>
         </div>
 
-        <div class="grid_3 push_1 divboton" style="margin-left: 5%">   
+        <div class="grid_4 divboton">   
         <?php echo $html->link('Admin','/pages/administracion',array('style'=>'margin-left:auto;margin-right:auto;', 'id'=>'bton-admin'));?>
         </div>  
         
-        <div class="grid_3 push_1 divboton">  
+        <div class="grid_4 divboton">  
         <?php echo $html->link('Estadisticas','/pquery/stats/mesas_total',array('style'=>'margin-left:auto;margin-right:auto;', 'id'=>'bton-estadisticas'));?>
         </div>     
     
-        <div class="grid_3 push_1 divboton">  
+        <div class="grid_4 divboton">  
         <?php echo $html->link('Contabilidad','/account',array('style'=>'margin-left:auto;margin-right:auto;', 'id'=>'bton-contabilidad'));?>
         </div>       
         <!--

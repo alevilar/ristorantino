@@ -1,6 +1,10 @@
+        <?php    
+        echo $this->element('menuadmin');
+        ?>
+
 <div class="users view">
 <h2><?php  __('Usuario');?></h2>
-	<dl><?php $i = 0; $class = ' class="altrow"';?>
+	<dl><?php $i = 0; $class = ' ';?>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Id'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 			<?php echo $user['User']['id']; ?>

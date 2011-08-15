@@ -14,6 +14,9 @@ class User extends AppModel {
 		),
 		'password' => array('notempty'),
 		'nombre' => array('notempty'),
+                'role'=> array(
+			'required' => VALID_NOT_EMPTY,
+		),
 	);
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed

@@ -4,6 +4,11 @@ class MozosController extends AppController {
 	var $name = 'Mozos';
 	var $helpers = array('Html', 'Form');
 
+        function beforeFilter() {
+            parent::beforeFilter();
+            $this->rutaUrl_for_layout[] =array('name'=> 'Admin','link'=>'/pages/administracion' );
+        }
+        
 	function index() {
 		$this->Mozo->recursive = 0;
 		$this->set('mozos', $this->paginate());
@@ -19,6 +24,7 @@ class MozosController extends AppController {
 	}
 
 	function add() {
+            $this->rutaUrl_for_layout[] =array('name'=> 'Mozos','link'=>'/mozos' );
 		if (!empty($this->data)) {
 			//$this->Mozo->create();
 
@@ -37,6 +43,7 @@ class MozosController extends AppController {
 	}
 
 	function edit($id = null) {
+            $this->rutaUrl_for_layout[] =array('name'=> 'Mozos','link'=>'/mozos' );
 		if (!$id && empty($this->data)) {
 			$this->Session->setFlash(__('Invalid Mozo', true));
 			$this->redirect(array('action'=>'index'));

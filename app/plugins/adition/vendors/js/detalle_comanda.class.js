@@ -1,9 +1,4 @@
 Risto.Adition.detalleComanda = function(jsonData) {
-    this.Producto = ko.observable();
-    this.cant = ko.observable(0);
-    this.cant_eliminada = ko.observable(0);
-    this.esEntrada = ko.observable(false);
-    this.observacion = ko.observable('');
     
     this.DetalleSabor = ko.observableArray([]);
     
@@ -22,7 +17,13 @@ Risto.Adition.detalleComanda.prototype = {
     observacion: ko.observable(''),
     
     initialize: function(jsonData){
-      if ( jsonData ) {
+        this.Producto = ko.observable();
+        this.cant = ko.observable(0);
+        this.cant_eliminada = ko.observable(0);
+        this.esEntrada = ko.observable(false);
+        this.observacion = ko.observable('');
+
+        if ( jsonData ) {
             this.Producto =  ko.observable ( new Risto.Adition.producto( jsonData.Producto ) );
             return ko.mapping.fromJS(jsonData, {} , this);
       }  
@@ -33,12 +34,12 @@ Risto.Adition.detalleComanda.prototype = {
     /**
      * Dispara un evento de producto seleccionado
      */
-    seleccionar: function(){
+    seleccionar: function(){        
         this.cant( this.cant()+1 );
     },
     
     
-    deseleccionar: function(){     
+    deseleccionar: function(){
         if (this.cant() > 0 ) {
             this.cant( this.cant()-1 );
         }
@@ -57,7 +58,8 @@ Risto.Adition.detalleComanda.prototype = {
         var cntx = this;
         $('#obstext').val( this.observacion() );
         $('#form-comanda-producto-observacion').submit( function(){
-            cntx.observacion( $('#obstext').val() );
+            alert("lindo aa "+$('#obstext').val()  );
+            cntx.observacion(  $('#obstext').val() );
             $('#form-comanda-producto-observacion').unbind();
             return false;
         });

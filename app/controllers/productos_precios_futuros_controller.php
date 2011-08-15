@@ -1,6 +1,11 @@
 <?php
 
 class ProductosPreciosFuturosController extends AppController {
+    
+            function beforeFilter() {
+            parent::beforeFilter();
+            $this->rutaUrl_for_layout[] =array('name'=> 'Admin','link'=>'/pages/administracion' );
+        }
 
     function index() {
 		$this->params['PaginateConditions'] = array();
@@ -9,14 +14,7 @@ class ProductosPreciosFuturosController extends AppController {
 			$pagCondiciones = array();
 			foreach($this->data as $modelo=>$campos){
 				foreach($campos as $key=>$val){
-                                    
-                                    if($key == 'no_tiene_precio_asignado'){ 
-                                        if ($val) {
-                                           debug("valor en 1 del no tiene precio asignado");
-                                        }
-                                        continue;
-                                    }
-                                    
+                                                                      
                                     if(!is_array($val)) {
                                             $condiciones[$modelo.".".$key." LIKE"] = '%'.$val.'%';
                                             $pagCondiciones[$modelo.".".$key] = $val;
@@ -26,6 +24,7 @@ class ProductosPreciosFuturosController extends AppController {
 			$this->paginate[$this->modelClass] = array(
 				'conditions' => $condiciones,
 			);
+                        
 		}
 		
 		
@@ -44,10 +43,12 @@ class ProductosPreciosFuturosController extends AppController {
 			$this->paginate[$this->modelClass] = array(
 				'conditions' => $condiciones
 			);
+                        
 		 }   
 		 
 		 $this->paginate['ProductosPreciosFuturo']['contain'] = array('Producto.Categoria');
                  $prods = $this->paginate('ProductosPreciosFuturo');
+
                  
 		
 		$this->Producto->recursive = 0;

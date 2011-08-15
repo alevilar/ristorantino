@@ -74,7 +74,26 @@ class AppController extends Controller {
 //            //let cake look in the view path of pluginB
 //            $paths->viewPaths[] = ROOT.DS.APP_DIR.DS.'plugins'.DS.$currentPlugin.DS.'views'.DS;
 
+            
+            
+            
+            
       }
+      
+      
+        var $rutaUrl_for_layout = array();      
+
+        /**
+         * Before Render
+         * Antes de mostrar la vista
+         *
+         */
+        function beforeRender(){
+                $this->set('rutaUrl_for_layout', $this->rutaUrl_for_layout);               
+        }
+
+   
+   
         
 }
 ?>

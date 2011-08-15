@@ -1,3 +1,6 @@
+        <?php    
+        echo $this->element('menuadmin');
+        ?>
 <div class="users form">
     <?php echo $form->create('User');?>
     <fieldset>

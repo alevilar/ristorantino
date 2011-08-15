@@ -1,4 +1,4 @@
-
+<div class="grid_11 push_1">
 <div class="grid_6 administracion_menu">
     <div class="grid_7 alpha omega">
     <h2>Mesas</h2>
@@ -13,8 +13,6 @@
    <h2>Clientes</h2>
     <?php
     echo $html->link('Clientes','/clientes').'<br>';
-    echo $html->link('Tipos de Documentos','/tipo_documentos').'<br>';
-    echo $html->link('IVA Responsabilidades','/iva_responsabilidades').'<br>';
     echo $html->link('Descuentos','/descuentos').'<br>';
     echo $html->link('Tipo de Pagos','/TipoDePagos').'<br>';
     ?>   
@@ -36,7 +34,7 @@
     echo $html->link('Categorias','/categorias').'<br>';
     echo $html->link('Productos','/productos').'<br>';
     echo $html->link('Gustos y Sabores','/sabores').'<br>';
-    echo $html->link('Aplicar Cambios de Precios Futuros','/productos_precios_futuros').'<br>';
+    echo $html->link('Precios Futuros','/productos_precios_futuros').'<br>';
     ?>
 
     <!--
@@ -52,7 +50,6 @@
     
     <?php
     echo $html->link('Usuarios','/users/index').'<br>';
-    echo $html->link('Permisos','/admin/acl').'<br>';
     echo $html->link('Mozos','/mozos/index').'<br>';
     ?>
     </div>  
@@ -60,9 +57,13 @@
     <div class="grid_7 alpha omega">
     <h2>Sistema</h2>
     <?php
+    echo $html->link('Configuraciones del sistema','configavanzadas').'<br>';
+    ?>
+    <?php
     echo $html->link('Acciones del sistema','sistemaconfig').'<br>';
     ?>
     </div>
     
 
+</div>
 </div>

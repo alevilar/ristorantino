@@ -8,11 +8,15 @@ class MesasController extends AppController {
     /* @var $Printer PrinterComponent */
     var $Printer;
 
-
-
+    function beforeFilter() {
+        parent::beforeFilter();
+        $this->rutaUrl_for_layout[] =array('name'=> 'Admin','link'=>'/pages/administracion' );
+    }
+    
     function index() {
         $this->paginate['Mesa'] = array(
-                'contain'	 => array('Mozo(numero)','Cliente'=>array('Descuento'))
+                'contain'	 => array('Mozo(numero)','Cliente'=>array('Descuento')),
+                'order' => array('Mesa.created' => 'asc')
         );
 
 
@@ -285,9 +289,25 @@ class MesasController extends AppController {
                 $this->Session->setFlash(__('La mesa no pudo ser guardada. Intente nuevamente.', true));
             }
         }
-        $mozos = $this->Mesa->Mozo->find('list',array('fields'=>array('id','numero')));
-
-        $tipo_pagos = $this->Mesa->Pago->TipoDePago->find('list');
+        
+        $options['joins'] = array(
+            array('table' => 'users',
+            'alias' => 'User',
+            'type' => 'inner',
+            'conditions' => array(
+            'user.role = mozo'
+                )
+            ),
+        );
+              
+$mozos = $this->Mesa->Mozo->find('list',array('fields'=>array('Mozo.id','User.nombre'),'joins'=>array(  array('table' => 'users',
+                                                                                                            'alias' => 'User',
+                                                                                                            'type' => 'inner',
+                                                                                                            'conditions' => array(
+                                                                                                            'user.id = Mozo.user_id')
+                                                                                                            )
+                                                                                                          )));
+$tipo_pagos = $this->Mesa->Pago->TipoDePago->find('list');
 
         $this->set('tipo_pagos',$tipo_pagos);
         //$descuentos = $this->Mesa->Descuento->find('list');
@@ -332,6 +352,8 @@ class MesasController extends AppController {
 
 
     function edit($id = null) {
+        
+        $this->rutaUrl_for_layout[] =array('name'=> 'Mesas','link'=>'/mesas' );
         if (!$id && empty($this->data)) {
             $this->Session->setFlash(__('Invalid Mesa', true));
             $this->redirect(array('action'=>'index'));

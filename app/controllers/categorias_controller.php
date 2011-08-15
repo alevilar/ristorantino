@@ -7,7 +7,12 @@ class CategoriasController extends AppController {
 	
 	
 	//var $layout;
-
+        function beforeFilter() {
+            parent::beforeFilter();
+            $this->rutaUrl_for_layout[] =array('name'=> 'Admin','link'=>'/pages/administracion' );
+        }
+        
+        
 	function index() {
 		$this->Categoria->recursive = 0;	
 		$this->set('categorias',$this->Categoria->generatetreelist(null, null, null, '&nbsp;&nbsp;&nbsp;'));	
@@ -35,6 +40,7 @@ class CategoriasController extends AppController {
 	}
 
 	function add() {
+            $this->rutaUrl_for_layout[] =array('name'=> 'Categorias','link'=>'/categorias' );
 		Cache::delete('categorias');
 		if (!empty($this->data)) {
 			$this->Categoria->create();
@@ -61,6 +67,7 @@ class CategoriasController extends AppController {
         }
 
 	function edit($id = null) {
+            $this->rutaUrl_for_layout[] =array('name'=> 'Categorias','link'=>'/categorias' );
 		Cache::delete('categorias');
 		if (!$id && empty($this->data)) {
 			$this->Session->setFlash(__('Invalid Categoria', true));

@@ -1,4 +1,20 @@
 
+
+// mensaje de confirmacion cuando se esta por salir de la pagina (evitar perdidas de datos no actualizados)
+window.onbeforeunload=confirmacionDeSalida;
+
+
+
+$('#mesa-view').live('pagebeforeshow',function(event, ui){
+  
+  
+  var el = $('#comanda-detalle-collapsible');
+  el.find('div[data-role=collapsible]').collapsible();      
+  $('.comandas-items').listview();
+});
+ 
+
+ 
 $(document).ready(function() {
 
     $(document).bind("mesaSeleccionada", mesaSeleccionada);
@@ -9,6 +25,8 @@ $(document).ready(function() {
     $(document).bind("mesaCuponPendiente", mesaCuponPendiente);
     $(document).bind("mesaCobrada", mesaCobrada);
     $(document).bind("mesaBorrada", mesaBorrada);
+    $(document).bind(MOZOS_POSIBLES_ESTADOS.agragaMesa.event, ponerMesaComoCurrent);
+    
     
     
     //creacion de comandas
@@ -21,12 +39,36 @@ $(document).ready(function() {
     
     
     
+    // Form SUBMITS
+    $('#form-mesa-add').submit(agregarNuevaMesa);
+    
+    
+    
     // CLICKS
     $('A[href="#comanda-add-menu"]').click(function(){
         Risto.Adition.adicionar.nuevaComandaParaCurrentMesa();
     })
                  
 });
+
+
+function agregarNuevaMesa(e){
+    e.preventDefault();
+    
+    var rta = $('#form-mesa-add').serializeArray();
+        
+    var miniMesa = {};
+    for (var r in rta ) {
+        miniMesa[rta[r].name] = rta[r].value;
+    }
+    
+    var mesa = Risto.Adition.adicionar.crearNuevaMesa(miniMesa.numero, miniMesa.mozo_id);
+    Risto.Adition.adicionar.setCurrentMesa( mesa );
+    document.getElementById('form-mesa-add').reset(); // limpio el formulario
+    $('.ui-dialog').dialog('close');
+
+    return false;
+}
 
 
 function mesaCerrada(){
@@ -74,3 +116,25 @@ function abrirMesa(e) {
 function productoSeleccionado(e) {
     Risto.Adition.adicionar.currentMesa().agregarProducto(e.producto);
 }
+
+
+function ponerMesaComoCurrent(e) {
+//    alert("meti esta mesa actual");
+//    Risto.Adition.adicionar.setCurrentMesa( e.mesa );
+//    $.mobile.changePage( "#mesa-view", { transition: "slideup"} );	
+}
+
+
+
+function confirmacionDeSalida(e) {
+	if(!e) e = window.event;
+	//e.cancelBubble is supported by IE - this will kill the bubbling process.
+	e.cancelBubble = true;
+	e.returnValue = 'Seguro que deseas salir de la aplicación?\n si no hay datos guardados, los mismos se perderán'; //This is displayed on the dialog
+
+	//e.stopPropagation works in Firefox.
+	if (e.stopPropagation) {
+		e.stopPropagation();
+		e.preventDefault();
+	}
+    }

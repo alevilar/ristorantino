@@ -1,3 +1,7 @@
+        <?php    
+        echo $this->element('menuadmin');
+        ?>
+
 <div class="productos view">
 <h2><?php  __('Producto');?></h2>
 	<dl><?php $i = 0; $class = ' class="altrow"';?>

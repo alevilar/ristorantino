@@ -1,3 +1,7 @@
+    <?php    
+    echo $this->element('menuadmin');
+    ?>
+
 <script type="text/javascript">
     Event.observe(window, 'load', function(){
         if ($F('ClienteTipofactura') == 0){

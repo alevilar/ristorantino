@@ -1,13 +1,4 @@
 
-/**
- *  Adicion Class
- *
- *  constructor
- *
- */
-
-
-
 //Parametros de configuracion
 Risto.Adition.cubiertosObligatorios   = true;
 
@@ -21,47 +12,33 @@ Risto.Adition.adicionar = {
 
     yaMapeado: false,
     
-    __model: function(){
-        return Risto.Adition.koAdicionModel;
-    },
+    // Mozo Actualmente Activo
+    currentMozo: ko.observable(new Mozo()),
     
-    currentMozo: function(){
-        return Risto.Adition.koAdicionModel.currentMozo.apply(Risto.Adition.koAdicionModel, arguments);
-    },
+    // Mesa Actualmente activa
+    currentMesa: ko.observable(new Mesa()),
     
-    currentMesa: function(){
-        return Risto.Adition.koAdicionModel.currentMesa.apply(Risto.Adition.koAdicionModel, arguments);
-    },
+    // listado de mozos
+    mozos: ko.observableArray( [] ),
+     // orden del listado de mozos: Se puede poner cualquier valor que venga como atributo (campos de la bbdd de la tabla mozos)
+    mozosOrder: ko.observable('mozo_id'),
+    
+    mesas: ko.observableArray( [] ),
     
     nuevaComandaParaCurrentMesa: function(){
         this.currentMesa().nuevaComanda();
     },
     
-    
     menu: function(){
         return Risto.Adition.koAdicionModel.menu.apply(Risto.Adition.koAdicionModel, arguments);
     },
     
-    mesas: function(){
-        return Risto.Adition.koAdicionModel.mesas.apply(Risto.Adition.koAdicionModel, arguments);
-    },
-    
-    mozos: function(){
-        return Risto.Adition.koAdicionModel.mozos.apply(Risto.Adition.koAdicionModel, arguments);
-    },
-    
-    mozosOrder: function(){
-        return Risto.Adition.koAdicionModel.mozosOrder.apply(Risto.Adition.koAdicionModel, arguments);
-    },
 
     /**
      * Constructor
      */
     initialize: function() {
         this.getMesasAbiertas();
-        $(function(){
-           Risto.Adition.koAdicionModel.refreshBinding();
-        });
     },
 
     /**
@@ -152,6 +129,23 @@ Risto.Adition.adicionar = {
         for (var m in this.mesas()) {
             if ( this.mesas()[m].id() == id ) {
                 return this.mesas()[m];
+            }            
+        }
+        return false;
+    },
+    
+    
+    /**
+     * Busca un mozo por su ID en el listado de mozos
+     * devuelve al objeto Mozo en caso de encontrarlo.
+     * caso contrario devuelve false
+     * @param id Integer id del Mozo a buscar
+     * @return Mozo en caso de encontrarlo, false caso contrario
+     */
+    findMozoById: function(id){
+        for (var m in this.mozos()) {
+            if ( this.mozos()[m].id() == id ) {
+                return this.mozos()[m];
             }            
         }
         return false;
@@ -278,8 +272,8 @@ Risto.Adition.adicionar = {
      * 
      */
     __actualizarMozosConMesasAbiertas: function( data ) {
-        
-        if ( !this.yaMapeado ) {
+        var adn = Risto.Adition.adicionar;
+        if ( !adn.yaMapeado ) {
             // si aun no fue mappeado
             var mapOps = {
                 'mozos': {
@@ -291,11 +285,10 @@ Risto.Adition.adicionar = {
                     }
                 }
             }
-
-            Risto.Adition.koAdicionModel = ko.mapping.fromJS(data, mapOps, Risto.Adition.koAdicionModel );
-            this.yaMapeado = true;
+            adn.yaMapeado = true;
+            ko.mapping.fromJS(data, mapOps, adn );
         } else {
-            ko.mapping.updateFromJS(Risto.Adition.koAdicionModel, data);
+            return ko.mapping.updateFromJS(adn, data);
         }
         $(document).trigger('adicionMesasActualizadas');
     },
@@ -306,5 +299,49 @@ Risto.Adition.adicionar = {
             console.debug(left.numero());
             return left.numero() == right.numero() ? 0 : (parseInt(left.numero()) < parseInt(right.numero()) ? -1 : 1) 
         })
+    },
+    
+    
+    crearNuevaMesa: function(mesaNumero, mozoId){
+        var mozo = this.findMozoById(mozoId);
+        var mesa = new Mesa(mozo)
+        mesa.numero( mesaNumero );       
+        return mesa;        
     }
 };
+
+
+
+
+
+/*____________________________________ OBSERVABLES DEPENDIENTES ___________________________*/
+
+/******---      ADICION         -----******/
+
+
+Risto.Adition.adicionar.todasLasMesas = ko.dependentObservable( function(){
+    var mesasList = [];
+    if ( this.mozos ) {
+        for ( var m in this.mozos() ) {
+            mesasList = mesasList.concat( this.mozos()[m].mesas() );
+        }
+    }
+    return mesasList;
+}, Risto.Adition.adicionar);
+
+// listado de mesas, depende de las mesas de cada mozo, y el orden que le haya indicado
+Risto.Adition.adicionar.mesas = ko.dependentObservable( function(){
+                var mesasList = [];
+                var order = this.mozosOrder();
+
+                mesasList = this.todasLasMesas();
+                
+                if ( order ) {
+                    mesasList.sort(function(left, right) {
+                        return left[order]() == right[order]() ? 0 : (parseInt(left[order]()) < parseInt(right[order]()) ? -1 : 1) 
+                    })
+                }
+                return mesasList;
+
+}, Risto.Adition.adicionar);
+     

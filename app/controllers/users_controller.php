@@ -13,6 +13,11 @@ class UsersController extends AppController {
             'proveedor'   => 'Proveedor',
             );
 
+        function beforeFilter() {
+            parent::beforeFilter();
+            $this->rutaUrl_for_layout[] =array('name'=> 'Admin','link'=>'/pages/administracion' );
+        }
+        
 	function index() {
 		$this->User->recursive = 0;
 		$this->set('users', $this->paginate());
@@ -28,6 +33,7 @@ class UsersController extends AppController {
 	}
 
 	function view($id = null) {
+             $this->rutaUrl_for_layout[] =array('name'=> 'Usuarios','link'=>'/users' );
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid User.', true));
 			$this->redirect(array('action'=>'index'));
@@ -36,7 +42,8 @@ class UsersController extends AppController {
 	}
 
 	function add() {
-		if (!empty($this->data)) {
+             $this->rutaUrl_for_layout[] =array('name'=> 'Usuarios','link'=>'/users' );
+             if (!empty($this->data)) {
 			$this->User->create();
 			if ($this->User->save($this->data)) {
 				$this->Session->setFlash(__('The User has been saved', true));
@@ -52,7 +59,8 @@ class UsersController extends AppController {
 	}
 
 	function edit($id = null) {
-		if (!$id && empty($this->data)) {
+             $this->rutaUrl_for_layout[] =array('name'=> 'Usuarios','link'=>'/users' );
+                if (!$id && empty($this->data)) {
 			$this->Session->setFlash(__('Invalid User', true));
 			$this->redirect(array('action'=>'index'));
 		}
@@ -107,6 +115,7 @@ class UsersController extends AppController {
 	 * @param id del usuario
 	 */
 	function self_user_edit($id){
+             $this->rutaUrl_for_layout[] =array('name'=> 'Usuarios','link'=>'/users' );
 		if (!$id && empty($this->data) || $id != $this->Auth->user('id')) {
 			$this->Session->setFlash(__('Usuario Incorrecto', true));
 			$this->redirect('/pages/home');
@@ -132,6 +141,7 @@ class UsersController extends AppController {
 	 * @param id del usuario
 	 */
 	function cambiar_password($id){
+             $this->rutaUrl_for_layout[] =array('name'=> 'Usuarios','link'=>'/users' );
 		if (!empty($this->data)) {
 			if($this->comparePasswords()){ //me fijo que los passwords coincidan
 				if ($this->User->save($this->data, $validate = false)) {
