@@ -5,6 +5,7 @@ Risto.Adition.comanda = function(jsonData){
 
 
 Risto.Adition.comanda.prototype = {
+    // Array de DetalleComanda, cada detalleComanda es 1 producto
     DetalleComanda : ko.observableArray([]),
     
     initialize: function(jsonData) {
@@ -23,18 +24,6 @@ Risto.Adition.comanda.prototype = {
             return ko.mapping.fromJS(jsonData, mapOps, this);
         }
         return this;
-    },
-    
-    agregarProductos: function( listProductos ){
-        // creo un nuevo detalleComanda con cada Producto
-        var dc, p;
-        for(var p in listProductos) {
-            dc = new Risto.Adition.detalleComanda();
-            p  = new Risto.Adition.producto( listProductos[p] );
-
-            dc.Producto = p;
-        }
-        this.DetalleComanda.unshift( dc ) ;
     }
     
 }

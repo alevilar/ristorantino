@@ -5,12 +5,15 @@ Risto.Adition.detalleComanda = function(jsonData) {
     this.esEntrada = ko.observable(false);
     this.observacion = ko.observable('');
     
+    this.DetalleSabor = ko.observableArray([]);
+    
     return this.initialize(jsonData);
 }
 
 
 Risto.Adition.detalleComanda.prototype = {
     Producto: ko.observable(),
+    DetalleSabor: ko.observableArray(), // array de Sabores
 
     // cant de este producto seleccionado
     cant: ko.observable(0),
@@ -22,8 +25,8 @@ Risto.Adition.detalleComanda.prototype = {
       if ( jsonData ) {
             this.Producto =  ko.observable ( new Risto.Adition.producto( jsonData.Producto ) );
             return ko.mapping.fromJS(jsonData, {} , this);
-        }  
-        return this;
+      }  
+      return this;
     },
     
     

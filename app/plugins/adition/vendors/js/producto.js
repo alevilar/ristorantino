@@ -17,9 +17,14 @@ Risto.Adition.producto.prototype = {
         return this;
     },
     
+        
     seleccionar: function(){
-        var event =  $.Event(MENU_ESTADOS_POSIBLES.productoSeleccionado.event);
-        event.producto = this; 
-        $(document).trigger(event);
+        if ( this.Categoria.Sabor.length == 0 ) {
+            var event =  $.Event(MENU_ESTADOS_POSIBLES.productoSeleccionado.event);
+            event.producto = this; 
+            $(document).trigger(event);
+        } else {
+            Risto.Adition.adicionar.currentMesa().currentComanda().currentSabores( this.Categoria.Sabor );
+        }
     }
 }

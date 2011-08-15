@@ -57,7 +57,7 @@ Mesa.prototype = {
     total: ko.observable(0),
     numero: ko.observable(0),
     
-    // es la comanda que actualmente se esta haciendo
+    // es la comanda que actualmente se esta haciendo objeto comandaFabrica
     currentComanda: ko.observable(), 
     Comanda: ko.observableArray(),
     

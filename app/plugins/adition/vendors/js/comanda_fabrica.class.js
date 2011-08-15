@@ -2,35 +2,42 @@ Risto.Adition.comandaFabrica = function(mesa){
     return this.initialize(mesa);
 }
 
-cant = 0;
 Risto.Adition.comandaFabrica.prototype = {
     id: 0,
     mesa: new Mesa(),
+    
+    comanda: {},
+    
+    // array de los sabores del producto seleccionado
+    currentSabores: ko.observableArray([]),
+    
 //    productosSeleccionados: ko.observableArray([]),
-    detallesComandas: ko.observableArray([]),
+//    detallesComandas: ko.observableArray([]),
     
     
     initialize: function(mesa){       
+        this.comanda = new Risto.Adition.comanda();
+        
         this.mesa = mesa;
         this.id = 0;
-        this.detallesComandas = ko.observableArray([]);        
         return this;
     },
     
     
     save: function() {
-        if ( this.mesa && this.detallesComandas() ) {
-            var newComanda = new Risto.Adition.comanda();
-            console.debug( this.detallesComandas() );
-            newComanda.DetalleComanda( this.detallesComandas() );
-            this.mesa.Comanda.unshift( newComanda );
-        }
+        this.mesa.Comanda.unshift( this.comanda );
+        return this.comanda;
     },
     
     
     __findDetalleComandaPorProducto: function(prod) {
-        for( var sdc in this.detallesComandas() ){
-            if ( this.detallesComandas()[sdc].Producto().id == prod.id ) {
+        var prodIndex;
+        for( var sdc in this.comanda.DetalleComanda() ){
+            prodIndex = this.comanda.DetalleComanda()[sdc].Producto();
+            if ( prodIndex.id == prod.id ) {
+                if ( prodIndex.Sabor ) {
+                    
+                }
                 return sdc;
             }
         } 
@@ -38,22 +45,25 @@ Risto.Adition.comandaFabrica.prototype = {
     },
     
     /**
-     * Agrega un producto al listado de productos seleccionados
+     * Agrega un producto al listado de productos (DetalleComanda) seleccionados
      */
     agregarProducto: function(prod){
         var dc;
+        
+        // checkeo si el producto ya estaba cargado
         var dcIndex = this.__findDetalleComandaPorProducto(prod);
         
         if ( dcIndex < 0 ) {
             // producto aun no agregado a la lista, entonces lo agrego
             dc = new Risto.Adition.detalleComanda();
             dc.Producto(prod);
-            dc.seleccionar();
-            this.detallesComandas.unshift(dc);
+            // suma 1 al producto
+            dc.seleccionar(); 
+            this.comanda.DetalleComanda.unshift(dc);
             return true;
         } else {
             // el producto ya estaba agregado, asique simplemente lo sumo
-            this.detallesComandas()[dcIndex].seleccionar();
+            this.comanda.DetalleComanda()[dcIndex].seleccionar();
             return false;
         }
     }

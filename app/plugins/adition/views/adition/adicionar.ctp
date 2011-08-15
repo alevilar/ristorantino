@@ -240,7 +240,7 @@
             
         <div  style="width: 28%; margin-right: 2%; display: inline; float: left;">
            <ul id="ul-productos-seleccionados" class=" ui-listview " data-role="listview"
-               data-bind="template: {name: 'categorias-productos-seleccionados', foreach: currentMesa().currentComanda().detallesComandas}"
+               data-bind="template: {name: 'categorias-productos-seleccionados', foreach: currentMesa().currentComanda().comanda.DetalleComanda}"
                 >
                  <script id="categorias-productos-seleccionados" type="text/x-jquery-tmpl">
                      <li data-bind="visible: cant()"  class="ui-li ui-li-static ui-body-c">
@@ -301,6 +301,40 @@
                      </a>
                  </script>
            </div>
+        </div>
+    </div>
+        
+    <div data-role="footer"><h2>Menu footer</h2></div>
+    
+</div>  
+
+
+
+        
+<div data-role="page" id="page-sabores">
+    <div  data-role="header"  data-position="inline">
+        <h1>Seleccionar sabores para <span></span></h1>
+	<a href="#mesa-view" data-icon="check" data-theme="b" data-bind="click: function(){currentMesa().currentComanda().save()}">Guardar</a>        
+    </div>
+
+    <div data-role="content">                  
+           
+        <div style="width: 70%; display: inline; float: right;">
+
+           <div id="ul-sabores" 
+                data-bind="template: {name: 'listaSabores', foreach: currentMesa().currentComanda().currentSabores()} ">
+                <!-- Template de categorias       -->
+               <script id="listaSabores" type="text/x-jquery-tmpl">
+                   <a  data-bind="click: seleccionar, attr: {href: hrefSegunSabor}" data-theme="c" data-inline="true" data-role="button" class="ui-btn ui-btn-inline ui-btn-corner-all ui-shadow ui-btn-up-c">
+                       <span class="ui-btn-inner ui-btn-corner-all">
+                           <span class="ui-btn-text">
+                               <span data-bind="text: name"></span>                         
+                           </span>
+                       </span>
+                   </a>
+                </script>
+           </div>
+           
         </div>
     </div>
         

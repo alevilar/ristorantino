@@ -29,16 +29,25 @@ Risto.Adition.menu = {
         return this;
     },
     
+    update: function(){
+        this.__getRemoteMenu();
+        alert("menu actualizado");
+    },
+    
+    __getRemoteMenu: function(){
+        var este = this;
+        // si no hay categorias las cargo via AJAX
+        $.getJSON( urlDomain+'categorias/listar.json', function(data){
+            este.__iniciarCategoriasTreeServer(data)
+        } );
+    },
+    
     
     __armarMenu: function(){
         if ( localStorage.categoriasTree) {
             this.__iniciarCategoriasTreeLocalStorage();
         } else {
-            var este = this;
-            // si no hay categorias las cargo via AJAX
-            $.getJSON( urlDomain+'categorias/listar.json', function(data){
-                este.__iniciarCategoriasTreeServer(data)
-            } );
+            this.__getRemoteMenu();
         }
     },
     

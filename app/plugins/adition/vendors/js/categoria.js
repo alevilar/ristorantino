@@ -9,6 +9,7 @@ Risto.Adition.categoria.prototype = {
     Padre: {},
     Hijos: [],
     Producto: [],
+    Sabor: [],
     
     
     initialize: function(jsonData, parent){
@@ -16,6 +17,13 @@ Risto.Adition.categoria.prototype = {
             if ( typeof this[i] == 'undefined' ) {
                 this[i] = jsonData[i];
             } 
+        }
+        
+        if (jsonData.Sabor) {
+            this.Sabor = [];
+        }
+        for (var p in jsonData.Sabor){
+            this.Sabor.push( new Risto.Adition.sabor( jsonData.Sabor[p], this) );
         }
         
         if (jsonData.Producto) {

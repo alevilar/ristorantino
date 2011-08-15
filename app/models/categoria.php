@@ -32,10 +32,15 @@ class Categoria extends AppModel {
                 
 		$this->recursive = 1;
 		$this->id = $categoria_id;
+//                $this->contain(array(
+//                    'Producto', 
+//                    'Sabor',
+//                ));
 		$array_categoria = $this->read();
+//                debug($array_categoria );die;
                 $array_final = $array_categoria['Categoria'];
                 $array_final['Producto'] = $array_categoria['Producto'];
-                
+                $array_final['Sabor'] = $array_categoria['Sabor'];
 		//agarro los herederos del ROOT
 		$resultado = $this->children($categoria_id,1);
 

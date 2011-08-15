@@ -44,6 +44,7 @@
                     '/adition/js/comanda_fabrica.class',
                     '/adition/js/producto',
                     '/adition/js/categoria',
+                    '/adition/js/sabor.class',
                     
                     '/adition/js/detalle_comanda.class',
                     '/adition/js/comanda.class',
