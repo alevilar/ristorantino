@@ -1,4 +1,3 @@
-
 <script id="li-productos-detallecomanda" type="text/x-jquery-tmpl">
      <li  class="ui-li ui-li-static ui-body-c">
          <span data-type="horizontal" data-role="controlgroup" class="ui-corner-all ui-controlgroup ui-controlgroup-horizontal">
@@ -6,13 +5,11 @@
             <a data-bind="style: { background: esEntrada() ? '#437FBE' : ''}" data-role="button" data-iconpos="notext" data-icon="star" href="#" title="Entrada" data-theme="c" class="ui-btn ui-btn-icon-notext ui-corner-right ui-controlgroup-last ui-btn-up-c"><span class="ui-btn-inner ui-corner-right ui-controlgroup-last"><span class="ui-btn-text">Entrada</span><span class="ui-icon ui-icon-star ui-icon-shadow"></span></span></a>
          </span>
 
-         
-         <span data-bind="text: cant" style="right: auto" class="ui-li-count ui-btn-up-c ui-btn-corner-all"></span>
+
+         <span data-bind="text: realCant()" style="right: auto" class="ui-li-count ui-btn-up-c ui-btn-corner-all"></span>
          <span data-bind="text: Producto().name" style="margin-left: 20px;"></span>
      </li>
 </script>
-                                         
-                                         
                                          
                                          
 <!--
@@ -187,6 +184,9 @@
             <h1>Mesa N°<span data-bind="text: adn().currentMesa().numero"></span>, Mozo <span data-bind="text: adn().currentMesa().mozo().numero"></span>
                 <span class="mesa-total" style="color: red;">$<span data-bind="text: adn().currentMesa().total"></span></span>
             </h1>
+            
+            <a data-theme="e" data-bind="visible: adn().currentMesa().tieneComandaModificada()" href="#">Guardar Cambios de Comanda</a>
+            
 <!--            <div data-role="navbar">
                     <ul>
                         <li><a href="#mesa-view" class="ui-btn-active">Vista Común</a></li>
@@ -228,8 +228,7 @@
 
                                 <ul class="ui-listview " data-role="listview"
                                    data-bind="template: {name: 'li-productos-detallecomanda', foreach: DetalleComanda}"
-                                   style="margin: 0px;"                                    >
-                                        
+                                   style="margin: 0px;">
                                 </ul>                                                                           
                            </div>
                         </script>
@@ -300,7 +299,7 @@
                                     <span class="ui-icon ui-icon-grid ui-icon-shadow"></span>
                                 </span>
                             </a>
-                            <a data-bind="click: esEntrada() ? unsetEsEntrada : setEsEntrada, style: { background: esEntrada() ? '#437FBE' : ''}" data-role="button" data-iconpos="notext" data-icon="star" href="#" title="Entrada" data-theme="c" class="ui-btn ui-btn-icon-notext ui-corner-right ui-controlgroup-last ui-btn-up-c"><span class="ui-btn-inner ui-corner-right ui-controlgroup-last"><span class="ui-btn-text">Entrada</span><span class="ui-icon ui-icon-star ui-icon-shadow"></span></span></a>
+                            <a data-bind="click: toggleEsEntrada, style: { background: esEntrada() ? '#437FBE' : ''}" data-role="button" data-iconpos="notext" data-icon="star" href="#" title="Entrada" data-theme="c" class="ui-btn ui-btn-icon-notext ui-corner-right ui-controlgroup-last ui-btn-up-c"><span class="ui-btn-inner ui-corner-right ui-controlgroup-last"><span class="ui-btn-text">Entrada</span><span class="ui-icon ui-icon-star ui-icon-shadow"></span></span></a>
                          </span>
 
                          <span data-bind="text: Producto().name"></span>

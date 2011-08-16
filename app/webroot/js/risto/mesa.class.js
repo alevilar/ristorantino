@@ -419,6 +419,27 @@ Mesa.prototype = {
         }, function(data) {
             console.debug(data);
         });
+    },
+    
+    
+    /**
+     * Si tiene un detalleComanda modificado dentro del listado de comandas
+     * eme devuelve true
+     * @return boolean
+     */
+    tieneComandaModificada: function(){
+        var cc, ddcc;
+        for (var c in this.Comanda() ) {
+            cc = this.Comanda()[c];
+            for (var dc in cc.DetalleComanda() ){
+                // caa detalle comanda dentro del array de comandas
+                ddcc = cc.DetalleComanda()[dc];
+                if ( ddcc.modificada() == true ) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
     
 

@@ -5,16 +5,27 @@ window.onbeforeunload=confirmacionDeSalida;
 
 
 
+/**
+ *JQM 
+ * renderizado de cosas que se cargan dinamicamente en javascript
+ * en cada cambio de pagina, hacemos que se  vuelva a refrescar JQM 
+ * para enriquecer los elementos nuevos
+ *
+ */
 $('#mesa-view').live('pagebeforeshow',function(event, ui){
-  
-  
   var el = $('#comanda-detalle-collapsible');
   el.find('div[data-role=collapsible]').collapsible();      
   $('.comandas-items').listview();
 });
  
 
- 
+
+/**
+ *
+ *                  Eventos ONLOAD
+ *
+ *
+ */ 
 $(document).ready(function() {
 
     $(document).bind("mesaSeleccionada", mesaSeleccionada);
