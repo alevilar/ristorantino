@@ -1,3 +1,6 @@
+     <?php  
+        echo $this->element('menuadmin');
+     ?>
 <div class="tipoImpuestos form">
 <?php echo $form->create('TipoImpuesto');?>
 	<fieldset>

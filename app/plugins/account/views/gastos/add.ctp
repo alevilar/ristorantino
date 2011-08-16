@@ -1,3 +1,8 @@
+     <?php  
+        echo $this->element('menuadmin');
+     ?>
+  
+        
 <?php 
     echo $javascript->link('jquery/jquery-ui-1.8.14.custom.min'); 
     echo $html->css('jquery-ui/jquery-ui-1.8.14.custom');
@@ -19,13 +24,14 @@
                 echo $form->input('factura_fecha', array('id'=>'facturaFecha', 'type'=>'text'));
 		echo $form->input('importe_neto');
                 ?>
-                <legend>Impuestos</legend>
-                <div id="impuestos">
-
+                
+                <div id="gastos_impuestos">
+                <legend>Impuestos</legend>  
                 <?php
                 echo $form->input('TipoImpuesto.TipoImpuesto', array('multiple' => 'checkbox', 
                                                         'type' => 'select',
-                                                        'options' => $tipo_impuestos));
+                                                        'options' => $tipo_impuestos
+                                                         ));
                 ?>
                 </div>
                 <?php

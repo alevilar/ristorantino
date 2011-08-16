@@ -33,7 +33,7 @@ foreach ($mesas as $mesa):
 		<strong><?php echo $mesa['Mesa']['numero']; ?><strong>
 		</td>
 		<td>
-			<?php echo $html->link('('.$mesa['Mesa']['mozo_id'].')','/Mozos/view/'.$mesa['Mesa']['mozo_id']) . 'N° '.$mesa['Mozo']['numero']; ?>
+			<?php echo $html->link('N° '.$mesa['Mozo']['numero'],'/Mozos/view/'.$mesa['Mesa']['mozo_id']); ?>
 		</td>
 		<td>
 			<?php echo $mesa['Mesa']['total']; ?>
@@ -77,7 +77,7 @@ foreach ($mesas as $mesa):
                         }
                     ?>
 		</td>
-		<td>
+		<td align="center">
 			<?php 
 			if(!empty($mesa['Cliente']['Descuento']['porcentaje'])){
 			 	echo 'remito'; }

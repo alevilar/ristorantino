@@ -8,7 +8,7 @@
 body {
 	background-color: #6b6b6e;
 	color: #000000;
-	font-family:'lucida grande',verdana,helvetica,arial,sans-serif;
+	font-family: helvetica,arial,sans-serif;
 	font-size:80%;
 	margin: 5px;
         background-position:  top;
@@ -47,14 +47,14 @@ h1 {
 }
 h2 {
 	color: #000000;
-	font-family:'Gill Sans','lucida grande',helvetica, arial, sans-serif;
+	font-family: helvetica, arial, sans-serif;
 	font-size: 140%;
 	margin: 0.3em 0;
 	padding-top: 0.8em;
 }
 h3 {
 	color: #000000;
-	font-family:'Gill Sans','lucida grande',helvetica, arial, sans-serif;
+	font-family:helvetica, arial, sans-serif;
 	font-size: 120%;
 	padding-top: 1.5em;
 }
@@ -206,7 +206,7 @@ label {
 	padding-right: 20px;
 }
 input, textarea {
-	font-family: "frutiger linotype", "lucida grande", "verdana", sans-serif;
+	font-family: "frutiger linotype", "lucida grande", "verdana", helvetica, sans-serif;
 	padding: 2px;
 }
 select {
@@ -442,7 +442,7 @@ li.selected    {
 /* administracion */
 
 .administracion_menu {
-    font-family: Verdana, sans-serif;
+    font-family: helvetica, Verdana, sans-serif;
 }
 
 .administracion_menu h2 {
@@ -457,7 +457,7 @@ li.selected    {
 
 .administracion_menu a {
     font-size: 100%;
-    font-family: Verdana, sans-serif;
+    font-family: helvetica, Verdana, sans-serif;
     padding-bottom: 2%;
     padding-top: 2%;
     padding-left: 2%;
@@ -534,7 +534,7 @@ li.selected    {
 }
 
 .mesastotaledit{
-    font-family: verdana,helvetica,arial,sans-serif;
+    font-family: helvetica,arial,sans-serif;
     font-size: 17px;
     margin-left: 25px;
     margin-top: 25px;
@@ -678,6 +678,18 @@ li.selected    {
     padding: 0;
 }
 
+#MesaTimeCobroMonth, #MesaTimeCobroDay, #MesaTimeCobroYear, #MesaTimeCobroHour, #MesaTimeCobroHour, #MesaTimeCobroMin, #MesaTimeCobroMeridian {
+    margin: 0;
+    padding: 0;
+}
+
+.datetime {
+    font-size: 20px;
+}
+.datetime p {
+    font-size: 13px;
+}
+
 /* menu del admin */
 
 .menubread {
@@ -693,4 +705,20 @@ li.selected    {
 
 .menubread li a {
     color: #ffffff;
+}
+
+
+
+/*   SECCION CONTABILIDAD */
+
+
+#gastos_impuestos {
+    float: left;
+    clear: both;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#gastos_impuestos .input .checkbox label,#gastos_impuestos .input label  {
+    display: inline;
 }
