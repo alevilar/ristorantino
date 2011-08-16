@@ -29,15 +29,18 @@
                     'jquery/jquery.tmpl.min',
                     'jquery/jquery.periodicalupdater',
                    
-                    'knockout-1.2.1',
-                    'knockout.mapping',
+                    
                     'jquery/fg.menu',
                     'ristorantino/generic',
+                    
+                    'knockout-1.2.1',
+                    'knockout.mapping',
                     
                     // OJO !! EL ORDEN IMPORTA !!
                     '/adition/js/adition.package',
                     'risto/mozo.class',
                     'risto/mesa.class',
+                    '/adition/js/comanda.class',
                     '/adition/js/comanda_fabrica.class',
                     '/adition/js/adicion.class',
                     
@@ -45,11 +48,15 @@
                     '/adition/js/categoria',
                     '/adition/js/sabor.class',
                     
+                    
                     '/adition/js/detalle_comanda.class',
-                    '/adition/js/comanda.class',
+                    
+                    
                     '/adition/js/ko_adicion_model',
                     '/adition/js/adition.events',
-                    '/adition/js/menu',
+                   '/adition/js/menu',
+                    
+                    
                     
                     
                      'jquery/jquery.mobile-1.0b2',

@@ -279,7 +279,7 @@
             
         <div  style="width: 28%; margin-right: 2%; display: inline; float: left;">
            <ul id="ul-productos-seleccionados" class=" ui-listview " data-role="listview"
-               data-bind="template: {name: 'categorias-productos-seleccionados', foreach: currentMesa().currentComanda().comanda.DetalleComanda}"
+               data-bind="template: {name: 'categorias-productos-seleccionados', foreach: adn().productosSeleccionados}"
                 >
                  <script id="categorias-productos-seleccionados" type="text/x-jquery-tmpl">
                      <li data-bind="visible: cant()"  class="ui-li ui-li-static ui-body-c">
@@ -349,7 +349,12 @@
 
 
 
-        
+
+
+<!--
+                        SABORES-ADD
+
+-->
 <div data-role="page" id="page-sabores">
     <div  data-role="header"  data-position="inline">
         <h1>Seleccionar sabores para <span></span></h1>
@@ -361,7 +366,7 @@
         <div style="width: 70%; display: inline; float: right;">
 
            <div id="ul-sabores" 
-                data-bind="template: {name: 'listaSabores', foreach: currentMesa().currentComanda().currentSabores()} ">
+                data-bind="template: {name: 'listaSabores', foreach: adn().currentSabores} ">
                 <!-- Template de categorias       -->
                <script id="listaSabores" type="text/x-jquery-tmpl">
                    <a  data-bind="click: seleccionar, attr: {href: hrefSegunSabor}" data-theme="c" data-inline="true" data-role="button" class="ui-btn ui-btn-inline ui-btn-corner-all ui-shadow ui-btn-up-c">

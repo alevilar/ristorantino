@@ -30,8 +30,8 @@ Risto.Adition.menu = {
     },
     
     update: function(){
+        localStorage.removeItem( 'categoriasTree' );
         this.__getRemoteMenu();
-        alert("menu actualizado");
     },
     
     __getRemoteMenu: function(){
@@ -61,7 +61,7 @@ Risto.Adition.menu = {
     },
     
     __iniciarCategoriasTreeServer: function(cats){
-        localStorage.categoriasTree = ko.toJSON(cats);
+        localStorage.setItem( 'categoriasTree', ko.toJSON(cats) );
         this.__iniciarCategoriasTreeLocalStorage();
     },
     

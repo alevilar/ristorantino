@@ -296,7 +296,6 @@ Risto.Adition.adicionar = {
     
     ordenarMesasPorNumero: function(){
         return this.mesas().sort(function(left, right) {
-            console.debug(left.numero());
             return left.numero() == right.numero() ? 0 : (parseInt(left.numero()) < parseInt(right.numero()) ? -1 : 1) 
         })
     },
@@ -345,3 +344,21 @@ Risto.Adition.adicionar.mesas = ko.dependentObservable( function(){
 
 }, Risto.Adition.adicionar);
      
+     
+     
+/**
+ * Variable de estado generada cuando se esta armando una comanda
+ * son los productos seleccionados
+ */
+Risto.Adition.adicionar.productosSeleccionados = ko.dependentObservable( function(){
+    return this.currentMesa().currentComanda().comanda.DetalleComanda();    
+}, Risto.Adition.adicionar);     
+
+
+/**
+ * Variable de estado generada cuando se esta armando una comanda
+ * son los sabores de un producto seleccionado
+ */
+Risto.Adition.adicionar.currentSabores = ko.dependentObservable( function(){
+    return this.currentMesa().currentComanda().currentSabores();    
+}, Risto.Adition.adicionar);   

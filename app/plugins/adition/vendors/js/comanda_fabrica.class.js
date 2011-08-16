@@ -4,7 +4,7 @@ Risto.Adition.comandaFabrica = function(mesa){
 
 Risto.Adition.comandaFabrica.prototype = {
     id: 0,
-    mesa: new Mesa(),
+    mesa: {},
     
     comanda: {},
     
@@ -56,10 +56,8 @@ Risto.Adition.comandaFabrica.prototype = {
      */
     agregarProducto: function(prod){
         var dc;
-        
         // checkeo si el producto ya estaba cargado
         var dcIndex = this.__findDetalleComandaPorProducto(prod);
-        
         if ( dcIndex < 0 ) {
             // producto aun no agregado a la lista, entonces lo agrego
             dc = new Risto.Adition.detalleComanda();
