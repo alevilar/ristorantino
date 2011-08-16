@@ -200,7 +200,7 @@
                 <ul data-role="listview" style="width: 100%">
                     <li><a href="#comanda-add-menu" data-rel="dialog"><?= $html->image('/adition/css/img/chef_64.png')?>Comanda</a></li>
                     <li><a href="#sacar-item" >Sacar Item</a></li>
-                    <li><a href="#Agregar Cliente" >Agregar Cliente</a></li>
+                    <li><a href="<?php echo $html->url('/clientes/ajax_clientes_factura_a')?>" data-rel="dialog" >Agregar Cliente</a></li>
                     <li><a href="#Agragar Descuento" >Agregar Descuento</a></li>
                     <li><a href="#Cerrar-mesa" >Cerrar Mesa</a></li>
                     <li><a href="#cambiar-mozo" >Cambiar Mozo</a></li>
