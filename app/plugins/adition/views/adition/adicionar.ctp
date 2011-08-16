@@ -126,7 +126,7 @@
         </div>
     
         <div data-role="content">
-            <form name="form-mesa-add" action="#mesa-view" id="form-mesa-add" data-ajax="false">
+            <form name="form-mesa-add" action="#" id="form-mesa-add" data-ajax="false">
                 <div data-role="">
                     <fieldset data-role="controlgroup" data-type="horizontal">
                         <legend style="display: block; clear: both;">Seleccionar Mozo:</legend>
