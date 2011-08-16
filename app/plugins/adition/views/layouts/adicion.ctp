@@ -1,6 +1,13 @@
 <!DOCTYPE html> 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+        <script type="text/javascript">
+        <!--
+            // Inicializacion de variable global de url
+            var urlDomain = "<?php echo $html->url('/',true);?>";
+        -->
+        </script>
+    
 	<?php echo $html->charset(); ?>
 	<title>
 		<?php echo $title_for_layout; ?>
@@ -69,9 +76,6 @@
     <script type="text/javascript">
     <!--
         $.mobile.page.prototype.options.backBtnText = "Volver";
-
-        // Inicializacion de variables y objetos Core
-        var urlDomain = "<?php echo $html->url('/',true);?>";
 
         // instancio el objeto adicion que sera el kernel de la app
         Risto.Adition.adicionar.initialize();
