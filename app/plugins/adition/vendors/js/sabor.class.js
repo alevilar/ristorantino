@@ -15,7 +15,8 @@ Risto.Adition.sabor.prototype = {
     
     
     seleccionar: function() {
-        return false;
+        Risto.Adition.adicionar.currentMesa().currentComanda().agregarSabor( this );
+        return true;
     },
     
     hrefSegunSabor: function(){

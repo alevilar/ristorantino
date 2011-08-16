@@ -11,6 +11,10 @@ Risto.Adition.comandaFabrica.prototype = {
     // array de los sabores del producto seleccionado
     currentSabores: ko.observableArray([]),
     
+    productoSaborTmp: {}, //producto temporal (que esta esperando la seleccion de sabores)
+    saboresSeleccionados: [], // listado de sabores seleccionados para el productoSaborTmp
+   
+    
 //    productosSeleccionados: ko.observableArray([]),
 //    detallesComandas: ko.observableArray([]),
     
@@ -37,6 +41,8 @@ Risto.Adition.comandaFabrica.prototype = {
     },
     
     
+    
+    
     __findDetalleComandaPorProducto: function(prod) {
         var prodIndex;
         for( var sdc in this.comanda.DetalleComanda() ){
@@ -51,11 +57,21 @@ Risto.Adition.comandaFabrica.prototype = {
         return -1;
     },
     
-    /**
-     * Agrega un producto al listado de productos (DetalleComanda) seleccionados
-     */
-    agregarProducto: function(prod){
+    saveSabores: function(prod, sabores) {
+        $('#page-sabores').dialog('close');
+        this.saboresSeleccionados = [];
+        this.productoSaborTmp = {};
+        
+        this.__doAdd( this.productoSaborTmp );
+    },
+    
+    agregarSabor: function( sabor ) {
+        this.saboresSeleccionados.push(sabor);
+    },
+    
+    __doAdd: function(prod){
         var dc;
+            
         // checkeo si el producto ya estaba cargado
         var dcIndex = this.__findDetalleComandaPorProducto(prod);
         if ( dcIndex < 0 ) {
@@ -65,12 +81,29 @@ Risto.Adition.comandaFabrica.prototype = {
             // suma 1 al producto
             dc.seleccionar(); 
             this.comanda.DetalleComanda.unshift(dc);
+            if (this.saboresSeleccionados.length > 0 ) {
+                dc.DetalleSabor( this.saboresSeleccionados );
+            }
             return true;
         } else {
             // el producto ya estaba agregado, asique simplemente lo sumo
             this.comanda.DetalleComanda()[dcIndex].seleccionar();
             return false;
         }
+    },
+    
+    /**
+     * Agrega un producto al listado de productos (DetalleComanda) seleccionados
+     */
+    agregarProducto: function(prod){
+        if ( prod.Categoria.Sabor.length > 0 ) {
+            this.productoSaborTmp = prod;
+            this.currentSabores( prod.Categoria.Sabor );
+//             $('#page-sabores').dialog();             
+        } else {
+            this.__doAdd(prod);
+        }
+        
     }
 }
 

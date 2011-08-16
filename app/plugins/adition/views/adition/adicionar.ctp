@@ -7,7 +7,7 @@
 
 
          <span data-bind="text: realCant()" style="right: auto" class="ui-li-count ui-btn-up-c ui-btn-corner-all"></span>
-         <span data-bind="text: Producto().name" style="margin-left: 20px;"></span>
+         <span data-bind="text: nameConSabores()" style="margin-left: 20px;"></span>
      </li>
 </script>
                                          
@@ -199,15 +199,14 @@
             <div class="" style="width: 28%; float: left;">
                 <ul data-role="listview" style="width: 100%">
                     <li><a href="#comanda-add-menu" data-rel="dialog"><?= $html->image('/adition/css/img/chef_64.png')?>Comanda</a></li>
-                    <li><a href="#sacar-item" >Sacar Item</a></li>
+<!--                    <li><a href="#sacar-item" >Sacar Item</a></li>-->
                     <li><a href="<?php echo $html->url('/clientes/ajax_clientes_factura_a')?>" data-rel="dialog" >Agregar Cliente</a></li>
-                    <li><a href="#Agragar Descuento" >Agregar Descuento</a></li>
+<!--                    <li><a href="#Agragar Descuento" >Agregar Descuento</a></li>-->
                     <li><a href="#Cerrar-mesa" >Cerrar Mesa</a></li>
                     <li><a href="#cambiar-mozo" >Cambiar Mozo</a></li>
                     <li><a href="#Cambiar N° Mesa" >Cambiar N°</a></li>
                     <li><a href="#re-print" >Re imprimir Ticket</a></li>
                     <li><a href="#Borrar-mesa" >Borrar Mesa</a></li>
-                    <li><a href="#testiesto" >De la pagina de atras</a></li>
                 </ul>
             </div>
 
@@ -275,7 +274,7 @@
        </div> 
         
         
-            
+        <!--        PRODUCTOS SELECCIONADOS    -->
         <div  style="width: 28%; margin-right: 2%; display: inline; float: left;">
            <ul id="ul-productos-seleccionados" class=" ui-listview " data-role="listview"
                data-bind="template: {name: 'categorias-productos-seleccionados', foreach: adn().productosSeleccionados}"
@@ -302,7 +301,7 @@
                             <a data-bind="click: toggleEsEntrada, style: { background: esEntrada() ? '#437FBE' : ''}" data-role="button" data-iconpos="notext" data-icon="star" href="#" title="Entrada" data-theme="c" class="ui-btn ui-btn-icon-notext ui-corner-right ui-controlgroup-last ui-btn-up-c"><span class="ui-btn-inner ui-corner-right ui-controlgroup-last"><span class="ui-btn-text">Entrada</span><span class="ui-icon ui-icon-star ui-icon-shadow"></span></span></a>
                          </span>
 
-                         <span data-bind="text: Producto().name"></span>
+                         <span data-bind="text: nameConSabores()"></span>
 
                          <span data-bind="text: cant" class="ui-li-count ui-btn-up-c ui-btn-corner-all"></span>
                      </li>
@@ -311,10 +310,10 @@
         </div>    
            
         <div style="width: 70%; display: inline; float: right;">
-
+            <!--           SELECCION DE CATEGORIAS                           -->
            <div id="ul-categorias" 
                 data-bind="template: {name: 'listaCategoriasTree', foreach: menu().currentSubCategorias} ">
-                <!-- Template de categorias       -->
+                <!-- Template de categorias                                  -->
                <script id="listaCategoriasTree" type="text/x-jquery-tmpl">
                    <a  href="#" data-bind="click: seleccionar" data-theme="b" data-inline="true" data-role="button" class="ui-btn ui-btn-inline ui-btn-corner-all ui-shadow ui-btn-up-b">
                        <span class="ui-btn-inner ui-btn-corner-all">
@@ -327,11 +326,11 @@
                 </script>
            </div>
            
-           
+            <!--           SELECCION DE PRODUCTOS                            -->
            <div id="ul-productos" style="clear: both" 
                 data-bind="template: {name: 'categorias-productos', foreach: menu().currentProductos} ">
                  <script id="categorias-productos" type="text/x-jquery-tmpl">
-                     <a href="#" data-bind="click: seleccionar" class="ui-btn ui-btn-inline ui-btn-icon-left ui-btn-corner-all ui-shadow ui-btn-up-e">
+                     <a data-bind="click: seleccionar, attr: { href: tieneSabores() ? '#page-sabores' : '#'}" data-rel="dialog" class="ui-btn ui-btn-inline ui-btn-icon-left ui-btn-corner-all ui-shadow ui-btn-up-e">
                          <span class="ui-btn-inner ui-btn-corner-all">
                              <span class="ui-btn-text" data-bind="text: name" ></span>
                              <span class="ui-icon ui-icon-right ui-icon-shadow"></span>
@@ -354,21 +353,18 @@
                         SABORES-ADD
 
 -->
-<div data-role="page" id="page-sabores">
+<div data-role="page" id="page-sabores" data-theme="e">
     <div  data-role="header"  data-position="inline">
         <h1>Seleccionar sabores para <span></span></h1>
-	<a href="#mesa-view" data-icon="check" data-theme="b" data-bind="click: function(){currentMesa().currentComanda().save()}">Guardar</a>        
+	<a href="#" data-icon="check" data-theme="b" data-bind="click: function(){adn().currentMesa().currentComanda().saveSabores()}">Guardar</a>        
     </div>
 
     <div data-role="content">                  
-           
-        <div style="width: 70%; display: inline; float: right;">
-
            <div id="ul-sabores" 
                 data-bind="template: {name: 'listaSabores', foreach: adn().currentSabores} ">
                 <!-- Template de categorias       -->
                <script id="listaSabores" type="text/x-jquery-tmpl">
-                   <a  data-bind="click: seleccionar, attr: {href: hrefSegunSabor}" data-theme="c" data-inline="true" data-role="button" class="ui-btn ui-btn-inline ui-btn-corner-all ui-shadow ui-btn-up-c">
+                   <a href="#"  data-bind="click: seleccionar" data-theme="c" data-inline="true" data-role="button" class="ui-btn ui-btn-inline ui-btn-corner-all ui-shadow ui-btn-up-c">
                        <span class="ui-btn-inner ui-btn-corner-all">
                            <span class="ui-btn-text">
                                <span data-bind="text: name"></span>                         
@@ -377,11 +373,7 @@
                    </a>
                 </script>
            </div>
-           
-        </div>
     </div>
-        
-    <div data-role="footer"><h2>Menu footer</h2></div>
-    
+            
 </div>  
 

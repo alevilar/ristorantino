@@ -1,7 +1,4 @@
 Risto.Adition.detalleComanda = function(jsonData) {
-    
-    this.DetalleSabor = ko.observableArray([]);
-    
     return this.initialize(jsonData);
 }
 
@@ -21,7 +18,33 @@ Risto.Adition.detalleComanda.prototype = {
         return this.cant() - this.cant_eliminada();
     },
     
+    nameConSabores: function(){
+        var nom = '';
+        if ( this.Producto ) {
+            if ( typeof this.Producto().name == 'function'){
+                nom += this.Producto().name();
+            } else {
+                nom += this.Producto().name;
+            }
+            
+            if ( this.DetalleSabor().lenght > 0 ){
+                var dsname = '';
+                for (var ds in this.DetalleSabor()) {
+                    dsname = this.DetalleSabor()[ds].name();
+                    if ( ds+1 < this.DetalleSabor().lenght) {
+                        // si no es el ultimo
+                        dsname += ', ';
+                    }
+                }
+                nom = nom+' '+dsname;
+            }
+        }
+        
+        return nom;
+    },
+    
     initialize: function(jsonData){
+        this.DetalleSabor = ko.observableArray([]);
         this.Producto = ko.observable();
         this.cant = ko.observable(0);
         this.cant_eliminada = ko.observable(0);

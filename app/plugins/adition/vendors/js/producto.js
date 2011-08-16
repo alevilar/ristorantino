@@ -19,12 +19,15 @@ Risto.Adition.producto.prototype = {
     
         
     seleccionar: function(){
-        if ( this.Categoria.Sabor.length == 0 ) {
-            var event =  $.Event(MENU_ESTADOS_POSIBLES.productoSeleccionado.event);
-            event.producto = this; 
-            $(document).trigger(event);
-        } else {
-            Risto.Adition.adicionar.currentMesa().currentComanda().currentSabores( this.Categoria.Sabor );
+        var event =  $.Event(MENU_ESTADOS_POSIBLES.productoSeleccionado.event);
+        event.producto = this; 
+        $(document).trigger(event);
+    },
+    
+    tieneSabores: function(){
+        if ( this.Categoria.Sabor.length > 0 ){
+            return true;
         }
+        return false;
     }
 }
