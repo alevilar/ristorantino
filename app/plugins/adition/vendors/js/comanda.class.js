@@ -7,8 +7,11 @@ Risto.Adition.comanda = function(jsonData){
 Risto.Adition.comanda.prototype = {
     // Array de DetalleComanda, cada detalleComanda es 1 producto
     DetalleComanda : ko.observableArray([]),
+    created: ko.observable(),
     
     initialize: function(jsonData) {
+        this.created = ko.observable();
+        
         if ( jsonData ) {
             // si aun no fue mappeado
             var mapOps = {
@@ -24,6 +27,19 @@ Risto.Adition.comanda.prototype = {
             return ko.mapping.fromJS(jsonData, mapOps, this);
         }
         return this;
+    },
+    
+    
+    timeCreated: function(){
+        var d;
+        
+        if (this.created() ) {
+            d = new Date( mysqlTimeStampToDate(this.created() ) );      
+        } else {
+            d = new Date(); 
+        }
+        
+        return d.toLocaleTimeString();
     }
     
 }

@@ -45,6 +45,7 @@
                                 <a href="#mesa-view" data-role="none" class="mesa" data-bind="click: seleccionar" >
                                     (<span class="mesa-mozo" data-bind="text: mozo().numero" style="color: red"></span>)
                                     <span class="mesa-numero" data-bind="text: numero"></span>
+                                    <span class="mesa-created" data-bind="text: timeAbrio()"></span>
                                 </a>
                             </li>
                         </script>
@@ -59,7 +60,6 @@
                             <li><a onclick="Risto.Adition.adicionar.mozosOrder('created')">Ordenar Por Cierre</a></li>
                         </ul>
                 </div>
-                Ristorantino Mágico
         </div>
 
 </div>
@@ -82,7 +82,7 @@
 
                 <div data-role="navbar">
                         <ul>
-                            <li><a href="#listado-mozos">Mozos</a></li>
+                            <li><a href="#listado-mozos" class="ui-btn-active">Mozos</a></li>
                             <li><a href="#listado-mesas">Mesas</a></li>
                         </ul>
                 </div>
@@ -210,18 +210,12 @@
 
             <div class="mesas view " style="width: 70%; float:right;" >
                 <h1>Detalle de Consumición</h1>
-                
-                <div data-bind="visible: adn().currentMesa().mesaEditada">
-                    Mesa Modificada !!
-                    <button>Guardar</button>
-                    <button>Cancelar</button>
-                </div>
 
                 <div id="comanda-detalle-collapsible" data-role="collapsible-set" data-bind="template: {name: 'listaComandas', foreach: adn().currentMesa().Comanda}">
                         <!-- Template: listado de comandas con sus productos-->
                         <script id="listaComandas" type="text/x-jquery-tmpl">
                            <div data-role="collapsible">
-                                <h3><span>Comanda ${id}</span> <span>${created}</span></h3>
+                                <h3><span>Comanda #${id}</span> <span data-bind="text: timeCreated()"></span></h3>
 
                                 <ul class="ui-listview " data-role="listview"
                                    data-bind="template: {name: 'li-productos-detallecomanda', foreach: DetalleComanda}"

@@ -56,9 +56,22 @@ Mesa.prototype = {
     
     // attributos
     mozo: ko.observable( {} ),
+    
+    timeAbrio: function(){
+        var d;
+        
+        if (this.created() == 0) {
+            d = new Date();
+        } else {
+            d = new Date( mysqlTimeStampToDate(this.created()) );       
+        }
+        
+        return d.toLocaleTimeString();
+    },
 
     initialize: function( mozo, jsonData ) {
         
+        this.created        = ko.observable(0);
         this.total          = ko.observable( 0 );
         this.numero         = ko.observable( 0 );
         this.mozo           = ko.observable( new Mozo() );
