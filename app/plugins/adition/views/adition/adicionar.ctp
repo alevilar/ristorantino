@@ -42,7 +42,7 @@
                             el ajax que verifica el estado de las mesas (si fue abierta o cerrada alguna. -->
                         <script id="listaMesas" type="text/x-jquery-tmpl">
                             <li class="grid_1">
-                                <a href="#mesa-view" data-role="none" class="mesa" data-bind="click: seleccionar" >
+                                <a href="#mesa-view" data-role="none" class="mesa" data-bind="click: seleccionar, attr: {accesskey: numero}" >
                                     (<span class="mesa-mozo" data-bind="text: mozo().numero" style="color: red"></span>)
                                     <span class="mesa-numero" data-bind="text: numero"></span>
                                 </a>

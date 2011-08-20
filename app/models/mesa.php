@@ -41,7 +41,8 @@ class Mesa extends AppModel {
 								'conditions' => '',
 								'fields' => '',
 								'order' => ''
-			)
+			),
+                        'MesaEstado',
 	);
 
 
