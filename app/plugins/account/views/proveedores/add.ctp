@@ -1,9 +1,12 @@
+     <?php  
+        echo $this->element('menuadmin');
+     ?>
 <div class="proveedores form">
 <?php echo $form->create('Proveedor');?>
 	<fieldset>
  		<legend><?php __('Nuevo Proveedor');?></legend>
 	<?php
-		echo $form->input('name');
+		echo $form->input('name', array('label'=>'Nombre'));
 		echo $form->input('cuit');
 		echo $form->input('mail');
 		echo $form->input('telefono');

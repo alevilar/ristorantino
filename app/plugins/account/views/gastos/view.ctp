@@ -1,6 +1,10 @@
+     <?php  
+        echo $this->element('menuadmin');
+     ?>
+
 <div class="gastos view">
 <h2><?php  __('Gasto');?></h2>
-	<dl><?php $i = 0; $class = ' class="altrow"';?>
+	<dl><?php $i = 0; $class = '';?>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Id'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 			<?php echo $gasto['Gasto']['id']; ?>
@@ -61,7 +65,7 @@
 			<?php echo $gasto['Gasto']['percep_iva']; ?>
 			&nbsp;
 		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('No Gravado'); ?></dt>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('No Grabado'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 			<?php echo $gasto['Gasto']['no_gravado']; ?>
 			&nbsp;
@@ -71,12 +75,12 @@
 			<?php echo $gasto['Gasto']['otros']; ?>
 			&nbsp;
 		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Created'); ?></dt>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Creado'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 			<?php echo $gasto['Gasto']['created']; ?>
 			&nbsp;
 		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Modified'); ?></dt>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Modificado'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 			<?php echo $gasto['Gasto']['modified']; ?>
 			&nbsp;

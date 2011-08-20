@@ -1,3 +1,6 @@
+     <?php  
+        echo $this->element('menuadmin');
+     ?>
 <div class="vales index">
     <h2><?php __('Vales'); ?></h2>
     <p>
@@ -10,7 +13,7 @@
         <tr>
             <th><?php echo $paginator->sort('persona'); ?></th>
             <th><?php echo $paginator->sort('monto'); ?></th>
-            <th><?php echo $paginator->sort('created'); ?></th>
+            <th><?php echo $paginator->sort('Creado','created'); ?></th>
             <th class="actions"><?php __('Acciones'); ?></th>
         </tr>
         <?php
@@ -33,7 +36,7 @@
             </td>
             <td class="actions">
                 <?php echo $html->link(__('Editar', true), array('action' => 'edit', $vale['Vale']['id'])); ?>
-                <?php echo $html->link(__('Eliminar', true), array('action' => 'delete', $vale['Vale']['id']), null, sprintf(__('Seguro deseas eliminar el vale de %s a %s?', true), $vale['Vale']['monto'], $vale['Vale']['persona'])); ?>
+                <?php echo $html->link(__('Eliminar', true), array('action' => 'delete', $vale['Vale']['id']), null, sprintf(__('¿Estas seguro que deseas eliminar el vale de %s a "%s"?', true), $vale['Vale']['monto'], $vale['Vale']['persona'])); ?>
             </td>
         </tr>
         <?php endforeach; ?>

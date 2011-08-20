@@ -7,7 +7,7 @@
 
 
          <span data-bind="text: realCant()" style="right: auto" class="ui-li-count ui-btn-up-c ui-btn-corner-all"></span>
-         <span data-bind="text: nameConSabores()" style="margin-left: 20px;"></span>
+         <span data-bind="text: Producto().nameConSabores()" style="margin-left: 20px;"></span>
      </li>
 </script>
                                          
