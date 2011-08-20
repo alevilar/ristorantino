@@ -14,7 +14,8 @@ Risto.Adition.sabor.prototype = {
     },
     
     
-    seleccionar: function() {
+    seleccionar: function(e) {
+        $(e.currentTarget).addClass('ui-btn-active');
         Risto.Adition.adicionar.currentMesa().currentComanda().agregarSabor( this );
         return true;
     },

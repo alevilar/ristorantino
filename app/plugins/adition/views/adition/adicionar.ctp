@@ -255,22 +255,6 @@
 
     <div data-role="content">
         
-         <script type="text/javascript">
-             Risto.Adition.adicionar.nuevaComandaParaCurrentMesa();
-        </script>
-        
-            
-       <div id="path" data-bind="template: {name: 'boton', foreach: menu().path}">
-            <script id="boton" type="text/x-jquery-tmpl">
-                    <a data-bind="attr: {'data-icon': esUltimoDelPath()?'':'back', 'data-theme': esUltimoDelPath()?'a':''}, click: seleccionar" data-bind="click: seleccionar" class="ui-btn ui-btn-inline ui-btn-icon-left ui-btn-corner-all ui-shadow ui-btn-up-c">
-                         <span class="ui-btn-inner ui-btn-corner-all">
-                             <span class="ui-btn-text" data-bind="text: name" ></span>
-                             <span class="ui-icon ui-icon-right ui-icon-shadow"></span>
-                         </span>
-                     </a>
-            </script>
-       </div> 
-        
         
         <!--        PRODUCTOS SELECCIONADOS    -->
         <div  style="width: 28%; margin-right: 2%; display: inline; float: left;">
@@ -308,6 +292,18 @@
         </div>    
            
         <div style="width: 70%; display: inline; float: right;">
+             <!--           PATH DE CATEGORIAS                           -->
+            <div id="path" data-bind="template: {name: 'boton', foreach: menu().path}">
+                <script id="boton" type="text/x-jquery-tmpl">
+                        <a data-bind="attr: {'data-icon': esUltimoDelPath()?'':'back', 'data-theme': esUltimoDelPath()?'a':''}, click: seleccionar" data-bind="click: seleccionar" class="ui-btn ui-btn-inline ui-btn-icon-left ui-btn-corner-all ui-shadow ui-btn-up-c">
+                             <span class="ui-btn-inner ui-btn-corner-all">
+                                 <span class="ui-btn-text" data-bind="text: name" ></span>
+                                 <span class="ui-icon ui-icon-right ui-icon-shadow"></span>
+                             </span>
+                         </a>
+                </script>
+           </div> 
+            
             <!--           SELECCION DE CATEGORIAS                           -->
            <div id="ul-categorias" 
                 data-bind="template: {name: 'listaCategoriasTree', foreach: menu().currentSubCategorias} ">
