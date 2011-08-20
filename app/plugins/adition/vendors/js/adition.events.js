@@ -204,19 +204,25 @@ function buscarAccessKey(e) {
         irMesaPrev();
     }
     
+    console.info(code > 47);
     if ( code > 47){ // desde el numero 0 hasta la ultima letra con simbolos
         // a los 3,5 segundos borrar el string y reiniciarlo
-        setTimeout(function(  ){
-            Risto.Adition.mesaBuscarAccessKey = '';
-        },3500);
         
         // buscar la mesa con ese numero, busca por accesskey
-        Risto.Adition.mesaBuscarAccessKey += String.fromCharCode( e.charCode );
+        Risto.Adition.mesaBuscarAccessKey += String.fromCharCode( code );
+        console.debug(Risto.Adition.mesaBuscarAccessKey);
         var domFinded = $("[accesskey='"+Risto.Adition.mesaBuscarAccessKey+"']");
+        console.debug( domFinded);
         if ( domFinded.length ) {
+            console.info("encontro");
             Risto.Adition.mesaCurrentIndex = $(domFinded[0]);
             domFinded[0].focus();
+            Risto.Adition.mesaBuscarAccessKey = ''
         }
+        
+        setTimeout(function(  ){
+            Risto.Adition.mesaBuscarAccessKey = '';
+        },3200);
     }
     
 }
