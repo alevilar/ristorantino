@@ -7,7 +7,7 @@
 
 
          <span data-bind="text: realCant()" style="right: auto" class="ui-li-count ui-btn-up-c ui-btn-corner-all"></span>
-         <span data-bind="text: Producto().nameConSabores()" style="margin-left: 20px;"></span>
+         <span data-bind="text: nameConSabores()" style="margin-left: 20px;"></span>
      </li>
 </script>
                                          
@@ -199,14 +199,12 @@
             <div class="" style="width: 28%; float: left;">
                 <ul data-role="listview" style="width: 100%">
                     <li><a href="#comanda-add-menu" data-rel="dialog"><?= $html->image('/adition/css/img/chef_64.png')?>Comanda</a></li>
-<!--                    <li><a href="#sacar-item" >Sacar Item</a></li>-->
-                    <li><a href="<?php echo $html->url('/clientes/ajax_clientes_factura_a')?>" data-rel="dialog" >Agregar Cliente</a></li>
-<!--                    <li><a href="#Agragar Descuento" >Agregar Descuento</a></li>-->
-                    <li><a href="#Cerrar-mesa" >Cerrar Mesa</a></li>
-                    <li><a href="#cambiar-mozo" >Cambiar Mozo</a></li>
-                    <li><a href="#Cambiar N° Mesa" >Cambiar N°</a></li>
-                    <li><a href="#re-print" >Re imprimir Ticket</a></li>
-                    <li><a href="#Borrar-mesa" >Borrar Mesa</a></li>
+                    <li><a href="<?php echo $html->url('/clientes/ajax_clientes_factura_a')?>" data-rel="dialog" ><?= $html->image('/adition/css/img/addcliente.png')?>Agregar Cliente</a></li>
+                    <li><a href="#mesa-cerrar" ><?= $html->image('/adition/css/img/cerrarmesa.png')?>Cerrar Mesa</a></li>
+                    <li><a href="#mesa-cambiar-mozo" ><?= $html->image('/adition/css/img/cambiarmozo.png')?>Cambiar Mozo</a></li>
+                    <li><a href="#mesa-cambiar-numero" >Cambiar N°</a></li>
+                    <li><a href="#mesa-re-print" ><?= $html->image('/adition/css/img/reimprimir.png')?>Re imprimir Ticket</a></li>
+                    <li><a href="#mesa-borrar" data-rel="back"><?= $html->image('/adition/css/img/borrarmesa.png')?>Borrar Mesa</a></li>
                 </ul>
             </div>
 
