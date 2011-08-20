@@ -32,6 +32,7 @@
                 }
 
 		echo $javascript->link( array(
+                    '/adition/js/cake_saver',
                     'risto/risto',
                     'jquery/jquery-1.6.1.min',
                     'jquery/jquery.tmpl.min',
