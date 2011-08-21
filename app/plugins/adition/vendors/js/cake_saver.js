@@ -13,13 +13,14 @@ var $cakeSaver = {
         var url = sendObj['url'];
         var model = sendObj['model'];
         var method = sendObj['method'] || this.method;
-        var ob = this.__processObj(obj, model);
+        var ob = this.__processObj(obj, obj.model);
         
         $.ajax({
             'url': url,
             'data': ob,
             'type': method,
-            success: function(){
+            success: function(data){
+                obj.handleAjaxSuccess(data, url, method);
             }
         });
        
@@ -30,11 +31,10 @@ var $cakeSaver = {
         var ooo = {};
         
         for (var i in auxObj ) {
-            if ( typeof auxObj[i] != 'object' && typeof auxObj[i] != 'function') {
+            if ( typeof auxObj[i] != 'object' && typeof auxObj[i] != 'function' && auxObj[i] != undefined && auxObj[i] != null) {
                 ooo['data['+model+']['+i+']'] = auxObj[i];
             }
         }
-//        ooo = ko.toJSON(ooo);
         ooo = $.param(ooo);
         return ooo;
     }

@@ -1,9 +1,7 @@
 <?
 
-$vec = array(
-    'insertedId' => $insertedId,
-    'msg'        => $validationErrors,
-);
+$mesa['insertedId'] = $insertedId;
+$mesa['msg']        = $validationErrors;
 
 
-echo $javascript->object($vec);
+echo $javascript->object($mesa);

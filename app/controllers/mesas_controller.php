@@ -263,11 +263,13 @@ class MesasController extends AppController {
     function abrirMesa(){
         $insertedId = 0;
         if (!empty($this->data['Mesa'])){
+//            unset( $this->data['Mesa']['created'] );
             if ($this->Mesa->save($this->data)){
                 $insertedId = $this->Mesa->id;
             }
         }
         $this->set('insertedId', $insertedId);
+        $this->set('mesa', $this->Mesa->read(null) );
         $this->set('validationErrors', $this->Mesa->validationErrors);
     }
     
