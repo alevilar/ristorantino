@@ -46,3 +46,6 @@ CREATE TABLE `proveedores` (
 `created` DATETIME NOT NULL ,
 `modified` DATETIME NULL
 ) ENGINE = MYISAM ;
+
+
+ALTER TABLE `gastos` ADD `importe_total` FLOAT NOT NULL DEFAULT 0 AFTER `importe_neto`;

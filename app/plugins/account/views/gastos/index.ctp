@@ -25,17 +25,6 @@ foreach ($gastos as $gasto):
 	if ($i++ % 2 == 0) {
 		$class = ' class="altrow"';
 	}
-        
-        $total = 0;
-        if (!empty($gasto['Gasto']['importe_neto'])) {
-            $total = $gasto['Gasto']['importe_neto'];
-        }
-        
-        if (!empty($gasto['TipoImpuesto'])) {
-            foreach($gasto['TipoImpuesto'] as $tipoImpuesto) {
-                $total += $gasto['Gasto']['importe_neto'] * $tipoImpuesto['porcentaje'] / 100;
-            }
-        }
 ?>
 	<tr<?php echo $class;?>>
 		<td>
@@ -57,7 +46,7 @@ foreach ($gastos as $gasto):
 			$ <?php echo $gasto['Gasto']['importe_neto']; ?>
 		</td>
                 <td>
-			$ <?php echo $total; ?>
+			$ <?php echo $gasto['Gasto']['importe_total']; ?>
 		</td>
 		<td>
 			<?php echo date("d/m/Y H:i", strtotime($gasto['Gasto']['created'])); ?>
