@@ -4,6 +4,12 @@ class ProveedoresController extends AppController {
 	var $name = 'Proveedores';
 	var $helpers = array('Html', 'Form');
 
+        function beforeFilter() {
+            parent::beforeFilter();
+            $this->rutaUrl_for_layout[] =array('name'=> 'Contabilidad','link'=>'/account' );
+        }
+        
+        
 	function index() {
 		$this->Proveedor->recursive = 0;
 		$this->set('proveedores', $this->paginate());
@@ -18,6 +24,7 @@ class ProveedoresController extends AppController {
 	}
 
 	function add() {
+           $this->rutaUrl_for_layout[] =array('name'=> 'Proveedores','link'=>'/account/proveedores' );
 		if (!empty($this->data)) {
 			$this->Proveedor->create();
 			if ($this->Proveedor->save($this->data)) {
@@ -30,6 +37,7 @@ class ProveedoresController extends AppController {
 	}
 
 	function edit($id = null) {
+            $this->rutaUrl_for_layout[] =array('name'=> 'Proveedores','link'=>'/account/proveedores' );
 		if (!$id && empty($this->data)) {
 			$this->Session->setFlash(__('Invalid Proveedor', true));
 			$this->redirect(array('action' => 'index'));

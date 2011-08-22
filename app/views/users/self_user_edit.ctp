@@ -1,3 +1,8 @@
+    <?php    
+        echo $this->element('menuadmin');
+    ?>
+
+
 <h1>Editar Mis Datos</h1>
 <div class="users form">
 <?php echo $form->create('User',array('action' => 'self_user_edit'));?>

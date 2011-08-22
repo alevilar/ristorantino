@@ -1,6 +1,13 @@
 <!DOCTYPE html> 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+        <script type="text/javascript">
+        <!--
+            // Inicializacion de variable global de url
+            var urlDomain = "<?php echo $html->url('/',true);?>";
+        -->
+        </script>
+    
 	<?php echo $html->charset(); ?>
 	<title>
 		<?php echo $title_for_layout; ?>
@@ -13,8 +20,9 @@
 		
 		// para los modal window
 		echo $html->css(array(
-                    'jquery-mobile/jquery.mobile-1.0b1.min',
+                    'jquery-mobile/jquery.mobile-1.0b2.min',
                     'jquery-mobile/jquery-mobile-fluid960',
+                    'jquery-mobile/jquery.mobile.actionsheet',
                     '/adition/css/ristorantino'
                     ));
 
@@ -23,29 +31,46 @@
                     echo $html->css($cssUserRole,'stylesheet', array('media'=>'screen'));
                 }
 
-		echo $javascript->link(array(
+		echo $javascript->link( array(
+                    '/adition/js/cake_saver',
+                    'risto/risto',
                     'jquery/jquery-1.6.1.min',
                     'jquery/jquery.tmpl.min',
                     'jquery/jquery.periodicalupdater',
+                    
+                    'jquery/fg.menu',
+                    'ristorantino/generic',
+                    
                     'knockout-1.2.1',
                     'knockout.mapping',
                     
-//                    'jquery/jquery.mobile.splitview',
-                    'jquery/jquery.mobile-1.0b1.min',
-                    'jquery/jquery.easing.1.3',
-//                    'jquery/jquery.mobile.scrollview',
-//                    'jquery/scrollview',
-                    
-                    'jquery/fg.menu',
-
-                    'ristorantino/generic',
+                    // OJO !! EL ORDEN IMPORTA !!
+                    '/adition/js/adition.package',
+                    'risto/mozo.class',
+                    'risto/mesa.class',
+                    '/adition/js/comanda.class',
+                    '/adition/js/comanda_fabrica.class',
                     '/adition/js/adicion.class',
-                    'ristorantino/mesa.class',
-                    'ristorantino/mozo.class',
-
+                    
+                    '/adition/js/producto',
+                    '/adition/js/categoria',
+                    '/adition/js/sabor.class',
+                    
+                    
+                    '/adition/js/detalle_comanda.class',
+                    
+                    
+                    '/adition/js/ko_adicion_model',
                     '/adition/js/adition.events',
-                    '/adition/js/comanda',
-
+                   '/adition/js/menu',
+                    
+                    
+                    
+                    
+                     'jquery/jquery.mobile-1.0b2',
+                    'jquery/jquery.easing.1.3',
+                    'jquery/jquery.mobile.actionsheet',
+                   
                     ));
                 ?>
 
@@ -53,11 +78,8 @@
     <!--
         $.mobile.page.prototype.options.backBtnText = "Volver";
 
-        // Inicializacion de variables y objetos Core
-        var urlDomain = "<?php echo $html->url('/',true);?>";
-
         // instancio el objeto adicion que sera el kernel de la app
-        var adicion = new Adicion();
+        Risto.Adition.adicionar.initialize();
     -->
     </script>
 

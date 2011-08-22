@@ -6,7 +6,7 @@
 			<?php echo $categoria['Categoria']['id']; ?>
 			&nbsp;
 		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Parent'); ?></dt>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Padre'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 			<?php echo $categoria['Categoria']['parent_id']; ?>
 			&nbsp;
@@ -21,22 +21,22 @@
 			<?php echo $categoria['Categoria']['right']; ?>
 			&nbsp;
 		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Name'); ?></dt>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Nombre'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 			<?php echo $categoria['Categoria']['name']; ?>
 			&nbsp;
 		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Description'); ?></dt>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Descripción'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 			<?php echo $categoria['Categoria']['description']; ?>
 			&nbsp;
 		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Created'); ?></dt>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Creado'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 			<?php echo $categoria['Categoria']['created']; ?>
 			&nbsp;
 		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Modified'); ?></dt>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Modificado'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 			<?php echo $categoria['Categoria']['modified']; ?>
 			&nbsp;
@@ -45,12 +45,12 @@
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $html->link(__('Edit Categoria', true), array('action'=>'edit', $categoria['Categoria']['id'])); ?> </li>
-		<li><?php echo $html->link(__('Delete Categoria', true), array('action'=>'delete', $categoria['Categoria']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $categoria['Categoria']['id'])); ?> </li>
-		<li><?php echo $html->link(__('List Categorias', true), array('action'=>'index')); ?> </li>
-		<li><?php echo $html->link(__('New Categoria', true), array('action'=>'add')); ?> </li>
-		<li><?php echo $html->link(__('List Items', true), array('controller'=> 'items', 'action'=>'index')); ?> </li>
-		<li><?php echo $html->link(__('New Item', true), array('controller'=> 'items', 'action'=>'add')); ?> </li>
+		<li><?php echo $html->link(__('Editar Categoria', true), array('action'=>'edit', $categoria['Categoria']['id'])); ?> </li>
+		<li><?php echo $html->link(__('Borrar Categoria', true), array('action'=>'delete', $categoria['Categoria']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $categoria['Categoria']['id'])); ?> </li>
+		<li><?php echo $html->link(__('Listar Categorias', true), array('action'=>'index')); ?> </li>
+		<li><?php echo $html->link(__('Crear Categoria', true), array('action'=>'add')); ?> </li>
+		<li><?php echo $html->link(__('Listar Items', true), array('controller'=> 'items', 'action'=>'index')); ?> </li>
+		<li><?php echo $html->link(__('Crear Item', true), array('controller'=> 'items', 'action'=>'add')); ?> </li>
 	</ul>
 </div>
 <div class="related">
@@ -86,9 +86,9 @@
 			<td><?php echo $item['created'];?></td>
 			<td><?php echo $item['modified'];?></td>
 			<td class="actions">
-				<?php echo $html->link(__('View', true), array('controller'=> 'items', 'action'=>'view', $item['id'])); ?>
-				<?php echo $html->link(__('Edit', true), array('controller'=> 'items', 'action'=>'edit', $item['id'])); ?>
-				<?php echo $html->link(__('Delete', true), array('controller'=> 'items', 'action'=>'delete', $item['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $item['id'])); ?>
+				<?php echo $html->link(__('Ver', true), array('controller'=> 'items', 'action'=>'view', $item['id'])); ?>
+				<?php echo $html->link(__('Editar', true), array('controller'=> 'items', 'action'=>'edit', $item['id'])); ?>
+				<?php echo $html->link(__('Borrar', true), array('controller'=> 'items', 'action'=>'delete', $item['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $item['id'])); ?>
 			</td>
 		</tr>
 	<?php endforeach; ?>

@@ -1,3 +1,9 @@
+    <?php  
+    echo $this->element('menuadmin');
+     ?>
+
+
+
 <div class="tipoDePagos index">
 <h2><?php __('Tipo de Pagos');?></h2>
 <p>
@@ -32,9 +38,8 @@ foreach ($tipoDePagos as $tipoDePago):
 			<?php echo $tipoDePago['TipoDePago']['description']; ?>
 		</td>
 		<td class="actions">
-			<?php echo $html->link(__('Ver', true), array('action'=>'view', $tipoDePago['TipoDePago']['id'])); ?>
 			<?php echo $html->link(__('Editar', true), array('action'=>'edit', $tipoDePago['TipoDePago']['id'])); ?>
-			<?php echo $html->link(__('Borrar', true), array('action'=>'delete', $tipoDePago['TipoDePago']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $tipoDePago['TipoDePago']['id'])); ?>
+			<?php echo $html->link(__('Borrar', true), array('action'=>'delete', $tipoDePago['TipoDePago']['id']), null, sprintf(__('¿Está seguro que desea borrar el tipo de pago: %s?', true), $tipoDePago['TipoDePago']['name'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>
@@ -49,6 +54,5 @@ foreach ($tipoDePagos as $tipoDePago):
 	<ul>
 		<li><?php echo $html->link(__('Crear Tipo de pago', true), array('action'=>'add')); ?></li>
 		<li><?php echo $html->link(__('Listar Pagos', true), array('controller'=> 'pagos', 'action'=>'index')); ?> </li>
-		<li><?php echo $html->link(__('Nuevo Pago', true), array('controller'=> 'pagos', 'action'=>'add')); ?> </li>
 	</ul>
 </div>

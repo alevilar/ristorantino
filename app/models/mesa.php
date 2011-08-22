@@ -41,7 +41,8 @@ class Mesa extends AppModel {
 								'conditions' => '',
 								'fields' => '',
 								'order' => ''
-			)
+			),
+                        'MesaEstado',
 	);
 
 
@@ -119,7 +120,11 @@ class Mesa extends AppModel {
         function calcular_subtotal($id = null){
             if (!empty($id)) $this->id = $id;
             $this->calcular_total();
-            return $this->total['Mesa']['subtotal'];
+            if(!empty($this->total['Mesa']['subtotal'])){
+                return $this->total['Mesa']['subtotal'];
+            }else {
+                return 0;
+            }
         }
 	
 

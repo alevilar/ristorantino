@@ -38,33 +38,100 @@ var MESA_ESTADOS_POSIBLES =  {
  *
  **/
 var Mesa = function(mozo, jsonData) {
-        if (jsonData && mozo) {
-            return this.initialize(mozo, jsonData);
-        }        
+        return this.initialize(mozo, jsonData);
 }
 
 
 
 Mesa.prototype = {
-    id: 0,
-    comandas: ko.observableArray(),
+    model: 'Mesa',
+    id: ko.observable(0),
+    total: ko.observable(0),
+    numero: ko.observable(0),
+    mozo_id: ko.observable(0),
+    created: ko.observable(0),    
     
-  
+    // es la comanda que actualmente se esta haciendo objeto comandaFabrica
+    currentComanda: ko.observable(), 
+    Comanda: ko.observableArray(),
     
     // attributos
-    mozo: ko.observable(null),
-
-    initialize: function(mozo, jsonData){
-        this.mozo = ko.observable(mozo);
+    mozo: ko.observable( {} ),
+    
+    timeAbrio: function(){
+        var d;
         
-        // si vino jsonData mapeo con koMapp
-        if ( mozo && jsonData ) {
-            ko.mapping.fromJS(jsonData, {}, this);
+        if (this.created() == 0) {
+            d = new Date();
+        } else {
+            d = new Date( mysqlTimeStampToDate(this.created()) );       
         }
         
-        return this;
+        return d.toLocaleTimeString();
+    },
+
+    initialize: function( mozo, jsonData ) {
+        this.id             = ko.observable();
+        this.created        = ko.observable();
+        this.total          = ko.observable( 0 );
+        this.numero         = ko.observable( 0 );
+        this.mozo           = ko.observable( new Mozo() );
+        this.currentComanda = ko.observable( new Risto.Adition.comandaFabrica() );
+        this.Comanda        = ko.observableArray( [] );
+        this.mozo_id        = this.mozo().id;
+        
+        // si vino jsonData mapeo con koMapp
+        if ( jsonData ) {
+            // si aun no fue mappeado
+            var mapOps = {
+                'Comanda': {
+                    create: function(ops) {
+                        return new Risto.Adition.comanda(ops.data);
+                    },
+                    key: function(data) {
+                        return ko.utils.unwrapObservable(data.id);
+                    }
+                }
+            }
+            
+            if (mozo) {
+                // meto al mozo sin agregarle la mesa al listado porque seguramente vino en el json
+                this.setMozo(mozo, false);
+            }
+            
+            return ko.mapping.fromJS(jsonData, mapOps, this);
+        } else {
+            if (mozo) {
+                // meto al mozo agregandole al mozo
+                this.setMozo(mozo, true);
+            }
+        }
+        
+        return ko.mapping.fromJS({}, {}, this);
     },
     
+    
+    /**
+     * agregar un producto a la comanda que actualmente se esta haciendo
+     * no implica que se haya agregado un producto a la mesa.
+     * es un estado intermedio de generacion de la comanda
+     * @param prod Producto  
+     **/
+    agregarProducto: function(prod){
+        this.currentComanda().agregarProducto(prod);
+    },
+    
+    nuevaComanda: function(){
+        this.currentComanda( new Risto.Adition.comandaFabrica(this)  );
+    },
+    
+    getData: function(){
+        $.get(this.urlGetData(), function(){
+            
+        });
+    },
+    
+    urlGetData: function(){return urlDomain+'mesas/ticket_view/'+this.id()},
     urlView: function(){return urlDomain+'mesas/view/'+this.id()},
     urlEdit: function(){return urlDomain+'mesas/edit/'+this.id()},
     urlComandaAdd: function(){return urlDomain+'comandas/add/'+this.id()},
@@ -73,7 +140,7 @@ Mesa.prototype = {
      *  Id del elemento que contiene los datos de esta mesa
      *  es utilizada en el action mesas/view
      */
-    domElementContainer: function(){ return 'mesa-' + this.id(); },
+    domElementContainer: function(){return 'mesa-' + this.id();},
 
 
     /**
@@ -312,6 +379,16 @@ Mesa.prototype = {
              alert("error de ajax: "+t);
          }
     },
+    
+    /**
+     * Si tiene un mozo setteado retorna true, caso contrario false
+     * Verifica con el id del mozo (si es CERO es que no tiene mozo)
+     * @return Boolean
+     */
+    tieneMozo: function(){
+        return this.mozo().id() ? true: false;
+    },
+
 
     /**
      * Setea el mozo a la mesa.
@@ -320,10 +397,14 @@ Mesa.prototype = {
      * @param agregarMesa Boolean indica si agrego la mesa al listado de mesas que tiene el mozo
      */
     setMozo: function(nuevoMozo, agregarMesa){
-        if ( this.mozo() ){
+        // si la mesa que le quiero agregar, tenia otro mozo
+        // lo debo sacar, eliminandole la mesa de su listado de mesas
+        if ( this.tieneMozo() ){
             var mozoViejo = this.mozo();
             mozoViejo.sacarMesa(this);
         }
+        
+        this.mozo_id( nuevoMozo.id() );
         this.mozo(nuevoMozo);
         if (agregarMesa) {
             this.mozo().agregarMesa(this);
@@ -352,8 +433,34 @@ Mesa.prototype = {
         }, function(data) {
             console.debug(data);
         });
+    },
+    
+    
+    /**
+     * Si tiene un detalleComanda modificado dentro del listado de comandas
+     * eme devuelve true
+     * @return boolean
+     */
+    tieneComandaModificada: function(){
+        var cc, ddcc;
+        for (var c in this.Comanda() ) {
+            cc = this.Comanda()[c];
+            for (var dc in cc.DetalleComanda() ){
+                // caa detalle comanda dentro del array de comandas
+                ddcc = cc.DetalleComanda()[dc];
+                if ( ddcc.modificada() == true ) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    },
+    
+    
+    
+    handleAjaxSuccess: function(data, action, method) {
+        ko.mapping.updateFromJS(this, data[this.model]);             
     }
 
-
-
 };
+

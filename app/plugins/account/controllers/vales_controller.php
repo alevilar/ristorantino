@@ -7,6 +7,12 @@ class ValesController extends AccountAppController {
     var $uses = array('Vale');
     var $components = array('Printer', 'RequestHandler');
 
+
+    function beforeFilter() {
+            parent::beforeFilter();
+            $this->rutaUrl_for_layout[] =array('name'=> 'Contabilidad','link'=>'/account' );
+    }    
+    
     function index() {
         $this->Vale->recursive = 0;
         $this->Vale->order = array('Vale.created' => 'DESC');
@@ -14,6 +20,7 @@ class ValesController extends AccountAppController {
     }
 
     function add() {
+        $this->rutaUrl_for_layout[] =array('name'=> 'Vales','link'=>'/account/vales' );
         if (!empty($this->data)) {
             $this->Vale->create();
             if ($this->Vale->save($this->data)) {
@@ -26,6 +33,7 @@ class ValesController extends AccountAppController {
     }
 
     function edit($id = null) {
+        $this->rutaUrl_for_layout[] =array('name'=> 'Vales','link'=>'/account/vales' );
         if (!$id && empty($this->data)) {
             $this->Session->setFlash(__('Invalid Vale', true));
             $this->redirect(array('action' => 'index'));

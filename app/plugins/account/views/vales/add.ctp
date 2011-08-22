@@ -1,3 +1,7 @@
+     <?php  
+        echo $this->element('menuadmin');
+     ?>
+
 <div class="vales form">
 <?php echo $form->create('Vale');?>
 	<fieldset>
@@ -5,8 +9,9 @@
 		echo $form->input('persona');
                 echo $form->input('monto');
 	?>
-	</fieldset>
 <?php echo $form->end('Guardar');?>
+        </fieldset>
+
 </div>
 <div class="actions">
 	<ul>

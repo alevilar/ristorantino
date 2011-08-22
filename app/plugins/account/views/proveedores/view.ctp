@@ -1,12 +1,16 @@
+     <?php  
+        echo $this->element('menuadmin');
+     ?>
+
 <div class="proveedores view">
 <h2><?php  __('Proveedor');?></h2>
-	<dl><?php $i = 0; $class = ' class="altrow"';?>
+	<dl><?php $i = 0; $class = '';?>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Id'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 			<?php echo $proveedor['Proveedor']['id']; ?>
 			&nbsp;
 		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Name'); ?></dt>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Nombre'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 			<?php echo $proveedor['Proveedor']['name']; ?>
 			&nbsp;
@@ -31,12 +35,12 @@
 			<?php echo $proveedor['Proveedor']['domicilio']; ?>
 			&nbsp;
 		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Created'); ?></dt>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Creado'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 			<?php echo $proveedor['Proveedor']['created']; ?>
 			&nbsp;
 		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Modified'); ?></dt>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Modificado'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 			<?php echo $proveedor['Proveedor']['modified']; ?>
 			&nbsp;
@@ -45,9 +49,9 @@
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $html->link(__('Edit Proveedor', true), array('action' => 'edit', $proveedor['Proveedor']['id'])); ?> </li>
-		<li><?php echo $html->link(__('Delete Proveedor', true), array('action' => 'delete', $proveedor['Proveedor']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $proveedor['Proveedor']['id'])); ?> </li>
-		<li><?php echo $html->link(__('List Proveedores', true), array('action' => 'index')); ?> </li>
-		<li><?php echo $html->link(__('New Proveedor', true), array('action' => 'add')); ?> </li>
+		<li><?php echo $html->link(__('Editar Proveedor', true), array('action' => 'edit', $proveedor['Proveedor']['id'])); ?> </li>
+		<li><?php echo $html->link(__('Borrar Proveedor', true), array('action' => 'delete', $proveedor['Proveedor']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $proveedor['Proveedor']['id'])); ?> </li>
+		<li><?php echo $html->link(__('Listar Proveedores', true), array('action' => 'index')); ?> </li>
+		<li><?php echo $html->link(__('Nuevo Proveedor', true), array('action' => 'add')); ?> </li>
 	</ul>
 </div>

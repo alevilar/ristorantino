@@ -85,74 +85,51 @@ class StatsController extends PqueryAppController {
     
     
     function mesas_factura() {
-        /*
-        debug($this->passedArgs['p']);
-        if(!empty($this->passedArgs['p']))
-        
+        //SELECT * FROM `clientes` WHERE DATE(created) >=(select date_sub(curdate(),interval 1 year)as Date)and DATE(created) <= NOW();
+        $desde = 'select date_sub(curdate(),interval 1 day)as Date;';
+        //SELECT * FROM `clientes` WHERE DATE(created) >=(select date_sub(curdate(),interval 1 year)as Date)
+        $select = 'SELECT * FROM `clientes` WHERE DATE(created) >=';
+
+        $test = $this->Mesa->query($desde);
+
+        if(!empty($this->passedArgs['p']) && $this->passedArgs['p']!='dia'){
+            
+               debug($this->passedArgs['p']);
+               
+             if($this->passedArgs['p']=='anio'){
+                 //query de año
+                 $desde = '(select date_sub(curdate(),interval 1 year)as Date)';
+                 $query = 'SELECT * FROM `mesas` WHERE DATE(created) >='.$desde.'and DATE(created) <= NOW();';
+                 $mesas = $this->Mesa->query($query);
+             }else{
+                    if($this->passedArgs['p']=='mes'){
+                        //query de mes
+                        $desde = '(select date_sub(curdate(),interval 1 month)as Date)';
+                        $query = 'SELECT * FROM `mesas` WHERE DATE(created) >='.$desde.'and DATE(created) <= NOW();';                       
+                        $mesas = $this->Mesa->query($query);                      
+                       }else {
+                               if($this->passedArgs['p']=='semana'){
+                                   //query de semana
+                                    $desde = '(select date_sub(curdate(),interval 1 week)as Date)';
+                                    $query = 'SELECT * FROM `mesas` WHERE DATE(created) >='.$desde.'and DATE(created) <= NOW();';                       
+                                    $mesas = $this->Mesa->query($query);
+                               }
+                       }
+                } 
                 
-        $desdeHasta = '1 = 1';
-        $limit = '';
-        $lineas = array($desdeHasta);
-        if ( !empty($this->data['Linea'] )) {
-            $linea = array();
-            foreach ($this->data['Linea'] as $linea) {
-                if(!empty($linea['desde']) && !empty($linea['hasta']))
-                    {
-                    list($dia, $mes, $anio) = explode("/", $linea['desde']);
-                    $desde = $anio."-".$mes."-".$dia;
-
-                    list($dia, $mes, $anio) = explode("/", $linea['hasta']);
-                    $hasta = $anio."-".$mes."-".$dia;
-
-                    $desdeHasta = "m.created BETWEEN '$desde' AND '$hasta'";
-                    $lineas[] = $desdeHasta;
-                }
-            }
-        } else {
-            $limit = ' LIMIT 7 ';
-        }
-
-        $mesasLineas = array();
-        foreach ( $lineas as $l ) {
-            $query = '    SELECT count(*) as "cant_mesas", 
-            sum(m.cant_comensales) as "cant_cubiertos" ,
-            sum(m.total) as "total", 
-            sum(m.total)/sum(m.cant_comensales) as "promedio_cubiertos",
-            DATE(m.created) as "fecha" FROM (
-
-                SELECT id,numero,mozo_id,total, cant_comensales, cliente_id,menu, ADDDATE(m.created,-1) as created, modified, time_cerro, time_cobro from mesas m
-                WHERE
-                    HOUR(m.created) BETWEEN 0 AND ' . $horarioCorte . '
-
-                UNION
-
-                SELECT id,numero,mozo_id,total, cant_comensales, cliente_id,menu, created, modified, time_cerro, time_cobro from mesas m
-                WHERE
-                    HOUR(m.created) BETWEEN ' . $horarioCorte . ' AND 24) as m
-            WHERE ' . $l . '                    
-            GROUP BY DATE(m.created)
-            ORDER BY m.created DESC     
-            ' . $limit;
-
-            $mesas = $this->Mesa->query($query);
-
-            foreach ($mesas as &$m) {
-                $m['Mesa'] = $m[0];
-                unset($m[0]);
-            }
-            $mesasLineas[] = $mesas;
-        }
-        $this->set('mesas', $mesasLineas);
-        */
+         }else {
+              //query default del dia
+                $query = 'SELECT * FROM `clientes` WHERE DATE(created) = NOW();';                       
+                $mesas = $this->Mesa->query($query);
+            //SELECT * FROM `clientes` WHERE DATE(created) ="2010-02-01";
+         }
+         debug($mesas);
+        $this->set('mesas', $mesas);
+        // la consulta debe hacerse a mesas y luego relacionarla con "pagos" y con  "tipo de pagos". Sumar y enviar solo el total
+        // Me guardo en un array todo los tipos de pago y ya tengo las mesas, hacer un foreach por cada mesa busco el id en la tabla pagos y voy sumando en el array de tipo de pagos.
+        
     }
-    
-    
-    
-    
-      
-    
-    
-    
+
 
     function dia() {
 

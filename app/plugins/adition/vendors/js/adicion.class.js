@@ -1,76 +1,6 @@
-/**
- *
- *
- *  KO Model
- *  Aca van todos los bindings que se realizaran en la vista
- *
- *  tambien el mapeo de datos entre arrays que vienen del servidor
- *
- *
- */
-var koAdicionModel = {
-    currentMozo: ko.observable(),
-    currentMesa: ko.observable(),
-    
-    tieneCurrentMesa: function(){
-        if ( typeof this.currentMesa() == 'object')  {
-            return true;
-        } else {
-            return false;
-        }
-    },
-    
-    // listado de mozos
-    mozos: ko.observableArray(),
-    
-    // a continuacion indicar el Campo del Model Mesa que sera utilizado para ordenar el listado de mesas
-    mozosOrder: ko.observable('mozo_id')
-    
-//    mesas: ko.observableArray()
-//    mesas: ko.dependentObservable( function(){
-//                var mesasList = [];
-//                console.debug(this);
-//                for (var m in this.mozos()) {
-//                    mesasList = array.concat(mesasList, this.mozos().mesas());
-//                }
-//                return mesasList;
-//           }, this)
-}
-// Dependientes
-// listado de mesas, depende de las mesas de cada mozo, y el orden que le haya indicado
-koAdicionModel.mesas = ko.dependentObservable( function(){
-                var mesasList = [];
-                var order = this.mozosOrder();
-
-                for (var m in this.mozos()) {
-                    mesasList = mesasList.concat(this.mozos()[m].mesas());
-                }
-                
-                if ( order ) {
-                    mesasList.sort(function(left, right) {
-                        return left[order]() == right[order]() ? 0 : (parseInt(left[order]()) < parseInt(right[order]()) ? -1 : 1) 
-                    })
-                }
-                return mesasList;
-
-           }, koAdicionModel);
-           
-
-
-/**
- *  Adicion Class
- *
- *  constructor
- *
- */
-
-var Adicion = function() {
-    this.initialize();
-}
-
 
 //Parametros de configuracion
-Adicion.cubiertosObligatorios   = true;
+Risto.Adition.cubiertosObligatorios   = true;
 
 
 /**
@@ -78,43 +8,37 @@ Adicion.cubiertosObligatorios   = true;
  *
  *
  * */
-Adicion.prototype = {
+Risto.Adition.adicionar = {
 
     yaMapeado: false,
     
-    __model: function(){
-        return koAdicionModel;
+    // Mozo Actualmente Activo
+    currentMozo: ko.observable(new Mozo()),
+    
+    // Mesa Actualmente activa
+    currentMesa: ko.observable(new Mesa()),
+    
+    // listado de mozos
+    mozos: ko.observableArray( [] ),
+     // orden del listado de mozos: Se puede poner cualquier valor que venga como atributo (campos de la bbdd de la tabla mozos)
+    mozosOrder: ko.observable('mozo_id'),
+    
+    mesas: ko.observableArray( [] ),
+    
+    nuevaComandaParaCurrentMesa: function(){
+        this.currentMesa().nuevaComanda();
     },
     
-    currentMozo: function(){
-        return koAdicionModel.currentMozo.apply(koAdicionModel, arguments);
+    menu: function(){
+        return Risto.Adition.koAdicionModel.menu.apply(Risto.Adition.koAdicionModel, arguments);
     },
     
-    currentMesa: function(){
-        return koAdicionModel.currentMesa.apply(koAdicionModel, arguments);
-    },
-    
-    
-    mesas: function(){
-        return koAdicionModel.mesas.apply(koAdicionModel, arguments);
-    },
-    
-    mozos: function(){
-        return koAdicionModel.mozos.apply(koAdicionModel, arguments);
-    },
-    
-    mozosOrder: function(){
-        return koAdicionModel.mozosOrder.apply(koAdicionModel, arguments);
-    },
 
     /**
      * Constructor
      */
     initialize: function() {
         this.getMesasAbiertas();
-        $(function(){
-            ko.applyBindings(koAdicionModel);
-        });
     },
 
     /**
@@ -181,8 +105,8 @@ Adicion.prototype = {
      */
     tieneMesaSeleccionada: function(){
         var retornar = false;
-        if(adicion.currentMesa){
-            if(adicion.currentMesa.estaAbierta())
+        if(this.currentMesa){
+            if(this.currentMesa.estaAbierta())
                 retornar = true;
             else
                 retornar = false;
@@ -205,6 +129,23 @@ Adicion.prototype = {
         for (var m in this.mesas()) {
             if ( this.mesas()[m].id() == id ) {
                 return this.mesas()[m];
+            }            
+        }
+        return false;
+    },
+    
+    
+    /**
+     * Busca un mozo por su ID en el listado de mozos
+     * devuelve al objeto Mozo en caso de encontrarlo.
+     * caso contrario devuelve false
+     * @param id Integer id del Mozo a buscar
+     * @return Mozo en caso de encontrarlo, false caso contrario
+     */
+    findMozoById: function(id){
+        for (var m in this.mozos()) {
+            if ( this.mozos()[m].id() == id ) {
+                return this.mozos()[m];
             }            
         }
         return false;
@@ -331,10 +272,10 @@ Adicion.prototype = {
      * 
      */
     __actualizarMozosConMesasAbiertas: function( data ) {
-        
-        if ( !this.yaMapeado ) {
+        var adn = Risto.Adition.adicionar;
+        if ( !adn.yaMapeado ) {
             // si aun no fue mappeado
-            mapOps = {
+            var mapOps = {
                 'mozos': {
                     create: function(ops) {
                         return new Mozo(ops.data);
@@ -344,23 +285,82 @@ Adicion.prototype = {
                     }
                 }
             }
-
-            koAdicionModel = ko.mapping.fromJS(data, mapOps, koAdicionModel );
-            this.yaMapeado = true;
+            adn.yaMapeado = true;
+            ko.mapping.fromJS(data, mapOps, adn );
         } else {
-            ko.mapping.updateFromJS(koAdicionModel, data);
+            return ko.mapping.updateFromJS(adn, data);
         }
         $(document).trigger('adicionMesasActualizadas');
     },
     
     
-    
     ordenarMesasPorNumero: function(){
         return this.mesas().sort(function(left, right) {
-            console.debug(left.numero());
             return left.numero() == right.numero() ? 0 : (parseInt(left.numero()) < parseInt(right.numero()) ? -1 : 1) 
         })
+    },
+    
+    
+    crearNuevaMesa: function(mesaNumero, mozoId){
+        var mozo = this.findMozoById(mozoId);
+        var mesa = new Mesa(mozo)
+        mesa.numero( mesaNumero );
+        
+        $cakeSaver.send({url:urlDomain+'mesas/abrirMesa.json', obj: mesa, model: 'Mesa'})
+        return mesa;        
     }
-
-		
 };
+
+
+
+
+
+/*____________________________________ OBSERVABLES DEPENDIENTES ___________________________*/
+
+/******---      ADICION         -----******/
+
+
+Risto.Adition.adicionar.todasLasMesas = ko.dependentObservable( function(){
+    var mesasList = [];
+    if ( this.mozos ) {
+        for ( var m in this.mozos() ) {
+            mesasList = mesasList.concat( this.mozos()[m].mesas() );
+        }
+    }
+    return mesasList;
+}, Risto.Adition.adicionar);
+
+// listado de mesas, depende de las mesas de cada mozo, y el orden que le haya indicado
+Risto.Adition.adicionar.mesas = ko.dependentObservable( function(){
+                var mesasList = [];
+                var order = this.mozosOrder();
+
+                mesasList = this.todasLasMesas();
+                
+                if ( order ) {
+                    mesasList.sort(function(left, right) {
+                        return left[order]() == right[order]() ? 0 : (parseInt(left[order]()) < parseInt(right[order]()) ? -1 : 1) 
+                    })
+                }
+                return mesasList;
+
+}, Risto.Adition.adicionar);
+     
+     
+     
+/**
+ * Variable de estado generada cuando se esta armando una comanda
+ * son los productos seleccionados
+ */
+Risto.Adition.adicionar.productosSeleccionados = ko.dependentObservable( function(){
+    return this.currentMesa().currentComanda().comanda.DetalleComanda();    
+}, Risto.Adition.adicionar);     
+
+
+/**
+ * Variable de estado generada cuando se esta armando una comanda
+ * son los sabores de un producto seleccionado
+ */
+Risto.Adition.adicionar.currentSabores = ko.dependentObservable( function(){
+    return this.currentMesa().currentComanda().currentSabores();    
+}, Risto.Adition.adicionar);   

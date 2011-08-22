@@ -1,3 +1,7 @@
+    <?php    
+    echo $this->element('menuadmin');
+    ?>
+
 <script type="text/javascript">
     Event.observe(window, 'load', function(){
         if ($F('ClienteTipofactura') == 0){
@@ -114,6 +118,6 @@
 </div>
 <div class="actions">
     <ul>
-        <li><?php echo $html->link(__('List Clientes', true), array('action'=>'index'));?></li>
+        <li><?php echo $html->link(__('Listar Clientes', true), array('action'=>'index'));?></li>
     </ul>
 </div>

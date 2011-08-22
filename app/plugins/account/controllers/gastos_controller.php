@@ -4,7 +4,12 @@ class GastosController extends AccountAppController {
 	var $name = 'Gastos';
 	var $helpers = array('Html', 'Form');
 
-	function index() {
+        function beforeFilter() {
+            parent::beforeFilter();
+            $this->rutaUrl_for_layout[] =array('name'=> 'Contabilidad','link'=>'/account' );
+        }
+        
+        function index() {
 		$this->Gasto->recursive = 1;
 		$this->set('gastos', $this->paginate());
 	}
@@ -18,6 +23,7 @@ class GastosController extends AccountAppController {
 	}
 
 	function add() {
+            $this->rutaUrl_for_layout[] =array('name'=> 'Gastos','link'=>'/account/gastos' );
 		if (!empty($this->data)) {
                         // fecha de factura
                         if (!empty($this->data['Gasto']['factura_fecha'])) {
@@ -44,6 +50,7 @@ class GastosController extends AccountAppController {
 	}
 
 	function edit($id = null) {
+            $this->rutaUrl_for_layout[] =array('name'=> 'Gastos','link'=>'/account/gastos' );
 		if (!$id && empty($this->data)) {
 			$this->Session->setFlash(__('Invalid Gasto', true));
 			$this->redirect(array('action' => 'index'));

@@ -4,6 +4,12 @@ class ProductosController extends AppController {
 	var $name = 'Productos';
 	var $helpers = array('Html', 'Form');
 
+        function beforeFilter() {
+            parent::beforeFilter();
+            $this->rutaUrl_for_layout[] =array('name'=> 'Admin','link'=>'/pages/administracion' );
+        }
+        
+        
 	function index() {
 		$this->params['PaginateConditions'] = array();
 		
@@ -48,8 +54,26 @@ class ProductosController extends AppController {
 		 }   
 		 
 		 
-		
-		
+		/***
+                 * 
+                 * ES PARA BORRARRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+                 * 
+               
+                 $prodsConPrecioFuturo = $this->Producto->ProductosPreciosFuturo->find('all', array(
+                     'fields' => 'producto_id'
+                 ));
+                 if ( count($prodsConPrecioFuturo) > 1 ) {
+                    $this->paginate['Producto']['conditions']['Producto.id NOT IN'] = array('874','3267');
+                 } else {
+                     $this->paginate['Producto']['conditions']['Producto.id <>'] = array('874');
+                 }
+		 /****************************
+                  * 
+                  * ------------------------------------------------------
+                  */
+                 
+                 
+                 
 		$this->Producto->recursive = 0;
 		$this->set('productos', $this->paginate());
 	}
@@ -73,6 +97,7 @@ class ProductosController extends AppController {
 	}
 
 	function add() {
+            $this->rutaUrl_for_layout[] =array('name'=> 'Productos','link'=>'/productos' );
 		if (!empty($this->data)) {
 			$this->Producto->create();
 			if ($this->Producto->save($this->data)) {
@@ -88,6 +113,7 @@ class ProductosController extends AppController {
 	}
 
 	function edit($id = null) {
+            $this->rutaUrl_for_layout[] =array('name'=> 'Productos','link'=>'/productos' );
 		if (!$id && empty($this->data)) {
 			$this->Session->setFlash(__('Invalid Producto', true));
 			$this->redirect(array('action'=>'index'));
@@ -162,6 +188,75 @@ class ProductosController extends AppController {
             
             $this->redirect($this->referer());
         }
-
+        
+        
+        function sinpreciosfuturos(){
+             $this->rutaUrl_for_layout[] =array('name'=> 'Precios Futuros','link'=>'/productos_precios_futuros' );
+		$this->params['PaginateConditions'] = array();
+		if(!empty($this->data)){
+			$condiciones = array();
+			$pagCondiciones = array();
+			foreach($this->data as $modelo=>$campos){
+				foreach($campos as $key=>$val){
+                                                                        
+                                    if(!is_array($val)) {
+                                            $condiciones[$modelo.".".$key." LIKE"] = '%'.$val.'%';
+                                            $pagCondiciones[$modelo.".".$key] = $val;
+                                    }
+				}
+			}
+                        
+			$this->paginate[$this->modelClass] = array(
+				'conditions' => $condiciones,
+			);
+		}
+		
+		
+		if(!empty($this->passedArgs) && empty($this->data)){ 
+		 	$condiciones = array();
+			$pagCondiciones = array();
+			foreach($this->passedArgs as $campo=>$valor){
+				if($campo == 'page' || $campo == 'sort' || $campo == 'direction'){ 
+					continue;
+				}
+				$condiciones["$campo LIKE"] = '%'.$valor.'%';
+				$pagCondiciones[$campo] = $valor;
+				$this->data[$campo] = $valor;
+				
+			}
+			$this->paginate[$this->modelClass] = array(
+				'conditions' => $condiciones
+			);
+		 }   
+                                                
+                 $query = 'SELECT * FROM `productos` WHERE `id` NOT IN 
+                                (SELECT DISTINCT `producto_id` FROM `productos_precios_futuros`) 
+                                        ORDER BY `productos`.`id` ASC';
+                 
+                 $prod_sinpf = $this->Producto->query($query);
+                 
+//                 //debug($prod_sinpf);
+//                 
+//                 $condiciones["productos_precios NOT IN"] = '(SELECT DISTINCT `producto_id` FROM `productos_precios_futuros`)';
+//                 
+//                 	$this->paginate['Producto'] = array(
+//				'conditions' => $condiciones
+//			);
+                 
+                 
+		$this->Producto->recursive = 0;
+		$this->set('productos', $prod_sinpf);
+           
+            
+            
+        }
+        
+        
+        
+        
+        
+        
+      
 }
+
 ?>

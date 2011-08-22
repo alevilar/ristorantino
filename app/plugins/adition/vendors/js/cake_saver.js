@@ -1,0 +1,42 @@
+var $cakeSaver = {
+    
+    method: 'POST',
+    
+    /**
+     * 
+     * Objeto a mandar, debe tener como minimo:
+     *  'url' => es la url donde se enviara el post
+     *  'obj' => es el objeto que voy a enviar
+     */
+    send: function( sendObj ){
+        var obj = sendObj['obj'];
+        var url = sendObj['url'];
+        var model = sendObj['model'];
+        var method = sendObj['method'] || this.method;
+        var ob = this.__processObj(obj, obj.model);
+        
+        $.ajax({
+            'url': url,
+            'data': ob,
+            'type': method,
+            success: function(data){
+                obj.handleAjaxSuccess(data, url, method);
+            }
+        });
+       
+    },
+    
+    __processObj: function(obj, model){
+        var auxObj = ko.toJS(obj);
+        var ooo = {};
+        
+        for (var i in auxObj ) {
+            if ( typeof auxObj[i] != 'object' && typeof auxObj[i] != 'function' && auxObj[i] != undefined && auxObj[i] != null) {
+                ooo['data['+model+']['+i+']'] = auxObj[i];
+            }
+        }
+        ooo = $.param(ooo);
+        return ooo;
+    }
+    
+}

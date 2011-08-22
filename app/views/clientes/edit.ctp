@@ -1,3 +1,9 @@
+    <?php    
+    echo $this->element('menuadmin');
+    ?>
+
+
+
 <script type="text/javascript">
     Event.observe(window, 'load', function(){
         if ($F('ClienteTipofactura') == 0){
@@ -41,15 +47,14 @@
             array(
                 'label'=>'Tipo Factura',
                 'options'=>array('B'=>'"B"', '0'=>'Remito','A'=>'"A"'),
-                'after'=> '<br>Tipo de comprobante a imprimir.
-                            Se puede imprimir una factura "A", "B", o un remito.'
+                'after'=> '<br>Tipo de comprobante a imprimir.'
             )
         );
 
         echo $form->input('descuento_id',array(
                 'div'=>array('id' => 'div-descuento'),
                 'empty'=>'Sin Descuento',
-                'after'=>'El descuento solo es válido cuando se quiere imprimir un remito'));
+                'after'=>'<br>El descuento solo es válido cuando se quiere imprimir un remito'));
 
         ?>
 
@@ -58,8 +63,7 @@
              echo $form->input('imprime_ticket',
                                 array(
                                     'checked'=>true,
-                                    'after'=>'Hay ocasiones en las que no es necesario imprimir un remito,
-                                        El remito, cuando es impreso sale por una comandera, ya que no es un comprobante fiscal.<br> Si desea imprimir por otra comandera debe dirigirse a la seccion "Comanderas" de la pagina de administracion.'));
+                                    'after'=>'Hay ocasiones en las que no es necesario imprimir un remito.<br>Si desea imprimir por otra comandera debe dirigirse a la seccion "Comanderas" de la pagina de administracion.'));
 
             ?>
         </div>

@@ -1,6 +1,14 @@
+    <?php    
+    echo $this->element('menuadmin');
+    ?>
+
+
+
+
+
 <div class="clientes view">
-<h2><?php  __('Cliente');?></h2>
-	<dl><?php $i = 0; $class = ' class="altrow"';?>
+<h2><?php  __('Cliente:'); echo " ".$cliente['Cliente']['nombre'] ;?></h2>
+	<dl><?php $i = 0; $class = '';?>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Id'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 			<?php echo $cliente['Cliente']['id']; ?>
@@ -23,13 +31,12 @@
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Imprime Ticket'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $cliente['Cliente']['imprime_ticket']; ?>
-			&nbsp;
-		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Nombre'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $cliente['Cliente']['nombre']; ?>
-			&nbsp;
+			<?php if($cliente['Cliente']['imprime_ticket']==1){
+                            echo"SI";
+                        }else {
+                            echo"NO";
+                        }
+                        ?>
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Nrodocumento'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
@@ -46,7 +53,13 @@
 			<?php echo $cliente['Cliente']['domicilio']; ?>
 			&nbsp;
 		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Responsabilidad Iva'); ?></dt>
+                <dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Telefono'); ?></dt>
+		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
+			<?php echo $cliente['Cliente']['telefono']; ?>
+			&nbsp;
+		</dd>
+
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Resp IVA'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 			<?php echo $cliente['IvaResponsabilidad']['name']; ?>
 			&nbsp;

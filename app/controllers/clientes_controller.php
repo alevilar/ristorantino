@@ -3,13 +3,67 @@ class ClientesController extends AppController {
 
 	var $name = 'Clientes';
 	var $helpers = array('Html', 'Form', 'Ajax');
-
+        
+        
+        function beforeFilter() {
+            parent::beforeFilter();
+            $this->rutaUrl_for_layout[] =array('name'=> 'Admin','link'=>'/pages/administracion' );
+        }
+        
 	function index() {
+           
+            $this->params['PaginateConditions'] = array();
+		
+		if(!empty($this->data)){
+			$condiciones = array();
+			$pagCondiciones = array();
+			foreach($this->data as $modelo=>$campos){
+				foreach($campos as $key=>$val){
+						if(!is_array($val))
+							$condiciones[$modelo.".".$key." LIKE"] = '%'.$val.'%';
+							$pagCondiciones[$modelo.".".$key] = $val;
+				}
+			}
+			$this->Cliente->recursive = 0;
+			$this->paginate['Cliente'] = array(
+				'conditions' => $condiciones
+			);
+			
+			$this->params['PaginateConditions'] = $pagCondiciones;
+			$this->set('clientes', $this->paginate('Cliente'));
+		}
+		
+		
+		if(!empty($this->passedArgs) && empty($this->data)){ 
+		 	$condiciones = array();
+			$pagCondiciones = array();
+			foreach($this->passedArgs as $campo=>$valor){
+				if($campo == 'page' || $campo == 'sort' || $campo == 'direction'){ 
+					continue;
+				}
+				$condiciones["$campo LIKE"] = '%'.$valor.'%';
+				$pagCondiciones[$campo] = $valor;
+				$this->data[$campo] = $valor;
+				
+			}
+			$this->Cliente->recursive = 0;
+			$this->paginate['Clientes'] = array(
+				'conditions' => $condiciones
+			);
+                        
+			$this->params['PaginateConditions'] = $pagCondiciones;
+			$this->set('clientes', $this->paginate('Cliente'));
+		 }   
+ 
+                /* <- Esto es lo original -> */
+                
 		$this->Cliente->recursive = 0;
 		$this->set('clientes', $this->paginate());
+                
 	}
 
 	function view($id = null) {
+            $this->rutaUrl_for_layout[] =array('name'=> 'Clientes','link'=>'/clientes' );
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid Cliente.', true));
 			$this->redirect(array('action'=>'index'));
@@ -18,6 +72,7 @@ class ClientesController extends AppController {
 	}
 
 	function add() {
+            $this->rutaUrl_for_layout[] =array('name'=> 'Clientes','link'=>'/clientes' );
 		if (!empty($this->data)) {
 			$this->Cliente->create();
 			if ($this->Cliente->save($this->data)) {
@@ -55,6 +110,7 @@ class ClientesController extends AppController {
 	}
 
 	function edit($id = null) {
+            $this->rutaUrl_for_layout[] =array('name'=> 'Clientes','link'=>'/clientes' );
 		if (!$id && empty($this->data)) {
 			$this->Session->setFlash(__('Cliente incorrecto', true));
 			$this->redirect(array('action'=>'index'));
@@ -80,11 +136,11 @@ class ClientesController extends AppController {
 
 	function delete($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for Cliente', true));
+			$this->Session->setFlash(__('Cliente invalido', true));
 			$this->redirect(array('action'=>'index'));
 		}
 		if ($this->Cliente->del($id)) {
-			$this->Session->setFlash(__('Cliente deleted', true));
+			$this->Session->setFlash(__('Cliente eliminado', true));
 			$this->redirect(array('action'=>'index'));
 		}
 	}

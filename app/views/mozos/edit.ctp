@@ -1,3 +1,8 @@
+        <?php     
+            echo $this->element('menuadmin');
+        ?>
+        
+
 <div class="mozos form">
 <?php echo $form->create('Mozo');?>
 	<fieldset>
@@ -6,7 +11,7 @@
 		echo $form->input('id');
 		echo $form->input('user_id', array('empty'=>'No relacionar con usuarios del sistema'));
 		echo $form->input('numero');
-		echo $form->input('activo',array('after'=>'Solo mozos activos aparecen en la adición. Si BORRA un mozo se pierden los datos estadisticos, puede desactivarlo para no perder información.'));
+                echo $form->input('activo',array('after'=>'<p>Sólo los mozos activos apareran en la Adición.</br>Si BORRA un mozo se pierden los datos estadisticos, puede desactivarlo para no perder información.</p>'));
 	?>
      <?php echo $form->end('Submit');?>           
 	</fieldset>

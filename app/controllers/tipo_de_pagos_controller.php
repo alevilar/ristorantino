@@ -4,6 +4,11 @@ class TipoDePagosController extends AppController {
 	var $name = 'TipoDePagos';
 	var $helpers = array('Html', 'Form');
 
+       function beforeFilter() {
+            parent::beforeFilter();
+            $this->rutaUrl_for_layout[] =array('name'=> 'Admin','link'=>'/pages/administracion' );
+        }
+        
 	function index() {
 		$this->TipoDePago->recursive = 0;
 		$this->set('tipoDePagos', $this->paginate());
@@ -18,6 +23,7 @@ class TipoDePagosController extends AppController {
 	}
 
 	function add() {
+            $this->rutaUrl_for_layout[] =array('name'=> 'Tipo de pagos','link'=>'/TipoDePagos' );
 		if (!empty($this->data)) {
 			$this->TipoDePago->create();
 			if ($this->TipoDePago->save($this->data)) {
@@ -30,6 +36,7 @@ class TipoDePagosController extends AppController {
 	}
 
 	function edit($id = null) {
+             $this->rutaUrl_for_layout[] =array('name'=> 'Tipo de pagos','link'=>'/TipoDePagos' );
 		if (!$id && empty($this->data)) {
 			$this->Session->setFlash(__('Invalid TipoDePago', true));
 			$this->redirect(array('action'=>'index'));

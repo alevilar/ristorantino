@@ -8,7 +8,6 @@ echo $paginator->counter(array(
 ?></p>
 <table cellpadding="0" cellspacing="0">
 <tr>
-	<th><?php echo $paginator->sort('id');?></th>
 	<th><?php echo $paginator->sort('codigo_fiscal');?></th>
 	<th><?php echo $paginator->sort('Nombre');?></th>
 	<th class="actions"><?php __('Acciones');?></th>
@@ -23,16 +22,12 @@ foreach ($ivaResponsabilidades as $ivaResponsabilidad):
 ?>
 	<tr<?php echo $class;?>>
 		<td>
-			<?php echo $ivaResponsabilidad['IvaResponsabilidad']['id']; ?>
-		</td>
-		<td>
 			<?php echo $ivaResponsabilidad['IvaResponsabilidad']['codigo_fiscal']; ?>
 		</td>
 		<td>
 			<?php echo $ivaResponsabilidad['IvaResponsabilidad']['name']; ?>
 		</td>
 		<td class="actions">
-			<?php echo $html->link(__('Ver', true), array('action' => 'view', $ivaResponsabilidad['IvaResponsabilidad']['id'])); ?>
 			<?php echo $html->link(__('Editar', true), array('action' => 'edit', $ivaResponsabilidad['IvaResponsabilidad']['id'])); ?>
 			<?php echo $html->link(__('Borrar', true), array('action' => 'delete', $ivaResponsabilidad['IvaResponsabilidad']['id']), null, sprintf(__('Esta seguro que desea borrar # %s?', true), $ivaResponsabilidad['IvaResponsabilidad']['id'])); ?>
 		</td>

@@ -4,6 +4,11 @@ class DescuentosController extends AppController {
 	var $name = 'Descuentos';
 	var $helpers = array('Html', 'Form');
 
+       function beforeFilter() {
+            parent::beforeFilter();
+            $this->rutaUrl_for_layout[] =array('name'=> 'Admin','link'=>'/pages/administracion' );
+        }
+        
 	function index() {
 		$this->Descuento->recursive = 0;
 		$this->set('descuentos', $this->paginate());
@@ -18,6 +23,7 @@ class DescuentosController extends AppController {
 	}
 
 	function add() {
+            $this->rutaUrl_for_layout[] =array('name'=> 'Descuentos','link'=>'/pages/administracion' );
 		if (!empty($this->data)) {
 			$this->Descuento->create();
 			if ($this->Descuento->save($this->data)) {
@@ -30,6 +36,7 @@ class DescuentosController extends AppController {
 	}
 
 	function edit($id = null) {
+            $this->rutaUrl_for_layout[] =array('name'=> 'Descuentos','link'=>'/pages/administracion' );
 		if (!$id && empty($this->data)) {
 			$this->Session->setFlash(__('Invalid Descuento', true));
 			$this->redirect(array('action'=>'index'));

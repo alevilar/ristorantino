@@ -32,28 +32,31 @@ var Mozo = function(jsonData){
 
 
 Mozo.prototype = {
-//    id : 0,
-//    numero : 0,
-      mesas: null,
-//    seleccionado: false,
+    id      : ko.observable( 0 ),
+    numero  : ko.observable( 0 ),
+    mesas   : ko.observableArray(),
 
-
-    initialize: function(jsonData){
+    initialize: function(jsonData) {
         var mozoNuevo = this;
-
-        // si aun no fue mappeado
-        mapOps = {
-            'mesas': {
-                create: function(ops) {
-                    return new Mesa(mozoNuevo, ops.data);
-                },
-                key: function(data) {
-                    return ko.utils.unwrapObservable(data.id);
+        this.id     = ko.observable( 0 );
+        this.numero = ko.observable( 0 );
+        this.mesas  = ko.observableArray( [] );
+        
+        if (jsonData) {
+            // si aun no fue mappeado
+            var mapOps = {
+                'mesas': {
+                    create: function(ops) {
+                        return new Mesa(mozoNuevo, ops.data);
+                    },
+                    key: function(data) {
+                        return ko.utils.unwrapObservable(data.id);
+                    }
                 }
             }
+            return ko.mapping.fromJS(jsonData, mapOps, this);
         }
-
-        return ko.mapping.fromJS(jsonData, mapOps, this);
+        return this;
     },
 
     /**
@@ -84,14 +87,13 @@ Mozo.prototype = {
         this.mesas.push(nuevaMesa);
         var evento = $.Event(MOZOS_POSIBLES_ESTADOS.agragaMesa.event);
         evento.mozo = this;
+        evento.mesa = nuevaMesa;
         $(document).trigger(evento);
     },
 
 
     sacarMesa: function(mesa){
-        if ( this.mesas ) { 
-            var i = $.inArray(mesa, this.mesas());
-            this.mesas.splice(i,1);
+        if ( this.mesas.remove(mesa) ) { 
             var evento = $.Event(MOZOS_POSIBLES_ESTADOS.sacaMesa.event);
             evento.mozo = this;
             $(document).trigger(evento);

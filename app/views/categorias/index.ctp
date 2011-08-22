@@ -1,9 +1,14 @@
+    <?php 
+        echo $this->element('menuadmin');
+    ?>
+
+
 <div class="categorias index">
 <h2><?php __('Categorias');?></h2>
 
 <?php echo $html->link('Reordenar Alfabeticamente',array('action'=>'reordenar'));?>
 
-<table cellpadding="0" cellspacing="0">
+<table class="categorias-table" cellpadding="0" cellspacing="0">
 
 <?php
 $i = 0;
@@ -16,12 +21,11 @@ while(list($categoria_id, $categoria_name) = each($categorias)):
 ?>
 	<tr<?php echo $class;?>>
 		<td align="left" width="200px;">
-			<span style="text-align: left;"><?php echo $html->image('right.png',array('width'=>'15px;'))."($categoria_id) $categoria_name"; ?></span>
+			<span style="text-align: left;"><?php echo $html->image('right.png',array('width'=>'22px;'))."($categoria_id) $categoria_name"; ?></span>
 		</td>
 		<td class="actions" align="left">
-			<?php echo $html->link(__('View', true), array('action'=>'view', $categoria_id)); ?>
-			<?php echo $html->link(__('Edit', true), array('action'=>'edit', $categoria_id)); ?>
-			<?php echo $html->link(__('Delete', true), array('action'=>'delete', $categoria_id), null, sprintf(__('Seguro que querés borrar la categoria # %s?', true), $categoria_name)); ?>
+			<?php echo $html->link(__('Editar', true), array('action'=>'edit', $categoria_id)); ?>
+			<?php echo $html->link(__('Borrar', true), array('action'=>'delete', $categoria_id), null, sprintf(__('Seguro que querés borrar la categoria # %s?', true), $categoria_name)); ?>
 		</td>
 	</tr>
 <?php endwhile; ?>

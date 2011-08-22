@@ -27,10 +27,20 @@ class Categoria extends AppModel {
 	 * @return unknown_type
 	 */
 	function array_listado($categoria_id = 1){	
-		$array_final = array();	
+		$array_categoria = array();	
+                $array_final = array();
+                
 		$this->recursive = 1;
 		$this->id = $categoria_id;
-		$array_final = $this->read();
+//                $this->contain(array(
+//                    'Producto', 
+//                    'Sabor',
+//                ));
+		$array_categoria = $this->read();
+//                debug($array_categoria );die;
+                $array_final = $array_categoria['Categoria'];
+                $array_final['Producto'] = $array_categoria['Producto'];
+                $array_final['Sabor'] = $array_categoria['Sabor'];
 		//agarro los herederos del ROOT
 		$resultado = $this->children($categoria_id,1);
 

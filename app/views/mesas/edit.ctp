@@ -1,3 +1,8 @@
+    <?php    
+    echo $this->element('menuadmin');
+    ?>
+
+
 
 <div class="mesas form">
 <?php echo $form->create('Mesa');?>
@@ -5,118 +10,134 @@
  		<legend><?php __('Editar Mesa');?></legend>
 	<?php
 		echo $form->input('id');
-		echo $form->input('numero',array('after'=>'Escriba otro número de mesa.','label'=>'Cambiar Número de Mesa'));
-		echo $form->input('mozo_id',array('after'=>'Seleccione un nuevo mozo para ésta mesa'));
-		echo $form->input('total',array('after'=>'OJO !!! Cuando una mesa ya esta cerrada, cuando se modifica el total, se modifica el verdadero valor final de la mesa.'));
-	?>
-	</fieldset>
+		echo $form->input('numero',array('after'=>'</br>Si cambia este número, cambiara el número de la mesa','label'=>'Cambiar Número de Mesa'));
+		echo $form->input('mozo_id',array('after'=>'</br>Aquí puede cambiar el mozo de la mesa'));
+		echo $form->input('total',array('after'=>'</br>Aquí puede cambiar el total de la mesa.'));
+                //echo $form->input('Cliente_descuento_porcentaje',array('after'=>'</br>Aquí puede cambiar el total de la mesa.'));                   
+                
+                
+        ?>
 <?php echo $form->end('Guardar Cambios');?>
+	</fieldset>
 </div>
 
-<h2>Detalles de la Mesa</h2>
+<div class="detallesmesa">
+    <h2>Detalles de la Mesa</h2>
+    
+    <dl>
+    <?php
+            echo "<dt>Tipo Factura</dt>";
+            if ($mesa['Cliente']['tipofactura'] == ''){
+                    $tipofac = "B";
+                    $mesa['Cliente']['tipofactura'] = "B";
+            }
 
-<h3>Cliente</h3>
-<dl>
-<?php
-	echo "<dt>Tipo Factura</dt>";
-	if ($mesa['Cliente']['tipofactura'] == ''){
-		$tipofac = "B";
-		$mesa['Cliente']['tipofactura'] = "B";
-	}
-	
-	if ($mesa['Cliente']['tipofactura'] === 0){
-		$tipofac = 'Remito';	
-	}
-	else{
-		$tipofac = $mesa['Cliente']['tipofactura'];
-	}
-	
-	echo "<dd>\"$tipofac\" &nbsp;</dd>";
-	
-	if(empty($mesa['Cliente']['tipofactura'])){
-		echo "<dt>Nombre</dt>";
-		echo "<dd>". $mesa['Cliente']['nombre']."&nbsp;</dd>";
-	
-		echo "<dt>Descuento</dt>";
-		$dto = (!empty($mesa['Cliente']['Descuento']['porcentaje']))?$mesa['Cliente']['Descuento']['porcentaje']:"0";
-		echo "<dd>". $dto."% &nbsp;</dd>";
-	}
-	
-	echo "<dt>Imprime Ticket</dt>";
-	echo "<dd>". ($mesa['Cliente']['imprime_ticket'])?'SI':'NO'."&nbsp;</dd>";
-?>
-</dl>
+            if ($mesa['Cliente']['tipofactura'] === 0){
+                    $tipofac = 'Remito';	
+            }
+            else{
+                    $tipofac = $mesa['Cliente']['tipofactura'];
+            }
 
-<?php 
-echo "Abrió a las ".date('H:i', strtotime($this->data['Mesa']['created']));
-?>
+            echo "<dd>\"$tipofac\" &nbsp;</dd>";
 
-<ul>
+            if(empty($mesa['Cliente']['tipofactura'])){
+                    echo "<dt>Nombre</dt>";
+                    echo "<dd>". $mesa['Cliente']['nombre']."&nbsp;</dd>";
 
-<?php
-$totalSumado = 0;
-foreach($items as $comanda):
-	 echo "<li>ID: ";
-	 echo "#".$comanda['id']."</li>";
-	 echo $html->link("Reimprimir Comanda #".$comanda['id'],array('controller'=>'comandas','action'=>'imprimir',$comanda['id']));
-	 if($comanda['observacion']){
-	 echo "<li><cite>Observacion:</cite> ";
-	 echo $comanda['observacion']."</li>";
-	 }
-	 
-	 
-	 ?>
-	 <ul>
-	 <?php foreach($comanda['DetalleComanda'] as $detalle){?>
-	 	<li>
-	 		<?php echo "Cant Pedida: ".$detalle['cant']." Sacada: ".$detalle['cant_eliminada'] ?>
-	 		<br>
-	 		<span style="color: maroon; <?php  if(($detalle['cant']-$detalle['cant_eliminada'])==0) echo "text-decoration: line-through;"?> ">
-	 			<?php  echo $detalle['cant']-$detalle['cant_eliminada'].")  ".$detalle['Producto']['name']." [p-u $ ".$detalle['Producto']['precio']."]"?>
-	 		</span>
-	 	</li>
-	 	<?php if(count($detalle['DetalleSabor'])>0){
-	 				$primero = true;
-	 			echo "(";
-	 			 foreach($detalle['DetalleSabor'] as $sabor){
-	 			 	if(!$primero){
-	 			 		echo ", ";
-	 			 	}
-	 			 	$primero = false;
-	 			 	echo $sabor['Sabor']['name']." [ $".$sabor['Sabor']['precio']."]";
-	 			 	$totalSumado += ($detalle['cant']-$detalle['cant_eliminada'])*$sabor['Sabor']['precio'];
-	 			 }
-	 			 echo ")";
-	 	}
-	 	
-		$totalSumado += ($detalle['cant']-$detalle['cant_eliminada'])*$detalle['Producto']['precio'];
-	 	}?>
-	 </ul>
-	 
-	 
-	 <hr />
-	 <?php 
-endforeach;
+                    echo "<dt>Descuento</dt>";
+                    $dto = (!empty($mesa['Cliente']['Descuento']['porcentaje']))?$mesa['Cliente']['Descuento']['porcentaje']:"0";
+                    echo "<dd>". $dto."% &nbsp;</dd>";
+            }
 
-?>
+            echo "<dt>Imprime Ticket</dt>";
+            echo "<dd>";
+            echo ($mesa['Cliente']['imprime_ticket'])?'SI':'NO';
+            echo "</dd>"
+    ?>
+    </dl>
 
+    <?php 
+    echo "<strong><p>Abrió a las ".date('H:i', strtotime($this->data['Mesa']['created']))."</strong></p>";
+    ?>
+</div>
+
+<ul class="items_mesas">
+
+    <?php
+    $totalSumado = 0;
+    foreach($items as $comanda):
+             echo "<li><p>";
+             echo "#".$comanda['id']."</p>";
+             echo $html->link("Reimprimir Comanda #".$comanda['id'],array('controller'=>'comandas','action'=>'imprimir',$comanda['id']),array('style'=>'float:right;margin-right: 100px;font-size:120%;color:#000000;font-weight: normal;'));
+             if($comanda['observacion']){
+             echo "<cite>Observacion: ";
+             echo $comanda['observacion']."</cite>";
+             //echo "</li>";
+             }
+             
+
+             ?>
+        <ul>
+                <?php //debug($comanda); ?>
+             <?php foreach($comanda['DetalleComanda'] as $detalle){ ?>
+                    <li>
+                            <?php echo "Cant Pedida: ".$detalle['cant'].($detalle['cant_eliminada']!='0'?" Sacada: ".$detalle['cant_eliminada']:'') ?>
+                            <br>
+                            <span style="color: #AD0101; font-weight: normal; font-size: 120%; <?php  if(($detalle['cant']-$detalle['cant_eliminada'])==0) echo "text-decoration: line-through;"?> ">
+                                    <?php  echo $detalle['cant']-$detalle['cant_eliminada'].")  ".(!empty($detalle['Producto']['name'])?$detalle['Producto']['name']:'')." [p-u $ ".$detalle['Producto']['precio']."]"?>
+                            </span>
+                    </li>
+                    <?php if(count($detalle['DetalleSabor'])>0){
+                                            $primero = true;
+                                    echo "<cite>";
+                                    echo "(";
+                                     foreach($detalle['DetalleSabor'] as $sabor){
+                                            if(!$primero){
+                                                    echo ", ";
+                                            }
+                                            $primero = false;
+                                            echo $sabor['Sabor']['name'].($sabor['Sabor']['precio']!='0'?" [ $".$sabor['Sabor']['precio']."]":'');
+ 
+                                            $totalSumado += ($detalle['cant']-$detalle['cant_eliminada'])*$sabor['Sabor']['precio'];
+                                     }
+                                     echo ")";
+                                     echo "</cite>";
+                    }
+
+                    $totalSumado += ($detalle['cant']-$detalle['cant_eliminada'])*$detalle['Producto']['precio'];
+                    }?>
+             </ul>
+
+
+    </li>
+             <?php 
+    endforeach;
+
+    ?>
+    
 </ul>
 
-<?php 
+<div class="mesastotaledit">
+    <?php 
+    //echo "<p>La suma de los productos da: <strong> $$totalSumado</strong></p>";
+    //
+    //echo "<p><br>Segun funciones especiales:";
 
-echo "<p>La suma de los productos da: $$totalSumado</p>";
+    echo "<h3>SUBTOTAL = <span>$$subtotal</span></h3>";
+    $dto = empty($mesa['Cliente']['Descuento']['porcentaje'])?0:$mesa['Cliente']['Descuento']['porcentaje'];
+    echo "<h3>TOTAL = <span>$$total</span> </h3>";
+            if($dto!='0') {
+                 echo "(Dto: $dto%)";
+            }
+    echo "</p>";
 
-echo "<p><br><br>Segun funciones especiales:";
-echo "<h3>SUBTOTAL = $$subtotal</h3>";
-$dto = empty($mesa['Cliente']['Descuento']['porcentaje'])?0:$mesa['Cliente']['Descuento']['porcentaje'];
-echo "<h4>TOTAL = $$total (Dto: $dto%)</h4>";
-echo "</p>";
-
-echo "<p><br><br>Segun base de datos: <br>";
-echo "<h5>Subtotal almacenado en Base de Datos: $".$mesa['Mesa']['subtotal']."<h5>";
-echo "<h5>Total almacenado en Base de Datos: $".$mesa['Mesa']['total']."<h5>";
-echo "</p>";
+    //echo "<p><br><br>Segun base de datos: <br>";
+    //echo "<h5>Subtotal almacenado en Base de Datos: $".$mesa['Mesa']['subtotal']."<h5>";
+    //echo "<h5>Total almacenado en Base de Datos: $".$mesa['Mesa']['total']."<h5>";
+    //echo "</p>";
 ?>
+</div>
 
 
 <div class="actions">
