@@ -306,7 +306,7 @@ Risto.Adition.adicionar = {
         var mesa = new Mesa(mozo)
         mesa.numero( mesaNumero );
         
-        $cakeSaver.send({url:urlDomain+'mesas/abrirMesa.json', obj: mesa, model: 'Mesa'})
+        $cakeSaver.send({url:urlDomain+'mesas/abrirMesa.json', obj: mesa});
         return mesa;        
     }
 };

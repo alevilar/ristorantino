@@ -27,7 +27,6 @@ class DetalleComandasController extends AppController {
 		$this->autoRender = false;
 		$ok = false;
 		//Configure::write('debug',1);
-	debug($this->data);
 		if($this->DetalleComanda->saveAll($this->data)){
 			$ok = true;
 		}
@@ -38,8 +37,8 @@ class DetalleComandasController extends AppController {
 	function add(){
 		$this->autoRender = false;
 		$ok = false;
-		//Configure::write('debug',1);		
-		
+		Configure::write('debug',1);		
+		debug($this->data);
 		$imprimir = $this->data['imprimir'];
 		unset($this->data['imprimir']);		
 		

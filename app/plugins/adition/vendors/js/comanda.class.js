@@ -8,6 +8,7 @@ Risto.Adition.comanda.prototype = {
     // Array de DetalleComanda, cada detalleComanda es 1 producto
     DetalleComanda : ko.observableArray([]),
     created: ko.observable(),
+    model: 'Comanda',
     
     initialize: function(jsonData) {
         this.created = ko.observable();
@@ -41,5 +42,10 @@ Risto.Adition.comanda.prototype = {
         
         return d.toLocaleTimeString();
     }
+//    ,
+//    
+//    handleAjaxSuccess: function(){
+//        return true;
+//    }
     
 }

@@ -1,4 +1,15 @@
 Risto.Adition.detalleComanda = function(jsonData) {
+    
+    this.producto_id = ko.dependentObservable( function(){
+        console.info("paso");
+        var prod = undefined;
+        if ( this.Producto ) {
+            prod = this.Producto().id();
+        }
+        return prod;
+    }, this);
+
+
     return this.initialize(jsonData);
 }
 
@@ -10,14 +21,17 @@ Risto.Adition.detalleComanda.prototype = {
     // cant de este producto seleccionado
     cant: ko.observable(0),
     cant_eliminada: ko.observable(0),
+    imprimir: ko.observable(),
     es_entrada: ko.observable( 0 ),
     observacion: ko.observable(''),
     modificada: ko.observable(false),
+    model: 'DetalleComanda',
     
     
     initialize: function(jsonData){
         this.DetalleSabor = ko.observableArray([]);
         this.Producto = ko.observable();
+        this.imprimir = ko.observable(true);
         this.cant = ko.observable(0);
         this.cant_eliminada = ko.observable(0);
         this.es_entrada = ko.observable.call( false );
@@ -151,5 +165,5 @@ Risto.Adition.detalleComanda.prototype = {
         }
         return false;
     }
-    
 }
+
