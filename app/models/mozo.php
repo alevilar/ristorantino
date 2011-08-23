@@ -78,7 +78,20 @@ class Mozo extends AppModel {
 	}
 
 
+        /**
+         * Para todos los mozos activos, me trae sus mesas abiertas
+         * @param int $mozo_id id del mozo, en caso de que no le pase ninguno, me busca todos
+         * @return array Mozos con sus mesas, Comandas, detalleComanda, productos y sabores
+         */
         function mesasAbiertas($mozo_id = null){
+            $conditions = array();
+            if ( !empty($mozo_id) ){
+               $conditions['Mozo.id'] =  $mozo_id;
+            } else {
+                // mozos activos
+                $conditions['Mozo.activo'] =  1;
+            }
+            
             $options = array(
                 'contain' => array(
                     'Mesa' => array(
@@ -92,7 +105,8 @@ class Mozo extends AppModel {
                         ),
                         'order' => 'Mesa.created DESC',
                     ),
-                 )
+                 ),
+                'conditions'=> $conditions,
             );
 
             return $this->find('all', $options);

@@ -27,7 +27,6 @@ class DetalleComandasController extends AppController {
 		$this->autoRender = false;
 		$ok = false;
 		//Configure::write('debug',1);
-	debug($this->data);
 		if($this->DetalleComanda->saveAll($this->data)){
 			$ok = true;
 		}
@@ -38,10 +37,9 @@ class DetalleComandasController extends AppController {
 	function add(){
 		$this->autoRender = false;
 		$ok = false;
-		//Configure::write('debug',1);		
-		
-		$imprimir = $this->data['imprimir'];
-		unset($this->data['imprimir']);		
+		Configure::write('debug',1);		
+		$imprimir = $this->data['Comanda']['imprimir'];
+		unset($this->data['Comanda']['imprimir']);		
 		
 		// este array contine la prioridad y la mesa_id ---> todos datos de Modelo Comanda
 		$comanda = $this->data['Comanda'];
@@ -49,8 +47,8 @@ class DetalleComandasController extends AppController {
 		
 		//cuento la cantidad de comanderas involucradas en este pedido para genrar la cantidad de comandas correspondientes
 		$v_comanderas = array();
-		foreach($this->data as $find_data):
-			$v_comanderas[$find_data['DetalleComanda']['comandera_id']] = $find_data['DetalleComanda']['comandera_id'];
+		foreach($this->data['DetalleComanda'] as $find_data):
+			$v_comanderas[$find_data['comandera_id']] = $find_data['comandera_id'];
 		endforeach;
 		
 		// por cada comandera involucrada creo una comanda
@@ -71,9 +69,9 @@ class DetalleComandasController extends AppController {
 		
 		// por cada Comanda que hice (o sea por cada comandera) genero elDetalleComanda
 		while(list($comandera_id, $comanda_id) = each($v_comandera_y_comanda)):
-			foreach($this->data as $data):
-				$data['DetalleComanda']['comanda_id'] = $comanda_id;
-				if ($data['DetalleComanda']['comandera_id'] == $comandera_id){
+			foreach($this->data['DetalleComanda'] as $data):
+				$data['comanda_id'] = $comanda_id;
+				if ($data['comandera_id'] == $comandera_id){
 					if ($this->DetalleComanda->saveAll($data)){
 						$ok = true;
 					}

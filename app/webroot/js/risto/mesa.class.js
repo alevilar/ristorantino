@@ -44,7 +44,8 @@ var Mesa = function(mozo, jsonData) {
 
 
 Mesa.prototype = {
-    id: 0,
+    model: 'Mesa',
+    id: ko.observable(0),
     total: ko.observable(0),
     numero: ko.observable(0),
     mozo_id: ko.observable(0),
@@ -56,15 +57,28 @@ Mesa.prototype = {
     
     // attributos
     mozo: ko.observable( {} ),
+    
+    timeAbrio: function(){
+        var d;
+        
+        if (this.created() == 0) {
+            d = new Date();
+        } else {
+            d = new Date( mysqlTimeStampToDate(this.created()) );       
+        }
+        
+        return d.toLocaleTimeString();
+    },
 
     initialize: function( mozo, jsonData ) {
-        
+        this.id             = ko.observable();
+        this.created        = ko.observable();
         this.total          = ko.observable( 0 );
         this.numero         = ko.observable( 0 );
         this.mozo           = ko.observable( new Mozo() );
         this.currentComanda = ko.observable( new Risto.Adition.comandaFabrica() );
         this.Comanda        = ko.observableArray( [] );
-        this.mozo_id        = ko.observable( 0 );
+        this.mozo_id        = this.mozo().id;
         
         // si vino jsonData mapeo con koMapp
         if ( jsonData ) {
@@ -93,7 +107,7 @@ Mesa.prototype = {
             }
         }
         
-        return this;
+        return ko.mapping.fromJS({}, {}, this);
     },
     
     
@@ -440,8 +454,13 @@ Mesa.prototype = {
             }
         }
         return false;
-    }
+    },
     
+    
+    
+    handleAjaxSuccess: function(data, action, method) {
+        ko.mapping.updateFromJS(this, data[this.model]);             
+    }
 
 };
 

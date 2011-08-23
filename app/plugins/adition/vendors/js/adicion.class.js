@@ -304,7 +304,9 @@ Risto.Adition.adicionar = {
     crearNuevaMesa: function(mesaNumero, mozoId){
         var mozo = this.findMozoById(mozoId);
         var mesa = new Mesa(mozo)
-        mesa.numero( mesaNumero );       
+        mesa.numero( mesaNumero );
+        
+        $cakeSaver.send({url:urlDomain+'mesas/abrirMesa.json', obj: mesa});
         return mesa;        
     }
 };

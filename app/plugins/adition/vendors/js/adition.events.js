@@ -27,6 +27,8 @@ $('#mesa-view').live('pagebeforeshow',function(event, ui){
  *
  */ 
 $(document).ready(function() {
+    
+    $(document).keydown(buscarAccessKey);
 
     $(document).bind("mesaSeleccionada", mesaSeleccionada);
 
@@ -149,3 +151,74 @@ function confirmacionDeSalida(e) {
 		e.preventDefault();
 	}
     }
+    
+    
+  
+
+function irMesaPrev() {
+    var mesaContainer = $('#mesas_container');
+    
+    if ( Risto.Adition.mesaCurrentIndex !== null) {
+        var aaa = Risto.Adition.mesaCurrentIndex.parent().prev().find('a');
+        if ( aaa.length ) {
+            Risto.Adition.mesaCurrentIndex = aaa;
+        }
+    } else {
+        Risto.Adition.mesaCurrentIndex = mesaContainer.find('a').first();
+    }
+    Risto.Adition.mesaCurrentIndex.focus();
+}
+
+function irMesaNext() {
+    var mesaContainer = $('#mesas_container');
+    
+    if ( Risto.Adition.mesaCurrentIndex !== null) {
+        var aaa = Risto.Adition.mesaCurrentIndex.parent().next().find('a');
+        if ( aaa.length ) {
+            Risto.Adition.mesaCurrentIndex = aaa;
+        }
+    } else {
+        Risto.Adition.mesaCurrentIndex = mesaContainer.find('a').first();
+        Risto.Adition.mesaCurrentIndex.focus();
+    }
+    Risto.Adition.mesaCurrentIndex.focus();
+}
+    
+function buscarAccessKey(e) {
+    var code = e.which;
+    
+    // al apretar la tecla back, volver atras, menos cuando estoy en un INPUT o TEXTAREA
+    if (code == 8 ) { // tecla backspace
+        if (document.activeElement.tagName.toLowerCase() != 'input' && document.activeElement.tagName.toLowerCase() != 'textarea') {
+            history.back();
+        }
+    }
+    
+    // mesa siguiente a la seleccionada (focus) del listado de mesas
+    if (code == 39 ) { //btn flecha derecha
+        irMesaNext();
+    }
+    
+    // mesa anterior a la seleccionada del listado de mesas
+    if (code == 37 ) { // boton flecha izq
+        irMesaPrev();
+    }
+
+    if ( code > 47){ // desde el numero 0 hasta la ultima letra con simbolos
+        // a los 3,5 segundos borrar el string y reiniciarlo
+        
+        // buscar la mesa con ese numero, busca por accesskey
+        Risto.Adition.mesaBuscarAccessKey += String.fromCharCode( code );
+        var domFinded = $("[accesskey='"+Risto.Adition.mesaBuscarAccessKey+"']");
+        if ( domFinded.length ) {
+            Risto.Adition.mesaCurrentIndex = $(domFinded[0]);
+            domFinded[0].focus();
+            Risto.Adition.mesaBuscarAccessKey = ''
+        }
+        
+        setTimeout(function(  ){
+            Risto.Adition.mesaBuscarAccessKey = '';
+        },3200);
+    }
+    
+}
