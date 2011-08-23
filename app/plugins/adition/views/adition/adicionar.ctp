@@ -31,12 +31,15 @@
                         </ul>
                 </div>
         </div>
-
+                    <a href="#" data-role="button" data-icon="monio" data-iconpos="notext">555-555-5555</a>
+                    <a href="#mesa-view" data-role="button" data-icon="moniob" data-theme="e" data-iconpos="notext"></a>
+                    <a href="#mesa-view" data-role="button" data-icon="tenedor" data-theme="c" data-iconpos="notext" data-iconpos="right"></a>
+                    <a href="#mesa-view" data-role="button" data-icon="tenedorb" data-theme="e" data-iconpos="notext"></a>
         <div  data-role="content" class="">
                 <a href="#mesa-add" class="mesa" data-rel="dialog">Abrir Mesa</a>
                 
                 <!-- aca va el listado de mesas que se carga dinamicamente en un script de abajo -->
-                <ul id="mesas_container" class="container_12 listado-mesas" data-bind='template: { name: "listaMesas", foreach: adn().mesas }'>
+                <ul id="mesas_container" class="container_12 listado-adicion mesas" data-bind='template: { name: "listaMesas", foreach: adn().mesas }'>
                         <!-- Template: 
                             listado de mesas que será refrescado continuamente mediante 
                             el ajax que verifica el estado de las mesas (si fue abierta o cerrada alguna. -->
@@ -90,14 +93,15 @@
 
         <div data-role="content" class="container_12">
                 <!-- aca va el listado de mesas que se carga dinamicamente en un script de abajo -->
-                <ul id="mesas_container" class="container_12 listado-mesas"
+                <ul id="mesas_container" class="container_12 listado-adicion mozos"
                     data-bind='template: { name: "listaMozos", foreach: adn().mozos }'>
                     <script id="listaMozos" type="text/x-jquery-tmpl">
                         <li data-mesa-numero="${numero}" data-mozo-id="${id}" class="grid_1">
-                            <a href="mozos/view/${id}" data-role="none" class="mesa" >
+                            <a href="mozos/view/${id}" data-role="none" class="mozo" >
                                 (<span class="mozo-numero" data-bind="text: numero()" style="color: red"></span>)
                                 <span class="mozo-cant-mesas" data-bind="text: mesas().length"></span> mesas
                             </a>
+                            
                         </li>
                     </script>
 
