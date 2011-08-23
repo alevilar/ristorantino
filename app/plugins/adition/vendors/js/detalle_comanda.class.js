@@ -1,12 +1,11 @@
 Risto.Adition.detalleComanda = function(jsonData) {
     
     this.producto_id = ko.dependentObservable( function(){
-        console.info("paso");
-        var prod = undefined;
-        if ( this.Producto ) {
-            prod = this.Producto().id();
+        var prod = this.Producto();
+        if ( prod ) {
+            return prod.id;
         }
-        return prod;
+        return undefined;
     }, this);
 
 
@@ -30,7 +29,6 @@ Risto.Adition.detalleComanda.prototype = {
     
     initialize: function(jsonData){
         this.DetalleSabor = ko.observableArray([]);
-        this.Producto = ko.observable();
         this.imprimir = ko.observable(true);
         this.cant = ko.observable(0);
         this.cant_eliminada = ko.observable(0);
@@ -38,11 +36,12 @@ Risto.Adition.detalleComanda.prototype = {
         this.observacion = ko.observable('');
         this.modificada = ko.observable(false);
 
+        this.Producto = ko.observable( new Risto.Adition.producto() );
         if ( jsonData ) {
             this.Producto =  ko.observable ( new Risto.Adition.producto( jsonData.Producto ) );
             return ko.mapping.fromJS(jsonData, {} , this);
-      }  
-      return this;
+        }  
+      return ko.mapping.fromJS({}, {} , this);;
     },
     
     

@@ -123,8 +123,9 @@ Risto.Adition.comandaFabrica.prototype = {
         
         if ( dcIndex < 0 ) {
             // producto aun no agregado a la lista, entonces lo agrego
-            dc = new Risto.Adition.detalleComanda();
-            dc.Producto(prod);
+            var dcConProd = {Producto : prod};
+            dc = new Risto.Adition.detalleComanda(dcConProd);
+
             // suma 1 al producto
             dc.seleccionar(); 
             
