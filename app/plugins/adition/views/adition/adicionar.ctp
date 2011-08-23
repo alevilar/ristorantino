@@ -215,7 +215,7 @@
                         <!-- Template: listado de comandas con sus productos-->
                         <script id="listaComandas" type="text/x-jquery-tmpl">
                            <div data-role="collapsible">
-                                <h3><span>Comanda #${id}</span> <span data-bind="text: timeCreated()"></span></h3>
+                                <h3><span>Comanda #<span data-bind="text: id"></span></span> <span data-bind="text: timeCreated()"></span></h3>
 
                                 <ul class="ui-listview " data-role="listview"
                                    data-bind="template: {name: 'li-productos-detallecomanda', foreach: DetalleComanda}"

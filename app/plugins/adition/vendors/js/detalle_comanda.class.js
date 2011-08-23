@@ -1,5 +1,7 @@
 Risto.Adition.detalleComanda = function(jsonData) {
+    this.initialize(jsonData);
     
+    // Observables Dependientes
     this.producto_id = ko.dependentObservable( function(){
         var prod = this.Producto();
         if ( prod ) {
@@ -7,9 +9,17 @@ Risto.Adition.detalleComanda = function(jsonData) {
         }
         return undefined;
     }, this);
-
-
-    return this.initialize(jsonData);
+    
+    
+    this.comandera_id = ko.dependentObservable( function(){
+        var prod = this.Producto();
+        if ( prod ) {
+            return prod.comandera_id;
+        }
+        return undefined;
+    }, this);
+    
+    return this;
 }
 
 
@@ -20,7 +30,6 @@ Risto.Adition.detalleComanda.prototype = {
     // cant de este producto seleccionado
     cant: ko.observable(0),
     cant_eliminada: ko.observable(0),
-    imprimir: ko.observable(),
     es_entrada: ko.observable( 0 ),
     observacion: ko.observable(''),
     modificada: ko.observable(false),

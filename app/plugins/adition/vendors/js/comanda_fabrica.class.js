@@ -21,17 +21,47 @@ Risto.Adition.comandaFabrica.prototype = {
     
     initialize: function(mesa){       
         this.comanda = new Risto.Adition.comanda();
-        
-        this.mesa = mesa;
-        this.id = 0;
+        if ( mesa ) {
+            this.comanda.mesa_id = mesa.id();
+            this.mesa = mesa;
+        }
+        this.id = undefined;
         return this;
     },
     
     
     save: function() {
-        this.mesa.Comanda.unshift( this.comanda );
+        if ( !this.mesa){
+                jQuery.error("no hay una mesa setteada. No se puede guardar una comanda de ninguna mesa");
+                return null;
+        }
+            
+        // separo la comanda generada en varias comandas
+        // se genera 1 comanda por cada impresora que haya (comandera)
+        var ccdc;
+        var comanderas = [];
+        var comanderaComanda;
+        // separo los detaleComanda por comandera
+        for (var dc in this.comanda.DetalleComanda()) {
+            ccdc = this.comanda.DetalleComanda()[dc];
+            console.debug(ccdc);
+            if ( !comanderas[ccdc.comandera_id()] || !comanderas[ccdc.comandera_id()].length ) {
+               comanderas[ccdc.comandera_id()] = [];
+            }
+            comanderas[ccdc.comandera_id()].push(ccdc);
+        }
+        console.debug(comanderas);
         
-        $cakeSaver.send({url:urlDomain+'detalle_comandas/add', obj: this.comanda});
+        // creo una nueva comanda para cada comandera
+        for (var com in comanderas ) {
+            comanderaComanda = new Risto.Adition.comanda({mesa_id: this.mesa.id()});
+            comanderaComanda.DetalleComanda(comanderas[com]);
+            
+            this.mesa.Comanda.unshift( comanderaComanda );
+        
+            $cakeSaver.send({url:urlDomain+'detalle_comandas/add', obj: comanderaComanda});
+        }
+        
         
         return this.comanda;
     },

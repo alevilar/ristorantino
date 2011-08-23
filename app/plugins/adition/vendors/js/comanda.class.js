@@ -9,8 +9,12 @@ Risto.Adition.comanda.prototype = {
     DetalleComanda : ko.observableArray([]),
     created: ko.observable(),
     model: 'Comanda',
+    imprimir: ko.observable(),
+    id: ko.observable(),
     
     initialize: function(jsonData) {
+        this.id = ko.observable();
+        this.imprimir = ko.observable(true);
         this.created = ko.observable();
         
         if ( jsonData ) {
@@ -27,7 +31,7 @@ Risto.Adition.comanda.prototype = {
             }
             return ko.mapping.fromJS(jsonData, mapOps, this);
         }
-        return this;
+        return ko.mapping.fromJS({}, {}, this);;
     },
     
     
