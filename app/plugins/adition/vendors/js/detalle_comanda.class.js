@@ -48,9 +48,28 @@ Risto.Adition.detalleComanda.prototype = {
         this.Producto = ko.observable( new Risto.Adition.producto() );
         if ( jsonData ) {
             this.Producto =  ko.observable ( new Risto.Adition.producto( jsonData.Producto ) );
+            if ( jsonData.DetalleSabor && jsonData.DetalleSabor.length){
+                for(var s in jsonData.DetalleSabor){
+                    this.DetalleSabor.push( new Risto.Adition.sabor( jsonData.DetalleSabor[s].Sabor) );
+                }
+                delete jsonData.DetalleSabor;
+            }
             return ko.mapping.fromJS(jsonData, {} , this);
-        }  
-      return ko.mapping.fromJS({}, {} , this);;
+        }
+        
+        return ko.mapping.fromJS({}, {} , this);
+    },
+    
+    /**
+     *Es el valor del producto sumandole los sabores
+     */
+    precio: function(){
+        var total = 0;
+        total += parseFloat(this.Producto().precio);
+        for (var s in this.DetalleSabor() ){
+            total += parseFloat( this.DetalleSabor()[s].precio );
+        }
+        return total;
     },
     
     
@@ -81,13 +100,16 @@ Risto.Adition.detalleComanda.prototype = {
             
             if ( this.DetalleSabor().length > 0 ){
                 var dsname = '';
-                
                 for (var ds in this.DetalleSabor()) {
                     if ( ds > 0 ) {
                         // no es el primero
                         dsname += ', ';
                     }
-                    dsname += this.DetalleSabor()[ds].name;
+                    if (typeof this.DetalleSabor()[ds].name == 'function') {
+                        dsname += this.DetalleSabor()[ds].name();
+                    } else {
+                        dsname += this.DetalleSabor()[ds].name;
+                    }
                 }
                 
                 if (dsname != '' ){

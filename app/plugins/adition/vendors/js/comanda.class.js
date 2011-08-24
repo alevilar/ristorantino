@@ -46,10 +46,12 @@ Risto.Adition.comanda.prototype = {
         
         return d.toLocaleTimeString();
     }
-//    ,
-//    
-//    handleAjaxSuccess: function(){
-//        return true;
-//    }
+    ,
+    
+    handleAjaxSuccess: function(data){
+//        ko.mapping.updateFromJS(this, data.Comanda)
+        this.id(data.Comanda.Comanda.id);
+        this.created(data.Comanda.Comanda.id);
+    }
     
 }

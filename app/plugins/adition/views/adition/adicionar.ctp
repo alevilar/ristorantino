@@ -7,7 +7,7 @@
 
 
          <span data-bind="text: realCant()" style="right: auto" class="ui-li-count ui-btn-up-c ui-btn-corner-all"></span>
-         <span data-bind="text: Producto().name" style="margin-left: 20px;"></span>
+         <span data-bind="text: nameConSabores()" style="margin-left: 20px;"></span>
      </li>
 </script>
                                          
@@ -34,21 +34,31 @@
                     <a href="#" data-role="button" data-icon="monio" data-iconpos="notext">555-555-5555</a>
                     <a href="#mesa-view" data-role="button" data-icon="moniob" data-theme="e" data-iconpos="notext"></a>
                     <a href="#mesa-view" data-role="button" data-icon="tenedor" data-theme="c" data-iconpos="notext" data-iconpos="right"></a>
-                    <a href="#mesa-view" data-role="button" data-icon="tenedorb" data-theme="e" data-iconpos="notext"></a>
+                    <a href="#mesa-view" data-role="button" data-icon="tenedorb" data-theme="e"  data-iconpos="notext" >Mesa loca</a>
         <div  data-role="content" class="">
                 <a href="#mesa-add" class="mesa" data-rel="dialog">Abrir Mesa</a>
                 
                 <!-- aca va el listado de mesas que se carga dinamicamente en un script de abajo -->
-                <ul id="mesas_container" class="container_12 listado-adicion mesas" data-bind='template: { name: "listaMesas", foreach: adn().mesas }'>
+                <ul id="mesas_container" class="listado-adicion" data-bind='template: { name: "listaMesas", foreach: adn().mesas }'>
                         <!-- Template: 
                             listado de mesas que será refrescado continuamente mediante 
                             el ajax que verifica el estado de las mesas (si fue abierta o cerrada alguna. -->
                         <script id="listaMesas" type="text/x-jquery-tmpl">
-                            <li class="grid_1">
-                                <a href="#mesa-view" data-role="none" class="mesa" data-bind="click: seleccionar, attr: {accesskey: numero}" >
-                                    (<span class="mesa-mozo" data-bind="text: mozo().numero" style="color: red"></span>)
-                                    <span class="mesa-numero" data-bind="text: numero"></span>
-                                    <span class="mesa-created" data-bind="text: timeAbrio()"></span>
+                            <li class="grid_2">
+                                <a  data-bind="click: seleccionar, attr: {accesskey: numero}" 
+                                    data-theme="c" 
+                                    data-icon="tenedorb" 
+                                    data-role="button" 
+                                    href="#mesa-view" 
+                                    class="ui-btn ui-btn-icon-left ui-btn-corner-all ui-shadow ui-btn-up-c">
+                                    <span class="ui-btn-inner ui-btn-corner-all">
+                                        <span class="ui-btn-text">
+                                            <span class="mesa-numero" data-bind="text: numero"></span>
+                                            <span class="mesa-mozo" data-bind="text: mozo().numero"></span>
+                                            <span class="mesa-created">Abrió a las <cite data-bind="text: timeAbrio()"></cite></span>
+                                        </span>
+                                        <span class="ui-icon ui-icon-tenedorb ui-icon-shadow"></span>
+                                    </span>
                                 </a>
                             </li>
                         </script>
@@ -186,7 +196,7 @@
             <a data-rel="back" data-transition="reverse" href="#">Volver</a>
             
             <h1>Mesa N°<span data-bind="text: adn().currentMesa().numero"></span>, Mozo <span data-bind="text: adn().currentMesa().mozo().numero"></span>
-                <span class="mesa-total" style="color: red;">$<span data-bind="text: adn().currentMesa().total"></span></span>
+                <span class="mesa-total" style="color: red;">$<span data-bind="text: adn().currentMesa().totalCalculado"></span></span>
             </h1>
             
             <a data-theme="e" data-bind="visible: adn().currentMesa().tieneComandaModificada()" href="#">Guardar Cambios de Comanda</a>

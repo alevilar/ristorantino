@@ -250,7 +250,10 @@ LEFT JOIN
 			$mesas = $this->find('all', array('conditions'=>$conditions));
 		}			
 		else{
-			$mesas = $this->find('all', array('conditions'=>$conditions,'contain'=>array('Mozo(numero)')));
+			$mesas = $this->find('all', array(
+                            'conditions'=>$conditions,
+                            'contain'=>array('Mozo(numero)')
+                            ));
 		}
 		return $mesas;
 	}

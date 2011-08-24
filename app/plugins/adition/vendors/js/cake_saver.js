@@ -41,30 +41,31 @@ var $cakeSaver = {
      * @param recursivObj es el objeto resultado de este proceso. Sirve cuando quiero hacerlo de forma recursiva
      */
     __aplanarObj: function(auxObj, recursivObj, key) {
-        var cont;
-        var ooo = recursivObj || {};
-        var model = auxObj.model;
-        var arrayKey;
+        var cont,
+            ooo = recursivObj || {},
+            model = auxObj.model,
+            arrayKey,
+            siEsArrayKey;
         
         for (var i in auxObj ) {
             if ( typeof auxObj[i] != 'object' && typeof auxObj[i] != 'function' && auxObj[i] != undefined && auxObj[i] != null) {
                 arrayKey = key || 'data['+model+']'; 
                 arrayKey = arrayKey+'['+i+']';
-                console.debug(arrayKey);
                 ooo[arrayKey] = auxObj[i];
             }
             
             // si es Array
             if ( typeof auxObj[i] == 'object' && $.isArray(auxObj[i]) ) {
                 cont = 0;
+                siEsArrayKey = key || 'data';
                 for (var scnd in auxObj[i]) {
-                    this.__aplanarObj(auxObj[i][scnd], ooo, 'data['+auxObj[i][scnd].model+']['+cont+']');
+                    this.__aplanarObj(auxObj[i][scnd], ooo, siEsArrayKey+'['+auxObj[i][scnd].model+']'+'['+cont+']');
                     cont++;
                 }
             }
             
             // si es un objeto Model , o sea si tiene el atributo 'model''
-            if ( typeof auxObj[i] == 'object' && auxObj[i].model ) {
+            if ( typeof auxObj[i] == 'object' && auxObj[i] && auxObj[i].model ) {
                 this.__aplanarObj(auxObj[i], ooo); 
             }
         }

@@ -35,9 +35,10 @@ class DetalleComandasController extends AppController {
 	}
 	
 	function add(){
-		$this->autoRender = false;
+		
 		$ok = false;
-		Configure::write('debug',1);		
+		Configure::write('debug',0);		
+                
 		$imprimir = $this->data['Comanda']['imprimir'];
 		unset($this->data['Comanda']['imprimir']);		
 		
@@ -55,42 +56,57 @@ class DetalleComandasController extends AppController {
 		$v_comandera_y_comanda = array();
 		while (list($key, $value) = each($v_comanderas)):
 			// Creo una comanda
-			$this->DetalleComanda->Comanda->create();
 			if($this->DetalleComanda->Comanda->save($comanda)){
 					$ok = true;
-					$v_comandera_y_comanda[$key] = $this->DetalleComanda->Comanda->id;
+					$v_comandera_y_comanda[$key] = $this->DetalleComanda->Comanda->getLastInsertID();
 			}
 			else {
 				debug("No se pudo crear una nueva Comanda");
-				return false;
+				return -1;
 			}
 			
 		endwhile;
 		
 		// por cada Comanda que hice (o sea por cada comandera) genero elDetalleComanda
-		while(list($comandera_id, $comanda_id) = each($v_comandera_y_comanda)):
+		while(list($comandera_id, $comanda_id) = each($v_comandera_y_comanda)){
+                    
 			foreach($this->data['DetalleComanda'] as $data):
+                        debug($data);
 				$data['comanda_id'] = $comanda_id;
 				if ($data['comandera_id'] == $comandera_id){
-					if ($this->DetalleComanda->saveAll($data)){
+                                    $dataToSave['DetalleComanda'] = $data;
+					if ($this->DetalleComanda->save($dataToSave)){
 						$ok = true;
+                                                if (!empty($data['DetalleSabor'])){
+                                                    $detalleSabor = $data['DetalleSabor'];
+                                                    foreach ($detalleSabor as $ds){
+                                                        $ds['detalle_comanda_id'] = $this->DetalleComanda->getLastInsertID();
+                                                        $dataToSave['DetalleSabor'] = $ds;
+                                                        if ($this->DetalleComanda->DetalleSabor->save($dataToSave)){
+                                                            $ok = 3;
+                                                        } else {
+                                                            $ok = -3;
+                                                        }
+                                                    }
+                                                }
 					}
 					else {
-						$ok = false;
+						$ok = -2;
 						break;
 					}
 				}				
 			endforeach;
-			if($imprimir){
-				//imprimio la comanda usando el Componente Printer
-				$this->Printer->imprimirComanda($comanda_id);	
-			}
-		endwhile;
+
+                }
+                if($imprimir){
+                        //imprimio la comanda usando el Componente Printer
+                        $this->Printer->imprimirComanda($comanda_id);	
+                }
+
 		
-		
-					
-		return ($ok)?'ok':'failed to save comanda';
-		
+		$this->set('okval', $ok);
+                $this->DetalleComanda->Comanda->contain(array('DetalleComanda' => array('DetalleSabor.Sabor')));
+		$this->set('comanda', $this->DetalleComanda->Comanda->read());
 	}
 
 	function edit($id = null) {

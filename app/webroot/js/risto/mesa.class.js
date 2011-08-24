@@ -38,7 +38,21 @@ var MESA_ESTADOS_POSIBLES =  {
  *
  **/
 var Mesa = function(mozo, jsonData) {
-        return this.initialize(mozo, jsonData);
+        this.initialize(mozo, jsonData);
+        
+        
+        
+        this.totalCalculado = ko.dependentObservable(function(){
+            var total = 0;
+            for (var c in this.Comanda()){
+                for (dc in this.Comanda()[c].DetalleComanda() ){
+                    total += this.Comanda()[c].DetalleComanda()[dc].precio();
+                }
+            }
+            return total;
+        }, this);
+        
+        return this;
 }
 
 
@@ -67,7 +81,8 @@ Mesa.prototype = {
             d = new Date( mysqlTimeStampToDate(this.created()) );       
         }
         
-        return d.toLocaleTimeString();
+        var min =  (d.getMinutes() < 10 ? '0' : '') + d.getMinutes();
+        return d.getHours()+":"+min;
     },
 
     initialize: function( mozo, jsonData ) {
