@@ -704,10 +704,26 @@ li.selected    {
 }
 
 .menubread li a {
-    color: #ffffff;
+    color: #E7E7E7;
+    font-weight: bold;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    padding-left: 0;
+    padding-right: 5px;
 }
-
-
+.menubread li a:hover {
+    color: #000000;
+}
+.menubread li {
+    background-image:url("../img/breadcrumbimage.png"); 
+    background-repeat: no-repeat;
+    background-position: right;
+    padding-right: 10px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    padding-left: 10px;
+    margin: 0;
+}
 
 /*   SECCION CONTABILIDAD */
 

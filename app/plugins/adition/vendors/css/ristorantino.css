@@ -1,5 +1,3 @@
-
-
 ul.listado-adicion{
     list-style: none;
     padding: 0px;
@@ -55,4 +53,20 @@ ul.mesas li a, ul.mesas li button {
 */
 .mesa {
     text-decoration: none;
+}
+
+.titulo-comanda {
+    color: rgba(0, 0, 0, 0.4);  
+}
+
+.id-comanda {
+    color: rgba(0, 0, 0, 0.4);
+}
+.hora-comanda {
+    color: #666666;
+}
+
+.ui-listview li div div a img {
+    top: 12%;
+    left: 5%;
 }

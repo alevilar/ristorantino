@@ -23,7 +23,12 @@
 }
 .ui-icon-moniob {
      background-image: url(images/mozomoniob.png); 
-     background-position: 0 50%;
+     background-position: center;
+     background-repeat: no-repeat;
+}
+.ui-icon-entrada {
+     background-image: url(images/entrada.png); 
+     background-position: center;
      background-repeat: no-repeat;
 }
  

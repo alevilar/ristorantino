@@ -2,7 +2,7 @@
      <li  class="ui-li ui-li-static ui-body-c">
          <span data-type="horizontal" data-role="controlgroup" class="ui-corner-all ui-controlgroup ui-controlgroup-horizontal">
             <a data-bind="click: deseleccionar" data-role="button" data-icon="minus" data-iconpos="notext" href="#" title="-" data-theme="c" class="ui-btn ui-btn-icon-notext ui-btn-up-c"><span class="ui-btn-inner"><span class="ui-btn-text">-</span><span class="ui-icon ui-icon-minus ui-icon-shadow"></span></span></a>
-            <a data-bind="style: { background: esEntrada() ? '#437FBE' : ''}" data-role="button" data-iconpos="notext" data-icon="star" href="#" title="Entrada" data-theme="c" class="ui-btn ui-btn-icon-notext ui-corner-right ui-controlgroup-last ui-btn-up-c"><span class="ui-btn-inner ui-corner-right ui-controlgroup-last"><span class="ui-btn-text">Entrada</span><span class="ui-icon ui-icon-star ui-icon-shadow"></span></span></a>
+            <a data-bind="style: { background: esEntrada() ? '#437FBE' : ''}" data-role="button" data-iconpos="notext" data-icon="entrada" href="#" title="Entrada" data-theme="c" class="ui-btn ui-btn-icon-notext ui-corner-right ui-controlgroup-last ui-btn-up-c"><span class="ui-btn-inner ui-corner-right ui-controlgroup-last"><span class="ui-btn-text">Entrada</span><span class="ui-icon ui-icon-entrada ui-icon-shadow"></span></span></a>
          </span>
 
 
@@ -36,6 +36,7 @@
                     <a href="#mesa-view" data-role="button" data-icon="tenedor" data-theme="c" data-iconpos="notext" data-iconpos="right"></a>
                     <a href="#mesa-view" data-role="button" data-icon="tenedorb" data-theme="e" data-iconpos="notext"></a>
         <div  data-role="content" class="">
+
                 <a href="#mesa-add" class="mesa" data-rel="dialog">Abrir Mesa</a>
                 
                 <!-- aca va el listado de mesas que se carga dinamicamente en un script de abajo -->
@@ -45,10 +46,11 @@
                             el ajax que verifica el estado de las mesas (si fue abierta o cerrada alguna. -->
                         <script id="listaMesas" type="text/x-jquery-tmpl">
                             <li class="grid_1">
-                                <a href="#mesa-view" data-role="none" class="mesa" data-bind="click: seleccionar, attr: {accesskey: numero}" >
+                                <a href="#mesa-view" data-role="button" data-icon="tenedor"  data-bind="click: seleccionar, attr: {accesskey: numero}" >
                                     (<span class="mesa-mozo" data-bind="text: mozo().numero" style="color: red"></span>)
                                     <span class="mesa-numero" data-bind="text: numero"></span>
                                     <span class="mesa-created" data-bind="text: timeAbrio()"></span>
+                                    <span class="ui-icon ui-icon-tenedor ui-icon-shadow"></span>
                                 </a>
                             </li>
                         </script>
@@ -185,8 +187,8 @@
 	<div  data-role="header" data-position="inline">
             <a data-rel="back" data-transition="reverse" href="#">Volver</a>
             
-            <h1>Mesa N°<span data-bind="text: adn().currentMesa().numero"></span>, Mozo <span data-bind="text: adn().currentMesa().mozo().numero"></span>
-                <span class="mesa-total" style="color: red;">$<span data-bind="text: adn().currentMesa().total"></span></span>
+            <h1>Mesa <span data-bind="text: adn().currentMesa().numero"></span> | Mozo <span data-bind="text: adn().currentMesa().mozo().numero"></span>
+             | <span class="mesa-total" style="color: red;"> $<span data-bind="text: adn().currentMesa().total"></span></span>
             </h1>
             
             <a data-theme="e" data-bind="visible: adn().currentMesa().tieneComandaModificada()" href="#">Guardar Cambios de Comanda</a>
@@ -213,13 +215,13 @@
             </div>
 
             <div class="mesas view " style="width: 70%; float:right;" >
-                <h1>Detalle de Consumición</h1>
+                <h1 class="titulo-comanda">Detalle de Consumición</h1>
 
                 <div id="comanda-detalle-collapsible" data-role="collapsible-set" data-bind="template: {name: 'listaComandas', foreach: adn().currentMesa().Comanda}">
                         <!-- Template: listado de comandas con sus productos-->
                         <script id="listaComandas" type="text/x-jquery-tmpl">
                            <div data-role="collapsible">
-                                <h3><span>Comanda #<span data-bind="text: id"></span></span> <span data-bind="text: timeCreated()"></span></h3>
+                                <h3><span class="id-comanda">#<span data-bind="text: id"></span></span>  <span class="hora-comanda"  data-bind="text: timeCreated()"></span></h3>
 
                                 <ul class="ui-listview " data-role="listview"
                                    data-bind="template: {name: 'li-productos-detallecomanda', foreach: DetalleComanda}"
@@ -256,7 +258,7 @@
         
         <!--        PRODUCTOS SELECCIONADOS    -->
         <div  style="width: 28%; margin-right: 2%; display: inline; float: left;">
-           <ul id="ul-productos-seleccionados" class=" ui-listview " data-role="listview"
+           <ul id="ul-productos-seleccionados" class="ui-listview" data-role="listview"
                data-bind="template: {name: 'categorias-productos-seleccionados', foreach: adn().productosSeleccionados}"
                 >
                  <script id="categorias-productos-seleccionados" type="text/x-jquery-tmpl">
@@ -278,7 +280,7 @@
                                     <span class="ui-icon ui-icon-grid ui-icon-shadow"></span>
                                 </span>
                             </a>
-                            <a data-bind="click: toggleEsEntrada, style: { background: esEntrada() ? '#437FBE' : ''}" data-role="button" data-iconpos="notext" data-icon="star" href="#" title="Entrada" data-theme="c" class="ui-btn ui-btn-icon-notext ui-corner-right ui-controlgroup-last ui-btn-up-c"><span class="ui-btn-inner ui-corner-right ui-controlgroup-last"><span class="ui-btn-text">Entrada</span><span class="ui-icon ui-icon-star ui-icon-shadow"></span></span></a>
+                            <a data-bind="click: toggleEsEntrada, style: { background: esEntrada() ? '#437FBE' : ''}" data-role="button" data-iconpos="notext" data-icon="entrada" href="#" title="Entrada" data-theme="c" class="ui-btn ui-btn-icon-notext ui-corner-right ui-controlgroup-last ui-btn-up-c"><span class="ui-btn-inner ui-corner-right ui-controlgroup-last"><span class="ui-btn-text">Entrada</span><span class="ui-icon ui-icon-entrada ui-icon-shadow"></span></span></a>
                          </span>
 
                          <span data-bind="text: nameConSabores()"></span>
