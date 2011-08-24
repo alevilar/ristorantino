@@ -1,16 +1,22 @@
 Risto.Adition.sabor = function(jsonData){
-    return this.initialize(jsonData);
+    
+    this.initialize(jsonData);
+    
+    return this;
 }
 
 Risto.Adition.sabor.prototype = {
      name: '',
      Categoria: [],
+     precio: 0,
+     model: 'DetalleSabor',
 
      initialize: function(jsonData){
         for (var i in jsonData){
                 this[i] = jsonData[i];
         }
-        return this;
+        this.sabor_id = this.id;
+        return ko.mapping.fromJS({}, {} , this);
     },
     
     

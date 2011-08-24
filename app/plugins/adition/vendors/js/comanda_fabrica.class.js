@@ -41,16 +41,14 @@ Risto.Adition.comandaFabrica.prototype = {
         var ccdc;
         var comanderas = [];
         var comanderaComanda;
-        // separo los detaleComanda por comandera
+        // separo los detalleComanda por comandera
         for (var dc in this.comanda.DetalleComanda()) {
             ccdc = this.comanda.DetalleComanda()[dc];
-            console.debug(ccdc);
             if ( !comanderas[ccdc.comandera_id()] || !comanderas[ccdc.comandera_id()].length ) {
                comanderas[ccdc.comandera_id()] = [];
             }
             comanderas[ccdc.comandera_id()].push(ccdc);
         }
-        console.debug(comanderas);
         
         // creo una nueva comanda para cada comandera
         for (var com in comanderas ) {
@@ -58,8 +56,7 @@ Risto.Adition.comandaFabrica.prototype = {
             comanderaComanda.DetalleComanda(comanderas[com]);
             
             this.mesa.Comanda.unshift( comanderaComanda );
-        
-            $cakeSaver.send({url:urlDomain+'detalle_comandas/add', obj: comanderaComanda});
+            $cakeSaver.send({url:urlDomain+'detalle_comandas/add.json', obj: comanderaComanda});
         }
         
         
