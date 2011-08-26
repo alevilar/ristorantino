@@ -46,13 +46,6 @@
                             el ajax que verifica el estado de las mesas (si fue abierta o cerrada alguna. -->
                         <script id="listaMesas" type="text/x-jquery-tmpl">
 
-                            <li class="grid_1">
-                                <a href="#mesa-view" data-role="button" data-icon="tenedor"  data-bind="click: seleccionar, attr: {accesskey: numero}" >
-                                    (<span class="mesa-mozo" data-bind="text: mozo().numero" style="color: red"></span>)
-                                    <span class="mesa-numero" data-bind="text: numero"></span>
-                                    <span class="mesa-created" data-bind="text: timeAbrio()"></span>
-                                    <span class="ui-icon ui-icon-tenedor ui-icon-shadow"></span>
-
                             <li class="grid_2">
                                 <a  data-bind="click: seleccionar, attr: {accesskey: numero}" 
                                     data-theme="c" 
@@ -239,7 +232,9 @@
                         <!-- Template: listado de comandas con sus productos-->
                         <script id="listaComandas" type="text/x-jquery-tmpl">
                            <div data-role="collapsible">
-                                <h3><span class="id-comanda">#<span data-bind="text: id"></span></span>  <span class="hora-comanda"  data-bind="text: timeCreated()"></span></h3>
+                               <h3><span class="id-comanda">#<span data-bind="text: id"></span></span>  <span class="hora-comanda"  data-bind="text: timeCreated()"></span>
+                                   &nbsp;|&nbsp;<span class="comanda-listado-productos-string" data-bind="text: productsStringListing()"></span>
+                               </h3>
 
                                 <ul class="ui-listview " data-role="listview"
                                    data-bind="template: {name: 'li-productos-detallecomanda', foreach: DetalleComanda}"

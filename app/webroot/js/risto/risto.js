@@ -1,5 +1,26 @@
 
 var Risto = {
+    modelizar: function(obToModelizar){
+        
+        obToModelizar.timeCreated = function(){
+            var d;
+            
+            var created;
+            if (typeof this.created == 'function'){
+                created = this.created();
+            } else {
+                created = this.created;
+            }
+            if (!created) {
+                d = new Date();
+            } else {
+                d = new Date( mysqlTimeStampToDate(this.created()) );       
+            }
+
+            var min =  (d.getMinutes() < 10 ? '0' : '') + d.getMinutes();
+            return d.getHours()+":"+min;
+        }
+    }
 }
 
 
