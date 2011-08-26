@@ -1,24 +1,46 @@
 ul.listado-adicion{
     list-style: none;
     padding: 0px;
+    -webkit-margin-before: 0 !important;
+    margin: 0 !important;
 }
 
+.li-btn {
+    width: 8%;
+}
 ul.listado-adicion li {
     height: auto;
-    margin: 11px;
+    margin: 0.7%;
+}
+ul.listado-adicion li a {
+    margin: 0;
+    width: 100%;
+}
+.mesa-span {
+    padding-left: 25px !important;
+    padding-right: 5px !important;
+    padding-top: 0.9em !important;
+    padding-bottom: 0.9em !important;
+    text-overflow: clip !important;
+}    
+
+.mesa-icon {
+    left: 8% !important;
+    padding: 0 !important;
 }
 
 .mesa-created{
-    color: #363636;
-    font-size: xx-small;
+    color: #ffffff;
+    font-size: small;
 }
 
-ul.listado-adicion A:focus{
-    background: khaki;
-    border: 2px solid grey;
+ul.listado-adicion A:focus{   
+    background:#4596ce;font-weight:bold;color:#fff;cursor:pointer;text-shadow:0 -1px 1px #145072;text-decoration:none;background-image:-webkit-gradient(linear,left top,left bottom,from(#85bae4),to(#5393c5));background-image:-webkit-linear-gradient(top,#85bae4,#5393c5);background-image:-moz-linear-gradient(top,#85bae4,#5393c5);background-image:-ms-linear-gradient(top,#85bae4,#5393c5);background-image:-o-linear-gradient(top,#85bae4,#5393c5);background-image:linear-gradient(top,#85bae4,#5393c5);outline:0
 }
 
-ul.listado-adicion  .mesa-numero{
+.mesa-numero{
+    font-size: 125%;
+    padding-left: 8%;
 }
 
 ul.listado-adicion .mesa-mozo{
@@ -33,13 +55,6 @@ ul.listado-adicion .mesa-mozo{
     -moz-border-radius: 10px;
     border-radius: 10px;
     text-shadow: none;
-}
-
-ul.listado-adicion .mesa-created{
-    position: absolute;
-    left: 24px;
-    bottom: -2px;
-    color: #929292;
 }
 
 .mesa {

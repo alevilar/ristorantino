@@ -31,4 +31,21 @@
      background-position: center;
      background-repeat: no-repeat;
 }
+.ui-icon-mesa-abierta {
+     background-image: url(images/mesa-abrio.png); 
+     background-position: center;
+     background-repeat: no-repeat;
+}
+
+.ui-icon-mesa-porcerrar {
+     background-image: url(images/mesa-porcerrar.png); 
+     background-position: center;
+     background-repeat: no-repeat;
+}
+
+.ui-icon-mesa-cerrada {
+     background-image: url(images/mesa-cerrada.png); 
+     background-position: center;
+     background-repeat: no-repeat;
+}
  
