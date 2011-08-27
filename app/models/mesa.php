@@ -1,13 +1,14 @@
 <?php
+
+
+
 class Mesa extends AppModel {
 
 	var $name = 'Mesa';
 	var $actsAs = array('Containable', 'SoftDeletable');
 
-
         var $numero = 0;
         var $mozoNumero = 0;
-
 	
 	var $validate = array(
 		'numero' => array(
@@ -18,7 +19,8 @@ class Mesa extends AppModel {
                          'message'=> 'El número ya existe.'
             )	
 	));
-
+        
+        
 
         /*
          * Valor total de una mesa Objeto en particular.
@@ -42,7 +44,6 @@ class Mesa extends AppModel {
 								'fields' => '',
 								'order' => ''
 			),
-                        'MesaEstado',
 	);
 
 
@@ -100,6 +101,7 @@ class Mesa extends AppModel {
                 if ($cant == 0) return 0;
 
                 $mesaData['Mesa'] = array(
+                    'estado'    => MESA_CERRADA,
                     'total'     => $this->calcular_total(),
                     'subtotal'  => $this->calcular_subtotal(),
                     'time_cerro'=> date( "Y-m-d H:i:s",strtotime('now')),
@@ -227,8 +229,7 @@ LEFT JOIN
 
         function ultimasCobradas($limit = 20){
 
-		$conditions = array("Mesa.time_cobro <>" => "0000-00-00 00:00:00",
-                                    "Mesa.time_cerro <>" => "0000-00-00 00:00:00");
+		$conditions = array("Mesa.estado >=" => MESA_COBRADA);
 
                 $mesas = $this->find('all', array(
                     'conditions'=>$conditions,
@@ -242,8 +243,7 @@ LEFT JOIN
 	
 	function listado_de_abiertas($recursive = -1){
 		
-		$conditions = array("Mesa.time_cobro" => "0000-00-00 00:00:00",
-                                    "Mesa.time_cerro" => "0000-00-00 00:00:00");
+		$conditions = array("Mesa.estado" => MESA_ABIERTA);
 		
 		if($recursive>-1){
 			$this->recursive = $recursive;			
@@ -261,7 +261,7 @@ LEFT JOIN
 
         function listadoAbiertasYSinCobrar($recursive = -1){
 
-		$conditions = array("Mesa.time_cobro" => "0000-00-00 00:00:00");
+		$conditions = array("Mesa.estado <" => MESA_COBRADA);
 
 		if($recursive>-1){
 			$this->recursive = $recursive;
@@ -294,8 +294,8 @@ LEFT JOIN
 		 
 		$this->recursive = -1;
 		$conditions = array(
-							'time_cobro'=>'0000-00-00 00:00:00', 
-							'numero'=>$numero_mesa);
+                                    'estado'=>MESA_ABIERTA, 
+                                    'numero'=>$numero_mesa);
 		
 		if(!empty($this->id)){
 			if($this->id != ''){
@@ -400,9 +400,7 @@ LEFT JOIN
 	 */
 	function todasLasCerradas(){
 		$this->recursive = 0;
-		$conditions = array(
-                    "time_cobro = '0000-00-00 00:00:00'",
-                    "time_cerro <> '0000-00-00 00:00:00'");
+		$conditions = array('estado' => MESA_CERRADA);
 		return $this->find('all',array('conditions'=>$conditions, 'order'=>'time_cerro'));
 	}
 
@@ -417,9 +415,14 @@ LEFT JOIN
             if (!empty($id)){
                 $this->id = $id;
             }
+            // si lo tengo en memoria primero busco por aca
+            if (!empty($this->data[$this->name]['estado'])){
+                return $this->data[$this->name]['estado'] == MESA_CERRADA;
+            }
+            // lo busco en BBDD        
             $ret = $this->find('count', array(
                 'conditions' => array(
-                    'Mesa.time_cerro' => '0000-00-00 00:00:00',
+                    'Mesa.estado' => MESA_CERRADA,
                     'Mesa.id' => $this->id,
 
                 )
@@ -434,8 +437,7 @@ LEFT JOIN
             if (!empty($mesa_id)) {
                 $this->id = $mesa_id;
             }
-            $result = $this->saveField('time_cerro', '0000-00-00 00:00:00');
-            $result = $this->saveField('time_cobro', '0000-00-00 00:00:00');
+            $result = $this->saveField('estado', MESA_ABIERTA);
         }
 }
 ?>

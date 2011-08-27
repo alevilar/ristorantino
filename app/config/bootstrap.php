@@ -45,6 +45,18 @@
 
 define('DATETIME_NULL', '0000-00-00 00:00:00');
 
+define('MESA_ABIERTA' , 1);
+define('MESA_CERRADA' , 2);
+define('MESA_COBRADA' , 3);
+
+
+$estadosMesaMsg = array(
+            MESA_ABIERTA => 'Abierta', 
+            MESA_CERRADA => 'Cerrada', 
+            MESA_COBRADA => 'Cobrada',
+);
+
+
 function comandosDeReinicializacionServidorImpresion($devName = null) {
     
     exec("sudo /etc/init.d/spooler_srv stop");

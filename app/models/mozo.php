@@ -102,7 +102,7 @@ class Mozo extends AppModel {
                         ),
                         'conditions' => array(
                             "Mesa.time_cobro" => "0000-00-00 00:00:00",
-                            "Mesa.time_cerro" => "0000-00-00 00:00:00",
+//                            "Mesa.time_cerro" => "0000-00-00 00:00:00",
                         ),
                         'order' => 'Mesa.created DESC',
                     ),
