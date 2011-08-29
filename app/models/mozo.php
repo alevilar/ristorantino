@@ -97,7 +97,8 @@ class Mozo extends AppModel {
                     'Mesa' => array(
                         'Cliente' => 'Descuento',
                         'Comanda' => array(
-                            'DetalleComanda.Producto',
+                            'DetalleComanda' => array(
+                                'Producto','DetalleSabor.Sabor'),
                         ),
                         'conditions' => array(
                             "Mesa.time_cobro" => "0000-00-00 00:00:00",

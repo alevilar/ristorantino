@@ -21,23 +21,46 @@ Risto.Adition.comandaFabrica.prototype = {
     
     initialize: function(mesa){       
         this.comanda = new Risto.Adition.comanda();
-        
-        this.mesa = mesa;
-        this.id = 0;
+        if ( mesa ) {
+            this.comanda.mesa_id = mesa.id();
+            this.mesa = mesa;
+        }
+        this.id = undefined;
         return this;
     },
     
     
     save: function() {
-        this.mesa.Comanda.unshift( this.comanda );
-        return this.comanda;
-
-        if ( this.mesa && this.detallesComandas() ) {
-            var newComanda = new Risto.Adition.comanda();
-            newComanda.DetalleComanda( this.detallesComandas() );
-            this.mesa.Comanda.unshift( newComanda );
+        if ( !this.mesa){
+                jQuery.error("no hay una mesa setteada. No se puede guardar una comanda de ninguna mesa");
+                return null;
+        }
+            
+        // separo la comanda generada en varias comandas
+        // se genera 1 comanda por cada impresora que haya (comandera)
+        var ccdc;
+        var comanderas = [];
+        var comanderaComanda;
+        // separo los detalleComanda por comandera
+        for (var dc in this.comanda.DetalleComanda()) {
+            ccdc = this.comanda.DetalleComanda()[dc];
+            if ( !comanderas[ccdc.comandera_id()] || !comanderas[ccdc.comandera_id()].length ) {
+               comanderas[ccdc.comandera_id()] = [];
+            }
+            comanderas[ccdc.comandera_id()].push(ccdc);
         }
         
+        // creo una nueva comanda para cada comandera
+        for (var com in comanderas ) {
+            comanderaComanda = new Risto.Adition.comanda({mesa_id: this.mesa.id()});
+            comanderaComanda.DetalleComanda(comanderas[com]);
+            
+            this.mesa.Comanda.unshift( comanderaComanda );
+            $cakeSaver.send({url:urlDomain+'detalle_comandas/add.json', obj: comanderaComanda});
+        }
+        
+        
+        return this.comanda;
     },
     
     /**
@@ -127,8 +150,9 @@ Risto.Adition.comandaFabrica.prototype = {
         
         if ( dcIndex < 0 ) {
             // producto aun no agregado a la lista, entonces lo agrego
-            dc = new Risto.Adition.detalleComanda();
-            dc.Producto(prod);
+            var dcConProd = {Producto : prod};
+            dc = new Risto.Adition.detalleComanda(dcConProd);
+
             // suma 1 al producto
             dc.seleccionar(); 
             

@@ -9,10 +9,12 @@ if (!empty($rutaUrl_for_layout)){
             echo"<li style='display:inline;'>";
                 echo $html->link($m['name'],$m['link']);
             echo"</li>"; 
-            echo"»";
+            //echo"»";
     }
 }
 
 
 ?>
-</ul>
+    </ul>
+
+

@@ -27,7 +27,6 @@ class DetalleComandasController extends AppController {
 		$this->autoRender = false;
 		$ok = false;
 		//Configure::write('debug',1);
-	debug($this->data);
 		if($this->DetalleComanda->saveAll($this->data)){
 			$ok = true;
 		}
@@ -36,12 +35,12 @@ class DetalleComandasController extends AppController {
 	}
 	
 	function add(){
-		$this->autoRender = false;
-		$ok = false;
-		//Configure::write('debug',1);		
 		
-		$imprimir = $this->data['imprimir'];
-		unset($this->data['imprimir']);		
+		$ok = false;
+		Configure::write('debug',0);		
+                
+		$imprimir = $this->data['Comanda']['imprimir'];
+		unset($this->data['Comanda']['imprimir']);		
 		
 		// este array contine la prioridad y la mesa_id ---> todos datos de Modelo Comanda
 		$comanda = $this->data['Comanda'];
@@ -49,50 +48,65 @@ class DetalleComandasController extends AppController {
 		
 		//cuento la cantidad de comanderas involucradas en este pedido para genrar la cantidad de comandas correspondientes
 		$v_comanderas = array();
-		foreach($this->data as $find_data):
-			$v_comanderas[$find_data['DetalleComanda']['comandera_id']] = $find_data['DetalleComanda']['comandera_id'];
+		foreach($this->data['DetalleComanda'] as $find_data):
+			$v_comanderas[$find_data['comandera_id']] = $find_data['comandera_id'];
 		endforeach;
 		
 		// por cada comandera involucrada creo una comanda
 		$v_comandera_y_comanda = array();
 		while (list($key, $value) = each($v_comanderas)):
 			// Creo una comanda
-			$this->DetalleComanda->Comanda->create();
 			if($this->DetalleComanda->Comanda->save($comanda)){
 					$ok = true;
-					$v_comandera_y_comanda[$key] = $this->DetalleComanda->Comanda->id;
+					$v_comandera_y_comanda[$key] = $this->DetalleComanda->Comanda->getLastInsertID();
 			}
 			else {
 				debug("No se pudo crear una nueva Comanda");
-				return false;
+				return -1;
 			}
 			
 		endwhile;
 		
 		// por cada Comanda que hice (o sea por cada comandera) genero elDetalleComanda
-		while(list($comandera_id, $comanda_id) = each($v_comandera_y_comanda)):
-			foreach($this->data as $data):
-				$data['DetalleComanda']['comanda_id'] = $comanda_id;
-				if ($data['DetalleComanda']['comandera_id'] == $comandera_id){
-					if ($this->DetalleComanda->saveAll($data)){
+		while(list($comandera_id, $comanda_id) = each($v_comandera_y_comanda)){
+                    
+			foreach($this->data['DetalleComanda'] as $data):
+                        debug($data);
+				$data['comanda_id'] = $comanda_id;
+				if ($data['comandera_id'] == $comandera_id){
+                                    $dataToSave['DetalleComanda'] = $data;
+					if ($this->DetalleComanda->save($dataToSave)){
 						$ok = true;
+                                                if (!empty($data['DetalleSabor'])){
+                                                    $detalleSabor = $data['DetalleSabor'];
+                                                    foreach ($detalleSabor as $ds){
+                                                        $ds['detalle_comanda_id'] = $this->DetalleComanda->getLastInsertID();
+                                                        $dataToSave['DetalleSabor'] = $ds;
+                                                        if ($this->DetalleComanda->DetalleSabor->save($dataToSave)){
+                                                            $ok = 3;
+                                                        } else {
+                                                            $ok = -3;
+                                                        }
+                                                    }
+                                                }
 					}
 					else {
-						$ok = false;
+						$ok = -2;
 						break;
 					}
 				}				
 			endforeach;
-			if($imprimir){
-				//imprimio la comanda usando el Componente Printer
-				$this->Printer->imprimirComanda($comanda_id);	
-			}
-		endwhile;
+
+                }
+                if($imprimir){
+                        //imprimio la comanda usando el Componente Printer
+                        $this->Printer->imprimirComanda($comanda_id);	
+                }
+
 		
-		
-					
-		return ($ok)?'ok':'failed to save comanda';
-		
+		$this->set('okval', $ok);
+                $this->DetalleComanda->Comanda->contain(array('DetalleComanda' => array('DetalleSabor.Sabor')));
+		$this->set('comanda', $this->DetalleComanda->Comanda->read());
 	}
 
 	function edit($id = null) {
