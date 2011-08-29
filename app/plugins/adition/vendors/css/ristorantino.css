@@ -100,6 +100,10 @@ background-color: #EDEDED;
     left: 5%;
 }
 
-.content_mesas, content_mozos {
+.content_mesas, .content_mozos {
     background: none !important; 
+}
+
+#listado-mozos, #listado-mesas  {
+     background:##BBBBBB;background-image:-webkit-gradient(linear,left top,left bottom,from(#E7E7E7),to(#D5D5D5));background-image:-webkit-linear-gradient(top,#E7E7E7,#D5D5D5);background-image:-moz-linear-gradient(top,#E7E7E7,#D5D5D5);background-image:-ms-linear-gradient(top,#E7E7E7,#D5D5D5);background-image:-o-linear-gradient(top,#E7E7E7,#D5D5D5);background-image:linear-gradient(top,#E7E7E7,#D5D5D5)
 }
