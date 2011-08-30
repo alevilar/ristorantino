@@ -19,7 +19,11 @@ Risto.Adition.comandaFabrica.prototype = {
 //    detallesComandas: ko.observableArray([]),
     
     
-    initialize: function(mesa){       
+    initialize: function(mesa){
+        this.productoSaborTmp = {};
+        this.saboresSeleccionados = [];
+        this.mesa = mesa;
+        this.currentSabores = ko.observableArray([]);
         this.comanda = new Risto.Adition.comanda();
         if ( mesa ) {
             this.comanda.mesa_id = mesa.id();

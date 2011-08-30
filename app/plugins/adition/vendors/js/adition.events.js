@@ -30,14 +30,14 @@ $(document).ready(function() {
     
     $(document).keydown(buscarAccessKey);
 
-    $(document).bind("mesaSeleccionada", mesaSeleccionada);
+    $(document).bind(MESA_ESTADOS_POSIBLES.seleccionada.event, mesaSeleccionada);
 
     // cambios de estado de la mesa
-    $(document).bind("mesaAbierta", abrirMesa); //funcion vacia de jQuery
-    $(document).bind("mesaCerrada", mesaCerrada);
-    $(document).bind("mesaCuponPendiente", mesaCuponPendiente);
-    $(document).bind("mesaCobrada", mesaCobrada);
-    $(document).bind("mesaBorrada", mesaBorrada);
+    $(document).bind(MESA_ESTADOS_POSIBLES.abierta.event, abrirMesa); //funcion vacia de jQuery
+    $(document).bind(MESA_ESTADOS_POSIBLES.cerrada.event, mesaCerrada);
+    $(document).bind(MESA_ESTADOS_POSIBLES.cuponPendiente.event, mesaCuponPendiente);
+    $(document).bind(MESA_ESTADOS_POSIBLES.cobrada.event, mesaCobrada);
+    $(document).bind(MESA_ESTADOS_POSIBLES.borrada.event, mesaBorrada);
     $(document).bind(MOZOS_POSIBLES_ESTADOS.agragaMesa.event, ponerMesaComoCurrent);
     
     
@@ -50,6 +50,9 @@ $(document).ready(function() {
 
     $(document).bind("adicionCambioMozo", cambioMozo);
     
+    $(document).bind('adicionMesasActualizadas', function(){
+        $("#mesas_container").trigger( "create" );
+    });
     
     
     // Form SUBMITS
@@ -61,6 +64,16 @@ $(document).ready(function() {
     $('A[href="#comanda-add-menu"]').click(function(){
         Risto.Adition.adicionar.nuevaComandaParaCurrentMesa();
     })
+    
+    $('#mesa-cerrar').click(function(){
+        var mesa = Risto.Adition.adicionar.currentMesa();
+        var url = mesa.urlCerrarMesa();
+        $.get(url, {}, function(){
+           var ev = $.Event(MESA_ESTADOS_POSIBLES.cerrada.event);
+           ev.mesa = mesa;
+           $(document).trigger( ev );
+       })
+    });
                  
 });
 
@@ -84,7 +97,9 @@ function agregarNuevaMesa(e){
 }
 
 
-function mesaCerrada(){
+function mesaCerrada(e){
+    $("#mesa-id-"+e.mesa.id()).find('.ui-icon').removeClass('ui-icon-'+MESA_ESTADOS_POSIBLES.abierta.icon);
+    $("#mesa-id-"+e.mesa.id()).find('.ui-icon').addClass('ui-icon-'+MESA_ESTADOS_POSIBLES.cerrada.icon);
     alert('mesa cerrada');
 }
 

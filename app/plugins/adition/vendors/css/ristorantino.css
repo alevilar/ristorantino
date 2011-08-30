@@ -22,7 +22,7 @@ ul.listado-adicion li a {
     padding-top: 0.9em !important;
     padding-bottom: 0.9em !important;
     text-overflow: clip !important;
-}    
+}
 
 .mesa-icon {
     left: 8% !important;
@@ -34,8 +34,8 @@ ul.listado-adicion li a {
     font-size: small;
 }
 
-ul.listado-adicion A:focus{   
-    background:#4596ce;font-weight:bold;color:#fff !important;cursor:pointer;text-shadow:0 -1px 1px #145072;text-decoration:none;background-image:-webkit-gradient(linear,left top,left bottom,from(#85bae4),to(#5393c5));background-image:-webkit-linear-gradient(top,#85bae4,#5393c5);background-image:-moz-linear-gradient(top,#85bae4,#5393c5);background-image:-ms-linear-gradient(top,#85bae4,#5393c5);background-image:-o-linear-gradient(top,#85bae4,#5393c5);background-image:linear-gradient(top,#85bae4,#5393c5);outline:0
+ul.listado-adicion A:focus{
+    background:#4596ce;font-weight:bold;color:#fff;cursor:pointer;text-shadow:0 -1px 1px #145072;text-decoration:none;background-image:-webkit-gradient(linear,left top,left bottom,from(#85bae4),to(#5393c5));background-image:-webkit-linear-gradient(top,#85bae4,#5393c5);background-image:-moz-linear-gradient(top,#85bae4,#5393c5);background-image:-ms-linear-gradient(top,#85bae4,#5393c5);background-image:-o-linear-gradient(top,#85bae4,#5393c5);background-image:linear-gradient(top,#85bae4,#5393c5);outline:0
 }
 
 .mesa-numero, .mozo-numero{
@@ -43,7 +43,7 @@ ul.listado-adicion A:focus{
     padding-left: 8%;
 }
 
-.mozos li a {
+.mozo-numero{
     color: #1C6F9A;
 }
 
@@ -61,12 +61,12 @@ ul.listado-adicion .mesa-mozo,ul.listado-adicion .mozo-cant-mesas {
     -moz-border-radius-bottomright: 0px;
     -moz-border-radius-bottomleft: 75px;
     -webkit-border-radius: 75px 0px 0px 75px;
-    border-radius: 75px 0px 0px 75px; 
+    border-radius: 75px 0px 0px 75px;
     
 /*
 -webkit-box-shadow: inset 1px 1px 1px 0px #676767;
 -moz-box-shadow: inset 1px 1px 1px 0px #676767;
-box-shadow: inset 1px 1px 1px 0px #676767; 
+box-shadow: inset 1px 1px 1px 0px #676767;
 background-color: #EDEDED;
 */
 
@@ -84,7 +84,7 @@ background-color: #EDEDED;
 }
 
 .titulo-comanda {
-    color: rgba(0, 0, 0, 0.4);  
+    color: rgba(0, 0, 0, 0.4);
     margin: 0;
 }
 
@@ -101,9 +101,15 @@ background-color: #EDEDED;
 }
 
 .content_mesas, .content_mozos {
-    background: none !important; 
+    background: none !important;
 }
 
 #listado-mozos, #listado-mesas  {
-     background:##BBBBBB;background-image:-webkit-gradient(linear,left top,left bottom,from(#E7E7E7),to(#D5D5D5));background-image:-webkit-linear-gradient(top,#E7E7E7,#D5D5D5);background-image:-moz-linear-gradient(top,#E7E7E7,#D5D5D5);background-image:-ms-linear-gradient(top,#E7E7E7,#D5D5D5);background-image:-o-linear-gradient(top,#E7E7E7,#D5D5D5);background-image:linear-gradient(top,#E7E7E7,#D5D5D5)
+     background:#BBBBBB;
+     background-image:-webkit-gradient(linear,left top,left bottom,from(#E7E7E7),to(#D5D5D5));
+     background-image:-webkit-linear-gradient(top,#E7E7E7,#D5D5D5);
+     background-image:-moz-linear-gradient(top,#E7E7E7,#D5D5D5);
+     background-image:-ms-linear-gradient(top,#E7E7E7,#D5D5D5);
+     background-image:-o-linear-gradient(top,#E7E7E7,#D5D5D5);
+     background-image:linear-gradient(top,#E7E7E7,#D5D5D5);
 }
