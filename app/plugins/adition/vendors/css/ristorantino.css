@@ -1,3 +1,9 @@
+body{
+    overflow: hidden;
+}
+
+
+
 ul.listado-adicion{
     list-style: none;
     padding: 0px;
@@ -6,11 +12,12 @@ ul.listado-adicion{
 }
 
 .li-btn {
-    width: 8%;
+    /* ancho de los botones */
+    width: 10%;
 }
 ul.listado-adicion li {
     height: auto;
-    margin: 0.7%;
+    margin: 0.5%;
 }
 ul.listado-adicion li a {
     margin: 0;
@@ -25,7 +32,7 @@ ul.listado-adicion li a {
 }
 
 .mesa-icon {
-    left: 8% !important;
+    left: 7% !important;
     padding: 0 !important;
 }
 
@@ -35,7 +42,8 @@ ul.listado-adicion li a {
 }
 
 ul.listado-adicion A:focus{
-    background:#4596ce;font-weight:bold;color:#fff;cursor:pointer;text-shadow:0 -1px 1px #145072;text-decoration:none;background-image:-webkit-gradient(linear,left top,left bottom,from(#85bae4),to(#5393c5));background-image:-webkit-linear-gradient(top,#85bae4,#5393c5);background-image:-moz-linear-gradient(top,#85bae4,#5393c5);background-image:-ms-linear-gradient(top,#85bae4,#5393c5);background-image:-o-linear-gradient(top,#85bae4,#5393c5);background-image:linear-gradient(top,#85bae4,#5393c5);outline:0
+    color:#fff !important;
+    background:#4596ce;font-weight:bold;cursor:pointer;text-shadow:0 -1px 1px #145072;text-decoration:none;background-image:-webkit-gradient(linear,left top,left bottom,from(#85bae4),to(#5393c5));background-image:-webkit-linear-gradient(top,#85bae4,#5393c5);background-image:-moz-linear-gradient(top,#85bae4,#5393c5);background-image:-ms-linear-gradient(top,#85bae4,#5393c5);background-image:-o-linear-gradient(top,#85bae4,#5393c5);background-image:linear-gradient(top,#85bae4,#5393c5);outline:0
 }
 
 .mesa-numero, .mozo-numero{
@@ -43,19 +51,24 @@ ul.listado-adicion A:focus{
     padding-left: 8%;
 }
 
-.mozo-numero{
+
+.mozos li a {
     color: #1C6F9A;
+}
+
+.mesa-mozo:focus, .mozo-cant-mesas:focus {
+    color: #666666 !important;
 }
 
 ul.listado-adicion .mesa-mozo,ul.listado-adicion .mozo-cant-mesas {
     margin-left: 10px;
     background-color: #929292;
-    padding: 7px 1px 7px 5px;
+    padding: 7px 0px 7px 3px;
     font-size: small;
     position: absolute;
     right: 0;
     top: 19%;
-    
+    color: #666666;
     -moz-border-radius-topleft: 75px;
     -moz-border-radius-topright: 0px;
     -moz-border-radius-bottomright: 0px;
@@ -71,7 +84,6 @@ background-color: #EDEDED;
 */
 
     box-shadow: 1px 1px 1px 0 #8C8C8C inset;
-    color: #444;
     background:#dadada;
     text-shadow:0 1px 1px #fff;
     font-weight:bold;
@@ -112,4 +124,35 @@ background-color: #EDEDED;
      background-image:-ms-linear-gradient(top,#E7E7E7,#D5D5D5);
      background-image:-o-linear-gradient(top,#E7E7E7,#D5D5D5);
      background-image:linear-gradient(top,#E7E7E7,#D5D5D5);
+}
+
+.abrir-mesa {
+    margin: 0.5%;
+    font-size: 96%;
+    width: 10%;
+}
+
+.mesa-total {
+    color: #FF0000;
+    font-size: 110%;
+}
+.hora-abrio {
+    position: absolute;
+    right: 20px;
+}
+
+.sep {
+    color: #ffffff;
+    font-weight: normal;
+    font-size: 75%;
+}
+
+.comanda-listado-productos-string {
+    font-size: 85%;
+    color: #666666;
+    font-weight: normal;
+}
+
+.comanda-items li{
+    padding: .3em 10px!important;
 }

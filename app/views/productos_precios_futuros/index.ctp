@@ -25,9 +25,9 @@ echo $paginator->counter(array(
     
     
 <tr>
-	<th><?php echo $form->input('Producto.name',array('style'=>'width:170px;','label'=>false));?></th>
-	<th><?php echo $form->input('Producto.abrev',array('style'=>'width:150px;','label'=>false));?></th>
-	<th><?php echo $form->input('Producto.precio',array('style'=>'width:60px;','label'=>false));?></th>
+	<th><?php echo $form->input('Producto.name',array('style'=>'width:170px;','placeholder'=>'Nomnre', 'label'=>false));?></th>
+	<th><?php echo $form->input('Producto.abrev',array('style'=>'width:150px;','placeholder'=>'Abreviatura','label'=>false));?></th>
+	<th><?php echo $form->input('Producto.precio',array('style'=>'width:60px;','placeholder'=>'Precio','label'=>false));?></th>
 	<th>&nbsp;</th>
 	<th class="actions"><?php echo $form->end("Buscar")?></th>
 </tr>
@@ -73,8 +73,8 @@ foreach ($productos as $producto):
 			<?php echo date('d-m-y',strtotime($producto['Producto']['modified'])); ?>
 		</td>
 		<td class="actions">
-			<?php echo $html->link(__('Editar', true), array('action'=>'edit', $producto['Producto']['id'])); ?>
-			<?php echo $html->link(__('Borrar', true), array('action'=>'delete', $producto['Producto']['id']), null, sprintf(__('¿Esta seguro que desea borrar "%s"?', true), $producto['Producto']['name'])); ?>
+			<?php echo $html->link(__('Editar', true), array('controller'=>'productos', 'action'=>'edit', $producto['Producto']['id'])); ?>
+			<?php echo $html->link(__('Borrar', true), array('controller'=>'productos', 'action'=>'delete', $producto['Producto']['id']), null, sprintf(__('¿Esta seguro que desea borrar "%s"?', true), $producto['Producto']['name'])); ?>
 		</td>
 	</tr>
 <?php

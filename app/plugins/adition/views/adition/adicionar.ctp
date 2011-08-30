@@ -7,7 +7,7 @@
 
 
          <span data-bind="text: realCant()" style="right: auto" class="ui-li-count ui-btn-up-c ui-btn-corner-all"></span>
-         <span data-bind="text: nameConSabores()" style="margin-left: 20px;"></span>
+         <span data-bind="text: nameConSabores()" style="padding-left: 40px;"></span>
      </li>
 </script>
                                          
@@ -39,17 +39,14 @@
                     <a href="#" data-role="button" data-icon="mesa-porcerrar" data-theme="c" data-iconpos="notext" data-iconpos="right"></a>
                     <a href="#" data-role="button" data-icon="mesa-cerrada" data-theme="c"  data-iconpos="notext" >Mesa loca</a>
                     -->
-            
-                <!-- Abrir mesa
-                <a href="#mesa-add" class="mesa" data-rel="dialog">Abrir Mesa</a>
-                -->
                 
                 <!-- aca va el listado de mesas que se carga dinamicamente en un script de abajo -->
+                <a href="#mesa-add" data-rel="dialog" class="grid_1 abrir-mesa" href="#" data-role="button" data-theme="a">Abrir<br>Mesa</a>  
                 <ul id="mesas_container" class="listado-adicion" data-bind='template: { name: "listaMesas", foreach: adn().mesas }'>
                         <!-- Template: 
                             listado de mesas que será refrescado continuamente mediante 
                             el ajax que verifica el estado de las mesas (si fue abierta o cerrada alguna. -->
-                        
+                 
                         <script id="listaMesas" type="text/x-jquery-tmpl">
 
                             <li class="grid_2 li-btn">
@@ -75,6 +72,11 @@
                             </li>
                         </script>
                 </ul>
+                <!-- Abrir mesa -->
+                
+                
+                <a href="#mesa-add" class="mesa" ></a>
+                
         </div><!-- /navbar -->
             
         <div  data-role="footer" data-position="fixed">
@@ -103,7 +105,8 @@
 	<div  data-role="header" data-position="inline">
                 <h1>Mozos</h1>
                 
-                <a rel="external" href='<?= $html->url('/adition/adicionar') ?>' data-icon="home" data-iconpos="notext" data-direction="reverse" class="">Home</a>
+                <a rel="external" href='<?= $html->url('/adition/adicionar') ?>' data-icon="home" data-iconpos="notext" data-direction="reverse" class="ui-btn-right">Home</a>
+
 
                 <div data-role="navbar">
                         <ul>
@@ -249,11 +252,11 @@
                         <!-- Template: listado de comandas con sus productos-->
                         <script id="listaComandas" type="text/x-jquery-tmpl">
                            <div data-role="collapsible">
-                               <h3><span class="id-comanda">#<span data-bind="text: id"></span></span>  <span class="hora-comanda"  data-bind="text: timeCreated()"></span>
-                                   &nbsp;|&nbsp;<span class="comanda-listado-productos-string" data-bind="text: productsStringListing()"></span>
+                               <h3><span class="id-comanda">#<span data-bind="text: id"></span></span>  <span class="hora-comanda"  data-bind="text: timeCreated()"></span>&nbsp;|&nbsp;
+                                   <span class="comanda-listado-productos-string" data-bind="text: productsStringListing()"></span>
                                </h3>
 
-                                <ul class="ui-listview " data-role="listview"
+                                <ul class="ui-listview comanda-items" data-role="listview"
                                    data-bind="template: {name: 'li-productos-detallecomanda', foreach: DetalleComanda}"
                                    style="margin: 0px;">
                                 </ul>                                                                           
@@ -267,8 +270,8 @@
     
     <div data-role="footer" data-position="fixed">
         <h3>
-            <span class="mesa-total" style="color: red;">Total: $<span data-bind="text: adn().currentMesa().totalCalculado"></span></span>
-            <span>Abrió a las <span data-bind="text: adn().currentMesa().timeCreated()"></span></span>
+            <span class="mesa-total">$<span data-bind="text: adn().currentMesa().totalCalculado"></span></span>
+            <span class="hora-abrio">Abrió a las <span data-bind="text: adn().currentMesa().timeCreated()"></span></span>
         </h3>
     </div>
 </div>
