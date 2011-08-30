@@ -10,13 +10,13 @@ var MESA_ESTADOS_POSIBLES =  {
         msg: 'Mesa Abierta',
         event: 'mesaAbierta',
         id: 1,
-        icon: 'tenedorb'
+        icon: 'mesa-abierta'
     },
     cerrada: {
         msg: 'Mesa Cerrada',
         event: 'mesaCerrada',
         id: 2,
-        icon: 'tenedor'
+        icon: 'mesa-cerrada'
     },
     cuponPendiente: {
         msg: 'Mesa con Cupón Pendiente',

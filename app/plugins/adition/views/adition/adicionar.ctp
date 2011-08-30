@@ -44,6 +44,8 @@
                 <a href="#mesa-add" class="mesa" data-rel="dialog">Abrir Mesa</a>
                 -->
                 
+                
+                
                 <!-- aca va el listado de mesas que se carga dinamicamente en un script de abajo -->
                 <ul id="mesas_container" class="listado-adicion" data-bind='template: { name: "listaMesas", foreach: adn().mesas }'>
                         <!-- Template: 
@@ -53,9 +55,8 @@
                         <script id="listaMesas" type="text/x-jquery-tmpl">
 
                             <li class="grid_2 li-btn">
-                                <a  data-bind="click: seleccionar, attr: {accesskey: numero}" 
-                                    data-theme="c" 
-                                    data-icon="mesa-abierta" 
+                                <a  data-bind="click: seleccionar, attr: {accesskey: numero, attr: 'data-icon': getEstadoIcon()s}" 
+                                    data-theme="c"  
                                     data-role="button" 
                                     href="#mesa-view" 
                                     class="ui-btn ui-btn-icon-left ui-btn-corner-all ui-shadow ui-btn-up-c">
