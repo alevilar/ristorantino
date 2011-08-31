@@ -228,31 +228,31 @@
             <a href="#listado-mesas" data-rel="back">Volver</a>
             <h1>
                 Mesa <span data-bind="text: adn().currentMesa().numero"></span> | Mozo <span data-bind="text: adn().currentMesa().mozo().numero"></span>
-                -- Estado: <span data-bind="text: adn().currentMesa().getEstadoName()"></span>
+                <span class="hora-abrio">Estado: <span data-bind="text: adn().currentMesa().getEstadoName()"></span></span>
             </h1>
         </div>
 
         <div  data-role="content" class="">
-            <div class="" style="width: 28%; float: left;">
+            <div class="menu-comanda" style="width: 29%; float: left;">
                 <ul data-role="listview" style="width: 100%">
-                    <li><a href="#comanda-add-menu" data-rel="dialog"><?= $html->image('/adition/css/img/chef_64.png')?>Comanda</a></li>
-                    <li><a href="<?php echo $html->url('/clientes/ajax_clientes_factura_a')?>" data-rel="dialog" ><?= $html->image('/adition/css/img/addcliente.png')?>Agregar Cliente</a></li>
-                    <li><a href="#listado-mesas" id="mesa-cerrar" data-rel="back" data-transition="reverse"><?= $html->image('/adition/css/img/cerrarmesa.png')?>Cerrar Mesa</a></li>
-                    <li><a href="#mesa-cambiar-mozo" ><?= $html->image('/adition/css/img/cambiarmozo.png')?>Cambiar Mozo</a></li>
-                    <li><a href="#mesa-cambiar-numero" >Cambiar N°</a></li>
-                    <li><a href="#mesa-re-print" ><?= $html->image('/adition/css/img/reimprimir.png')?>Re imprimir Ticket</a></li>
-                    <li><a href="#mesa-borrar" data-rel="back"><?= $html->image('/adition/css/img/borrarmesa.png')?>Borrar Mesa</a></li>
+                    <li><a class="linkmenu-comanda" href="#comanda-add-menu" data-rel="dialog"><?= $html->image('/adition/css/img/chef_64.png')?>Comanda</a></li>
+                    <li><a class="linkmenu-comanda" href="<?php echo $html->url('/clientes/ajax_clientes_factura_a')?>" data-rel="dialog" ><?= $html->image('/adition/css/img/addcliente.png')?>Agregar Cliente</a></li>
+                    <li><a class="linkmenu-comanda" href="#listado-mesas" id="mesa-cerrar" data-rel="back" data-transition="reverse"><?= $html->image('/adition/css/img/cerrarmesa.png')?>Cerrar Mesa</a></li>
+                    <li><a class="linkmenu-comanda" href="#mesa-cambiar-mozo" ><?= $html->image('/adition/css/img/cambiarmozo.png')?>Cambiar Mozo</a></li>
+                    <li><a class="linkmenu-comanda" href="#mesa-cambiar-numero" ><?= $html->image('/adition/css/img/cambiarmesa.png')?>Cambiar N°</a></li>
+                    <li><a class="linkmenu-comanda" href="#mesa-re-print" ><?= $html->image('/adition/css/img/reimprimir.png')?>Reimprimir Ticket</a></li>
+                    <li><a class="linkmenu-comanda" href="#mesa-borrar" data-rel="back"><?= $html->image('/adition/css/img/borrarmesa.png')?>Borrar Mesa</a></li>
                 </ul>
             </div>
 
-            <div class="mesas view " style="width: 70%; float:right;" >
+            <div class="mesas view" style="width: 70%; float:right; margin-top: -7px;" >
                 <h3 class="titulo-comanda">Detalle de Consumición</h3>
 
                 <div id="comanda-detalle-collapsible" data-role="collapsible-set" data-bind="template: {name: 'listaComandas', foreach: adn().currentMesa().Comanda}">
                         <!-- Template: listado de comandas con sus productos-->
                         <script id="listaComandas" type="text/x-jquery-tmpl">
                            <div data-role="collapsible">
-                               <h3><span class="id-comanda">#<span data-bind="text: id"></span></span>  <span class="hora-comanda"  data-bind="text: timeCreated()"></span>&nbsp;|&nbsp;
+                               <h3><span class="id-comanda">#<span data-bind="text: id"></span></span>  <span class="hora-comanda"  data-bind="text: timeCreated()"></span>&nbsp;&nbsp;&nbsp;
                                    <span class="comanda-listado-productos-string" data-bind="text: productsStringListing()"></span>
                                </h3>
 

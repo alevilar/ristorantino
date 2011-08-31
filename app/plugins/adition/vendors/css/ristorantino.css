@@ -131,6 +131,13 @@ background-color: #EDEDED;
     font-size: 96%;
     width: 10%;
 }
+.abrir-mesa span {
+    overflow: visible !important;   
+}
+
+.ui-btn-inner{
+    padding-left: 21px; 
+} 
 
 .mesa-total {
     color: #FF0000;
@@ -142,9 +149,9 @@ background-color: #EDEDED;
 }
 
 .sep {
-    color: #ffffff;
+    color: #666666;
     font-weight: normal;
-    font-size: 75%;
+    font-size: 90%;
 }
 
 .comanda-listado-productos-string {
@@ -155,4 +162,25 @@ background-color: #EDEDED;
 
 .comanda-items li{
     padding: .3em 10px!important;
+    border-left-color: #B3B3B3;
+    border-left-width: 1px;
+    border-left-style: solid;
+    border-right-color: #B3B3B3;
+    border-right-width: 1px;
+    border-right-style: solid;
+
+}
+
+.menu-comanda ul li {
+    border-right-color: #B3B3B3;
+    border-right-width: 1px;
+    border-right-style: solid;
+}
+
+.linkmenu-comanda {
+    padding-left: 30% !important;
+    font-size: 92% !important;
+    overflow: visible !important;
+    padding-right: 0 !important;
+    text-overflow: visible !important;
 }
