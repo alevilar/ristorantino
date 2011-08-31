@@ -1,7 +1,6 @@
-     <?php  
-        echo $this->element('menuadmin');
-     ?>
-
+<?php  
+echo $this->element('menuadmin');
+?>
 <?php 
     echo $javascript->link('jquery/jquery-ui-1.8.14.custom.min');
     echo $html->css('jquery-ui/jquery-ui-1.8.14.custom');
@@ -22,7 +21,8 @@
 		echo $form->input('tipo_factura_id');
 		echo $form->input('factura_nro');
 		echo $form->input('factura_fecha', array('id'=>'facturaFecha', 'type'=>'text'));;
-		echo $form->input('importe_neto');
+		//echo $form->input('importe_neto');
+                echo $form->input('importe_total');
                 ?>
                 
                 

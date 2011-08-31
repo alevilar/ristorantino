@@ -2,5 +2,4 @@ nbproject
 .DS_Store
 *~
 
-/vendors/birthday/alejandro/.ssh/
-/vendors/birthday/alejandro/.mc/
+/app/tmp/
