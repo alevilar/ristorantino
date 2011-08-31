@@ -19,6 +19,21 @@
         ));
         ?></p>
         <table cellpadding="0" cellspacing="0">
+            
+             <tr>
+                <?php echo $form->create("Cliente",array("action"=>"index")); echo $form->input("id") ?>
+                <th><?php echo $form->input('nombre',array('style'=>'width:170px;','placeholder'=>'Nombre del cliente', 'label'=>false));?></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th><?php echo $form->input('nrodocumento',array('style'=>'width:120px;','placeholder'=>'CUIT / CUIL / DNI','label'=>false));?></th>
+                <th></th>
+                <th class="actions"><?php echo $form->end("Buscar")?></th>
+                </tr>
+                
+                
         <tr>
                 <th><?php echo $paginator->sort('nombre');?></th>
                 <th><?php echo $paginator->sort('Usuario','User.username');?></th>
@@ -81,18 +96,7 @@
         }
         ?>
 
-                <tr>
-                <?php echo $form->create("Cliente",array("action"=>"index")); echo $form->input("id") ?>
-                <th><?php echo $form->input('nombre',array('style'=>'width:170px;','placeholder'=>'Nombre del cliente', 'label'=>false));?></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th><?php echo $form->input('nrodocumento',array('style'=>'width:120px;','placeholder'=>'CUIT / CUIL / DNI','label'=>false));?></th>
-                <th></th>
-                <th class="actions"><?php echo $form->end("Buscar")?></th>
-                </tr>
+               
 
 
         </table>

@@ -74,9 +74,7 @@ var $cakeSaver = {
     
     __processObj: function(obj, model){
         var auxObj = ko.toJS(obj);
-        console.info(auxObj);
         var aa = this.__aplanarObj(auxObj);
-        console.debug(aa);
         return $.param( aa );
     }
     

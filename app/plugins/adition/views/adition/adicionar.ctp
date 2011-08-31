@@ -7,7 +7,7 @@
 
 
          <span data-bind="text: realCant()" style="right: auto" class="ui-li-count ui-btn-up-c ui-btn-corner-all"></span>
-         <span data-bind="text: nameConSabores()" style="margin-left: 20px;"></span>
+         <span data-bind="text: nameConSabores()" style="padding-left: 40px;"></span>
      </li>
 </script>
                                          
@@ -17,51 +17,42 @@
 
 -->
 <!-- Pagina 1, Home Page por default segun JQM: Listado de Mesas -->
-<div data-role="page" data-add-back-btn="true" id="listado-mesas">
+<div data-role="page" id="listado-mesas">
 
-	<div  data-role="header" data-position="inline">
+	<div  data-role="header">
             <h1><span style="color: #fcf0b5" data-bind="text: adn().mesas().length">0</span> Mesas Abiertas</h1>
 
-                <a rel="external" href='#listado-mesas' data-icon="home" data-iconpos="notext" data-direction="reverse" class="">Home</a>
-                
-                <div data-role="navbar">
-                        <ul>
-                            <li><a href="#listado-mozos">Mozos</a></li>
-                            <li><a href="#listado-mesas" class="ui-btn-active">Mesas</a></li>
-                        </ul>
-                </div>
+            <a rel="external" href='#listado-mesas' data-icon="home" data-iconpos="notext" data-direction="reverse" class="ui-btn-right">Home</a>
+
+            <div data-role="navbar">
+                    <ul>
+                        <li><a href="#listado-mozos">Mozos</a></li>
+                        <li><a href="#listado-mesas" class="ui-btn-active">Mesas</a></li>
+                    </ul>
+            </div>
         </div>
 
                     
-        <div  data-role="content" class="">
-                    <!-- Botones de muestra  -->
-                    <a href="#" data-role="button" data-icon="monio" data-iconpos="notext">555-555-5555</a>
+        <div  data-role="content" class="content_mesas">
+                    <!-- Botones de muestra  
                     <a href="#" data-role="button" data-icon="mesa-abierta" data-theme="c" data-iconpos="notext"></a>
                     <a href="#" data-role="button" data-icon="mesa-porcerrar" data-theme="c" data-iconpos="notext" data-iconpos="right"></a>
                     <a href="#" data-role="button" data-icon="mesa-cerrada" data-theme="c"  data-iconpos="notext" >Mesa loca</a>
-                   
-            
-                <!-- Abrir mesa
-                <a href="#mesa-add" class="mesa" data-rel="dialog">Abrir Mesa</a>
-                -->
+                    -->
                 
                 <!-- aca va el listado de mesas que se carga dinamicamente en un script de abajo -->
+                <a href="#mesa-add" data-rel="dialog" class="grid_1 abrir-mesa" href="#" data-role="button" data-theme="a">Abrir<br>Mesa</a>  
                 <ul id="mesas_container" class="listado-adicion" data-bind='template: { name: "listaMesas", foreach: adn().mesas }'>
                         <!-- Template: 
                             listado de mesas que será refrescado continuamente mediante 
                             el ajax que verifica el estado de las mesas (si fue abierta o cerrada alguna. -->
-                        
-                        
-                        <!-- Horario de mesa
-                        <span class="mesa-created">Abrió a las <cite data-bind="text: timeAbrio()"></cite></span> -->
+                 
                         <script id="listaMesas" type="text/x-jquery-tmpl">
-
-                            
 
                             <li class="grid_2 li-btn">
                                 <a  data-bind="click: seleccionar, attr: {accesskey: numero}" 
                                     data-theme="c" 
-                                    data-icon="tenedorb" 
+                                    data-icon="mesa-abierta" 
                                     data-role="button" 
                                     href="#mesa-view" 
                                     class="ui-btn ui-btn-icon-left ui-btn-corner-all ui-shadow ui-btn-up-c">
@@ -81,6 +72,11 @@
                             </li>
                         </script>
                 </ul>
+                <!-- Abrir mesa -->
+                
+                
+                <a href="#mesa-add" class="mesa" ></a>
+                
         </div><!-- /navbar -->
             
         <div  data-role="footer" data-position="fixed">
@@ -109,7 +105,8 @@
 	<div  data-role="header" data-position="inline">
                 <h1>Mozos</h1>
                 
-                <a rel="external" href='<?= $html->url('/adition/adicionar') ?>' data-icon="home" data-iconpos="notext" data-direction="reverse" class="">Home</a>
+                <a rel="external" href='<?= $html->url('/adition/adicionar') ?>' data-icon="home" data-iconpos="notext" data-direction="reverse" class="ui-btn-right">Home</a>
+
 
                 <div data-role="navbar">
                         <ul>
@@ -119,18 +116,35 @@
                 </div>
         </div>
 
-        <div data-role="content" class="container_12">
+        <div data-role="content" class="container_12 content_mozos">
                 <!-- aca va el listado de mesas que se carga dinamicamente en un script de abajo -->
                 <ul id="mesas_container" class="container_12 listado-adicion mozos"
                     data-bind='template: { name: "listaMozos", foreach: adn().mozos }'>
                     <script id="listaMozos" type="text/x-jquery-tmpl">
-                        <li data-mesa-numero="${numero}" data-mozo-id="${id}" class="grid_1">
-                            <a href="mozos/view/${id}" data-role="none" class="mozo" >
-                                (<span class="mozo-numero" data-bind="text: numero()" style="color: red"></span>)
-                                <span class="mozo-cant-mesas" data-bind="text: mesas().length"></span> mesas
-                            </a>
-                            
-                        </li>
+                       
+                        <li class="grid_1 li-btn" data-mesa-numero="${numero}" data-mozo-id="${id}">
+                                <a  data-bind="click: seleccionar, attr: {accesskey: numero}" 
+                                    data-theme="c" 
+                                    data-icon="mozob" 
+                                    data-role="button" 
+                                    href="#mesa-view" 
+                                    class="mozo ui-btn ui-btn-icon-left ui-btn-corner-all ui-shadow ui-btn-up-c">
+                                    <span class="mesa-span ui-btn-inner ui-btn-corner-all">
+                                        <span class="ui-btn-text">
+                                            <span class="mozo-numero" data-bind="text: numero()"></span>
+                                            <span class="mozo-cant-mesas" data-bind="text: mesas().length"></span>
+                                           
+                                        </span>
+                                        <span class="mesa-icon ui-icon ui-icon-mozob ui-icon-shadow"></span>
+                                        
+                                    </span>
+
+                                    
+                                    
+                                </a>
+                            </li>
+                        
+                        
                     </script>
 
                 </ul>
@@ -210,21 +224,12 @@
 
 -->
 <div data-role="page" id="mesa-view">
-	<div  data-role="header" data-position="inline">
-            <a data-rel="back" data-transition="reverse" href="#">Volver</a>
-            
-            <h1>Mesa <span data-bind="text: adn().currentMesa().numero"></span> | Mozo <span data-bind="text: adn().currentMesa().mozo().numero"></span>
-              | <span class="mesa-total" style="color: red;"> $<span data-bind="text: adn().currentMesa().totalCalculado"></span></span>
-            <span class="mesa-created">Abrió a las <cite data-bind="text: adn().currentMesa().timeAbrio()"></cite></span></h1>
-            
-            <a data-theme="b" data-bind="visible: adn().currentMesa().tieneComandaModificada()" href="#">Guardar Cambios de Comanda</a>
-            
-<!--            <div data-role="navbar">
-                    <ul>
-                        <li><a href="#mesa-view" class="ui-btn-active">Vista Común</a></li>
-                        <li><a href="#mesa-view-ticket">Vista Ticket</a></li>
-                    </ul>
-            </div>-->
+	<div  data-role="header">
+            <a href="#listado-mesas" data-rel="back">Volver</a>
+            <h1>
+                Mesa <span data-bind="text: adn().currentMesa().numero"></span> | Mozo <span data-bind="text: adn().currentMesa().mozo().numero"></span>
+                -- Estado: <span data-bind="text: adn().currentMesa().getEstadoName()"></span>
+            </h1>
         </div>
 
         <div  data-role="content" class="">
@@ -232,7 +237,7 @@
                 <ul data-role="listview" style="width: 100%">
                     <li><a href="#comanda-add-menu" data-rel="dialog"><?= $html->image('/adition/css/img/chef_64.png')?>Comanda</a></li>
                     <li><a href="<?php echo $html->url('/clientes/ajax_clientes_factura_a')?>" data-rel="dialog" ><?= $html->image('/adition/css/img/addcliente.png')?>Agregar Cliente</a></li>
-                    <li><a href="#mesa-cerrar" ><?= $html->image('/adition/css/img/cerrarmesa.png')?>Cerrar Mesa</a></li>
+                    <li><a href="#listado-mesas" id="mesa-cerrar" data-rel="back" data-transition="reverse"><?= $html->image('/adition/css/img/cerrarmesa.png')?>Cerrar Mesa</a></li>
                     <li><a href="#mesa-cambiar-mozo" ><?= $html->image('/adition/css/img/cambiarmozo.png')?>Cambiar Mozo</a></li>
                     <li><a href="#mesa-cambiar-numero" >Cambiar N°</a></li>
                     <li><a href="#mesa-re-print" ><?= $html->image('/adition/css/img/reimprimir.png')?>Re imprimir Ticket</a></li>
@@ -247,9 +252,11 @@
                         <!-- Template: listado de comandas con sus productos-->
                         <script id="listaComandas" type="text/x-jquery-tmpl">
                            <div data-role="collapsible">
-                                <h3><span class="id-comanda">#<span data-bind="text: id"></span></span>  <span class="hora-comanda"  data-bind="text: timeCreated()"></span></h3>
+                               <h3><span class="id-comanda">#<span data-bind="text: id"></span></span>  <span class="hora-comanda"  data-bind="text: timeCreated()"></span>&nbsp;|&nbsp;
+                                   <span class="comanda-listado-productos-string" data-bind="text: productsStringListing()"></span>
+                               </h3>
 
-                                <ul class="ui-listview " data-role="listview"
+                                <ul class="ui-listview comanda-items" data-role="listview"
                                    data-bind="template: {name: 'li-productos-detallecomanda', foreach: DetalleComanda}"
                                    style="margin: 0px;">
                                 </ul>                                                                           
@@ -261,7 +268,12 @@
             
         </div>
     
-    <div data-role="footer">Pie de página</div>
+    <div data-role="footer" data-position="fixed">
+        <h3>
+            <span class="mesa-total">$<span data-bind="text: adn().currentMesa().totalCalculado"></span></span>
+            <span class="hora-abrio">Abrió a las <span data-bind="text: adn().currentMesa().timeCreated()"></span></span>
+        </h3>
+    </div>
 </div>
 
 

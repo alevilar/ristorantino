@@ -56,6 +56,7 @@ class DetalleComandasController extends AppController {
 		$v_comandera_y_comanda = array();
 		while (list($key, $value) = each($v_comanderas)):
 			// Creo una comanda
+                        $this->DetalleComanda->Comanda->create();
 			if($this->DetalleComanda->Comanda->save($comanda)){
 					$ok = true;
 					$v_comandera_y_comanda[$key] = $this->DetalleComanda->Comanda->getLastInsertID();
@@ -75,6 +76,7 @@ class DetalleComandasController extends AppController {
 				$data['comanda_id'] = $comanda_id;
 				if ($data['comandera_id'] == $comandera_id){
                                     $dataToSave['DetalleComanda'] = $data;
+                                        $this->DetalleComanda->create();
 					if ($this->DetalleComanda->save($dataToSave)){
 						$ok = true;
                                                 if (!empty($data['DetalleSabor'])){
@@ -82,6 +84,7 @@ class DetalleComandasController extends AppController {
                                                     foreach ($detalleSabor as $ds){
                                                         $ds['detalle_comanda_id'] = $this->DetalleComanda->getLastInsertID();
                                                         $dataToSave['DetalleSabor'] = $ds;
+                                                        $this->DetalleComanda->DetalleSabor->create();
                                                         if ($this->DetalleComanda->DetalleSabor->save($dataToSave)){
                                                             $ok = 3;
                                                         } else {

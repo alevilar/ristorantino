@@ -8,27 +8,39 @@
 var MESA_ESTADOS_POSIBLES =  {
     abierta : {
         msg: 'Mesa Abierta',
-        event: 'mesaAbierta'
+        event: 'mesaAbierta',
+        id: 1,
+        icon: 'tenedorb'
     },
     cerrada: {
         msg: 'Mesa Cerrada',
-        event: 'mesaCerrada'
+        event: 'mesaCerrada',
+        id: 2,
+        icon: 'tenedor'
     },
     cuponPendiente: {
         msg: 'Mesa con Cupón Pendiente',
-        event: 'mesaCuponPendiente'
+        event: 'mesaCuponPendiente',
+        id: 0,
+        icon: ''
     },
     cobrada: {
         msg: 'Mesa Cobrada',
-        event: 'mesaCobrada'
+        event: 'mesaCobrada',
+        id: 3,
+        icon: ''
     },
     borrada: {
         msg: 'Mesa Borrada',
-        event: 'mesaBorrada'
+        event: 'mesaBorrada',
+        id: 0,
+        icon: ''
     },
     seleccionada: {
         msg: 'Mesa Seleccionada',
-        event: 'mesaSeleccionada'
+        event: 'mesaSeleccionada',
+        id: 0,
+        icon: ''
     }
 };
 
@@ -73,16 +85,10 @@ Mesa.prototype = {
     mozo: ko.observable( {} ),
     
     timeAbrio: function(){
-        var d;
-        
-        if (this.created() == 0) {
-            d = new Date();
-        } else {
-            d = new Date( mysqlTimeStampToDate(this.created()) );       
+        if (!this.timeCreated) {
+            Risto.modelizar(this);
         }
-        
-        var min =  (d.getMinutes() < 10 ? '0' : '') + d.getMinutes();
-        return d.getHours()+":"+min;
+        return this.timeCreated();
     },
 
     initialize: function( mozo, jsonData ) {
@@ -114,15 +120,31 @@ Mesa.prototype = {
                 this.setMozo(mozo, false);
             }
             
-            return ko.mapping.fromJS(jsonData, mapOps, this);
+            ko.mapping.fromJS(jsonData, mapOps, this);
         } else {
             if (mozo) {
                 // meto al mozo agregandole al mozo
                 this.setMozo(mozo, true);
             }
+            ko.mapping.fromJS({}, {}, this);
         }
+        this.__inicializar_estado();
         
-        return ko.mapping.fromJS({}, {}, this);
+        Risto.modelizar(this);
+        return this;
+    },
+    
+    __inicializar_estado: function(){
+        if (typeof this.estado == 'function'){
+            for(var ee in MESA_ESTADOS_POSIBLES){
+                if ( MESA_ESTADOS_POSIBLES[ee].id == this.estado() ){
+                    this.__estado = [MESA_ESTADOS_POSIBLES[ee]];
+                    return MESA_ESTADOS_POSIBLES[ee];
+                }
+            }
+        }
+        this.__estado = [MESA_ESTADOS_POSIBLES.abierta];
+        return MESA_ESTADOS_POSIBLES.abierta;
     },
     
     
@@ -150,6 +172,7 @@ Mesa.prototype = {
     urlView: function(){return urlDomain+'mesas/view/'+this.id()},
     urlEdit: function(){return urlDomain+'mesas/edit/'+this.id()},
     urlComandaAdd: function(){return urlDomain+'comandas/add/'+this.id()},
+    urlCerrarMesa: function(){return urlDomain+'mesas/cerrarMesa/'+this.id()},
     
     /**
      *  Id del elemento que contiene los datos de esta mesa
@@ -199,22 +222,6 @@ Mesa.prototype = {
         }
     },
 
-
-    cambiarEstadoEnBaseASusDatetimes: function(){
-        // seteo elestado a la mesa
-        if(this.time_cerro == DATETIME_CERO){
-            this.__estado = MESA_ESTADOS_POSIBLES.abierta;
-        }
-        else if (this.time_cerro != DATETIME_CERO && this.time_cobro == DATETIME_CERO) {
-            this.__estado = MESA_ESTADOS_POSIBLES.cerrada;
-        }
-        else if (this.time_cobro != DATETIME_CERO && this.time_llego_cupon == DATETIME_CERO) {
-            this.__estado = MESA_ESTADOS_POSIBLES.cuponPendiente;
-        }
-        else if (this.time_cobro != DATETIME_CERO) {
-            this.__estado = MESA_ESTADOS_POSIBLES.cobrada;
-        }
-    },
 
     cloneFromJson: function(json){
         //copio solo lo decclarado en el prototype de este modelo
@@ -286,6 +293,29 @@ Mesa.prototype = {
     getEstado: function(){
         return this.__estado;
     },
+    
+    getEstadoIcon: function(){
+        for (var nn in this.__estado){
+            return this.__estado[nn].icon;
+        }
+        return '';
+    },
+        
+    
+    getEstadoName: function(){
+        var txt = '',
+            i = false;
+        for (var nn in this.__estado){
+            if (i){
+                txt += ', ';
+                i = true;
+            }
+            txt += this.__estado[nn].msg;
+        }
+        
+        return txt;
+    },
+    
 
     /**
      * Me dice si la mesa pidio el cierre y esta pendiente de cobro
@@ -353,7 +383,7 @@ Mesa.prototype = {
      */
     reabrir : function(url){
         var data = {
-                'data[Mesa][time_cerro]': "0000-00-00 00:00:00",
+                'data[Mesa][estado]': MESA_ESTADOS_POSIBLES.abierta.id,
                 'data[Mesa][id]': this.id
         };
 
