@@ -13,8 +13,7 @@
 	<th><?php echo $paginator->sort('Tipo factura', 'TipoFactura.name');?></th>
 	<th><?php echo $paginator->sort('factura_nro');?></th>
 	<th><?php echo $paginator->sort('factura_fecha');?></th>
-	<th><?php echo $paginator->sort('importe_neto');?></th>
-        <th>Total</th>
+	<th><?php echo $paginator->sort('importe_total');?></th>
 	<th><?php echo $paginator->sort('created');?></th>
 	<th class="actions"><?php __('Actions');?></th>
 </tr>
@@ -43,9 +42,6 @@ foreach ($gastos as $gasto):
                         <?php echo date("d/m/Y H:i", strtotime($gasto['Gasto']['factura_fecha'])); ?>
 		</td>
 		<td>
-			$ <?php echo $gasto['Gasto']['importe_neto']; ?>
-		</td>
-                <td>
 			$ <?php echo $gasto['Gasto']['importe_total']; ?>
 		</td>
 		<td>

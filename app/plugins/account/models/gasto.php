@@ -114,15 +114,17 @@ class Gasto extends AccountAppModel {
             foreach ($results as &$result) {
                 if (!empty($result['Gasto'])) {
                     $result_aux = &$result;
+                    
+                    if (empty($result['Gasto']['importe_total'])) {
+                        if (!empty($result['TipoImpuesto'])) {
+                            $result['Gasto']['importe_total'] = $this->getTotalConImpuestos($result);
+                        }
+                        else {
+                            $result['Gasto']['importe_total'] = $result['Gasto']['importe_neto'];
+                        }
 
-                    if (!empty($result['TipoImpuesto'])) {
-                        $result['Gasto']['importe_total'] = $this->getTotalConImpuestos($result);
+                        unset($result_aux);
                     }
-                    else {
-                        $result['Gasto']['importe_total'] = $result['Gasto']['importe_neto'];
-                    }
-
-                    unset($result_aux);
                 }
             }
 

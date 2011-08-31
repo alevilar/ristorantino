@@ -49,3 +49,7 @@ CREATE TABLE `proveedores` (
 
 
 ALTER TABLE `gastos` ADD `importe_total` FLOAT NOT NULL DEFAULT 0 AFTER `importe_neto`;
+
+/* 31/08/2011 */
+ALTER TABLE `vales` ADD `user_id` INT NULL AFTER `id` ;
+ALTER TABLE `vales` ADD `fecha` DATE NOT NULL AFTER `persona` ;

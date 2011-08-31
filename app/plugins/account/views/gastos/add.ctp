@@ -17,7 +17,8 @@
 		echo $form->input('tipo_factura_id');
 		echo $form->input('factura_nro');
                 echo $form->input('factura_fecha', array('id'=>'facturaFecha', 'type'=>'text'));
-		echo $form->input('importe_neto');
+		//echo $form->input('importe_neto');
+                echo $form->input('importe_total');
                 ?>
                 <div id="impuestos">
                 <?php
@@ -29,7 +30,6 @@
                 </div>
                 <?php
 		echo $form->input('otros', array('label' => 'Otros cargos', 'size' => '7'));
-                echo $form->input('importe_total');
 	?>
 	</fieldset>
 <?php echo $form->end('Guardar');?>
