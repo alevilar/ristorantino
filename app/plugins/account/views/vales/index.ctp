@@ -11,7 +11,9 @@
         ?></p>
     <table cellpadding="0" cellspacing="0">
         <tr>
+            <th><?php echo $paginator->sort('Usuario', 'User.username'); ?></th>
             <th><?php echo $paginator->sort('persona'); ?></th>
+            <th><?php echo $paginator->sort('fecha'); ?></th>
             <th><?php echo $paginator->sort('monto'); ?></th>
             <th><?php echo $paginator->sort('Creado','created'); ?></th>
             <th class="actions"><?php __('Acciones'); ?></th>
@@ -25,8 +27,14 @@
             }
         ?>
             <tr<?php echo $class; ?>>
-                <td>
+            <td>
+                <?php if (!empty($vale['User']['username'])) echo $vale['User']['username']; ?>
+            </td>
+            <td>
                 <?php echo $vale['Vale']['persona']; ?>
+            </td>
+            <td>
+                <?php echo date("d/m/Y", strtotime($vale['Vale']['fecha'])); ?>
             </td>
             <td>
                 <?php echo $vale['Vale']['monto']; ?>

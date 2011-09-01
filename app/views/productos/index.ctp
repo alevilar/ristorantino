@@ -11,6 +11,17 @@ echo $paginator->options(array('url'=>$this->params['PaginateConditions']));
 //debug($paginator->params['paging']['Producto']['count']);
 echo $paginator->counter(array('format' => __('Pagina %page% de %pages%, mostrando %current% elementos de %count%.', true)));?></p>
 <table class="productos" cellpadding="0" cellspacing="0">
+        <tr>
+	<?php echo $form->create("Producto",array("action"=>"index")); echo $form->input("id") ?>
+	<th><?php echo $form->input('name',array('style'=>'width:170px;','placeholder'=>'Nombre del producto', 'label'=>false));?></th>
+	<th><?php echo $form->input('abrev',array('style'=>'width:145px;','placeholder'=>'Abreviatura','label'=>false));?></th>
+	<th><?php echo $form->input('Comandera.name',array('style'=>'width:85px;','placeholder'=>'Comandera','label'=>false));?></th>
+	<th><?php echo $form->input('Categoria.name',array('style'=>'width:85px;','placeholder'=>'Categoria','label'=>false));?></th>
+	<th><?php echo $form->input('precio',array('style'=>'width:40px;','placeholder'=>'Precio','label'=>false));?></th>
+        <th><?php echo $form->input('order',array('style'=>'width:35px;','placeholder'=>'Orden','label'=>false));?></th>
+	<th>&nbsp;</th>
+	<th class="actions"><?php echo $form->end("Buscar")?></th>
+        </tr>
 
 <tr>
 	<th><?php echo $paginator->sort('Nombre','name');?></th>
@@ -74,17 +85,7 @@ endforeach;
 }
     
 ?>
-        <tr>
-	<?php echo $form->create("Producto",array("action"=>"index")); echo $form->input("id") ?>
-	<th><?php echo $form->input('name',array('style'=>'width:170px;','placeholder'=>'Nombre del producto', 'label'=>false));?></th>
-	<th><?php echo $form->input('abrev',array('style'=>'width:145px;','placeholder'=>'Abreviatura','label'=>false));?></th>
-	<th><?php echo $form->input('Comandera.name',array('style'=>'width:85px;','placeholder'=>'Comandera','label'=>false));?></th>
-	<th><?php echo $form->input('Categoria.name',array('style'=>'width:85px;','placeholder'=>'Categoria','label'=>false));?></th>
-	<th><?php echo $form->input('precio',array('style'=>'width:40px;','placeholder'=>'Precio','label'=>false));?></th>
-        <th><?php echo $form->input('order',array('style'=>'width:35px;','placeholder'=>'Orden','label'=>false));?></th>
-	<th>&nbsp;</th>
-	<th class="actions"><?php echo $form->end("Buscar")?></th>
-        </tr>
+       
 </table>
 
 

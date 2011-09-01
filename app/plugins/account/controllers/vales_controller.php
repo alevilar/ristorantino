@@ -4,7 +4,7 @@ class ValesController extends AccountAppController {
 
     var $name = 'Vales';
     var $helpers = array('Html', 'Form');
-    var $uses = array('Vale');
+    var $uses = array('Vale', 'User');
     var $components = array('Printer', 'RequestHandler');
 
 
@@ -22,6 +22,12 @@ class ValesController extends AccountAppController {
     function add() {
         $this->rutaUrl_for_layout[] =array('name'=> 'Vales','link'=>'/account/vales' );
         if (!empty($this->data)) {
+            // fecha del vale
+            if (!empty($this->data['Vale']['fecha'])) {
+                $fecha = explode('/', $this->data['Vale']['fecha']);
+                $this->data['Vale']['fecha'] = $fecha[2] . "-" . $fecha[1] . "-" . $fecha[0];
+            }
+
             $this->Vale->create();
             if ($this->Vale->save($this->data)) {
                 $this->Session->setFlash(__('El vale ha sido creado', true));
@@ -30,6 +36,11 @@ class ValesController extends AccountAppController {
                 $this->Session->setFlash(__('El vale no se ha podido guardar. Por favor, intente nuevamente.', true));
             }
         }
+        
+        $users = $this->User->find('list', array(
+                        'order' => array('User.username')
+                    ));
+        $this->set('users', $users);
     }
 
     function edit($id = null) {
@@ -39,6 +50,13 @@ class ValesController extends AccountAppController {
             $this->redirect(array('action' => 'index'));
         }
         if (!empty($this->data)) {
+            // fecha del vale
+            if (!empty($this->data['Vale']['fecha'])) {
+                $fecha = $this->data['Vale']['fecha'];
+            }
+            $fecha = explode('/', $fecha);
+            $this->data['Vale']['fecha'] = $fecha[2] . "-" . $fecha[1] . "-" . $fecha[0];
+
             if ($this->Vale->save($this->data)) {
                 $this->Session->setFlash(__('El vale ha sido guardado', true));
                 $this->redirect(array('action' => 'index'));
@@ -48,7 +66,21 @@ class ValesController extends AccountAppController {
         }
         if (empty($this->data)) {
             $this->data = $this->Vale->read(null, $id);
+            
+            // fecha del vale
+            if (!empty($this->data['Vale']['fecha']) && $this->data['Vale']['fecha'] != '0000-00-00' ) {
+                $this->data['Vale']['fecha'] = strtotime($this->data['Vale']['fecha']);
+                $this->data['Vale']['fecha'] = date('d/m/Y', $this->data['Vale']['fecha']);
+            }
+            else {
+                $this->data['Vale']['fecha'] = date('d/m/Y');
+            }
         }
+        
+        $users = $this->User->find('list', array(
+                        'order' => array('User.username')
+                    ));
+        $this->set('users', $users);
     }
 
     function delete($id = null) {
