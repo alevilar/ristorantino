@@ -48,6 +48,10 @@ Risto.Adition.comandaFabrica.prototype = {
         // separo los detalleComanda por comandera
         for (var dc in this.comanda.DetalleComanda()) {
             ccdc = this.comanda.DetalleComanda()[dc];
+            //si el detalleComanda no tiene cantidad mayor a cero (se agregaron demas por error y luego se quitaron)
+            // entonces no debo guardarla
+            if ( ccdc.realCant() == 0) continue;
+            
             if ( !comanderas[ccdc.comandera_id()] || !comanderas[ccdc.comandera_id()].length ) {
                comanderas[ccdc.comandera_id()] = [];
             }
@@ -133,13 +137,27 @@ Risto.Adition.comandaFabrica.prototype = {
         return -1;
     },
     
+    limpiarSabores: function(){
+        this.saboresSeleccionados = [];
+//        $('#page-sabores').dialog('close');
+    },
+    
     saveSabores: function(prod, sabores) {
-        $('#page-sabores').dialog('close');
+//        $('#page-sabores').dialog('close');
         
         this.__doAdd( this.productoSaborTmp, this.saboresSeleccionados );
         
         this.saboresSeleccionados = [];
         this.productoSaborTmp = {};
+    },
+    
+    sacarSabor: function(sabor){
+       for (var s in this.saboresSeleccionados) {
+           if( this.saboresSeleccionados[s].id == sabor.id ) {
+               return this.saboresSeleccionados.splice(s,1);
+           }          
+       }
+       return false;
     },
     
     agregarSabor: function( sabor ) {

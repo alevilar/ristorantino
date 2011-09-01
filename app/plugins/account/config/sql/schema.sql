@@ -16,7 +16,7 @@ PRIMARY KEY ( `id` )
 DROP TABLE `gastos`;
 CREATE TABLE `gastos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `proveedor_id` int(11) NOT NULL,
+  `proveedor_id` int(11) DEFAULT NULL,
   `clasificacion` varchar(100) DEFAULT NULL,
   `tipo_factura_id` int(11) NOT NULL,
   `factura_nro` varchar(50) DEFAULT NULL,
@@ -53,3 +53,4 @@ ALTER TABLE `gastos` ADD `importe_total` FLOAT NOT NULL DEFAULT 0 AFTER `importe
 /* 31/08/2011 */
 ALTER TABLE `vales` ADD `user_id` INT NULL AFTER `id` ;
 ALTER TABLE `vales` ADD `fecha` DATE NOT NULL AFTER `persona` ;
+

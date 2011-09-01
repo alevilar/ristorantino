@@ -74,8 +74,18 @@ $(document).ready(function() {
            $(document).trigger( ev );
        })
     });
+    
                  
 });
+
+$('#page-sabores').live('pageshow', function(){
+    var closeIcon = $('#page-sabores a[data-icon="delete"]');
+    closeIcon.bind('click',function(){
+                Risto.Adition.adicionar.currentMesa().currentComanda().limpiarSabores();
+                closeIcon.unbind('click');
+            });
+});
+//
 
 
 function agregarNuevaMesa(e){

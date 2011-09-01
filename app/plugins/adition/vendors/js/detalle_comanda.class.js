@@ -134,10 +134,8 @@ Risto.Adition.detalleComanda.prototype = {
     
     deseleccionar: function(){
         if (this.realCant() > 0 ) {
-            if ( window.confirm('Seguro que desea quitar 1 '+this.Producto().name) ) {
-                this.cant_eliminada( this.cant_eliminada()+1 );
-                this.modificada(true);
-            }
+            this.cant_eliminada( this.cant_eliminada()+1 );
+            this.modificada(true);
         }
     },
     

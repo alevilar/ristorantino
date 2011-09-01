@@ -7,7 +7,7 @@
 
 
          <span data-bind="text: realCant()" style="right: auto" class="ui-li-count ui-btn-up-c ui-btn-corner-all"></span>
-         <span data-bind="text: nameConSabores()" style="margin-left: 20px;"></span>
+         <span data-bind="text: nameConSabores()" style="padding-left: 40px;"></span>
      </li>
 </script>
                                          
@@ -27,7 +27,7 @@
             <div data-role="navbar">
                     <ul>
                         <li><a href="#listado-mozos">Mozos</a></li>
-                        <li><a href="#listado-mesas" class="ui-btn-active">Mesas</a></li>
+                        <li><a href="#listado-mesas" class="ui-btn-active ui-state-persist">Mesas</a></li>
                     </ul>
             </div>
         </div>
@@ -39,24 +39,19 @@
                     <a href="#" data-role="button" data-icon="mesa-porcerrar" data-theme="c" data-iconpos="notext" data-iconpos="right"></a>
                     <a href="#" data-role="button" data-icon="mesa-cerrada" data-theme="c"  data-iconpos="notext" >Mesa loca</a>
                     -->
-            
-                <!-- Abrir mesa
-                <a href="#mesa-add" class="mesa" data-rel="dialog">Abrir Mesa</a>
-                -->
-                
-                
                 
                 <!-- aca va el listado de mesas que se carga dinamicamente en un script de abajo -->
+                <a href="#mesa-add" data-rel="dialog"  data-transition="pop" class="grid_1 abrir-mesa" href="#" data-role="button" data-theme="a">Abrir<br>Mesa</a>  
                 <ul id="mesas_container" class="listado-adicion" data-bind='template: { name: "listaMesas", foreach: adn().mesas }'>
                         <!-- Template: 
                             listado de mesas que será refrescado continuamente mediante 
                             el ajax que verifica el estado de las mesas (si fue abierta o cerrada alguna. -->
-                        
                         <script id="listaMesas" type="text/x-jquery-tmpl">
 
                             <li class="grid_2 li-btn">
-                                <a  data-bind="click: seleccionar, attr: {accesskey: numero, attr: 'data-icon': getEstadoIcon()s}" 
-                                    data-theme="c"  
+                                <a  data-bind="click: seleccionar, attr: {accesskey: numero}" 
+                                    data-theme="c" 
+                                    data-icon="mesa-abierta" 
                                     data-role="button" 
                                     href="#mesa-view" 
                                     class="ui-btn ui-btn-icon-left ui-btn-corner-all ui-shadow ui-btn-up-c">
@@ -66,7 +61,7 @@
                                             <span class="mesa-mozo" data-bind="text: mozo().numero"></span>
                                            
                                         </span>
-                                        <span class="mesa-icon ui-icon ui-icon-mesa-abierta ui-icon-shadow"></span>
+                                        <span class="mesa-icon ui-icon ui-icon-shadow" data-bind="css: {'ui-icon-mesa-abierta': getEstadoIcon()!='mesa-cerrada', 'ui-icon-mesa-cerrada': getEstadoIcon()=='mesa-cerrada'}"></span>
                                         
                                     </span>
 
@@ -104,11 +99,11 @@
 	<div  data-role="header" data-position="inline">
                 <h1>Mozos</h1>
                 
-                <a rel="external" href='<?= $html->url('/adition/adicionar') ?>' data-icon="home" data-iconpos="notext" data-direction="reverse" class="">Home</a>
+                <a rel="external" href='<?= $html->url('/adition/adicionar') ?>' data-icon="home" data-iconpos="notext" data-direction="reverse" class="ui-btn-right">Home</a>
 
                 <div data-role="navbar">
                         <ul>
-                            <li><a href="#listado-mozos" class="ui-btn-active">Mozos</a></li>
+                            <li><a href="#listado-mozos" class="ui-btn-active ui-state-persist">Mozos</a></li>
                             <li><a href="#listado-mesas">Mesas</a></li>
                         </ul>
                 </div>
@@ -141,8 +136,6 @@
                                     
                                 </a>
                             </li>
-                        
-                        
                     </script>
 
                 </ul>
@@ -223,38 +216,55 @@
 -->
 <div data-role="page" id="mesa-view">
 	<div  data-role="header">
-            <a href="#listado-mesas" data-rel="back">Volver</a>
+            <a href="#listado-mesas" data-transition="slide" data-direction="reverse">Volver</a>
             <h1>
                 Mesa <span data-bind="text: adn().currentMesa().numero"></span> | Mozo <span data-bind="text: adn().currentMesa().mozo().numero"></span>
-                -- Estado: <span data-bind="text: adn().currentMesa().getEstadoName()"></span>
+                <span class="hora-abrio">Estado: <span data-bind="text: adn().currentMesa().getEstadoName()"></span></span>
             </h1>
         </div>
 
-        <div  data-role="content" class="">
-            <div class="" style="width: 28%; float: left;">
+        <div  data-role="content" class="" data-scroll="true">
+            <div class="mesa-actions" style="width: 29%; float: left;">
                 <ul data-role="listview" style="width: 100%">
-                    <li><a href="#comanda-add-menu" data-rel="dialog"><?= $html->image('/adition/css/img/chef_64.png')?>Comanda</a></li>
-                    <li><a href="<?php echo $html->url('/clientes/ajax_clientes_factura_a')?>" data-rel="dialog" ><?= $html->image('/adition/css/img/addcliente.png')?>Agregar Cliente</a></li>
-                    <li><a href="#listado-mesas" id="mesa-cerrar" data-rel="back" data-transition="reverse"><?= $html->image('/adition/css/img/cerrarmesa.png')?>Cerrar Mesa</a></li>
-                    <li><a href="#mesa-cambiar-mozo" ><?= $html->image('/adition/css/img/cambiarmozo.png')?>Cambiar Mozo</a></li>
-                    <li><a href="#mesa-cambiar-numero" >Cambiar N°</a></li>
-                    <li><a href="#mesa-re-print" ><?= $html->image('/adition/css/img/reimprimir.png')?>Re imprimir Ticket</a></li>
-                    <li><a href="#mesa-borrar" data-rel="back"><?= $html->image('/adition/css/img/borrarmesa.png')?>Borrar Mesa</a></li>
+                    <li data-bind="attr: {'estado': 'comanda-add-menu_'+adn().currentMesa().getEstadoIcon()}">
+                        <a href="#comanda-add-menu" data-rel="dialog"  data-transition="pop"><?= $html->image('/adition/css/img/chef_64.png')?>Comanda</a>
+                    </li>
+                    <li data-bind="attr: {'estado': 'mesa-cliente_'+adn().currentMesa().getEstadoIcon()}">
+                        <a href="<?php echo $html->url('/clientes/ajax_clientes_factura_a')?>" data-rel="dialog" data-transition="pop"><?= $html->image('/adition/css/img/addcliente.png')?>Agregar Cliente</a>
+                    </li>
+                    <li data-bind="attr: {'estado': 'mesa-cerrar_'+adn().currentMesa().getEstadoIcon()}">
+                        <a href="#listado-mesas" id="mesa-cerrar" data-direction="reverse" data-transition="slide"><?= $html->image('/adition/css/img/cerrarmesa.png')?>Cerrar Mesa</a>
+                    </li>
+                    <li data-bind="attr: {'estado': 'mesa-cambiar-mozo_'+adn().currentMesa().getEstadoIcon()}">
+                        <a href="#mesa-cambiar-mozo" ><?= $html->image('/adition/css/img/cambiarmozo.png')?>Cambiar Mozo</a>
+                    </li>
+                    <li data-bind="attr: {'estado': 'mesa-cambiar-numero_'+adn().currentMesa().getEstadoIcon()}">
+                        <a href="#mesa-cambiar-numero" ><?= $html->image('/adition/css/img/cambiarmesa.png')?>Cambiar N°</a>
+                    </li>
+                        <li data-bind="attr: {'estado': 'mesa-re-print_'+adn().currentMesa().getEstadoIcon()}">
+                        <a href="#mesa-re-print" ><?= $html->image('/adition/css/img/reimprimir.png')?>Reimprimir Ticket</a>
+                    </li>
+                    <li data-bind="attr: {'estado': 'mesa-borrar_'+adn().currentMesa().getEstadoIcon()}">
+                        <a href="#mesa-borrar" data-rel="back"><?= $html->image('/adition/css/img/borrarmesa.png')?>Borrar Mesa</a>
+                    </li>
+                    <li data-bind="attr: {'estado': 'mesa-cobrar_'+adn().currentMesa().getEstadoIcon()}">
+                        <a href="#mesa-cobrar"><?= $html->image('/adition/css/img/reimprimir.png')?>Cobrar</a>
+                    </li>
                 </ul>
             </div>
 
-            <div class="mesas view " style="width: 70%; float:right;" >
+            <div class="mesas view" style="width: 70%; float:right; margin-top: -7px;" >
                 <h3 class="titulo-comanda">Detalle de Consumición</h3>
 
                 <div id="comanda-detalle-collapsible" data-role="collapsible-set" data-bind="template: {name: 'listaComandas', foreach: adn().currentMesa().Comanda}">
                         <!-- Template: listado de comandas con sus productos-->
                         <script id="listaComandas" type="text/x-jquery-tmpl">
                            <div data-role="collapsible">
-                               <h3><span class="id-comanda">#<span data-bind="text: id"></span></span>  <span class="hora-comanda"  data-bind="text: timeCreated()"></span>
-                                   &nbsp;|&nbsp;<span class="comanda-listado-productos-string" data-bind="text: productsStringListing()"></span>
+                               <h3><span class="id-comanda">#<span data-bind="text: id"></span></span>  <span class="hora-comanda"  data-bind="text: timeCreated()"></span>&nbsp;&nbsp;&nbsp;
+                                   <span class="comanda-listado-productos-string" data-bind="text: productsStringListing()"></span>
                                </h3>
 
-                                <ul class="ui-listview " data-role="listview"
+                                <ul class="ui-listview comanda-items" data-role="listview"
                                    data-bind="template: {name: 'li-productos-detallecomanda', foreach: DetalleComanda}"
                                    style="margin: 0px;">
                                 </ul>                                                                           
@@ -268,8 +278,8 @@
     
     <div data-role="footer" data-position="fixed">
         <h3>
-            <span class="mesa-total" style="color: red;">Total: $<span data-bind="text: adn().currentMesa().totalCalculado"></span></span>
-            <span>Abrió a las <span data-bind="text: adn().currentMesa().timeCreated()"></span></span>
+            <span class="mesa-total">$<span data-bind="text: adn().currentMesa().totalCalculado"></span></span>
+            <span class="hora-abrio">Abrió a las <span data-bind="text: adn().currentMesa().timeCreated()"></span></span>
         </h3>
     </div>
 </div>
@@ -321,7 +331,7 @@
 
                          <span data-bind="text: nameConSabores()"></span>
 
-                         <span data-bind="text: cant" class="ui-li-count ui-btn-up-c ui-btn-corner-all"></span>
+                         <span data-bind="text: realCant()" class="ui-li-count ui-btn-up-c ui-btn-corner-all"></span>
                      </li>
                  </script>
            </ul>
@@ -360,7 +370,7 @@
            <div id="ul-productos" style="clear: both" 
                 data-bind="template: {name: 'categorias-productos', foreach: menu().currentProductos} ">
                  <script id="categorias-productos" type="text/x-jquery-tmpl">
-                     <a data-bind="click: seleccionar, attr: { href: tieneSabores() ? '#page-sabores' : '#'}" data-rel="dialog" class="ui-btn ui-btn-inline ui-btn-icon-left ui-btn-corner-all ui-shadow ui-btn-up-e">
+                     <a data-bind="click: seleccionar, attr: { href: tieneSabores() ? '#page-sabores' : '#'}" data-rel="dialog"  data-transition="fade" class="ui-btn ui-btn-inline ui-btn-icon-left ui-btn-corner-all ui-shadow ui-btn-up-e">
                          <span class="ui-btn-inner ui-btn-corner-all">
                              <span class="ui-btn-text" data-bind="text: name" ></span>
                              <span class="ui-icon ui-icon-right ui-icon-shadow"></span>
@@ -371,8 +381,6 @@
         </div>
     </div>
         
-    <div data-role="footer"><h2>Menu footer</h2></div>
-    
 </div>  
 
 
@@ -384,9 +392,10 @@
 
 -->
 <div data-role="page" id="page-sabores" data-theme="b">
-    <div  data-role="header"  data-position="inline">
+    <div data-role="header">
         <h1>Seleccionar sabores<span></span></h1>
-	<a href="#" data-icon="check" data-theme="b" data-bind="click: function(){adn().currentMesa().currentComanda().saveSabores()}">Guardar</a>        
+               
+	<a href="#" data-icon="check" data-theme="b" data-rel="back" data-bind="click: function(){adn().currentMesa().currentComanda().saveSabores()}">Guardar</a>        
     </div>
 
     <div data-role="content">                  
@@ -406,4 +415,3 @@
     </div>
             
 </div>  
-

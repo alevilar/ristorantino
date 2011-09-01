@@ -171,16 +171,29 @@ background-color: #EDEDED;
 
 }
 
-.menu-comanda ul li {
+.mesa-actions ul li {
     border-right-color: #B3B3B3;
     border-right-width: 1px;
     border-right-style: solid;
 }
 
-.linkmenu-comanda {
+.mesa-actions ul li A {
     padding-left: 30% !important;
     font-size: 92% !important;
     overflow: visible !important;
     padding-right: 0 !important;
     text-overflow: visible !important;
 }
+
+.mesa-actions ul li[estado='comanda-add-menu_mesa-cerrada'],
+.mesa-actions ul li[estado='mesa-cliente_mesa-cerrada'],
+.mesa-actions ul li[estado='mesa-cerrar_mesa-cerrada']{
+    display: none;
+}
+
+.mesa-actions ul li[estado='mesa-re-print_mesa-abierta'],
+.mesa-actions ul li[estado='mesa-cobrar_mesa-abierta']{
+    display: none;
+}
+
+
