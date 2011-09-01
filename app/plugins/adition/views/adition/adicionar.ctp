@@ -41,7 +41,7 @@
                     -->
                 
                 <!-- aca va el listado de mesas que se carga dinamicamente en un script de abajo -->
-                <a href="#mesa-add" data-rel="dialog" class="grid_1 abrir-mesa" href="#" data-role="button" data-theme="a">Abrir<br>Mesa</a>  
+                <a href="#mesa-add" data-rel="dialog"  data-transition="pop" class="grid_1 abrir-mesa" href="#" data-role="button" data-theme="a">Abrir<br>Mesa</a>  
                 <ul id="mesas_container" class="listado-adicion" data-bind='template: { name: "listaMesas", foreach: adn().mesas }'>
                         <!-- Template: 
                             listado de mesas que será refrescado continuamente mediante 
@@ -225,7 +225,7 @@
 -->
 <div data-role="page" id="mesa-view">
 	<div  data-role="header">
-            <a href="#listado-mesas" data-rel="back">Volver</a>
+            <a href="#listado-mesas" data-transition="slide" data-direction="reverse">Volver</a>
             <h1>
                 Mesa <span data-bind="text: adn().currentMesa().numero"></span> | Mozo <span data-bind="text: adn().currentMesa().mozo().numero"></span>
                 <span class="hora-abrio">Estado: <span data-bind="text: adn().currentMesa().getEstadoName()"></span></span>
@@ -235,9 +235,9 @@
         <div  data-role="content" class="">
             <div class="menu-comanda" style="width: 29%; float: left;">
                 <ul data-role="listview" style="width: 100%">
-                    <li><a class="linkmenu-comanda" href="#comanda-add-menu" data-rel="dialog"><?= $html->image('/adition/css/img/chef_64.png')?>Comanda</a></li>
-                    <li><a class="linkmenu-comanda" href="<?php echo $html->url('/clientes/ajax_clientes_factura_a')?>" data-rel="dialog" ><?= $html->image('/adition/css/img/addcliente.png')?>Agregar Cliente</a></li>
-                    <li><a class="linkmenu-comanda" href="#listado-mesas" id="mesa-cerrar" data-rel="back" data-transition="reverse"><?= $html->image('/adition/css/img/cerrarmesa.png')?>Cerrar Mesa</a></li>
+                    <li><a class="linkmenu-comanda" href="#comanda-add-menu" data-rel="dialog"  data-transition="pop"><?= $html->image('/adition/css/img/chef_64.png')?>Comanda</a></li>
+                    <li><a class="linkmenu-comanda" href="<?php echo $html->url('/clientes/ajax_clientes_factura_a')?>" data-rel="dialog" data-transition="pop"><?= $html->image('/adition/css/img/addcliente.png')?>Agregar Cliente</a></li>
+                    <li><a class="linkmenu-comanda" href="#listado-mesas" id="mesa-cerrar" data-direction="reverse" data-transition="slide"><?= $html->image('/adition/css/img/cerrarmesa.png')?>Cerrar Mesa</a></li>
                     <li><a class="linkmenu-comanda" href="#mesa-cambiar-mozo" ><?= $html->image('/adition/css/img/cambiarmozo.png')?>Cambiar Mozo</a></li>
                     <li><a class="linkmenu-comanda" href="#mesa-cambiar-numero" ><?= $html->image('/adition/css/img/cambiarmesa.png')?>Cambiar N°</a></li>
                     <li><a class="linkmenu-comanda" href="#mesa-re-print" ><?= $html->image('/adition/css/img/reimprimir.png')?>Reimprimir Ticket</a></li>
@@ -362,7 +362,7 @@
            <div id="ul-productos" style="clear: both" 
                 data-bind="template: {name: 'categorias-productos', foreach: menu().currentProductos} ">
                  <script id="categorias-productos" type="text/x-jquery-tmpl">
-                     <a data-bind="click: seleccionar, attr: { href: tieneSabores() ? '#page-sabores' : '#'}" data-rel="dialog" class="ui-btn ui-btn-inline ui-btn-icon-left ui-btn-corner-all ui-shadow ui-btn-up-e">
+                     <a data-bind="click: seleccionar, attr: { href: tieneSabores() ? '#page-sabores' : '#'}" data-rel="dialog"  data-transition="pop" class="ui-btn ui-btn-inline ui-btn-icon-left ui-btn-corner-all ui-shadow ui-btn-up-e">
                          <span class="ui-btn-inner ui-btn-corner-all">
                              <span class="ui-btn-text" data-bind="text: name" ></span>
                              <span class="ui-icon ui-icon-right ui-icon-shadow"></span>
