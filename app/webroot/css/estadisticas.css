@@ -165,3 +165,8 @@ table.jqplot-table-legend tr td {
     background-color: #EAA228;
     color: #ffffff;    
 }
+
+.tabla-info {
+    overflow: auto;
+    height: 280px;
+}

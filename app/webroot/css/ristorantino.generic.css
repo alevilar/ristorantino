@@ -366,19 +366,19 @@ li.selected    {
 .inicio{
 	margin-top: 0;
 	background-color: transparent;
-	background-image: url("../img/home.png");
+	background-image: url("../img/home1.png");
 	background-repeat: no-repeat;
 	text-indent: -1000px;
 	display: block;
-	height: 65px;
-	width: 75px;
+	height: 60px;
+	width: 68px;
         float: left;
         background-position: center;
 }
 .inicio:hover{
 	background-color: transparent;
         background-position: center;
-	background-image: url("../img/homehover.png");
+	background-image: url("../img/home2.png");
 }
 
 

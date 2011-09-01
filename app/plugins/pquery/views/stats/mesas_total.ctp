@@ -176,7 +176,7 @@
         foreach($mesas as $i=>$mesa){
             if(!empty ($mesa['desde']))
     ?>
-    <div class="grid_3" style="margin-top:35px;">
+    <div class="grid_3 tabla-info" style="margin-top:35px;">
     <table cellspacing="0" cellpadding="0" style="text-align: center">
         <thead>
                         <tr>

@@ -29,29 +29,36 @@ Risto.Adition.comanda.prototype = {
                     }
                 }
             }
-            return ko.mapping.fromJS(jsonData, mapOps, this);
+            ko.mapping.fromJS(jsonData, mapOps, this);
         }
-        return ko.mapping.fromJS({}, {}, this);;
+        ko.mapping.fromJS({}, {}, this);
+        Risto.modelizar(this);
+        return this;
     },
     
-    
-    timeCreated: function(){
-        var d;
-        
-        if (this.created() ) {
-            d = new Date( mysqlTimeStampToDate(this.created() ) );      
-        } else {
-            d = new Date(); 
+    productsStringListing: function(){
+        var name = '';        
+        for (var dc in this.DetalleComanda() ){
+            if (dc > 0){
+                name += ', ';
+            }
+            name += this.DetalleComanda()[dc].realCant()+' '+this.DetalleComanda()[dc].Producto().name;
         }
-        
-        return d.toLocaleTimeString();
-    }
-    ,
+        return name;
+    },
+    
     
     handleAjaxSuccess: function(data){
 //        ko.mapping.updateFromJS(this, data.Comanda)
         this.id(data.Comanda.Comanda.id);
-        this.created(data.Comanda.Comanda.id);
+        this.created(data.Comanda.Comanda.created);
+    },
+    
+     timeCreated: function(){
+         if (!this.timeCreated) {
+            Risto.modelizar(this);
     }
+        return this.timeCreated();
+     }
     
 }
