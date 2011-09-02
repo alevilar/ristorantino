@@ -38,7 +38,7 @@
  */
 class AppController extends Controller {
 	var $helpers = array('Html', 'Form','Javascript','Ajax');
-        var $components = array('Acl', 'Session', 'Auth', 'Requesthandler', 'Configurator');
+        var $components = array('Acl', 'Session', 'Auth', 'RequestHandler', 'Configurator');
 	
 	
 	
@@ -59,7 +59,7 @@ class AppController extends Controller {
 
             // si es Ajax y no tengo permisos que me tire un error HTTP
             // asi lo puedo capturar desde jQuery
-            if($this->Requesthandler->isAjax()){
+            if($this->RequestHandler->isAjax()){
                 Configure::write('debug',1);
                 
                 if (!$this->Acl->check($this->Auth->user(), $this->action)){

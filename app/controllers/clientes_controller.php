@@ -144,7 +144,8 @@ class ClientesController extends AppController {
 			$this->redirect(array('action'=>'index'));
 		}
 	}
-
+        
+        
 
 
         /**
@@ -175,6 +176,30 @@ class ClientesController extends AppController {
 		
 	}
         
+        
+         function jqm_clientes($tipo = 'todos'){
+             $tipo = '';
+             $clientes = array();
+             switch ($tipo) {
+                 case 'a':
+                 case 'A':
+                     $clientes = $this->Cliente->todosLosTipoA();
+                     $tipo = 'a';
+                     break;
+                 case 'd':
+                 case 'descuento':
+                     $clientes = $this->Cliente->todosLosDeDescuentos();
+                     $tipo = 'd';
+                     break;
+                 default:
+                     $tipo = 't';
+                         $clientes = $this->Cliente->todos();
+                     break;
+             }
+             
+             $this->set('tipo',$tipo);
+            $this->set('clientes',$clientes);
+        }
 	
 	
 	/**
@@ -182,12 +207,7 @@ class ClientesController extends AppController {
 	 *
 	 */
 	function ajax_clientes_factura_a(){
-		$this->Cliente->order = 'Cliente.nombre';
-		$this->paginate = array('conditions'=>array('Cliente.tipofactura' => 'A'),
-					'limit'=> 7,
-                                        'contain' => array(),
-		);		
-		$this->set('clientes',$this->paginate());
+		$this->set('clientes',$this->Cliente->todosLosTipoA());
 	}
 	
         /**
@@ -195,19 +215,7 @@ class ClientesController extends AppController {
 	 *
 	 */
 	function ajax_clientes_con_descuento(){
-                $conditions = array('tipofactura <>' => "A");
-                if ($this->Auth->user('role') == 'mozo') {
-                    $conditions = array_merge($conditions, array('Descuento.porcentaje <' => 16));
-                }
-		$this->Cliente->order = 'Cliente.nombre';
-		$this->paginate = array('conditions'=>$conditions,
-                                        'limit'=> 7,
-                                        'contain' => array(
-                                                'Descuento'
-                                            ),
-		);
-		
-		$this->set('clientes',$this->paginate());
+		$this->set('clientes',$this->Cliente->todosLosDeDescuentos());
 	}
 
 }

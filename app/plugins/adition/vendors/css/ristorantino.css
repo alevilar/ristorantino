@@ -197,3 +197,20 @@ background-color: #EDEDED;
 }
 
 
+
+ul.listado-mozos-para-mesas{
+    padding: 0px;
+    margin: 0px;
+    background-color: #E7E7E7;
+}
+
+.listado-mozos-para-mesas li{
+    display: inline-block;
+    min-width: 40px;
+    min-height: 30px;
+    text-align: center;
+}
+
+.listado-mozos-para-mesas li a{
+    text-decoration: none;
+}

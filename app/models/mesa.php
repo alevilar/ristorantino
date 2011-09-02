@@ -47,30 +47,7 @@ class Mesa extends AppModel {
 	);
 
 
-	
-	var $hasOne = array(
-			'Pago' => array('className' => 'Pago',
-								'foreignKey' => 'mesa_id',
-								'dependent' => true,
-								'conditions' => '',
-								'fields' => '',
-								'order' => '')
-	);
-
-	var $hasMany = array(
-			'Comanda' => array('className' => 'Comanda',
-								'foreignKey' => 'mesa_id',
-								'dependent' => true,
-								'conditions' => '',
-								'fields' => '',
-								'order' => '',
-								'limit' => '',
-								'offset' => '',
-								'exclusive' => '',
-								'finderQuery' => '',
-								'counterQuery' => ''
-			)
-	);
+	var $hasMany = array( 'Comanda', 'Pago');
 	
 
         
