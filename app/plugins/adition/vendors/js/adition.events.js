@@ -17,6 +17,15 @@ $('#mesa-view').live('pagebeforeshow',function(event, ui){
   el.find('div[data-role=collapsible]').collapsible();      
   $('.comandas-items').listview();
 });
+
+
+$('#listado-mesas').live('pageshow',function(event, ui){
+  var tot = $('.listado-mozos-para-mesas > li');
+  var por = 100/tot.length;
+  tot.removeClass('ui-block-a');
+  tot.removeClass('ui-block-b');
+  tot.css({'width':por+'%', padding: '0px', margin: '0px', 'float': 'left'});
+});
  
 
 
@@ -26,7 +35,7 @@ $('#mesa-view').live('pagebeforeshow',function(event, ui){
  *
  *
  */ 
-$(document).ready(function() {
+$(document).ready(function() {    
     
     $(document).keydown(buscarAccessKey);
 
@@ -50,9 +59,11 @@ $(document).ready(function() {
 
     $(document).bind("adicionCambioMozo", cambioMozo);
     
-    $(document).bind('adicionMesasActualizadas', function(){
-        $("#mesas_container").trigger( "create" );
-    });
+    
+    // para refres
+//    $(document).bind('adicionMesasActualizadas', function(){
+//        $("#mesas_container").trigger( "create" );
+//    });
     
     
     // Form SUBMITS
@@ -69,13 +80,45 @@ $(document).ready(function() {
         var mesa = Risto.Adition.adicionar.currentMesa();
         var url = mesa.urlCerrarMesa();
         $.get(url, {}, function(){
-           var ev = $.Event(MESA_ESTADOS_POSIBLES.cerrada.event);
-           ev.mesa = mesa;
-           $(document).trigger( ev );
+//           var ev = $.Event(MESA_ESTADOS_POSIBLES.cerrada.event);
+//           ev.mesa = mesa;
+//           $(document).trigger( ev );
+            mesa.setEstadoCerrada();
        })
     });
+    
+    
+    $('#mesa-borrar').click(function(){
+        var mesa = Risto.Adition.adicionar.currentMesa();
+        var url = mesa.urlDelete();
+        $.get(url, {}, function(){
+//           var ev = $.Event(MESA_ESTADOS_POSIBLES.cerrada.event);
+//           ev.mesa = mesa;
+//           $(document).trigger( ev );
+            mesa.setEstadoBorrada();
+       })
+    });
+    
+    
+    $('#mesa-reabrir').click(function(){
+        var mesa = Risto.Adition.adicionar.currentMesa();
+        var url = mesa.urlReabrir();
+        $.get(url, {}, function(){
+          mesa.setEstadoAbierta();
+       })
+    });
+    
                  
 });
+
+$('#page-sabores').live('pageshow', function(){
+    var closeIcon = $('#page-sabores a[data-icon="delete"]');
+    closeIcon.bind('click',function(){
+                Risto.Adition.adicionar.currentMesa().currentComanda().limpiarSabores();
+                closeIcon.unbind('click');
+            });
+});
+//
 
 
 function agregarNuevaMesa(e){
@@ -99,16 +142,18 @@ function agregarNuevaMesa(e){
 
 function mesaCerrada(e){
     $("#mesa-id-"+e.mesa.id()).find('.ui-icon').removeClass('ui-icon-'+MESA_ESTADOS_POSIBLES.abierta.icon);
-    $("#mesa-id-"+e.mesa.id()).find('.ui-icon').addClass('ui-icon-'+MESA_ESTADOS_POSIBLES.cerrada.icon);
-    alert('mesa cerrada');
+    
+    
+    $("#mesa-id-"+e.mesa.id()).find('.ui-icon').addClass('ui-icon-'+MESA_ESTADOS_POSIBLES.cerrada.icon);   
 }
 
 function mesaCuponPendiente(){
     alert('mesa cupon pendiente');
 }
 
-function mesaBorrada(){
-    alert('mesa borrada');
+function mesaBorrada(e){
+    var mesa = e.mesa;
+    e.mesa.mozo().sacarMesa(mesa);
 }
 
 function mesaCobrada(){

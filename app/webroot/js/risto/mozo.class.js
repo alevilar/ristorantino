@@ -97,7 +97,9 @@ Mozo.prototype = {
             var evento = $.Event(MOZOS_POSIBLES_ESTADOS.sacaMesa.event);
             evento.mozo = this;
             $(document).trigger(evento);
+            return true
         }
+        return false;
     },
 
     /**

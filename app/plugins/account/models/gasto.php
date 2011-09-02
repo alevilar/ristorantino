@@ -5,13 +5,13 @@ class Gasto extends AccountAppModel {
         var $order = array('Gasto.created' => 'DESC');
         
         var $validate = array(
-		'proveedor_id' => array(
-			'rule1' => array(
-				'rule' => 'numeric',
-				'required' => true,
-				'message' => 'Debe especificar un proveedor'
-			)
-		),
+//		'proveedor_id' => array(
+//			'rule1' => array(
+//				'rule' => 'numeric',
+//				'required' => true,
+//				'message' => 'Debe especificar un proveedor'
+//			)
+//		),
                 'tipo_factura_id' => array(
 			'rule1' => array(
 				'rule' => 'numeric',

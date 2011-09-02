@@ -10,7 +10,10 @@
          <span data-bind="text: nameConSabores()" style="padding-left: 40px;"></span>
      </li>
 </script>
-                                         
+                  
+
+                    
+                    
                                          
 <!--
                         LISTADO MESAS
@@ -25,15 +28,29 @@
             <a rel="external" href='#listado-mesas' data-icon="home" data-iconpos="notext" data-direction="reverse" class="ui-btn-right">Home</a>
 
             <div data-role="navbar">
-                    <ul>
-                        <li><a href="#listado-mozos">Mozos</a></li>
-                        <li><a href="#listado-mesas" class="ui-btn-active">Mesas</a></li>
-                    </ul>
+                
+            <ul class="listado-mozos-para-mesas">
+                <li><a href="#" onclick="$('#mesas_container li').show();" class="ui-btn-active">Todos</a></li>
+                <?php
+                    foreach ($mozos as $m) {
+                        $k = $m['Mozo']['id'];
+                        $n = $m['Mozo']['numero'];
+
+                        $coso = "$('#mesas_container li').show();$('#mesas_container li[mozo!=$k]').hide();$('.listado-mozos-para-mesas').removeClass('ui-btn-active');$(this).addClass('ui-btn-active');"
+                        ?>
+                        <li><a href="#" onclick="<?php echo $coso?>"><?php echo $n?></a></li>
+                    <?
+                    }
+                ?>
+            </ul>
             </div>
         </div>
 
                     
         <div  data-role="content" class="content_mesas">
+            
+            
+            
                     <!-- Botones de muestra  
                     <a href="#" data-role="button" data-icon="mesa-abierta" data-theme="c" data-iconpos="notext"></a>
                     <a href="#" data-role="button" data-icon="mesa-porcerrar" data-theme="c" data-iconpos="notext" data-iconpos="right"></a>
@@ -46,13 +63,11 @@
                         <!-- Template: 
                             listado de mesas que será refrescado continuamente mediante 
                             el ajax que verifica el estado de las mesas (si fue abierta o cerrada alguna. -->
-                 
                         <script id="listaMesas" type="text/x-jquery-tmpl">
 
-                            <li class="grid_2 li-btn">
+                            <li class="grid_2 li-btn" data-bind="attr: {mozo: mozo().id()}">
                                 <a  data-bind="click: seleccionar, attr: {accesskey: numero}" 
-                                    data-theme="c" 
-                                    data-icon="mesa-abierta" 
+                                    data-theme="c"
                                     data-role="button" 
                                     href="#mesa-view" 
                                     class="ui-btn ui-btn-icon-left ui-btn-corner-all ui-shadow ui-btn-up-c">
@@ -62,7 +77,7 @@
                                             <span class="mesa-mozo" data-bind="text: mozo().numero"></span>
                                            
                                         </span>
-                                        <span class="mesa-icon ui-icon ui-icon-mesa-abierta ui-icon-shadow"></span>
+                                        <span class="mesa-icon ui-icon ui-icon-shadow" data-bind="css: {'ui-icon-mesa-abierta': getEstadoIcon()!='mesa-cerrada', 'ui-icon-mesa-cerrada': getEstadoIcon()=='mesa-cerrada'}"></span>
                                         
                                     </span>
 
@@ -72,11 +87,6 @@
                             </li>
                         </script>
                 </ul>
-                <!-- Abrir mesa -->
-                
-                
-                <a href="#mesa-add" class="mesa" ></a>
-                
         </div><!-- /navbar -->
             
         <div  data-role="footer" data-position="fixed">
@@ -94,70 +104,6 @@
 
 
 
-
-<!--
-                        LISTADO MOZOS
-
--->
-<!-- Pagina 2: Listado de Mozos -->
-<div data-role="page" data-add-back-btn="true" id="listado-mozos">
-
-	<div  data-role="header" data-position="inline">
-                <h1>Mozos</h1>
-                
-                <a rel="external" href='<?= $html->url('/adition/adicionar') ?>' data-icon="home" data-iconpos="notext" data-direction="reverse" class="ui-btn-right">Home</a>
-
-
-                <div data-role="navbar">
-                        <ul>
-                            <li><a href="#listado-mozos" class="ui-btn-active">Mozos</a></li>
-                            <li><a href="#listado-mesas">Mesas</a></li>
-                        </ul>
-                </div>
-        </div>
-
-        <div data-role="content" class="container_12 content_mozos">
-                <!-- aca va el listado de mesas que se carga dinamicamente en un script de abajo -->
-                <ul id="mesas_container" class="container_12 listado-adicion mozos"
-                    data-bind='template: { name: "listaMozos", foreach: adn().mozos }'>
-                    <script id="listaMozos" type="text/x-jquery-tmpl">
-                       
-                        <li class="grid_1 li-btn" data-mesa-numero="${numero}" data-mozo-id="${id}">
-                                <a  data-bind="click: seleccionar, attr: {accesskey: numero}" 
-                                    data-theme="c" 
-                                    data-icon="mozob" 
-                                    data-role="button" 
-                                    href="#mesa-view" 
-                                    class="mozo ui-btn ui-btn-icon-left ui-btn-corner-all ui-shadow ui-btn-up-c">
-                                    <span class="mesa-span ui-btn-inner ui-btn-corner-all">
-                                        <span class="ui-btn-text">
-                                            <span class="mozo-numero" data-bind="text: numero()"></span>
-                                            <span class="mozo-cant-mesas" data-bind="text: mesas().length"></span>
-                                           
-                                        </span>
-                                        <span class="mesa-icon ui-icon ui-icon-mozob ui-icon-shadow"></span>
-                                        
-                                    </span>
-
-                                    
-                                    
-                                </a>
-                            </li>
-                        
-                        
-                    </script>
-
-                </ul>
-        </div>
-
-        <div  data-role="footer" data-position="fixed">Ristorantino Mágico</div>
-</div>
-<!-- Fin Pagina 2: Listado de Mozos -->
-
-
-
-
-
 <!--
                         MESA-ADD
 
@@ -165,11 +111,11 @@
 <div  data-role="page"  id="mesa-add" data-theme="e">
         <div  data-role="header"  data-position="inline">
             <h1>Abrir Mesa</h1>
-            <a href="#"  data-rel="back" data-direction="reverse">Cancelar</a>
+            <a href="#"  data-rel="back">Cancelar</a>
         </div>
     
         <div data-role="content">
-            <form name="form-mesa-add" action="#" id="form-mesa-add" data-ajax="false">
+            <form name="form-mesa-add" action="#" id="form-mesa-add">
                 <div data-role="">
                     <fieldset data-role="controlgroup" data-type="horizontal">
                         <legend style="display: block; clear: both;">Seleccionar Mozo:</legend>
@@ -185,7 +131,7 @@
 
                     <fieldset data-role="fieldcontain">
                         <label for="numero">Escribir Número de Mesa:</label>
-                        <input type="number" name="numero" value="" maxlength="5" data-risto="mesa"/>
+                        <input type="text" name="numero" data-risto="mesa"/>
                     </fieldset>
                     
                     <fieldset>
@@ -232,16 +178,37 @@
             </h1>
         </div>
 
-        <div  data-role="content" class="">
-            <div class="menu-comanda" style="width: 29%; float: left;">
+        <div  data-role="content" class="" data-scroll="true">
+            <div class="mesa-actions" style="width: 29%; float: left;">
                 <ul data-role="listview" style="width: 100%">
-                    <li><a class="linkmenu-comanda" href="#comanda-add-menu" data-rel="dialog"  data-transition="pop"><?= $html->image('/adition/css/img/chef_64.png')?>Comanda</a></li>
-                    <li><a class="linkmenu-comanda" href="<?php echo $html->url('/clientes/ajax_clientes_factura_a')?>" data-rel="dialog" data-transition="pop"><?= $html->image('/adition/css/img/addcliente.png')?>Agregar Cliente</a></li>
-                    <li><a class="linkmenu-comanda" href="#listado-mesas" id="mesa-cerrar" data-direction="reverse" data-transition="slide"><?= $html->image('/adition/css/img/cerrarmesa.png')?>Cerrar Mesa</a></li>
-                    <li><a class="linkmenu-comanda" href="#mesa-cambiar-mozo" ><?= $html->image('/adition/css/img/cambiarmozo.png')?>Cambiar Mozo</a></li>
-                    <li><a class="linkmenu-comanda" href="#mesa-cambiar-numero" ><?= $html->image('/adition/css/img/cambiarmesa.png')?>Cambiar N°</a></li>
-                    <li><a class="linkmenu-comanda" href="#mesa-re-print" ><?= $html->image('/adition/css/img/reimprimir.png')?>Reimprimir Ticket</a></li>
-                    <li><a class="linkmenu-comanda" href="#mesa-borrar" data-rel="back"><?= $html->image('/adition/css/img/borrarmesa.png')?>Borrar Mesa</a></li>
+                    <li data-bind="attr: {'estado': 'comanda-add-menu_'+adn().currentMesa().getEstadoIcon()}">
+                        <a href="#comanda-add-menu" data-rel="dialog"  data-transition="pop"><?= $html->image('/adition/css/img/chef_64.png')?>Comanda</a>
+                    </li>
+                    <li data-bind="attr: {'estado': 'mesa-cliente_'+adn().currentMesa().getEstadoIcon()}">
+                        <a href="<?php echo $html->url('/clientes/jqm_clientes')?>" data-transition="fade"><?= $html->image('/adition/css/img/addcliente.png')?>Agregar Cliente</a>
+                    </li>
+                    <li data-bind="attr: {'estado': 'mesa-cerrar_'+adn().currentMesa().getEstadoIcon()}">
+                        <a href="#listado-mesas" id="mesa-cerrar" data-direction="reverse" data-transition="slide"><?= $html->image('/adition/css/img/cerrarmesa.png')?>Cerrar Mesa</a>
+                    </li>
+                    <li data-bind="attr: {'estado': 'mesa-cambiar-mozo_'+adn().currentMesa().getEstadoIcon()}">
+                        <a href="#mesa-cambiar-mozo" data-rel="dialog"  data-transition="pop"><?= $html->image('/adition/css/img/cambiarmozo.png')?>Cambiar Mozo</a>
+                    </li>
+                    <li data-bind="attr: {'estado': 'mesa-cambiar-numero_'+adn().currentMesa().getEstadoIcon()}">
+                        <a href="#mesa-cambiar-numero" data-rel="dialog"  data-transition="pop"><?= $html->image('/adition/css/img/cambiarmesa.png')?>Cambiar N°</a>
+                    </li>
+                        <li data-bind="attr: {'estado': 'mesa-re-print_'+adn().currentMesa().getEstadoIcon()}">
+                        <a href="#mesa-re-print" ><?= $html->image('/adition/css/img/reimprimir.png')?>Reimprimir Ticket</a>
+                    </li>
+                    <li data-bind="attr: {'estado': 'mesa-borrar_'+adn().currentMesa().getEstadoIcon()}">
+                        <a href="#listado-mesas" id="mesa-borrar" data-rel="back"><?= $html->image('/adition/css/img/borrarmesa.png')?>Borrar Mesa</a>
+                    </li>
+                    <li data-bind="attr: {'estado': 'mesa-cobrar_'+adn().currentMesa().getEstadoIcon()}">
+                        <a href="#mesa-cobrar"><?= $html->image('/adition/css/img/reimprimir.png')?>Cobrar</a>
+                    </li>
+                    
+                    <li data-bind="attr: {'estado': 'mesa-reabrir_'+adn().currentMesa().getEstadoIcon()}">
+                        <a href="#listado-mesas" id="mesa-reabrir"><?= $html->image('/adition/css/img/reimprimir.png')?>Re Abrir</a>
+                    </li>
                 </ul>
             </div>
 
@@ -323,7 +290,7 @@
 
                          <span data-bind="text: nameConSabores()"></span>
 
-                         <span data-bind="text: cant" class="ui-li-count ui-btn-up-c ui-btn-corner-all"></span>
+                         <span data-bind="text: realCant()" class="ui-li-count ui-btn-up-c ui-btn-corner-all"></span>
                      </li>
                  </script>
            </ul>
@@ -362,7 +329,7 @@
            <div id="ul-productos" style="clear: both" 
                 data-bind="template: {name: 'categorias-productos', foreach: menu().currentProductos} ">
                  <script id="categorias-productos" type="text/x-jquery-tmpl">
-                     <a data-bind="click: seleccionar, attr: { href: tieneSabores() ? '#page-sabores' : '#'}" data-rel="dialog"  data-transition="pop" class="ui-btn ui-btn-inline ui-btn-icon-left ui-btn-corner-all ui-shadow ui-btn-up-e">
+                     <a data-bind="click: seleccionar, attr: { href: tieneSabores() ? '#page-sabores' : '#'}" data-rel="dialog"  data-transition="fade" class="ui-btn ui-btn-inline ui-btn-icon-left ui-btn-corner-all ui-shadow ui-btn-up-e">
                          <span class="ui-btn-inner ui-btn-corner-all">
                              <span class="ui-btn-text" data-bind="text: name" ></span>
                              <span class="ui-icon ui-icon-right ui-icon-shadow"></span>
@@ -373,8 +340,6 @@
         </div>
     </div>
         
-    <div data-role="footer"><h2>Menu footer</h2></div>
-    
 </div>  
 
 
@@ -386,9 +351,10 @@
 
 -->
 <div data-role="page" id="page-sabores" data-theme="b">
-    <div  data-role="header"  data-position="inline">
+    <div data-role="header">
         <h1>Seleccionar sabores<span></span></h1>
-	<a href="#" data-icon="check" data-theme="b" data-bind="click: function(){adn().currentMesa().currentComanda().saveSabores()}">Guardar</a>        
+               
+	<a href="#" data-icon="check" data-theme="b" data-rel="back" data-bind="click: function(){adn().currentMesa().currentComanda().saveSabores()}">Guardar</a>        
     </div>
 
     <div data-role="content">                  
@@ -405,6 +371,72 @@
                    </a>
                 </script>
            </div>
+    </div>
+            
+</div>  
+
+
+
+
+
+
+<!--
+                    MESA CAMBIAR MOZO
+
+-->
+<div data-role="page" id="mesa-cambiar-mozo" data-theme="e">
+    <div data-role="header">
+        <h1>Seleccionar nuevo Mozo</h1>
+    </div>
+
+    <div data-role="content">                  
+        
+        <form name="cambiar-mozo" action="#">
+            <fieldset data-role="controlgroup" data-type="horizontal">
+                            <legend style="display: block; clear: both;">Seleccionar Mozo:</legend>
+                            <?php
+                                foreach ($mozos as $m) {
+                                    $k = $m['Mozo']['id'];
+                                    $n = $m['Mozo']['numero'];
+                                    echo "<input  type='radio' name='mozo_id' id='radio-mozo-id-$k' value='$k'/>";
+                                    echo "<label for='radio-mozo-id-$k'>$n</label>";
+                                }
+                            ?>
+            </fieldset>
+        </form>
+        
+        
+        <a href="#" data-rel="back" data-role="button" data-inline="true" data-theme="e">Cancelar</a>
+        <a href="#" data-rel="back" data-role="button" data-inline="true" data-theme="b">Guardar nuevo mozo</a>
+    </div>
+            
+</div>  
+
+
+
+
+
+<!--
+                    MESA CAMBIAR NUMERO
+
+-->
+<div data-role="page" id="mesa-cambiar-numero" data-theme="e">
+    <div data-role="header">
+        <h1>Nuevo Número de Mesa</h1>
+    </div>
+
+    <div data-role="content">                  
+        
+        <form name="cambiar-mozo" action="#">
+            <fieldset data-role="controlgroup" data-type="horizontal">
+                <legend for="numeroacambiar">Ingresar nuevo número</legend>
+                <input type="number"></input>
+            </fieldset>
+        </form>
+        
+        
+        <a href="#" data-rel="back" data-role="button" data-inline="true" data-theme="e">Cancelar</a>
+        <a href="#" data-rel="back" data-role="button" data-inline="true" data-theme="b">Guardar nuevo Número de Mesa</a>
     </div>
             
 </div>  

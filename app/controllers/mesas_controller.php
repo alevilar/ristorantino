@@ -394,9 +394,12 @@ $tipo_pagos = $this->Mesa->Pago->TipoDePago->find('list');
             $this->Session->setFlash(__('Invalid id for Mesa', true));
         }
         if ($this->Mesa->del($id)) {
-            $this->Session->setFlash(__('Mesa deleted', true));            
+            $this->Session->setFlash(__('Mesa deleted', true));     
+        } else {
         }
-        $this->redirect($this->referer());
+        if (!$this->RequestHandler->isAjax()){
+            $this->redirect($this->referer());
+        }
     }
 
 

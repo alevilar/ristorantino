@@ -226,5 +226,44 @@ class Cliente extends AppModel {
 		$ret = $this->find('first',array('conditions'=>array('Cliente.id'=>$id),'contain'=>array('TipoDocumento')));
 		return $ret;
 	}
+        
+        
+        
+        function todos($type = 'all'){
+                $clientes = $this->find($type, array(
+                    'order'      => 'Cliente.nombre',
+                    'contain' => array(
+                        'Descuento'
+                    ),
+                ));
+                return $clientes;
+        }
+        
+        
+        function todosLosTipoA($type = 'all'){
+                $clientes = $this->find($type, array(
+                    'order'      => 'Cliente.nombre',
+                    'conditions' => array('Cliente.tipofactura' => 'A'),
+                ));
+                return $clientes;
+        }
+        
+        function todosLosDeDescuentos($type = 'all', $limitarDescuento = false){
+                $conds = array('Cliente.tipofactura <>' => 'A');
+                
+                if ($limitarDescuento) {
+                    $conds['Descuento.porcentaje <='] = Config::read('Mozo.descuento_maximo');
+                }
+                
+		$ops = array(
+                    'conditions'=>$conds,
+                    'order' => 'Cliente.nombre',
+                    'contain' => array(
+                        'Descuento'
+                    ),
+		);
+                $clientes = $this->find($type, $ops);
+                return $clientes;
+        }
 }
 ?>

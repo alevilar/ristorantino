@@ -10,13 +10,13 @@ var MESA_ESTADOS_POSIBLES =  {
         msg: 'Mesa Abierta',
         event: 'mesaAbierta',
         id: 1,
-        icon: 'tenedorb'
+        icon: 'mesa-abierta'
     },
     cerrada: {
         msg: 'Mesa Cerrada',
         event: 'mesaCerrada',
         id: 2,
-        icon: 'tenedor'
+        icon: 'mesa-cerrada'
     },
     cuponPendiente: {
         msg: 'Mesa con Cupón Pendiente',
@@ -171,8 +171,10 @@ Mesa.prototype = {
     urlGetData: function(){return urlDomain+'mesas/ticket_view/'+this.id()},
     urlView: function(){return urlDomain+'mesas/view/'+this.id()},
     urlEdit: function(){return urlDomain+'mesas/edit/'+this.id()},
+    urlDelete: function(){return urlDomain+'mesas/delete/'+this.id()},
     urlComandaAdd: function(){return urlDomain+'comandas/add/'+this.id()},
     urlCerrarMesa: function(){return urlDomain+'mesas/cerrarMesa/'+this.id()},
+    urlReabrir: function(){return urlDomain+'mesas/reabrir/'+this.id()},
     
     /**
      *  Id del elemento que contiene los datos de esta mesa
@@ -505,6 +507,11 @@ Mesa.prototype = {
     
     handleAjaxSuccess: function(data, action, method) {
         ko.mapping.updateFromJS(this, data[this.model]);             
+    },
+    
+    
+    setClienteId: function(){
+        
     }
 
 };
