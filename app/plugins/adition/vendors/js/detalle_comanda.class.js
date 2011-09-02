@@ -54,6 +54,7 @@ Risto.Adition.detalleComanda.prototype = {
                 }
                 delete jsonData.DetalleSabor;
             }
+            delete jsonData.Producto;
             return ko.mapping.fromJS(jsonData, {} , this);
         }
         
