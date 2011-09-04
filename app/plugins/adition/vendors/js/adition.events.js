@@ -279,8 +279,6 @@ function onKeyPress(e) {
     if ( code > 47){ // desde el numero 0 hasta la ultima letra con simbolos
         
         // buscar la mesa con ese numero, busca por accesskey
-        console.debug(e);
-        console.debug(String.fromCharCode( e.charCode ));
         Risto.Adition.mesaBuscarAccessKey += String.fromCharCode( code );
         var domFinded = $("[accesskey^='"+Risto.Adition.mesaBuscarAccessKey+"']");
         if ( domFinded.length ) {
