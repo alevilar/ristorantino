@@ -44,4 +44,19 @@ class ProductsController extends InventoryAppController
         exit;
     }
     
+    
+    function add(){
+        if (!empty($this->data)){
+            if ($this->Product->save($this->data)){
+                $this->Session->setFlash('Se guardo un nuevo producto: '.$this->data['Product']['name']);
+            } else {
+                $this->Session->setFlash('Error al guardar un producto: '.$this->data['Product']['name']);
+            }
+            
+        }
+        $this->data['Product']['name'] = null;
+        $cats = $this->Product->Category->find('list');
+        $this->set('categories', $cats);
+    }
+    
 }

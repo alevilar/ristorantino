@@ -58,6 +58,7 @@
         					'cajero'=>'cajero', 
         					'query'=>'queries',
         					'action'=>'actions',
+                                                'inventory' => 'inventories',
                                                 'category' => 'categories',
                                                 'config_category' => 'config_categories',
             );

@@ -37,6 +37,21 @@
     echo $html->link('Precios Futuros','/productos_precios_futuros').'<br>';
     ?>
 
+
+ <h2>Inventario</h2>
+ <ul>
+    <?php
+    echo '<li>'.$html->link('listar productos', '/inventory/products').'</li>';
+    echo '<li>'.$html->link('agregar producto', '/inventory/products/add').'</li>';
+    echo '<li>'.$html->link('listar categorias', '/inventory/categories').'</li>';
+    echo '<li>'.$html->link('agregar categorias', '/inventory/categories/add').'</li>';
+    echo '<li>'.$html->link('Listar inventario, ver al día', '/inventory/counts').'</li>';
+    echo '<li>'.$html->link('agregar stock a inventario', '/inventory/counts/add').'</li>';
+    echo '<li>'.$html->link('Listar para imprimir', '/inventory/counts/listar_faltantes_para_imprimir').'</li>';    
+?>
+    </ul>
+
+
     <!--
     <h2>Modulo Contable</h2>
     <?php

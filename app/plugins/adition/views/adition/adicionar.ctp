@@ -5,15 +5,11 @@
             <a data-bind="style: { background: esEntrada() ? '#437FBE' : ''}" data-role="button" data-iconpos="notext" data-icon="entrada" href="#" title="Entrada" data-theme="c" class="ui-btn ui-btn-icon-notext ui-corner-right ui-controlgroup-last ui-btn-up-c"><span class="ui-btn-inner ui-corner-right ui-controlgroup-last"><span class="ui-btn-text">Entrada</span><span class="ui-icon ui-icon-entrada ui-icon-shadow"></span></span></a>
          </span>
 
-
          <span data-bind="text: realCant()" style="right: auto" class="ui-li-count ui-btn-up-c ui-btn-corner-all"></span>
          <span data-bind="text: nameConSabores()" style="padding-left: 40px;"></span>
      </li>
 </script>
                   
-
-                    
-                    
                                          
 <!--
                         LISTADO MESAS
@@ -185,7 +181,11 @@
                         <a href="#comanda-add-menu" data-rel="dialog"  data-transition="pop"><?= $html->image('/adition/css/img/chef_64.png')?>Comanda</a>
                     </li>
                     <li data-bind="attr: {'estado': 'mesa-cliente_'+adn().currentMesa().getEstadoIcon()}">
-                        <a href="<?php echo $html->url('/clientes/jqm_clientes')?>" data-transition="fade"><?= $html->image('/adition/css/img/addcliente.png')?>Agregar Cliente</a>
+                        <a href="<?php echo $html->url('/clientes/jqm_clientes')?>" data-rel="dialog" data-transition="fade">
+                                <?= $html->image('/adition/css/img/addcliente.png')?>
+                            <span data-bind="visible: !adn().currentMesa().tieneCliente()">Agregar Cliente</span>
+                            <span data-bind="visible: adn().currentMesa().tieneCliente()">Cliente: <span data-bind="text: adn().currentMesa().clienteNameData()"></span></span>
+                        </a>
                     </li>
                     <li data-bind="attr: {'estado': 'mesa-cerrar_'+adn().currentMesa().getEstadoIcon()}">
                         <a href="#listado-mesas" id="mesa-cerrar" data-direction="reverse" data-transition="slide"><?= $html->image('/adition/css/img/cerrarmesa.png')?>Cerrar Mesa</a>

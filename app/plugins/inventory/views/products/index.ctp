@@ -1,6 +1,8 @@
 <?php
 echo $javascript->link('jquery/jquery.jeditable.mini', false);
 
+echo $this->element('menu');
+
 ?>
 <script type="text/javascript">
 
@@ -42,6 +44,8 @@ $paginator->options(array('url' => $this->passedArgs));
 echo $paginator->sort('Product.name');
 ?>
 
+<?php echo $paginator->counter(array(    'format' => 'Pagina %page% de %pages%, mostrando %current% registros de %count% encontrados, starting on record %start%')); ?>
+
 <table>
     <thead>
         <tr>
@@ -73,6 +77,7 @@ foreach ($products as $p){
 ?>
 
 </table>
+
 
 <div class="">
 	<?php echo $paginator->prev('<< '.__('anterior', true), array(), null, array('class'=>''));?>

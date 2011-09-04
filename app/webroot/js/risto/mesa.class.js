@@ -52,8 +52,6 @@ var MESA_ESTADOS_POSIBLES =  {
 var Mesa = function(mozo, jsonData) {
         this.initialize(mozo, jsonData);
         
-        
-        
         this.totalCalculado = ko.dependentObservable(function(){
             var total = 0;
             for (var c in this.Comanda()){
@@ -75,7 +73,8 @@ Mesa.prototype = {
     total: ko.observable(0),
     numero: ko.observable(0),
     mozo_id: ko.observable(0),
-    created: ko.observable(0),    
+    created: ko.observable(0),
+    Cliente: ko.observable(),   
     
     // es la comanda que actualmente se esta haciendo objeto comandaFabrica
     currentComanda: ko.observable(), 
@@ -100,6 +99,7 @@ Mesa.prototype = {
         this.currentComanda = ko.observable( new Risto.Adition.comandaFabrica() );
         this.Comanda        = ko.observableArray( [] );
         this.mozo_id        = this.mozo().id;
+        this.Cliente        = ko.observable();
         
         // si vino jsonData mapeo con koMapp
         if ( jsonData ) {
@@ -506,12 +506,27 @@ Mesa.prototype = {
     
     
     handleAjaxSuccess: function(data, action, method) {
-        ko.mapping.updateFromJS(this, data[this.model]);             
+        ko.mapping.updateFromJS( this, data[this.model] );  
     },
     
     
-    setClienteId: function(){
-        
+    setCliente: function( objCliente ){
+        this.Cliente( objCliente );
+    },
+    
+    tieneCliente: function(){
+        if ( !this.Cliente() || this.Cliente() == {} || this.Cliente() == [] || this.Cliente().length == 0){
+            return false;
+        }
+        return true;
+    },
+    
+    clienteNameData: function(){
+        var name = '';
+        if (this.tieneCliente()){
+            name = this.Cliente().name;
+        }
+        return name;
     }
 
 };

@@ -5,20 +5,8 @@
     }
 </style>
 
-<ul class="horizontal">
-    <li>MENU: </li>
-<?php
 
-echo '<li>'.$html->link('listar productos', '/inventory/products').'</li>';
-echo '<li>'.$html->link('agregar producto', '/inventory/products/add').'</li>';
-
-echo '<li>'.$html->link('listar categorias', '/inventory/categories').'</li>';
-echo '<li>'.$html->link('agregar categorias', '/inventory/categories/add').'</li>';
-
-
-echo '<li>'.$html->link('agregar stock', '/inventory/counts/add').'</li>';
-?>
-</ul>
+<? echo $this->element('menu')?>
 
 <h2>Agregar Cantidad a inventario</h2>
 
@@ -30,11 +18,14 @@ echo '<li>'.$html->link('agregar stock', '/inventory/counts/add').'</li>';
 if (empty($prod)) {
     echo "<h1 style='color: red'>Tarea Terminada</h1>";
 } else {
+    ?>
+    <h1 style="padding: 0px; margin: 0px; color: red;">Vamos que faltan solo <?php echo count($prodsQueFaltan)?></h1>
+    <?php
     $prodName = $prod['Product']['name'];
-    echo "<h1>$prodName</h1>";
+    
     echo $form->create('Count');
     echo $form->input('product_id', array('type'=>'hidden', 'value'=>$prod['Product']['id']));
-    echo $form->input('count', array('label'=>'ingresar cantidad'));
+    echo $form->input('count', array('label'=>"Ingresar cantidad de <span style='font-size: 24px;'>$prodName</span>"));
     echo $form->end('Guardar');
     
     ?>
@@ -59,5 +50,10 @@ if (empty($prod)) {
 
 ?>
 </div>
+
+<script type="text/javascript">
+    jQuery('#CountCount').focus();
+</script>
+
 
 

@@ -11,6 +11,11 @@
         <div class="grid_4 divboton">   
         <?php echo $html->link('Admin','/pages/administracion',array('style'=>'margin-left:auto;margin-right:auto;', 'id'=>'bton-admin'));?>
         </div>  
+    
+    <div class="grid_4 divboton">   
+        <?php echo $html->link('Inventario','/inventory',array('style'=>'margin-left:auto;margin-right:auto;', 'id'=>'bton-admin'));?>
+        </div>  
+    
         
         <div class="grid_4 divboton">  
         <?php echo $html->link('Estadisticas','/pquery/stats/mesas_total',array('style'=>'margin-left:auto;margin-right:auto;', 'id'=>'bton-estadisticas'));?>

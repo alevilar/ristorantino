@@ -108,6 +108,12 @@ $(document).ready(function() {
        })
     });
     
+    
+    $('#mesa-eliminar-cliente').click(function(){
+        Risto.Adition.adicionar.currentMesa().Cliente({});
+        return true;
+    });
+    
                  
 });
 
