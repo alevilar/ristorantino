@@ -1,0 +1,24 @@
+CREATE TABLE  `inventory_products` (
+`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`name` VARCHAR( 65 ) NOT NULL ,
+`category_id` INT NULL ,
+`created` TIMESTAMP NULL
+) ENGINE = MYISAM ;
+
+
+CREATE TABLE  `inventory_categories` (
+`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`name` VARCHAR( 65 ) NOT NULL ,
+`created` TIMESTAMP NULL ,
+`modified` TIMESTAMP NULL
+) ENGINE = MYISAM ;
+
+
+CREATE TABLE  `inventory_counts` (
+`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`product_id` INT NOT NULL ,
+`count`  FLOAT NOT NULL  DEFAULT  '0',
+`created` TIMESTAMP NULL ,
+`modified` TIMESTAMP NOT NULL
+) ENGINE = MYISAM ;
+
