@@ -68,6 +68,9 @@ class ClientesController extends AppController {
 			$this->Session->setFlash(__('Invalid Cliente.', true));
 			$this->redirect(array('action'=>'index'));
 		}
+                $this->Cliente->contain(array(
+                    'Descuento',
+                ));
 		$this->set('cliente', $this->Cliente->read(null, $id));
 	}
 

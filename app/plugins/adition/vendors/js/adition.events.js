@@ -110,8 +110,8 @@ $(document).ready(function() {
     });
     
     
-    $('#mesa-eliminar-cliente').click(function(){
-        Risto.Adition.adicionar.currentMesa().Cliente({});
+    $('#mesa-eliminar-cliente').live('click',function(){
+        Risto.Adition.adicionar.currentMesa().Cliente(null);
         return true;
     });
     
@@ -129,8 +129,6 @@ $(document).ready(function() {
             var radio = $('#radio-mozo-id-'+mId);
             radio.prop('checked', true);
             radio.next().addClass('ui-btn-active');
-            
-            console.debug($('#radio-mozo-id-'+mId));
         }
     });
     

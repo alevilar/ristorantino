@@ -176,23 +176,27 @@
         <div  data-role="content" class="" data-scroll="true">
             <div class="mesa-actions" style="width: 29%; float: left;">
                 <ul data-role="listview" style="width: 100%">
+                    
                     <li data-bind="attr: {'estado': 'comanda-add-menu_'+adn().currentMesa().getEstadoIcon()}">
                         <a href="#comanda-add-menu" data-rel="dialog"  data-transition="pop"><?= $html->image('/adition/css/img/chef_64.png')?>Comanda</a>
                     </li>
-                    <li data-bind="attr: {'estado': 'mesa-cliente_'+adn().currentMesa().getEstadoIcon()}">
+                    
+                    <li>
                         <a href="<?php echo $html->url('/clientes/jqm_clientes')?>" data-rel="dialog" data-transition="fade">
                                 <?= $html->image('/adition/css/img/addcliente.png')?>
-                            <span data-bind="visible: !adn().currentMesa().tieneCliente()">Agregar Cliente</span>
-                            <span data-bind="visible: adn().currentMesa().tieneCliente()">Cliente: <span data-bind="text: adn().currentMesa().clienteNameData()"></span></span>
+                            <span data-bind="visible: !adn().currentMesa().Cliente()">Agregar Cliente</span>
+                            <span data-bind="visible: adn().currentMesa().Cliente()">Cliente: <span data-bind="text: adn().currentMesa().clienteNameData()"></span></span>
                         </a>
                     </li>
-                    <li data-bind="attr: {'estado': 'mesa-cerrar_'+adn().currentMesa().getEstadoIcon()}">
+                    
+                    <li>
                         <a href="#listado-mesas" id="mesa-cerrar" data-direction="reverse" data-transition="slide"><?= $html->image('/adition/css/img/cerrarmesa.png')?>Cerrar Mesa</a>
                     </li>
-                    <li data-bind="attr: {'estado': 'mesa-cambiar-mozo_'+adn().currentMesa().getEstadoIcon()}">
+                    
+                    <li>
                         <a href="#mesa-cambiar-mozo" data-rel="dialog"  data-transition="pop"><?= $html->image('/adition/css/img/cambiarmozo.png')?>Cambiar Mozo</a>
                     </li>
-                    <li data-bind="attr: {'estado': 'mesa-cambiar-numero_'+adn().currentMesa().getEstadoIcon()}">
+                    <li>
                         <a href="#mesa-cambiar-numero" data-rel="dialog"  data-transition="pop"><?= $html->image('/adition/css/img/cambiarmesa.png')?>Cambiar N°</a>
                     </li>
                         <li data-bind="attr: {'estado': 'mesa-re-print_'+adn().currentMesa().getEstadoIcon()}">

@@ -1,6 +1,9 @@
 <div data-role="header">
-    <a href="#mesa-view" data-transition="slide" data-direction="reverse">Volver</a>
     <h1>Clientes para la mesa <span data-bind="text: adn().currentMesa().numero"></span></h1>
+    
+    <a id="mesa-eliminar-cliente" href="#mesa-view" data-transition="fade" data-theme="b" data-direction="reverse" data-bind="visible: adn().currentMesa().Cliente()}">
+            Borrar Cliente<span data-bind="text: adn().currentMesa().clienteNameData()"></span>
+    </a>
 </div>
     
 <div data-role="content" >
@@ -8,12 +11,6 @@
     
     <div id="contenedor-listado-clientes-factura-a">
         <ul data-role="listview"  data-filter="true" id="listado-clientes-factura-a-ajax">
-           
-              <li data-theme="e" data-bind="visible: adn().currentMesa().tieneCliente()">
-                    <a id="mesa-eliminar-cliente" href="#mesa-view" data-transition="fade" data-direction="reverse">
-                        Borrar Cliente: <span data-bind="text: adn().currentMesa().clienteNameData()"></span>
-                    </a>
-              </li> 
               
                 <?php foreach($clientes as $c): 
                     $porcentaje  = !empty($c['Descuento']['porcentaje']) ? $c['Descuento']['porcentaje'] : 0;
@@ -21,7 +18,7 @@
                     $clienteName = !empty($c['Cliente']['nombre']) ? $c['Cliente']['nombre']: '' ;
                     ?>
             <li>&nbsp;
-                    <a href="#mesa-view" data-transition="fade" data-direction="reverse" onclick="Risto.Adition.adicionar.currentMesa().setCliente( <? echo "{id:".$c['Cliente']['id'].", name: '".$clienteName ."', tipofactura: '$tipofactura', porcentaje: $porcentaje}";?> )">
+                    <a href="#mesa-view" data-transition="fade" data-direction="reverse" onclick="Risto.Adition.adicionar.currentMesa().setCliente( <? echo "{id:".$c['Cliente']['id'].", nombre: '".$clienteName ."', tipofactura: '$tipofactura', porcentaje: $porcentaje}";?> )">
                         <?php
                         if ($c['Cliente']['tipofactura']) {
                             echo '<span>"'.$c['Cliente']['tipofactura'].'"&nbsp;</span>';

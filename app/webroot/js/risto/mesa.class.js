@@ -72,6 +72,17 @@ var Mesa = function(mozo, jsonData) {
         }, this);
         
         
+        this.clienteNameData= ko.dependentObservable(function(){
+            var cliente = this.Cliente();
+            console.debug(cliente);
+            var name = '';
+            if (cliente){
+                name = cliente.nombre;
+            }
+            return name;
+        }, this);
+        
+        
         this.initialize(mozo, jsonData);
          
         return this;
@@ -118,6 +129,13 @@ Mesa.prototype = {
         
         // si vino jsonData mapeo con koMapp
         if ( jsonData ) {
+            
+            if (typeof jsonData.Cliente && jsonData.Cliente.id){
+                this.Cliente(jsonData.Cliente);
+            } else {
+                this.Cliente(null);
+            }
+            
             // si aun no fue mappeado
             var mapOps = {
                 'Comanda': {
@@ -190,6 +208,7 @@ Mesa.prototype = {
     urlComandaAdd: function(){return urlDomain+'comandas/add/'+this.id()},
     urlCerrarMesa: function(){return urlDomain+'mesas/cerrarMesa/'+this.id()},
     urlReabrir: function(){return urlDomain+'mesas/reabrir/'+this.id()},
+    urlCliente: function(clienteId){return urlDomain+'clientes/view/'+clienteId+'.json'},
     
     /**
      *  Id del elemento que contiene los datos de esta mesa
@@ -331,14 +350,6 @@ Mesa.prototype = {
     },
 
 
-    tieneCliente : function(){
-        if (this.cliente.id != null ||this.cliente.id != undefined)
-            return true;
-        else
-            return false;
-    },
-		
-    
     tieneMenu : function(){
         if (this.menu > 0)
             return this.menu;
@@ -491,23 +502,11 @@ Mesa.prototype = {
     
     
     setCliente: function( objCliente ){
-        this.Cliente( objCliente );
-    },
-    
-    tieneCliente: function(){
-        if ( !this.Cliente() || this.Cliente() == {} || this.Cliente() == [] || this.Cliente().length == 0){
-            return false;
-        }
-        return true;
-    },
-    
-    clienteNameData: function(){
-        var name = '';
-        if (this.tieneCliente()){
-            name = this.Cliente().name;
-        }
-        return name;
+        
+        var ctx = this;
+        $.get(this.urlCliente(objCliente.id),function(data){
+            ctx.Cliente( data.Cliente );
+        });
     }
-
 };
 
