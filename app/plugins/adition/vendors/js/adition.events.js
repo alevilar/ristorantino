@@ -37,7 +37,8 @@ $('#listado-mesas').live('pageshow',function(event, ui){
  */ 
 $(document).ready(function() {    
     
-    $(document).keydown(buscarAccessKey);
+    $(document).keydown(onKeyDown);
+    $(document).keypress(onKeyPress);
 
     $(document).bind(MESA_ESTADOS_POSIBLES.seleccionada.event, mesaSeleccionada);
 
@@ -249,8 +250,9 @@ function irMesaNext() {
     }
     Risto.Adition.mesaCurrentIndex.focus();
 }
-    
-function buscarAccessKey(e) {
+
+
+function onKeyDown(e) {
     var code = e.which;
     
     // al apretar la tecla back, volver atras, menos cuando estoy en un INPUT o TEXTAREA
@@ -269,22 +271,26 @@ function buscarAccessKey(e) {
     if (code == 37 ) { // boton flecha izq
         irMesaPrev();
     }
+}
 
+var oldTimeOut;
+function onKeyPress(e) {
+    var code = e.which;
     if ( code > 47){ // desde el numero 0 hasta la ultima letra con simbolos
-        // a los 3,5 segundos borrar el string y reiniciarlo
         
         // buscar la mesa con ese numero, busca por accesskey
         Risto.Adition.mesaBuscarAccessKey += String.fromCharCode( code );
-        var domFinded = $("[accesskey='"+Risto.Adition.mesaBuscarAccessKey+"']");
+        var domFinded = $("[accesskey^='"+Risto.Adition.mesaBuscarAccessKey+"']");
         if ( domFinded.length ) {
             Risto.Adition.mesaCurrentIndex = $(domFinded[0]);
             domFinded[0].focus();
-            Risto.Adition.mesaBuscarAccessKey = ''
         }
         
-        setTimeout(function(  ){
+        if(oldTimeOut){
+            clearTimeout(oldTimeOut);
+        }
+        oldTimeOut = setTimeout(function(){
             Risto.Adition.mesaBuscarAccessKey = '';
-        },3200);
+        },1000);
     }
-    
 }
