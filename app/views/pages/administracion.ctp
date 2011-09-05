@@ -22,7 +22,17 @@
     <h2>Mi Cuenta</h2>
     <? echo $html->link('Modificar Mis Datos','/users/self_user_edit/'.$session->read('Auth.User.id')).'<br>'; ?>
     <? echo $html->link('Modificar Mi Contraseña','/users/cambiar_password/'.$session->read('Auth.User.id')); ?>
-    </div>    
+    </div>   
+       
+
+    <div class="grid_7 alpha omega">
+    <h2>Usuarios</h2>
+    
+    <?php
+    echo $html->link('Usuarios','/users/index').'<br>';
+    echo $html->link('Mozos','/mozos/index').'<br>';
+    ?>
+    </div>  
    
 </div>
 
@@ -60,16 +70,7 @@
     //echo $html->link('Egresos','/egresos').'<br>';
     ?>
     -->
-   
 
-    <div class="grid_7 alpha omega">
-    <h2>Usuarios</h2>
-    
-    <?php
-    echo $html->link('Usuarios','/users/index').'<br>';
-    echo $html->link('Mozos','/mozos/index').'<br>';
-    ?>
-    </div>  
       
     <div class="grid_7 alpha omega">
     <h2>Sistema</h2>
