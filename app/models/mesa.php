@@ -78,7 +78,7 @@ class Mesa extends AppModel {
                 if ($cant == 0) return 0;
 
                 $mesaData['Mesa'] = array(
-                    'estado'    => MESA_CERRADA,
+                    'estado_id'    => MESA_CERRADA,
                     'total'     => $this->calcular_total(),
                     'subtotal'  => $this->calcular_subtotal(),
                     'time_cerro'=> date( "Y-m-d H:i:s",strtotime('now')),
@@ -206,7 +206,7 @@ LEFT JOIN
 
         function ultimasCobradas($limit = 20){
 
-		$conditions = array("Mesa.estado >=" => MESA_COBRADA);
+		$conditions = array("Mesa.estado_id >=" => MESA_COBRADA);
 
                 $mesas = $this->find('all', array(
                     'conditions'=>$conditions,
@@ -220,7 +220,7 @@ LEFT JOIN
 	
 	function listado_de_abiertas($recursive = -1){
 		
-		$conditions = array("Mesa.estado" => MESA_ABIERTA);
+		$conditions = array("Mesa.estado_id" => MESA_ABIERTA);
 		
 		if($recursive>-1){
 			$this->recursive = $recursive;			
@@ -238,7 +238,7 @@ LEFT JOIN
 
         function listadoAbiertasYSinCobrar($recursive = -1){
 
-		$conditions = array("Mesa.estado <" => MESA_COBRADA);
+		$conditions = array("Mesa.estado_id <" => MESA_COBRADA);
 
 		if($recursive>-1){
 			$this->recursive = $recursive;
@@ -271,7 +271,7 @@ LEFT JOIN
 		 
 		$this->recursive = -1;
 		$conditions = array(
-                                    'estado'=>MESA_ABIERTA, 
+                                    'estado_id'=>MESA_ABIERTA, 
                                     'numero'=>$numero_mesa);
 		
 		if(!empty($this->id)){
@@ -377,7 +377,7 @@ LEFT JOIN
 	 */
 	function todasLasCerradas(){
 		$this->recursive = 0;
-		$conditions = array('estado' => MESA_CERRADA);
+		$conditions = array('estado_id' => MESA_CERRADA);
 		return $this->find('all',array('conditions'=>$conditions, 'order'=>'time_cerro'));
 	}
 
@@ -393,13 +393,13 @@ LEFT JOIN
                 $this->id = $id;
             }
             // si lo tengo en memoria primero busco por aca
-            if (!empty($this->data[$this->name]['estado'])){
-                return $this->data[$this->name]['estado'] == MESA_CERRADA;
+            if (!empty($this->data[$this->name]['estado_id'])){
+                return $this->data[$this->name]['estado_id'] == MESA_CERRADA;
             }
             // lo busco en BBDD        
             $ret = $this->find('count', array(
                 'conditions' => array(
-                    'Mesa.estado' => MESA_CERRADA,
+                    'Mesa.estado_id' => MESA_CERRADA,
                     'Mesa.id' => $this->id,
 
                 )
@@ -414,7 +414,7 @@ LEFT JOIN
             if (!empty($mesa_id)) {
                 $this->id = $mesa_id;
             }
-            $result = $this->saveField('estado', MESA_ABIERTA);
+            $result = $this->saveField('estado_id', MESA_ABIERTA);
         }
 }
 ?>

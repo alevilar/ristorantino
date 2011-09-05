@@ -62,11 +62,11 @@
                         <script id="listaMesas" type="text/x-jquery-tmpl">
 
                             <li class="grid_2 li-btn" data-bind="attr: {mozo: mozo().id()}">
-                                <a  data-bind="click: seleccionar, attr: {accesskey: numero}" 
+                                <a  data-bind="click: seleccionar, attr: {accesskey: numero}, css: {'ui-btn-up-f': estaCerrada(), 'ui-btn-up-c': !estaCerrada()}" 
                                     data-theme="c"
                                     data-role="button" 
                                     href="#mesa-view" 
-                                    class="ui-btn ui-btn-icon-left ui-btn-corner-all ui-shadow ui-btn-up-c">
+                                    class="ui-btn ui-btn-icon-left ui-btn-corner-all ui-shadow">
                                     <span class="mesa-span ui-btn-inner ui-btn-corner-all">
                                         <span class="ui-btn-text">
                                             <span class="mesa-numero" data-bind="text: numero"></span>
@@ -166,7 +166,7 @@
 
 -->
 <div data-role="page" id="mesa-view">
-	<div  data-role="header">
+	<div  data-role="header" data-bind="css: {'ui-bar-f': adn().currentMesa().estaCerrada()}">
             <a href="#listado-mesas" data-transition="slide" data-direction="reverse">Volver</a>
             <h1>
                 Mesa <span data-bind="text: adn().currentMesa().numero"></span> | Mozo <span data-bind="text: adn().currentMesa().mozo().numero"></span>

@@ -54,3 +54,8 @@ INSERT INTO  `coqus`.`configs` (
 VALUES (
 NULL ,  '6',  'descuento_maximo',  '15',  'máximo porcentaje de descuento que puede hacer un mozo'
 );
+
+
+/** PONER ESTADO CERRADA A TODAS LAS MESAS **/
+update mesas
+set mesa_estado_id = 2;

@@ -41,9 +41,32 @@ ul.listado-adicion li a {
     font-size: small;
 }
 
+
+ul.listado-adicion .ui-btn-up-f:focus{
+    background:#CF7E44;
+    text-shadow:0 -1px 1px #733715;
+    background-image:-webkit-gradient(linear,left top,left bottom,from(#E3AF84),to(#C48452));
+    background-image:-webkit-linear-gradient(top,#E3AF84,#C48452);
+    background-image:-moz-linear-gradient(top,#E3AF84,#C48452);
+    background-image:-ms-linear-gradient(top,#E3AF84,#C48452);
+    background-image:-o-linear-gradient(top,#E3AF84,#C48452);
+    background-image:linear-gradient(top,#E3AF84,#C48452);
+}
+
 ul.listado-adicion A:focus{
     color:#fff !important;
-    background:#4596ce;font-weight:bold;cursor:pointer;text-shadow:0 -1px 1px #145072;text-decoration:none;background-image:-webkit-gradient(linear,left top,left bottom,from(#85bae4),to(#5393c5));background-image:-webkit-linear-gradient(top,#85bae4,#5393c5);background-image:-moz-linear-gradient(top,#85bae4,#5393c5);background-image:-ms-linear-gradient(top,#85bae4,#5393c5);background-image:-o-linear-gradient(top,#85bae4,#5393c5);background-image:linear-gradient(top,#85bae4,#5393c5);outline:0
+    background:#4596ce;
+    font-weight:bold;
+    cursor:pointer;
+    text-shadow:0 -1px 1px #145072;
+    text-decoration:none;
+    background-image:-webkit-gradient(linear,left top,left bottom,from(#85bae4),to(#5393c5));
+    background-image:-webkit-linear-gradient(top,#85bae4,#5393c5);
+    background-image:-moz-linear-gradient(top,#85bae4,#5393c5);
+    background-image:-ms-linear-gradient(top,#85bae4,#5393c5);
+    background-image:-o-linear-gradient(top,#85bae4,#5393c5);
+    background-image:linear-gradient(top,#85bae4,#5393c5);
+    outline:0
 }
 
 .mesa-numero, .mozo-numero{

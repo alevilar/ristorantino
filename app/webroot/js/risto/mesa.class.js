@@ -2,7 +2,7 @@
  * @var Static MESAS_POSIBLES_ESTADOS
  * 
  *  esta variable es simplemenete un catalogo de estados posibles que
- *  la mesa pude adoptar en su variable privada this.__estado
+ *  la mesa pude adoptar
  *
  **/
 var MESA_ESTADOS_POSIBLES =  {
@@ -50,7 +50,6 @@ var MESA_ESTADOS_POSIBLES =  {
  *
  **/
 var Mesa = function(mozo, jsonData) {
-        this.initialize(mozo, jsonData);
         
         this.totalCalculado = ko.dependentObservable(function(){
             var total = 0;
@@ -62,6 +61,19 @@ var Mesa = function(mozo, jsonData) {
             return total;
         }, this);
         
+        
+        
+        /**
+         * 
+         * @return boolean
+         **/
+        this.estaCerrada = ko.dependentObservable(function(){
+            return MESA_ESTADOS_POSIBLES.cerrada == this.estado();
+        }, this);
+        
+        
+        this.initialize(mozo, jsonData);
+         
         return this;
 }
 
@@ -75,10 +87,12 @@ Mesa.prototype = {
     mozo_id: ko.observable(0),
     created: ko.observable(0),
     Cliente: ko.observable(),   
+    estado: ko.observable(0),
     
     // es la comanda que actualmente se esta haciendo objeto comandaFabrica
     currentComanda: ko.observable(), 
     Comanda: ko.observableArray(),
+    
     
     // attributos
     mozo: ko.observable( {} ),
@@ -100,6 +114,7 @@ Mesa.prototype = {
         this.Comanda        = ko.observableArray( [] );
         this.mozo_id        = this.mozo().id;
         this.Cliente        = ko.observable();
+        this.estado         = ko.observable();
         
         // si vino jsonData mapeo con koMapp
         if ( jsonData ) {
@@ -135,16 +150,16 @@ Mesa.prototype = {
     },
     
     __inicializar_estado: function(){
-        if (typeof this.estado == 'function'){
+        var estado = MESA_ESTADOS_POSIBLES.abierta;
+         if (typeof this.estado_id == 'function' && this.estado_id() ){
             for(var ee in MESA_ESTADOS_POSIBLES){
-                if ( MESA_ESTADOS_POSIBLES[ee].id == this.estado() ){
-                    this.__estado = [MESA_ESTADOS_POSIBLES[ee]];
-                    return MESA_ESTADOS_POSIBLES[ee];
+                if ( MESA_ESTADOS_POSIBLES[ee].id && MESA_ESTADOS_POSIBLES[ee].id == this.estado_id() ){
+                    estado = MESA_ESTADOS_POSIBLES[ee];
+                    break;
                 }
             }
-        }
-        this.__estado = [MESA_ESTADOS_POSIBLES.abierta];
-        return MESA_ESTADOS_POSIBLES.abierta;
+         }
+        return this.estado(estado);
     },
     
     
@@ -203,25 +218,16 @@ Mesa.prototype = {
         return this.button;
     },
 
-    /** estado de la mesa
-     * @var __estado Private
-     **/
-    __estado: [],
     
 
     /**
-     * con el estado actual __estado, va tirando triggers para el evento
+     * Disparador de triggers para el evento
      *
      **/
     __triggerEventCambioDeEstado: function(){
-        if (!$.isEmptyObject(this.getEstado())) {
-            var estados = this.getEstado();
-            for (estado in estados ) {
-                var event =  $.Event(estados[estado].event);
-                event.mesa = this;
-                $(document).trigger(event);
-            }
-        }
+        var event =  $.Event(this.estado().event);
+        event.mesa = this;
+        $(document).trigger(event);
     },
 
 
@@ -240,13 +246,7 @@ Mesa.prototype = {
     },
 
     deseleccionar: function() {
-        for (var e in this.__estado){
-            if (this.__estado[e] == MESA_ESTADOS_POSIBLES.seleccionada) {
-                var idx = this.__estado.indexOf(this.__estado[e]);
-                if(idx!=-1) this.__estado.splice(idx, 1);
-            }
-        }
-
+        
     },
 
     seleccionar: function() {
@@ -258,64 +258,52 @@ Mesa.prototype = {
     
 
     setEstadoAbierta : function(){
-        this.__estado = [];
-        this.__estado.push(MESA_ESTADOS_POSIBLES.abierta);
-        this.__triggerEventCambioDeEstado();
+        this.setEstado(MESA_ESTADOS_POSIBLES.abierta);
         return this;
     },
 
     setEstadoCerrada : function(){
-        this.__estado = [];
-        this.__estado.push(MESA_ESTADOS_POSIBLES.cerrada);
-        this.__triggerEventCambioDeEstado();
+        this.setEstado(MESA_ESTADOS_POSIBLES.cerrada);
         return this;
     },
 
     setEstadoBorrada: function() {
-        this.__estado = [];
-        this.__estado.push(MESA_ESTADOS_POSIBLES.borrada);
-        this.__triggerEventCambioDeEstado();
+        this.setEstado(MESA_ESTADOS_POSIBLES.borrada);
         return this;
     },
 
-    setEstadoCuponPendiente : function(){
-        this.__estado = [];
-        this.__estado.push(MESA_ESTADOS_POSIBLES.cuponPendiente);
-        this.__triggerEventCambioDeEstado();
+    setEstadoCuponPendiente : function(){        
+        this.setEstado(MESA_ESTADOS_POSIBLES.cuponPendiente);
         return this;
     },
 
     setCobrada : function(){
-        this.__estado = [];
-        this.__estado.push(MESA_ESTADOS_POSIBLES.cobrada);
-        this.__triggerEventCambioDeEstado();
+        this.setEstado(MESA_ESTADOS_POSIBLES.cobrada);
         return this;
+    },
+    
+    setEstado: function(nuevoestado){
+        this.estado(nuevoestado);
+        this.__triggerEventCambioDeEstado();
     },
 
     getEstado: function(){
-        return this.__estado;
+        return this.estado();
     },
     
     getEstadoIcon: function(){
-        for (var nn in this.__estado){
-            return this.__estado[nn].icon;
+        if (this.estado()){
+            return this.estado().icon;
         }
         return '';
     },
         
     
     getEstadoName: function(){
-        var txt = '',
-            i = false;
-        for (var nn in this.__estado){
-            if (i){
-                txt += ', ';
-                i = true;
-            }
-            txt += this.__estado[nn].msg;
+        if (this.estado()){
+            return this.estado().msg;
         }
-        
-        return txt;
+        return '';
     },
     
 
@@ -335,14 +323,6 @@ Mesa.prototype = {
      */
     pidioCierre : function(){
         return this.estaCerrada();
-    },
-
-    /**
-     * 
-     * @return boolean
-     **/
-    estaCerrada : function(){
-        return ( $.inArray(MESA_ESTADOS_POSIBLES.cerrada, this.getEstado()));
     },
 
 
@@ -385,7 +365,7 @@ Mesa.prototype = {
      */
     reabrir : function(url){
         var data = {
-                'data[Mesa][estado]': MESA_ESTADOS_POSIBLES.abierta.id,
+                'data[Mesa][estado_id]': MESA_ESTADOS_POSIBLES.abierta.id,
                 'data[Mesa][id]': this.id
         };
 
