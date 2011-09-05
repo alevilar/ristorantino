@@ -11,9 +11,10 @@
 }
 
 li {
-    text-decoration: none; !important
+    text-decoration: none !important; 
     margin: 0;
     padding: 0;
+    list-style: none;
 }
 ul {
     text-decoration: none;
@@ -21,9 +22,49 @@ ul {
     padding: 0;
 }
 
+.menu_stats h2 {
+    font-size: 140%;
+    width: 100%;
+    float: left;
+    clear: both;
+    text-align: center;
+    text-shadow: 2px 2px 4px #FFFFFF;
+    filter: dropshadow(color=#FFFFFF, offx=2, offy=2); 
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.menu_stats a{
+    width: 80%;
+    font-size: 100%;
+    font-family: helvetica, Verdana, sans-serif;
+    padding-bottom: 2%;
+    padding-top: 2%;
+    padding-left: 2%;
+    padding-right: 5%;
+    float: left;
+    clear: both;
+    margin-bottom: 1px; 
+   
+    border: 1px solid #ccc;
+    background: #eee;
+    font-weight: bold;
+    color: #444;
+    text-shadow: 0 1px 1px #f6f6f6;
+    background-image: -moz-linear-gradient(top, #fefefe, #eeeeee);
+    background-image: -webkit-gradient(linear,left top,left bottom,	color-stop(0,#fdfdfd), color-stop(1,#eeeeee));
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#fdfdfd', EndColorStr='#eeeeee')";
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px; 
+    -moz-box-shadow: 0px 1px 4px rgba(0,0,0,.3);
+    -webkit-box-shadow: 0px 1px 4px rgba(0,0,0,.3);
+    box-shadow: 0px 1px 4px rgba(0,0,0,.3);
+}
+
 .menu_stats {
     background-color: #C2D2DE;
-    height: 80%;
+    height: auto;
     margin-top: 50px;
     border-top-style: solid;
     border-top-width: 1px;
@@ -35,7 +76,7 @@ ul {
     border-bottom-width: 1px;
     border-bottom-color: #949494;
     padding-left: 10px;
-    padding-top: 10px;
+    padding-top: 0;
     padding-bottom: 10px;
     padding-left: 0;
     
@@ -45,10 +86,6 @@ ul {
     -moz-border-radius-bottomleft: 0px;
     -webkit-border-radius: 0px 10px 10px 0px;
     border-radius: 0px 10px 10px 0px; 
-
-    -webkit-box-shadow: inset -1px 1px 1px 1px #949494;
-    -moz-box-shadow: inset -1px 1px 1px 1px #949494;
-    box-shadow: inset -1px 1px 1px 1px #949494; 
 }
 
 #prim_fecha input, #seg_fecha input {

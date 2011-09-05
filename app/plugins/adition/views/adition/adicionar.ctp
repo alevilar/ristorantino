@@ -203,11 +203,11 @@
                         <a href="#listado-mesas" id="mesa-borrar" data-rel="back"><?= $html->image('/adition/css/img/borrarmesa.png')?>Borrar Mesa</a>
                     </li>
                     <li data-bind="attr: {'estado': 'mesa-cobrar_'+adn().currentMesa().getEstadoIcon()}">
-                        <a href="#mesa-cobrar"><?= $html->image('/adition/css/img/reimprimir.png')?>Cobrar</a>
+                        <a href="#mesa-cobrar"><?= $html->image('/adition/css/img/cobrar.png')?>Cobrar</a>
                     </li>
                     
                     <li data-bind="attr: {'estado': 'mesa-reabrir_'+adn().currentMesa().getEstadoIcon()}">
-                        <a href="#listado-mesas" id="mesa-reabrir"><?= $html->image('/adition/css/img/reimprimir.png')?>Re Abrir</a>
+                        <a href="#listado-mesas" id="mesa-reabrir"><?= $html->image('/adition/css/img/reabrir.png')?>Re Abrir</a>
                     </li>
                 </ul>
             </div>

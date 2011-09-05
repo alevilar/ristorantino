@@ -36,29 +36,31 @@
     echo $html->link('Gustos y Sabores','/sabores').'<br>';
     echo $html->link('Precios Futuros','/productos_precios_futuros').'<br>';
     ?>
-
-
- <h2>Inventario</h2>
- <ul>
+    </div>
+    
+    <div class="grid_7 alpha omega">
+     <h2>Inventario</h2>
+     <ul class="admin_m">
     <?php
-    echo '<li>'.$html->link('listar productos', '/inventory/products').'</li>';
-    echo '<li>'.$html->link('agregar producto', '/inventory/products/add').'</li>';
-    echo '<li>'.$html->link('listar categorias', '/inventory/categories').'</li>';
-    echo '<li>'.$html->link('agregar categorias', '/inventory/categories/add').'</li>';
+    echo '<li>'.$html->link('Listar productos', '/inventory/products').'</li>';
+    echo '<li>'.$html->link('Agregar producto', '/inventory/products/add').'</li>';
+    echo '<li>'.$html->link('Listar categorias', '/inventory/categories').'</li>';
+    echo '<li>'.$html->link('Agregar categorias', '/inventory/categories/add').'</li>';
     echo '<li>'.$html->link('Listar inventario, ver al día', '/inventory/counts').'</li>';
-    echo '<li>'.$html->link('agregar stock a inventario', '/inventory/counts/add').'</li>';
+    echo '<li>'.$html->link('Agregar stock a inventario', '/inventory/counts/add').'</li>';
     echo '<li>'.$html->link('Listar para imprimir', '/inventory/counts/listar_faltantes_para_imprimir').'</li>';    
-?>
+    ?>
+     </div>
     </ul>
 
 
     <!--
     <h2>Modulo Contable</h2>
     <?php
-    echo $html->link('Egresos','/egresos').'<br>';
+    //echo $html->link('Egresos','/egresos').'<br>';
     ?>
     -->
-    </div> 
+   
 
     <div class="grid_7 alpha omega">
     <h2>Usuarios</h2>

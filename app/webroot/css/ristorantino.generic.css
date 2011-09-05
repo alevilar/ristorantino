@@ -430,7 +430,7 @@ li.selected    {
 }
 
 #bton-contabilidad{
-	background-image: url("../img/contable.png");
+	background-image: url("../img/contabilidad.png");
         background-position: center top;
 	background-repeat: no-repeat;
         padding-bottom: 0px;
@@ -438,6 +438,17 @@ li.selected    {
         padding-right: 50px;
         padding-top: 150px;
 }
+
+#bton-inven {
+	background-image: url("../img/inventario.png");
+        background-position: center top;
+	background-repeat: no-repeat;
+        padding-bottom: 0px;
+        padding-left: 50px;
+        padding-right: 50px;
+        padding-top: 150px;
+}
+
 
 /* administracion */
 
@@ -500,6 +511,11 @@ li.selected    {
         
 }        
 
+.admin_m,.admin_m li  {
+     margin: 0;
+     text-decoration: none;
+     list-style: none;
+}
 
 #MesaIndexForm{
     text-align: left;

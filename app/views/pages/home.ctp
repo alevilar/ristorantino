@@ -13,7 +13,7 @@
         </div>  
     
     <div class="grid_4 divboton">   
-        <?php echo $html->link('Inventario','/inventory',array('style'=>'margin-left:auto;margin-right:auto;', 'id'=>'bton-admin'));?>
+        <?php echo $html->link('Inventario','/inventory',array('style'=>'margin-left:auto;margin-right:auto;', 'id'=>'bton-inven'));?>
         </div>  
     
         
