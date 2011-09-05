@@ -31,10 +31,9 @@
                     foreach ($mozos as $m) {
                         $k = $m['Mozo']['id'];
                         $n = $m['Mozo']['numero'];
-
-                        $coso = "$('#mesas_container li').show();$('#mesas_container li[mozo!=$k]').hide();$('.listado-mozos-para-mesas').removeClass('ui-btn-active');$(this).addClass('ui-btn-active');"
+                      
                         ?>
-                        <li><a href="#" onclick="<?php echo $coso?>"><?php echo $n?></a></li>
+                        <li><a href="#" data-mozo-id="<?php echo $k?>"><?php echo $n?></a></li>
                     <?
                     }
                 ?>
@@ -317,8 +316,8 @@
                    <a  href="#" data-bind="click: seleccionar" data-theme="b" data-inline="true" data-role="button" class="ui-btn ui-btn-inline ui-btn-corner-all ui-shadow ui-btn-up-b">
                        <span class="ui-btn-inner ui-btn-corner-all">
                            <span class="ui-btn-text">
-                               <?php echo $html->image('ico_mozo.png', array('height'=>'40px'));?>
-                               <span data-bind="text: name">Bebidas con Alcohol</span>                         
+                               <image class="menu-img" src="" data-bind="visible: image_url, attr: {src: urlDomain+'img/'+image_url}"/>
+                               <span data-bind="text: name, css: {'menu-letra-con-imagen': image_url}"></span>                         
                            </span>
                        </span>
                    </a>

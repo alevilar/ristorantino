@@ -115,6 +115,25 @@ $(document).ready(function() {
         return true;
     });
     
+    
+    $('.listado-mozos-para-mesas a').click(function(){
+        var mId = undefined;
+        if ( $(this).attr('data-mozo-id') ) {
+            mId = $(this).attr('data-mozo-id');
+            $('#mesas_container li').show();
+            $('#mesas_container li[mozo!='+mId+']').hide();
+            $('.listado-mozos-para-mesas a').removeClass('ui-btn-active');
+            $(this).addClass('ui-btn-active');
+            
+            // pongo a este mozo como el seleccionado en el formulario de nueva mesa
+            var radio = $('#radio-mozo-id-'+mId);
+            radio.prop('checked', true);
+            radio.next().addClass('ui-btn-active');
+            
+            console.debug($('#radio-mozo-id-'+mId));
+        }
+    });
+    
                  
 });
 
@@ -135,6 +154,10 @@ function agregarNuevaMesa(e){
         
     var miniMesa = {};
     for (var r in rta ) {
+        if (!rta[r].value){
+            alert("Debe completar numero de mozo y de mesa");
+            return false;
+        }
         miniMesa[rta[r].name] = rta[r].value;
     }
     

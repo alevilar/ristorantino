@@ -237,3 +237,19 @@ ul.listado-mozos-para-mesas{
 .listado-mozos-para-mesas li a{
     text-decoration: none;
 }
+
+
+.menu-img{
+    width: 50px; 
+    height: 50px;
+}
+
+.menu-letra-con-imagen{
+    font-size: xx-small;
+    clear: both;
+    position: absolute;
+    width: 86px;
+    white-space: normal;
+    bottom: 2px;
+    left: 5px;
+}

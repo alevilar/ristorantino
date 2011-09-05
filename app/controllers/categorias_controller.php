@@ -10,6 +10,7 @@ class CategoriasController extends AppController {
         function beforeFilter() {
             parent::beforeFilter();
             $this->rutaUrl_for_layout[] =array('name'=> 'Admin','link'=>'/pages/administracion' );
+            
         }
         
         
@@ -71,12 +72,37 @@ class CategoriasController extends AppController {
 		Cache::delete('categorias');
 		if (!$id && empty($this->data)) {
 			$this->Session->setFlash(__('Invalid Categoria', true));
-			$this->redirect(array('action'=>'index'));
+//			$this->redirect(array('action'=>'index'));
 		}
+
+                if( !empty($this->data['Categoria']['newfile']['name'])){
+                    $path = WWW_ROOT.'img/';
+                    
+                    $name = Inflector::slug(strstr($this->data['Categoria']['newfile']['name'], '.', true));
+                    $ext = substr(strrchr($this->data['Categoria']['newfile']['name'], "."),1);
+                    $nameFile = $name.".$ext";
+                    
+                    if ( file_exists($path.$nameFile) ){
+                        $i = 1;
+                        $nameFile = $name."_$i.$ext";
+                        while ( file_exists($path.$nameFile) ) {
+                            $i ++;
+                            $nameFile = $name."_$i.$ext";
+                        }
+                    }
+                    
+                    $this->data['Categoria']['image_url'] = $name.".$ext";
+                    
+                    
+                    $this->data['Categoria']['image_url'] = $name.".$ext";
+                    move_uploaded_file($this->data['Categoria']['newfile']['tmp_name'], $path.$nameFile) ;
+                    
+                }
+      
 		if (!empty($this->data)) {
 			if ($this->Categoria->save($this->data)) {
 				$this->Session->setFlash(__('The Categoria has been saved', true));
-				$this->redirect(array('action'=>'index'));
+//				$this->redirect(array('action'=>'index'));
 			} else {
 				$this->Session->setFlash(__('The Categoria could not be saved. Please, try again.', true));
 			}

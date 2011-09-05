@@ -4,13 +4,14 @@
         ?>
 
 <div class="categorias form">
-<?php echo $form->create('Categoria');?>
+<?php echo $form->create('Categoria', array('type' => 'file'));?>
 	<fieldset>
  		<legend><?php __('Crear Categoria');?></legend>
 	<?php
 		echo $form->input('parent_id',array('type'=>'select', 'options'=> $categorias, 'default'=>1,'label'=>'Categoria Padre'));
 		//echo $form->input('parent_id',array('empty'=>'raiz'));
 		echo $form->input('name');
+                echo $form->input('image_url',array('label'=>'Foto/Imagen', 'type'=>'file'));
 		echo $form->input('description');
 	?>
 <?php echo $form->end('Submit');?>

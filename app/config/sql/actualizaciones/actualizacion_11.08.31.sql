@@ -59,3 +59,7 @@ NULL ,  '6',  'descuento_maximo',  '15',  'máximo porcentaje de descuento que p
 /** PONER ESTADO CERRADA A TODAS LAS MESAS **/
 update mesas
 set mesa_estado_id = 2;
+
+
+
+ALTER TABLE  `categorias` ADD  `image_url` VARCHAR( 200 ) NULL AFTER  `description`;

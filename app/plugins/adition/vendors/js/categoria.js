@@ -10,14 +10,18 @@ Risto.Adition.categoria.prototype = {
     Hijos: [],
     Producto: [],
     Sabor: [],
+    image_url: '',
     
     
     initialize: function(jsonData, parent){
+
         for (var i in jsonData){
             if ( typeof this[i] == 'undefined' ) {
                 this[i] = jsonData[i];
             } 
         }
+        
+        this.image_url = jsonData.image_url;
         
         if (jsonData.Sabor) {
             this.Sabor = [];

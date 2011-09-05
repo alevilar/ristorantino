@@ -1,16 +1,23 @@
         <?php    
         echo $this->element('menuadmin');
+        
+        debug($this->data['Categoria']['image_url']);
+        echo $html->image($this->data['Categoria']['image_url'], array('width'=>100));
         ?>
 
 <div class="categorias form">
-<?php echo $form->create('Categoria');?>
+<?php echo $form->create('Categoria', array('type' => 'file'));?>
 	<fieldset>
  		<legend><?php __('Editar Categoria');?></legend>
+                
+                
 	<?php
-	
+        
 		echo $form->input('id');
 		echo $form->input('parent_id',array('type'=>'select', 'options'=> $categorias, 'default'=>1,'label'=>'Categoria Padre'));
 		echo $form->input('name',array('label'=>'Nombre'));
+                echo $form->input('image_url',array('type'=>'hidden'));
+                echo $form->input('newfile',array('label'=>'Foto/Imagen ('.$this->data['Categoria']['image_url'].')', 'type'=>'file'));
 		echo $form->input('description',array('label'=>'Descripción'));
 	?>
 <?php echo $form->end('Submit');?>
