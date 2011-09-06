@@ -39,6 +39,7 @@ Risto.Adition.adicionar = {
      */
     initialize: function() {
         this.getMesasAbiertas();
+        this.mozosOrder('numero');
     },
 
     /**

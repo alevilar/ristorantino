@@ -79,7 +79,7 @@
         <div  data-role="footer" data-position="fixed">
                 <div data-role="navbar">
                         <ul>
-                            <li><a onclick="Risto.Adition.adicionar.mozosOrder('numero')">Ordenar Por Numero</a></li>
+                            <li><a onclick="Risto.Adition.adicionar.mozosOrder('numero')" class="ui-btn-active">Ordenar Por Numero</a></li>
                             <li><a onclick="Risto.Adition.adicionar.mozosOrder('mozo_id')">Ordenar Por Mozo</a></li>
                             <li><a onclick="Risto.Adition.adicionar.mozosOrder('created')">Ordenar Por Cierre</a></li>
                         </ul>
@@ -173,7 +173,7 @@
                         <a href="#comanda-add-menu" data-rel="dialog"  data-transition="pop"><?= $html->image('/adition/css/img/chef_64.png')?>Comanda</a>
                     </li>
                     
-                    <li data-bind="attr: {'estado': 'comanda-add-menu_'+adn().currentMesa().getEstadoIcon()}">
+                    <li data-bind="attr: {'estado': 'mesa-cliente_'+adn().currentMesa().getEstadoIcon()}">
                         <a href="<?php echo $html->url('/clientes/jqm_clientes')?>" data-rel="dialog" data-transition="fade">
                                 <?= $html->image('/adition/css/img/addcliente.png')?>
                             <span data-bind="visible: !adn().currentMesa().Cliente()">Agregar Cliente</span>
@@ -181,8 +181,13 @@
                         </a>
                     </li>
                     
-                    <li data-bind="attr: {'estado': 'comanda-add-menu_'+adn().currentMesa().getEstadoIcon()}">
+                    <li data-bind="attr: {'estado': 'mesa-cerrar_'+adn().currentMesa().getEstadoIcon()}">
                         <a href="#listado-mesas" id="mesa-cerrar" data-direction="reverse" data-transition="slide"><?= $html->image('/adition/css/img/cerrarmesa.png')?>Cerrar Mesa</a>
+                    </li>
+                    
+                    
+                    <li data-bind="attr: {'estado': 'mesa-cobrar_'+adn().currentMesa().getEstadoIcon()}">
+                        <a href="#mesa-cobrar" data-rel="dialog"><?= $html->image('/adition/css/img/cobrar.png')?>Cobrar</a>
                     </li>
                     
                     <li>
@@ -194,15 +199,14 @@
                         <li data-bind="attr: {'estado': 'mesa-re-print_'+adn().currentMesa().getEstadoIcon()}">
                         <a href="#mesa-re-print" ><?= $html->image('/adition/css/img/reimprimir.png')?>Reimprimir Ticket</a>
                     </li>
-                    <li data-bind="attr: {'estado': 'mesa-borrar_'+adn().currentMesa().getEstadoIcon()}">
-                        <a href="#listado-mesas" id="mesa-borrar" data-rel="back"><?= $html->image('/adition/css/img/borrarmesa.png')?>Borrar Mesa</a>
-                    </li>
-                    <li data-bind="attr: {'estado': 'mesa-cobrar_'+adn().currentMesa().getEstadoIcon()}">
-                        <a href="#mesa-cobrar"><?= $html->image('/adition/css/img/cobrar.png')?>Cobrar</a>
-                    </li>
                     
                     <li data-bind="attr: {'estado': 'mesa-reabrir_'+adn().currentMesa().getEstadoIcon()}">
                         <a href="#listado-mesas" id="mesa-reabrir"><?= $html->image('/adition/css/img/reabrir.png')?>Re Abrir</a>
+                    </li>
+                    
+                    <hr />
+                    <li data-bind="attr: {'estado': 'mesa-borrar_'+adn().currentMesa().getEstadoIcon()}">
+                        <a href="#listado-mesas" id="mesa-borrar" data-rel="back"><?= $html->image('/adition/css/img/borrarmesa.png')?>Borrar Mesa</a>
                     </li>
                 </ul>
             </div>
@@ -440,6 +444,24 @@
 	    </fieldset>
             
         </form>
+    </div>
+            
+</div>  
+
+
+
+
+<!--
+                    MESA COBRAR
+
+-->
+<div data-role="page" id="mesa-cobrar" data-theme="e">
+    <div data-role="header">
+        <h1>Cobrar Mesa</h1>
+    </div>
+
+    <div data-role="content">                  
+        <h2>Cobrar la mesa</h2>
     </div>
             
 </div>  

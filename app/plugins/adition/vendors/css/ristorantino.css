@@ -210,10 +210,8 @@ background-color: #EDEDED;
 
 .mesa-actions ul li[estado='comanda-add-menu_mesa-cerrada'],
 .mesa-actions ul li[estado='mesa-cliente_mesa-cerrada'],
-.mesa-actions ul li[estado='mesa-cerrar_mesa-cerrada']{
-    display: none;
-}
-
+.mesa-actions ul li[estado='mesa-cerrar_mesa-cerrada'],
+.mesa-actions ul li[estado='mesa-reabrir_mesa-abierta'],
 .mesa-actions ul li[estado='mesa-re-print_mesa-abierta'],
 .mesa-actions ul li[estado='mesa-cobrar_mesa-abierta']{
     display: none;

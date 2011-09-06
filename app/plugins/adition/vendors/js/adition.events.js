@@ -92,14 +92,16 @@ $(document).ready(function() {
     
     
     $('#mesa-borrar').click(function(){
-        var mesa = Risto.Adition.adicionar.currentMesa();
-        var url = mesa.urlDelete();
-        $.get(url, {}, function(){
-//           var ev = $.Event(MESA_ESTADOS_POSIBLES.cerrada.event);
-//           ev.mesa = mesa;
-//           $(document).trigger( ev );
-            mesa.setEstadoBorrada();
-       })
+        if (window.confirm('Seguro que desea borrar la mesa '+Risto.Adition.adicionar.currentMesa().numero())){
+            var mesa = Risto.Adition.adicionar.currentMesa();
+            var url = mesa.urlDelete();
+            $.get(url, {}, function(){
+    //           var ev = $.Event(MESA_ESTADOS_POSIBLES.cerrada.event);
+    //           ev.mesa = mesa;
+    //           $(document).trigger( ev );
+                mesa.setEstadoBorrada();
+           })
+        }
     });
     
     
