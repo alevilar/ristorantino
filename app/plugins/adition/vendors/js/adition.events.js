@@ -69,6 +69,8 @@ $(document).ready(function() {
     
     // Form SUBMITS
     $('#form-mesa-add').submit(agregarNuevaMesa);
+    $('#form-cambiar-mozo').submit(cambiarMozo);
+    $('#form-cambiar-numero').submit(cambiarNumeroMesa);
     
     
     
@@ -314,4 +316,56 @@ function onKeyPress(e) {
             Risto.Adition.mesaBuscarAccessKey = '';
         },1000);
     }
+}
+
+
+
+function cambiarMozo(e){    
+    var mozoId = $(this).find('[name="mozo_id"]:checked').val();
+    var mozo = Risto.Adition.adicionar.findMozoById(mozoId);
+    var mozoAnterior = Risto.Adition.adicionar.currentMesa().mozo();
+    Risto.Adition.adicionar.currentMesa().setMozo( mozo );
+    
+    $('.ui-dialog').dialog('close');
+    
+    var sendOb = {
+        obj: {
+            id: Risto.Adition.adicionar.currentMesa().id(),
+            mozo_id: mozoId,
+            model: 'Mesa',
+            handleAjaxSuccess: function(){}
+        },
+        url: Risto.Adition.adicionar.currentMesa().urlEdit(),
+        error: function(){
+            Risto.Adition.adicionar.currentMesa().setMozo( mozoAnterior );
+            alert("debido a un error en el servidor, el mozo no fue modificado");
+        }
+    }
+
+    $cakeSaver.send(sendOb);
+    
+    return false;
+}
+
+function cambiarNumeroMesa(){
+    var numeroMesa = $(this).find('[name="numero"]').val();
+    var numAnt = Risto.Adition.adicionar.currentMesa().numero( numeroMesa );
+    Risto.Adition.adicionar.currentMesa().numero( numeroMesa );
+    $('.ui-dialog').dialog('close');
+    
+    var sendOb = {
+        obj: {
+            id: Risto.Adition.adicionar.currentMesa().id(),
+            numero: numeroMesa,
+            model: 'Mesa',
+            handleAjaxSuccess: function(){}
+        },
+        url: Risto.Adition.adicionar.currentMesa().urlEdit(),
+        error: function(){
+            Risto.Adition.adicionar.currentMesa().numero( numAnt );
+            alert("debido a un error en el servidor, el numero de mesa no fue modificado");
+        }
+    }
+    $cakeSaver.send(sendOb);
+    return false;
 }

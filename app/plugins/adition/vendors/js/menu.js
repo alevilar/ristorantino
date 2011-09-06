@@ -44,7 +44,11 @@ Risto.Adition.menu = {
     
     
     __armarMenu: function(){
-        if ( localStorage.categoriasTree) {
+        var newDay          = new Date(),
+            cantMiliseconds = 86400000; // 86400000 equivalen a 1 dia
+        
+        // si no paso mas de 1 día, no volver a traer el menu
+        if ( localStorage.categoriasTree && localStorage.categoriasTreeDate && (localStorage.categoriasTreeDate - newDay.valueOf() ) < cantMiliseconds) {
             this.__iniciarCategoriasTreeLocalStorage();
         } else {
             this.__getRemoteMenu();
@@ -61,7 +65,9 @@ Risto.Adition.menu = {
     },
     
     __iniciarCategoriasTreeServer: function(cats){
+        var date = new Date();
         localStorage.setItem( 'categoriasTree', ko.toJSON(cats) );
+        localStorage.setItem( 'categoriasTreeDate', date.valueOf() );
         this.__iniciarCategoriasTreeLocalStorage();
     },
     

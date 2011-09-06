@@ -347,7 +347,11 @@ $tipo_pagos = $this->Mesa->Pago->TipoDePago->find('list');
                         }
                     endforeach;
                 }
+            } else {
+                 header("HTTP/1.0 500 Internal Server Error");
             }
+        } else {
+             header("HTTP/1.0 500 Internal Server Error");
         }
         return $returnFlag;
     }

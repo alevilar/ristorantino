@@ -43,14 +43,6 @@
 
                     
         <div  data-role="content" class="content_mesas">
-            
-            
-            
-                    <!-- Botones de muestra  
-                    <a href="#" data-role="button" data-icon="mesa-abierta" data-theme="c" data-iconpos="notext"></a>
-                    <a href="#" data-role="button" data-icon="mesa-porcerrar" data-theme="c" data-iconpos="notext" data-iconpos="right"></a>
-                    <a href="#" data-role="button" data-icon="mesa-cerrada" data-theme="c"  data-iconpos="notext" >Mesa loca</a>
-                    -->
                 
                 <!-- aca va el listado de mesas que se carga dinamicamente en un script de abajo -->
                 <a href="#mesa-add" data-rel="dialog"  data-transition="pop" class="grid_1 abrir-mesa" href="#" data-role="button" data-theme="a">Abrir<br>Mesa</a>  
@@ -389,12 +381,17 @@
 -->
 <div data-role="page" id="mesa-cambiar-mozo" data-theme="e">
     <div data-role="header">
-        <h1>Seleccionar nuevo Mozo</h1>
+        <h1>Seleccionar nuevo Mozo para la mesa <span data-bind="text: adn().currentMesa().numero"></span></h1>
     </div>
 
-    <div data-role="content">                  
+    <div data-role="content">           
         
-        <form name="cambiar-mozo" action="#">
+        <div>
+            El mozo actual es el <span data-bind="text: adn().currentMesa().mozo().numero"></span>
+        </div>
+        
+        <form name="cambiar-mozo" id="form-cambiar-mozo" action="#" data-ajax="false"  data-direction="reverse">
+            <input type="hidden" name="mesa_id" data-bind="value: adn().currentMesa().id"/>
             <fieldset data-role="controlgroup" data-type="horizontal">
                             <legend style="display: block; clear: both;">Seleccionar Mozo:</legend>
                             <?php
@@ -406,11 +403,12 @@
                                 }
                             ?>
             </fieldset>
+            
+            <fieldset class="ui-grid-a">
+                <div class="ui-block-a"><a data-role="button" data-rel="back" data-theme="e">Cancelar</a></div>
+                <div class="ui-block-b"><button type="submit" data-theme="b">Cambiar de Mozo</button></div>
+	    </fieldset>
         </form>
-        
-        
-        <a href="#" data-rel="back" data-role="button" data-inline="true" data-theme="e">Cancelar</a>
-        <a href="#" data-rel="back" data-role="button" data-inline="true" data-theme="b">Guardar nuevo mozo</a>
     </div>
             
 </div>  
@@ -430,16 +428,18 @@
 
     <div data-role="content">                  
         
-        <form name="cambiar-mozo" action="#">
+        <form name="cambiar-mozo" id="form-cambiar-numero" action="#" data-ajax="false"  data-direction="reverse">
             <fieldset data-role="controlgroup" data-type="horizontal">
                 <legend for="numeroacambiar">Ingresar nuevo número</legend>
-                <input type="number"></input>
+                <input type="text" name="numero" />
             </fieldset>
+            
+             <fieldset class="ui-grid-a">
+                <div class="ui-block-a"><a data-role="button" data-rel="back" data-theme="e">Cancelar</a></div>
+                <div class="ui-block-b"><button type="submit" data-theme="b">Guardar nuevo Número de Mesa</button></div>
+	    </fieldset>
+            
         </form>
-        
-        
-        <a href="#" data-rel="back" data-role="button" data-inline="true" data-theme="e">Cancelar</a>
-        <a href="#" data-rel="back" data-role="button" data-inline="true" data-theme="b">Guardar nuevo Número de Mesa</a>
     </div>
             
 </div>  

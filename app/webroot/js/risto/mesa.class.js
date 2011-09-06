@@ -61,9 +61,14 @@ var Mesa = function(mozo, jsonData) {
                 }
             }
             
+            
+            if (this.Cliente() && this.Cliente().tipofactura().toLowerCase() == 'a'){               
+                totalText = 'Factura "A" '+totalText;
+            }
+            
             if (this.Cliente() && this.Cliente().Descuento()){
                 dto = total * this.Cliente().Descuento().porcentaje() / 100;
-                totalText = '$'+total+' - [Dto] $'+dto+' = '+(total - dto);
+                totalText = totalText+' - [Dto '+this.Cliente().Descuento().porcentaje()+'%] $'+dto+' = $'+(total - dto);
             }
             return totalText;
         }, this);
@@ -207,7 +212,7 @@ Mesa.prototype = {
     
     urlGetData: function(){return urlDomain+'mesas/ticket_view/'+this.id()},
     urlView: function(){return urlDomain+'mesas/view/'+this.id()},
-    urlEdit: function(){return urlDomain+'mesas/edit/'+this.id()},
+    urlEdit: function(){return urlDomain+'mesas/ajax_edit/'+this.id()},
     urlDelete: function(){return urlDomain+'mesas/delete/'+this.id()},
     urlComandaAdd: function(){return urlDomain+'comandas/add/'+this.id()},
     urlCerrarMesa: function(){return urlDomain+'mesas/cerrarMesa/'+this.id()},
@@ -446,6 +451,8 @@ Mesa.prototype = {
      * @param agregarMesa Boolean indica si agrego la mesa al listado de mesas que tiene el mozo
      */
     setMozo: function(nuevoMozo, agregarMesa){
+        var laAgrego = agregarMesa || true; // por default sera true
+        
         // si la mesa que le quiero agregar, tenia otro mozo
         // lo debo sacar, eliminandole la mesa de su listado de mesas
         if ( this.tieneMozo() ){
@@ -455,7 +462,7 @@ Mesa.prototype = {
         
         this.mozo_id( nuevoMozo.id() );
         this.mozo(nuevoMozo);
-        if (agregarMesa) {
+        if (laAgrego) {
             this.mozo().agregarMesa(this);
         }
     },

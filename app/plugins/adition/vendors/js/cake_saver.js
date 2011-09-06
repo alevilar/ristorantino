@@ -4,13 +4,15 @@ var $cakeSaver = {
     
     /**
      * 
-     * Objeto a mandar, debe tener como minimo:
+     * @param sendObje Objeto a mandar, debe tener como minimo:
      *  'url' => es la url donde se enviara el post
      *  'obj' => es el objeto que voy a enviar$cakeSaver
+     *  @param fn funcion callback a ejecutar
      */
-    send: function( sendObj ){
+    send: function( sendObj , fn){
         var obj = sendObj['obj'];
         var url = sendObj['url'];
+        var errorHandler = sendObj.error || function(){};
         var method = sendObj['method'] || this.method;
         var ob = this.__processObj(obj, obj.model);
 
@@ -18,16 +20,21 @@ var $cakeSaver = {
             'url': url,
             'data': ob,
             'type': method,
+            error: errorHandler,
             success: function(data){
-                try { 
+                if (typeof fn == 'function'){
+                    fn.call(data);
+                } else {
+                    try { 
                     if ( obj.handleAjaxSuccess ) {
-                        obj.handleAjaxSuccess(data, url, method);
-                    } else {
-                        throw "$cakeSaver:: EL objeto '"+obj.model+"' pasado para enviar vía ajax no tiene una función llamada 'handleAjaxSuccess'. La misma es indispensable para tratar la respuesta.";
+                            obj.handleAjaxSuccess(data, url, method);
+                        } else {
+                            throw "$cakeSaver:: EL objeto '"+obj.model+"' pasado para enviar vía ajax no tiene una función llamada 'handleAjaxSuccess'. La misma es indispensable para tratar la respuesta.";
+                        }
                     }
-                }
-                catch(er) {
-                    jQuery.error(er);
+                    catch(er) {
+                        jQuery.error(er);
+                    }
                 }
             }
         });
