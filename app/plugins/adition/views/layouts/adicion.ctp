@@ -55,7 +55,8 @@
                     '/adition/js/producto',
                     '/adition/js/categoria',
                     '/adition/js/sabor.class',
-                    
+                    '/adition/js/cliente.class',
+                    '/adition/js/descuento.class',
                     
                     '/adition/js/detalle_comanda.class',
                     

@@ -181,7 +181,7 @@
                         <a href="#comanda-add-menu" data-rel="dialog"  data-transition="pop"><?= $html->image('/adition/css/img/chef_64.png')?>Comanda</a>
                     </li>
                     
-                    <li>
+                    <li data-bind="attr: {'estado': 'comanda-add-menu_'+adn().currentMesa().getEstadoIcon()}">
                         <a href="<?php echo $html->url('/clientes/jqm_clientes')?>" data-rel="dialog" data-transition="fade">
                                 <?= $html->image('/adition/css/img/addcliente.png')?>
                             <span data-bind="visible: !adn().currentMesa().Cliente()">Agregar Cliente</span>
@@ -189,7 +189,7 @@
                         </a>
                     </li>
                     
-                    <li>
+                    <li data-bind="attr: {'estado': 'comanda-add-menu_'+adn().currentMesa().getEstadoIcon()}">
                         <a href="#listado-mesas" id="mesa-cerrar" data-direction="reverse" data-transition="slide"><?= $html->image('/adition/css/img/cerrarmesa.png')?>Cerrar Mesa</a>
                     </li>
                     
@@ -240,7 +240,7 @@
     
     <div data-role="footer" data-position="fixed">
         <h3>
-            <span class="mesa-total">$<span data-bind="text: adn().currentMesa().totalCalculado"></span></span>
+            <span class="mesa-total"><span data-bind="text: adn().currentMesa().totalCalculado"></span></span>
             <span class="hora-abrio">Abrió a las <span data-bind="text: adn().currentMesa().timeCreated()"></span></span>
         </h3>
     </div>

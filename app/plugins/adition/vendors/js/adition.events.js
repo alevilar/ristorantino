@@ -111,7 +111,7 @@ $(document).ready(function() {
     
     
     $('#mesa-eliminar-cliente').live('click',function(){
-        Risto.Adition.adicionar.currentMesa().Cliente(null);
+        Risto.Adition.adicionar.currentMesa().setCliente(null);
         return true;
     });
     

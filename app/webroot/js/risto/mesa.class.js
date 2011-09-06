@@ -52,13 +52,20 @@ var MESA_ESTADOS_POSIBLES =  {
 var Mesa = function(mozo, jsonData) {
         
         this.totalCalculado = ko.dependentObservable(function(){
-            var total = 0;
+            var total = 0, dto = 0, totalText = '$-';
+            
             for (var c in this.Comanda()){
                 for (dc in this.Comanda()[c].DetalleComanda() ){
                     total += this.Comanda()[c].DetalleComanda()[dc].precio();
+                    totalText = '$'+total;
                 }
             }
-            return total;
+            
+            if (this.Cliente() && this.Cliente().Descuento()){
+                dto = total * this.Cliente().Descuento().porcentaje() / 100;
+                totalText = '$'+total+' - [Dto] $'+dto+' = '+(total - dto);
+            }
+            return totalText;
         }, this);
         
         
@@ -74,12 +81,10 @@ var Mesa = function(mozo, jsonData) {
         
         this.clienteNameData= ko.dependentObservable(function(){
             var cliente = this.Cliente();
-            console.debug(cliente);
-            var name = '';
             if (cliente){
-                name = cliente.nombre;
+                return cliente.nombre();
             }
-            return name;
+            return '';
         }, this);
         
         
@@ -129,12 +134,12 @@ Mesa.prototype = {
         
         // si vino jsonData mapeo con koMapp
         if ( jsonData ) {
-            
             if (typeof jsonData.Cliente && jsonData.Cliente.id){
-                this.Cliente(jsonData.Cliente);
-            } else {
-                this.Cliente(null);
+                this.Cliente( new Risto.Adition.cliente(jsonData.Cliente) );
+            } else {               
+                this.Cliente( null );
             }
+            delete jsonData.Cliente;
             
             // si aun no fue mappeado
             var mapOps = {
@@ -152,18 +157,17 @@ Mesa.prototype = {
                 // meto al mozo sin agregarle la mesa al listado porque seguramente vino en el json
                 this.setMozo(mozo, false);
             }
-            
             ko.mapping.fromJS(jsonData, mapOps, this);
         } else {
             if (mozo) {
                 // meto al mozo agregandole al mozo
                 this.setMozo(mozo, true);
             }
-            ko.mapping.fromJS({}, {}, this);
         }
         this.__inicializar_estado();
         
         Risto.modelizar(this);
+        
         return this;
     },
     
@@ -208,7 +212,14 @@ Mesa.prototype = {
     urlComandaAdd: function(){return urlDomain+'comandas/add/'+this.id()},
     urlCerrarMesa: function(){return urlDomain+'mesas/cerrarMesa/'+this.id()},
     urlReabrir: function(){return urlDomain+'mesas/reabrir/'+this.id()},
-    urlCliente: function(clienteId){return urlDomain+'clientes/view/'+clienteId+'.json'},
+    urlAddCliente: function(clienteId){
+        var url = urlDomain+'mesas/addClienteToMesa/'+this.id();
+        if (clienteId){
+            url += '/'+clienteId;
+        }
+        url += '.json';
+        return url;
+    },
     
     /**
      *  Id del elemento que contiene los datos de esta mesa
@@ -502,10 +513,18 @@ Mesa.prototype = {
     
     
     setCliente: function( objCliente ){
+        var ctx = this, clienteId = null;
         
-        var ctx = this;
-        $.get(this.urlCliente(objCliente.id),function(data){
-            ctx.Cliente( data.Cliente );
+        if (objCliente) {
+            clienteId = objCliente.id;
+        }
+        
+        $.get(this.urlAddCliente(clienteId),function(data){
+            if ( data.Cliente ){
+                ctx.Cliente( new Risto.Adition.cliente(data.Cliente) );
+            } else{
+                ctx.Cliente(null);
+            }
         });
     }
 };

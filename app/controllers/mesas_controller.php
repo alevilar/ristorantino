@@ -437,6 +437,24 @@ $tipo_pagos = $this->Mesa->Pago->TipoDePago->find('list');
         $this->Mesa->reabrir($id);
         $this->redirect($this->referer());
     }
+    
+    
+    function addClienteToMesa($mesa_id, $cliente_id = 0){
+        if ($cliente_id) {
+            $this->Mesa->Cliente->contain(array(
+                        'Descuento',
+                    ));
+            $this->set('cliente', $this->Mesa->Cliente->read(null, $cliente_id));
+        } else {
+            $this->set('cliente', array());
+        }
+                
+                
+        $this->Mesa->id = $mesa_id;
+        if ($this->Mesa->saveField('cliente_id', $cliente_id) ) {
+            $this->Session->setFlash('Se agregó un cliente a la mesa', true);
+        }
+    }
 
 }
 ?>
