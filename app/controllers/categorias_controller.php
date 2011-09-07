@@ -40,22 +40,6 @@ class CategoriasController extends AppController {
 		$this->set('categoria', $this->Categoria->read(null, $id));
 	}
 
-	function add() {
-            $this->rutaUrl_for_layout[] =array('name'=> 'Categorias','link'=>'/categorias' );
-		Cache::delete('categorias');
-		if (!empty($this->data)) {
-			$this->Categoria->create();
-			if ($this->Categoria->save($this->data)) {
-				$this->Session->setFlash(__('The Categoria has been saved', true));
-				$this->redirect(array('action'=>'index'));
-			} else {
-				$this->Session->setFlash(__('The Categoria could not be saved. Please, try again.', true));
-			}
-		}
-		
-		$categorias = $this->Categoria->generatetreelist(null, null, null, '-- ');
-		$this->set(compact('categorias'));
-	}
 
         function recover() {
             debug($this->Categoria->recover());
@@ -69,11 +53,6 @@ class CategoriasController extends AppController {
 
 	function edit($id = null) {
             $this->rutaUrl_for_layout[] =array('name'=> 'Categorias','link'=>'/categorias' );
-		Cache::delete('categorias');
-		if (!$id && empty($this->data)) {
-			$this->Session->setFlash(__('Invalid Categoria', true));
-//			$this->redirect(array('action'=>'index'));
-		}
 
                 if( !empty($this->data['Categoria']['newfile']['name'])){
                     $path = WWW_ROOT.'img/';
@@ -100,6 +79,9 @@ class CategoriasController extends AppController {
                 }
       
 		if (!empty($this->data)) {
+                    if (empty($id) ) {
+			$this->Categoria->create();
+                    }
 			if ($this->Categoria->save($this->data)) {
 				$this->Session->setFlash(__('The Categoria has been saved', true));
 //				$this->redirect(array('action'=>'index'));

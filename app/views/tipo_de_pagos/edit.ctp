@@ -1,15 +1,25 @@
     <?php    
     echo $this->element('menuadmin');
+    
+     echo $html->image($this->data['TipoDePago']['image_url'], array('width'=>100));
     ?>
 
 
 <div class="tipoDePagos form">
-<?php echo $form->create('TipoDePago');?>
+    
+<?php echo $form->create('TipoDePago', array('type' => 'file'));?>
 	<fieldset>
  		<legend><?php __('Edit TipoDePago');?></legend>
 	<?php
-		echo $form->input('id');
+                if (!empty($this->data['TipoDePago']['id'])){
+                    echo $form->input('id');
+                }
+                
+                $catim = empty($this->data['TipoDePago']['image_url'])? '' : '('.$this->data['TipoDePago']['image_url'].')';
+                
 		echo $form->input('name');
+                echo $form->input('image_url',array('type'=>'hidden'));
+                echo $form->input('newfile',array('label'=>'Foto/Imagen '.$catim, 'type'=>'file'));
 		echo $form->input('description');
 	?>
 <?php echo $form->end('Submit');?>

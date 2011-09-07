@@ -304,7 +304,7 @@ class PrinterComponent extends Object {
 				// solo imprimir el producto que se imprime con esta comandera
 				if($detalle['Producto']['comandera_id']==$comandera_id){
 					$prod_cant = $detalle['DetalleComanda']['cant'];
-					$prod_name = $detalle['Producto']['name'];
+					$prod_name = $detalle['Producto']['name'].' - '.$detalle['DetalleComanda']['observacion'];
 					$prod_sabor = '';
 					$primero = true;
 					foreach ( $detalle['DetalleSabor'] as $sabor){

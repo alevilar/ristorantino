@@ -251,3 +251,38 @@ ul.listado-mozos-para-mesas{
     bottom: 2px;
     left: 5px;
 }
+
+
+.tipo_de_pagos ul{
+    margin: 0px;
+    padding: 0px;
+        
+}
+
+.tipo_de_pagos li{
+    text-align: center;
+    display: inline-block;
+    font-size: x-small;
+    margin: 0px 8px;
+}
+
+.tipo_de_pagos li a{
+       text-decoration: none;
+}
+
+.tipo_de_pagos li img{
+    width: 80px;
+}
+
+
+
+.pagos_creados{}
+
+.pagos_creados li{
+    display: inline-block;
+    width: 33%;
+}
+
+.pagos_creados li img{
+    width: 60px;
+}

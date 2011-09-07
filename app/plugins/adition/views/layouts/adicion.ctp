@@ -57,6 +57,7 @@
                     '/adition/js/sabor.class',
                     '/adition/js/cliente.class',
                     '/adition/js/descuento.class',
+                    '/adition/js/pago.class',
                     
                     '/adition/js/detalle_comanda.class',
                     

@@ -116,9 +116,10 @@ class Comanda extends AppModel {
 	function comanderas_involucradas($id){
 		$this->recursive = 2;
 		$group = array('Producto.comandera_id');
-		$result =  $this->DetalleComanda->find('all',array(	'conditions' => array('Comanda.id'=> $id),
-														'group'=>$group,
-														'fields'=>array('Producto.comandera_id')));
+		$result =  $this->DetalleComanda->find('all',array(	
+                    'conditions' => array('DetalleComanda.comanda_id'=> $id),
+                            'group'=>$group,
+                            'fields'=>$group));
 		$v_retorno = array();
 		foreach($result as $r){
 			$v_retorno[] = $r['Producto']['comandera_id'];

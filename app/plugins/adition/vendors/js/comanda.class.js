@@ -30,8 +30,10 @@ Risto.Adition.comanda.prototype = {
                 }
             }
             ko.mapping.fromJS(jsonData, mapOps, this);
+        } else {
+            ko.mapping.fromJS({}, {}, this);
         }
-        ko.mapping.fromJS({}, {}, this);
+        
         Risto.modelizar(this);
         return this;
     },

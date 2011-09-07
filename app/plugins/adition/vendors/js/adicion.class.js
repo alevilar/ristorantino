@@ -25,6 +25,10 @@ Risto.Adition.adicionar = {
     
     mesas: ko.observableArray( [] ),
     
+    // pagos seleccionado de la currentMesa en proceso de pago. es una variable temporal de estado
+    pagos: ko.observableArray( [] ),
+    
+    
     nuevaComandaParaCurrentMesa: function(){
         this.currentMesa().nuevaComanda();
     },
@@ -365,3 +369,27 @@ Risto.Adition.adicionar.productosSeleccionados = ko.dependentObservable( functio
 Risto.Adition.adicionar.currentSabores = ko.dependentObservable( function(){
     return this.currentMesa().currentComanda().currentSabores();    
 }, Risto.Adition.adicionar);   
+
+
+// al procesar un pago aqui se escribe el vuelto para manejar en la vista
+Risto.Adition.adicionar.vueltoText = ko.dependentObservable( function(){
+   var pagos = this.pagos(),
+       sumPagos = 0,
+       totMesa = Risto.Adition.adicionar.currentMesa().totalCalculado(),
+       vuelto = 0,
+       retText = 'Total: '+Risto.Adition.adicionar.currentMesa().totalCalculadoTexto();
+   if (pagos && pagos.length) {
+       for (var p in pagos) {
+           if ( pagos[p].valor() ) {
+            sumPagos += parseFloat(pagos[p].valor());
+           }
+       }
+       vuelto = (totMesa - sumPagos);
+       if (vuelto < 0 ){
+           retText = retText+'   -  Vuelto: $  '+vuelto;
+       } else {
+           retText = retText+'   -  Faltan: $  '+vuelto;
+       }
+   }
+   return retText;
+}, Risto.Adition.adicionar);

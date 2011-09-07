@@ -53,7 +53,6 @@ class CustomQuery extends PqueryAppModel{
 	
 	
 	function query($sql = null){
-            $consultaFinal = array();
 		if(!empty($sql)){
 			$result =  parent::query($sql);
 		}

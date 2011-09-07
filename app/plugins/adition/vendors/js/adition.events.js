@@ -136,6 +136,19 @@ $(document).ready(function() {
         }
     });
     
+    
+    $('#mesa-pagos-procesar').click(function(){
+        for (var p in Risto.Adition.adicionar.pagos() ) {
+            if ( Risto.Adition.adicionar.pagos()[p] ) {
+                if ( Risto.Adition.adicionar.pagos()[p].valor() ) {
+                    Risto.Adition.adicionar.currentMesa().Pago.push( Risto.Adition.adicionar.pagos()[p] );
+                }
+            }
+        }
+        Risto.Adition.adicionar.pagos([]);
+        Risto.Adition.adicionar.currentMesa().cobrarPagos();
+    });
+    
                  
 });
 

@@ -9,6 +9,7 @@
          <span data-bind="text: nameConSabores()" style="padding-left: 40px;"></span>
      </li>
 </script>
+
                   
                                          
 <!--
@@ -64,7 +65,7 @@
                                             <span class="mesa-mozo" data-bind="text: mozo().numero"></span>
                                            
                                         </span>
-                                        <span class="mesa-icon ui-icon ui-icon-shadow" data-bind="css: {'ui-icon-mesa-abierta': getEstadoIcon()!='mesa-cerrada', 'ui-icon-mesa-cerrada': getEstadoIcon()=='mesa-cerrada'}"></span>
+                                        <span class="mesa-icon ui-icon ui-icon-shadow" data-bind="css: {'ui-icon-mesa-abierta': getEstadoIcon()!='mesa-cerrada', 'ui-icon-mesa-cerrada': getEstadoIcon()=='mesa-cerrada', 'ui-icon-mesa-cobrada': getEstadoIcon()=='mesa-cobrada'}"></span>
                                         
                                     </span>
 
@@ -193,10 +194,12 @@
                     <li>
                         <a href="#mesa-cambiar-mozo" data-rel="dialog"  data-transition="pop"><?= $html->image('/adition/css/img/cambiarmozo.png')?>Cambiar Mozo</a>
                     </li>
+                    
                     <li>
                         <a href="#mesa-cambiar-numero" data-rel="dialog"  data-transition="pop"><?= $html->image('/adition/css/img/cambiarmesa.png')?>Cambiar N°</a>
                     </li>
-                        <li data-bind="attr: {'estado': 'mesa-re-print_'+adn().currentMesa().getEstadoIcon()}">
+                    
+                    <li data-bind="attr: {'estado': 'mesa-re-print_'+adn().currentMesa().getEstadoIcon()}">
                         <a href="#mesa-re-print" ><?= $html->image('/adition/css/img/reimprimir.png')?>Reimprimir Ticket</a>
                     </li>
                     
@@ -236,7 +239,7 @@
     
     <div data-role="footer" data-position="fixed">
         <h3>
-            <span class="mesa-total"><span data-bind="text: adn().currentMesa().totalCalculado"></span></span>
+            <span class="mesa-total"><span data-bind="text: adn().currentMesa().totalCalculadoTexto"></span></span>
             <span class="hora-abrio">Abrió a las <span data-bind="text: adn().currentMesa().timeCreated()"></span></span>
         </h3>
     </div>
@@ -409,7 +412,7 @@
             </fieldset>
             
             <fieldset class="ui-grid-a">
-                <div class="ui-block-a"><a data-role="button" data-rel="back" data-theme="e">Cancelar</a></div>
+                <div class="ui-block-a"><a href="#" data-role="button" data-rel="back" data-theme="e">Cancelar</a></div>
                 <div class="ui-block-b"><button type="submit" data-theme="b">Cambiar de Mozo</button></div>
 	    </fieldset>
         </form>
@@ -438,8 +441,8 @@
                 <input type="text" name="numero" />
             </fieldset>
             
-             <fieldset class="ui-grid-a">
-                <div class="ui-block-a"><a data-role="button" data-rel="back" data-theme="e">Cancelar</a></div>
+            <fieldset class="ui-grid-a">
+                <div class="ui-block-a"><a href="#" data-role="button" data-rel="back" data-theme="e">Cancelar</a></div>
                 <div class="ui-block-b"><button type="submit" data-theme="b">Guardar nuevo Número de Mesa</button></div>
 	    </fieldset>
             
@@ -462,6 +465,50 @@
 
     <div data-role="content">                  
         <h2>Cobrar la mesa</h2>
+        
+        <ul class="tipo_de_pagos">
+        <?php 
+        foreach ( $tipo_de_pagos as $tp ){
+            $pago = $tp['TipoDePago'];
+            $pagoJson =  $javascript->object($pago);
+            ?>
+            <li>
+                <a href="#" onclick='new Risto.Adition.pago(<?php echo $pagoJson?>)'>
+            <?php
+            echo $html->image($tp['TipoDePago']['image_url']);
+            echo '<br />';
+            echo $pago['name'];
+            ?>
+                </a>
+                </li>
+                <?php
+        }
+        ?>
+        </ul>
+        
+        <h4>Pagos Seleccionados</h4>
+        <ul class="pagos_creados"
+            data-bind='template: { name: "li-pagos-creados", foreach: adn().pagos }'>
+            
+            <script id="li-pagos-creados" type="text/x-jquery-tmpl">
+                 <li>
+                     <img src="" data-bind="attr: {src: image(), alt: TipoDePago().name, title: TipoDePago().name}"/>
+                     <label>Ingresar Valor $: </label>
+                     <input name="valor" data-bind="value: valor, valueUpdate: 'keyup'" placeholder="Ej: 100.4"/>
+                 </li>
+            </script>
+            
+        </ul>
+        
+        
+            <div class="ui-grid-a">
+                <div class="ui-block-a"><a href="#" data-role="button" data-rel="back">Cancelar</a></div>
+                <div class="ui-block-b"><a href="#" data-role="button" data-rel="back" data-theme="b" id="mesa-pagos-procesar">Cerrar Mesa</a></div>
+	    </div>
+    </div>
+    
+    <div data-role="footer">
+        <h2 data-bind="text: adn().vueltoText"></h2>
     </div>
             
 </div>  

@@ -1,44 +1,25 @@
-<table cellpadding="0" cellspacing="0">
-    <tr>
-        <td colspan="<?php echo count($cols)?>"></td>
-    </tr>
-    <tr>
-        <td colspan="<?php echo count($cols)?>">
-            <?php echo $descripcion?>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="<?php echo count($cols)?>"></td>
-    </tr>
-</table>
 
+<TABLE FRAME=VOID CELLSPACING=0 COLS=3 RULES=NONE BORDER=0>
+		<TR>
+			<?php
+				foreach ($columnas as $c):
+					echo "<TD BGCOLOR='#FFFF99'><b>$c</b></TD>";
+				endforeach;
+			?>
+		</TR>
 
-<table cellpadding="0" cellspacing="0">
-    <thead>
-        <tr>
-            <?php foreach ($cols as $col): ?>
-            <th><?php echo $col;?></th>
-            <?php endforeach; ?>
-        </tr>
-    </thead>
+		<?php
+		foreach ($filas as $f):
+		?>
+		<TR>
+			<?php
+			foreach($f[0] as $d):
+				echo "<TD>$d</TD>";
+			endforeach;?>
+		</TR>
+		<?php
+		endforeach;
+		?>
 
-    <tbody>
-        <?php
-        $i = 0;
-        foreach ($queries as $query):
-            $class = null;
-            if ($i++ % 2 == 0) {
-                $class = ' class="altrow"';
-            }
-            ?>
-        <tr<?php echo $class;?>>
-                <?php foreach($query as $line):?>
-            <td>
-                        <?php echo $line; ?>
-            </td>
-                <?php endforeach; ?>
-        </tr>
-        <?php endforeach; ?>
-    </tbody>
-</table>
+</TABLE>
 

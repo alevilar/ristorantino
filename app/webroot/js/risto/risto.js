@@ -38,3 +38,29 @@ function mysqlTimeStampToDate(timestamp) {
     }
         
 }
+
+/**
+ * I make a mysql date timestamp
+ * @deprecated - Datepicker used instead
+ * @param {Object} dateobj - a date
+ */
+function jsToMySqlTimestamp( dateobj )
+{
+    var date;
+    if ( dateobj ) {
+         date = new Date( dateobj );
+    } else {
+        date = new Date(  );
+    }
+    
+    var yyyy = date.getFullYear();
+    var mm = date.getMonth() + 1;
+    var dd = date.getDate();
+    var hh = date.getHours();
+    var min = date.getMinutes();
+    var ss = date.getSeconds();
+ 
+	var mysqlDateTime = yyyy + '-' + mm + '-' + dd + ' ' + hh + ':' + min + ':' + ss;
+ 
+    return mysqlDateTime;
+}

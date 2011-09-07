@@ -30,6 +30,7 @@ foreach ($tipoDePagos as $tipoDePago):
 	<tr<?php echo $class;?>>
 		<td>
 			<?php echo $tipoDePago['TipoDePago']['id']; ?>
+                    <?php echo $html->image($tipoDePago['TipoDePago']['image_url'], array('width'=>40)); ?>
 		</td>
 		<td>
 			<?php echo $tipoDePago['TipoDePago']['name']; ?>
@@ -52,7 +53,7 @@ foreach ($tipoDePagos as $tipoDePago):
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $html->link(__('Crear Tipo de pago', true), array('action'=>'add')); ?></li>
+		<li><?php echo $html->link(__('Crear Tipo de pago', true), array('action'=>'edit')); ?></li>
 		<li><?php echo $html->link(__('Listar Pagos', true), array('controller'=> 'pagos', 'action'=>'index')); ?> </li>
 	</ul>
 </div>

@@ -37,7 +37,7 @@ class DetalleComandasController extends AppController {
 	function add(){
 		
 		$ok = false;
-		Configure::write('debug',0);		
+//		Configure::write('debug',0);		
                 
 		$imprimir = $this->data['Comanda']['imprimir'];
 		unset($this->data['Comanda']['imprimir']);		
@@ -70,9 +70,7 @@ class DetalleComandasController extends AppController {
 		
 		// por cada Comanda que hice (o sea por cada comandera) genero elDetalleComanda
 		while(list($comandera_id, $comanda_id) = each($v_comandera_y_comanda)){
-                    
 			foreach($this->data['DetalleComanda'] as $data):
-                        debug($data);
 				$data['comanda_id'] = $comanda_id;
 				if ($data['comandera_id'] == $comandera_id){
                                     $dataToSave['DetalleComanda'] = $data;
@@ -99,12 +97,13 @@ class DetalleComandasController extends AppController {
 					}
 				}				
 			endforeach;
-
+                        
+                        if($imprimir){
+                             //imprimio la comanda usando el Componente Printer
+                                $this->Printer->imprimirComanda($comanda_id);	
+                        }
                 }
-                if($imprimir){
-                        //imprimio la comanda usando el Componente Printer
-                        $this->Printer->imprimirComanda($comanda_id);	
-                }
+                
 
 		
 		$this->set('okval', $ok);

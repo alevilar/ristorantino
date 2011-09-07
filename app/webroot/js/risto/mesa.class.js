@@ -22,13 +22,13 @@ var MESA_ESTADOS_POSIBLES =  {
         msg: 'Mesa con Cupón Pendiente',
         event: 'mesaCuponPendiente',
         id: 0,
-        icon: ''
+        icon: 'mesa-cobrada'
     },
     cobrada: {
         msg: 'Mesa Cobrada',
         event: 'mesaCobrada',
         id: 3,
-        icon: ''
+        icon: 'mesa-cobrada'
     },
     borrada: {
         msg: 'Mesa Borrada',
@@ -50,17 +50,28 @@ var MESA_ESTADOS_POSIBLES =  {
  *
  **/
 var Mesa = function(mozo, jsonData) {
-        
-        this.totalCalculado = ko.dependentObservable(function(){
-            var total = 0, dto = 0, totalText = '$-';
+    
+        this.totalCalculadoNeto = ko.dependentObservable(function(){
+            var total = 0;
             
             for (var c in this.Comanda()){
                 for (dc in this.Comanda()[c].DetalleComanda() ){
-                    total += this.Comanda()[c].DetalleComanda()[dc].precio();
-                    totalText = '$'+total;
+                    total += parseFloat( this.Comanda()[c].DetalleComanda()[dc].precio() * this.Comanda()[c].DetalleComanda()[dc].realCant() );
                 }
             }
             
+            return total;
+        }, this);
+        
+        
+        this.totalCalculadoTexto = ko.dependentObservable(function(){
+            var total = this.totalCalculadoNeto(), dto = 0, totalText = '$-';
+            
+            for (var c in this.Comanda()){
+                for (dc in this.Comanda()[c].DetalleComanda() ){
+                    totalText = '$'+total;
+                }
+            }
             
             if (this.Cliente() && this.Cliente().tipofactura().toLowerCase() == 'a'){               
                 totalText = 'Factura "A" '+totalText;
@@ -75,6 +86,16 @@ var Mesa = function(mozo, jsonData) {
         
         
         
+        this.totalCalculado = ko.dependentObservable(function(){
+            var total = this.totalCalculadoNeto(), dto = 0, totalText = '$-';
+            
+            if (this.Cliente() && this.Cliente().Descuento()){
+                dto = total * this.Cliente().Descuento().porcentaje() / 100;
+                totalText = total - dto;
+            }
+            return totalText;
+        }, this);
+        
         /**
          * 
          * @return boolean
@@ -83,6 +104,14 @@ var Mesa = function(mozo, jsonData) {
             return MESA_ESTADOS_POSIBLES.cerrada == this.estado();
         }, this);
         
+        
+        this.estado_id = ko.dependentObservable(function(){
+            var est = this.estado();
+            if (est){
+                return est.id;
+            }
+            return 0;
+        }, this);
         
         this.clienteNameData= ko.dependentObservable(function(){
             var cliente = this.Cliente();
@@ -109,10 +138,12 @@ Mesa.prototype = {
     created: ko.observable(0),
     Cliente: ko.observable(),   
     estado: ko.observable(0),
+
     
     // es la comanda que actualmente se esta haciendo objeto comandaFabrica
     currentComanda: ko.observable(), 
     Comanda: ko.observableArray(),
+    Pago: ko.observableArray(),
     
     
     // attributos
@@ -136,6 +167,8 @@ Mesa.prototype = {
         this.mozo_id        = this.mozo().id;
         this.Cliente        = ko.observable();
         this.estado         = ko.observable();
+        this.Pago           = ko.observableArray( [] );
+        var mapOps          = {};        
         
         // si vino jsonData mapeo con koMapp
         if ( jsonData ) {
@@ -147,7 +180,7 @@ Mesa.prototype = {
             delete jsonData.Cliente;
             
             // si aun no fue mappeado
-            var mapOps = {
+            mapOps = {
                 'Comanda': {
                     create: function(ops) {
                         return new Risto.Adition.comanda(ops.data);
@@ -162,25 +195,26 @@ Mesa.prototype = {
                 // meto al mozo sin agregarle la mesa al listado porque seguramente vino en el json
                 this.setMozo(mozo, false);
             }
-            ko.mapping.fromJS(jsonData, mapOps, this);
         } else {
             if (mozo) {
                 // meto al mozo agregandole al mozo
                 this.setMozo(mozo, true);
             }
+            jsonData = {};
         }
+        
         this.__inicializar_estado();
         
         Risto.modelizar(this);
-        
+        ko.mapping.fromJS(jsonData, mapOps, this);
         return this;
     },
     
     __inicializar_estado: function(){
         var estado = MESA_ESTADOS_POSIBLES.abierta;
-         if (typeof this.estado_id == 'function' && this.estado_id() ){
+         if (this.estado_id){
             for(var ee in MESA_ESTADOS_POSIBLES){
-                if ( MESA_ESTADOS_POSIBLES[ee].id && MESA_ESTADOS_POSIBLES[ee].id == this.estado_id() ){
+                if ( MESA_ESTADOS_POSIBLES[ee].id && MESA_ESTADOS_POSIBLES[ee].id == this.estado_id ){
                     estado = MESA_ESTADOS_POSIBLES[ee];
                     break;
                 }
@@ -296,8 +330,15 @@ Mesa.prototype = {
         this.setEstado(MESA_ESTADOS_POSIBLES.abierta);
         return this;
     },
+    
+    setEstadoCobrada : function(){
+        this.time_cobro( jsToMySqlTimestamp() );
+        this.setEstado(MESA_ESTADOS_POSIBLES.cobrada);
+        return this;
+    },
 
     setEstadoCerrada : function(){
+        this.time_cerro = jsToMySqlTimestamp();
         this.setEstado(MESA_ESTADOS_POSIBLES.cerrada);
         return this;
     },
@@ -309,11 +350,6 @@ Mesa.prototype = {
 
     setEstadoCuponPendiente : function(){        
         this.setEstado(MESA_ESTADOS_POSIBLES.cuponPendiente);
-        return this;
-    },
-
-    setCobrada : function(){
-        this.setEstado(MESA_ESTADOS_POSIBLES.cobrada);
         return this;
     },
     
@@ -532,6 +568,29 @@ Mesa.prototype = {
             } else{
                 ctx.Cliente(null);
             }
+        });
+    },
+    
+    
+    cobrarPagos: function(){
+        this.setEstadoCobrada();
+        
+        var mes = {
+            Mesa: {
+                id: this.id(),
+                estado_id: this.estado_id(),
+                time_cobro: this.time_cobro(),
+                model: 'Mesa'
+            },
+            Pago: this.Pago()
+        };
+        
+        // guardo los pagos
+        $cakeSaver.send({
+            url: urlDomain+'pagos/add',
+            obj: mes
+        }, function(d){
+            
         });
     }
 };

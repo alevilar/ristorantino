@@ -62,6 +62,7 @@ class AditionController extends AditionAppController {
 	 */
 	function adicionar()
         {
+            $this->set('tipo_de_pagos', $this->Mozo->Mesa->Pago->TipoDePago->find('all'));
             $this->set('mozos', $this->Mozo->dameActivos());
 	}
 	

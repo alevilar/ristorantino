@@ -35,7 +35,7 @@ while(list($categoria_id, $categoria_name) = each($categorias)):
 
 <div class="actions">
 	<ul>
-		<li><?php echo $html->link(__('Nueva Categoria', true), array('action'=>'add')); ?></li>
+		<li><?php echo $html->link(__('Nueva Categoria', true), array('action'=>'edit')); ?></li>
 		<li><?php echo $html->link(__('Listar Productos', true), array('controller'=> 'productos', 'action'=>'index')); ?> </li>
 		<li><?php echo $html->link(__('Agregar un Nuevo Producto', true), array('controller'=> 'productos', 'action'=>'add')); ?> </li>
 	</ul>

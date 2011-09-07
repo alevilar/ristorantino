@@ -63,3 +63,7 @@ set mesa_estado_id = 2;
 
 
 ALTER TABLE  `categorias` ADD  `image_url` VARCHAR( 200 ) NULL AFTER  `description`;
+
+ALTER TABLE  `tipo_de_pagos` ADD  `image_url` VARCHAR( 200 ) NULL AFTER  `description`;
+
+ALTER TABLE  `detalle_comandas` ADD  `observacion` TEXT NULL AFTER  `comanda_id`;

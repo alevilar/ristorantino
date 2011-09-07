@@ -46,6 +46,7 @@ var $cakeSaver = {
      *
      * @param auxObj es el objeto que voy a aplanar
      * @param recursivObj es el objeto resultado de este proceso. Sirve cuando quiero hacerlo de forma recursiva
+     * @key es un string, la continuacion del $this[data][blah][blah] que deseo crear automaticamente
      */
     __aplanarObj: function(auxObj, recursivObj, key) {
         var cont,

@@ -176,7 +176,6 @@ Risto.Adition.detalleComanda.prototype = {
         var cntx = this;
         $('#obstext').val( this.observacion() );
         $('#form-comanda-producto-observacion').submit( function(){
-            alert("lindo aa "+$('#obstext').val()  );
             cntx.observacion(  $('#obstext').val() );
             $('#form-comanda-producto-observacion').unbind();
             return false;

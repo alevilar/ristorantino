@@ -340,6 +340,7 @@ $tipo_pagos = $this->Mesa->Pago->TipoDePago->find('list');
                         $valor = (strtolower($valor) == 'now()') ? strftime('%Y-%m-%d %H:%M:%S', time()) : $valor;
                         if (!$this->Mesa->saveField($field, $valor, $validate = true)) {
                             debug($this->Mesa->validationErrors);
+                            header("HTTP/1.0 500 Internal Server Error");
                             if($returnFlag == 1){
                                 $returnFlag = 0;
                             }
