@@ -77,7 +77,13 @@ $(document).ready(function() {
     // CLICKS
     $('A[href="#comanda-add-menu"]').click(function(){
         Risto.Adition.adicionar.nuevaComandaParaCurrentMesa();
-    })
+    });
+    
+    $('A[href="#mesa-cobrar"]').click(function(){
+        Risto.Adition.adicionar.pagos([]);
+    });
+    
+    
     
     $('#mesa-cerrar').click(function(){
         var mesa = Risto.Adition.adicionar.currentMesa();

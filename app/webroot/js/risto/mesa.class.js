@@ -203,18 +203,18 @@ Mesa.prototype = {
             jsonData = {};
         }
         
-        this.__inicializar_estado();
+        this.__inicializar_estado(jsonData);
         
         Risto.modelizar(this);
         ko.mapping.fromJS(jsonData, mapOps, this);
         return this;
     },
     
-    __inicializar_estado: function(){
+    __inicializar_estado: function(jsonData){
         var estado = MESA_ESTADOS_POSIBLES.abierta;
-         if (this.estado_id){
+         if (jsonData.estado_id){
             for(var ee in MESA_ESTADOS_POSIBLES){
-                if ( MESA_ESTADOS_POSIBLES[ee].id && MESA_ESTADOS_POSIBLES[ee].id == this.estado_id ){
+                if ( MESA_ESTADOS_POSIBLES[ee].id && MESA_ESTADOS_POSIBLES[ee].id == jsonData.estado_id ){
                     estado = MESA_ESTADOS_POSIBLES[ee];
                     break;
                 }
