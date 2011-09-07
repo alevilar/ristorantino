@@ -78,7 +78,7 @@ var Mesa = function(mozo, jsonData) {
             }
             
             if (this.Cliente() && this.Cliente().Descuento()){
-                dto = total * this.Cliente().Descuento().porcentaje() / 100;
+                dto = Math.floor(total * this.Cliente().Descuento().porcentaje() / 100);
                 totalText = totalText+' - [Dto '+this.Cliente().Descuento().porcentaje()+'%] $'+dto+' = $'+(total - dto);
             }
             return totalText;
@@ -90,7 +90,7 @@ var Mesa = function(mozo, jsonData) {
             var total = this.totalCalculadoNeto(), dto = 0, totalText = '$-';
             
             if (this.Cliente() && this.Cliente().Descuento()){
-                dto = total * this.Cliente().Descuento().porcentaje() / 100;
+                dto = Math.floor(total * this.Cliente().Descuento().porcentaje() / 100);
                 totalText = total - dto;
             }
             return totalText;
