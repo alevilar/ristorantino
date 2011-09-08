@@ -158,7 +158,6 @@ Risto.Adition.detalleComanda.prototype = {
         // no se por que pero hay veces en que viene el boolean como si fuera un character asique deboi
         // hacer esta verificacion
         if ( this.es_entrada() && (this.es_entrada() === true || this.es_entrada() === '1') ){
-            console.debug("es entrada");
             return true;
         }
         return false;

@@ -11,10 +11,7 @@ ul.listado-adicion{
     margin: 0 !important;
 }
 
-.li-btn {
-    /* ancho de los botones */
-    width: 10%;
-}
+
 ul.listado-adicion li {
     height: auto;
     margin: 0.5%;
@@ -41,8 +38,42 @@ ul.listado-adicion li a {
     font-size: small;
 }
 
+.listado-adicion li{
+    display: inline-block;
+    width: 10%;
+}
 
-ul.listado-adicion .ui-btn-up-f:focus{
+
+
+ul.listado-adicion .mesa-cobrada A{
+    border: 1px solid 		#721E1E;
+    background: 			#B05D5D;
+    color: 					#fff;
+    font-weight: bold;
+    text-shadow: 0 -1px 1px #D8A0A0;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#845555), to(#B05D5D)); /* Saf4+, Chrome */
+    background-image: -webkit-linear-gradient(top, #845555, #B05D5D); /* Chrome 10+, Saf5.1+ */
+    background-image:    -moz-linear-gradient(top, #845555, #B05D5D); /* FF3.6 */
+    background-image:     -ms-linear-gradient(top, #845555, #B05D5D); /* IE10 */
+    background-image:      -o-linear-gradient(top, #845555, #B05D5D); /* Opera 11.10+ */
+    background-image:         linear-gradient(top, #845555, #B05D5D);
+}
+
+ul.listado-adicion .mesa-cerrada A{
+    border: 1px solid 		#996F45;
+    background: 			#B0875D;
+    color: 					#fff;
+    font-weight: bold;
+    text-shadow: 0 -1px 1px #254f7a;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#CFA882), to(#B0875D)); /* Saf4+, Chrome */
+    background-image: -webkit-linear-gradient(top, #CFA882, #B0875D); /* Chrome 10+, Saf5.1+ */
+    background-image:    -moz-linear-gradient(top, #CFA882, #B0875D); /* FF3.6 */
+    background-image:     -ms-linear-gradient(top, #CFA882, #B0875D); /* IE10 */
+    background-image:      -o-linear-gradient(top, #CFA882, #B0875D); /* Opera 11.10+ */
+    background-image:         linear-gradient(top, #CFA882, #B0875D);
+}
+
+ul.listado-adicion .mesa-cerrada A:focus{
     background:#CF7E44;
     text-shadow:0 -1px 1px #733715;
     background-image:-webkit-gradient(linear,left top,left bottom,from(#E3AF84),to(#C48452));
@@ -53,7 +84,7 @@ ul.listado-adicion .ui-btn-up-f:focus{
     background-image:linear-gradient(top,#E3AF84,#C48452);
 }
 
-ul.listado-adicion A:focus{
+ul.listado-adicion .mesa-abierta A:focus{
     color:#fff !important;
     background:#4596ce;
     font-weight:bold;
@@ -213,7 +244,13 @@ background-color: #EDEDED;
 .mesa-actions ul li[estado='mesa-cerrar_mesa-cerrada'],
 .mesa-actions ul li[estado='mesa-reabrir_mesa-abierta'],
 .mesa-actions ul li[estado='mesa-re-print_mesa-abierta'],
-.mesa-actions ul li[estado='mesa-cobrar_mesa-abierta']{
+.mesa-actions ul li[estado='mesa-cobrar_mesa-abierta'],
+
+.mesa-actions ul li[estado='comanda-add-menu_mesa-cobrada'],
+.mesa-actions ul li[estado='mesa-cliente_mesa-cobrada'],
+.mesa-actions ul li[estado='mesa-cerrar_mesa-cobrada'],
+.mesa-actions ul li[estado='mesa-cobrar_mesa-cobrada']
+{
     display: none;
 }
 
@@ -285,4 +322,8 @@ ul.listado-mozos-para-mesas{
 
 .pagos_creados li img{
     width: 60px;
+}
+
+.es_entrada{
+    background: #437FBE;
 }

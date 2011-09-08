@@ -60,7 +60,7 @@ var Mesa = function(mozo, jsonData) {
                 }
             }
             
-            return total;
+            return Math.round( total*100)/100;
         }, this);
         
         
@@ -78,8 +78,8 @@ var Mesa = function(mozo, jsonData) {
             }
             
             if (this.Cliente() && !this.Cliente().hasOwnProperty('length') && this.Cliente().Descuento()){
-                dto = Math.floor(total * this.Cliente().Descuento().porcentaje() / 100);
-                totalText = totalText+' - [Dto '+this.Cliente().Descuento().porcentaje()+'%] $'+dto+' = $'+(total - dto);
+                dto = Math.round( Math.floor( total * this.Cliente().Descuento().porcentaje() / 100 ) *100 ) /100;
+                totalText = totalText+' - [Dto '+this.Cliente().Descuento().porcentaje()+'%] $'+dto+' = $'+ Math.round( (total - dto)*100)/100;
             }
             return totalText;
         }, this);
@@ -113,7 +113,7 @@ var Mesa = function(mozo, jsonData) {
             return 0;
         }, this);
         
-        this.clienteNameData= ko.dependentObservable(function(){
+        this.clienteNameData = ko.dependentObservable(function(){
             var cliente = this.Cliente();
             if (cliente){
                 if (typeof cliente == 'function') {
@@ -121,6 +121,14 @@ var Mesa = function(mozo, jsonData) {
                 } else {
                     return cliente.nombre;
                 }
+            }
+            return '';
+        }, this);
+        
+        
+        this.getEstadoIcon = ko.dependentObservable( function(){
+            if (this.estado()){
+                return this.estado().icon;
             }
             return '';
         }, this);
@@ -173,7 +181,6 @@ Mesa.prototype = {
         this.estado         = ko.observable();
         this.Pago           = ko.observableArray( [] );
         var mapOps          = {};
-        var eee;
         
         // si vino jsonData mapeo con koMapp
         if ( jsonData ) {
@@ -373,13 +380,6 @@ Mesa.prototype = {
         return this.estado();
     },
     
-    getEstadoIcon: function(){
-        if (this.estado()){
-            return this.estado().icon;
-        }
-        return '';
-    },
-        
     
     getEstadoName: function(){
         if (this.estado()){

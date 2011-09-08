@@ -440,7 +440,7 @@ $tipo_pagos = $this->Mesa->Pago->TipoDePago->find('list');
     function reabrir($id){
         $this->Session->setFlash('Se reabrió la mesa', true);
         $this->Mesa->reabrir($id);
-        $this->redirect($this->referer());
+        die("reabrio la mesa ID: $id");
     }
     
     

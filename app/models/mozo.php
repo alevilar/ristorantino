@@ -101,11 +101,11 @@ class Mozo extends AppModel {
                                 'Producto','DetalleSabor.Sabor'),
                         ),
                         'conditions' => array(
-                            "Mesa.time_cobro" => "0000-00-00 00:00:00",
+                            "Mesa.estado_id <" => MESA_COBRADA,
                             'Mesa.deleted' => 0,
 //                            "Mesa.time_cerro" => "0000-00-00 00:00:00",
                         ),
-                        'order' => 'Mesa.created DESC',
+                        'order' => 'Mesa.numero DESC',
                     ),
                  ),
                 'conditions'=> $conditions,

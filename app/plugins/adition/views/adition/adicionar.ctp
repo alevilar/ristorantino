@@ -1,13 +1,14 @@
-<script id="li-productos-detallecomanda" type="text/x-jquery-tmpl">
-     <li  class="ui-li ui-li-static ui-body-c">
-         <span data-type="horizontal" data-role="controlgroup" class="ui-corner-all ui-controlgroup ui-controlgroup-horizontal">
-            <a data-bind="click: deseleccionar" data-role="button" data-icon="minus" data-iconpos="notext" href="#" title="-" data-theme="c" class="ui-btn ui-btn-icon-notext ui-btn-up-c"><span class="ui-btn-inner"><span class="ui-btn-text">-</span><span class="ui-icon ui-icon-minus ui-icon-shadow"></span></span></a>
-            <a data-bind="style: { background: esEntrada() ? '#437FBE' : ''}" data-role="button" data-iconpos="notext" data-icon="entrada" href="#" title="Entrada" data-theme="c" class="ui-btn ui-btn-icon-notext ui-corner-right ui-controlgroup-last ui-btn-up-c"><span class="ui-btn-inner ui-corner-right ui-controlgroup-last"><span class="ui-btn-text">Entrada</span><span class="ui-icon ui-icon-entrada ui-icon-shadow"></span></span></a>
-         </span>
 
-         <span data-bind="text: realCant()" style="right: auto" class="ui-li-count ui-btn-up-c ui-btn-corner-all"></span>
-         <span data-bind="text: nameConSabores()" style="padding-left: 40px;"></span>
-     </li>
+<script id="li-productos-detallecomanda" type="text/x-jquery-tmpl">
+ <li  class="ui-li ui-li-static ui-body-c">
+     <span data-type="horizontal" data-role="controlgroup" class="ui-corner-all ui-controlgroup ui-controlgroup-horizontal">
+        <a data-bind="click: deseleccionar" data-role="button" data-icon="minus" data-iconpos="notext" href="#" title="-" data-theme="c" class="ui-btn ui-btn-icon-notext ui-btn-up-c"><span class="ui-btn-inner"><span class="ui-btn-text">-</span><span class="ui-icon ui-icon-minus ui-icon-shadow"></span></span></a>
+        <a data-bind="css: { es_entrada: esEntrada()}" data-role="button" data-iconpos="notext" data-icon="entrada" href="#" title="Entrada" data-theme="c" class="ui-btn ui-btn-icon-notext ui-corner-right ui-controlgroup-last ui-btn-up-c"><span class="ui-btn-inner ui-corner-right ui-controlgroup-last"><span class="ui-btn-text">Entrada</span><span class="ui-icon ui-icon-entrada ui-icon-shadow"></span></span></a>
+     </span>
+
+     <span data-bind="text: realCant()" style="right: auto" class="ui-li-count ui-btn-up-c ui-btn-corner-all"></span>
+     <span data-bind="text: nameConSabores()" style="padding-left: 40px;"></span>
+ </li>
 </script>
 
                   
@@ -44,7 +45,6 @@
 
                     
         <div  data-role="content" class="content_mesas">
-                
                 <!-- aca va el listado de mesas que se carga dinamicamente en un script de abajo -->
                 <a href="#mesa-add" data-rel="dialog"  data-transition="pop" class="grid_1 abrir-mesa" href="#" data-role="button" data-theme="a">Abrir<br>Mesa</a>  
                 <ul id="mesas_container" class="listado-adicion" data-bind='template: { name: "listaMesas", foreach: adn().mesas }'>
@@ -53,12 +53,12 @@
                             el ajax que verifica el estado de las mesas (si fue abierta o cerrada alguna. -->
                         <script id="listaMesas" type="text/x-jquery-tmpl">
 
-                            <li class="grid_2 li-btn" data-bind="attr: {mozo: mozo().id()}">
-                                <a  data-bind="click: seleccionar, attr: {accesskey: numero}, css: {'ui-btn-up-f': estaCerrada(), 'ui-btn-up-c': !estaCerrada()}" 
+                            <li data-bind="attr: {mozo: mozo().id(), 'class': getEstadoIcon()}">
+                                <a  data-bind="click: seleccionar, attr: {accesskey: numero}" 
                                     data-theme="c"
                                     data-role="button" 
                                     href="#mesa-view" 
-                                    class="ui-btn ui-btn-icon-left ui-btn-corner-all ui-shadow">
+                                    class="ui-btn ui-btn-icon-left ui-btn-corner-all ui-shadow ui-btn-up-c">
                                     <span class="mesa-span ui-btn-inner ui-btn-corner-all">
                                         <span class="ui-btn-text">
                                             <span class="mesa-numero" data-bind="text: numero"></span>
@@ -228,6 +228,7 @@
                                 <ul class="ui-listview comanda-items" data-role="listview"
                                    data-bind="template: {name: 'li-productos-detallecomanda', foreach: DetalleComanda}"
                                    style="margin: 0px;">
+                                    
                                 </ul>                                                                           
                            </div>
                         </script>
@@ -256,7 +257,7 @@
 <div data-role="page" id="comanda-add-menu">
     <div  data-role="header"  data-position="inline">
 <!--        <a data-rel="back" data-transition="reverse" href="#">Cancelar</a>-->
-	<h1>Nueva Comanda</h1>
+	<h1>Nueva Comanda para la mesa <span data-bind="text: adn().currentMesa().numero"></span></h1>
 	<a href="#mesa-view" data-icon="check" data-theme="b" data-bind="click: function(){adn().currentMesa().currentComanda().save()}">Guardar</a>        
     </div>
 
@@ -287,7 +288,16 @@
                                     <span class="ui-icon ui-icon-grid ui-icon-shadow"></span>
                                 </span>
                             </a>
-                            <a data-bind="click: toggleEsEntrada, style: { background: esEntrada() ? '#437FBE' : ''}" data-role="button" data-iconpos="notext" data-icon="entrada" href="#" title="Entrada" data-theme="c" class="ui-btn ui-btn-icon-notext ui-corner-right ui-controlgroup-last ui-btn-up-c"><span class="ui-btn-inner ui-corner-right ui-controlgroup-last"><span class="ui-btn-text">Entrada</span><span class="ui-icon ui-icon-entrada ui-icon-shadow"></span></span></a>
+                            <a data-role="button" data-iconpos="notext" data-icon="entrada" 
+                               href="#" title="Entrada" data-theme="c" 
+                               class="ui-btn ui-btn-icon-notext ui-corner-right ui-controlgroup-last ui-btn-up-c"
+                               data-bind="click: toggleEsEntrada, css: { es_entrada: esEntrada()}"
+                               >
+                                <span class="ui-btn-inner ui-corner-right ui-controlgroup-last">
+                                    <span class="ui-btn-text">Entrada</span>
+                                    <span class="ui-icon ui-icon-entrada ui-icon-shadow"></span>
+                                </span>
+                            </a>
                          </span>
 
                          <span data-bind="text: nameConSabores()"></span>
@@ -354,7 +364,7 @@
 -->
 <div data-role="page" id="page-sabores" data-theme="b">
     <div data-role="header">
-        <h1>Seleccionar sabores<span></span></h1>
+        <h1>Seleccionar sabores</h1>
                
 	<a href="#" data-icon="check" data-theme="b" data-rel="back" data-bind="click: function(){adn().currentMesa().currentComanda().saveSabores()}">Guardar</a>        
     </div>
@@ -430,11 +440,13 @@
 -->
 <div data-role="page" id="mesa-cambiar-numero" data-theme="e">
     <div data-role="header">
-        <h1>Nuevo Número de Mesa</h1>
+        <h1>Cambiar número de la Mesa <span data-bind="text: adn().currentMesa().numero"></span></h1>
     </div>
 
-    <div data-role="content">                  
-        
+    <div data-role="content">    
+        <p>
+        El número actual es <span data-bind="text: adn().currentMesa().numero"></span>
+        </p>
         <form name="cambiar-mozo" id="form-cambiar-numero" action="#" data-ajax="false"  data-direction="reverse">
             <fieldset data-role="controlgroup" data-type="horizontal">
                 <legend for="numeroacambiar">Ingresar nuevo número</legend>
@@ -460,7 +472,7 @@
 -->
 <div data-role="page" id="mesa-cobrar" data-theme="e">
     <div data-role="header">
-        <h1>Cobrar Mesa</h1>
+        <h1>Mesa <span data-bind="text: adn().currentMesa().numero"> | </span><span data-bind="text: adn().vueltoText"></span></h1>
     </div>
 
     <div data-role="content">                  
@@ -507,9 +519,6 @@
 	    </div>
     </div>
     
-    <div data-role="footer">
-        <h2 data-bind="text: adn().vueltoText"></h2>
-    </div>
             
 </div>  
 
