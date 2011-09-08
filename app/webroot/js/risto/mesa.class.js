@@ -172,7 +172,8 @@ Mesa.prototype = {
         this.Cliente        = ko.observable();
         this.estado         = ko.observable();
         this.Pago           = ko.observableArray( [] );
-        var mapOps          = {};        
+        var mapOps          = {};
+        var eee;
         
         // si vino jsonData mapeo con koMapp
         if ( jsonData ) {
@@ -188,11 +189,7 @@ Mesa.prototype = {
                 'ignore': ["Cliente"],
                 'Comanda': {
                     create: function(ops) {
-                        console.debug(ops);
                         return new Risto.Adition.comanda(ops.data);
-                    },
-                    key: function(data) {
-                        return ko.utils.unwrapObservable(data.id);
                     }
                 }
             }
@@ -201,6 +198,10 @@ Mesa.prototype = {
                 // meto al mozo sin agregarle la mesa al listado porque seguramente vino en el json
                 this.setMozo(mozo, false);
             }
+            
+            // meto el estado como Objeto Observable Estado
+            this.__inicializar_estado(jsonData);
+            
         } else {
             if (mozo) {
                 // meto al mozo agregandole al mozo
@@ -209,16 +210,17 @@ Mesa.prototype = {
             jsonData = {};
         }
         
-        this.__inicializar_estado(jsonData);
-        
+        // agrego atributos generales
         Risto.modelizar(this);
+        
         ko.mapping.fromJS(jsonData, mapOps, this);
+       
         return this;
     },
     
     __inicializar_estado: function(jsonData){
         var estado = MESA_ESTADOS_POSIBLES.abierta;
-         if (jsonData.estado_id){
+         if (jsonData.estado_id) {
             for(var ee in MESA_ESTADOS_POSIBLES){
                 if ( MESA_ESTADOS_POSIBLES[ee].id && MESA_ESTADOS_POSIBLES[ee].id == jsonData.estado_id ){
                     estado = MESA_ESTADOS_POSIBLES[ee];
@@ -226,7 +228,9 @@ Mesa.prototype = {
                 }
             }
          }
-        return this.estado(estado);
+         
+        this.estado( estado );
+        return estado;
     },
     
     

@@ -44,7 +44,7 @@ Risto.Adition.adicionar = {
     initialize: function() {
         this.reloadMesasAbiertas();
         
-        setInterval(this.reloadMesasAbiertas, 50000);
+        setInterval(this.reloadMesasAbiertas, 10000);
     },
     
     reloadMesasAbiertas: function(){

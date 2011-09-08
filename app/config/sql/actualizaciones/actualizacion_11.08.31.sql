@@ -2,21 +2,21 @@ ALTER TABLE `productos_precios_futuros` ADD `id` INT NOT NULL AUTO_INCREMENT PRI
 
 
 
-ALTER TABLE  `mesas` ADD  `estado` TINYINT NOT NULL DEFAULT  0 AFTER  `cant_comensales`;
+ALTER TABLE  `mesas` ADD  `estado_id` TINYINT NOT NULL DEFAULT  0 AFTER  `cant_comensales`;
 
 
 
 /* Meto el estado script de migracion de datos existentes con el nuevo campo de estado */
 /* COBRADAS*/
 UPDATE mesas SET
-estado = 3
+estado_id = 3
 where
 time_cobro <> '0000-00-00 00:00:00';
 
 
 /* CERRADAS */
 UPDATE mesas SET
-estado = 2
+estado_id = 2
 where
 time_cerro <> '0000-00-00 00:00:00'
 and
@@ -24,7 +24,7 @@ time_cobro = '0000-00-00 00:00:00';
 
 /* ABIERTAS */
 UPDATE mesas SET
-estado = 1
+estado_id = 1
 where
 time_cerro = '0000-00-00 00:00:00'
 and
@@ -36,7 +36,7 @@ time_cobro = '0000-00-00 00:00:00';
 de esa forma evitamos que un mozo pueda hacer un descuento del 100%
 el default esta en 15%
 */
-INSERT INTO  `coqus`.`config_categories` (
+INSERT INTO  `config_categories` (
 `id` ,
 `name`
 )
@@ -44,7 +44,7 @@ VALUES (
 NULL ,  'Mozo'
 );
 
-INSERT INTO  `coqus`.`configs` (
+INSERT INTO `configs` (
 `id` ,
 `config_category_id` ,
 `key` ,
@@ -54,11 +54,6 @@ INSERT INTO  `coqus`.`configs` (
 VALUES (
 NULL ,  '6',  'descuento_maximo',  '15',  'máximo porcentaje de descuento que puede hacer un mozo'
 );
-
-
-/** PONER ESTADO CERRADA A TODAS LAS MESAS **/
-update mesas
-set mesa_estado_id = 2;
 
 
 
