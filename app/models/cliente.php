@@ -232,7 +232,7 @@ class Cliente extends AppModel {
         function todos($type = 'all'){
                 $clientes = $this->find($type, array(
                     'order'      => 'Cliente.nombre',
-                    'limit' => 10,
+//                    'limit' => 10,
                     'contain' => array(
                         'Descuento'
                     ),

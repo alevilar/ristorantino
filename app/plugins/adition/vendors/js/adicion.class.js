@@ -42,9 +42,18 @@ Risto.Adition.adicionar = {
      * Constructor
      */
     initialize: function() {
-        this.getMesasAbiertas();
-        this.mozosOrder('numero');
+        this.reloadMesasAbiertas();
+        
+        setInterval(this.reloadMesasAbiertas, 50000);
     },
+    
+    reloadMesasAbiertas: function(){
+        Risto.Adition.adicionar.getMesasAbiertas();
+
+        // ordenar por numero de mesa
+        Risto.Adition.adicionar.mozosOrder('numero'); 
+    },
+    
 
     /**
      *Crea un elemento DOM con el TAG pasado como parametro

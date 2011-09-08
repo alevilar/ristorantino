@@ -73,11 +73,11 @@ var Mesa = function(mozo, jsonData) {
                 }
             }
             
-            if (this.Cliente() && this.Cliente().tipofactura().toLowerCase() == 'a'){               
+            if (this.Cliente() && !this.Cliente().hasOwnProperty('length') && this.Cliente().tipofactura().toLowerCase() == 'a'){               
                 totalText = 'Factura "A" '+totalText;
             }
             
-            if (this.Cliente() && this.Cliente().Descuento()){
+            if (this.Cliente() && !this.Cliente().hasOwnProperty('length') && this.Cliente().Descuento()){
                 dto = Math.floor(total * this.Cliente().Descuento().porcentaje() / 100);
                 totalText = totalText+' - [Dto '+this.Cliente().Descuento().porcentaje()+'%] $'+dto+' = $'+(total - dto);
             }
@@ -89,7 +89,7 @@ var Mesa = function(mozo, jsonData) {
         this.totalCalculado = ko.dependentObservable(function(){
             var total = this.totalCalculadoNeto(), dto = 0, totalText = '$-';
             
-            if (this.Cliente() && this.Cliente().Descuento()){
+            if (this.Cliente() && !this.Cliente().hasOwnProperty('length') &&  this.Cliente().Descuento()){
                 dto = Math.floor(total * this.Cliente().Descuento().porcentaje() / 100);
                 totalText = total - dto;
             }
@@ -116,7 +116,11 @@ var Mesa = function(mozo, jsonData) {
         this.clienteNameData= ko.dependentObservable(function(){
             var cliente = this.Cliente();
             if (cliente){
-                return cliente.nombre();
+                if (typeof cliente == 'function') {
+                    return cliente.nombre();
+                } else {
+                    return cliente.nombre;
+                }
             }
             return '';
         }, this);
@@ -181,8 +185,10 @@ Mesa.prototype = {
             
             // si aun no fue mappeado
             mapOps = {
+                'ignore': ["Cliente"],
                 'Comanda': {
                     create: function(ops) {
+                        console.debug(ops);
                         return new Risto.Adition.comanda(ops.data);
                     },
                     key: function(data) {
@@ -249,6 +255,7 @@ Mesa.prototype = {
     urlEdit: function(){return urlDomain+'mesas/ajax_edit/'+this.id()},
     urlDelete: function(){return urlDomain+'mesas/delete/'+this.id()},
     urlComandaAdd: function(){return urlDomain+'comandas/add/'+this.id()},
+    urlReimprimirTicket: function(){return urlDomain+'mesas/imprimirTicket/'+this.id()},
     urlCerrarMesa: function(){return urlDomain+'mesas/cerrarMesa/'+this.id()},
     urlReabrir: function(){return urlDomain+'mesas/reabrir/'+this.id()},
     urlAddCliente: function(clienteId){
@@ -569,29 +576,7 @@ Mesa.prototype = {
                 ctx.Cliente(null);
             }
         });
-    },
-    
-    
-    cobrarPagos: function(){
-        this.setEstadoCobrada();
-        
-        var mes = {
-            Mesa: {
-                id: this.id(),
-                estado_id: this.estado_id(),
-                time_cobro: this.time_cobro(),
-                model: 'Mesa'
-            },
-            Pago: this.Pago()
-        };
-        
-        // guardo los pagos
-        $cakeSaver.send({
-            url: urlDomain+'pagos/add',
-            obj: mes
-        }, function(d){
-            
-        });
     }
+    
 };
 

@@ -1,5 +1,4 @@
 
-
 // mensaje de confirmacion cuando se esta por salir de la pagina (evitar perdidas de datos no actualizados)
 window.onbeforeunload=confirmacionDeSalida;
 
@@ -96,6 +95,12 @@ $(document).ready(function() {
        })
     });
     
+    $('#mesa-reimprimir').click(function(){
+        var mesa = Risto.Adition.adicionar.currentMesa();
+        var url = mesa.urlReimprimirTicket();
+        $.get(url);
+    });
+    
     
     $('#mesa-borrar').click(function(){
         if (window.confirm('Seguro que desea borrar la mesa '+Risto.Adition.adicionar.currentMesa().numero())){
@@ -144,15 +149,21 @@ $(document).ready(function() {
     
     
     $('#mesa-pagos-procesar').click(function(){
+        // lipieza de pagos, selecciono solo los que se les haya agregado algun valor en el input
         for (var p in Risto.Adition.adicionar.pagos() ) {
             if ( Risto.Adition.adicionar.pagos()[p] ) {
                 if ( Risto.Adition.adicionar.pagos()[p].valor() ) {
+                    // agrego el pago a la mesa
                     Risto.Adition.adicionar.currentMesa().Pago.push( Risto.Adition.adicionar.pagos()[p] );
                 }
             }
         }
+        
+        // reinicio los pagos
         Risto.Adition.adicionar.pagos([]);
-        Risto.Adition.adicionar.currentMesa().cobrarPagos();
+        
+        // cambio el estado de la mesa para disparar el evento
+        Risto.Adition.adicionar.currentMesa().setEstadoCobrada();
     });
     
                  
@@ -207,8 +218,26 @@ function mesaBorrada(e){
     e.mesa.mozo().sacarMesa(mesa);
 }
 
-function mesaCobrada(){
-    alert('mesa cobrada');
+function mesaCobrada(e){
+    // envio los datos al servidor
+    var m = e.mesa
+    var mes = {
+            Mesa: {
+                id: m.id(),
+                estado_id: m.estado_id(),
+                time_cobro: m.time_cobro(),
+                model: 'Mesa'
+            },
+            Pago: m.Pago()
+        };
+        
+        // guardo los pagos
+        $cakeSaver.send({
+            url: urlDomain+'pagos/add',
+            obj: mes
+        }, function(d){
+            
+        });
 }
 
 

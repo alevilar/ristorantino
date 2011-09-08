@@ -131,7 +131,7 @@ class PrinterComponent extends Object {
 
             if(!empty($this->Mesa['Cliente']['Descuento']['porcentaje'])) {
                 $this->porcentaje_descuento = $this->Mesa['Cliente']['Descuento']['porcentaje'];
-                $this->importe_descuento = cqs_round(($this->porcentaje_descuento/100)*$this->Mesa['Mesa']['total']);
+                $this->importe_descuento = cqs_round(($this->porcentaje_descuento/100)*$this->Mesa['Mesa']['subtotal']);
             }
 
             $imprimio = false;
