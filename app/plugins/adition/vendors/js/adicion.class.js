@@ -1,3 +1,7 @@
+// intervalo en milisegundos en el que seran renovadas las mesas
+MESAS_RELOAD_INTERVAL = 5500;
+
+
 
 //Parametros de configuracion
 Risto.Adition.cubiertosObligatorios   = true;
@@ -44,7 +48,7 @@ Risto.Adition.adicionar = {
     initialize: function() {
         this.reloadMesasAbiertas();
         
-        setInterval(this.reloadMesasAbiertas, 3000);
+        setInterval(this.reloadMesasAbiertas, MESAS_RELOAD_INTERVAL);
     },
     
     reloadMesasAbiertas: function(){
@@ -269,12 +273,23 @@ Risto.Adition.adicionar = {
 
 
     getMesasAbiertas: function(){
-        var ajaxResp = $.get(
-                urlDomain + 'mozos/mesas_abiertas.json',
-                this.__actualizarMozosConMesasAbiertas,
-                'json'
-            );
-        ajaxResp.error = function(){alert("fallo conexión")}
+        var mandando, // esta hace de semaforo para futuras peticiones. Solo se manda 1 peticion, y hasta que no termine no se puide otra
+            cntx = this;
+        
+        if (mandando) return null;
+        
+        function mandarSiNoEstabaMandando() {
+            $.ajax({
+                url: urlDomain + 'mozos/mesas_abiertas.json',
+                timeout: 10000,
+                success: cntx.__actualizarMozosConMesasAbiertas,
+                error: function(){alert("falló conexión")},
+                complete: function() {mandando = false},
+                beforeSend: function() {mandando = true;}
+            });
+        }
+                
+        return mandarSiNoEstabaMandando();
     },
     
 
@@ -360,7 +375,27 @@ Risto.Adition.adicionar.mesas = ko.dependentObservable( function(){
 
 }, Risto.Adition.adicionar);
      
-     
+    
+Risto.Adition.adicionar.mesasCerradas = ko.dependentObservable(function(){
+    var mesas = [];
+    for ( var m in this.mesas() ) {
+        if ( !this.mesas()[m].estaAbierta() ) {
+            mesas.push( this.mesas()[m]);
+        }
+    }
+    var order = 'time_cerro';
+    if ( order ) {
+        mesas.sort(function(left, right) {
+            if (left[order] && typeof left[order] == 'function' && right[order] && typeof right[order] == 'function') {
+                return left[order]() == right[order]() ? 0 : (parseInt(left[order]()) < parseInt(right[order]()) ? -1 : 1) 
+            }
+        })
+    }
+                
+                
+    return mesas;
+
+}, Risto.Adition.adicionar);
      
 /**
  * Variable de estado generada cuando se esta armando una comanda

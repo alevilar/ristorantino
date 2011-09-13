@@ -2,13 +2,40 @@
 <script id="li-productos-detallecomanda" type="text/x-jquery-tmpl">
  <li  class="ui-li ui-li-static ui-body-c">
      <span data-type="horizontal" data-role="controlgroup" class="ui-corner-all ui-controlgroup ui-controlgroup-horizontal">
-        <a data-bind="click: deseleccionar" data-role="button" data-icon="minus" data-iconpos="notext" href="#" title="-" data-theme="c" class="ui-btn ui-btn-icon-notext ui-btn-up-c"><span class="ui-btn-inner"><span class="ui-btn-text">-</span><span class="ui-icon ui-icon-minus ui-icon-shadow"></span></span></a>
+        <a data-bind="click: deseleccionarYEnviar" data-role="button" data-icon="minus" data-iconpos="notext" href="#" title="-" data-theme="c" class="ui-btn ui-btn-icon-notext ui-btn-up-c"><span class="ui-btn-inner"><span class="ui-btn-text">-</span><span class="ui-icon ui-icon-minus ui-icon-shadow"></span></span></a>
         <a data-bind="css: { es_entrada: esEntrada()}" data-role="button" data-iconpos="notext" data-icon="entrada" href="#" title="Entrada" data-theme="c" class="ui-btn ui-btn-icon-notext ui-corner-right ui-controlgroup-last ui-btn-up-c"><span class="ui-btn-inner ui-corner-right ui-controlgroup-last"><span class="ui-btn-text">Entrada</span><span class="ui-icon ui-icon-entrada ui-icon-shadow"></span></span></a>
      </span>
 
      <span data-bind="text: realCant()" style="right: auto" class="ui-li-count ui-btn-up-c ui-btn-corner-all"></span>
-     <span data-bind="text: nameConSabores()" style="padding-left: 40px;"></span>
+     <span data-bind="text: nameConSabores(), css: {tachada: realCant()==0}" style="padding-left: 40px;"></span>
  </li>
+</script>
+
+
+
+
+<!-- Template: 
+listado de mesas que será refrescado continuamente mediante 
+el ajax que verifica el estado de las mesas (si fue abierta o cerrada alguna. -->
+<script id="listaMesas" type="text/x-jquery-tmpl">
+
+    <li data-bind="attr: {mozo: mozo().id(), 'class': getEstadoIcon()}">
+        <a  data-bind="click: seleccionar, attr: {accesskey: numero}" 
+            data-theme="c"
+            data-role="button" 
+            href="#mesa-view" 
+            class="ui-btn ui-btn-icon-left ui-btn-corner-all ui-shadow ui-btn-up-c">
+            <span class="mesa-span ui-btn-inner ui-btn-corner-all">
+                <span class="ui-btn-text">
+                    <span class="mesa-numero" data-bind="text: numero"></span>
+                    <span class="mesa-mozo" data-bind="text: mozo().numero"></span>
+                    <br />
+                    <span class="mesa-time" data-bind="text: textoHora()"></span>
+                </span>
+                <span class="mesa-icon ui-icon ui-icon-shadow" data-bind="css: {'ui-icon-mesa-abierta': getEstadoIcon()!='mesa-cerrada', 'ui-icon-mesa-cerrada': getEstadoIcon()=='mesa-cerrada', 'ui-icon-mesa-cobrada': getEstadoIcon()=='mesa-cobrada'}"></span>
+            </span>
+        </a>
+    </li>
 </script>
 
                   
@@ -48,47 +75,64 @@
                 <!-- aca va el listado de mesas que se carga dinamicamente en un script de abajo -->
                 <a href="#mesa-add" data-rel="dialog"  data-transition="pop" class="grid_1 abrir-mesa" href="#" data-role="button" data-theme="a">Abrir<br>Mesa</a>  
                 <ul id="mesas_container" class="listado-adicion" data-bind='template: { name: "listaMesas", foreach: adn().mesas }'>
-                        <!-- Template: 
-                            listado de mesas que será refrescado continuamente mediante 
-                            el ajax que verifica el estado de las mesas (si fue abierta o cerrada alguna. -->
-                        <script id="listaMesas" type="text/x-jquery-tmpl">
-
-                            <li data-bind="attr: {mozo: mozo().id(), 'class': getEstadoIcon()}">
-                                <a  data-bind="click: seleccionar, attr: {accesskey: numero}" 
-                                    data-theme="c"
-                                    data-role="button" 
-                                    href="#mesa-view" 
-                                    class="ui-btn ui-btn-icon-left ui-btn-corner-all ui-shadow ui-btn-up-c">
-                                    <span class="mesa-span ui-btn-inner ui-btn-corner-all">
-                                        <span class="ui-btn-text">
-                                            <span class="mesa-numero" data-bind="text: numero"></span>
-                                            <span class="mesa-mozo" data-bind="text: mozo().numero"></span>
-                                           
-                                        </span>
-                                        <span class="mesa-icon ui-icon ui-icon-shadow" data-bind="css: {'ui-icon-mesa-abierta': getEstadoIcon()!='mesa-cerrada', 'ui-icon-mesa-cerrada': getEstadoIcon()=='mesa-cerrada', 'ui-icon-mesa-cobrada': getEstadoIcon()=='mesa-cobrada'}"></span>
-                                        
-                                    </span>
-
-                                    
-                                    
-                                </a>
-                            </li>
-                        </script>
+                        
                 </ul>
         </div><!-- /navbar -->
             
         <div  data-role="footer" data-position="fixed">
                 <div data-role="navbar">
                         <ul>
-                            <li><a onclick="Risto.Adition.adicionar.mozosOrder('numero')" class="ui-btn-active">Ordenar Por Numero</a></li>
-                            <li><a onclick="Risto.Adition.adicionar.mozosOrder('mozo_id')">Ordenar Por Mozo</a></li>
-                            <li><a onclick="Risto.Adition.adicionar.mozosOrder('created')">Ordenar Por Cierre</a></li>
+                            <li><a href="#listado-mesas" class="ui-btn-active">Modo Adicionista</a></li>
+                            <li><a href="#listado-mesas-cerradas">Modo Cajero</a></li>
                         </ul>
                 </div>
         </div>
 
 </div>
 <!-- Fin Pagina 1 -->
+
+
+
+
+
+<!--
+                        LISTADO MESAS CERRADAS:::: MODO CAJERO
+
+-->
+<!-- Pagina 1, Home Page por default segun JQM: Listado de Mesas -->
+<div data-role="page" id="listado-mesas-cerradas">
+
+	<div  data-role="header">
+            <h1><span style="color: #fcf0b5" data-bind="text: adn().mesasCerradas().length">0</span> Mesas Cerradas</h1>
+
+            <a rel="external" href='#listado-mesas' data-icon="home" data-iconpos="notext" data-direction="reverse" class="ui-btn-right">Home</a>
+
+            
+        </div>
+
+                    
+        <div  data-role="content" class="content_mesas">
+                <!-- aca va el listado de mesas que se carga dinamicamente en un script de abajo -->
+                <ul class="listado-adicion" data-bind='template: { name: "listaMesas", foreach: adn().mesasCerradas }'>
+                       
+                </ul>
+        </div><!-- /navbar -->
+            
+        <div  data-role="footer" data-position="fixed">
+                <div data-role="navbar">
+                        <ul>
+                            <li><a href="#listado-mesas">Modo Adicionista</a></li>
+                            <li><a href="#listado-mesas-cerradas" class="ui-btn-active">Modo Cajero</a></li>
+                        </ul>
+                </div>
+        </div>
+
+</div>
+<!-- Fin Pagina Cajero -->
+
+
+
+
 
 
 
@@ -170,11 +214,11 @@
             <div class="mesa-actions" style="width: 29%; float: left;">
                 <ul data-role="listview" style="width: 100%">
                     
-                    <li data-bind="attr: {'estado': 'comanda-add-menu_'+adn().currentMesa().getEstadoIcon()}">
+                    <li id="mesa-action-comanda" data-bind="attr: {'estado': 'comanda-add-menu_'+adn().currentMesa().getEstadoIcon()}">
                         <a href="#comanda-add-menu" data-rel="dialog"  data-transition="pop"><?= $html->image('/adition/css/img/chef_64.png')?>Comanda</a>
                     </li>
                     
-                    <li data-bind="attr: {'estado': 'mesa-cliente_'+adn().currentMesa().getEstadoIcon()}">
+                    <li id="mesa-action-cliente" data-bind="attr: {'estado': 'mesa-cliente_'+adn().currentMesa().getEstadoIcon()}">
                         <a href="<?php echo $html->url('/clientes/jqm_clientes')?>" data-rel="dialog" data-transition="fade">
                                 <?= $html->image('/adition/css/img/addcliente.png')?>
                             <span data-bind="visible: !adn().currentMesa().Cliente()">Agregar Cliente</span>
@@ -182,33 +226,33 @@
                         </a>
                     </li>
                     
-                    <li data-bind="attr: {'estado': 'mesa-cerrar_'+adn().currentMesa().getEstadoIcon()}">
+                    <li id="mesa-action-cerrar" data-bind="attr: {'estado': 'mesa-cerrar_'+adn().currentMesa().getEstadoIcon()}">
                         <a href="#listado-mesas" id="mesa-cerrar" data-direction="reverse" data-transition="slide"><?= $html->image('/adition/css/img/cerrarmesa.png')?>Cerrar Mesa</a>
                     </li>
                     
                     
-                    <li data-bind="attr: {'estado': 'mesa-cobrar_'+adn().currentMesa().getEstadoIcon()}">
+                    <li id="mesa-action-cobrar" data-bind="attr: {'estado': 'mesa-cobrar_'+adn().currentMesa().getEstadoIcon()}">
                         <a href="#mesa-cobrar" data-rel="dialog"><?= $html->image('/adition/css/img/cobrar.png')?>Cobrar</a>
                     </li>
                     
-                    <li>
+                    <li id="mesa-action-cambiar-mozo">
                         <a href="#mesa-cambiar-mozo" data-rel="dialog"  data-transition="pop"><?= $html->image('/adition/css/img/cambiarmozo.png')?>Cambiar Mozo</a>
                     </li>
                     
-                    <li>
+                    <li id="mesa-action-cambiar-numero">
                         <a href="#mesa-cambiar-numero" data-rel="dialog"  data-transition="pop"><?= $html->image('/adition/css/img/cambiarmesa.png')?>Cambiar N°</a>
                     </li>
                     
-                    <li data-bind="attr: {'estado': 'mesa-re-print_'+adn().currentMesa().getEstadoIcon()}">
+                    <li id="mesa-action-reimprimir" data-bind="attr: {'estado': 'mesa-re-print_'+adn().currentMesa().getEstadoIcon()}">
                         <a href="#listado-mesas" id="mesa-reimprimir"  data-rel="back"><?= $html->image('/adition/css/img/reimprimir.png')?>Imprimir Ticket</a>
                     </li>
                     
-                    <li data-bind="attr: {'estado': 'mesa-reabrir_'+adn().currentMesa().getEstadoIcon()}">
+                    <li id="mesa-action-reabrir" data-bind="attr: {'estado': 'mesa-reabrir_'+adn().currentMesa().getEstadoIcon()}">
                         <a href="#listado-mesas" id="mesa-reabrir"><?= $html->image('/adition/css/img/reabrir.png')?>Re Abrir</a>
                     </li>
                     
                     <hr />
-                    <li data-bind="attr: {'estado': 'mesa-borrar_'+adn().currentMesa().getEstadoIcon()}">
+                    <li id="mesa-action-borrar" data-bind="attr: {'estado': 'mesa-borrar_'+adn().currentMesa().getEstadoIcon()}">
                         <a href="#listado-mesas" id="mesa-borrar" data-rel="back"><?= $html->image('/adition/css/img/borrarmesa.png')?>Borrar Mesa</a>
                     </li>
                 </ul>

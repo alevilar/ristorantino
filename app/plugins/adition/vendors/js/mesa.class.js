@@ -127,8 +127,9 @@ var Mesa = function(mozo, jsonData) {
         
         
         this.getEstadoIcon = ko.dependentObservable( function(){
-            if (this.estado()){
-                return this.estado().icon;
+            var estado = this.estado();
+            if (estado){
+                return estado.icon;
             }
             return '';
         }, this);
@@ -142,20 +143,20 @@ var Mesa = function(mozo, jsonData) {
 
 
 Mesa.prototype = {
-    model: 'Mesa',
-    id: ko.observable(0),
-    total: ko.observable(0),
-    numero: ko.observable(0),
-    mozo_id: ko.observable(0),
-    created: ko.observable(0),
-    Cliente: ko.observable(),   
-    estado: ko.observable(0),
-
+    model       : 'Mesa',
+    id          : ko.observable( 0 ),
+    total       : ko.observable( 0 ),
+    numero      : ko.observable( 0 ),
+    mozo_id     : ko.observable( 0 ),
+    created     : ko.observable( 0 ),
+    time_cerro  : ko.observable( 0 ),
+    Cliente     : ko.observable(   ),   
+    estado      : ko.observable( 0 ),
     
     // es la comanda que actualmente se esta haciendo objeto comandaFabrica
-    currentComanda: ko.observable(), 
-    Comanda: ko.observableArray(),
-    Pago: ko.observableArray(),
+    currentComanda: ko.observable( ), 
+    Comanda     : ko.observableArray( ),
+    Pago        : ko.observableArray( ),
     
     
     // attributos
@@ -395,7 +396,7 @@ Mesa.prototype = {
      */
     estaAbierta : function(){
 
-        return ( $.inArray(MESA_ESTADOS_POSIBLES.abierta, this.getEstado()) );
+        return MESA_ESTADOS_POSIBLES.abierta == this.getEstado();
     },
 
     /**
@@ -580,6 +581,24 @@ Mesa.prototype = {
                 ctx.Cliente(null);
             }
         });
+    },
+    
+    
+    /**
+     * Devuelve un texto con la hora
+     * si la mesa esta cerrada, dice "Cerró: 14:35"
+     * si esta aberta dice: "Abrió 13:22"
+     */
+    textoHora: function() {
+        var date, txt;
+        if ( this.getEstado() == MESA_ESTADOS_POSIBLES.cerrada ) {
+            txt = 'Cerró a las ';
+            date =  mysqlTimeStampToDate(this.time_cerro());
+        } else {
+            txt = 'Abrió a las ';
+            date = mysqlTimeStampToDate(this.created());            
+        }
+        return txt + date.getHours() + ':' + date.getMinutes() + 'hs';
     }
     
 };

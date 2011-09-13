@@ -7,7 +7,8 @@ var $cakeSaver = {
      * @param sendObje Objeto a mandar, debe tener como minimo:
      *  'url' => es la url donde se enviara el post
      *  'obj' => es el objeto que voy a enviar$cakeSaver
-     *  @param fn funcion callback a ejecutar
+     *  'error' => function handler
+     *  @param fn funcion callback a ejecutar onSuccess
      */
     send: function( sendObj , fn){
         var obj = sendObj['obj'];

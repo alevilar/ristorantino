@@ -46,8 +46,8 @@
                     
                     // OJO !! EL ORDEN IMPORTA !!
                     '/adition/js/adition.package',
-                    'risto/mozo.class',
-                    'risto/mesa.class',
+                    '/adition/js/mozo.class',
+                    '/adition/js/mesa.class',
                     '/adition/js/comanda.class',
                     '/adition/js/comanda_fabrica.class',
                     '/adition/js/adicion.class',
@@ -61,11 +61,9 @@
                     
                     '/adition/js/detalle_comanda.class',
                     
-                    
                     '/adition/js/ko_adicion_model',
                     '/adition/js/adition.events',
                     '/adition/js/menu',
-                    
                     
                     'jquery/jquery.mobile-1.0b2',
                     'jquery/jquery.easing.1.3',

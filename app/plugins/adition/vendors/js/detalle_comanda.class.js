@@ -24,26 +24,26 @@ Risto.Adition.detalleComanda = function(jsonData) {
 
 
 Risto.Adition.detalleComanda.prototype = {
-    Producto: ko.observable(),
+    Producto    : ko.observable(),
     DetalleSabor: ko.observableArray(), // array de Sabores
 
     // cant de este producto seleccionado
-    cant: ko.observable(0),
-    cant_eliminada: ko.observable(0),
-    es_entrada: ko.observable( 0 ),
-    observacion: ko.observable(''),
-    modificada: ko.observable(false),
-    model: 'DetalleComanda',
+    cant        : ko.observable( 0 ),
+    cant_eliminada: ko.observable( 0 ),
+    es_entrada  : ko.observable( 0 ),
+    observacion : ko.observable( '' ),
+    modificada  : ko.observable( false ),
+    model       : 'DetalleComanda',
     
     
     initialize: function(jsonData){
-        this.DetalleSabor = ko.observableArray([]);
-        this.imprimir = ko.observable(true);
-        this.cant = ko.observable(0);
-        this.cant_eliminada = ko.observable(0);
-        this.es_entrada = ko.observable.call( false );
-        this.observacion = ko.observable('');
-        this.modificada = ko.observable(false);
+        this.DetalleSabor   = ko.observableArray( [] );
+        this.imprimir       = ko.observable( true );
+        this.cant           = ko.observable( 0 );
+        this.cant_eliminada = ko.observable( 0 );
+        this.es_entrada     = ko.observable.call( false );
+        this.observacion    = ko.observable( '' );
+        this.modificada     = ko.observable( false );
 
         this.Producto = ko.observable( new Risto.Adition.producto() );
         if ( jsonData ) {
@@ -58,7 +58,7 @@ Risto.Adition.detalleComanda.prototype = {
             return ko.mapping.fromJS(jsonData, {} , this);
         }
         
-        return ko.mapping.fromJS({}, {} , this);
+        return ko.mapping.fromJS( {}, {} , this );
     },
     
     /**
@@ -138,6 +138,23 @@ Risto.Adition.detalleComanda.prototype = {
             this.cant_eliminada( this.cant_eliminada()+1 );
             this.modificada(true);
         }
+    },
+    
+    deseleccionarYEnviar: function(){
+        
+        if (!window.confirm('Seguro que desea eliminar 1 unidad de '+this.Producto().name)){
+            return false;
+        }
+        
+        if (this.realCant() > 0 ) {
+            this.cant_eliminada( this.cant_eliminada()+1 );
+            this.modificada(true);
+        }
+        $cakeSaver.send({
+           url: urlDomain + '/detalle_comandas/edit/' + this.id(),
+           obj: this
+        }, function() {
+        });
     },
     
     /**
