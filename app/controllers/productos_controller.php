@@ -83,6 +83,25 @@ class ProductosController extends AppController {
 			$this->Session->setFlash(__('Invalid Producto.', true));
 			$this->redirect(array('action'=>'index'));
 		}
+                $fields = array(
+                    'DetalleComanda.producto_id',
+                    'sum(DetalleComanda.cant_eliminada) as "cant_eliminada"',
+                    'sum(DetalleComanda.cant - DetalleComanda.cant_eliminada) as "suma"', 
+                    'DATE(DetalleComanda.created) as "date"');
+                
+                $this->set('consumiciones', $this->Producto->DetalleComanda->find('all', array(
+                    'conditions' => array(
+                        'DetalleComanda.producto_id' => $id,
+                    ),
+                    'contain' => array('DetalleSabor.Sabor'),
+                    'fields' => $fields,
+                    'group' => 'DetalleComanda.producto_id, DATE(DetalleComanda.created) HAVING sum(DetalleComanda.cant - DetalleComanda.cant_eliminada) > 0',
+                    'order' => 'DetalleComanda.created DESC',                    
+                )));
+                
+                $this->Producto->contain(array(
+                   'Categoria', 'HistoricoPrecio' => array('order'=>'HistoricoPrecio.created DESC') , 'Comandera', 'ProductosPreciosFuturo'
+                ));
 		$this->set('producto', $this->Producto->read(null, $id));
 	}
 	
@@ -119,16 +138,18 @@ class ProductosController extends AppController {
 			$this->redirect(array('action'=>'index'));
 		}
 		if (!empty($this->data)) {
-			if ($this->Producto->save($this->data)) {
-                            $this->Session->setFlash(__('The Producto has been saved', true));
+			if ($this->Producto->save($this->data['Producto'])) {
+//                            $this->Session->setFlash('El producto fue guardado correctamente');
                             if (!empty($this->data['ProductosPreciosFuturo']['precio'])){
                                 $this->data['ProductosPreciosFuturo']['producto_id'] = $this->data['Producto']['id'];
                                 //debug($this->Producto->ProductosPreciosFuturo);die;
                                 if (!$this->Producto->ProductosPreciosFuturo->save($this->data['ProductosPreciosFuturo'])){
                                     $this->Session->setFlash(__('No se pudo guardar el precio futuro', true));
                                 }
+                                
+                            // reseteo los precios futuros
                             } elseif(!empty($this->data['ProductosPreciosFuturo']['producto_id'])){
-                                if (!$this->Producto->ProductosPreciosFuturo->del($this->data['ProductosPreciosFuturo']['producto_id'])){
+                                if (!$this->Producto->ProductosPreciosFuturo->del($this->data['ProductosPreciosFuturo']['producto_id'], false)){
                                     $this->Session->setFlash(__('No se pudo eliminar el precio futuro', true));
                                 }
                             }
@@ -137,9 +158,8 @@ class ProductosController extends AppController {
 				$this->Session->setFlash(__('The Producto could not be saved. Please, try again.', true));
 			}
 		}
-		if (empty($this->data)) {
-			$this->data = $this->Producto->read(null, $id);
-		}
+                
+                $this->data = $this->Producto->read(null, $id);
 		$comanderas = $this->Producto->Comandera->find('list',array('fields'=>array('id','description')));
 		$categorias = $this->Producto->Categoria->generatetreelist(null, null, null, '___');
 		$this->set(compact('categorias','comanderas'));

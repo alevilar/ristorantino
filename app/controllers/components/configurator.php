@@ -7,10 +7,9 @@ class ConfiguratorComponent extends Object {
         $this->Config = & ClassRegistry::init('Config');
 
         $ccc = $this->Config->find('all');
-
-        $confName = '';
         
         foreach( $ccc as $c){
+            $confName = '';
             if (!empty($c['ConfigCategory']['name'])) {
                 $confName = $c['ConfigCategory']['name'].'.';
             }

@@ -193,6 +193,11 @@ es igual al de las mesas de la adicion salvo que al hacer click tienen otro comp
                         <input type="text" name="numero" data-risto="mesa"/>
                     </fieldset>
                     
+                     <fieldset data-role="fieldcontain">
+                        <label for="cant_comensales">Cantidad de Cubiertos:</label>
+                        <input type="text" name="cant_comensales"/>
+                    </fieldset>
+                    
                     <fieldset>
                         <button type="submit"  data-theme="b">Abrir Mesa</button>
                     </fieldset>
@@ -232,7 +237,12 @@ es igual al de las mesas de la adicion salvo que al hacer click tienen otro comp
 	<div  data-role="header" data-bind="css: {'ui-bar-f': adn().currentMesa().estaCerrada()}">
             <a href="#listado-mesas" data-transition="slide" data-direction="reverse">Volver</a>
             <h1>
-                Mesa <span data-bind="text: adn().currentMesa().numero"></span> | Mozo <span data-bind="text: adn().currentMesa().mozo().numero"></span>
+                
+                 <span data-bind="text: adn().currentMesa().numero"></span>
+                <?php echo $html->image('mesa-abrio.png') ?> Mesa  - 
+                Mozo <?php echo $html->image('mozomoniob.png') ?>
+                <span data-bind="text: adn().currentMesa().mozo().numero"></span>
+                 
                 <span class="hora-abrio">Estado: <span data-bind="text: adn().currentMesa().getEstadoName()"></span></span>
             </h1>
         </div>
@@ -311,6 +321,7 @@ es igual al de las mesas de la adicion salvo que al hacer click tienen otro comp
     
     <div data-role="footer" data-position="fixed">
         <h3>
+            <span class="cant_comensales" data-bind="visible: adn().currentMesa().cant_comensales() > 0"><span data-bind="text: adn().currentMesa().cant_comensales()"></span> Cubiertos</span>
             <span class="mesa-total"><span data-bind="text: adn().currentMesa().textoTotalCalculado"></span></span>
             <span class="hora-abrio">Abrió a las <span data-bind="text: adn().currentMesa().timeCreated()"></span></span>
         </h3>

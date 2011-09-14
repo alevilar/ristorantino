@@ -190,8 +190,9 @@ function agregarNuevaMesa(e){
         }
         miniMesa[rta[r].name] = rta[r].value;
     }
+    console.debug(miniMesa);
     
-    var mesa = Risto.Adition.adicionar.crearNuevaMesa(miniMesa.numero, miniMesa.mozo_id);
+    var mesa = Risto.Adition.adicionar.crearNuevaMesa(miniMesa);
     Risto.Adition.adicionar.setCurrentMesa( mesa );
     document.getElementById('form-mesa-add').reset(); // limpio el formulario
     $('.ui-dialog').dialog('close');

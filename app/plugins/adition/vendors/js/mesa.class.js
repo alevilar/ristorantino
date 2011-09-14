@@ -167,6 +167,7 @@ Mesa.prototype = {
     time_cerro  : ko.observable( 0 ),
     Cliente     : ko.observable(   ),   
     estado      : ko.observable( 0 ),
+    cant_comensales: ko.observable( 0 ),
     
     // es la comanda que actualmente se esta haciendo objeto comandaFabrica
     currentComanda: ko.observable( ), 
@@ -196,11 +197,13 @@ Mesa.prototype = {
         this.Cliente        = ko.observable();
         this.estado         = ko.observable();
         this.Pago           = ko.observableArray( [] );
+        this.cant_comensales= ko.observable(0);
         var mapOps          = {};
+        
         
         // si vino jsonData mapeo con koMapp
         if ( jsonData ) {
-            if (typeof jsonData.Cliente && jsonData.Cliente.id){
+            if (jsonData.Cliente && jsonData.Cliente.id){
                 this.Cliente( new Risto.Adition.cliente(jsonData.Cliente) );
             } else {               
                 this.Cliente( null );

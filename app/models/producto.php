@@ -25,25 +25,6 @@ class Producto extends AppModel {
 
         var $hasOne = array('ProductosPreciosFuturo');
         
-        
-         var $hasAndBelongsToMany = array(        
-             'Producto' => array(                
-                 'className' => 'Producto',
-                 'joinTable' => 'detalle_comandas',                
-                 'foreignKey' => 'comanda_id',
-                 'associationForeignKey'  => 'producto_id',
-                 'unique' => true,
-                 'conditions' => '',
-                 'fields' => '',
-                 'order' => '',
-                 'limit' => '',
-                 'offset' => '',
-                 'finderQuery' => '',
-                 'deleteQuery' => '',
-                 'insertQuery' => ''
-                 )
-             );
-         
 
 	var $hasMany = array(
             'HistoricoPrecio',
@@ -73,11 +54,6 @@ class Producto extends AppModel {
                                 'message' => 'La impresora fiscal no soporta acentos, eñes, puntos, ni caracteres raros. Los únicos símbolos raros admitidos son "-" y "/"'
                         )
 		),
-        'precio' => array (
-            'precio_float' => array(
-                        'rule' => array('decimal', 2)
-                        )
-            ),
 	);
 
 

@@ -1,5 +1,5 @@
 // intervalo en milisegundos en el que seran renovadas las mesas
-MESAS_RELOAD_INTERVAL = 55500;
+MESAS_RELOAD_INTERVAL = 5500;
 MESA_RELOAD_TIMEOUT = 60000;
 
 
@@ -328,10 +328,9 @@ Risto.Adition.adicionar = {
     },
     
     
-    crearNuevaMesa: function(mesaNumero, mozoId){
-        var mozo = this.findMozoById(mozoId);
-        var mesa = new Mesa(mozo)
-        mesa.numero( mesaNumero );
+    crearNuevaMesa: function(mesaJSON){
+        var mozo = this.findMozoById(mesaJSON.mozo_id);
+        var mesa = new Mesa(mozo, mesaJSON);
         
         $cakeSaver.send({url:urlDomain+'mesas/abrirMesa.json', obj: mesa});
         return mesa;        

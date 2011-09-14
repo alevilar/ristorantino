@@ -84,9 +84,10 @@ class Mesa extends AppModel {
                     'time_cerro'=> date( "Y-m-d H:i:s",strtotime('now')),
                 );
 
-                // si no estoy usando cajero, entonces poner como que ya esta cerrada
+                // si no estoy usando cajero, entonces poner como que ya esta cerrada y cobrada
                 if (!Configure::read('Adicion.usarCajero'))  {
                     $mesaData['Mesa']['time_cobro'] = date( "Y-m-d H:i:s",strtotime('now'));
+                    $mesaData['Mesa']['estado_id']  = MESA_COBRADA;
                 } else {
                     $mesaData['Mesa']['time_cobro'] = DATETIME_NULL;
                 }

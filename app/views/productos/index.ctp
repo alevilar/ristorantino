@@ -73,6 +73,7 @@ foreach ($productos as $producto):
 			<?php echo date('d-m-y',strtotime($producto['Producto']['created'])); ?>
 		</td>
 		<td class="actions">
+                    <?php echo $html->link(__('Ver', true), array('action'=>'view', $producto['Producto']['id'])); ?>
 			<?php echo $html->link(__('Editar', true), array('action'=>'edit', $producto['Producto']['id'])); ?>
 			<?php echo $html->link(__('Borrar', true), array('action'=>'delete', $producto['Producto']['id']), null, sprintf(__('¿Esta seguro que desea borrar el producto: %s?', true), $producto['Producto']['name'])); ?>
 		</td>

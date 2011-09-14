@@ -43,12 +43,16 @@
             echo $javascript->link('scriptaculous');
             echo $javascript->link('jquery/jquery-1.6.1.min');
             echo $javascript->link('jquery/jquery-ui-1.8.14.custom.min');
-            echo $scripts_for_layout;
+            
             //echo $javascript->link('Controls'); // PAD numerico
         ?>
             <script type="text/javascript">
                 jQuery.noConflict();
             </script>
+        
+        <?php
+            echo $scripts_for_layout;
+        ?>
         </head>
         <body>
             <div id="container" class="container_12">
