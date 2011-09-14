@@ -59,6 +59,9 @@
                 <div class="grid_12 header">
                 <?php echo $html->link("Inicio", '/pages/home', array('class' => 'inicio')) ?>
                     
+                    <?php 
+                    echo $this->element('menu_' . $this->params['controller']);
+                    ?>
                     <div style="float:right; font-size: 140%;">
                          <div style="text-align: right;">
                             <?php  
@@ -68,15 +71,16 @@
                             ?>
                         </div>     
 
-                            <?php echo $html->link('Cambiar de usuario', array('controller' => 'users', 'action' => 'logout', 'plugin' => null), array('style' => 'float: right; margin-top:20px;')); ?>
+                        <?php echo $html->link('Cambiar de usuario', array('controller' => 'users', 'action' => 'logout', 'plugin' => null), array('style' => 'float: right; margin-top:20px;')); ?>
                     </div>
                         
-                <div id="mesajes"><?php $session->flash(); $session->flash('auth'); ?></div>
+                    <div id="mesajes"><?php $session->flash(); $session->flash('auth'); ?></div>
                 </div>
                 <div id="content" class="grid_12">
                     <?php echo $content_for_layout; ?>
                 </div>
-
+                
+                <div class="clear"></div>
         </div>
 
         <div class="clear"></div>

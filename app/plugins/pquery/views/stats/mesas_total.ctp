@@ -6,18 +6,6 @@
 		echo $javascript->link('/pquery/js/jquery.jqplot.js'); //plugin estadisticas
 		echo $javascript->link('/pquery/js/plugins/jqplot.dateAxisRenderer.js');
 		echo $javascript->link('/pquery/js/plugins/jqplot.highlighter.js');
-
-
-                
-             /* 
-                            $mesas = array ( 
-                               array('Mesa'=> array('fecha'=> '2011-06','total'=>'330')),
-                               array('Mesa'=> array('fecha'=> '2011-05','total'=>'330')),
-                               array('Mesa'=> array('fecha'=> '2011-04','total'=>'290')),
-                               array('Mesa'=> array('fecha'=> '2011-03','total'=>'900'))
-                             );     
-             */
-        
 ?>
 
 
@@ -122,61 +110,37 @@
     
 })(jQuery); 
     
-
-
-    
-
 </script>
 
+<div class="clear" style="height: 20px;"></div>
+<div class="grid_9 alpha">
+    <div id="chart1" class="grid_12 alpha omega" style="height:350px;"></div>
+    
+    <div class="grid_12 alpha omega">
+        <?php 
+        echo $form->create('Mesa',array('url'=>'/pquery/stats/mesas_total', 'class' => 'formufecha')); 
+        ?>
 
-<?php echo $this->element('menustats'); ?>
-
-<div class="grid_10 omega content_stats">
-
-    <div class="grid_11 push_1">
-            <h4 class="grid_6">Elija el rango de fechas para visualizar</h4>
-            <div class="grid_6" style="margin-top: 10px;">
-                <!--<input id="otrafecha" type="checkbox" style="vertical-align: middle;position: relative;"><span>Añadir otras fechas para comparar</span>-->
-                <?php echo $html->link('Añadir otra fecha para comparar','#',array('id'=>'otrafecha'));?>
-            </div>
-            <div class="clear"></div>
-
-                <?php echo $form->create('Mesa',array('url'=>'/pquery/stats/mesas_total')); ?>
-
-            <div id="prim_fecha" class="grid_4">
-
-                      <?php   
-                      echo $form->input('Linea.0.desde', array('label'=>'Desde','id'=>'from', 'class' =>'datepicker'));
-                      echo $form->input('Linea.0.hasta', array('label'=>'Hasta','id'=>'to', 'class' =>'datepicker'));  
-                      ?>
-
-            </div>    
-
-            <div id="seg_fecha" class="grid_4 push_1" style="display: none;">
+        <h2>Modificar rango de fechas</h2>
             <?php
-                     echo $form->input('Linea.1.desde', array('label'=>'Desde','id'=>'from2', 'class' =>'datepicker'));
-                     echo $form->input('Linea.1.hasta', array('label'=>'Hasta','id'=>'to2', 'class' =>'datepicker'));
-                     ?>
-            </div>
-            <div class="clear"></div>
-                    <div class="grid_2">
-            <?php
-              echo $form->end('Enviar');
+            echo "Desde: ".$form->text('Linea.0.desde', array('placeholder'=>'Ej: 22/09/2011','id'=>'from', 'class' =>'datepicker'));
+            echo "Hasta: ".$form->text('Linea.0.hasta', array('placeholder'=>'Ej: 30/09/2011','id'=>'to', 'class' =>'datepicker'));  
+            echo $form->submit('Aceptar', array('class' => '', 'div' => false));
             ?>
-                     </div>
-     </div>
 
+        <?php
+        echo $form->end();
+        ?>
 
-    <div class="clear"></div>
+    </div>
+</div>
+    
 
-    <div id="chart1" class="grid_9 alpha omega" style="margin-top:20px; height:350px;"></div>
-
-
-    <?php
+<?php
         foreach($mesas as $i=>$mesa){
             if(!empty ($mesa['desde']))
     ?>
-    <div class="grid_3 tabla-info" style="margin-top:35px;">
+    <div class="grid_3 omega tabla-info">
     <table cellspacing="0" cellpadding="0" style="text-align: center">
         <thead>
                         <tr>
@@ -192,7 +156,7 @@
                 foreach($mesa as $m){
                     echo('<tr>');
                     echo('<td>');
-                    echo($m['Mesa']['fecha']);
+                    echo(date('d-m-Y', strtotime($m['Mesa']['fecha'])));
                     echo('</td>');
                     echo('<td>');
                     echo('$');
@@ -220,4 +184,7 @@
             }
     ?>
 
-</div> <!-- cierra div content_stats -->
+
+
+
+    
