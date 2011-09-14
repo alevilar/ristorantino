@@ -51,6 +51,10 @@ var MESA_ESTADOS_POSIBLES =  {
  **/
 var Mesa = function(mozo, jsonData) {
     
+        /**
+         *Devuelve el total neto, sin aplicar descuentos
+         *@return float
+         */
         this.totalCalculadoNeto = ko.dependentObservable(function(){
             var total = 0;
             
@@ -64,7 +68,28 @@ var Mesa = function(mozo, jsonData) {
         }, this);
         
         
-        this.totalCalculadoTexto = ko.dependentObservable(function(){
+        /**
+         *Devuelve el total aplicandole los descuentos
+         *@return float
+         */
+        this.totalCalculado = ko.dependentObservable(function(){
+            var total = this.totalCalculadoNeto(), 
+                dto = 0,
+                totalText = total;
+            
+            if (this.Cliente() && !this.Cliente().hasOwnProperty('length') &&  this.Cliente().Descuento()){
+                dto = Math.floor(total * this.Cliente().Descuento().porcentaje() / 100);
+                totalText = total - dto;
+            }
+            return totalText;
+        }, this);
+        
+        
+        /**
+         *Devuelve el total mostrando un texto
+         *@return String
+         */
+        this.textoTotalCalculado = ko.dependentObservable(function(){
             var total = this.totalCalculadoNeto(), dto = 0, totalText = '$-';
             
             for (var c in this.Comanda()){
@@ -85,16 +110,6 @@ var Mesa = function(mozo, jsonData) {
         }, this);
         
         
-        
-        this.totalCalculado = ko.dependentObservable(function(){
-            var total = this.totalCalculadoNeto(), dto = 0, totalText = '$-';
-            
-            if (this.Cliente() && !this.Cliente().hasOwnProperty('length') &&  this.Cliente().Descuento()){
-                dto = Math.floor(total * this.Cliente().Descuento().porcentaje() / 100);
-                totalText = total - dto;
-            }
-            return totalText;
-        }, this);
         
         /**
          * 
@@ -156,7 +171,7 @@ Mesa.prototype = {
     // es la comanda que actualmente se esta haciendo objeto comandaFabrica
     currentComanda: ko.observable( ), 
     Comanda     : ko.observableArray( ),
-    Pago        : ko.observableArray( ),
+    Pago        : ko.observableArray( ), // cantidad de pagos asociados a la mesa
     
     
     // attributos
@@ -593,10 +608,17 @@ Mesa.prototype = {
         var date, txt;
         if ( this.getEstado() == MESA_ESTADOS_POSIBLES.cerrada ) {
             txt = 'Cerró a las ';
-            date =  mysqlTimeStampToDate(this.time_cerro());
+            if (typeof this.time_cerro == 'function') {
+                date =  mysqlTimeStampToDate(this.time_cerro());
+            }
         } else {
             txt = 'Abrió a las ';
-            date = mysqlTimeStampToDate(this.created());            
+            if (typeof this.created == 'function') {
+                date = mysqlTimeStampToDate(this.created());            
+            }
+        }
+        if ( !date ) {
+            date = new Date();
         }
         return txt + date.getHours() + ':' + date.getMinutes() + 'hs';
     }

@@ -414,6 +414,9 @@ LEFT JOIN
             if (!empty($mesa_id)) {
                 $this->id = $mesa_id;
             }
+            $this->Pago->deleteAll(array(
+                'mesa_id' => $mesa_id
+            ), $cascada = false);
             $result = $this->saveField('estado_id', MESA_ABIERTA);
         }
 }

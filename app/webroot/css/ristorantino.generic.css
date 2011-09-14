@@ -314,28 +314,30 @@ li.selected    {
 
 
 
+.dashboard-buttons{
+    
+}
 
-#botonera_home{
-	text-align: center;
-	margin: auto;
-        padding-bottom: 80px;
+.dashboard-buttons li{
+    display: inline-block;
 }
 
 
-.boton{
+.dashboard-buttons a{
+        padding: 150px 50px 0;
 	display: block;
-	height: 65px;
-	width: 100px;
-	border: 2px solid #666666;
+	width: 150px;
 	text-align: center;
 	text-decoration: none;
-	background-color: silver;
 	vertical-align: middle;
 	overflow: hidden;  
         color: #000000; 
+        background-position: center top;
+	background-repeat: no-repeat;
+        background-image: url(../img/botonvaciop.png);
 }
 
-.boton:hover{
+.dashboard-buttons a:hover{
 	background-color: #E7E7E7;
         -webkit-transition: background 180ms ease;
         -moz-transition: background 180ms ease;
@@ -391,42 +393,18 @@ li.selected    {
 
 #bton-estadisticas{
 	background-image: url("../img/stats.png");
-        background-position: center top;
-	background-repeat: no-repeat;
-        padding-bottom: 0px;
-        padding-left: 50px;
-        padding-right: 50px;
-        padding-top: 150px;
 }
 
 #bton-adicion{
 	background-image: url("../img/adicion.png");
-        background-position: center top;
-	background-repeat: no-repeat;
-        padding-bottom: 0px;
-        padding-left: 50px;
-        padding-right: 50px;
-        padding-top: 150px;
 }
 
 #bton-caja{
 	background-image: url("../img/caja.png");
-        background-position: center top;
-	background-repeat: no-repeat;
-        padding-bottom: 0px;
-        padding-left: 50px;
-        padding-right: 50px;
-        padding-top: 150px;
 }
 
 #bton-admin{
 	background-image: url("../img/admin.png");
-        background-position: center top;
-	background-repeat: no-repeat;
-        padding-bottom: 0px;
-        padding-left: 50px;
-        padding-right: 50px;
-        padding-top: 150px;
 }
 
 #bton-contabilidad{
@@ -441,12 +419,6 @@ li.selected    {
 
 #bton-inven {
 	background-image: url("../img/inventario.png");
-        background-position: center top;
-	background-repeat: no-repeat;
-        padding-bottom: 0px;
-        padding-left: 50px;
-        padding-right: 50px;
-        padding-top: 150px;
 }
 
 
