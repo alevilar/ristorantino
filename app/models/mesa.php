@@ -420,5 +420,85 @@ LEFT JOIN
             ), $cascada = false);
             $result = $this->saveField('estado_id', MESA_ABIERTA);
         }
+        
+        
+        
+        
+        /**
+         * Me devuelve un listado agrupado por dia de mesas. Util para estadistica y contabilidad
+         * @param type $fechaDesde string formato de fecha debe ser del tip AÑO-mes-dia Y-m-d
+         * @param type $fechaHasta string formato de fecha debe ser del tip AÑO-mes-dia Y-m-d
+         * @param type $conds array de condiciones extra
+         */
+        function totalesDeMesasEntre($fechaDesde = '', $fechaHasta = '', $conds = array()){
+            $horarioCorte = Configure::read('Horario.corte_del_dia');
+            $limit = empty($conds['limit']) ? '' : $conds['limit'];
+            $desde = empty($fechaDesde) ? date('Y-m-d', strtotime('now')) : $fechaDesde;
+            $hasta = empty($fechaHasta) ? date('Y-m-d', strtotime('now')) : $fechaHasta;
+            $desdeHasta = "m.created BETWEEN '$desde' AND '$hasta'";
+            
+            $fieldConds = empty($conds['fields']) ? array() : $conds['fields'];
+            $fields = array_merge( array( 'count(*) as "cant_mesas"'), $fieldConds );
+            
+            $groups = empty($conds['fields']) ? array() : $conds['group'];
+            
+            $fieldsText = '';
+            $i = 0;
+            foreach ($fields as $f){
+                if ($i > 0) {
+                    $fieldsText .= ', ';
+                }
+                $fieldsText .= $f;
+                $i++;
+            }
+            
+            $groupByText = '';
+            if (!empty($groups)) {
+                $groupByText = 'GROUP BY ';
+                $i = 0;
+                foreach ($groups as $g){
+                    if ($i > 0) {
+                        $groupByText .= ', ';
+                    }
+                    $groupByText .= $g;
+                    $i++;
+                }
+            }
+            
+            $orderByText = 'ORDER BY m.created DESC ';
+            $order = empty($conds['order']) ? array() : $conds['order'];
+            if (!empty($order)) {
+                $orderByText = 'ORDER BY ';
+                $i = 0;
+                foreach ($order as $o){
+                    if ($i > 0) {
+                        $orderByText .= ', ';
+                    }
+                    $orderByText .= $o;
+                    $i++;
+                }
+            }
+            
+            $query = '    SELECT 
+                    '.$fieldsText.'
+                   FROM (
+                    SELECT m.id, m.numero, m.mozo_id, m.total, m.cant_comensales, 
+                    m.cliente_id, m.menu, ADDDATE(m.created,-1) as created, m.modified, m.time_cerro, m.time_cobro 
+                    FROM mesas m
+                    WHERE
+                        HOUR(m.created) BETWEEN 0 AND ' . $horarioCorte . '
+                    UNION
+                    SELECT id,numero,mozo_id,total, cant_comensales, cliente_id,menu, created, modified, time_cerro, time_cobro from mesas m
+                    WHERE
+                        HOUR(m.created) BETWEEN ' . $horarioCorte . ' AND 24) as m
+                    LEFT JOIN pagos p ON p.mesa_id = m.id
+                    LEFT JOIN tipo_de_pagos tp ON tp.id = p.tipo_de_pago_id
+                    LEFT JOIN mozos z ON z.id = m.mozo_id
+                WHERE ' . $desdeHasta . '                    
+                '. $groupByText .'
+                '. $orderByText. '    
+                '. $limit;
+            return $this->query($query);
+        }
 }
 ?>

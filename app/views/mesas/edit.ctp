@@ -27,32 +27,32 @@
     <dl>
     <?php
             echo "<dt>Tipo Factura</dt>";
-            if ($mesa['Cliente']['tipofactura'] == ''){
+            if ($mozo['Cliente']['tipofactura'] == ''){
                     $tipofac = "B";
-                    $mesa['Cliente']['tipofactura'] = "B";
+                    $mozo['Cliente']['tipofactura'] = "B";
             }
 
-            if ($mesa['Cliente']['tipofactura'] === 0){
+            if ($mozo['Cliente']['tipofactura'] === 0){
                     $tipofac = 'Remito';	
             }
             else{
-                    $tipofac = $mesa['Cliente']['tipofactura'];
+                    $tipofac = $mozo['Cliente']['tipofactura'];
             }
 
             echo "<dd>\"$tipofac\" &nbsp;</dd>";
 
-            if(empty($mesa['Cliente']['tipofactura'])){
+            if(empty($mozo['Cliente']['tipofactura'])){
                     echo "<dt>Nombre</dt>";
-                    echo "<dd>". $mesa['Cliente']['nombre']."&nbsp;</dd>";
+                    echo "<dd>". $mozo['Cliente']['nombre']."&nbsp;</dd>";
 
                     echo "<dt>Descuento</dt>";
-                    $dto = (!empty($mesa['Cliente']['Descuento']['porcentaje']))?$mesa['Cliente']['Descuento']['porcentaje']:"0";
+                    $dto = (!empty($mozo['Cliente']['Descuento']['porcentaje']))?$mozo['Cliente']['Descuento']['porcentaje']:"0";
                     echo "<dd>". $dto."% &nbsp;</dd>";
             }
 
             echo "<dt>Imprime Ticket</dt>";
             echo "<dd>";
-            echo ($mesa['Cliente']['imprime_ticket'])?'SI':'NO';
+            echo ($mozo['Cliente']['imprime_ticket'])?'SI':'NO';
             echo "</dd>"
     ?>
     </dl>
@@ -125,7 +125,7 @@
     //echo "<p><br>Segun funciones especiales:";
 
     echo "<h3>SUBTOTAL = <span>$$subtotal</span></h3>";
-    $dto = empty($mesa['Cliente']['Descuento']['porcentaje'])?0:$mesa['Cliente']['Descuento']['porcentaje'];
+    $dto = empty($mozo['Cliente']['Descuento']['porcentaje'])?0:$mozo['Cliente']['Descuento']['porcentaje'];
     echo "<h3>TOTAL = <span>$$total</span> </h3>";
             if($dto!='0') {
                  echo "(Dto: $dto%)";

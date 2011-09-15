@@ -28,6 +28,8 @@
  */
 
 
+setlocale(LC_TIME, 'ar_ES');
+
 /**
  * CakePHP Debug Level:
  *

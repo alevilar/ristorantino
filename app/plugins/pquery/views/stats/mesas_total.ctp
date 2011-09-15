@@ -1,11 +1,11 @@
 <?php
-                echo $html->css('/pquery/css/examples');
-                echo $html->css('jquery-ui/jquery-ui-1.8.14.custom');
-                echo $html->css('estadisticas');
-                
-		echo $javascript->link('/pquery/js/jquery.jqplot.js'); //plugin estadisticas
-		echo $javascript->link('/pquery/js/plugins/jqplot.dateAxisRenderer.js');
-		echo $javascript->link('/pquery/js/plugins/jqplot.highlighter.js');
+    echo $html->css('/pquery/css/examples');
+    echo $html->css('jquery-ui/jquery-ui-1.8.14.custom');
+    echo $html->css('estadisticas');
+
+    echo $javascript->link('/pquery/js/jquery.jqplot.js'); //plugin estadisticas
+    echo $javascript->link('/pquery/js/plugins/jqplot.dateAxisRenderer.js');
+    echo $javascript->link('/pquery/js/plugins/jqplot.highlighter.js');
 ?>
 
 
@@ -59,16 +59,14 @@
     //s1 = [['2011-03',220],['2011-04',290],['2011-05',330],['2011-06',330]];
    
                plot1 = $.jqplot('chart1', mesas.getCoordenadas() ,{
-                   title: 'Ganancia de mesas',
+                   title: 'Ventas',
                    axes: {
                        xaxis: {
                            renderer: $.jqplot.DateAxisRenderer,
                            tickOptions: {
-                               formatString: '%b %Y'
+                               formatString: '%#d&nbsp;%b'
                                                //formato de la fecha
-                           },
-                           numberTicks: 7
-                                       //cantidad de elementos
+                           }
                        },
                        yaxis: {
                            tickOptions: {
@@ -77,17 +75,7 @@
                        }
                    },
                    highlighter: {
-                       fadeTooltip: false,
-                       sizeAdjust: 10,
-                       tooltipLocation: 'n',
-                       useAxesFormatters: false,
-                       tooltipFormatString: '<b>Total:<span style="color:red;"> %.2f</span></b>',
-                       useAxesFormatters: false,
-                       tooltipAxes: 'y'
-                   },
-                   cursor: {
-                       show: false,
-                       zoom: false
+                       tooltipAxes: 'both'
                    }
                });
 
@@ -101,12 +89,6 @@
         });
     }
     );
-    
-    
-    
-    
-    
-    
     
 })(jQuery); 
     
@@ -137,8 +119,8 @@
     
 
 <?php
-        foreach($mesas as $i=>$mesa){
-            if(!empty ($mesa['desde']))
+        foreach($mesas as $i=>$mozo){
+            if(!empty ($mozo['desde']))
     ?>
     <div class="grid_3 omega tabla-info">
     <table cellspacing="0" cellpadding="0" style="text-align: center">
@@ -151,9 +133,9 @@
         <tbody>
 
     <?php     
-        if(!empty($mesa)){
+        if(!empty($mozo)){
 
-                foreach($mesa as $m){
+                foreach($mozo as $m){
                     echo('<tr>');
                     echo('<td>');
                     echo(date('d-m-Y', strtotime($m['Mesa']['fecha'])));

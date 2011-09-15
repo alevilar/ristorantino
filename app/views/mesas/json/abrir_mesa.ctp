@@ -1,7 +1,7 @@
 <?
 
-$mesa['insertedId'] = $insertedId;
-$mesa['msg']        = $validationErrors;
+$mozo['insertedId'] = $insertedId;
+$mozo['msg']        = $validationErrors;
 
 
-echo $javascript->object($mesa);
+echo $javascript->object($mozo);
