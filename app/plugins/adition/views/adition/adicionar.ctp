@@ -303,6 +303,16 @@ el ajax que verifica el estado de las mesas (si fue abierta o cerrada alguna. --
 <!--        <a data-rel="back" data-transition="reverse" href="#">Cancelar</a>-->
 	<h1>Nueva Comanda para la mesa <span data-bind="text: adn().currentMesa().numero"></span></h1>
 	<a href="#mesa-view" data-icon="check" data-theme="b" data-bind="click: function(){adn().currentMesa().currentComanda().save()}">Guardar</a>        
+        
+        <a  data-icon="plus" data-role="actionsheet">Opciones</a>
+        <div>
+              <a data-role="button" href="#">Action 1</a>
+              <a data-role="button" href="#">Action 2</a>
+              <a data-role="button" href="#">Action 3</a>
+              <br/>
+              <!-- This close button is optional. The widget also closes if you click or touch outside of the popup -->
+              <a data-role="button" data-rel="close" href="#">Cancel</a>
+        </div>
     </div>
 
     <div data-role="content">
