@@ -350,19 +350,28 @@ es igual al de las mesas de la adicion salvo que al hacer click tienen otro comp
 	<h1>Nueva Comanda para la mesa <span data-bind="text: adn().currentMesa().numero"></span></h1>
 	<a href="#mesa-view" data-icon="check" data-theme="b" data-bind="click: function(){adn().currentMesa().currentComanda().save()}">Guardar</a>        
         
-        <a  data-icon="plus" data-role="actionsheet">Opciones</a>
-        <div>
-              <a data-role="button" href="#">Action 1</a>
-              <a data-role="button" href="#">Action 2</a>
-              <a data-role="button" href="#">Action 3</a>
-              <br/>
-              <!-- This close button is optional. The widget also closes if you click or touch outside of the popup -->
-              <a data-role="button" data-rel="close" href="#">Cancel</a>
-        </div>
+        <a data-icon="plus" class="ui-btn-right" data-role="actionsheet">Open</a>
+		<div>
+			<a data-role="button" href="#">Action 1</a>
+			<a data-role="button" href="#">Action 2</a>
+			<a data-role="button" href="#">Action 3</a>
+			<br/>
+			<a data-role="button" data-rel="close" href="#">Cancel</a>
+		</div>
+        
     </div>
 
     <div data-role="content">
         
+        <a data-icon="plus" class="ui-btn-right" data-role="actionsheet">Open</a>
+		<div>
+			<a data-role="button" href="#">Update 1</a>
+			<a data-role="button" href="#">Update 2</a>
+			<a data-role="button" href="#">Update 3</a>
+		</div>
+		<div id='sheet0'>
+			<h1>This is sheet 0</h1>
+		</div>
         
         <!--        PRODUCTOS SELECCIONADOS    -->
         <div  style="width: 28%; margin-right: 2%; display: inline; float: left;">

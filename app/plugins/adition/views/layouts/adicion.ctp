@@ -20,10 +20,11 @@
 		
 		// para los modal window
 		echo $html->css(array(
-                    'jquery-mobile/jquery.mobile-1.0b2.min',
+                    'jquery-mobile/jquery.mobile-1.0b3.min',
                     'jquery-mobile/jquery-mobile-fluid960',
                     'jquery-mobile/jquery.mobile.actionsheet',
-                    '/adition/css/ristorantino'
+                    '/adition/css/ristorantino',
+                    'jquery-mobile/jquery.mobile-custom',
                     ));
 
                 $cssUserRole = "acl-".$session->read('Auth.User.role');
@@ -34,9 +35,9 @@
 		echo $javascript->link( array(
                     '/adition/js/cake_saver',
                     'risto/risto',
-                    'jquery/jquery-1.6.1.min',
+                    'jquery/jquery-1.6.4.min',
                     'jquery/jquery.tmpl.min',
-                    'jquery/jquery.periodicalupdater',
+//                    'jquery/jquery.periodicalupdater',
                     
                     'jquery/fg.menu',
                     'ristorantino/generic',
@@ -65,8 +66,8 @@
                     '/adition/js/adition.events',
                     '/adition/js/menu',
                     
-                    'jquery/jquery.mobile-1.0b2',
-                    'jquery/jquery.easing.1.3',
+                    'jquery/jquery.mobile-1.0b3.min',
+//                    'jquery/jquery.easing.1.3',
                     'jquery/jquery.mobile.actionsheet',
 //                    'jquery/jquery.mobile.scrollview.js',
                    

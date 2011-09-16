@@ -103,7 +103,6 @@ class Mozo extends AppModel {
                         'conditions' => array(
                             "Mesa.estado_id <" => MESA_COBRADA,
                             'Mesa.deleted' => 0,
-//                            "Mesa.time_cerro" => "0000-00-00 00:00:00",
                         ),
                         'order' => 'Mesa.numero DESC',
                     ),
