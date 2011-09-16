@@ -18,10 +18,18 @@ class PagosController extends AppController {
 	}
 
 	function add() {
-            debug($this->data);
 		if (!empty($this->data)) {
                     if (!empty($this->data['Mesa'])) {
+                        $this->data['Mesa']['estado_id'] = MESA_COBRADA;
+                        $this->data['Mesa']['time_cobro'] = date( "Y-m-d H:i:s", strtotime('now'));
                         $this->Pago->Mesa->save($this->data['Mesa']);
+                    }
+                    
+                    if ( count($this->data['Pago']) == 1 && empty($this->data['Pago'][0]['valor']) ) {
+                        if (!empty($this->data['Mesa'])) {
+                            $total_pagado = $this->Pago->Mesa->calcular_total($this->data['Mesa']['id']);
+                            $this->data['Pago'][0]['valor'] = $total_pagado;
+                        }                    
                     }
                     
                     if ($this->Pago->saveAll($this->data['Pago'])) {				

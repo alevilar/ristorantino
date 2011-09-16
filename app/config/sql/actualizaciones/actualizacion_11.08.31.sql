@@ -62,3 +62,11 @@ ALTER TABLE  `categorias` ADD  `image_url` VARCHAR( 200 ) NULL AFTER  `descripti
 ALTER TABLE  `tipo_de_pagos` ADD  `image_url` VARCHAR( 200 ) NULL AFTER  `description`;
 
 ALTER TABLE  `detalle_comandas` ADD  `observacion` TEXT NULL AFTER  `comanda_id`;
+
+
+CREATE TABLE  `paxamar`.`observaciones` (
+`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`name` VARCHAR( 64 ) NOT NULL ,
+`created` TIMESTAMP NULL ,
+`modified` TIMESTAMP NULL
+) ENGINE = MYISAM ;

@@ -22,7 +22,7 @@
 </tr>
 <?php
 $i = 0;
-foreach ($mesas as $mesa):
+foreach ($mesas as $mozo):
 	$class = null;
 	if ($i++ % 2 == 0) {
 		$class = ' class="altrow"';
@@ -30,30 +30,30 @@ foreach ($mesas as $mesa):
 ?>
 	<tr<?php echo $class;?>>
 		<td>
-		<strong><?php echo $mesa['Mesa']['numero']; ?><strong>
+		<strong><?php echo $mozo['Mesa']['numero']; ?><strong>
 		</td>
 		<td>
-			<?php echo $html->link('N° '.$mesa['Mozo']['numero'],'/Mozos/view/'.$mesa['Mesa']['mozo_id']); ?>
+			<?php echo $html->link('N° '.$mozo['Mozo']['numero'],'/Mozos/view/'.$mozo['Mesa']['mozo_id']); ?>
 		</td>
 		<td>
-			<?php echo $mesa['Mesa']['total']; ?>
+			<?php echo $mozo['Mesa']['total']; ?>
 		</td>
                 <td>
 			<?php
-			if(!empty($mesa['Cliente']['Descuento']['porcentaje'])){
-			 	echo $mesa['Cliente']['Descuento']['porcentaje']."%"; }
+			if(!empty($mozo['Cliente']['Descuento']['porcentaje'])){
+			 	echo $mozo['Cliente']['Descuento']['porcentaje']."%"; }
 			 else{
 			 	echo '0%';
 			 }
                              ?>
 		</td>
                 <td>
-			<?php echo $mesa['Mesa']['cant_comensales'] ?>
+			<?php echo $mozo['Mesa']['cant_comensales'] ?>
 		</td>
 		<td>
 			<?php
-                        if ( $mesa['Mesa']['created'] != '0000-00-00 00:00:00'){
-                            echo date('d-m-y (H:i)',strtotime($mesa['Mesa']['created']));
+                        if ( $mozo['Mesa']['created'] != '0000-00-00 00:00:00'){
+                            echo date('d-m-y (H:i)',strtotime($mozo['Mesa']['created']));
                         } else {
                             echo "Sin Abrir";
                         }
@@ -61,8 +61,8 @@ foreach ($mesas as $mesa):
 		</td>
                 <td>
                     <?php
-                        if ( $mesa['Mesa']['time_cerro'] != '0000-00-00 00:00:00'){
-                            echo date('d-m-y (H:i)',strtotime($mesa['Mesa']['time_cerro']));
+                        if ( $mozo['Mesa']['time_cerro'] != '0000-00-00 00:00:00'){
+                            echo date('d-m-y (H:i)',strtotime($mozo['Mesa']['time_cerro']));
                         } else {
                             echo "Abierta";
                         }
@@ -70,8 +70,8 @@ foreach ($mesas as $mesa):
 		</td>
                 <td>
                     <?php
-                        if ( $mesa['Mesa']['time_cobro'] != '0000-00-00 00:00:00'){
-                            echo date('d-m-y (H:i)',strtotime($mesa['Mesa']['time_cobro']));
+                        if ( $mozo['Mesa']['time_cobro'] != '0000-00-00 00:00:00'){
+                            echo date('d-m-y (H:i)',strtotime($mozo['Mesa']['time_cobro']));
                         } else {
                             echo "Sin Cobrar";
                         }
@@ -79,32 +79,32 @@ foreach ($mesas as $mesa):
 		</td>
 		<td align="center">
 			<?php 
-			if(!empty($mesa['Cliente']['Descuento']['porcentaje'])){
+			if(!empty($mozo['Cliente']['Descuento']['porcentaje'])){
 			 	echo 'remito'; }
-			 elseif($mesa['Cliente']['tipofactura']) {
-			 	echo ' "'.$mesa['Cliente']['tipofactura'].'"';
+			 elseif($mozo['Cliente']['tipofactura']) {
+			 	echo ' "'.$mozo['Cliente']['tipofactura'].'"';
 			 }
 			 else echo ' "B"'?>
 		</td>
                 <td>
 			<?php
-			if(!empty($mesa['Cliente'])){
-                            echo $mesa['Cliente']['nombre'];
+			if(!empty($mozo['Cliente'])){
+                            echo $mozo['Cliente']['nombre'];
                         }
                         ?>
 		</td>
 
 		<td class="actions">
-			<?php if($mesa['Mesa']['time_cerro'] != '0000-00-00 00:00:00'){
-                                echo $html->link(__('Reabrir', true), array('action'=>'reabrir', $mesa['Mesa']['id'])); 
+			<?php if($mozo['Mesa']['time_cerro'] != '0000-00-00 00:00:00'){
+                                echo $html->link(__('Reabrir', true), array('action'=>'reabrir', $mozo['Mesa']['id'])); 
                                 echo ('</br>');
                         }?>
 			
-                        <?php echo $html->link(__('Editar', true), array('action'=>'edit', $mesa['Mesa']['id'])); ?>
+                        <?php echo $html->link(__('Editar', true), array('action'=>'edit', $mozo['Mesa']['id'])); ?>
 			</br>
-                        <?php echo $html->link(__('Borrar', true), array('action'=>'delete', $mesa['Mesa']['id']), null, sprintf(__('¿Esta seguro que quiere borrar la mesa nº %s?\nSi se elimina se perderán los pedidos y no sera computada en las estadísticas.', true), $mesa['Mesa']['numero'])); ?>
+                        <?php echo $html->link(__('Borrar', true), array('action'=>'delete', $mozo['Mesa']['id']), null, sprintf(__('¿Esta seguro que quiere borrar la mesa nº %s?\nSi se elimina se perderán los pedidos y no sera computada en las estadísticas.', true), $mozo['Mesa']['numero'])); ?>
                         </br>
-                        <?php echo $html->link(__('Imprimir Ticket', true), array('action'=>'imprimirTicket', $mesa['Mesa']['id']), null, sprintf(__('¿Desea imprimir el ticket de la mesa nº %s?', true), $mesa['Mesa']['numero'])); ?>
+                        <?php echo $html->link(__('Imprimir Ticket', true), array('action'=>'imprimirTicket', $mozo['Mesa']['id']), null, sprintf(__('¿Desea imprimir el ticket de la mesa nº %s?', true), $mozo['Mesa']['numero'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>      

@@ -3,13 +3,13 @@
                 echo $html->css('/pquery/css/examples.css');
                 echo $javascript->link('/pquery/js/jquery.min.js'); 
 		echo $javascript->link('/pquery/js/jquery.jqplot.js');
-foreach ($mesas as $i=>$mesa){
+foreach ($mesas as $i=>$mozo){
     
-    echo $mesa[0]['total'];
+    echo $mozo[0]['total'];
         echo '<br>';
-    echo $mesa[0]['mes'];
+    echo $mozo[0]['mes'];
         echo '<br>';
-    echo $mesa[0]['year'];
+    echo $mozo[0]['year'];
         echo '<br>';
         echo '<br>';
 }
@@ -33,18 +33,18 @@ function editit(str, si, pi, plot) {
 
 jQuery(document).ready(function(){
     jQuery.jqplot.config.enablePlugins = true;
-    s1 = [<?php foreach ($mesas as $i=>$mesa){
+    s1 = [<?php foreach ($mesas as $i=>$mozo){
         echo '[';
         echo '\'';
-        echo $mesa[0]['year'];
+        echo $mozo[0]['year'];
         echo '-';
-        if ($mesa[0]['mes']<10) {
+        if ($mozo[0]['mes']<10) {
             echo'0';
         }
-        echo $mesa[0]['mes'];
+        echo $mozo[0]['mes'];
         echo '\'';
         echo ',';
-        echo $mesa[0]['total'];
+        echo $mozo[0]['total'];
         echo ']';
             if ($i!=2){
                 echo ',';

@@ -3,7 +3,7 @@
 $json = array(
     'items' => $items,
     'mozo'  => $mozo_json,
-    'mesa'  => $mesa,
+    'mesa'  => $mozo,
     'mesa_total'  => $mesa_total,
 );
 

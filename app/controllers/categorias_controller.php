@@ -16,7 +16,7 @@ class CategoriasController extends AppController {
         
 	function index() {
 		$this->Categoria->recursive = 0;	
-		$this->set('categorias',$this->Categoria->generatetreelist(null, null, null, '&nbsp;&nbsp;&nbsp;'));	
+		$this->set('categorias',$this->Categoria->generatetreelist(null, null, null, '-&nbsp;-&nbsp;-&nbsp;'));	
 	}
 	
 	

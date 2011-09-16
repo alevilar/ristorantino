@@ -152,10 +152,8 @@ $(document).ready(function() {
         // lipieza de pagos, selecciono solo los que se les haya agregado algun valor en el input
         for (var p in Risto.Adition.adicionar.pagos() ) {
             if ( Risto.Adition.adicionar.pagos()[p] ) {
-                if ( Risto.Adition.adicionar.pagos()[p].valor() ) {
-                    // agrego el pago a la mesa
-                    Risto.Adition.adicionar.currentMesa().Pago.push( Risto.Adition.adicionar.pagos()[p] );
-                }
+                // agrego el pago a la mesa
+                Risto.Adition.adicionar.currentMesa().Pago.push( Risto.Adition.adicionar.pagos()[p] );
             }
         }
         
@@ -192,8 +190,9 @@ function agregarNuevaMesa(e){
         }
         miniMesa[rta[r].name] = rta[r].value;
     }
+    console.debug(miniMesa);
     
-    var mesa = Risto.Adition.adicionar.crearNuevaMesa(miniMesa.numero, miniMesa.mozo_id);
+    var mesa = Risto.Adition.adicionar.crearNuevaMesa(miniMesa);
     Risto.Adition.adicionar.setCurrentMesa( mesa );
     document.getElementById('form-mesa-add').reset(); // limpio el formulario
     $('.ui-dialog').dialog('close');
@@ -218,9 +217,11 @@ function mesaBorrada(e){
     e.mesa.mozo().sacarMesa(mesa);
 }
 
+
+// Procesar los pagos de la mesa
 function mesaCobrada(e){
     // envio los datos al servidor
-    var m = e.mesa
+    var m = e.mesa;
     var mes = {
             Mesa: {
                 id: m.id(),

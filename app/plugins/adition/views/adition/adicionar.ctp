@@ -8,6 +8,7 @@
 
      <span data-bind="text: realCant()" style="right: auto" class="ui-li-count ui-btn-up-c ui-btn-corner-all"></span>
      <span data-bind="text: nameConSabores(), css: {tachada: realCant()==0}" style="padding-left: 40px;"></span>
+     <span class="producto-precio">p/u: {{= '$'}}<span data-bind="text: Producto().precio"></span></span>
  </li>
 </script>
 
@@ -38,6 +39,33 @@ el ajax que verifica el estado de las mesas (si fue abierta o cerrada alguna. --
     </li>
 </script>
 
+
+<!-- Template: 
+listado de mesas que será refrescado continuamente mediante 
+es igual al de las mesas de la adicion salvo que al hacer click tienen otro comportamiento
+-->
+<script id="listaMesasCajero" type="text/x-jquery-tmpl">
+
+    <li data-bind="attr: {mozo: mozo().id(), 'class': getEstadoIcon()}">
+        <a  data-bind="click: seleccionar" 
+            data-theme="c"
+            data-role="button" 
+            href="#mesa-cobrar" 
+            data-rel="dialog"
+            class="ui-btn ui-btn-icon-left ui-btn-corner-all ui-shadow ui-btn-up-c">
+            <span class="mesa-span ui-btn-inner ui-btn-corner-all">
+                <span class="ui-btn-text">
+                    <span class="mesa-numero" data-bind="text: numero"></span>
+                    <span class="mesa-mozo" data-bind="text: mozo().numero"></span>
+                    <br />
+                    <span class="mesa-time" data-bind="text: textoHora()"></span>
+                </span>
+                <span class="mesa-icon ui-icon ui-icon-shadow" data-bind="css: {'ui-icon-mesa-abierta': getEstadoIcon()!='mesa-cerrada', 'ui-icon-mesa-cerrada': getEstadoIcon()=='mesa-cerrada', 'ui-icon-mesa-cobrada': getEstadoIcon()=='mesa-cobrada'}"></span>
+            </span>
+        </a>
+    </li>
+</script>
+
                   
                                          
 <!--
@@ -48,7 +76,7 @@ el ajax que verifica el estado de las mesas (si fue abierta o cerrada alguna. --
 <div data-role="page" id="listado-mesas">
 
 	<div  data-role="header">
-            <h1><span style="color: #fcf0b5" data-bind="text: adn().mesas().length">0</span> Mesas Abiertas</h1>
+            <h1><span style="color: #fcf0b5" data-bind="text: adn().mesas().length">0</span> Mesas</h1>
 
             <a rel="external" href='#listado-mesas' data-icon="home" data-iconpos="notext" data-direction="reverse" class="ui-btn-right">Home</a>
 
@@ -82,7 +110,7 @@ el ajax que verifica el estado de las mesas (si fue abierta o cerrada alguna. --
         <div  data-role="footer" data-position="fixed">
                 <div data-role="navbar">
                         <ul>
-                            <li><a href="#listado-mesas" class="ui-btn-active">Modo Adicionista</a></li>
+                            <li><a href="#listado-mesas" class="ui-btn-active ui-state-persist">Modo Adicionista</a></li>
                             <li><a href="#listado-mesas-cerradas">Modo Cajero</a></li>
                         </ul>
                 </div>
@@ -113,7 +141,7 @@ el ajax que verifica el estado de las mesas (si fue abierta o cerrada alguna. --
                     
         <div  data-role="content" class="content_mesas">
                 <!-- aca va el listado de mesas que se carga dinamicamente en un script de abajo -->
-                <ul class="listado-adicion" data-bind='template: { name: "listaMesas", foreach: adn().mesasCerradas }'>
+                <ul class="listado-adicion" data-bind='template: { name: "listaMesasCajero", foreach: adn().mesasCerradas }'>
                        
                 </ul>
         </div><!-- /navbar -->
@@ -122,7 +150,7 @@ el ajax que verifica el estado de las mesas (si fue abierta o cerrada alguna. --
                 <div data-role="navbar">
                         <ul>
                             <li><a href="#listado-mesas">Modo Adicionista</a></li>
-                            <li><a href="#listado-mesas-cerradas" class="ui-btn-active">Modo Cajero</a></li>
+                            <li><a href="#listado-mesas-cerradas" class="ui-btn-active ui-state-persist">Modo Cajero</a></li>
                         </ul>
                 </div>
         </div>
@@ -166,6 +194,11 @@ el ajax que verifica el estado de las mesas (si fue abierta o cerrada alguna. --
                         <input type="text" name="numero" data-risto="mesa"/>
                     </fieldset>
                     
+                     <fieldset data-role="fieldcontain">
+                        <label for="cant_comensales">Cantidad de Cubiertos:</label>
+                        <input type="text" name="cant_comensales"/>
+                    </fieldset>
+                    
                     <fieldset>
                         <button type="submit"  data-theme="b">Abrir Mesa</button>
                     </fieldset>
@@ -191,7 +224,14 @@ el ajax que verifica el estado de las mesas (si fue abierta o cerrada alguna. --
         <form name="comanda" id="form-comanda-producto-observacion">
             <textarea name="obs" id="obstext" autofocus="true"></textarea>
         </form>
+        
+        <div class="observaciones-list">
+                <?php foreach($observaciones as $o) { ?>
+                <a data-role="button" data-inline="true" href="#" onclick="$('#obstext').val( $('#obstext').val()+', <?php echo $o?>' )"><?php echo $o?></a>
+                <?php } ?>
+        </div>
     </div>
+    
 </div> 
 
 
@@ -205,7 +245,12 @@ el ajax que verifica el estado de las mesas (si fue abierta o cerrada alguna. --
 	<div  data-role="header" data-bind="css: {'ui-bar-f': adn().currentMesa().estaCerrada()}">
             <a href="#listado-mesas" data-transition="slide" data-direction="reverse">Volver</a>
             <h1>
-                Mesa <span data-bind="text: adn().currentMesa().numero"></span> | Mozo <span data-bind="text: adn().currentMesa().mozo().numero"></span>
+                
+                 <span data-bind="text: adn().currentMesa().numero"></span>
+                <?php echo $html->image('mesa-abrio.png') ?> Mesa  - 
+                Mozo <?php echo $html->image('mozomoniob.png') ?>
+                <span data-bind="text: adn().currentMesa().mozo().numero"></span>
+                 
                 <span class="hora-abrio">Estado: <span data-bind="text: adn().currentMesa().getEstadoName()"></span></span>
             </h1>
         </div>
@@ -284,7 +329,8 @@ el ajax que verifica el estado de las mesas (si fue abierta o cerrada alguna. --
     
     <div data-role="footer" data-position="fixed">
         <h3>
-            <span class="mesa-total"><span data-bind="text: adn().currentMesa().totalCalculadoTexto"></span></span>
+            <span class="cant_comensales" data-bind="visible: adn().currentMesa().cant_comensales() > 0"><span data-bind="text: adn().currentMesa().cant_comensales()"></span> Cubiertos</span>
+            <span class="mesa-total"><span data-bind="text: adn().currentMesa().textoTotalCalculado"></span></span>
             <span class="hora-abrio">Abrió a las <span data-bind="text: adn().currentMesa().timeCreated()"></span></span>
         </h3>
     </div>
@@ -526,7 +572,8 @@ el ajax que verifica el estado de las mesas (si fue abierta o cerrada alguna. --
 -->
 <div data-role="page" id="mesa-cobrar" data-theme="e">
     <div data-role="header">
-        <h1>Mesa <span data-bind="text: adn().currentMesa().numero"> | </span><span data-bind="text: adn().vueltoText"></span></h1>
+        <h1>Mesa <span data-bind="text: adn().currentMesa().numero"></span> | <span data-bind="text: adn().vueltoText"></span></h1>
+        <a href="#mesa-view" data-transition="slide" data-direction="reverse" data-theme="b">Ir a la Mesa</a>
     </div>
 
     <div data-role="content">                  

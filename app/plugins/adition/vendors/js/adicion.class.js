@@ -1,5 +1,6 @@
 // intervalo en milisegundos en el que seran renovadas las mesas
 MESAS_RELOAD_INTERVAL = 5500;
+MESA_RELOAD_TIMEOUT = 60000;
 
 
 
@@ -273,23 +274,20 @@ Risto.Adition.adicionar = {
 
 
     getMesasAbiertas: function(){
-        var mandando, // esta hace de semaforo para futuras peticiones. Solo se manda 1 peticion, y hasta que no termine no se puide otra
-            cntx = this;
+        var cntx = this;
         
-        if (mandando) return null;
-        
-        function mandarSiNoEstabaMandando() {
+        if ( !cntx.ajaxSending ) {
             $.ajax({
                 url: urlDomain + 'mozos/mesas_abiertas.json',
-                timeout: 10000,
+                timeout: MESA_RELOAD_TIMEOUT,
                 success: cntx.__actualizarMozosConMesasAbiertas,
-                error: function(){alert("falló conexión")},
-                complete: function() {mandando = false},
-                beforeSend: function() {mandando = true;}
+                error: function(){alert("falló conexión"); },
+                complete: function() {cntx.ajaxSending = false},
+                beforeSend: function() {cntx.ajaxSending = true}
             });
         }
-                
-        return mandarSiNoEstabaMandando();
+        
+        
     },
     
 
@@ -330,10 +328,9 @@ Risto.Adition.adicionar = {
     },
     
     
-    crearNuevaMesa: function(mesaNumero, mozoId){
-        var mozo = this.findMozoById(mozoId);
-        var mesa = new Mesa(mozo)
-        mesa.numero( mesaNumero );
+    crearNuevaMesa: function(mesaJSON){
+        var mozo = this.findMozoById(mesaJSON.mozo_id);
+        var mesa = new Mesa(mozo, mesaJSON);
         
         $cakeSaver.send({url:urlDomain+'mesas/abrirMesa.json', obj: mesa});
         return mesa;        
@@ -421,7 +418,7 @@ Risto.Adition.adicionar.vueltoText = ko.dependentObservable( function(){
        sumPagos = 0,
        totMesa = Risto.Adition.adicionar.currentMesa().totalCalculado(),
        vuelto = 0,
-       retText = 'Total: '+Risto.Adition.adicionar.currentMesa().totalCalculadoTexto();
+       retText = 'Total: '+Risto.Adition.adicionar.currentMesa().textoTotalCalculado();
    if (pagos && pagos.length) {
        for (var p in pagos) {
            if ( pagos[p].valor() ) {
@@ -429,10 +426,10 @@ Risto.Adition.adicionar.vueltoText = ko.dependentObservable( function(){
            }
        }
        vuelto = (totMesa - sumPagos);
-       if (vuelto < 0 ){
-           retText = retText+'   -  Vuelto: $  '+vuelto;
+       if (vuelto <= 0 ){
+           retText = retText+'   -  Vuelto: $  '+Math.abs(vuelto);
        } else {
-           retText = retText+'   -  Faltan: $  '+vuelto;
+           retText = retText+'   -  ¡¡¡¡ Faltan: $  '+vuelto+' !!!';
        }
    }
    return retText;

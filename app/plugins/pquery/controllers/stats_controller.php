@@ -7,7 +7,6 @@ class StatsController extends PqueryAppController {
     var $uses = array('Mesa');
 
     function year() {
-
         //SELECT SUM(total),YEAR(mesas.created) FROM `mesas` GROUP BY YEAR(mesas.created) ORDER BY YEAR(mesas.created) asc
         /*
           $group = array(
@@ -26,11 +25,93 @@ class StatsController extends PqueryAppController {
         $this->set('mesas', $mesasporaño);
     }
 
-    function mesas_total() {
+    /**
+     *
+     * @param type $groupByRange string posibilidades: day - month -  year. Indica como seran agrupados los datos
+     * 
+     */
+    function mesas_total($groupByRange = 'day') {
         $horarioCorte = Configure::read('Horario.corte_del_dia');
         $desdeHasta = '1 = 1';
         $limit = '';
         $lineas = array($desdeHasta);
+        
+        // por default buscar 1 semana atras
+        if (empty($this->data['Linea'])){
+            $this->data['Linea'][0]['hasta'] = date('d/m/Y',strtotime('now'));
+            $this->data['Linea'][0]['desde'] = date('d/m/Y',strtotime('-1 month'));
+        }
+        
+        $mesasLineas = array();
+        if ( !empty($this->data['Linea'] )) {
+            $lineas = array();
+            foreach ($this->data['Linea'] as $linea) {
+                if(!empty($linea['desde']) && !empty($linea['hasta']))
+                    {
+                    list($dia, $mes, $anio) = explode("/", $linea['desde']);
+                    $desde = $anio."-".$mes."-".$dia;
+
+                    list($dia, $mes, $anio) = explode("/", $linea['hasta']);
+                    $hasta = $anio."-".$mes."-".$dia;
+                    
+                    $fields = array(
+                         'sum(m.cant_comensales) as "cant_cubiertos"' ,
+                         'sum(m.total) as "total"', 
+                         'sum(m.total)/sum(m.cant_comensales) as "promedio_cubiertos"',
+                    );
+                    $group = array();
+                    
+                    switch ( strtolower( $groupByRange) ){
+                        case 'day':
+                            $fields[] = 'DATE(m.created) as "fecha"';
+                            $group = array(
+                                 'DATE(m.created)',
+                            );
+                            break;
+                        case 'month':
+                            $fields[] = 'GET_FORMAT( DATE(m.created),"%Y-%m") as "fecha"';
+                            $group = array(
+                                 'YEAR(m.created)','MONTH(m.created)',
+                            );
+                            break;
+                        case 'year':
+                            $fields[] = 'YEAR(m.created) as "fecha"';
+                            $group = array(
+                                 'YEAR(m.created)',
+                            );
+                            break;
+                    }
+                    
+                    
+                    
+                    
+                    $mesas = $this->Mesa->totalesDeMesasEntre($desde, $hasta, array(
+                        'fields' => $fields,
+                        'group' => $group,
+                    ));
+                    foreach ($mesas as &$m) {
+                        $m['Mesa'] = $m[0];
+                        $m['Mesa']['fecha'] = date('d-M-y',strtotime($m['Mesa']['fecha']));
+                        unset($m[0]);
+                    }
+                    $mesasLineas[] = $mesas;
+                }
+            }
+        }
+        
+        $this->set('mesas', $mesasLineas);
+    }
+
+    
+    
+    function mozos_total() {        
+        // por default buscar hoy
+        if ( empty($this->data['Linea']) ) {
+            $this->data['Linea'][0]['hasta'] = date('d/m/Y',strtotime('now'));
+            $this->data['Linea'][0]['desde'] = date('d/m/Y',strtotime('-1 week'));
+        }
+        
+        $mesasLineas = array();
         if ( !empty($this->data['Linea'] )) {
             $lineas = array();
             foreach ($this->data['Linea'] as $linea) {
@@ -42,47 +123,39 @@ class StatsController extends PqueryAppController {
                     list($dia, $mes, $anio) = explode("/", $linea['hasta']);
                     $hasta = $anio."-".$mes."-".$dia;
 
-                    $desdeHasta = "m.created BETWEEN '$desde' AND '$hasta'";
-                    $lineas[] = $desdeHasta;
+                    $mesas = $this->Mesa->totalesDeMesasEntre($desde, $hasta, array(
+                        'fields' => array(
+                             'sum(m.cant_comensales) as "cant_cubiertos"' ,
+                             'sum(m.total) as "total"', 
+                             'sum(m.total)/sum(m.cant_comensales) as "promedio_cubiertos"',
+                             'DATE(m.created) as "fecha"',
+                             'z.numero as "mozo"',
+                             'z.id as "mozo_id"'
+                        ),
+                        'group' => array(
+                            'DATE(m.created), z.id, z.numero',
+                        ),
+                        'order' => array(
+                            'DATE(m.created) DESC',
+                            'z.numero ASC',
+                        )
+                    ));
+                      
+                    $fechas = array();
+                    foreach ($mesas as &$m) {
+                        $m['Mozo'] = $m[0];
+                        $m['Mozo']['numero'] = $m['z']['mozo'];
+                        $m['Mozo']['id'] = $m['z']['mozo_id'];
+                        $fechas[$m['Mozo']['fecha']][$m['Mozo']['id']] = $m;
+                        unset($m[0]);
+                        unset($m['z']);
+                    }
                 }
             }
-        } else {
-            $limit = ' LIMIT 7 ';
         }
-
-        $mesasLineas = array();
-        foreach ( $lineas as $l ) {
-            $query = '    SELECT count(*) as "cant_mesas", 
-            sum(m.cant_comensales) as "cant_cubiertos" ,
-            sum(m.total) as "total", 
-            sum(m.total)/sum(m.cant_comensales) as "promedio_cubiertos",
-            DATE(m.created) as "fecha" FROM (
-
-                SELECT id,numero,mozo_id,total, cant_comensales, cliente_id,menu, ADDDATE(m.created,-1) as created, modified, time_cerro, time_cobro from mesas m
-                WHERE
-                    HOUR(m.created) BETWEEN 0 AND ' . $horarioCorte . '
-
-                UNION
-
-                SELECT id,numero,mozo_id,total, cant_comensales, cliente_id,menu, created, modified, time_cerro, time_cobro from mesas m
-                WHERE
-                    HOUR(m.created) BETWEEN ' . $horarioCorte . ' AND 24) as m
-            WHERE ' . $l . '                    
-            GROUP BY DATE(m.created)
-            ORDER BY m.created DESC     
-            ' . $limit;
-
-            $mesas = $this->Mesa->query($query);
-
-            foreach ($mesas as &$m) {
-                $m['Mesa'] = $m[0];
-                unset($m[0]);
-            }
-            $mesasLineas[] = $mesas;
-        }
-        $this->set('mesas', $mesasLineas);
+        $this->set('fechas', $fechas);
+        $this->set('mozos', $mesas);
     }
-    
     
     function mesas_factura() {
         //SELECT * FROM `clientes` WHERE DATE(created) >=(select date_sub(curdate(),interval 1 year)as Date)and DATE(created) <= NOW();

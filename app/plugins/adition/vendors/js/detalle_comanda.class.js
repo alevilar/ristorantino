@@ -79,7 +79,7 @@ Risto.Adition.detalleComanda.prototype = {
      * O sea, la cantidad agregada menos la quitada
      */
     realCant: function(){
-        return this.cant() - this.cant_eliminada();
+        return parseInt( this.cant() ) - parseInt( this.cant_eliminada() );
     },
     
     
@@ -128,14 +128,14 @@ Risto.Adition.detalleComanda.prototype = {
      * Dispara un evento de producto seleccionado
      */
     seleccionar: function(){        
-        this.cant( this.cant()+1 );
+        this.cant( parseInt(this.cant() ) + 1 );
         this.modificada(true);
     },
     
     
     deseleccionar: function(){
         if (this.realCant() > 0 ) {
-            this.cant_eliminada( this.cant_eliminada()+1 );
+            this.cant_eliminada( parseInt( this.cant_eliminada() ) + 1 );
             this.modificada(true);
         }
     },
@@ -147,7 +147,7 @@ Risto.Adition.detalleComanda.prototype = {
         }
         
         if (this.realCant() > 0 ) {
-            this.cant_eliminada( this.cant_eliminada()+1 );
+            this.cant_eliminada( parseInt( this.cant_eliminada() ) + 1 );
             this.modificada(true);
         }
         $cakeSaver.send({

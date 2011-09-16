@@ -8,13 +8,7 @@
                 echo $html->css('cake.css');         
                 echo $html->css('/pquery/css/jquery.jqplot.css');
                 echo $html->css('estadisticas');
-                
-                $mesas = array ( 
-                               array('Mesa'=> array('tipo'=> 'Efectivo','total'=>'600','cant'=>'6300')),
-                               array('Mesa'=> array('tipo'=> 'Cheque','total'=>'330','cant'=>'3700')),
-                               array('Mesa'=> array('tipo'=> 'Debito','total'=>'290','cant'=>'2200')),
-                               array('Mesa'=> array('tipo'=> 'Credito','total'=>'50','cant'=>'100'))
-                             );    
+        
                 
 ?>
 
@@ -65,23 +59,16 @@
     });
 </script>
 
-<?php echo $this->element('menustats'); ?>
 
-<div class="grid_6 push_1">
-<div id="chart1" style="width: 80%; height: 450px; margin-left: 10%;"></div>
+<div class="clear" style="height: 20px;"></div>
+
+<div class="grid_9 alpha">
+    <div id="chart1" class="grid_12 alpha omega" style="height:350px;"></div>
+
 </div>
 
-<div class="grid_2 push_1 select_periodo">
-    <?php echo $html->link("Dia", 'mesas_pago/dia', array('class' => 'menu_periodo')) ?>
-    <?php echo $html->link("Semana", 'mesas_pago/semana', array('class' => 'menu_periodo')) ?>
-    <?php echo $html->link("Mes", 'mesas_pago/mes', array('class' => 'menu_periodo')) ?>
-    <?php echo $html->link("Año", 'mesas_pago/anio', array('class' => 'menu_periodo')) ?>
-</div>
-
-
-<div class="grid_10 push_2 omega">
-    
-    <table cellspacing="0" cellpadding="0" style="text-align: left; font-size: 17px;">
+<div class="grid_3 omega">
+    <table cellspacing="0" cellpadding="0">
         <thead>
                         <tr>
                             <th class="editable">Tipo de pago</th>
@@ -91,38 +78,39 @@
         </thead>
         <tbody>
 
-    <?php     
-        if(!empty($mesas)){
+    <?php
+        if ( !empty($mesas) ){
 
-                foreach($mesas as $m){
-                    echo('<tr>');
-                    echo('<td>');
-                    ?><strong><?php
-                    echo($m['Mesa']['tipo']);
-                    ?></strong><?php
-                    echo('</td>');
-                    echo('<td>');
-                    echo($m['Mesa']['cant']);
-                    echo('</td>');
-                    echo('<td>');
-                    echo('$');
-                    echo($m['Mesa']['total']);
-                    echo('</td>');
-                    echo('</tr>');
+                foreach ( $mesas as $m ){
+                    ?>
+                    <tr>
+                        <td>
+                            <strong><?php echo($m['Mesa']['tipo']); ?></strong>
+                        </td>
+                        
+                        <td> <?php echo($m['Mesa']['cant']); ?></td>
+                        
+                        <td> $<?php echo($m['Mesa']['total']); ?></td>
+                    </tr>
+                    <?php
             }        
         }else{
-                echo('<td>');
-                    echo('No se encontraron mesas');   
-                echo('</td>');
-                echo('<td>');
-                    echo('-');  
-                echo('</td>');
-
+            ?>
+                    <tr><td>No se encontraron mesas</td></tr>        
+            <?php
         }    
-            echo('</tr>');
     ?>
+        </tbody>
+    </table>
 
 </div>
+    <div class="grid_2 push_1 select_periodo">
+        <?php echo $html->link("Dia", 'mesas_pago/dia', array('class' => 'menu_periodo')) ?>
+        <?php echo $html->link("Semana", 'mesas_pago/semana', array('class' => 'menu_periodo')) ?>
+        <?php echo $html->link("Mes", 'mesas_pago/mes', array('class' => 'menu_periodo')) ?>
+        <?php echo $html->link("Año", 'mesas_pago/anio', array('class' => 'menu_periodo')) ?>
+    </div>
+
 
 
 

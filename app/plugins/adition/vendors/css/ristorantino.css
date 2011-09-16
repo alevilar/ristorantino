@@ -338,3 +338,13 @@ ul.listado-mozos-para-mesas{
     font-size: xx-small;
     margin-left: -17px;
 }
+
+.cant_comensales{
+    float: left;
+}
+
+
+.producto-precio{
+    float: right;
+    margin-top: 11px;
+}

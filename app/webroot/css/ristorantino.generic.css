@@ -67,18 +67,31 @@ h4 {
 
 
 ul, li {
-	margin: 0 12px;
 }
 
 /* Layout */
 /* Layout */
 #container {
-	text-align: left;
+	background: #fff;
+        min-height: 250px;
+	color: #333;
+        -webkit-border-radius: 15px;
+        -moz-border-radius: 15px;
+        border-radius: 15px; 
+        padding: 15px;
+        left: -15px;
+        background: #f0f0f0;
+	background-image: -moz-linear-gradient(top,#eeeeee,#dddddd);
+	background-image: -webkit-gradient(linear,left top,left bottom,
+		color-stop(0, 		#eeeeee),
+		color-stop(1, 		#dddddd));
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#eeeeee', EndColorStr='#dddddd')";
 }
 
 .header{
 	padding-top: 0;
         padding-bottom: 5px;
+        border-bottom: 1px solid #6B6B6E;
 }
 .header a {
 	color: #CCCCCC;
@@ -102,22 +115,7 @@ ul, li {
 	color: #e3e3e4;
 }
 
-#content{
-	background: #fff;
-        min-height: 250px;
-	color: #333;
-        -webkit-border-radius: 15px;
-        -moz-border-radius: 15px;
-        border-radius: 15px; 
-        padding: 15px;
-        left: -15px;
-        background: #f0f0f0;
-	background-image: -moz-linear-gradient(top,#eeeeee,#dddddd);
-	background-image: -webkit-gradient(linear,left top,left bottom,
-		color-stop(0, 		#eeeeee),
-		color-stop(1, 		#dddddd));
-	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#eeeeee', EndColorStr='#dddddd')";
-}
+
 #footer {
 	text-align: right;
 }
@@ -206,7 +204,6 @@ label {
 	padding-right: 20px;
 }
 input, textarea {
-	font-family: "frutiger linotype", "lucida grande", "verdana", helvetica, sans-serif;
 	padding: 2px;
 }
 select {
@@ -314,33 +311,33 @@ li.selected    {
 
 
 
+.dashboard-buttons{
+    text-align: center;
+    margin: auto;
+}
 
-#botonera_home{
-	text-align: center;
-	margin: auto;
-        padding-bottom: 80px;
+.dashboard-buttons li{
+    display: inline-block;
 }
 
 
-.boton{
+.dashboard-buttons a{
+        padding: 150px 50px 0;
 	display: block;
-	height: 65px;
-	width: 100px;
-	border: 2px solid #666666;
+	width: 150px;
 	text-align: center;
 	text-decoration: none;
-	background-color: silver;
 	vertical-align: middle;
 	overflow: hidden;  
         color: #000000; 
+        background-position: center top;
+	background-repeat: no-repeat;
+        background-image: url(../img/botonvaciop.png);
 }
 
-.boton:hover{
-	background-color: #E7E7E7;
-        -webkit-transition: background 180ms ease;
-        -moz-transition: background 180ms ease;
-        -o-transition: background 180ms ease;
-        transition: background 180ms ease;
+.dashboard-buttons a:hover{
+        opacity:0.7;
+        filter:alpha(opacity=70); /* For IE8 and earlier */
 }
 
 .redondeado{
@@ -391,42 +388,18 @@ li.selected    {
 
 #bton-estadisticas{
 	background-image: url("../img/stats.png");
-        background-position: center top;
-	background-repeat: no-repeat;
-        padding-bottom: 0px;
-        padding-left: 50px;
-        padding-right: 50px;
-        padding-top: 150px;
 }
 
 #bton-adicion{
 	background-image: url("../img/adicion.png");
-        background-position: center top;
-	background-repeat: no-repeat;
-        padding-bottom: 0px;
-        padding-left: 50px;
-        padding-right: 50px;
-        padding-top: 150px;
 }
 
 #bton-caja{
 	background-image: url("../img/caja.png");
-        background-position: center top;
-	background-repeat: no-repeat;
-        padding-bottom: 0px;
-        padding-left: 50px;
-        padding-right: 50px;
-        padding-top: 150px;
 }
 
 #bton-admin{
 	background-image: url("../img/admin.png");
-        background-position: center top;
-	background-repeat: no-repeat;
-        padding-bottom: 0px;
-        padding-left: 50px;
-        padding-right: 50px;
-        padding-top: 150px;
 }
 
 #bton-contabilidad{
@@ -441,46 +414,36 @@ li.selected    {
 
 #bton-inven {
 	background-image: url("../img/inventario.png");
-        background-position: center top;
-	background-repeat: no-repeat;
-        padding-bottom: 0px;
-        padding-left: 50px;
-        padding-right: 50px;
-        padding-top: 150px;
 }
 
 
 /* administracion */
 
-.administracion_menu {
-    font-family: helvetica, Verdana, sans-serif;
+.administracion_menu ul{
+    text-align: center;
+    margin: auto;
+    background: #eee;
+    height: 50px;
+    display: inline;
+}
+
+.administracion_menu li{
+    display: inline-block;
 }
 
 .administracion_menu h2 {
     font-size: 140%;
-    width: 100%;
-    float: left;
-    clear: both;
-    text-align: center;
+    display: inline;
+    clear: none;
     text-shadow: 2px 2px 4px #FFFFFF;
     filter: dropshadow(color=#FFFFFF, offx=2, offy=2); 
 }
 
 .administracion_menu a {
-    font-size: 100%;
-    font-family: helvetica, Verdana, sans-serif;
-    padding-bottom: 2%;
-    padding-top: 2%;
-    padding-left: 2%;
-    padding-right: 5%;
-    float: left;
-    clear: both;
-    width: 100%;
-    margin-bottom: 1px; 
-    
     border: 1px solid #ccc;
-    background: #eee;
+    display: block;
     font-weight: bold;
+    padding: 10px;
     color: #444;
     text-shadow: 0 1px 1px #f6f6f6;
     background-image: -moz-linear-gradient(top, #fefefe, #eeeeee);

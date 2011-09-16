@@ -118,12 +118,19 @@ class DetalleComandasController extends AppController {
 		}
 		if (!empty($this->data)) {
 			if ($this->DetalleComanda->save($this->data)) {
-				$this->Session->setFlash(__('The Comanda has been saved', true));
+                            if($this->RequestHandler->isAjax()){
+                                return 1;
+                            }
+                            $this->Session->setFlash(__('The Comanda has been saved', true));
 				$this->redirect(array('action'=>'index'));
 			} else {
-				$this->Session->setFlash(__('The Comanda could not be saved. Please, try again.', true));
+                            if($this->RequestHandler->isAjax()){
+                                return "edit failed";
+                            }
+                            $this->Session->setFlash(__('The Comanda could not be saved. Please, try again.', true));
 			}
 		}
+                
 		if (empty($this->data)) {
 			$this->data = $this->DetalleComanda->read(null, $id);
 		}
