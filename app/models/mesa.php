@@ -490,9 +490,7 @@ LEFT JOIN
                     UNION
                     SELECT id,numero,mozo_id,total, cant_comensales, cliente_id,menu, created, modified, time_cerro, time_cobro from mesas m
                     WHERE
-                        HOUR(m.created) BETWEEN ' . $horarioCorte . ' AND 24) as m
-                    LEFT JOIN pagos p ON p.mesa_id = m.id
-                    LEFT JOIN tipo_de_pagos tp ON tp.id = p.tipo_de_pago_id
+                        HOUR(m.created) BETWEEN ' . $horarioCorte . ' AND 24) as m                  
                     LEFT JOIN mozos z ON z.id = m.mozo_id
                 WHERE ' . $desdeHasta . '                    
                 '. $groupByText .'

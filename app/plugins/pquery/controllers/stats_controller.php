@@ -25,7 +25,12 @@ class StatsController extends PqueryAppController {
         $this->set('mesas', $mesasporaño);
     }
 
-    function mesas_total() {
+    /**
+     *
+     * @param type $groupByRange string posibilidades: day - month -  year. Indica como seran agrupados los datos
+     * 
+     */
+    function mesas_total($groupByRange = 'day') {
         $horarioCorte = Configure::read('Horario.corte_del_dia');
         $desdeHasta = '1 = 1';
         $limit = '';
@@ -48,17 +53,41 @@ class StatsController extends PqueryAppController {
 
                     list($dia, $mes, $anio) = explode("/", $linea['hasta']);
                     $hasta = $anio."-".$mes."-".$dia;
-
+                    
+                    $fields = array(
+                         'sum(m.cant_comensales) as "cant_cubiertos"' ,
+                         'sum(m.total) as "total"', 
+                         'sum(m.total)/sum(m.cant_comensales) as "promedio_cubiertos"',
+                    );
+                    $group = array();
+                    
+                    switch ( strtolower( $groupByRange) ){
+                        case 'day':
+                            $fields[] = 'DATE(m.created) as "fecha"';
+                            $group = array(
+                                 'DATE(m.created)',
+                            );
+                            break;
+                        case 'month':
+                            $fields[] = 'GET_FORMAT( DATE(m.created),"%Y-%m") as "fecha"';
+                            $group = array(
+                                 'YEAR(m.created)','MONTH(m.created)',
+                            );
+                            break;
+                        case 'year':
+                            $fields[] = 'YEAR(m.created) as "fecha"';
+                            $group = array(
+                                 'YEAR(m.created)',
+                            );
+                            break;
+                    }
+                    
+                    
+                    
+                    
                     $mesas = $this->Mesa->totalesDeMesasEntre($desde, $hasta, array(
-                        'fields' => array(
-                             'sum(m.cant_comensales) as "cant_cubiertos"' ,
-                             'sum(m.total) as "total"', 
-                             'sum(m.total)/sum(m.cant_comensales) as "promedio_cubiertos"',
-                             'DATE(m.created) as "fecha"',
-                        ),
-                        'group' => array(
-                            'DATE(m.created)',
-                        )
+                        'fields' => $fields,
+                        'group' => $group,
                     ));
                     foreach ($mesas as &$m) {
                         $m['Mesa'] = $m[0];

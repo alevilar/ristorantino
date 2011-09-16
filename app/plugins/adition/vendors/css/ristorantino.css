@@ -342,3 +342,9 @@ ul.listado-mozos-para-mesas{
 .cant_comensales{
     float: left;
 }
+
+
+.producto-precio{
+    float: right;
+    margin-top: 11px;
+}

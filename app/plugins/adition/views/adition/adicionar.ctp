@@ -8,6 +8,7 @@
 
      <span data-bind="text: realCant()" style="right: auto" class="ui-li-count ui-btn-up-c ui-btn-corner-all"></span>
      <span data-bind="text: nameConSabores(), css: {tachada: realCant()==0}" style="padding-left: 40px;"></span>
+     <span class="producto-precio">p/u: {{= '$'}}<span data-bind="text: Producto().precio"></span></span>
  </li>
 </script>
 
@@ -223,7 +224,14 @@ es igual al de las mesas de la adicion salvo que al hacer click tienen otro comp
         <form name="comanda" id="form-comanda-producto-observacion">
             <textarea name="obs" id="obstext" autofocus="true"></textarea>
         </form>
+        
+        <div class="observaciones-list">
+                <?php foreach($observaciones as $o) { ?>
+                <a data-role="button" data-inline="true" href="#" onclick="$('#obstext').val( $('#obstext').val()+', <?php echo $o?>' )"><?php echo $o?></a>
+                <?php } ?>
+        </div>
     </div>
+    
 </div> 
 
 
