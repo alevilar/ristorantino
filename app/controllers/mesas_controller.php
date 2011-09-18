@@ -97,18 +97,13 @@ class MesasController extends AppController {
             if (!empty( $this->data['Mesa']['estado_cerrada'])){
                 switch ($this->data['Mesa']['estado_cerrada']) {
                     case 'abiertas':
-                        $condiciones['Mesa.time_cerro'] = DATETIME_NULL;
-                        $condiciones['Mesa.time_cobro'] = DATETIME_NULL;
+                        $condiciones['Mesa.estado_id'] = MESA_ABIERTA;
                         break;
                     case 'cerradas':
-                        $condiciones['Mesa.created <>'] = DATETIME_NULL;
-                        $condiciones['Mesa.time_cerro <>'] = DATETIME_NULL;
-                        $condiciones['Mesa.time_cobro'] = DATETIME_NULL;
+                        $condiciones['Mesa.estado_id'] = MESA_CERRADA;
                         break;
                      case 'cobradas':
-                        $condiciones['Mesa.created <>'] = DATETIME_NULL;
-                         $condiciones['Mesa.time_cerro <>'] = DATETIME_NULL;
-                        $condiciones['Mesa.time_cobro <>'] = DATETIME_NULL;
+                         $condiciones['Mesa.estado_id'] = MESA_COBRADA;
                         break;
                     default:
                         break;
@@ -133,6 +128,12 @@ class MesasController extends AppController {
             $this->layout = 'xls';
             $this->render('xls/index');
         } else {
+            $tot = $this->Mesa->find('first', array(
+                'conditions' => $condiciones,
+                'fields' => array('sum(Mesa.total) as total'),
+                ));
+            $tot = empty($tot['0']['total']) ? 0 : $tot['0']['total'];
+            $this->set('mesas_suma_total', money_format('%.2n', $tot) );
             $this->set('mesas', $this->paginate('Mesa'));
         }
     }
@@ -440,7 +441,11 @@ $tipo_pagos = $this->Mesa->Pago->TipoDePago->find('list');
     function reabrir($id){
         $this->Session->setFlash('Se reabrió la mesa', true);
         $this->Mesa->reabrir($id);
-        die("reabrio la mesa ID: $id");
+        if ($this->RequestHandler->isAjax()) {
+            die("reabrio la mesa ID: $id");
+        } else{
+            $this->redirect($this->referer());
+        }
     }
     
     

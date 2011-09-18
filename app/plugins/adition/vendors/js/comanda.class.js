@@ -9,7 +9,7 @@ Risto.Adition.comanda.prototype = {
     DetalleComanda : ko.observableArray([]),
     created: ko.observable(),
     model: 'Comanda',
-    imprimir: ko.observable(),
+    imprimir: ko.observable( true ),
     id: ko.observable(),
     observacion: ko.observable(),
     

@@ -347,32 +347,35 @@ es igual al de las mesas de la adicion salvo que al hacer click tienen otro comp
 <div data-role="page" id="comanda-add-menu">
     <div  data-role="header"  data-position="inline">
 <!--        <a data-rel="back" data-transition="reverse" href="#">Cancelar</a>-->
-	<h1>Nueva Comanda para la mesa <span data-bind="text: adn().currentMesa().numero"></span></h1>
-	<a href="#mesa-view" data-icon="check" data-theme="b" data-bind="click: function(){adn().currentMesa().currentComanda().save()}">Guardar</a>        
-        
-        <a data-icon="plus" class="ui-btn-right" data-role="actionsheet">Open</a>
-		<div>
-			<a data-role="button" href="#">Action 1</a>
-			<a data-role="button" href="#">Action 2</a>
-			<a data-role="button" href="#">Action 3</a>
-			<br/>
-			<a data-role="button" data-rel="close" href="#">Cancel</a>
-		</div>
-        
+
+        <div style="margin-left: 40px; text-align: center; height: 40px; margin-top: 5px;">
+            <h3 style="display: inline; text-align: center; margin-top: 8px;">Nueva Comanda para la mesa <span data-bind="text: adn().currentMesa().numero"></span></h3>
+            
+            <span style="float: right; clear: none; width: 40%">
+                <span data-bind="click: function(){adn().currentMesa().currentComanda().comanda.imprimir( 0 )}, visible: adn().currentMesa().currentComanda().comanda.imprimir()"><?php echo $html->image('print48', array('width'=> 35))?></span>
+                <span data-bind="click: function(){adn().currentMesa().currentComanda().comanda.imprimir( 1 )}, visible: !adn().currentMesa().currentComanda().comanda.imprimir()" ><?php echo $html->image('dontprint48', array('width'=> 35))?></span>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="#mesa-view" data-role="button"  data-inline="true" data-icon="check" data-theme="b" data-bind="click: function(){adn().currentMesa().currentComanda().save()}">Guardar</a>        
+                
+            </span>
+        </div>
     </div>
 
-    <div data-role="content">
+    <div data-role="content">   
         
-        <a data-icon="plus" class="ui-btn-right" data-role="actionsheet">Open</a>
-		<div>
-			<a data-role="button" href="#">Update 1</a>
-			<a data-role="button" href="#">Update 2</a>
-			<a data-role="button" href="#">Update 3</a>
-		</div>
-		<div id='sheet0'>
-			<h1>This is sheet 0</h1>
-		</div>
-        
+        <h2>ijisdisj</h2>
+        <div id="comanda-opciones" class="ui-actionsheet-content" style="display: none;">
+            <h2>Opciones</h2>
+                <a data-role="button" href="#" class="ui-actionsheet-commandbtn ui-btn ui-btn-up-c ui-btn-corner-all ui-shadow" data-theme="c"><span class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text">Action 1</span></span></a>
+                <a data-role="button" href="#" class="ui-actionsheet-commandbtn ui-btn ui-btn-up-c ui-btn-corner-all ui-shadow" data-theme="c"><span class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text">Action 2</span></span></a>
+                <a data-role="button" href="#" class="ui-actionsheet-commandbtn ui-btn ui-btn-up-c ui-btn-corner-all ui-shadow" data-theme="c"><span class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text">Action 3</span></span></a>
+                <br>
+                <a data-role="button" data-rel="close" href="#" class="ui-actionsheet-closebtn ui-btn ui-btn-corner-all ui-shadow ui-btn-up-c" data-theme="c"><span class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text">Cancel</span></span></a>
+            <p>
+                mira cuantas opciones que tengo !!
+            </p>
+        </div>
+             
         <!--        PRODUCTOS SELECCIONADOS    -->
         <div  style="width: 28%; margin-right: 2%; display: inline; float: left;">
            <ul id="ul-productos-seleccionados" class="ui-listview" data-role="listview"

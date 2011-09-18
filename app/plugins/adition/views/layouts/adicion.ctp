@@ -21,7 +21,7 @@
 		// para los modal window
 		echo $html->css(array(
                     'jquery-mobile/jquery.mobile-1.0b3.min',
-                    'jquery-mobile/jquery-mobile-fluid960',
+//                    'jquery-mobile/jquery-mobile-fluid960',
                     'jquery-mobile/jquery.mobile.actionsheet',
                     '/adition/css/ristorantino',
                     'jquery-mobile/jquery.mobile-custom',
@@ -39,7 +39,7 @@
                     'jquery/jquery.tmpl.min',
 //                    'jquery/jquery.periodicalupdater',
                     
-                    'jquery/fg.menu',
+//                    'jquery/fg.menu',
                     'ristorantino/generic',
                     
                     'knockout-1.2.1',

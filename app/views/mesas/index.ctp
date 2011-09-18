@@ -100,7 +100,9 @@ $paginator->options(array('url' => $this->passedArgs));
 echo $paginator->counter(array(
 'format' => __('Pagina %page% de %pages%, mostrando %current% elementos de %count%', true)
 ));
+ echo "..... y suman un total de <b>$$mesas_suma_total</b> pesos";
 ?></p>
+
 <?php 
 if ($paginator->params['paging']['Mesa']['count']!=0) { 
             echo $this->element('mesas/listado_tabla');

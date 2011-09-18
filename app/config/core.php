@@ -28,7 +28,8 @@
  */
 
 
-setlocale(LC_TIME, 'ar_ES');
+setlocale(LC_TIME, 'es_AR');
+setlocale(LC_MONETARY, 'es_AR');
 
 /**
  * CakePHP Debug Level:

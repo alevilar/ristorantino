@@ -26,7 +26,13 @@ $('#listado-mesas').live('pageshow',function(event, ui){
   tot.css({'width':por+'%', padding: '0px', margin: '0px', 'float': 'left'});
 });
  
-
+ 
+ $( "#comanda-add-menu" ).live( "pagecreate", function() { 
+		$( ":jqmData(role='actionsheet')", this ).each(function() {
+			$(this).actionsheet();
+		});
+	});
+        
 
 /**
  *
@@ -81,6 +87,10 @@ $(document).ready(function() {
     $('A[href="#mesa-cobrar"]').click(function(){
         Risto.Adition.adicionar.pagos([]);
     });
+    
+     $('#btn-comanda-opciones').click(function(){
+         $('#comanda-opciones').toggle();
+      });
     
     
     

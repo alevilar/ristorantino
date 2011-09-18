@@ -1,8 +1,3 @@
-body{
-    overflow: hidden;
-}
-
-
 
 ul.listado-adicion{
     list-style: none;
@@ -347,4 +342,12 @@ ul.listado-mozos-para-mesas{
 .producto-precio{
     float: right;
     margin-top: 11px;
+}
+
+
+#comanda-opciones{
+  position: absolute;
+  top: 40%;
+  left: 40%;
+  z-index: 99;
 }
