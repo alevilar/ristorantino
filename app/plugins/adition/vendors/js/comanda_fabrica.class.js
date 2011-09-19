@@ -58,10 +58,17 @@ Risto.Adition.comandaFabrica.prototype = {
             comanderas[ccdc.comandera_id()].push(ccdc);
         }
         
+        var comandaJsonCopy = {
+            mesa_id: this.comanda.mesa_id,
+            observacion: this.comanda.observacion(),
+            imprimir: this.comanda.imprimir()
+        }
+        
+        
         // creo una nueva comanda para cada comandera
         for (var com in comanderas ) {
-            comanderaComanda = new Risto.Adition.comanda({mesa_id: this.mesa.id()});
-            comanderaComanda.DetalleComanda(comanderas[com]);
+            comanderaComanda = new Risto.Adition.comanda( comandaJsonCopy );
+            comanderaComanda.DetalleComanda( comanderas[com] );
             
             this.mesa.Comanda.unshift( comanderaComanda );
             $cakeSaver.send({url:urlDomain+'detalle_comandas/add.json', obj: comanderaComanda});

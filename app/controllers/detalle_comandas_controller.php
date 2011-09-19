@@ -3,7 +3,7 @@ class DetalleComandasController extends AppController {
 
 	var $name = 'DetalleComandas';
 	var $helpers = array('Html', 'Form');
-	var $components = array( 'Printer');
+	var $components = array( 'Printer', 'Actualizador');
 
 	function index() {
 		$this->DetalleComanda->recursive = 0;
@@ -24,6 +24,7 @@ class DetalleComandasController extends AppController {
 
 	
 	function sacarProductos(){
+            $this->Actualizador->actualizar();
 		$this->autoRender = false;
 		$ok = false;
 		//Configure::write('debug',1);
@@ -35,11 +36,11 @@ class DetalleComandasController extends AppController {
 	}
 	
 	function add(){
-		
+		$this->Actualizador->actualizar();
 		$ok = false;
 		Configure::write('debug',0);		
                 
-		$imprimir = $this->data['Comanda']['imprimir'];
+		$imprimir = $this->data['Comanda']['imprimir'] ? true : false;
 		unset($this->data['Comanda']['imprimir']);		
 		
 		// este array contine la prioridad y la mesa_id ---> todos datos de Modelo Comanda
@@ -105,13 +106,14 @@ class DetalleComandasController extends AppController {
                 }
                 
 
-		
+		$this->set('imprimir', $imprimir);
 		$this->set('okval', $ok);
                 $this->DetalleComanda->Comanda->contain(array('DetalleComanda' => array('DetalleSabor.Sabor')));
 		$this->set('comanda', $this->DetalleComanda->Comanda->read());
 	}
 
 	function edit($id = null) {
+            $this->Actualizador->actualizar();
 		if (!$id && empty($this->data)) {
 			$this->Session->setFlash(__('Invalid Comanda', true));
 			$this->redirect(array('action'=>'index'));
@@ -140,6 +142,7 @@ class DetalleComandasController extends AppController {
 	}
 
 	function delete($id = null) {
+            $this->Actualizador->actualizar();
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for Comanda', true));
 			$this->redirect(array('action'=>'index'));

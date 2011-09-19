@@ -31,7 +31,6 @@ Risto.Adition.comanda.prototype = {
                     }
                 }
             }
-           
         } else {
             jsonData = {};
             mapOps = {};

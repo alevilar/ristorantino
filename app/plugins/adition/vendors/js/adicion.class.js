@@ -315,7 +315,9 @@ Risto.Adition.adicionar = {
             adn.yaMapeado = true;
             ko.mapping.fromJS(data, mapOps, adn );
         } else {
-            return ko.mapping.updateFromJS(adn, data);
+            if (data.mozos.length) {
+                return ko.mapping.updateFromJS(adn, data);
+            }
         }
         $(document).trigger('adicionMesasActualizadas');
     },

@@ -179,6 +179,8 @@ background-color: #EDEDED;
     margin: 0.5%;
     font-size: 96%;
     width: 10%;
+    float: left;
+    height: 77px;
 }
 .abrir-mesa span {
     overflow: visible !important;   
@@ -350,4 +352,17 @@ ul.listado-mozos-para-mesas{
   top: 40%;
   left: 40%;
   z-index: 99;
+}
+
+
+#comanda-add-observacion{
+    position: absolute;
+    right: 170px;
+    width: 60%;
+    z-index: 99;
+    background-color: #4F4F4F;
+}
+
+#comanda-add-observacion TEXTAREA{
+    width: 100%;
 }

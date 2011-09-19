@@ -2,7 +2,7 @@
 class PagosController extends AppController {
 
 	var $name = 'Pagos';
-	var $helpers = array('Html', 'Form');
+	var $helpers = array('Html', 'Form', 'Actualizador');
 
 	function index() {
 		$this->Pago->recursive = 0;
@@ -18,6 +18,7 @@ class PagosController extends AppController {
 	}
 
 	function add() {
+            $this->Actualizador->actualizar();
 		if (!empty($this->data)) {
                     if (!empty($this->data['Mesa'])) {
                         $this->data['Mesa']['estado_id'] = MESA_COBRADA;

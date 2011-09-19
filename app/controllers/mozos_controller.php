@@ -2,6 +2,7 @@
 class MozosController extends AppController {
 
 	var $name = 'Mozos';
+        var $components = array('Actualizador');
 	var $helpers = array('Html', 'Form');
 
         function beforeFilter() {
@@ -77,7 +78,12 @@ class MozosController extends AppController {
 
 
         function mesas_abiertas() {
-            $mesas = $this->Mozo->mesasAbiertas();
+            $mesas = array();
+            if ( $this->Actualizador->huboCambios() ) {
+                $mesas = $this->Mozo->mesasAbiertas();                
+                $this->Actualizador->reset();
+            }            
+//            $this->Actualizador->actualizar();
             $this->set('mesas', $mesas);
         }
 

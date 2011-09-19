@@ -265,7 +265,7 @@ es igual al de las mesas de la adicion salvo que al hacer click tienen otro comp
                     
                     <li id="mesa-action-cliente" data-bind="attr: {'estado': 'mesa-cliente_'+adn().currentMesa().getEstadoIcon()}">
                         <a href="<?php echo $html->url('/clientes/jqm_clientes')?>" data-rel="dialog" data-transition="fade">
-                                <?= $html->image('/adition/css/img/addcliente.png')?>
+                                <?= $html->image('/adition/css/img/customers.png')?>
                             <span data-bind="visible: !adn().currentMesa().Cliente()">Agregar Cliente</span>
                             <span data-bind="visible: adn().currentMesa().Cliente()">Cliente: <span data-bind="text: adn().currentMesa().clienteNameData()"></span></span>
                         </a>
@@ -280,16 +280,17 @@ es igual al de las mesas de la adicion salvo que al hacer click tienen otro comp
                         <a href="#mesa-cobrar" data-rel="dialog"><?= $html->image('/adition/css/img/cobrar.png')?>Cobrar</a>
                     </li>
                     
+                    <li id="mesa-action-reimprimir" data-bind="attr: {'estado': 'mesa-re-print_'+adn().currentMesa().getEstadoIcon()}">
+                        <a href="#listado-mesas" id="mesa-reimprimir"  data-rel="back"><?= $html->image('/adition/css/img/printer.png')?>Imprimir Ticket</a>
+                    </li>
+
+                    
                     <li id="mesa-action-cambiar-mozo">
                         <a href="#mesa-cambiar-mozo" data-rel="dialog"  data-transition="pop"><?= $html->image('/adition/css/img/cambiarmozo.png')?>Cambiar Mozo</a>
                     </li>
                     
                     <li id="mesa-action-cambiar-numero">
                         <a href="#mesa-cambiar-numero" data-rel="dialog"  data-transition="pop"><?= $html->image('/adition/css/img/cambiarmesa.png')?>Cambiar N°</a>
-                    </li>
-                    
-                    <li id="mesa-action-reimprimir" data-bind="attr: {'estado': 'mesa-re-print_'+adn().currentMesa().getEstadoIcon()}">
-                        <a href="#listado-mesas" id="mesa-reimprimir"  data-rel="back"><?= $html->image('/adition/css/img/reimprimir.png')?>Imprimir Ticket</a>
                     </li>
                     
                     <li id="mesa-action-reabrir" data-bind="attr: {'estado': 'mesa-reabrir_'+adn().currentMesa().getEstadoIcon()}">
@@ -337,9 +338,6 @@ es igual al de las mesas de la adicion salvo que al hacer click tienen otro comp
 </div>
 
 
-
-        
-
 <!--
                         COMANDA-ADD
 
@@ -351,9 +349,10 @@ es igual al de las mesas de la adicion salvo que al hacer click tienen otro comp
         <div style="margin-left: 40px; text-align: center; height: 40px; margin-top: 5px;">
             <h3 style="display: inline; text-align: center; margin-top: 8px;">Nueva Comanda para la mesa <span data-bind="text: adn().currentMesa().numero"></span></h3>
             
-            <span style="float: right; clear: none; width: 40%">
-                <span data-bind="click: function(){adn().currentMesa().currentComanda().comanda.imprimir( 0 )}, visible: adn().currentMesa().currentComanda().comanda.imprimir()"><?php echo $html->image('print48', array('width'=> 35))?></span>
-                <span data-bind="click: function(){adn().currentMesa().currentComanda().comanda.imprimir( 1 )}, visible: !adn().currentMesa().currentComanda().comanda.imprimir()" ><?php echo $html->image('dontprint48', array('width'=> 35))?></span>
+            <span style="float: right; margin-right: 10px;">
+                <a href="#" onclick="$('#comanda-add-observacion').toggle('slow').focus();"><?php echo $html->image('pencil_48.png', array('width'=> 35))?></a>
+                <a href="#" data-bind="click: function(){adn().currentMesa().currentComanda().comanda.imprimir( 0 )}, visible: adn().currentMesa().currentComanda().comanda.imprimir()"><?php echo $html->image('print48', array('width'=> 35))?></a>
+                <a href="#" data-bind="click: function(){adn().currentMesa().currentComanda().comanda.imprimir( 1 )}, visible: !adn().currentMesa().currentComanda().comanda.imprimir()" ><?php echo $html->image('dontprint48', array('width'=> 35))?></a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <a href="#mesa-view" data-role="button"  data-inline="true" data-icon="check" data-theme="b" data-bind="click: function(){adn().currentMesa().currentComanda().save()}">Guardar</a>        
                 
@@ -362,22 +361,14 @@ es igual al de las mesas de la adicion salvo que al hacer click tienen otro comp
     </div>
 
     <div data-role="content">   
-        
-        <h2>ijisdisj</h2>
-        <div id="comanda-opciones" class="ui-actionsheet-content" style="display: none;">
-            <h2>Opciones</h2>
-                <a data-role="button" href="#" class="ui-actionsheet-commandbtn ui-btn ui-btn-up-c ui-btn-corner-all ui-shadow" data-theme="c"><span class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text">Action 1</span></span></a>
-                <a data-role="button" href="#" class="ui-actionsheet-commandbtn ui-btn ui-btn-up-c ui-btn-corner-all ui-shadow" data-theme="c"><span class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text">Action 2</span></span></a>
-                <a data-role="button" href="#" class="ui-actionsheet-commandbtn ui-btn ui-btn-up-c ui-btn-corner-all ui-shadow" data-theme="c"><span class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text">Action 3</span></span></a>
-                <br>
-                <a data-role="button" data-rel="close" href="#" class="ui-actionsheet-closebtn ui-btn ui-btn-corner-all ui-shadow ui-btn-up-c" data-theme="c"><span class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text">Cancel</span></span></a>
-            <p>
-                mira cuantas opciones que tengo !!
-            </p>
+        <div style="display: none" id="comanda-add-observacion" class="ui-corner-bottom ui-overlay-shadow ui-content">
+            <h4>Agregar observación general para la comanda</h4>
+            <textarea data-bind="value: adn().currentMesa().currentComanda().comanda.observacion, valueUpdate: 'keyup'" autofocus="true" id="obstext" name="obs" class="ui-input-text ui-body-null ui-corner-all ui-shadow-inset ui-body-a"></textarea>
+            <a href="#" onclick="$('#comanda-add-observacion').toggle('slow')" data-role="button">Aceptar</a>
         </div>
-             
         <!--        PRODUCTOS SELECCIONADOS    -->
         <div  style="width: 28%; margin-right: 2%; display: inline; float: left;">
+            
            <ul id="ul-productos-seleccionados" class="ui-listview" data-role="listview"
                data-bind="template: {name: 'categorias-productos-seleccionados', foreach: adn().productosSeleccionados}"
                 >
