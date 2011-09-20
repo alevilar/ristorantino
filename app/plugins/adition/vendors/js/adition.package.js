@@ -28,7 +28,6 @@ $(document).ready(function(){
 function mostrarMesasDeMozo(mozoId) {
     var mesasDom = $('#mesas_container li');
     mesasDom.show();
-    console.debug("mostrno las mesas de "+mozoId);
     if ( mozoId ) {
             $('#mesas_container li[mozo!='+mozoId+']').hide();
             $('.listado-mozos-para-mesas a').removeClass('ui-btn-active');
