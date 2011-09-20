@@ -11,6 +11,8 @@ window.onbeforeunload=confirmacionDeSalida;
  * para enriquecer los elementos nuevos
  *
  */
+
+// enrquiqueecr con JQM el listado ed comandas de la mesa en msa-view
 $('#mesa-view').live('pagebeforeshow',function(event, ui){
   var el = $('#comanda-detalle-collapsible');
   el.find('div[data-role=collapsible]').collapsible();      
@@ -18,6 +20,7 @@ $('#mesa-view').live('pagebeforeshow',function(event, ui){
 });
 
 
+// acomodar todos mozos al ancho ed la pantalla segun resolucion
 $('#listado-mesas').live('pageshow',function(event, ui){
   var tot = $('.listado-mozos-para-mesas > li');
   var por = 100/tot.length;
@@ -26,12 +29,6 @@ $('#listado-mesas').live('pageshow',function(event, ui){
   tot.css({'width':por+'%', padding: '0px', margin: '0px', 'float': 'left'});
 });
  
- 
- $( "#comanda-add-menu" ).live( "pagecreate", function() { 
-		$( ":jqmData(role='actionsheet')", this ).each(function() {
-			$(this).actionsheet();
-		});
-	});
         
 
 /**
@@ -66,10 +63,15 @@ $(document).ready(function() {
     $(document).bind("adicionCambioMozo", cambioMozo);
     
     
-    // para refres
-//    $(document).bind('adicionMesasActualizadas', function(){
-//        $("#mesas_container").trigger( "create" );
-//    });
+    // para refrescar las mesas segun el mozo marcado
+    $(document).bind('adicionMesasActualizadas', function(){
+        var btnMozo = $('.listado-mozos-para-mesas .ui-btn-active');
+        var mozoId = 0;
+        if ( btnMozo[0] ) {
+            mozoId = btnMozo[0].dataset.mozoId;
+        }
+        mostrarMesasDeMozo(mozoId);
+    });
     
     
     // Form SUBMITS
@@ -141,20 +143,12 @@ $(document).ready(function() {
     });
     
     
+    // al hacer click n un mozo del menu bar
+    // se muestran solo lasmesas de ese mozo
     $('.listado-mozos-para-mesas a').click(function(){
         var mId = undefined;
-        if ( $(this).attr('data-mozo-id') ) {
-            mId = $(this).attr('data-mozo-id');
-            $('#mesas_container li').show();
-            $('#mesas_container li[mozo!='+mId+']').hide();
-            $('.listado-mozos-para-mesas a').removeClass('ui-btn-active');
-            $(this).addClass('ui-btn-active');
-            
-            // pongo a este mozo como el seleccionado en el formulario de nueva mesa
-            var radio = $('#radio-mozo-id-'+mId);
-            radio.prop('checked', true);
-            radio.next().addClass('ui-btn-active');
-        }
+        mostrarMesasDeMozo( $(this).attr('data-mozo-id') );
+        
     });
     
     

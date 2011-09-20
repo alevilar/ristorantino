@@ -30,6 +30,9 @@ Risto.Adition.adicionar = {
     
     mesas: ko.observableArray( [] ),
     
+    // microtime de la ultima actualizacion de las mesas
+    mesasLastUpdatedTime : ko.observable(  ),
+    
     // pagos seleccionado de la currentMesa en proceso de pago. es una variable temporal de estado
     pagos: ko.observableArray( [] ),
     
@@ -276,11 +279,21 @@ Risto.Adition.adicionar = {
     getMesasAbiertas: function(){
         var cntx = this;
         
+        var timeText = this.mesasLastUpdatedTime() || '',
+            url = urlDomain + 'mozos/mesas_abiertas.json';
+        if ( timeText ) {
+            url = urlDomain + 'mozos/mesas_abiertas/'+timeText+'.json'
+        }
+        
         if ( !cntx.ajaxSending ) {
             $.ajax({
-                url: urlDomain + 'mozos/mesas_abiertas.json',
+                url: url,
                 timeout: MESA_RELOAD_TIMEOUT,
-                success: cntx.__actualizarMozosConMesasAbiertas,
+                success: function(data){
+                    if (data.mozos.length) {
+                        cntx.__actualizarMozosConMesasAbiertas(data);
+                    }
+                },
                 error: function(){alert("falló conexión"); },
                 complete: function() {cntx.ajaxSending = false},
                 beforeSend: function() {cntx.ajaxSending = true}
@@ -299,6 +312,8 @@ Risto.Adition.adicionar = {
      * 
      */
     __actualizarMozosConMesasAbiertas: function( data ) {
+        Risto.Adition.adicionar.mesasLastUpdatedTime(data.time);
+        
         var adn = Risto.Adition.adicionar;
         if ( !adn.yaMapeado ) {
             // si aun no fue mappeado
@@ -316,7 +331,7 @@ Risto.Adition.adicionar = {
             ko.mapping.fromJS(data, mapOps, adn );
         } else {
             if (data.mozos.length) {
-                return ko.mapping.updateFromJS(adn, data);
+                ko.mapping.updateFromJS(adn, data);
             }
         }
         $(document).trigger('adicionMesasActualizadas');

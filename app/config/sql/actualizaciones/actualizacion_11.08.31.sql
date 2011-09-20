@@ -70,3 +70,10 @@ CREATE TABLE  `observaciones` (
 `created` TIMESTAMP NULL ,
 `modified` TIMESTAMP NULL
 ) ENGINE = MYISAM ;
+
+
+
+ALTER TABLE  `pagos` ADD  `created` TIMESTAMP NULL AFTER  `valor` ,
+ADD  `modified` TIMESTAMP NULL AFTER  `created`;
+
+ALTER TABLE  `pagos` CHANGE  `valor`  `valor` FLOAT NOT NULL;

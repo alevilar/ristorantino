@@ -8,7 +8,7 @@ foreach($mesas as &$m){
 
 $res = array(
     'mozos' => $mesas,
-    'time'  =>  time(), // curren Unix server time
+    'time'  =>  $mesasLastUpdatedTime, // curren Unix server time
 );
 
 echo json_encode($res);

@@ -131,7 +131,9 @@ es igual al de las mesas de la adicion salvo que al hacer click tienen otro comp
 <div data-role="page" id="listado-mesas-cerradas">
 
 	<div  data-role="header">
-            <h1><span style="color: #fcf0b5" data-bind="text: adn().mesasCerradas().length">0</span> Mesas Cerradas</h1>
+            <h1><span style="color: #fcf0b5" data-bind="text: adn().mesasCerradas().length">0</span> Mesas Cerradas
+                y <span data-bind="text: Math.abs(adn().mesasCerradas().length - adn().mesas().length)"></span> abiertas
+            </h1>
 
             <a rel="external" href='#listado-mesas' data-icon="home" data-iconpos="notext" data-direction="reverse" class="ui-btn-right">Home</a>
 
