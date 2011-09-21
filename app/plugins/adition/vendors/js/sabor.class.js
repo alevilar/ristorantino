@@ -1,3 +1,8 @@
+/*--------------------------------------------------------------------------------------------------- Risto.Adicion.sabor
+ *
+ *
+ * Clase Sabor, depende de Productos
+ */
 Risto.Adition.sabor = function(jsonData){
     
     this.initialize(jsonData);

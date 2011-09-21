@@ -1,3 +1,9 @@
+/*--------------------------------------------------------------------------------------------------- Risto.Adicion.comanda
+ *
+ *
+ * Clase Comanda
+ */
+
 Risto.Adition.comanda = function(jsonData){
     this.DetalleComanda = ko.observableArray([]);
     return this.initialize( jsonData );

@@ -1,3 +1,8 @@
+/*--------------------------------------------------------------------------------------------------- Risto.Adicion.pago
+ *
+ *
+ * Clase Pago
+ */
 Risto.Adition.pago = function(jsonOb){
     
     return this.initialize(jsonOb);

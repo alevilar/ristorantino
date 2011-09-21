@@ -1,15 +1,26 @@
-<div data-role="header">
-    <h1>Clientes para la mesa <span data-bind="text: adn().currentMesa().numero"></span></h1>
-    
-    <a id="mesa-eliminar-cliente" href="#mesa-view" data-transition="fade" data-theme="b" data-direction="reverse" data-bind="visible: adn().currentMesa().Cliente()}">
-            Borrar Cliente<span data-bind="text: adn().currentMesa().clienteNameData()"></span>
-    </a>
-</div>
-    
-<div data-role="content" >
+    <div data-role="header">
+        <h1>Clientes para la mesa <span data-bind="text: adn().currentMesa().numero"></span></h1>
+
+        <a id="mesa-eliminar-cliente" href="#mesa-view" data-transition="fade" data-theme="b" data-direction="reverse" data-bind="visible: adn().currentMesa().Cliente()}">
+                Borrar Cliente<span data-bind="text: adn().currentMesa().clienteNameData()"></span>
+        </a>
+        
+<!--        <div data-role="navbar">
+                <ul>
+                    <li><a href="#" class="ui-btn-active ui-state-persist">Listado de Clientes</a></li>
+                    <li><a href="<?php echo $html->url('/clientes/addFacturaA')?>">Agregar Factura "A"</a></li>
+                </ul>
+        </div>-->
+    </div>
+
+    <div data-role="content" >
     
     
     <div id="contenedor-listado-clientes-factura-a">
+        
+        <?
+        debug($this->action);
+        ?>
         <ul data-role="listview"  data-filter="true" id="listado-clientes-factura-a-ajax">
               
                 <?php foreach($clientes as $c): 
@@ -34,5 +45,4 @@
                 </li>
                 <?php endforeach; ?>
         </ul>
-    </div>
 </div>

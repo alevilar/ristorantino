@@ -1,3 +1,9 @@
+/*--------------------------------------------------------------------------------------------------- Risto.Adicion.cliente
+ *
+ *
+ * Clase Cliente
+ */
+
 Risto.Adition.cliente = function(jsonMap){    
     return this.initialize(jsonMap);
 }

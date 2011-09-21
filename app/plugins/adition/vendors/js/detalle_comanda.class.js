@@ -1,3 +1,10 @@
+/*--------------------------------------------------------------------------------------------------- Risto.Adicion.detalleComanda
+ *
+ *
+ * Clase DetalleComanda
+ */
+
+
 Risto.Adition.detalleComanda = function(jsonData) {
     this.initialize(jsonData);
     

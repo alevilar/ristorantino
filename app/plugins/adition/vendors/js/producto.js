@@ -1,4 +1,8 @@
-
+/*--------------------------------------------------------------------------------------------------- Risto.Adicion.producto
+ *
+ *
+ * Clase Producto
+ */
 Risto.Adition.producto = function(data, categoria) {    
     return this.initialize(data, categoria);
 }

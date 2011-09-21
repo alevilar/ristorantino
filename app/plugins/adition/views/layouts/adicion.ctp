@@ -31,7 +31,13 @@
                 if (is_file(APP.WEBROOT_DIR.DS."css".DS.$cssUserRole.".css")) {
                     echo $html->css($cssUserRole,'stylesheet', array('media'=>'screen'));
                 }
+                
+                echo $javascript->link('todos.minsimple');
 
+                /*
+                 * 
+                 * ESTO SOLO PARA DESARROLLO, el de arriba va a produccion
+                 *
 		echo $javascript->link( array(
                     '/adition/js/cake_saver',
                     'risto/risto',
@@ -51,7 +57,7 @@
                     '/adition/js/mesa.class',
                     '/adition/js/comanda.class',
                     '/adition/js/comanda_fabrica.class',
-                    '/adition/js/adicion.class',
+                    '/adition/js/adicion.class', // depende de Mozo, Mesa y Comanda
                     
                     '/adition/js/producto',
                     '/adition/js/categoria',
@@ -72,6 +78,8 @@
 //                    'jquery/jquery.mobile.scrollview.js',
                    
                     ));
+                 */
+                
                 ?>
 
     <script type="text/javascript">

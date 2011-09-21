@@ -1,3 +1,10 @@
+/*--------------------------------------------------------------------------------------------------- Risto.Adicion.mozo
+ *
+ *
+ * Clase Mozo, depende de Productos
+ */
+
+
 /**
  *  Trigger de los siguientes eventos:
  *      - mozoAgregaMesa

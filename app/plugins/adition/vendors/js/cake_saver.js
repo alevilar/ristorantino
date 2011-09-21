@@ -1,3 +1,11 @@
+/*--------------------------------------------------------------------------------------------------- CakeSaver
+ *
+ *
+ * Clase CakeSaver
+ * 
+ * Convierte objetos de javascript en algo que CakePhp pueda leer bajo el $this->data
+ * o sea, convierte los objetos a un array para enviar via method POST en ajax
+ */
 var $cakeSaver = {
     
     method: 'POST',

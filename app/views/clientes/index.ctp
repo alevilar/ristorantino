@@ -2,9 +2,9 @@
     <?php    
   //  echo $this->element('menuadmin');
     ?>
-<div data-role="page">
 
     <div data-role="header">
+        <a href="#mesa-view" data-transition="reverse">Volver</a>
         <h1>Clientes</h1>
     </div>
     
@@ -114,4 +114,3 @@
         </div>
         
     </div>
-</div>

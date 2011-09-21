@@ -258,8 +258,8 @@ es igual al de las mesas de la adicion salvo que al hacer click tienen otro comp
         </div>
 
         <div  data-role="content" class="" data-scroll="true">
-            <div class="mesa-actions" style="width: 29%; float: left;">
-                <ul data-role="listview" style="width: 100%">
+            <div class="mesa-actions">
+                <ul data-role="listview">
                     
                     <li id="mesa-action-comanda" data-bind="attr: {'estado': 'comanda-add-menu_'+adn().currentMesa().getEstadoIcon()}">
                         <a href="#comanda-add-menu" data-rel="dialog"  data-transition="pop"><?= $html->image('/adition/css/img/chef_64.png')?>Comanda</a>
@@ -306,7 +306,7 @@ es igual al de las mesas de la adicion salvo que al hacer click tienen otro comp
                 </ul>
             </div>
 
-            <div class="mesas view" style="width: 70%; float:right; margin-top: -7px;" >
+            <div class="mesa-view">
                 <h3 class="titulo-comanda">Detalle de Consumición</h3>
 
                 <div id="comanda-detalle-collapsible" data-role="collapsible-set" data-bind="template: {name: 'listaComandas', foreach: adn().currentMesa().Comanda}">

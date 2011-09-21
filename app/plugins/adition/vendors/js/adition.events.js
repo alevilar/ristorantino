@@ -1,3 +1,9 @@
+/*--------------------------------------------------------------------------------------------------- Adition EVENTS
+ *
+ *
+ * Adition Events
+ * el el script que capura los eventos de la pagina adition.php[ctp]
+ */
 
 // mensaje de confirmacion cuando se esta por salir de la pagina (evitar perdidas de datos no actualizados)
 window.onbeforeunload=confirmacionDeSalida;

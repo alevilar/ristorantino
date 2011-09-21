@@ -1,8 +1,11 @@
-
+/*--------------------------------------------------------------------------------------------------- Risto.Adicion.categoria
+ *
+ *
+ * Clase Categoria
+ */
 Risto.Adition.categoria = function(data, parent){
-    var lala = this.initialize(data, parent);
-   
-    return lala;
+    this.initialize(data, parent);
+    return this;
 }
 
 Risto.Adition.categoria.prototype = {

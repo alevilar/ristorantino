@@ -222,6 +222,21 @@ background-color: #EDEDED;
 
 }
 
+.mesa-actions{
+    width: 29%; 
+    float: left;
+}
+
+.mesa-actions UL{
+    width: 100%; 
+}
+
+.mesa-view{
+    width: 70%; 
+    float:right; 
+    margin-top: -7px;
+}
+
 .mesa-actions ul li {
     border-right-color: #B3B3B3;
     border-right-width: 1px;

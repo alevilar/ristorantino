@@ -1,3 +1,11 @@
+/*--------------------------------------------------------------------------------------------------- Risto.Adicion.adicion
+ *
+ *
+ * Clase Adicion
+ * ees el Kernel de la aplicacion
+ * se lo suele encontrar muchas veces como objeto adicionar o adn() para simplicar
+ */
+
 // intervalo en milisegundos en el que seran renovadas las mesas
 MESAS_RELOAD_INTERVAL = 5500;
 MESA_RELOAD_TIMEOUT = 60000;

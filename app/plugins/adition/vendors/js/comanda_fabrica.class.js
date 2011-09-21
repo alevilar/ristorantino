@@ -1,3 +1,9 @@
+/*--------------------------------------------------------------------------------------------------- Risto.Adicion.comandaFabrica
+ *
+ *
+ * Clase ComandaFabrica
+ */
+
 Risto.Adition.comandaFabrica = function(mesa){
     return this.initialize(mesa);
 }

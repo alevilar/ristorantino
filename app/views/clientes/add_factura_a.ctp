@@ -1,5 +1,12 @@
 <div data-role="header">
     <h1>Clientes</h1>
+    
+    <div data-role="navbar">
+                <ul>
+                    <li><a href="#" class="ui-btn-active ui-state-persist">Listado de Clientes</a></li>
+                    <li><a href="<?php echo $html->url('/clientes/addFacturaA')?>">Agregar Factura "A"</a></li>
+                </ul>
+    </div>
 </div>
     
 <div data-role="content" >
@@ -26,7 +33,7 @@
 
            ?>
         </fieldset>
-        <?php //echo $form->end('guardar');?>
-        <?php echo $ajax->submit('guardar', array('url'=> array('controller'=>'clientes', 'action'=>'addFacturaA'), 'update' => 'clientes-listado'));?>
+        <?php echo $form->end('guardar');?>
+        <?php //echo $form->submit('guardar', array('url'=> array('controller'=>'clientes', 'action'=>'addFacturaA')));?>
     </div>
 </div>
