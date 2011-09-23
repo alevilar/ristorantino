@@ -270,6 +270,26 @@ c=c||{};if(!(c.ignore instanceof Array))c.ignore=[c.ignore];c.ignore=c.ignore.co
 ignore:[]}};ko.mapping.visitModel=function(a,c,b){b=b||{};b.visitedObjects=b.visitedObjects||new x;var d,e=ko.utils.unwrapObservable(a);if(w(e))c(a,b.parentName),d=e instanceof Array?[]:{};else return c(a,b.parentName);b.visitedObjects.save(a,d);var g=b.parentName;y(e,function(a){if(!(b.ignore&&ko.utils.arrayIndexOf(b.ignore,a)!=-1)){var h=e[a];b.parentName=z(g,e,a);if(!(b.include&&ko.utils.arrayIndexOf(b.include,a)===-1)||!e[m]||!e[m].mappedProperties||e[m].mappedProperties[a]||e instanceof Array)switch(j(ko.utils.unwrapObservable(h))){case "object":case "undefined":var f=
 b.visitedObjects.get(h);d[a]=f!==void 0?f:ko.mapping.visitModel(h,c,b);break;default:d[a]=c(h,b.parentName)}}});return d};ko.exportSymbol("ko.mapping",ko.mapping);ko.exportSymbol("ko.mapping.fromJS",ko.mapping.fromJS);ko.exportSymbol("ko.mapping.fromJSON",ko.mapping.fromJSON);ko.exportSymbol("ko.mapping.isMapped",ko.mapping.isMapped);ko.exportSymbol("ko.mapping.defaultOptions",ko.mapping.defaultOptions);ko.exportSymbol("ko.mapping.toJS",ko.mapping.toJS);ko.exportSymbol("ko.mapping.toJSON",ko.mapping.toJSON);
 ko.exportSymbol("ko.mapping.updateFromJS",ko.mapping.updateFromJS);ko.exportSymbol("ko.mapping.updateFromJSON",ko.mapping.updateFromJSON);ko.exportSymbol("ko.mapping.visitModel",ko.mapping.visitModel)})();
+/**
+ *
+ * @var Constant DATETIME_CERO
+ */
+var DATETIME_CERO = '0000-00-00 00:00:00';
+
+
+// para que no titile el cursor. Que no se pueda hacer click
+window.onload = function() {
+   if(document.all){
+      document.onselectstart = function(e) {return false;} // ie
+   } else {
+      document.onmousedown = function(e)
+      {
+         if(e.target.type!='text' && e.target.type!='button' && e.target.type!='textarea') return false;
+         else return true;
+      } // mozilla
+   }
+}
+
 /*--------------------------------------------------------------------------------------------------- PKG:Risto.Adicion
  *
  *
@@ -1671,7 +1691,7 @@ Risto.Adition.adicionar = {
                         cntx.__actualizarMozosConMesasAbiertas(data);
                     }
                 },
-                error: function(){alert("falló conexión"); },
+                error: function(){},
                 complete: function() {cntx.ajaxSending = false},
                 beforeSend: function() {cntx.ajaxSending = true}
             });
