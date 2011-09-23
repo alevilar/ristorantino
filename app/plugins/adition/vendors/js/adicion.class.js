@@ -302,7 +302,7 @@ Risto.Adition.adicionar = {
                         cntx.__actualizarMozosConMesasAbiertas(data);
                     }
                 },
-                error: function(){alert("falló conexión"); },
+                error: function(){},
                 complete: function() {cntx.ajaxSending = false},
                 beforeSend: function() {cntx.ajaxSending = true}
             });

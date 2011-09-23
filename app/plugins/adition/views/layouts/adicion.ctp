@@ -32,12 +32,12 @@
                     echo $html->css($cssUserRole,'stylesheet', array('media'=>'screen'));
                 }
                 
-                echo $javascript->link('todos.minsimple');
+//                echo $javascript->link('todos.minsimple');
 
                 /*
                  * 
                  * ESTO SOLO PARA DESARROLLO, el de arriba va a produccion
-                 *
+                 */
 		echo $javascript->link( array(
                     '/adition/js/cake_saver',
                     'risto/risto',
@@ -78,7 +78,6 @@
 //                    'jquery/jquery.mobile.scrollview.js',
                    
                     ));
-                 */
                 
                 ?>
 

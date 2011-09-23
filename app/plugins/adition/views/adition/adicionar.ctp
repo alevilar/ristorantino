@@ -353,8 +353,8 @@ es igual al de las mesas de la adicion salvo que al hacer click tienen otro comp
             
             <span style="float: right; margin-right: 10px;">
                 <a href="#" onclick="$('#comanda-add-observacion').toggle('slow').focus();"><?php echo $html->image('pencil_48.png', array('width'=> 35))?></a>
-                <a href="#" data-bind="click: function(){adn().currentMesa().currentComanda().comanda.imprimir( 0 )}, visible: adn().currentMesa().currentComanda().comanda.imprimir()"><?php echo $html->image('print48', array('width'=> 35))?></a>
-                <a href="#" data-bind="click: function(){adn().currentMesa().currentComanda().comanda.imprimir( 1 )}, visible: !adn().currentMesa().currentComanda().comanda.imprimir()" ><?php echo $html->image('dontprint48', array('width'=> 35))?></a>
+                <a href="#" data-bind="click: function(){adn().currentMesa().currentComanda().comanda.imprimir( 0 )}, visible: adn().currentMesa().currentComanda().comanda.imprimir()"><?php echo $html->image('print48.png', array('width'=> 35))?></a>
+                <a href="#" data-bind="click: function(){adn().currentMesa().currentComanda().comanda.imprimir( 1 )}, visible: !adn().currentMesa().currentComanda().comanda.imprimir()" ><?php echo $html->image('dontprint48.png', array('width'=> 35))?></a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <a href="#mesa-view" data-role="button"  data-inline="true" data-icon="check" data-theme="b" data-bind="click: function(){adn().currentMesa().currentComanda().save()}">Guardar</a>        
                 

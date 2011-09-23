@@ -32,7 +32,7 @@ class ActualizadorComponent extends Object {
     function huboCambios($time){
         // si la fecha de actualizacion es mas reciente que time
         // entonces hubieron cambios
-        return  $this->file->lastAccess() > $time ;
+        return  $this->file->read() > $time ;
     }
     
     function actualizar(){        
