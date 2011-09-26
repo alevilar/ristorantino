@@ -470,18 +470,28 @@ Mozo.prototype = {
  *  la mesa pude adoptar
  *
  **/
+
 var MESA_ESTADOS_POSIBLES =  {
     abierta : {
         msg: 'Mesa Abierta',
         event: 'mesaAbierta',
         id: 1,
-        icon: 'mesa-abierta'
+        icon: 'mesa-abierta',
+        url: urlDomain+'mesas/add'
+    },
+    reabierta : {
+        msg: 'Mesa Re-Abierta',
+        event: 'mesaAbierta',
+        id: 1,
+        icon: 'mesa-abierta',
+        url: urlDomain+'mesas/reabrir'
     },
     cerrada: {
         msg: 'Mesa Cerrada',
         event: 'mesaCerrada',
         id: 2,
-        icon: 'mesa-cerrada'
+        icon: 'mesa-cerrada',
+        url: urlDomain+'mesas/cerrarMesa'
     },
     cuponPendiente: {
         msg: 'Mesa con Cupón Pendiente',
@@ -499,7 +509,8 @@ var MESA_ESTADOS_POSIBLES =  {
         msg: 'Mesa Borrada',
         event: 'mesaBorrada',
         id: 0,
-        icon: ''
+        icon: '',
+        url: urlDomain+'mesas/delete'
     },
     seleccionada: {
         msg: 'Mesa Seleccionada',
@@ -827,6 +838,17 @@ Mesa.prototype = {
         return this;
     },
     
+    
+    
+    cambioDeEstadoAjax: function(estado){
+        var estadoAnt = this.getEstado();
+        var mesa = this;
+        this.setEstado(estado);
+        var ajax = $.get( estado.url+'/'+this.id() );
+        ajax.error = function(){
+            mesa.setEstado(estadoAnt);
+        }
+    },
 
     setEstadoAbierta : function(){
         this.setEstado(MESA_ESTADOS_POSIBLES.abierta);
@@ -2463,13 +2485,7 @@ $(document).ready(function() {
     
     $('#mesa-cerrar').click(function(){
         var mesa = Risto.Adition.adicionar.currentMesa();
-        var url = mesa.urlCerrarMesa();
-        $.get(url, {}, function(){
-//           var ev = $.Event(MESA_ESTADOS_POSIBLES.cerrada.event);
-//           ev.mesa = mesa;
-//           $(document).trigger( ev );
-            mesa.setEstadoCerrada();
-       })
+        mesa.cambioDeEstadoAjax( MESA_ESTADOS_POSIBLES.cerrada );
     });
     
     $('#mesa-reimprimir').click(function(){
@@ -2482,23 +2498,14 @@ $(document).ready(function() {
     $('#mesa-borrar').click(function(){
         if (window.confirm('Seguro que desea borrar la mesa '+Risto.Adition.adicionar.currentMesa().numero())){
             var mesa = Risto.Adition.adicionar.currentMesa();
-            var url = mesa.urlDelete();
-            $.get(url, {}, function(){
-    //           var ev = $.Event(MESA_ESTADOS_POSIBLES.cerrada.event);
-    //           ev.mesa = mesa;
-    //           $(document).trigger( ev );
-                mesa.setEstadoBorrada();
-           })
+            mesa.cambioDeEstadoAjax( MESA_ESTADOS_POSIBLES.borrada );
         }
     });
     
     
     $('#mesa-reabrir').click(function(){
         var mesa = Risto.Adition.adicionar.currentMesa();
-        var url = mesa.urlReabrir();
-        $.get(url, {}, function(){
-          mesa.setEstadoAbierta();
-       })
+        mesa.cambioDeEstadoAjax( MESA_ESTADOS_POSIBLES.reabierta );
     });
     
     

@@ -12,18 +12,28 @@
  *  la mesa pude adoptar
  *
  **/
+
 var MESA_ESTADOS_POSIBLES =  {
     abierta : {
         msg: 'Mesa Abierta',
         event: 'mesaAbierta',
         id: 1,
-        icon: 'mesa-abierta'
+        icon: 'mesa-abierta',
+        url: urlDomain+'mesas/add'
+    },
+    reabierta : {
+        msg: 'Mesa Re-Abierta',
+        event: 'mesaAbierta',
+        id: 1,
+        icon: 'mesa-abierta',
+        url: urlDomain+'mesas/reabrir'
     },
     cerrada: {
         msg: 'Mesa Cerrada',
         event: 'mesaCerrada',
         id: 2,
-        icon: 'mesa-cerrada'
+        icon: 'mesa-cerrada',
+        url: urlDomain+'mesas/cerrarMesa'
     },
     cuponPendiente: {
         msg: 'Mesa con Cupón Pendiente',
@@ -41,7 +51,8 @@ var MESA_ESTADOS_POSIBLES =  {
         msg: 'Mesa Borrada',
         event: 'mesaBorrada',
         id: 0,
-        icon: ''
+        icon: '',
+        url: urlDomain+'mesas/delete'
     },
     seleccionada: {
         msg: 'Mesa Seleccionada',
@@ -369,6 +380,17 @@ Mesa.prototype = {
         return this;
     },
     
+    
+    
+    cambioDeEstadoAjax: function(estado){
+        var estadoAnt = this.getEstado();
+        var mesa = this;
+        this.setEstado(estado);
+        var ajax = $.get( estado.url+'/'+this.id() );
+        ajax.error = function(){
+            mesa.setEstado(estadoAnt);
+        }
+    },
 
     setEstadoAbierta : function(){
         this.setEstado(MESA_ESTADOS_POSIBLES.abierta);

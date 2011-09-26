@@ -1,71 +1,4 @@
-
-<script id="li-productos-detallecomanda" type="text/x-jquery-tmpl">
- <li  class="ui-li ui-li-static ui-body-c">
-     <span data-type="horizontal" data-role="controlgroup" class="ui-corner-all ui-controlgroup ui-controlgroup-horizontal">
-        <a data-bind="click: deseleccionarYEnviar" data-role="button" data-icon="minus" data-iconpos="notext" href="#" title="-" data-theme="c" class="ui-btn ui-btn-icon-notext ui-btn-up-c"><span class="ui-btn-inner"><span class="ui-btn-text">-</span><span class="ui-icon ui-icon-minus ui-icon-shadow"></span></span></a>
-        <a data-bind="css: { es_entrada: esEntrada()}" data-role="button" data-iconpos="notext" data-icon="entrada" href="#" title="Entrada" data-theme="c" class="ui-btn ui-btn-icon-notext ui-corner-right ui-controlgroup-last ui-btn-up-c"><span class="ui-btn-inner ui-corner-right ui-controlgroup-last"><span class="ui-btn-text">Entrada</span><span class="ui-icon ui-icon-entrada ui-icon-shadow"></span></span></a>
-     </span>
-
-     <span data-bind="text: realCant()" style="right: auto" class="ui-li-count ui-btn-up-c ui-btn-corner-all"></span>
-     <span data-bind="text: nameConSabores(), css: {tachada: realCant()==0}" style="padding-left: 40px;"></span>
-     <span class="producto-precio">p/u: {{= '$'}}<span data-bind="text: Producto().precio"></span></span>
- </li>
-</script>
-
-
-
-
-<!-- Template: 
-listado de mesas que será refrescado continuamente mediante 
-el ajax que verifica el estado de las mesas (si fue abierta o cerrada alguna. -->
-<script id="listaMesas" type="text/x-jquery-tmpl">
-
-    <li data-bind="attr: {mozo: mozo().id(), 'class': getEstadoIcon()}">
-        <a  data-bind="click: seleccionar, attr: {accesskey: numero}" 
-            data-theme="c"
-            data-role="button" 
-            href="#mesa-view" 
-            class="ui-btn ui-btn-icon-left ui-btn-corner-all ui-shadow ui-btn-up-c">
-            <span class="mesa-span ui-btn-inner ui-btn-corner-all">
-                <span class="ui-btn-text">
-                    <span class="mesa-numero" data-bind="text: numero"></span>
-                    <span class="mesa-mozo" data-bind="text: mozo().numero"></span>
-                    <br />
-                    <span class="mesa-time" data-bind="text: textoHora()"></span>
-                </span>
-                <span class="mesa-icon ui-icon ui-icon-shadow" data-bind="css: {'ui-icon-mesa-abierta': getEstadoIcon()!='mesa-cerrada', 'ui-icon-mesa-cerrada': getEstadoIcon()=='mesa-cerrada', 'ui-icon-mesa-cobrada': getEstadoIcon()=='mesa-cobrada'}"></span>
-            </span>
-        </a>
-    </li>
-</script>
-
-
-<!-- Template: 
-listado de mesas que será refrescado continuamente mediante 
-es igual al de las mesas de la adicion salvo que al hacer click tienen otro comportamiento
--->
-<script id="listaMesasCajero" type="text/x-jquery-tmpl">
-
-    <li data-bind="attr: {mozo: mozo().id(), 'class': getEstadoIcon()}">
-        <a  data-bind="click: seleccionar" 
-            data-theme="c"
-            data-role="button" 
-            href="#mesa-cobrar" 
-            data-rel="dialog"
-            class="ui-btn ui-btn-icon-left ui-btn-corner-all ui-shadow ui-btn-up-c">
-            <span class="mesa-span ui-btn-inner ui-btn-corner-all">
-                <span class="ui-btn-text">
-                    <span class="mesa-numero" data-bind="text: numero"></span>
-                    <span class="mesa-mozo" data-bind="text: mozo().numero"></span>
-                    <br />
-                    <span class="mesa-time" data-bind="text: textoHora()"></span>
-                </span>
-                <span class="mesa-icon ui-icon ui-icon-shadow" data-bind="css: {'ui-icon-mesa-abierta': getEstadoIcon()!='mesa-cerrada', 'ui-icon-mesa-cerrada': getEstadoIcon()=='mesa-cerrada', 'ui-icon-mesa-cobrada': getEstadoIcon()=='mesa-cobrada'}"></span>
-            </span>
-        </a>
-    </li>
-</script>
-
+<?php echo $this->element('jq_templates'); ?>
                   
                                          
 <!--
@@ -88,7 +21,6 @@ es igual al de las mesas de la adicion salvo que al hacer click tienen otro comp
                     foreach ($mozos as $m) {
                         $k = $m['Mozo']['id'];
                         $n = $m['Mozo']['numero'];
-                      
                         ?>
                         <li><a href="#" data-mozo-id="<?php echo $k?>"><?php echo $n?></a></li>
                     <?
@@ -121,7 +53,26 @@ es igual al de las mesas de la adicion salvo que al hacer click tienen otro comp
 
 
 
-
+<!-- Opciones del cajero-->
+<div data-role="page" id="cajero-opciones">
+    <div data-role="header">
+        <h1>Opciones de Cajero</h1>
+    </div>
+    <div data-role="content">
+            <h3>Informes Fiscales</h3>
+            <a href="#listado-mesas-cerradas" data-href="<?php echo $html->url('/adition/cashier/cierre_x');?>" data-direction="reverse" data-transition="slide" data-inline="true" data-role="button">Imprimir informe "X"</a>
+            <a href="#listado-mesas-cerradas" data-href="<?php echo $html->url('/adition/cashier/cierre_z');?>" data-direction="reverse" data-transition="slide" data-inline="true" data-role="button">Imprimir informe "Z"</a>
+            <a href="<?php echo $html->url('/adition/cashier/nota_credito');?>" data-transition="slide" data-inline="true" data-role="button">Nota de crédito</a>
+            
+            <hr />
+            <h3>Impresoras</h3>
+            <a href="#listado-mesas-cerradas" data-href="<?php echo $html->url('/adition/cashier/vaciar_cola_impresion_fiscal');?>" data-inline="true" data-role="button" class="silent-click" >Vaciar cola de impresión</a>
+            
+            <hr />
+            <h3>Servidor</h3>
+            <a data-icon="home" href="<?php echo $html->url('/');?>" data-inline="true" rel="external" data-role="button">Volver a HOME</a>
+    </div>
+</div>
 
 <!--
                         LISTADO MESAS CERRADAS:::: MODO CAJERO
@@ -135,9 +86,7 @@ es igual al de las mesas de la adicion salvo que al hacer click tienen otro comp
                 y <span data-bind="text: Math.abs(adn().mesasCerradas().length - adn().mesas().length)"></span> abiertas
             </h1>
 
-            <a rel="external" href='#listado-mesas' data-icon="home" data-iconpos="notext" data-direction="reverse" class="ui-btn-right">Home</a>
-
-            
+            <a href='#cajero-opciones' data-icon="gear" data-iconpos="notext" data-rel="dialog" class="ui-btn-right">Home</a>
         </div>
 
                     
@@ -309,23 +258,8 @@ es igual al de las mesas de la adicion salvo que al hacer click tienen otro comp
             <div class="mesa-view">
                 <h3 class="titulo-comanda">Detalle de Consumición</h3>
 
-                <div id="comanda-detalle-collapsible" data-role="collapsible-set" data-bind="template: {name: 'listaComandas', foreach: adn().currentMesa().Comanda}">
-                        <!-- Template: listado de comandas con sus productos-->
-                        <script id="listaComandas" type="text/x-jquery-tmpl">
-                           <div data-role="collapsible">
-                               <h3><span class="id-comanda">#<span data-bind="text: id"></span></span>  <span class="hora-comanda"  data-bind="text: timeCreated()"></span>&nbsp;&nbsp;&nbsp;
-                                   <span class="comanda-listado-productos-string" data-bind="text: productsStringListing()"></span>
-                               </h3>
-
-                                <ul class="ui-listview comanda-items" data-role="listview"
-                                   data-bind="template: {name: 'li-productos-detallecomanda', foreach: DetalleComanda}"
-                                   style="margin: 0px;">
-                                    
-                                </ul>                                                                           
-                           </div>
-                        </script>
-                </div>
-
+                <!-- template -->
+                <div id="comanda-detalle-collapsible" data-role="collapsible-set" data-bind="template: {name: 'listaComandas', foreach: adn().currentMesa().Comanda}"></div>
             </div>
             
         </div>
@@ -373,86 +307,20 @@ es igual al de las mesas de la adicion salvo que al hacer click tienen otro comp
             
            <ul id="ul-productos-seleccionados" class="ui-listview" data-role="listview"
                data-bind="template: {name: 'categorias-productos-seleccionados', foreach: adn().productosSeleccionados}"
-                >
-                 <script id="categorias-productos-seleccionados" type="text/x-jquery-tmpl">
-                     <li data-bind="visible: cant()"  class="ui-li ui-li-static ui-body-c">
-                         <span data-type="horizontal" data-role="controlgroup" class="ui-corner-all ui-controlgroup ui-controlgroup-horizontal">
-                            <a data-bind="click: seleccionar" data-role="button" data-icon="plus" data-iconpos="notext" href="#" title="+" data-theme="c" class="ui-btn ui-btn-icon-notext ui-corner-left ui-btn-up-c"><span class="ui-btn-inner ui-corner-left"><span class="ui-btn-text" >+</span><span class="ui-icon ui-icon-plus ui-icon-shadow"></span></span></a>
-                            <a data-bind="click: deseleccionar" data-role="button" data-icon="minus" data-iconpos="notext" href="#" title="-" data-theme="c" class="ui-btn ui-btn-icon-notext ui-btn-up-c"><span class="ui-btn-inner"><span class="ui-btn-text">-</span><span class="ui-icon ui-icon-minus ui-icon-shadow"></span></span></a>
-                            <a data-bind="click: addObservacion, style: { background: observacion() ? '#437FBE' : ''}" 
-                               data-rel="dialog"  
-                               data-role="button"
-                               data-iconpos="notext" 
-                               data-icon="grid" 
-                               href="#obss" 
-                               title="Observación" 
-                               data-theme="c" class="ui-btn ui-btn-icon-notext ui-btn-up-c">
-                                <span class="ui-btn-inner">
-                                    <span class="ui-btn-text">Observación
-                                    </span>
-                                    <span class="ui-icon ui-icon-grid ui-icon-shadow"></span>
-                                </span>
-                            </a>
-                            <a data-role="button" data-iconpos="notext" data-icon="entrada" 
-                               href="#" title="Entrada" data-theme="c" 
-                               class="ui-btn ui-btn-icon-notext ui-corner-right ui-controlgroup-last ui-btn-up-c"
-                               data-bind="click: toggleEsEntrada, css: { es_entrada: esEntrada()}"
-                               >
-                                <span class="ui-btn-inner ui-corner-right ui-controlgroup-last">
-                                    <span class="ui-btn-text">Entrada</span>
-                                    <span class="ui-icon ui-icon-entrada ui-icon-shadow"></span>
-                                </span>
-                            </a>
-                         </span>
-
-                         <span data-bind="text: nameConSabores()"></span>
-
-                         <span data-bind="text: realCant()" class="ui-li-count ui-btn-up-c ui-btn-corner-all"></span>
-                     </li>
-                 </script>
-           </ul>
+                ></ul>
         </div>    
            
         <div style="width: 70%; display: inline; float: right;">
-             <!--           PATH DE CATEGORIAS                           -->
-            <div id="path" data-bind="template: {name: 'boton', foreach: menu().path}">
-                <script id="boton" type="text/x-jquery-tmpl">
-                        <a data-bind="attr: {'data-icon': esUltimoDelPath()?'':'back', 'data-theme': esUltimoDelPath()?'a':''}, click: seleccionar" data-bind="click: seleccionar" class="ui-btn ui-btn-inline ui-btn-icon-left ui-btn-corner-all ui-shadow ui-btn-up-c">
-                             <span class="ui-btn-inner ui-btn-corner-all">
-                                 <span class="ui-btn-text" data-bind="text: name" ></span>
-                                 <span class="ui-icon ui-icon-right ui-icon-shadow"></span>
-                             </span>
-                         </a>
-                </script>
-           </div> 
+            <div id="path" data-bind="template: {name: 'boton', foreach: menu().path}"></div> 
             
             <!--           SELECCION DE CATEGORIAS                           -->
            <div id="ul-categorias" 
                 data-bind="template: {name: 'listaCategoriasTree', foreach: menu().currentSubCategorias} ">
-                <!-- Template de categorias                                  -->
-               <script id="listaCategoriasTree" type="text/x-jquery-tmpl">
-                   <a  href="#" data-bind="click: seleccionar" data-theme="b" data-inline="true" data-role="button" class="ui-btn ui-btn-inline ui-btn-corner-all ui-shadow ui-btn-up-b">
-                       <span class="ui-btn-inner ui-btn-corner-all">
-                           <span class="ui-btn-text">
-                               <image class="menu-img" src="" data-bind="visible: image_url, attr: {src: urlDomain+'img/'+image_url}"/>
-                               <span data-bind="text: name, css: {'menu-letra-con-imagen': image_url}"></span>                         
-                           </span>
-                       </span>
-                   </a>
-                </script>
            </div>
            
             <!--           SELECCION DE PRODUCTOS                            -->
            <div id="ul-productos" style="clear: both" 
                 data-bind="template: {name: 'categorias-productos', foreach: menu().currentProductos} ">
-                 <script id="categorias-productos" type="text/x-jquery-tmpl">
-                     <a data-bind="click: seleccionar, attr: { href: tieneSabores() ? '#page-sabores' : '#'}" data-rel="dialog"  data-transition="fade" class="ui-btn ui-btn-inline ui-btn-icon-left ui-btn-corner-all ui-shadow ui-btn-up-e">
-                         <span class="ui-btn-inner ui-btn-corner-all">
-                             <span class="ui-btn-text" data-bind="text: name" ></span>
-                             <span class="ui-icon ui-icon-right ui-icon-shadow"></span>
-                         </span>
-                     </a>
-                 </script>
            </div>
         </div>
     </div>
@@ -477,16 +345,6 @@ es igual al de las mesas de la adicion salvo que al hacer click tienen otro comp
     <div data-role="content">                  
            <div id="ul-sabores" 
                 data-bind="template: {name: 'listaSabores', foreach: adn().currentSabores} ">
-                <!-- Template de categorias       -->
-               <script id="listaSabores" type="text/x-jquery-tmpl">
-                   <a href="#"  data-bind="click: seleccionar" data-theme="c" data-inline="true" data-role="button" class="ui-btn ui-btn-inline ui-btn-corner-all ui-shadow ui-btn-up-c">
-                       <span class="ui-btn-inner ui-btn-corner-all">
-                           <span class="ui-btn-text">
-                               <span data-bind="text: name"></span>                         
-                           </span>
-                       </span>
-                   </a>
-                </script>
            </div>
     </div>
             
@@ -607,17 +465,7 @@ es igual al de las mesas de la adicion salvo que al hacer click tienen otro comp
         <h4>Pagos Seleccionados</h4>
         <ul class="pagos_creados"
             data-bind='template: { name: "li-pagos-creados", foreach: adn().pagos }'>
-            
-            <script id="li-pagos-creados" type="text/x-jquery-tmpl">
-                 <li>
-                     <img src="" data-bind="attr: {src: image(), alt: TipoDePago().name, title: TipoDePago().name}"/>
-                     <label>Ingresar Valor $: </label>
-                     <input name="valor" data-bind="value: valor, valueUpdate: 'keyup'" placeholder="Ej: 100.4"/>
-                 </li>
-            </script>
-            
         </ul>
-        
         
             <div class="ui-grid-a">
                 <div class="ui-block-a"><a href="#" data-role="button" data-rel="back">Cancelar</a></div>
