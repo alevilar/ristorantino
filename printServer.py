@@ -2,10 +2,17 @@
 """ 
 Servidor de impresion a archivos
 Necesita tener instalado el paquete python-daemon
+
+para agregar la impresora a cups hacer:
+sudo lpadmin -p [NOMBRE] -E -v socket://localhost:[PUERTO] -m raw
+
+(el puerto debe coincidir con alguno de la configuracion de puerto-archivo que esta mas abajo)
+
 """ 
 import os, socket, select, daemon
 from tempfile import NamedTemporaryFile
 
+#CONFIGURACION DE PUERTOS-ARCHIVOS
 opts = [
 	{"port":12000, "suffix":".txt", "prefix":"comanda_", "dir":"/tmp/comandas/"},
 	{"port":12001, "suffix":".txt", "prefix":"fiscal_", "dir":"/tmp/fiscal/"}

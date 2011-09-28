@@ -55,12 +55,11 @@ class PrinterComponent extends Object {
 	 *
 	 * Esto es todo para la fiscal
 	 */
-	var $impresoraFiscal = null;
 
-	// variables que se inicializan en el constructor y que sirven par aguardar los txt temporales del sppooler
-	var $sourceFolder = '';
-	var $destFolder = '';
-	var $tempFolder = '';
+	
+	var $impresoraFiscal = null;
+	var $nombreImpresoraFiscal = null;
+	var $serverImpresoraFiscal = null;
 
         /* @var $Controller AppController */
         var $Controller;
@@ -91,12 +90,6 @@ class PrinterComponent extends Object {
 
 
             $this->generadorComando = new ComandosImpresora();
-
-            // ESTAS CARPTAS SON LLAMADAS DESDE EL SPOOLER, para poder levantar el programita
-            $this->sourceFolder = Configure::read('ImpresoraFiscal.tempFuente');
-            $this->destFolder = Configure::read('ImpresoraFiscal.tempDest');
-            $this->tempFolder = Configure::read('ImpresoraFiscal.TempImpfiscal');
-
         }
 
 
@@ -215,47 +208,7 @@ class PrinterComponent extends Object {
 		}
 
 		$this->impresoraFiscal = Configure::read('Dev.printer');
-
-		$this->__ejecutarSpoolerFiscal();
 	}
-
-
-
-	function seEstaEjecutandoElSpooler(){
-		//  spooler -pttyUSB0 -l -s /tmp/fuente -a /tmp/dest
-		$return = exec('ps -A | grep spooler');// esto es para saber si se esta ejecutando el spooler
-		$esta = false;
-
-		if (!strstr($return,'spooler')){
-			$this->log("No está ejecutandose el spooler!!", LOG_ERROR);
-			$esta = false;
-		}
-		else {
-			$esta = true;
-		}
-		return $esta;
-	}
-
-
-
-	/**
-	 * me inicializa algunas cositas de la impresora fiscal por ahoa solo me crea las carpetas temporales
-	 *
-	 * @return boolean sio se esta ejecutando o no el spooler (archivo que se ejecuta de manera externa ala aplicacion web)
-	 */
-	function __ejecutarSpoolerFiscal()
-	{
-
-		$this->__crearDirectorioSiNoExiste($this->destFolder);
-		$this->__crearDirectorioSiNoExiste($this->sourceFolder);
-
-		$return = exec('ps -A | grep spooler');// esto es para saber si se esta ejecutando el spooler
-		//debug($return);
-
-		return $this->seEstaEjecutandoElSpooler();
-	}
-
-
 
 	/**
 	 * Imprime una Comanda para la cocina
@@ -553,7 +506,7 @@ class PrinterComponent extends Object {
 		//inserto los productos en vcomandas y cierro la mesa
 		$this-> __setProductosYCerrar($productos, $importe_descuento);
 
-		return $this->printHasarFiscal("ticketMesa$mesa");
+		return $this->printHasarFiscal();
 	}
 
 	/**
@@ -577,16 +530,10 @@ class PrinterComponent extends Object {
 		//inserto los productos en vcomandas y cierro la mesa
 		$this-> __setProductosYCerrar($productos, $porcentaje_descuento);
 
-		return $this->printHasarFiscal("ticketMesa$mesa");
+		return $this->printHasarFiscal();
 	
 	}
 	
-	
-	
-	
-
-
-
 	/**
 	 * Imprime un comprobante del tipo ticket para consumidor final
 	 * en realidad el que voy a usar yo para el restaurant es el comprobante tipo ticket
@@ -627,7 +574,7 @@ class PrinterComponent extends Object {
 		//inserto los productos en vcomandas y cierro la mesa
 		$this-> __setProductosYCerrar($productos, $importe_descuento);
 		
-		if($this->printHasarFiscal("ticketMesa$mesa")){
+		if($this->printHasarFiscal()){
 			$this->log("Se imprimió una factura A correctamente", LOG_INFO);	
 			return true;
 		}else{
@@ -830,7 +777,7 @@ class PrinterComponent extends Object {
 	{
 		$this->vcomandos[] = $this->generadorComando->delHeaderTrailer();
 		$this->vcomandos[] = $this->generadorComando->dailyClose("X");
-		$this->printHasarFiscal('cierreX');
+		$this->printHasarFiscal();
 	}
 
 
@@ -844,158 +791,64 @@ class PrinterComponent extends Object {
 	{
 		$this->vcomandos[] = $this->generadorComando->delHeaderTrailer();
 		$this->vcomandos[] = $this->generadorComando->dailyClose("Z");
-		$this->printHasarFiscal('cierreZeta');
+		$this->printHasarFiscal();
 
 	}
 
-
-
-        /**
-         * @param integer $numeroTicket numero de tiquet factura original
-         * @param char $tipo A o B segun el tipo de la nota de credito a imprimir
-         */
-        function imprimirNotaDeCredito($numeroTicket, $importe, $tipo = 'B', $descrip, $cliente = array()){
-            $tipoId = $tipo == 'B' ? 'S' : 'R';
-            if (!empty($cliente) && $tipo == 'A') {
-                $this->vcomandos[] = $this->generadorComando->setCustomerData($cliente['razonsocial'], $cliente['numerodoc'], $cliente['respo_iva'], $cliente['tipodoc']);
-            } else {
-                //condumidor Final
-                $this->vcomandos[] = $this->generadorComando->setCustomerData();
-            }
-            $this->vcomandos[] = $this->generadorComando->setEmbarkNumber($numeroTicket);
-            $this->vcomandos[] = $this->generadorComando->openDNFH($tipoId);
-            $this->vcomandos[] = $this->generadorComando->printLineItem($descrip, 1, $importe);
-            $this->vcomandos[] = $this->generadorComando->closeDNFH();
-            $this->printHasarFiscal('nota_credito');
+    /**
+     * @param integer $numeroTicket numero de tiquet factura original
+     * @param char $tipo A o B segun el tipo de la nota de credito a imprimir
+     */
+    function imprimirNotaDeCredito($numeroTicket, $importe, $tipo = 'B', $descrip, $cliente = array()){
+        $tipoId = $tipo == 'B' ? 'S' : 'R';
+        if (!empty($cliente) && $tipo == 'A') {
+            $this->vcomandos[] = $this->generadorComando->setCustomerData($cliente['razonsocial'], $cliente['numerodoc'], $cliente['respo_iva'], $cliente['tipodoc']);
+        } else {
+            //condumidor Final
+            $this->vcomandos[] = $this->generadorComando->setCustomerData();
         }
-
-
-
-
+        $this->vcomandos[] = $this->generadorComando->setEmbarkNumber($numeroTicket);
+        $this->vcomandos[] = $this->generadorComando->openDNFH($tipoId);
+        $this->vcomandos[] = $this->generadorComando->printLineItem($descrip, 1, $importe);
+        $this->vcomandos[] = $this->generadorComando->closeDNFH();
+        $this->printHasarFiscal();
+    }
 
 	function printFacturaB($vproductos){
 
 	}
 
-
-
-
-	/**
-	 * Elimina archivos de un directorio
-	 */
-	function delTree($dir) {
-		$files = glob( $dir . '*', GLOB_MARK );
-		foreach( $files as $file ){
-			if( substr( $file, -1 ) == '/' )
-			$this->delTree( $file );
-			else
-			unlink( $file );
-		}
-	}
-
-
-
-	function eliminarComandosEncolados(){
-		$this->delTree($this->sourceFolder);
-			
-	}
-
-
-
-
 	/**
 	 * me toma el array vcomandos y me manda a imprimir
-	 * ademas me genera un archivo con el nombre que le paso como parametro, es util para mandaar a imprimir cosas rapido
-	 * si el archivo ya existe lo borra y crea el nuevo.
-	 *
-	 * @param string $arch_name es el nombre del archivo que voy a imprimir temporalmente paraluego enconlar
 	 * 					si no pongo nada me genera un nombre aleatorio
 	 * @return boolean true si paso todo bien, false si paso mal
 	 */
-	function printHasarFiscal($arch_name = '')
+	function printHasarFiscal()
 	{
 		//primero valida los comandos... si estan todos bien, entonces sigue adelante
+		$serverImpresoraFiscal = Configure::read('ImpresoraFiscal.server');
+		$nombreImpresoraFiscal = Configure::read('ImpresoraFiscal.nombre');
 		if(!$this->__validarComandos()){
 			return false;
 		}
-                
-		$this->__inicio_manual();
 
-		if ($arch_name == ''){
-			$arch_name = "archivo";
+		$descriptorspec = array(
+		   0 => array("pipe", "r"), //esto lo uso para mandarle comandos
+		   1 => array("pipe", "/tmp/lprstdout.txt", "a"),  // el stdout a un archivo tmp
+		   2 => array("file", "/tmp/lprerrout.txt", "a") // el stderr a un archivo tmp
+		);
+        $process = proc_open('lpr -H '.$serverImpresoraFiscal.' -P '.$nombreImpresoraFiscal, $descriptorspec, $pipes, null, null);
+        if (is_resource($process)) 
+		{
+			foreach($this->vcomandos as $comando):
+                fwrite($pipes[0],$comando);
+                fwrite($pipes[0],"\n");
+			endforeach;
+			fclose($pipes[0]);
+			$ret =  proc_close($process);
+			return true;
 		}
-		//$arch_name = $arch_name.date("His");
-
-		try {
-
-                    debug($this->destFolder);
-			if(file_exists($this->destFolder."/".$arch_name."ans")){
-				//debug("se borrò el archivo $archivo porque ya existia");
-				unlink($this->destFolder."/".$arch_name."ans");
-			}
-	
-			$this->__crearDirectorioSiNoExiste($this->tempFolder);
-	
-			// imprimo el array de esta primer comanda
-	
-			//path y nombre del txt que voy a guardar en elpath temporal
-                        //de la impresora par luego mandarlo a imprimir
-			$path = $this->tempFolder;
-			$archivo = $path.'/'.$arch_name;
-			$this->__hacerArchivoComandosFiscales($archivo);
-	
-			//meter en la cola de impresion
-			copy($archivo,$this->sourceFolder."/$arch_name");
-
-                        $archPathCompleto = $this->sourceFolder."/$arch_name";
-                        //exec("spooler -g -h 1600 -i localhost -f $archPathCompleto");
-			chmod($this->sourceFolder."/$arch_name",0777);
-				
-		} catch (Exception $e) {
-			$this->log($e->getMessage(),LOG_ERROR);
-			return false;
-		}
-		
-		return true;
-	}
-
-
-	/**
-	 * me arma un archivo con los comandos fiscales que se le pasen como argumento
-	 *
-	 *	@param string $archivo es el nombre del archivo, con su path completo, PE: /tmp/lala.txt
-	 *	@param array $v_comandos es el array con cada comando  ser escrito en el archivo, cada position del vector es una linea del archivo de comandos
-	 *							  si v_comandos viene vacio e, tonces el componente lee su atributo $this->vcomandos
-	 */
-	function __hacerArchivoComandosFiscales($archivo,$v_comandos = array())
-	{
-		if(count($v_comandos)>0){
-			$this->vcomandos = $v_comandos;
-		}
-
-		if(file_exists($archivo)){
-			//debug("se borrò el archivo $archivo porque ya existia");
-			unlink($archivo);
-		}
-
-		// si el archivo no existe lo creo
-		$archivo_comanda = fopen($archivo, "w+t");
-
-
-		foreach($this->vcomandos as $comando):
-
-                    //fwrite($archivo_comanda, iconv('UTF-8', 'ANSI_X3.4-1968//TRANSLIT//IGNORE', $comando));
-                    //fwrite($archivo_comanda, iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $comando));
-                    fwrite($archivo_comanda,$comando);
-                    fwrite($archivo_comanda,"\n");
-		endforeach;
-
-			
-		fclose($archivo_comanda);
-		chmod($archivo,0777);
-
-
+		return false;
 	}
 }
-
 ?>
