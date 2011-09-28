@@ -2,6 +2,20 @@ A[href='#listado-mesas-cerradas']{
     display: none !important;
 }
 
+
+
+/*** HOME ***/
+#bton-caja,
+#bton-admin,
+#bton-inven,
+#bton-estadisticas,
+#bton-contabilidad,
+a[href="/works/ristorantino/pquery/queries/list_view/10"],
+a[href="/works/ristorantino/pquery/queries/list_view/5"]{
+    display: none
+}
+
+
 /*   Acciones de la mesa  */ 
 #mesa-action-cambiar-mozo, 
 #mesa-action-reabrir,

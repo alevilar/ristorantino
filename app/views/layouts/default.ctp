@@ -37,6 +37,11 @@
             echo $html->css('ristorantino.generic');
             echo $html->css('cake.generic.croogo');
             echo $html->css('fluid_grid');
+            
+            $cssUserRole = "acl-".$session->read('Auth.User.role');
+            if (is_file(APP.WEBROOT_DIR.DS."css".DS.$cssUserRole.".css")) {
+                echo $html->css($cssUserRole,'stylesheet', array('media'=>'screen'));
+            }
 
 
             echo $javascript->link('prototype');
