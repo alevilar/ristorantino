@@ -2415,7 +2415,8 @@ $('#listado-mesas').live('pageshow',function(event, ui){
   tot.removeClass('ui-block-b');
   tot.css({'width':por+'%', padding: '0px', margin: '0px', 'float': 'left'});
 });
- 
+
+
         
 
 /**
@@ -2473,8 +2474,8 @@ $(document).ready(function() {
         Risto.Adition.adicionar.nuevaComandaParaCurrentMesa();
     });
     
-    $('A[href="#mesa-cobrar"]').click(function(){
-        Risto.Adition.adicionar.pagos([]);
+    $('A[href="#mesa-cobrar"]').live('click',function(){
+        Risto.Adition.adicionar.pagos( [] );
     });
     
      $('#btn-comanda-opciones').click(function(){
@@ -2540,6 +2541,21 @@ $(document).ready(function() {
         Risto.Adition.adicionar.currentMesa().setEstadoCobrada();
     });
     
+    
+    
+    // Los botones que tengan la clase silent-click sirven para los dialogs
+    // la idea es que al ser apretados el dialog se cierre, pero que se envie 
+    // el href via ajax, Es util para las ocasiones en las que quiero mandar
+    // una accion al servidor del cual no espero respuesta.
+    $('[data-href]').live('click',function(e){
+        var att = $(this).attr('data-href');
+        if (att) {
+            $.get( att );
+        }
+        $('.ui-dialog').dialog('close');
+    });
+
+    
                  
 });
 
@@ -2566,7 +2582,6 @@ function agregarNuevaMesa(e){
         }
         miniMesa[rta[r].name] = rta[r].value;
     }
-    console.debug(miniMesa);
     
     var mesa = Risto.Adition.adicionar.crearNuevaMesa(miniMesa);
     Risto.Adition.adicionar.setCurrentMesa( mesa );
@@ -2579,8 +2594,6 @@ function agregarNuevaMesa(e){
 
 function mesaCerrada(e){
     $("#mesa-id-"+e.mesa.id()).find('.ui-icon').removeClass('ui-icon-'+MESA_ESTADOS_POSIBLES.abierta.icon);
-    
-    
     $("#mesa-id-"+e.mesa.id()).find('.ui-icon').addClass('ui-icon-'+MESA_ESTADOS_POSIBLES.cerrada.icon);   
 }
 

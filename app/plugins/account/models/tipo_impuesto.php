@@ -18,7 +18,7 @@ class TipoImpuesto extends AccountAppModel {
 	var $hasAndBelongsToMany = array(
 		'Gasto' => array(
 			'className' => 'Account.Gasto',
-			'joinTable' => 'gastos_tipo_impuestos',
+			'joinTable' => 'account_gastos_tipo_impuestos',
 			'foreignKey' => 'tipo_impuesto_id',
 			'associationForeignKey' => 'gasto_id',
 			'unique' => true,

@@ -65,9 +65,9 @@
                     <div style="float:right; font-size: 140%;">
                          <div style="text-align: right;">
                             <?php  
-                            echo($session->read('Auth.User.nombre'));
-                            echo(' ');
-                            echo($session->read('Auth.User.apellido'));
+                            echo $session->read('Auth.User.nombre') . " " . $session->read('Auth.User.apellido');
+                            
+                            echo "<br />- ".$session->read('Auth.User.role') ." -";
                             ?>
                         </div>     
 

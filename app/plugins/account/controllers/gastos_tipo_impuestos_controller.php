@@ -1,7 +1,6 @@
 <?php
 class GastosTipoImpuestosController extends AppController {
 
-	var $name = 'GastosTipoImpuestos';
 	var $helpers = array('Html', 'Form');
 
 	function index() {

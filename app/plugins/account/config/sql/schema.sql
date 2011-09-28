@@ -1,34 +1,37 @@
-CREATE TABLE `vales` (
+CREATE TABLE `account_vales` (
 `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 `persona` VARCHAR( 50 ) NOT NULL ,
 `monto` FLOAT NOT NULL ,
+`user_id` INT NULL,
+`fecha` DATE NOT NULL,
 `modified` DATETIME NULL ,
 `created` DATETIME NOT NULL
 ) ENGINE = MYISAM ;
 
-CREATE TABLE `tipo_impuestos` (
+CREATE TABLE `account_tipo_impuestos` (
 `id` int(11) NOT NULL AUTO_INCREMENT,
 `name` VARCHAR( 50 ) NOT NULL ,
 `porcentaje` FLOAT NOT NULL ,
 PRIMARY KEY ( `id` )
 ) ENGINE = MYISAM ;
 
-DROP TABLE `gastos`;
-CREATE TABLE `gastos` (
+DROP TABLE `account_gastos`;
+CREATE TABLE `account_gastos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `proveedor_id` int(11) DEFAULT NULL,
   `clasificacion` varchar(100) DEFAULT NULL,
   `tipo_factura_id` int(11) NOT NULL,
   `factura_nro` varchar(50) DEFAULT NULL,
   `factura_fecha` date DEFAULT NULL,
-  `importe_neto` float NOT NULL DEFAULT '0',
+  `importe_neto` float NOT NULL DEFAULT 0,
+  `importe_total` FLOAT NOT NULL DEFAULT 0,
   `otros` float DEFAULT NULL,
   `created` datetime NOT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM;
 
-CREATE TABLE `gastos_tipo_impuestos` (
+CREATE TABLE `account_gastos_tipo_impuestos` (
 `id` int(11) NOT NULL AUTO_INCREMENT,
 `gasto_id` INT NOT NULL ,
 `tipo_impuesto_id` INT NOT NULL ,
@@ -36,7 +39,7 @@ PRIMARY KEY ( `id` )
 ) ENGINE = MYISAM ;
 
 
-CREATE TABLE `proveedores` (
+CREATE TABLE `account_proveedores` (
 `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 `name` VARCHAR( 100 ) NOT NULL ,
 `cuit` VARCHAR( 12 ) NULL ,
@@ -47,10 +50,4 @@ CREATE TABLE `proveedores` (
 `modified` DATETIME NULL
 ) ENGINE = MYISAM ;
 
-
-ALTER TABLE `gastos` ADD `importe_total` FLOAT NOT NULL DEFAULT 0 AFTER `importe_neto`;
-
-/* 31/08/2011 */
-ALTER TABLE `vales` ADD `user_id` INT NULL AFTER `id` ;
-ALTER TABLE `vales` ADD `fecha` DATE NOT NULL AFTER `persona` ;
 

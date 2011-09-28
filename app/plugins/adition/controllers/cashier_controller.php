@@ -76,8 +76,7 @@ imprimirse");
 		$this->redirect($this->referer());
 	}
 
-        function listar_dispositivos(){
-            $this->layout = false;
+        function listar_dispositivos(){            
             echo "<br>";
             echo exec('ls /dev/tty*');
             die;
