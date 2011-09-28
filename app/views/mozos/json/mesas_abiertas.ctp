@@ -11,4 +11,4 @@ $res = array(
     'time'  =>  $mesasLastUpdatedTime, // curren Unix server time
 );
 
-echo json_encode($res);
+echo json_encode($res, JSON_NUMERIC_CHECK);

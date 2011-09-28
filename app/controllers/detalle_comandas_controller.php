@@ -38,7 +38,6 @@ class DetalleComandasController extends AppController {
 	function add(){
 		$this->Actualizador->actualizar();
 		$ok = false;
-		Configure::write('debug',0);		
                 
 		$imprimir = $this->data['Comanda']['imprimir'] ? true : false;
 		unset($this->data['Comanda']['imprimir']);		

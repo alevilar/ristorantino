@@ -48,7 +48,7 @@ Risto.Adition.detalleComanda.prototype = {
         this.imprimir       = ko.observable( true );
         this.cant           = ko.observable( 0 );
         this.cant_eliminada = ko.observable( 0 );
-        this.es_entrada     = ko.observable.call( false );
+        this.es_entrada     = ko.observable( 0 );
         this.observacion    = ko.observable( '' );
         this.modificada     = ko.observable( false );
 
@@ -62,10 +62,11 @@ Risto.Adition.detalleComanda.prototype = {
                 delete jsonData.DetalleSabor;
             }
             delete jsonData.Producto;
-            return ko.mapping.fromJS(jsonData, {} , this);
+        } else {
+            jsonData = {}
         }
         
-        return ko.mapping.fromJS( {}, {} , this );
+        ko.mapping.fromJS( jsonData, {} , this );
     },
     
     /**
@@ -169,7 +170,12 @@ Risto.Adition.detalleComanda.prototype = {
      * modifica this.es_entrada
      */
     toggleEsEntrada: function(){
-        this.es_entrada( !this.es_entrada() );
+        if ( this.es_entrada() ) {
+            this.es_entrada( 0 );
+        } else {
+            this.es_entrada( 1 );
+        }
+        
     },
     
     
@@ -181,10 +187,7 @@ Risto.Adition.detalleComanda.prototype = {
     esEntrada: function(){
         // no se por que pero hay veces en que viene el boolean como si fuera un character asique deboi
         // hacer esta verificacion
-        if ( this.es_entrada() && (this.es_entrada() === true || this.es_entrada() === '1') ){
-            return true;
-        }
-        return false;
+        return this.es_entrada();
     },
     
     

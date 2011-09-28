@@ -9,4 +9,4 @@ $vec = array(
     'Comanda' => $comanda,
 );
 
-echo $javascript->object($vec);
+echo json_encode($vec, JSON_NUMERIC_CHECK);
