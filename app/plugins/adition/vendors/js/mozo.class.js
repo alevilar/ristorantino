@@ -39,9 +39,9 @@ var Mozo = function(jsonData){
 
 
 Mozo.prototype = {
-    id      : ko.observable( 0 ),
-    numero  : ko.observable( 0 ),
-    mesas   : ko.observableArray(),
+    id      : function( ) { return 0 },
+    numero  : function( ) { return 0 },
+    mesas   : function( ) { return [] },
 
     initialize: function(jsonData) {
         var mozoNuevo = this;

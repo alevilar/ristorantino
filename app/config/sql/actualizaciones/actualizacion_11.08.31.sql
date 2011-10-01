@@ -77,3 +77,8 @@ ALTER TABLE  `pagos` ADD  `created` TIMESTAMP NULL AFTER  `valor` ,
 ADD  `modified` TIMESTAMP NULL AFTER  `created`;
 
 ALTER TABLE  `pagos` CHANGE  `valor`  `valor` FLOAT NOT NULL;
+
+
+
+
+ALTER TABLE  `mesas` CHANGE  `cant_comensales`  `cant_comensales` INT( 11 ) NULL DEFAULT  '0';

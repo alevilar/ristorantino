@@ -10,6 +10,7 @@ cat knockout.mapping.js >> todos.js
 cat ristorantino/generic.js >> todos.js
 cat ../../plugins/adition/vendors/js/adition.package.js >> todos.js
 cat ../../plugins/adition/vendors/js/mozo.class.js >> todos.js
+cat ../../plugins/adition/vendors/js/mesa.estados.class.js >> todos.js
 cat ../../plugins/adition/vendors/js/mesa.class.js >> todos.js
 cat ../../plugins/adition/vendors/js/comanda.class.js >> todos.js
 cat ../../plugins/adition/vendors/js/comanda_fabrica.class.js >> todos.js

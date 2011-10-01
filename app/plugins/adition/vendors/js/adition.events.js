@@ -36,6 +36,14 @@ $('#listado-mesas').live('pageshow',function(event, ui){
 });
 
 
+
+$('#page-sabores').live('pageshow', function(){
+    var closeIcon = $('#page-sabores a[data-icon="delete"]');
+    closeIcon.bind('click',function(){
+                Risto.Adition.adicionar.currentMesa().currentComanda().limpiarSabores();
+                closeIcon.unbind('click');
+            });
+});
         
 
 /**
@@ -75,7 +83,7 @@ $(document).ready(function() {
         var btnMozo = $('.listado-mozos-para-mesas .ui-btn-active');
         var mozoId = 0;
         if ( btnMozo[0] ) {
-            mozoId = btnMozo[0].dataset.mozoId;
+            mozoId = $(btnMozo[0]).attr('data-mozo-id');
         }
         mostrarMesasDeMozo(mozoId);
     });
@@ -93,6 +101,10 @@ $(document).ready(function() {
         Risto.Adition.adicionar.nuevaComandaParaCurrentMesa();
     });
     
+    $('#comanda-add-guardar').click(function(){
+        Risto.Adition.adicionar.currentMesa().currentComanda().save()
+    });
+    
     $('A[href="#mesa-cobrar"]').live('click',function(){
         Risto.Adition.adicionar.pagos( [] );
     });
@@ -103,19 +115,19 @@ $(document).ready(function() {
     
     
     
-    $('#mesa-cerrar').click(function(){
+    $('#mesa-cerrar').bind('click', function(){
         var mesa = Risto.Adition.adicionar.currentMesa();
         mesa.cambioDeEstadoAjax( MESA_ESTADOS_POSIBLES.cerrada );
     });
     
-    $('#mesa-reimprimir').click(function(){
+    $('#mesa-reimprimir').bind('click', function(){
         var mesa = Risto.Adition.adicionar.currentMesa();
         var url = mesa.urlReimprimirTicket();
         $.get(url);
     });
     
     
-    $('#mesa-borrar').click(function(){
+    $('#mesa-borrar').bind('click', function(){
         if (window.confirm('Seguro que desea borrar la mesa '+Risto.Adition.adicionar.currentMesa().numero())){
             var mesa = Risto.Adition.adicionar.currentMesa();
             mesa.cambioDeEstadoAjax( MESA_ESTADOS_POSIBLES.borrada );
@@ -123,13 +135,13 @@ $(document).ready(function() {
     });
     
     
-    $('#mesa-reabrir').click(function(){
+    $('#mesa-reabrir').bind('click',function(){
         var mesa = Risto.Adition.adicionar.currentMesa();
         mesa.cambioDeEstadoAjax( MESA_ESTADOS_POSIBLES.reabierta );
     });
     
     
-    $('#mesa-eliminar-cliente').live('click',function(){
+    $('#mesa-eliminar-cliente').bind('click',function(){
         Risto.Adition.adicionar.currentMesa().setCliente(null);
         return true;
     });
@@ -137,7 +149,7 @@ $(document).ready(function() {
     
     // al hacer click n un mozo del menu bar
     // se muestran solo lasmesas de ese mozo
-    $('.listado-mozos-para-mesas a').click(function(){
+    $('.listado-mozos-para-mesas a').bind('click',function(){
         var mId = undefined;
         mostrarMesasDeMozo( $(this).attr('data-mozo-id') );
         
@@ -178,34 +190,31 @@ $(document).ready(function() {
                  
 });
 
-$('#page-sabores').live('pageshow', function(){
-    var closeIcon = $('#page-sabores a[data-icon="delete"]');
-    closeIcon.bind('click',function(){
-                Risto.Adition.adicionar.currentMesa().currentComanda().limpiarSabores();
-                closeIcon.unbind('click');
-            });
-});
-//
 
 
 function agregarNuevaMesa(e){
     e.preventDefault();
     
-    var rta = $('#form-mesa-add').serializeArray();
-        
+    var rta = $('#form-mesa-add').serializeArray();    
     var miniMesa = {};
+    
     for (var r in rta ) {
-        if (!rta[r].value){
-            alert("Debe completar numero de mozo y de mesa");
+        if (rta[r].name == 'numero' && !rta[r].value){
+            alert("Debe completar numero de mesa");
+            return false;
+        }
+        
+        if (rta[r].name == 'cant_comensales' && !rta[r].value && Risto.Adition.cubiertosObligatorios){
+            alert("Debe indicar la cantidad de cubiertos");
             return false;
         }
         miniMesa[rta[r].name] = rta[r].value;
     }
     
-    var mesa = Risto.Adition.adicionar.crearNuevaMesa(miniMesa);
+    var mesa = Risto.Adition.adicionar.crearNuevaMesa( miniMesa );
     Risto.Adition.adicionar.setCurrentMesa( mesa );
     document.getElementById('form-mesa-add').reset(); // limpio el formulario
-    $('.ui-dialog').dialog('close');
+    $.mobile.changePage('#mesa-view');
 
     return false;
 }

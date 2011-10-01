@@ -6,21 +6,6 @@
  * se lo suele encontrar muchas veces como objeto adicionar o adn() para simplicar
  */
 
-// intervalo en milisegundos en el que seran renovadas las mesas
-MESAS_RELOAD_INTERVAL = 5500;
-MESA_RELOAD_TIMEOUT = 60000;
-
-
-
-//Parametros de configuracion
-Risto.Adition.cubiertosObligatorios   = true;
-
-
-/**
- * extencion del objeto array
- *
- *
- * */
 Risto.Adition.adicionar = {
 
     yaMapeado: false,
@@ -105,22 +90,6 @@ Risto.Adition.adicionar = {
         return mozosTags;
     },
 
-
-    mesasButonizadas: function() {
-        var btns = [];
-        for(var m in this.mesas) {
-            btns.push(this.mesas[m].getButton());
-        }
-        return btns;
-    },
-
-    mozosButonizados: function() {
-        var btns = [];
-        for(var m in this.mozos) {
-            btns.push(this.mozos[m].getButton());
-        }
-        return btns;
-    },
 
     nombrificar: function(list, text) {
         for (var i in list) {
@@ -210,11 +179,11 @@ Risto.Adition.adicionar = {
      * @param Boolean cubiertosObligatorios
      **/
     cerrarCurrentMesa: function(cubiertosObligatorios ){
-        var cubiertosObligatorios = cubiertosObligatorios || 'undefined';
+        var cubiertosObs = cubiertosObligatorios || 'undefined';
 
         if (this.tieneMesaSeleccionada()) {
             // si aun no se settearon la cantidad de comensales DEBE HACERLO !!
-            if (cubiertosObligatorios && (this.currentMesa.getCantComensales() == 0) && (this.currentMozo.numero != 99)) {
+            if (cubiertosObs && (this.currentMesa.getCantComensales() == 0) && (this.currentMozo.numero != 99)) {
                     showComensalesWindow();
             } else {
                 if(this.tieneMesaSeleccionada()){

@@ -381,7 +381,7 @@ class PrinterComponent extends Object {
 			
 			//si paso todo bien la creacion del archivo la mando a imprimir
 			$comandera_name = $this->comanderas[$comandera_id]['Comandera']['name'];
-			$comando = "lp -d $comandera_name $arch_name";
+			$comando = "lpr -P $comandera_name $arch_name";
 			$retorno = exec($comando);
 			//debug("Se mando el comando". $comando." ---El EL JOB ID es->> ".$retorno);
 				
@@ -758,7 +758,7 @@ class PrinterComponent extends Object {
 				
 			//si paso todo bien la creacion del archivo la mando a imprimir
 			$comandera_name = $this->comanderas[$comandera_id]['Comandera']['name'];
-			$comando = "lp -d $comandera_name $arch_name";
+			$comando = "lpr -P $comandera_name $arch_name";
 			$retorno = exec($comando);
 			//debug("Se mando el comando". $comando." ---El EL JOB ID es->> ".$retorno);
 

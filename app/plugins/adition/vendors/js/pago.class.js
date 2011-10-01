@@ -10,10 +10,10 @@ Risto.Adition.pago = function(jsonOb){
 
 
 Risto.Adition.pago.prototype = {
-    model: 'Pago',
-    TipoDePago: ko.observable(),
-    valor: ko.observable(),
-    mesa_id: ko.observable(),
+    model       : 'Pago',
+    TipoDePago  : function( ) {},
+    valor       : function( ) {},
+    mesa_id     : function( ) {},
     tipo_de_pago_id: undefined,
     
     initialize: function(jsonOb){

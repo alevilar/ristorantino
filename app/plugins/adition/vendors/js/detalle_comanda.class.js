@@ -31,15 +31,15 @@ Risto.Adition.detalleComanda = function(jsonData) {
 
 
 Risto.Adition.detalleComanda.prototype = {
-    Producto    : ko.observable(),
-    DetalleSabor: ko.observableArray(), // array de Sabores
+    Producto    : function( ) {},
+    DetalleSabor: function( ) { return [] }, // array de Sabores
 
     // cant de este producto seleccionado
-    cant        : ko.observable( 0 ),
-    cant_eliminada: ko.observable( 0 ),
-    es_entrada  : ko.observable( 0 ),
-    observacion : ko.observable( '' ),
-    modificada  : ko.observable( false ),
+    cant        : function( ) { return 0 },
+    cant_eliminada: function( ) { return 0 },
+    es_entrada  : function( ) { return 0 },
+    observacion : function( ) { return '' },
+    modificada  : function( ) { return false },
     model       : 'DetalleComanda',
     
     
@@ -62,6 +62,8 @@ Risto.Adition.detalleComanda.prototype = {
                 delete jsonData.DetalleSabor;
             }
             delete jsonData.Producto;
+            
+            jsonData.es_entrada = parseInt( jsonData.es_entrada );
         } else {
             jsonData = {}
         }

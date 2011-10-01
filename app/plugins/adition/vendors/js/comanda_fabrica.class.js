@@ -15,7 +15,7 @@ Risto.Adition.comandaFabrica.prototype = {
     comanda: {},
     
     // array de los sabores del producto seleccionado
-    currentSabores: ko.observableArray([]),
+    currentSabores: function( ) {return []},
     
     productoSaborTmp: {}, //producto temporal (que esta esperando la seleccion de sabores)
     saboresSeleccionados: [], // listado de sabores seleccionados para el productoSaborTmp
@@ -40,17 +40,35 @@ Risto.Adition.comandaFabrica.prototype = {
     },
     
     
+    /**
+     *
+     * Inserta el DetalleComanda en la vista de la mesa
+     * inserta tantas comandas como se le hayan pasado de parametro
+     * @param comandaJsonCopy Object con los atributos de la comanda
+     * @param comanderas Array listado de comandas
+     */
+    __colocarListadoDeProductosEnVistaDeMesa: function( comandaJsonCopy, comanderas ){
+         // creo una nueva comanda para cada comandera
+        for (var com in comanderas ) {
+            comanderaComanda = new Risto.Adition.comanda( comandaJsonCopy );
+            comanderaComanda.DetalleComanda( comanderas[com] );
+          
+            this.mesa.Comanda.unshift( comanderaComanda );
+        }
+    },
+    
+    
     save: function() {
         if ( !this.mesa){
                 jQuery.error("no hay una mesa setteada. No se puede guardar una comanda de ninguna mesa");
                 return null;
         }
-            
+        
         // separo la comanda generada en varias comandas
         // se genera 1 comanda por cada impresora que haya (comandera)
         var ccdc;
         var comanderas = [];
-        var comanderaComanda;
+        
         // separo los detalleComanda por comandera
         for (var dc in this.comanda.DetalleComanda()) {
             ccdc = this.comanda.DetalleComanda()[dc];
@@ -64,20 +82,33 @@ Risto.Adition.comandaFabrica.prototype = {
             comanderas[ccdc.comandera_id()].push(ccdc);
         }
         
-        var comandaJsonCopy = {
-            mesa_id: this.comanda.mesa_id,
-            observacion: this.comanda.observacion(),
-            imprimir: this.comanda.imprimir()
+        if ( !this.puestoEnVistaDeMesa ) {
+            var comandaJsonCopy = {
+                mesa_id: this.mesa.id(),
+                observacion: this.comanda.observacion(),
+                imprimir: this.comanda.imprimir()
+            }
+            this.__colocarListadoDeProductosEnVistaDeMesa(comandaJsonCopy, comanderas);
+            this.puestoEnVistaDeMesa = true;
         }
         
+        var estaComanda = this;
         
         // creo una nueva comanda para cada comandera
         for (var com in comanderas ) {
             comanderaComanda = new Risto.Adition.comanda( comandaJsonCopy );
             comanderaComanda.DetalleComanda( comanderas[com] );
             
-            this.mesa.Comanda.unshift( comanderaComanda );
-            $cakeSaver.send({url:urlDomain+'detalle_comandas/add.json', obj: comanderaComanda});
+            $cakeSaver.send({
+                url: urlDomain+'detalle_comandas/add.json', 
+                obj: comanderaComanda,
+                'if': function(){
+                    return estaComanda.mesa.id();
+                },
+                'ifDo': function(){
+                    estaComanda.save();
+                }
+            });
         }
         
         

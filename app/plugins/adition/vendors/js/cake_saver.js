@@ -16,38 +16,54 @@ var $cakeSaver = {
      *  'url' => es la url donde se enviara el post
      *  'obj' => es el objeto que voy a enviar$cakeSaver
      *  'error' => function handler
+     *  'if'    => es una funcion que devuelve un boolean, Si el boolean da false, entonces el envio se posterga hasta que sea "true"
+     *  'ifDo'  => es una funcion que se ejecuta cuando devuelve true el IF
      *  @param fn funcion callback a ejecutar onSuccess
      */
     send: function( sendObj , fn){
         var obj = sendObj['obj'];
+        console.debug(obj);
         var url = sendObj['url'];
+        var ifCallback = sendObj['if'] || function(){ return true };
+        var ifDoCallback = sendObj['ifDo'] || function(){ };
         var errorHandler = sendObj.error || function(){};
-        var method = sendObj['method'] || this.method;
-        var ob = this.__processObj(obj, obj.model);
+        var method = sendObj['method'] || this.method;       
+        var ob = this.__processObj(obj, obj.model); // objeto aplanado
 
+        if ( typeof ifCallback == 'function' &&  ifCallback.call() ){
+            this.__doSend(url, ob, method, errorHandler, fn, obj);
+        } else {
+            // enviar dentro de un rato
+            setTimeout(function(){ ifDoCallback.call(); }, MESAS_RELOAD_INTERVAL); 
+        }
+       
+    },
+    
+    
+    
+    __doSend: function(url, ob, method, errorHandler, fn, obj){
         $.ajax({
-            'url': url,
-            'data': ob,
-            'type': method,
-            error: errorHandler,
-            success: function(data){
-                if (typeof fn == 'function'){
-                    fn.call(data);
-                } else {
-                    try { 
-                    if ( obj.handleAjaxSuccess ) {
-                            obj.handleAjaxSuccess(data, url, method);
-                        } else {
-                            throw "$cakeSaver:: EL objeto '"+obj.model+"' pasado para enviar vía ajax no tiene una función llamada 'handleAjaxSuccess'. La misma es indispensable para tratar la respuesta.";
+                'url': url,
+                'data': ob,
+                'type': method,
+                error: errorHandler,
+                success: function(data){
+                    if (typeof fn == 'function'){
+                        fn.call(data);
+                    } else {
+                        try { 
+                        if ( obj.handleAjaxSuccess ) {
+                                obj.handleAjaxSuccess(data, url, method);
+                            } else {
+                                throw "$cakeSaver:: EL objeto '"+obj.model+"' pasado para enviar vía ajax no tiene una función llamada 'handleAjaxSuccess'. La misma es indispensable para tratar la respuesta.";
+                            }
+                        }
+                        catch(er) {
+                            jQuery.error(er);
                         }
                     }
-                    catch(er) {
-                        jQuery.error(er);
-                    }
                 }
-            }
-        });
-       
+            });
     },
     
     

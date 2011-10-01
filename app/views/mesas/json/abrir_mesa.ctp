@@ -1,6 +1,6 @@
 <?
 
-$mozo['insertedId'] = $insertedId;
+$mozo['Mesa']['id'] = $insertedId;
 $mozo['msg']        = $validationErrors;
 
 

@@ -54,6 +54,7 @@
                     // OJO !! EL ORDEN IMPORTA !!
                     '/adition/js/adition.package',
                     '/adition/js/mozo.class',
+                    '/adition/js/mesa.estados.class',
                     '/adition/js/mesa.class',
                     '/adition/js/comanda.class',
                     '/adition/js/comanda_fabrica.class',
@@ -84,9 +85,22 @@
     <script type="text/javascript">
     <!--
         $.mobile.page.prototype.options.backBtnText = "Volver";
+        
+        
+        
+        // intervalo en milisegundos en el que seran renovadas las mesas
+        MESAS_RELOAD_INTERVAL = 5500;
+        MESA_RELOAD_TIMEOUT = 60000;
+
+        //Parametros de configuracion
+        Risto.Adition.cubiertosObligatorios   = <?php echo Configure::read('Adicion.cantidadCubiertosObligatorio')?'true':'false'?>;
+
 
         // instancio el objeto adicion que sera el kernel de la app
         Risto.Adition.adicionar.initialize();
+        
+        
+        
     -->
     </script>
 

@@ -264,13 +264,14 @@ class MesasController extends AppController {
 
 
     function abrirMesa(){
+        sleep(25);
         $this->Actualizador->actualizar();
         
         $insertedId = 0;
         if (!empty($this->data['Mesa'])){
 //            unset( $this->data['Mesa']['created'] );
-            if ($this->Mesa->save($this->data)){
-                $insertedId = $this->Mesa->id;
+            if ( $this->Mesa->save($this->data) ){
+                $insertedId = $this->Mesa->getLastInsertId();
             }
         }
         $this->set('insertedId', $insertedId);
@@ -414,6 +415,8 @@ $tipo_pagos = $this->Mesa->Pago->TipoDePago->find('list');
         }
         if (!$this->RequestHandler->isAjax()){
             $this->redirect($this->referer());
+        } else {
+            die(1);
         }
     }
 

@@ -12,12 +12,12 @@ Risto.Adition.comanda = function(jsonData){
 
 Risto.Adition.comanda.prototype = {
     // Array de DetalleComanda, cada detalleComanda es 1 producto
-    DetalleComanda : ko.observableArray([]),
-    created: ko.observable(),
-    model: 'Comanda',
-    imprimir: ko.observable( true ),
-    id: ko.observable(),
-    observacion: ko.observable(),
+    DetalleComanda  : function( ) { return [] },
+    created         : function( ) { },
+    model           : 'Comanda',
+    imprimir        : function( ) { return true },
+    id              : function( ) {},
+    observacion     : function( ) {},
     
     initialize: function(jsonData) {
         this.id = ko.observable();

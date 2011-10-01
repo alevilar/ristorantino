@@ -2,71 +2,10 @@
  *
  *
  * Clase Mesa
- */
-
-
-/**
- * @var Static MESAS_POSIBLES_ESTADOS
  * 
- *  esta variable es simplemenete un catalogo de estados posibles que
- *  la mesa pude adoptar
- *
- **/
-
-var MESA_ESTADOS_POSIBLES =  {
-    abierta : {
-        msg: 'Mesa Abierta',
-        event: 'mesaAbierta',
-        id: 1,
-        icon: 'mesa-abierta',
-        url: urlDomain+'mesas/add'
-    },
-    reabierta : {
-        msg: 'Mesa Re-Abierta',
-        event: 'mesaAbierta',
-        id: 1,
-        icon: 'mesa-abierta',
-        url: urlDomain+'mesas/reabrir'
-    },
-    cerrada: {
-        msg: 'Mesa Cerrada',
-        event: 'mesaCerrada',
-        id: 2,
-        icon: 'mesa-cerrada',
-        url: urlDomain+'mesas/cerrarMesa'
-    },
-    cuponPendiente: {
-        msg: 'Mesa con Cupón Pendiente',
-        event: 'mesaCuponPendiente',
-        id: 0,
-        icon: 'mesa-cobrada'
-    },
-    cobrada: {
-        msg: 'Mesa Cobrada',
-        event: 'mesaCobrada',
-        id: 3,
-        icon: 'mesa-cobrada'
-    },
-    borrada: {
-        msg: 'Mesa Borrada',
-        event: 'mesaBorrada',
-        id: 0,
-        icon: '',
-        url: urlDomain+'mesas/delete'
-    },
-    seleccionada: {
-        msg: 'Mesa Seleccionada',
-        event: 'mesaSeleccionada',
-        id: 0,
-        icon: ''
-    }
-};
-
-/**
- *
- *Definicion de la Clase Mesa
- *
- **/
+ * para inicializarla es necesario pasarle el objeto Mozo
+ * tambien se le puede pasar un jsonData para ser mappeado con knockout
+ */
 var Mesa = function(mozo, jsonData) {
     
         /**
@@ -130,7 +69,10 @@ var Mesa = function(mozo, jsonData) {
         
         
         /**
+         * dependentObservable
          * 
+         * Chequea si la mesa esta con el estado: cerrada. (por lo general, lo que interesa
+         * es saber que si no esta cerrada es porque esta abierta :-)
          * @return boolean
          **/
         this.estaCerrada = ko.dependentObservable(function(){
@@ -138,6 +80,13 @@ var Mesa = function(mozo, jsonData) {
         }, this);
         
         
+        /**
+         * dependentObservable
+         * 
+         * chequea el ID del estado y devuelve el id del mismo
+         * @return integer
+         *
+         */
         this.estado_id = ko.dependentObservable(function(){
             var est = this.estado();
             if (est){
@@ -146,6 +95,15 @@ var Mesa = function(mozo, jsonData) {
             return 0;
         }, this);
         
+        
+        /**
+         * dependentObservable
+         * 
+         * Devuelve el nombre del Cliente si es que hay alguno setteado
+         * en caso de no haber cliente, devuelve el string vacio ''
+         *
+         *@return string
+         */
         this.clienteNameData = ko.dependentObservable(function(){
             var cliente = this.Cliente();
             if (cliente){
@@ -159,6 +117,17 @@ var Mesa = function(mozo, jsonData) {
         }, this);
         
         
+        /**
+         *  dependentObservable
+         *  
+         *  devuelve el nombre del icono (jqm data-icon) que tiene el estado 
+         *  en el que la mesa se encuentra actualmente
+         *  el nombre del icono sirve para manejar cuestiones esteticas y es definido
+         *  en "mesa.estados.class.js"
+         *  
+         *  @return string
+         *
+         */
         this.getEstadoIcon = ko.dependentObservable( function(){
             var estado = this.estado();
             if (estado){
@@ -168,34 +137,62 @@ var Mesa = function(mozo, jsonData) {
         }, this);
         
         
-        this.initialize(mozo, jsonData);
-         
-        return this;
+        /**
+         * Devuelve un texto con la hora
+         * si la mesa esta cerrada, dice "Cerró: 14:35"
+         * si esta aberta dice: "Abrió 13:22"
+         */
+        this.textoHora = ko.dependentObservable( function() {
+            var date, txt;
+            if ( this.getEstado() == MESA_ESTADOS_POSIBLES.cerrada ) {
+                txt = 'Cerró a las ';
+                if (typeof this.time_cerro == 'function') {
+                    date =  mysqlTimeStampToDate(this.time_cerro());
+                }
+            } else {
+                txt = 'Abrió a las ';
+                if (typeof this.created == 'function') {
+                    date = mysqlTimeStampToDate(this.created());            
+                }
+            }
+            if ( !date ) {
+                date = new Date();
+            }
+            return txt + date.getHours() + ':' + date.getMinutes() + 'hs';
+        }, this);
+        
+        
+        return this.initialize(mozo, jsonData);
 }
 
 
 
 Mesa.prototype = {
     model       : 'Mesa',
-    id          : ko.observable( 0 ),
-    total       : ko.observable( 0 ),
-    numero      : ko.observable( 0 ),
-    mozo_id     : ko.observable( 0 ),
-    created     : ko.observable( 0 ),
-    time_cerro  : ko.observable( 0 ),
-    Cliente     : ko.observable(   ),   
-    estado      : ko.observable( 0 ),
-    cant_comensales: ko.observable( 0 ),
+    id          : function( ) { return 0 },
+    total       : function( ) { return 0 },
+    numero      : function( ) { return 0 },
+    mozo_id     : function( ) { return 0 },
+    created     : function( ) { return 0 },
+    time_cerro  : function( ) { return 0 },
+    Cliente     : function( ) { }, 
+    estado      : function( ) { return 0 },
+    cant_comensales: function( ) { return 0 },
     
     // es la comanda que actualmente se esta haciendo objeto comandaFabrica
-    currentComanda: ko.observable( ), 
-    Comanda     : ko.observableArray( ),
-    Pago        : ko.observableArray( ), // cantidad de pagos asociados a la mesa
+    /** @param currentComanda comandaFabrica **/
+    currentComanda: function( ) { },
+    Comanda     : function( ) { return [] },
+    Pago        : function( ) { return [] }, // cantidad de pagos asociados a la mesa
     
     
     // attributos
-    mozo: ko.observable( {} ),
+    mozo: function( ) { return {} },
     
+    /**
+     * es timeCreated o sea la fecha de creacion del mysql timestamp
+     * @return string timestamp
+     **/
     timeAbrio: function(){
         if (!this.timeCreated) {
             Risto.modelizar(this);
@@ -203,6 +200,9 @@ Mesa.prototype = {
         return this.timeCreated();
     },
 
+    /**
+     *@constructor
+     */
     initialize: function( mozo, jsonData ) {
         this.id             = ko.observable();
         this.created        = ko.observable();
@@ -262,6 +262,12 @@ Mesa.prototype = {
         return this;
     },
     
+    /**
+     * Inicializa el estado de la mesa en base al json pasada como parametro
+     * o sea, convierte el id del estado que viene de la bbdd, a un objeto
+     * "estado" que son los que estan en mesa.estados.class.js
+     * @return MesaEstado
+     */
     __inicializar_estado: function(jsonData){
         var estado = MESA_ESTADOS_POSIBLES.abierta;
          if (jsonData.estado_id) {
@@ -288,16 +294,22 @@ Mesa.prototype = {
         this.currentComanda().agregarProducto(prod);
     },
     
+    /**
+     * Inicializa currentComanda para poder hacer una nueva comanda con
+     * el objeto comandaFabrica
+     * @constructor
+     */
     nuevaComanda: function(){
         this.currentComanda( new Risto.Adition.comandaFabrica(this)  );
     },
     
+    
     getData: function(){
-        $.get(this.urlGetData(), function(){
-            
-        });
+        $.get(this.urlGetData());
     },
     
+    
+    /* listado de URLS de accion con la mesa */
     urlGetData: function(){return urlDomain+'mesas/ticket_view/'+this.id()},
     urlView: function(){return urlDomain+'mesas/view/'+this.id()},
     urlEdit: function(){return urlDomain+'mesas/ajax_edit/'+this.id()},
@@ -320,27 +332,7 @@ Mesa.prototype = {
      *  es utilizada en el action mesas/view
      */
     domElementContainer: function(){return 'mesa-' + this.id();},
-
-
-    /**
-     * devuelve un Button con el elemento mesa
-     * @return jQuery Element button
-     */
-    getButton: function(){
-        if (this.hasOwnProperty('mozo') && !this.button) {
-            var btn = document.createElement('button');
-            btn.setAttribute('mozo_id', this.mozo.id);
-            btn.mesa_id = this.id;
-            btn.innerHTML = this.numero;
-            btn.mesa = this;
-            this.button = btn;
-            var cntx = this;
-            this.button.onclick = function(){
-                cntx.seleccionar.call(cntx)
-            }
-        }
-        return this.button;
-    },
+ 
 
     
 
@@ -354,25 +346,9 @@ Mesa.prototype = {
         $(document).trigger(event);
     },
 
-
-    cloneFromJson: function(json){
-        //copio solo lo decclarado en el prototype de este modelo
-        for (var i in this){
-            if ((typeof this[i] != 'function') && (typeof this[i] != 'object')){
-                this[i] = json[i];
-            }
-
-            if ((typeof this[i] == 'function') && json.hasOwnProperty(i) && (typeof this[i] != 'object')){
-                this[i](json[i]);
-            }
-        }
-        return this;
-    },
-
-    deseleccionar: function() {
-        
-    },
-
+    /**
+     * dispara un evento de mesa seleccionada
+     */
     seleccionar: function() {
         var event =  $.Event(MESA_ESTADOS_POSIBLES.seleccionada.event);
         event.mesa = this;
@@ -381,7 +357,13 @@ Mesa.prototype = {
     },
     
     
-    
+    /**
+     * cambia el estado de la mesa y lo envia vía ajax. Para ser modificado 
+     * en bbdd.
+     * En caso de error en el ajax la mesa vuelve a su estado anterior.
+     * 
+     * dispara el evento de cambio de estado. en caso de error lo dispararia 2 veces
+     */
     cambioDeEstadoAjax: function(estado){
         var estadoAnt = this.getEstado();
         var mesa = this;
@@ -392,43 +374,71 @@ Mesa.prototype = {
         }
     },
 
+    /**
+     * dispara un evento de mesa Abierta
+     */
     setEstadoAbierta : function(){
         this.setEstado(MESA_ESTADOS_POSIBLES.abierta);
         return this;
     },
     
+    /**
+     * dispara un evento de mesa cobrada
+     */
     setEstadoCobrada : function(){
         this.time_cobro( jsToMySqlTimestamp() );
         this.setEstado(MESA_ESTADOS_POSIBLES.cobrada);
         return this;
     },
 
+
+    /**
+     * dispara un evento de mesa cerrada
+     */
     setEstadoCerrada : function(){
         this.time_cerro = jsToMySqlTimestamp();
         this.setEstado(MESA_ESTADOS_POSIBLES.cerrada);
         return this;
     },
 
+    /**
+     * dispara un evento de mesa borrada
+     */
     setEstadoBorrada: function() {
         this.setEstado(MESA_ESTADOS_POSIBLES.borrada);
         return this;
     },
 
+    /**
+     * dispara un evento de mesa con cupon pendiente
+     */
     setEstadoCuponPendiente : function(){        
         this.setEstado(MESA_ESTADOS_POSIBLES.cuponPendiente);
         return this;
     },
     
+    /**
+     * Cambia el estado de la mesa y genera un disparador del evento
+     */
     setEstado: function(nuevoestado){
         this.estado(nuevoestado);
         this.__triggerEventCambioDeEstado();
     },
 
+    /**
+     * devuelve el estado actual de la mesa
+     * @return MesaEstado
+     */
     getEstado: function(){
         return this.estado();
     },
     
     
+    /**
+     * devuelve el string que identifica como nombre al estado
+     * es el atributo del objeto estado llamado msg
+     * el objeto de estado de la mesa es el de mesa.estados.class.js
+     */
     getEstadoName: function(){
         if (this.estado()){
             return this.estado().msg;
@@ -455,28 +465,29 @@ Mesa.prototype = {
         return this.estaCerrada();
     },
 
-
+    
+    /**
+     * modifica el ID del la mesa
+     */
     setId : function(id){
         this.id = id;
     },
 
 
-    tieneMenu : function(){
-        if (this.menu > 0)
-            return this.menu;
-        else
-            return 0;
-    },
-
-
+    /**
+     *devuelve la cantidad de comensales o cubiertos seteado en la mesa
+     *@return integer
+     */        
     getCantComensales : function(){
         return this.cantComensales();
     },
 
-
+    /**
+     * Envia un ajax con la peticion de imprimir el ticket para esta mesa
+     */
     reimprimir : function(){
         var url = window.urlDomain+'mesas/imprimirTicket';
-        $.post( url+"/"+this.id);
+        $.get( url+"/"+this.id);
     },
 
 
@@ -495,39 +506,25 @@ Mesa.prototype = {
         this.setEstadoAbierta();
     },
 
-
+    /**
+     * Envia un ajax con la peticion de cerrar esta mesa
+     */
     cerrar: function(){
         var url = window.urlDomain + 'mesas/cerrarMesa' + '/' + this.currentMesa.id + '/0';
         var context = this;
         $.get(url, {}, function(){context.setEstadoCerrada();});
     },
 
-
+    /**
+     * Envia un ajax con la peticion de borrar esta mesa
+     */
     borrar : function(){
         var url = window.urlDomain + 'mesas/delete/' +this.id;
         var context = this;
         $.get(url, {}, function(){context.setEstadoBorrada()});
     },
 
-
-    __abrir: function(){
-        if (this.id) {
-            alert('no se puede abrir una mesa que ya esta abierta. El ID ya existe. Consulte con el administrador del Sistema');
-            return;
-        }
-        var context = this;
-        alert("voy a abrir");
-        var response = $.post( urlDomain + 'mesas/abrirMesa.json',
-                {'data[Mesa][numero]': this.numero, 'data[Mesa][mozo_id]': this.mozo.id},
-                function() {
-                    context.setEstadoAbierta();
-                },
-            'json');
-            
-         response.error = function(t) {
-             alert("error de ajax: "+t);
-         }
-    },
+    
     
     /**
      * Si tiene un mozo setteado retorna true, caso contrario false
@@ -563,12 +560,15 @@ Mesa.prototype = {
     },
 
 
-    abrirlaConMozo: function(nuevoMozo){
-        this.setMozo(nuevoMozo);
-        return this.__abrir();
-    },
-
-
+    /**
+     * Realiza una edicion rapida via Ajax del Model Mesa de Cakephp
+     * o sea, desde aca se puede tcoar facilmente cualquier campo de la bbdd
+     * siempre y cuando el parametro data respete la forma de los inputs de cake.
+     * 
+     * @param data Array los keys del array deben ser de la forma cake:
+     *                      Ej: data['data[Mesa][cant_comensales]'] o data['data[Mesa][cliente_id]']
+     *                      
+     */
     editar: function(data) {
         if (!data['data[Mesa][id]']){
             data['data[Mesa][id]'] = this.id;
@@ -577,43 +577,22 @@ Mesa.prototype = {
     },
     
     
-    
-    keepUpdated: function() {
-        $.PeriodicalUpdater({
-            url: urlDomain+'/comandas/de_mesa/'+this.id()
-        }, function(data) {
-            console.debug(data);
-        });
+    /**
+     * Es el callback que recibe la actualizacion de las mesas via json desde 
+     * cakeSaver
+     */
+    handleAjaxSuccess: function(data, action, method) {
+        console.debug(data);
+        if (data[this.model]) {
+            ko.mapping.updateFromJS( this, data[this.model] );
+        }
     },
     
     
     /**
-     * Si tiene un detalleComanda modificado dentro del listado de comandas
-     * eme devuelve true
-     * @return boolean
+     * Dado un objeto cliente se setea el mismo a la mesa
+     * @param objCliente Object que debe tener como atributos al menos un id
      */
-    tieneComandaModificada: function(){
-        var cc, ddcc;
-        for (var c in this.Comanda() ) {
-            cc = this.Comanda()[c];
-            for (var dc in cc.DetalleComanda() ){
-                // caa detalle comanda dentro del array de comandas
-                ddcc = cc.DetalleComanda()[dc];
-                if ( ddcc.modificada() == true ) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    },
-    
-    
-    
-    handleAjaxSuccess: function(data, action, method) {
-        ko.mapping.updateFromJS( this, data[this.model] );  
-    },
-    
-    
     setCliente: function( objCliente ){
         var ctx = this, clienteId = null;
         
@@ -628,32 +607,7 @@ Mesa.prototype = {
                 ctx.Cliente(null);
             }
         });
-    },
-    
-    
-    /**
-     * Devuelve un texto con la hora
-     * si la mesa esta cerrada, dice "Cerró: 14:35"
-     * si esta aberta dice: "Abrió 13:22"
-     */
-    textoHora: function() {
-        var date, txt;
-        if ( this.getEstado() == MESA_ESTADOS_POSIBLES.cerrada ) {
-            txt = 'Cerró a las ';
-            if (typeof this.time_cerro == 'function') {
-                date =  mysqlTimeStampToDate(this.time_cerro());
-            }
-        } else {
-            txt = 'Abrió a las ';
-            if (typeof this.created == 'function') {
-                date = mysqlTimeStampToDate(this.created());            
-            }
-        }
-        if ( !date ) {
-            date = new Date();
-        }
-        return txt + date.getHours() + ':' + date.getMinutes() + 'hs';
     }
-    
+
 };
 

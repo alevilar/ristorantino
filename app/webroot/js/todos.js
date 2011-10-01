@@ -376,9 +376,9 @@ var Mozo = function(jsonData){
 
 
 Mozo.prototype = {
-    id      : ko.observable( 0 ),
-    numero  : ko.observable( 0 ),
-    mesas   : ko.observableArray(),
+    id      : function( ) { return 0 },
+    numero  : function( ) { return 0 },
+    mesas   : function( ) { return [] },
 
     initialize: function(jsonData) {
         var mozoNuevo = this;
@@ -635,24 +635,24 @@ var Mesa = function(mozo, jsonData) {
 
 Mesa.prototype = {
     model       : 'Mesa',
-    id          : ko.observable( 0 ),
-    total       : ko.observable( 0 ),
-    numero      : ko.observable( 0 ),
-    mozo_id     : ko.observable( 0 ),
-    created     : ko.observable( 0 ),
-    time_cerro  : ko.observable( 0 ),
-    Cliente     : ko.observable(   ),   
-    estado      : ko.observable( 0 ),
-    cant_comensales: ko.observable( 0 ),
+    id          : function( ) { return 0 },
+    total       : function( ) { return 0 },
+    numero      : function( ) { return 0 },
+    mozo_id     : function( ) { return 0 },
+    created     : function( ) { return 0 },
+    time_cerro  : function( ) { return 0 },
+    Cliente     : function( ) { }, 
+    estado      : function( ) { return 0 },
+    cant_comensales: function( ) { return 0 },
     
     // es la comanda que actualmente se esta haciendo objeto comandaFabrica
-    currentComanda: ko.observable( ), 
-    Comanda     : ko.observableArray( ),
-    Pago        : ko.observableArray( ), // cantidad de pagos asociados a la mesa
+    currentComanda: function( ) { },
+    Comanda     : function( ) { return [] },
+    Pago        : function( ) { return [] }, // cantidad de pagos asociados a la mesa
     
     
     // attributos
-    mozo: ko.observable( {} ),
+    mozo: function( ) { return {} },
     
     timeAbrio: function(){
         if (!this.timeCreated) {
@@ -1129,12 +1129,12 @@ Risto.Adition.comanda = function(jsonData){
 
 Risto.Adition.comanda.prototype = {
     // Array de DetalleComanda, cada detalleComanda es 1 producto
-    DetalleComanda : ko.observableArray([]),
-    created: ko.observable(),
-    model: 'Comanda',
-    imprimir: ko.observable( true ),
-    id: ko.observable(),
-    observacion: ko.observable(),
+    DetalleComanda  : function( ) { return [] },
+    created         : function( ) { },
+    model           : 'Comanda',
+    imprimir        : function( ) { return true },
+    id              : function( ) {},
+    observacion     : function( ) {},
     
     initialize: function(jsonData) {
         this.id = ko.observable();
@@ -1205,7 +1205,7 @@ Risto.Adition.comandaFabrica.prototype = {
     comanda: {},
     
     // array de los sabores del producto seleccionado
-    currentSabores: ko.observableArray([]),
+    currentSabores: function( ) { return [] },
     
     productoSaborTmp: {}, //producto temporal (que esta esperando la seleccion de sabores)
     saboresSeleccionados: [], // listado de sabores seleccionados para el productoSaborTmp
@@ -1621,11 +1621,11 @@ Risto.Adition.adicionar = {
      * @param Boolean cubiertosObligatorios
      **/
     cerrarCurrentMesa: function(cubiertosObligatorios ){
-        var cubiertosObligatorios = cubiertosObligatorios || 'undefined';
+        var cubiertosObs = cubiertosObligatorios || 'undefined';
 
         if (this.tieneMesaSeleccionada()) {
             // si aun no se settearon la cantidad de comensales DEBE HACERLO !!
-            if (cubiertosObligatorios && (this.currentMesa.getCantComensales() == 0) && (this.currentMozo.numero != 99)) {
+            if (cubiertosObs && (this.currentMesa.getCantComensales() == 0) && (this.currentMozo.numero != 99)) {
                     showComensalesWindow();
             } else {
                 if(this.tieneMesaSeleccionada()){
@@ -2092,10 +2092,10 @@ Risto.Adition.pago = function(jsonOb){
 
 
 Risto.Adition.pago.prototype = {
-    model: 'Pago',
-    TipoDePago: ko.observable(),
-    valor: ko.observable(),
-    mesa_id: ko.observable(),
+    model       : 'Pago',
+    TipoDePago  : function( ) {},
+    valor       : function( ) {},
+    mesa_id     : function( ) {},
     tipo_de_pago_id: undefined,
     
     initialize: function(jsonOb){
@@ -2156,15 +2156,15 @@ Risto.Adition.detalleComanda = function(jsonData) {
 
 
 Risto.Adition.detalleComanda.prototype = {
-    Producto    : ko.observable(),
-    DetalleSabor: ko.observableArray(), // array de Sabores
+    Producto    : function( ) {},
+    DetalleSabor: function( ) { return [] }, // array de Sabores
 
     // cant de este producto seleccionado
-    cant        : ko.observable( 0 ),
-    cant_eliminada: ko.observable( 0 ),
-    es_entrada  : ko.observable( 0 ),
-    observacion : ko.observable( '' ),
-    modificada  : ko.observable( false ),
+    cant        : function( ) { return 0 },
+    cant_eliminada: function( ) { return 0 },
+    es_entrada  : function( ) { return 0 },
+    observacion : function( ) { return '' },
+    modificada  : function( ) { return false },
     model       : 'DetalleComanda',
     
     
@@ -2173,7 +2173,7 @@ Risto.Adition.detalleComanda.prototype = {
         this.imprimir       = ko.observable( true );
         this.cant           = ko.observable( 0 );
         this.cant_eliminada = ko.observable( 0 );
-        this.es_entrada     = ko.observable.call( false );
+        this.es_entrada     = ko.observable( 0 );
         this.observacion    = ko.observable( '' );
         this.modificada     = ko.observable( false );
 
@@ -2187,10 +2187,13 @@ Risto.Adition.detalleComanda.prototype = {
                 delete jsonData.DetalleSabor;
             }
             delete jsonData.Producto;
-            return ko.mapping.fromJS(jsonData, {} , this);
+            
+            jsonData.es_entrada = parseInt( jsonData.es_entrada );
+        } else {
+            jsonData = {}
         }
         
-        return ko.mapping.fromJS( {}, {} , this );
+        ko.mapping.fromJS( jsonData, {} , this );
     },
     
     /**
@@ -2294,7 +2297,12 @@ Risto.Adition.detalleComanda.prototype = {
      * modifica this.es_entrada
      */
     toggleEsEntrada: function(){
-        this.es_entrada( !this.es_entrada() );
+        if ( this.es_entrada() ) {
+            this.es_entrada( 0 );
+        } else {
+            this.es_entrada( 1 );
+        }
+        
     },
     
     
@@ -2306,10 +2314,7 @@ Risto.Adition.detalleComanda.prototype = {
     esEntrada: function(){
         // no se por que pero hay veces en que viene el boolean como si fuera un character asique deboi
         // hacer esta verificacion
-        if ( this.es_entrada() && (this.es_entrada() === true || this.es_entrada() === '1') ){
-            return true;
-        }
-        return false;
+        return this.es_entrada();
     },
     
     
@@ -2456,7 +2461,7 @@ $(document).ready(function() {
         var btnMozo = $('.listado-mozos-para-mesas .ui-btn-active');
         var mozoId = 0;
         if ( btnMozo[0] ) {
-            mozoId = btnMozo[0].dataset.mozoId;
+            mozoId = $(btnMozo[0]).attr('mozoId');
         }
         mostrarMesasDeMozo(mozoId);
     });

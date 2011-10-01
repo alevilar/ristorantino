@@ -11,13 +11,13 @@ class Mesa extends AppModel {
         var $mozoNumero = 0;
 	
 	var $validate = array(
-		'numero' => array(
+                'mozo_id' => array(
 			'notempty',
 			'numeric',
-			'numero_de_mesa_inexistente' => array(
-                         'rule' => array('numero_de_mesa_inexistente'),
-                         'message'=> 'El número ya existe.'
-            )	
+                    ),
+		'numero' => array(
+			'notempty',
+			'numeric',	
 	));
         
         
@@ -286,12 +286,6 @@ LEFT JOIN
 
 		return ($result>0)?true:false;
 		
-	}
-	
-	
-	function numero_de_mesa_inexistente($numero_mesa = 0){
-		 return ($this->numero_de_mesa_existente($numero_mesa))?false:true;
-		 
 	}
 	
 	

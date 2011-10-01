@@ -129,12 +129,17 @@
             <form name="form-mesa-add" action="#" id="form-mesa-add">
                 <div data-role="">
                     <fieldset data-role="controlgroup" data-type="horizontal">
-                        <legend style="display: block; clear: both;">Seleccionar Mozo:</legend>
                         <?php
+                        $first = true;
                             foreach ($mozos as $m) {
                                 $k = $m['Mozo']['id'];
                                 $n = $m['Mozo']['numero'];
-                                echo "<input  type='radio' name='mozo_id' id='radio-mozo-id-$k' value='$k'/>";
+                                $cheked = '';
+                                if ($first) {
+                                    $cheked = "checked='true'";
+                                    $first = false;
+                                }
+                                echo "<input $cheked type='radio' name='mozo_id' id='radio-mozo-id-$k' value='$k'/>";
                                 echo "<label for='radio-mozo-id-$k'>$n</label>";
                             }
                         ?>
@@ -196,8 +201,14 @@
 	<div  data-role="header" data-bind="css: {'ui-bar-f': adn().currentMesa().estaCerrada()}">
             <a href="#listado-mesas" data-transition="slide" data-direction="reverse">Volver</a>
             <h1>
+                <span class="mesa-id" style="float: left;">
+                    #<span data-bind="text: adn().currentMesa().id()"></span>
+                    <span data-bind="visible: !adn().currentMesa().id()">
+                        <?php echo $html->image('loader.gif'); ?>
+                    </span>
+                </span>
                 
-                 <span data-bind="text: adn().currentMesa().numero"></span>
+                <span data-bind="text: adn().currentMesa().numero"></span>
                 <?php echo $html->image('mesa-abrio.png') ?> Mesa  - 
                 Mozo <?php echo $html->image('mozomoniob.png') ?>
                 <span data-bind="text: adn().currentMesa().mozo().numero"></span>
@@ -290,7 +301,7 @@
                 <a href="#" data-bind="click: function(){adn().currentMesa().currentComanda().comanda.imprimir( 0 )}, visible: adn().currentMesa().currentComanda().comanda.imprimir()"><?php echo $html->image('print48.png', array('width'=> 35))?></a>
                 <a href="#" data-bind="click: function(){adn().currentMesa().currentComanda().comanda.imprimir( 1 )}, visible: !adn().currentMesa().currentComanda().comanda.imprimir()" ><?php echo $html->image('dontprint48.png', array('width'=> 35))?></a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <a href="#mesa-view" data-role="button"  data-inline="true" data-icon="check" data-theme="b" data-bind="click: function(){adn().currentMesa().currentComanda().save()}">Guardar</a>        
+                <a href="#mesa-view" data-role="button" id="comanda-add-guardar"  data-inline="true" data-icon="check" data-theme="b">Guardar</a>        
                 
             </span>
         </div>
