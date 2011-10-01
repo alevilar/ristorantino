@@ -64,6 +64,7 @@ Risto.Adition.comandaFabrica.prototype = {
                 return null;
         }
         
+        
         // separo la comanda generada en varias comandas
         // se genera 1 comanda por cada impresora que haya (comandera)
         var ccdc;
@@ -82,17 +83,27 @@ Risto.Adition.comandaFabrica.prototype = {
             comanderas[ccdc.comandera_id()].push(ccdc);
         }
         
-        if ( !this.puestoEnVistaDeMesa ) {
-            var comandaJsonCopy = {
+        var comandaJsonCopy = {
                 mesa_id: this.mesa.id(),
                 observacion: this.comanda.observacion(),
                 imprimir: this.comanda.imprimir()
             }
+        
+        if ( !this.puestoEnVistaDeMesa ) {
+            
             this.__colocarListadoDeProductosEnVistaDeMesa(comandaJsonCopy, comanderas);
             this.puestoEnVistaDeMesa = true;
         }
         
-        var estaComanda = this;
+        // si la mesa no tiene ID es porque aun no se guardo.. entonces vuelvo 
+        // a llamar a este metodo pero dentro de un rato
+        if ( !this.mesa.id() ) {
+            var este = this;
+            setTimeout( function(){ 
+                este.save();
+            }, MESAS_RELOAD_INTERVAL); 
+            return null;
+        }
         
         // creo una nueva comanda para cada comandera
         for (var com in comanderas ) {
@@ -101,13 +112,7 @@ Risto.Adition.comandaFabrica.prototype = {
             
             $cakeSaver.send({
                 url: urlDomain+'detalle_comandas/add.json', 
-                obj: comanderaComanda,
-                'if': function(){
-                    return estaComanda.mesa.id();
-                },
-                'ifDo': function(){
-                    estaComanda.save();
-                }
+                obj: comanderaComanda
             });
         }
         
