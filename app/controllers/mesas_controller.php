@@ -264,7 +264,6 @@ class MesasController extends AppController {
 
 
     function abrirMesa(){
-        sleep(25);
         $this->Actualizador->actualizar();
         
         $insertedId = 0;

@@ -582,7 +582,6 @@ Mesa.prototype = {
      * cakeSaver
      */
     handleAjaxSuccess: function(data, action, method) {
-        console.debug(data);
         if (data[this.model]) {
             ko.mapping.updateFromJS( this, data[this.model] );
         }
