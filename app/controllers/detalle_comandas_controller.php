@@ -7,7 +7,25 @@ class DetalleComandasController extends AppController {
 
 	function index() {
 		$this->DetalleComanda->recursive = 0;
-		$this->set('comandas', $this->paginate());
+                $conditions['order'] = array('Producto.name');
+                $conditions['group'] = array('Producto.id', 'Producto.name');
+                $conditions['fields'] = array('Producto.name', 'sum(DetalleComanda.cant-DetalleComanda.cant_eliminada) as "cant"');
+                
+                // procesar buscador
+                if (!empty($this->data)) {
+                    if (!empty( $this->data['Producto']['id'] )) {
+                        $conditions['conditions']['Producto.id'] = $this->data['Producto']['id'];
+                    }
+                    if (!empty($this->data['DetalleComanda']['desde'])){
+                        $conditions['conditions']['DetalleComanda.created >='] = jsDate( $this->data['DetalleComanda']['desde'] );
+                    }
+                    
+                    if (!empty($this->data['DetalleComanda']['hasta'])){
+                        $conditions['conditions']['DetalleComanda.created <='] = jsDate( $this->data['DetalleComanda']['hasta'] );
+                    }
+                }
+                $this->set('productos', $this->DetalleComanda->Producto->find('list', array('order' => 'name')));
+		$this->set('comandas', $this->DetalleComanda->find('all', $conditions));
 	}
 	
 	function prueba(){

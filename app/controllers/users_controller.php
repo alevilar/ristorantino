@@ -13,6 +13,14 @@ class UsersController extends AppController {
 	function index() {
 		$this->User->recursive = 0;
                 
+                if (!empty($this->data)){
+                    $this->paginate['conditions'] = array('or' => array(
+                        'lower(User.username) LIKE' => '%'. strtolower( $this->data['User']['txt_buscar'] ) .'%',
+                        'lower(User.nombre) LIKE'   => '%'. strtolower( $this->data['User']['txt_buscar'] ) .'%',
+                        'lower(User.apellido) LIKE' => '%'. strtolower( $this->data['User']['txt_buscar'] ) .'%',
+                    ));
+                }
+                
                 $pag = $this->paginate();
                 foreach ($pag as &$p) {
                     $p['User']['grupo'] =  $this->User->groupName( $p['User']['id'] );

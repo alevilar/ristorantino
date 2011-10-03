@@ -10,6 +10,13 @@ echo $paginator->counter(array(
 'format' => __('Pagina %page% de %pages%, mostrando %current% elementos de %count%', true)
 ));
 ?></p>
+
+<?php
+echo $form->create('User', array('url'=>'/users/index'));
+echo $form->input('txt_buscar', array('label' => 'Introducir texto a buscar'));
+echo $form->end();
+?>
+
 <table cellpadding="0" cellspacing="0">
 <tr>
 	<th><?php echo $paginator->sort('Usuario','username');?></th>
