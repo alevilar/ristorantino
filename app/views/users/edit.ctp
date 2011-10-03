@@ -12,10 +12,8 @@
         echo $html->link('Modificarle la Contraseña','/users/cambiar_password/'.$this->data['User']['id'], array('class'=>'cambiopass'));?>
         <?php
 		echo $form->input('id');
-                    echo "</br></br><h3>Rol del usuario: <strong> ";
-                    echo ($this->data['User']['role']);
-                    echo "</strong></h3>";
-                echo $form->input('grupo',array('type'=>'select','label'=>'Tipo de Usuario','empty'=>'Seleccione', 'options'=>$aros));
+                    
+                echo $form->input('grupo', array('label'=>'Tipo de Usuario', 'options'=>$aros, 'selected'=>$parent_aro_seleced));
 		echo $form->input('username');
 		echo $form->input('nombre');
 		echo $form->input('apellido');

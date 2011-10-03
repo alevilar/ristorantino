@@ -15,20 +15,17 @@ class User extends AppModel {
 		),
 		'password' => array('notempty'),
 		'nombre' => array('notempty'),
-                'role'=> array(
-			'required' => VALID_NOT_EMPTY,
-		),
 	);
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 	var $hasOne = array(
-			'Mozo' => array('className' => 'Mozo',
-								'foreignKey' => 'user_id',
-								'dependent' => false,
-								'conditions' => '',
-								'fields' => '',
-								'order' => ''
-			)
+                'Mozo' => array('className' => 'Mozo',
+                                'foreignKey' => 'user_id',
+                                'dependent' => false,
+                                'conditions' => '',
+                                'fields' => '',
+                                'order' => ''
+                )
 	);
 
 
@@ -62,17 +59,42 @@ class User extends AppModel {
         function parentNode() {
             return null;
         }
-
-        function parentNodeId() {
-           if (!$this->id && empty($this->data)) {
+        
+        
+        function groupName($id = null) {
+            if (!empty($this->id)) {
+                $id = $this->id;
+            }
+           if (!$id && empty($this->data)) {
                return null;
            }
 
-           $aro = $this->Aro->find('all', array('fields' => array('parent_id'),
-                                'conditions'=>array('foreign_key'=>$this->id)));
+           $aro = $this->Aro->find('first', array('fields' => array('parent_id'),
+                                'conditions'=>array('foreign_key'=> $id )));
+           
+           $groupName = '';
+           if (!empty($aro['Aro']['parent_id'])) {
+               $groupName = $this->Aro->find('first', array('fields' => array('alias'),
+                                'conditions'=>array('id'=> $aro['Aro']['parent_id'] )));
+               $groupName = Inflector::singularize( $groupName['Aro']['alias'] );
+           }
+           return $groupName;
+        }
 
-           return $aro[0]['Aro']['parent_id'];
-           //return array('Group' => array('id' => $data['User']['group_id']));
+        function parentNodeId($id = null) {
+            if (!empty($this->id)) {
+                $id = $this->id;
+            }
+           if (!$id && empty($this->data)) {
+               return null;
+           }
+
+           $aro = $this->Aro->find('first', array('fields' => array('parent_id'),
+                                'conditions'=>array('foreign_key'=> $id )));
+           if (!empty($aro['Aro']['parent_id'])) {
+               return $aro['Aro']['parent_id'];
+           }
+           return null;
         }
 
         function getParentNode($id) {

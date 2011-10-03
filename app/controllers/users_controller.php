@@ -4,15 +4,7 @@ class UsersController extends AppController {
 	var $name = 'Users';
 	var $helpers = array('Html', 'Form');
 
-        var $roles = array(
-            'principiante'=> 'Usuario Principiante',
-            'adicionista' => 'Adicionista',
-            'gerente'     => 'Gerente',
-            'mozo'        => 'Mozo',
-            'cliente'     => 'Cliente',
-            'proveedor'   => 'Proveedor',
-            );
-
+        
         function beforeFilter() {
             parent::beforeFilter();
             $this->rutaUrl_for_layout[] =array('name'=> 'Admin','link'=>'/pages/administracion' );
@@ -20,7 +12,12 @@ class UsersController extends AppController {
         
 	function index() {
 		$this->User->recursive = 0;
-		$this->set('users', $this->paginate());
+                
+                $pag = $this->paginate();
+                foreach ($pag as &$p) {
+                    $p['User']['grupo'] =  $this->User->groupName( $p['User']['id'] );
+                }
+		$this->set( 'users', $pag );
 	}
 
         function listar_x_nombre($nombre = '') {
@@ -55,7 +52,7 @@ class UsersController extends AppController {
                 $this->Acl->Aro->recursive = 0;
                 $aros = $this->Acl->Aro->find('list', array('fields' => array('alias'), 'conditions'=>array('parent_id'=>1), 'order'=>'alias'));
                 $this->set(compact('aros'));
-                $this->set('roles', $this->roles);
+                $this->set('roles', $aros);
 	}
 
 	function edit($id = null) {
@@ -75,10 +72,13 @@ class UsersController extends AppController {
 		if (empty($this->data)) {
 			$this->data = $this->User->read(null, $id);
 		}
-                $this->Acl->Aro->recursive = 0;
+                
+                
+                
+                 $this->Acl->Aro->recursive = 0;
                 $aros = $this->Acl->Aro->find('list', array('fields' => array('alias'), 'conditions'=>array('parent_id'=>1), 'order'=>'alias'));
                 $this->set(compact('aros'));
-                $this->set('roles', $this->roles);
+                $this->set('parent_aro_seleced', $this->User->parentNodeId());
 	}
 
 	function delete($id = null) {
