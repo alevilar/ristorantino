@@ -99,11 +99,10 @@ class ClientesController extends AppController {
 			$this->Cliente->create();
 			if ($this->Cliente->save($this->data)) {
 				$this->Session->setFlash(__('Se agregó un nuevo cliente', true));
-				$this->autoRender = false;
-                                $this->redirect('/clientes/ajax_clientes_factura_a');
 			} else {
 				$this->Session->setFlash(__('El Cliente no pudo ser gardado, intente nuevamente.', true));
 			}
+                        $this->render('/clientes/jqm_result');
 		}
 		
 		$tipo_documentos = $this->Cliente->TipoDocumento->find('list');

@@ -15,14 +15,12 @@
 
     <div data-role="content" >
     
-    
     <div id="contenedor-listado-clientes-factura-a">
         
-        <?
-        debug($this->action);
-        ?>
         <ul data-role="listview"  data-filter="true" id="listado-clientes-factura-a-ajax">
-              
+            <li style="display: none" class="factura-a-cliente-add" data-theme="b">
+                <a href="<?php echo $html->url('/clientes/addFacturaA') ?>" data-rel="dialog">Agregar Nuevo Cliente</a>
+            </li>
                 <?php foreach($clientes as $c): 
                     $porcentaje  = !empty($c['Descuento']['porcentaje']) ? $c['Descuento']['porcentaje'] : 0;
                     $tipofactura = !empty($c['Cliente']['tipofactura'])? $c['Cliente']['tipofactura']: 'B';
@@ -45,4 +43,5 @@
                 </li>
                 <?php endforeach; ?>
         </ul>
+        
 </div>

@@ -25,6 +25,6 @@ cat ../../plugins/adition/vendors/js/detalle_comanda.class.js >> todos.js
 cat ../../plugins/adition/vendors/js/ko_adicion_model.js >> todos.js
 cat ../../plugins/adition/vendors/js/adition.events.js >> todos.js
 cat ../../plugins/adition/vendors/js/menu.js >> todos.js
-cat jquery/jquery.mobile-1.0b3.min.js >> todos.js
+cat jquery/jquery.mobile-1.0rc1.min.js >> todos.js
 cat jquery/jquery.mobile.actionsheet.js >> todos.js
 chmod 755 todos.js

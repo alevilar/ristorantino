@@ -55,7 +55,7 @@ class AppController extends Controller {
             $this->Auth->logoutRedirect='/users/login';
             //$this->Auth->autoRedirect = false;
 
-//            $this->Auth->allow(array('*'));return true;
+            $this->Auth->allow(array('*'));return true;
 
             // si es Ajax y no tengo permisos que me tire un error HTTP
             // asi lo puedo capturar desde jQuery

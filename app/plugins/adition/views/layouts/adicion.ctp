@@ -20,7 +20,7 @@
 		
 		// para los modal window
 		echo $html->css(array(
-                    'jquery-mobile/jquery.mobile-1.0b3.min',
+                    'jquery-mobile/jquery.mobile-1.0rc1.min',
 //                    'jquery-mobile/jquery-mobile-fluid960',
                     'jquery-mobile/jquery.mobile.actionsheet',
                     '/adition/css/ristorantino',
@@ -73,7 +73,7 @@
                     '/adition/js/adition.events',
                     '/adition/js/menu',
                     
-                    'jquery/jquery.mobile-1.0b3.min',
+                    'jquery/jquery.mobile-1.0rc1.min',
 //                    'jquery/jquery.easing.1.3',
                     'jquery/jquery.mobile.actionsheet',
 //                    'jquery/jquery.mobile.scrollview.js',
