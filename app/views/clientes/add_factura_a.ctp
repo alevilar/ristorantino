@@ -5,7 +5,7 @@
     
 <div data-role="content" data-theme="f">
     <div id="form-cliente-a" class="clientes form">
-        <?php echo $form->create('Cliente', array('action'=>'addFacturaA', 'id' =>'form-cliente-add'));?>
+        <?php echo $form->create('Cliente', array('action'=>'addFacturaA', 'id' =>'form-cliente-add', 'data-ajax'=>'false'));?>
         <fieldset>
             <legend><?php __('Agregar Factura "A"');?></legend>
             <?php

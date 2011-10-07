@@ -102,6 +102,8 @@ class ClientesController extends AppController {
 			} else {
 				$this->Session->setFlash(__('El Cliente no pudo ser gardado, intente nuevamente.', true));
 			}
+                        $this->set('cliente_id', $this->Cliente->id);
+                        $this->layout = false;
                         $this->render('/clientes/jqm_result');
 		}
 		

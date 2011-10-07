@@ -93,15 +93,21 @@ $(document).ready(function() {
     $('#form-mesa-add').submit(agregarNuevaMesa);
     $('#form-cambiar-mozo').submit(cambiarMozo);
     $('#form-cambiar-numero').submit(cambiarNumeroMesa);
+    
+    
+    
     $('#form-cliente-add').live('submit', function(e){
-        
-        e.preventDefault();
-alert("asasas");
-        var form = $('#form-cliente-add');
-        console.debug(form.attr('action'));
-//       $.get(form.attr('action'), function(data){
-//           form.parent().html(data);
-//       })
+      var form = $('#form-cliente-add');
+      var contenedorForm = form.parent();
+       e.preventDefault();
+       $.post(
+           form.attr('action'), 
+           form.serialize(),
+           function(data){
+               contenedorForm.html(data);
+               contenedorForm.trigger('refresh');
+           }
+       );
        return false; 
     });
     
