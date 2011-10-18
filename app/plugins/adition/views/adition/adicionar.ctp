@@ -14,24 +14,24 @@
             <a rel="external" href='#listado-mesas' data-icon="home" data-iconpos="notext" data-direction="reverse" class="ui-btn-right">Home</a>
 
             <div data-role="navbar">
-                
-            <ul class="listado-mozos-para-mesas">
-                <li><a href="#" onclick="$('#mesas_container li').show();" class="ui-btn-active">Todos</a></li>
-                <?php
-                    foreach ($mozos as $m) {
-                        $k = $m['Mozo']['id'];
-                        $n = $m['Mozo']['numero'];
-                        ?>
-                        <li><a href="#" data-mozo-id="<?php echo $k?>"><?php echo $n?></a></li>
-                    <?
-                    }
-                ?>
-            </ul>
+                <ul class="listado-mozos-para-mesas">
+                    <li><a href="#" onclick="$('#mesas_container li').show();" class="ui-btn-active">Todos</a></li>
+                    <?php
+                        foreach ($mozos as $m) {
+                            $k = $m['Mozo']['id'];
+                            $n = $m['Mozo']['numero'];
+                            ?>
+                            <li><a href="#" data-mozo-id="<?php echo $k?>"><?php echo $n?></a></li>
+                        <?
+                        }
+                    ?>
+                </ul>
             </div>
         </div>
 
                     
-        <div  data-role="content" class="content_mesas">
+        <div  data-role="content" class="content_mesas">           
+
                 <!-- aca va el listado de mesas que se carga dinamicamente en un script de abajo -->
                 <a href="#mesa-add" data-rel="dialog"  data-transition="pop" class="grid_1 abrir-mesa" href="#" data-role="button" data-theme="a">Abrir<br>Mesa</a>  
                 <ul id="mesas_container" class="listado-adicion" data-bind='template: { name: "listaMesas", foreach: adn().mesas }'>
@@ -297,6 +297,9 @@
             <h3 style="display: inline; text-align: center; margin-top: 8px;">Nueva Comanda para la mesa <span data-bind="text: adn().currentMesa().numero"></span></h3>
             
             <span style="float: right; margin-right: 10px;">
+                
+                <a href="#" onclick="Risto.Adition.menu.update()"><?php echo $html->image('refresh.png', array('width'=> 35))?></a>
+                
                 <a href="#" onclick="$('#comanda-add-observacion').toggle('slow').focus();"><?php echo $html->image('pencil_48.png', array('width'=> 35))?></a>
                 <a href="#" data-bind="click: function(){adn().currentMesa().currentComanda().comanda.imprimir( 0 )}, visible: adn().currentMesa().currentComanda().comanda.imprimir()"><?php echo $html->image('print48.png', array('width'=> 35))?></a>
                 <a href="#" data-bind="click: function(){adn().currentMesa().currentComanda().comanda.imprimir( 1 )}, visible: !adn().currentMesa().currentComanda().comanda.imprimir()" ><?php echo $html->image('dontprint48.png', array('width'=> 35))?></a>

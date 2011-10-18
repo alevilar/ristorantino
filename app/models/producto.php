@@ -44,17 +44,17 @@ class Producto extends AppModel {
 	
 	
 	
-	var $validate = array(
-	'abrev' => array(
-		'letras_correctas' => array(
-                                //'rule' => '/^[a-zA-Z0-9 -\.\/&]+$/',
-                                'rule' => '/^[a-zA-Z_0-9 \/\-]+$/mu',
-                                'required' => true,
-                                'allowEmpty' => false,
-                                'message' => 'La impresora fiscal no soporta acentos, eñes, puntos, ni caracteres raros. Los únicos símbolos raros admitidos son "-" y "/"'
-                        )
-		),
-	);
+//	var $validate = array(
+//	'abrev' => array(
+//		'letras_correctas' => array(
+//                                //'rule' => '/^[a-zA-Z0-9 -\.\/&]+$/',
+//                                'rule' => '/^[a-zA-Z_0-9 \/\-]+$/mu',
+//                                'required' => true,
+//                                'allowEmpty' => false,
+//                                'message' => 'La impresora fiscal no soporta acentos, eñes, puntos, ni caracteres raros. Los únicos símbolos raros admitidos son "-" y "/"'
+//                        )
+//		),
+//	);
 
 
         function buscarPorNombre($texto){

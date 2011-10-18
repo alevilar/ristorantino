@@ -45,7 +45,16 @@ Risto.Adition.adicionar = {
     initialize: function() {
         this.reloadMesasAbiertas();
         
-        setInterval(this.reloadMesasAbiertas, MESAS_RELOAD_INTERVAL);
+        // Crea el Web Worker
+        var worker = new Worker("adition/js/reload_mesas.js");
+        
+        worker.onmessage = function (evt) {
+            caca = evt;
+            console.debug(caca.data);
+        }
+        
+        var time = this.mesasLastUpdatedTime();
+        worker.postMessage( { urlDomain: urlDomain, timeText: time });
     },
     
     reloadMesasAbiertas: function(){

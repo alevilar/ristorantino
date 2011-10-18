@@ -15,12 +15,16 @@
     
         <base href="<?= $html->url('/')?>" />
         
+
+        
 	<?php
 		echo $html->meta('icon');
 		
 		// para los modal window
 		echo $html->css(array(
-                    'jquery-mobile/jquery.mobile-1.0rc1.min',
+//                    'http://code.jquery.com/mobile/latest/jquery.mobile.min.css',
+                    'jquery-mobile/jquery.mobile.min',
+//                    'jquery-mobile/jquery.mobile-1.0rc1.min',
 //                    'jquery-mobile/jquery-mobile-fluid960',
                     'jquery-mobile/jquery.mobile.actionsheet',
                     '/adition/css/ristorantino',
@@ -34,6 +38,7 @@
                 
 //                echo $javascript->link('todos');
 
+
                 /*
                  * 
                  * ESTO SOLO PARA DESARROLLO, el de arriba va a produccion
@@ -41,6 +46,7 @@
 		echo $javascript->link( array(
                     '/adition/js/cake_saver',
                     'risto/risto',
+//                    'http://code.jquery.com/jquery-1.6.2.min.js',
                     'jquery/jquery-1.6.4.min',
                     'jquery/jquery.tmpl.min',
 //                    'jquery/jquery.periodicalupdater',
@@ -73,9 +79,10 @@
                     '/adition/js/adition.events',
                     '/adition/js/menu',
                     
+//                    'http://code.jquery.com/mobile/latest/jquery.mobile.min.js',
                     'jquery/jquery.mobile-1.0rc1.min',
 //                    'jquery/jquery.easing.1.3',
-                    'jquery/jquery.mobile.actionsheet',
+//                    'jquery/jquery.mobile.actionsheet',
 //                    'jquery/jquery.mobile.scrollview.js',
                    
                     ));
@@ -89,8 +96,8 @@
         
         
         // intervalo en milisegundos en el que seran renovadas las mesas
-        MESAS_RELOAD_INTERVAL = 5500;
-        MESA_RELOAD_TIMEOUT = 60000;
+        MESAS_RELOAD_INTERVAL = <?php echo Configure::read('Adicion.reload_interval')?>;
+        MESA_RELOAD_TIMEOUT = <?php echo Configure::read('Adicion.reload_interval_timeout')?>;
 
         //Parametros de configuracion
         Risto.Adition.cubiertosObligatorios   = <?php echo Configure::read('Adicion.cantidadCubiertosObligatorio')?'true':'false'?>;
@@ -98,8 +105,6 @@
 
         // instancio el objeto adicion que sera el kernel de la app
         Risto.Adition.adicionar.initialize();
-        
-        
         
     -->
     </script>

@@ -312,7 +312,7 @@ class PrinterComponent extends Object {
 									
 						
 					foreach($prod_a_imprimir as $item){
-						if(!fwrite($archivo_comanda,iconv('UTF-8', 'ISO-8859-1//TRANSLIT', $item))) throw new Exception("no se puede escribir en el archivo: $arch_name");
+						if(!fwrite($archivo_comanda,iconv('UTF-8', Configure::read('ImpresoraFiscal.encoding'), $item))) throw new Exception("no se puede escribir en el archivo: $arch_name");
 						fwrite($archivo_comanda,"\n");
 					}				
 					
@@ -321,7 +321,7 @@ class PrinterComponent extends Object {
 						fwrite($archivo_comanda,"\n");
 						fwrite($archivo_comanda,'||||||||||||    OBSERVACION     |||||||||');
 						fwrite($archivo_comanda,"\n");
-						fwrite($archivo_comanda, iconv('UTF-8', 'ASCII//TRANSLIT', $productos[0]['Comanda']['observacion']));
+						fwrite($archivo_comanda, iconv('UTF-8', Configure::read('ImpresoraFiscal.encoding'), $productos[0]['Comanda']['observacion']));
 						fwrite($archivo_comanda,"\n");
 						fwrite($archivo_comanda,'|||||||||||||||||||||||||||||||||||||||||');
 						fwrite($archivo_comanda,"\n");
@@ -473,7 +473,10 @@ class PrinterComponent extends Object {
 	 */
 	function __setProductosYCerrar($productos, $importe_descuento = 0){
 		foreach ($productos as $p):
-		$this->vcomandos[] = $this->generadorComando->printLineItem($p['nombre'],$p['cantidad'],$p['precio']);
+		$this->vcomandos[] = $this->generadorComando->printLineItem(
+                        iconv('UTF-8', Configure::read('ImpresoraFiscal.encoding'), $p['nombre']),
+                        $p['cantidad'],
+                        $p['precio']);
 		//$this->vcomandos[] = "B".FS.$p['nombre'].FS.$p['cantidad'].FS.$p['precio'].FS."21.00".FS."M".FS."0.11".FS."1".FS."T";
 		endforeach;
 

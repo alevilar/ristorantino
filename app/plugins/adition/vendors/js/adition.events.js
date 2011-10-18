@@ -19,10 +19,8 @@ window.onbeforeunload=confirmacionDeSalida;
  */
 
 // enrquiqueecr con JQM el listado ed comandas de la mesa en msa-view
-$('#mesa-view').live('pagebeforeshow',function(event, ui){
-  var el = $('#comanda-detalle-collapsible');
-  el.find('div[data-role=collapsible]').collapsible();      
-  $('.comandas-items').listview();
+$('#mesa-view').live('pageshow',function(event, ui){  
+  $('#comanda-detalle-collapsible').trigger('create');
 });
 
 

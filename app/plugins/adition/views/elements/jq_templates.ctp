@@ -1,11 +1,12 @@
 <!-- Template: listado de comandas con sus productos-->
 <script id="listaComandas" type="text/x-jquery-tmpl">
    <div data-role="collapsible">
-       <h3><span class="id-comanda">#<span data-bind="text: id"></span></span>  <span class="hora-comanda"  data-bind="text: timeCreated()"></span>&nbsp;&nbsp;&nbsp;
+       <h3>
+           <span class="id-comanda">#<span data-bind="text: id"></span></span>  <span class="hora-comanda"  data-bind="text: timeCreated()"></span>&nbsp;&nbsp;&nbsp;
            <span class="comanda-listado-productos-string" data-bind="text: productsStringListing()"></span>
        </h3>
 
-        <ul class="ui-listview comanda-items" data-role="listview"
+        <ul class="comanda-items" data-role="listview"
            data-bind="template: {name: 'li-productos-detallecomanda', foreach: DetalleComanda}"
            style="margin: 0px;">
 
@@ -121,14 +122,17 @@
 
 <!-- Template: Listado de productos del detalle Comanda -->
 <script id="li-productos-detallecomanda" type="text/x-jquery-tmpl">
- <li  class="ui-li ui-li-static ui-body-c">
-     <span data-type="horizontal" data-role="controlgroup" class="ui-corner-all ui-controlgroup ui-controlgroup-horizontal">
-        <a id="mesa-action-detalle-comanda-sacar-item" data-bind="click: deseleccionarYEnviar" data-role="button" data-icon="minus" data-iconpos="notext" href="#" title="-" data-theme="c" class="ui-btn ui-btn-icon-notext ui-btn-up-c"><span class="ui-btn-inner"><span class="ui-btn-text">-</span><span class="ui-icon ui-icon-minus ui-icon-shadow"></span></span></a>
-        <a data-bind="css: { es_entrada: esEntrada()}" data-role="button" data-iconpos="notext" data-icon="entrada" href="#" title="Entrada" data-theme="c" class="ui-btn ui-btn-icon-notext ui-corner-right ui-controlgroup-last ui-btn-up-c"><span class="ui-btn-inner ui-corner-right ui-controlgroup-last"><span class="ui-btn-text">Entrada</span><span class="ui-icon ui-icon-entrada ui-icon-shadow"></span></span></a>
+ <li>
+     <span data-type="horizontal" data-role="controlgroup">
+        <a id="mesa-action-detalle-comanda-sacar-item" data-bind="click: deseleccionarYEnviar" data-role="button" data-icon="minus" data-iconpos="notext" href="#" title="-" data-theme="c">
+            -</a>
+        <a data-bind="css: { es_entrada: esEntrada()}" data-role="button" data-iconpos="notext" data-icon="entrada" href="#" title="Entrada" data-theme="c">
+            Entrada
+        </a>
      </span>
 
-     <span data-bind="text: realCant()" style="right: auto" class="ui-li-count ui-btn-up-c ui-btn-corner-all"></span>
-     <span data-bind="text: nameConSabores(), css: {tachada: realCant()==0}" style="padding-left: 40px;"></span>
+     <span data-bind="text: realCant()" style="padding-left: 20px;"></span>
+     <span data-bind="text: nameConSabores(), css: {tachada: realCant()==0}" style="padding-left: 20px;"></span>
      <span class="producto-precio">p/u: {{= '$'}}<span data-bind="text: Producto().precio"></span></span>
  </li>
 </script>
@@ -150,12 +154,13 @@ el ajax que verifica el estado de las mesas (si fue abierta o cerrada alguna. --
             <span class="mesa-span ui-btn-inner ui-btn-corner-all">
                 <span class="ui-btn-text">
                     <span class="mesa-numero" data-bind="text: numero"></span>
-                    <span class="mesa-mozo" data-bind="text: mozo().numero"></span>
+                    
                     <br />
                     <span class="mesa-time" data-bind="text: textoHora()"></span>
                 </span>
                 <span class="mesa-icon ui-icon ui-icon-shadow" data-bind="css: {'ui-icon-mesa-abierta': getEstadoIcon()!='mesa-cerrada', 'ui-icon-mesa-cerrada': getEstadoIcon()=='mesa-cerrada', 'ui-icon-mesa-cobrada': getEstadoIcon()=='mesa-cobrada'}"></span>
             </span>
+            <span class="mesa-mozo" data-bind="text: mozo().numero"></span>
         </a>
     </li>
 </script>
