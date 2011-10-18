@@ -82,3 +82,23 @@ ALTER TABLE  `pagos` CHANGE  `valor`  `valor` FLOAT NOT NULL;
 
 
 ALTER TABLE  `mesas` CHANGE  `cant_comensales`  `cant_comensales` INT( 11 ) NULL DEFAULT  '0';
+
+
+
+ALTER TABLE  `productos_precios_futuros` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+ALTER TABLE  `cake_sessions` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+
+
+INSERT INTO  `configs` (
+`id` ,
+`config_category_id` ,
+`key` ,
+`value` ,
+`description`
+)
+VALUES (
+NULL ,  '4',  'reload_interval',  '9700',  'valor en milisegundos de actualizacion de nuevas mesas'
+), (
+NULL ,  '4',  'reload_interval_timeout',  '60000',  'valor en milisegundos que debe esperar el ajax para actualizar las mesas. Si el ajax no se resuelve. entonces se termina a la fuerza.'
+);
