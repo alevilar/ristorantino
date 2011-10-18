@@ -42,6 +42,7 @@ $('#page-sabores').live('pageshow', function(){
                 closeIcon.unbind('click');
             });
 });
+
         
 
 /**

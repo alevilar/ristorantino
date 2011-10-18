@@ -93,6 +93,8 @@
     <!--
         $.mobile.page.prototype.options.backBtnText = "Volver";
         
+        $.mobile.page.prototype.options.defaultPageTransition = "none";
+        
         
         
         // intervalo en milisegundos en el que seran renovadas las mesas

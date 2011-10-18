@@ -29,7 +29,7 @@ $(document).ready(function(){
   
   
 /********----------- EXRA FUNCTIONS ---------------------------------*******/
-function mostrarMesasDeMozo(mozoId) {
+function mostrarMesasDeMozo( mozoId ) {
     var mesasDom = $('#mesas_container li');
     mesasDom.show();
     if ( mozoId ) {

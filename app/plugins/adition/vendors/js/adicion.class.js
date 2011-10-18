@@ -43,70 +43,37 @@ Risto.Adition.adicionar = {
      * Constructor
      */
     initialize: function() {
-        this.reloadMesasAbiertas();
+//        this.reloadMesasAbiertas();
         
         // Crea el Web Worker
-        var worker = new Worker("adition/js/reload_mesas.js");
+        var worker = new Worker("adition/js/adicion.model.js");
         
         worker.onmessage = function (evt) {
-            caca = evt;
-            console.debug(caca.data);
+            Risto.Adition.adicionar.__actualizarMozosConMesasAbiertas( evt.data );
         }
         
-        var time = this.mesasLastUpdatedTime();
-        worker.postMessage( { urlDomain: urlDomain, timeText: time });
+        
+
+        $(window).bind("online", function(){
+             worker.postMessage( {onLine: true} );
+        });
+        $(window).bind("offline", function(){
+             worker.postMessage( {onLine: false} );
+        });
+        
+        time = this.mesasLastUpdatedTime();
+        worker.postMessage( {urlDomain: urlDomain, timeText: time} );
     },
     
     reloadMesasAbiertas: function(){
         Risto.Adition.adicionar.getMesasAbiertas();
 
         // ordenar por numero de mesa
-        Risto.Adition.adicionar.mozosOrder('numero'); 
+        Risto.Adition.adicionar.mozosOrder('numero');
     },
     
 
-    /**
-     *Crea un elemento DOM con el TAG pasado como parametro
-     *e inserta el objeto mesa a éste.
-     *
-     * Ej: mesasEnTag('A')
-     * me devuelve un link con un atributo "mesa"
-     *
-     */
-    mesasEnTag: function(templateString) {
-        var tmpStr = templateString || "<button>${number}</button>";
-        var mesasTags = [];
-        var template = $.template( null, tmpStr );
-        var tag;
-        for(var m in this.mesas) {
-            tag = $.tmpl(template, this.mesas[m]);
-            tag[0].mesa = this.mesas[m];
-            $(tag[0]).click( function() {
-                this.mesa.seleccionar();
-            });
-            mesasTags.push(tag[0]);
-        }
-        return mesasTags;
-    },
-    
-    mozosEnTag: function(tagName) {
-        var mozosTags = [];
-        for(var m in this.mozos) {
-            var tag = document.createElement(tagName);
-            tag.mozo = this.mozos[m];
-            mozosTags.push(tag);
-        }
-        return mozosTags;
-    },
-
-
-    nombrificar: function(list, text) {
-        for (var i in list) {
-            list[i].innerHTML = list[i].obj[text];
-        }
-        return list;
-    },
-
+   
     /**
      * Me dice si tiene una mesa setteada
      * @return boolean
@@ -262,33 +229,6 @@ Risto.Adition.adicionar = {
     
 
 
-    getMesasAbiertas: function(){
-        var cntx = this;
-        
-        var timeText = this.mesasLastUpdatedTime() || '',
-            url = urlDomain + 'mozos/mesas_abiertas.json';
-        if ( timeText ) {
-            url = urlDomain + 'mozos/mesas_abiertas/'+timeText+'.json'
-        }
-        
-        if ( !cntx.ajaxSending ) {
-            $.ajax({
-                url: url,
-                timeout: MESA_RELOAD_TIMEOUT,
-                success: function(data){
-                    if (data.mozos.length) {
-                        cntx.__actualizarMozosConMesasAbiertas(data);
-                    }
-                },
-                error: function(){},
-                complete: function() {cntx.ajaxSending = false},
-                beforeSend: function() {cntx.ajaxSending = true}
-            });
-        }
-        
-        
-    },
-    
 
     /**
      * 
@@ -298,7 +238,7 @@ Risto.Adition.adicionar = {
      * 
      */
     __actualizarMozosConMesasAbiertas: function( data ) {
-        Risto.Adition.adicionar.mesasLastUpdatedTime(data.time);
+        Risto.Adition.adicionar.mesasLastUpdatedTime( data.time );
         
         var adn = Risto.Adition.adicionar;
         if ( !adn.yaMapeado ) {
