@@ -2,7 +2,7 @@
 <script id="listaComandas" type="text/x-jquery-tmpl">
    <div data-role="collapsible">
        <h3>
-           <span class="id-comanda">#<span data-bind="text: id"></span></span>  <span class="hora-comanda"  data-bind="text: timeCreated()"></span>&nbsp;&nbsp;&nbsp;
+           <span class="id-comanda">#<span data-bind="text: id()"></span></span>  <span class="hora-comanda"  data-bind="text: timeCreated()"></span>&nbsp;&nbsp;&nbsp;
            <span class="comanda-listado-productos-string" data-bind="text: productsStringListing()"></span>
        </h3>
 
@@ -73,11 +73,10 @@
 <!-- Template: Caomanda add: listado de categorias                                  -->
 <script id="listaCategoriasTree" type="text/x-jquery-tmpl">
    <a  href="#" data-bind="click: seleccionar" data-theme="b" data-inline="true" data-role="button" class="ui-btn ui-btn-inline ui-btn-corner-all ui-shadow ui-btn-up-b">
-       <span class="ui-btn-inner ui-btn-corner-all">
-           <span class="ui-btn-text">
-               <image class="menu-img" src="" data-bind="visible: image_url, attr: {src: urlDomain+'img/'+image_url}"/>
-               <span data-bind="text: name, css: {'menu-letra-con-imagen': image_url}"></span>                         
-           </span>
+       <span class="ui-btn-inner ui-btn-corner-all btn-categoria">
+               <image class="menu-img" data-bind="visible: image_url, attr: {src: urlDomain+'img/menu/'+image_url}"/>
+               <br />
+               <span class="menu-letra-con-imagen" data-bind="text: name"></span>                         
        </span>
    </a>
 </script>
@@ -85,10 +84,12 @@
 
 <!-- Template: Caomanda add: listado de productos -->
 <script id="categorias-productos" type="text/x-jquery-tmpl">
-     <a data-bind="click: seleccionar, attr: { href: tieneSabores() ? '#page-sabores' : '#'}" data-rel="dialog"  data-transition="fade" class="ui-btn ui-btn-inline ui-btn-icon-left ui-btn-corner-all ui-shadow ui-btn-up-e">
+     <a data-bind="click: seleccionar, attr: { href: tieneSabores() ? '#page-sabores' : '#'}" 
+        data-rel="dialog"  data-transition="fade" 
+        class="ui-btn ui-btn-inline ui-btn-icon-left ui-btn-corner-all ui-shadow ui-btn-up-e">
          <span class="ui-btn-inner ui-btn-corner-all">
              <span class="ui-btn-text" data-bind="text: name" ></span>
-             <span class="ui-icon ui-icon-right ui-icon-shadow"></span>
+             <span class="ui-icon ui-icon-right ui-icon-shadow" data-bind="css: {'ui-icon-forward': tieneSabores()}"></span>
          </span>
      </a>
  </script>

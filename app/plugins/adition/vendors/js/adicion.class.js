@@ -11,10 +11,10 @@ Risto.Adition.adicionar = {
     yaMapeado: false,
     
     // Mozo Actualmente Activo
-    currentMozo: ko.observable(new Mozo()),
+    currentMozo: ko.observable( new Mozo() ),
     
     // Mesa Actualmente activa
-    currentMesa: ko.observable(new Mesa()),
+    currentMesa: ko.observable( new Mesa() ),
     
     // listado de mozos
     mozos: ko.observableArray( [] ),
@@ -50,8 +50,7 @@ Risto.Adition.adicionar = {
         
         worker.onmessage = function (evt) {
             Risto.Adition.adicionar.__actualizarMozosConMesasAbiertas( evt.data );
-        }
-        
+        }        
         
 
         $(window).bind("online", function(){
@@ -254,7 +253,7 @@ Risto.Adition.adicionar = {
                 }
             }
             adn.yaMapeado = true;
-            ko.mapping.fromJS(data, mapOps, adn );
+            ko.mapping.fromJS( data, mapOps, adn );
         } else {
             if (data.mozos.length) {
                 ko.mapping.updateFromJS(adn, data);

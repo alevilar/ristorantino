@@ -60,8 +60,9 @@ Risto.Adition.comanda.prototype = {
     
     handleAjaxSuccess: function(data){
 //        ko.mapping.updateFromJS(this, data.Comanda)
-        this.id(data.Comanda.Comanda.id);
-        this.created(data.Comanda.Comanda.created);
+
+        this.id( data.Comanda.Comanda.id );
+        this.created( data.Comanda.Comanda.created );
     },
     
      timeCreated: function(){

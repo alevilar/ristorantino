@@ -1,4 +1,5 @@
 
+
 // definicion de variables globales del worker
 var urlDomain, 
     timeText, 
@@ -11,7 +12,8 @@ var urlDomain,
 
 
 // inicializacion con parametros enviados desde el instanciador del worker
-self.onmessage = function(obj) {   
+self.onmessage = function(obj) {
+    
 //    postMessage( obj.data );
     if (obj.data.urlDomain) {
         urlDomain = obj.data.urlDomain;
@@ -35,8 +37,6 @@ self.onmessage = function(obj) {
 
 
 AditionModel = {
-    mozos: [],
-    mesas: [],
     
     getMesas: function(){
         if ( onLine ) {
@@ -76,10 +76,44 @@ AditionModel = {
             if (data.time) {
                 mesasLastUpdatedTime = data.time;
             }
+            
             if (data.mozos.length) {
-                postMessage(data);                        
+                // actualizar el storage de mozos
+//                var mozos = data.mozos;
+                
+                // actualizar el storage de mesas
+//                var mesas = AditionModel._juntarMesasDeMozos( mozos );
+//                mesas = AditionModel._ordenarMesas( mesas );                
+//                data.mesas = mesas;
+                
+                //mandar la nueva data
+                postMessage(data);            
             }
+            
             ajaxSending = false;
         }
+    },
+    
+    _juntarMesasDeMozos: function( aMozo ){        
+        var mesas = [];
+        if ( aMozo ) {
+            for ( var m in aMozo ) {
+                mesas = mesas.concat( aMozo[m].mesas );
+            }
+        }        
+        return mesas;
+    },
+    
+    
+    _ordenarMesas: function( aMesas ){
+        var order = 'numero';
+
+        if ( order ) {
+            aMesas.sort(function(left, right) {
+                return left[order] == right[order] ? 0 : (parseInt(left[order]) < parseInt(right[order]) ? -1 : 1) 
+            })
+        }
+        return aMesas;
     }
+    
 }

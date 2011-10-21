@@ -101,4 +101,6 @@ VALUES (
 NULL ,  '4',  'reload_interval',  '9700',  'valor en milisegundos de actualizacion de nuevas mesas'
 ), (
 NULL ,  '4',  'reload_interval_timeout',  '60000',  'valor en milisegundos que debe esperar el ajax para actualizar las mesas. Si el ajax no se resuelve. entonces se termina a la fuerza.'
+), (
+NULL ,  '4',  'jqm_page_transition',  '',  'Utilizar animaciones de jquery mobile o no? poner valores de verdadero o falso de sistemas (dejar vacio "" si no quiero animaciones.'
 );

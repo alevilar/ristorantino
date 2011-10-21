@@ -50,6 +50,10 @@ define('MESA_CERRADA' , 2);
 define('MESA_COBRADA' , 3);
 
 
+define('MENU_FOLDER', 'menu');
+define('IMG_MENU', WWW_ROOT.'img/'.MENU_FOLDER.'/');
+
+
 $estadosMesaMsg = array(
             MESA_ABIERTA => 'Abierta', 
             MESA_CERRADA => 'Cerrada', 

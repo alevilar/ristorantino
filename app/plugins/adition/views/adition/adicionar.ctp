@@ -33,7 +33,7 @@
         <div  data-role="content" class="content_mesas">           
 
                 <!-- aca va el listado de mesas que se carga dinamicamente en un script de abajo -->
-                <a href="#mesa-add" data-rel="dialog"  data-transition="pop" class="grid_1 abrir-mesa" href="#" data-role="button" data-theme="a">Abrir<br>Mesa</a>  
+                <a href="#mesa-add" data-rel="dialog"  data-transition="none" class="grid_1 abrir-mesa" href="#" data-role="button" data-theme="a">Abrir<br>Mesa</a>  
                 <ul id="mesas_container" class="listado-adicion" data-bind='template: { name: "listaMesas", foreach: adn().mesas }'>
                         
                 </ul>
@@ -222,7 +222,7 @@
                 <ul data-role="listview">
                     
                     <li id="mesa-action-comanda" data-bind="attr: {'estado': 'comanda-add-menu_'+adn().currentMesa().getEstadoIcon()}">
-                        <a href="#comanda-add-menu" data-rel="dialog"  data-transition="pop"><?= $html->image('/adition/css/img/chef_64.png')?>Comanda</a>
+                        <a href="#comanda-add-menu" data-rel="dialog"  data-transition="none"><?= $html->image('/adition/css/img/chef_64.png')?>Comanda</a>
                     </li>
                     
                     <li id="mesa-action-cliente" data-bind="attr: {'estado': 'mesa-cliente_'+adn().currentMesa().getEstadoIcon()}">
@@ -270,7 +270,8 @@
                 <h3 class="titulo-comanda">Detalle de Consumición</h3>
 
                 <!-- template -->
-                <div id="comanda-detalle-collapsible" data-role="collapsible-set" data-bind="template: {name: 'listaComandas', foreach: adn().currentMesa().Comanda}"></div>
+                <div id="comanda-detalle-collapsible" data-role="collapsible-set" 
+                     data-bind="template: {name: 'listaComandas', foreach: adn().currentMesa().Comanda}"></div>
             </div>
             
         </div>
@@ -298,11 +299,11 @@
             
             <span style="float: right; margin-right: 10px;">
                 
-                <a href="#" onclick="Risto.Adition.menu.update()"><?php echo $html->image('refresh.png', array('width'=> 35))?></a>
+                <a href="#" title="Actualizar Menú" onclick="Risto.Adition.menu.update()"><?php echo $html->image('refresh.png', array('width'=> 35))?></a>
                 
-                <a href="#" onclick="$('#comanda-add-observacion').toggle('slow').focus();"><?php echo $html->image('pencil_48.png', array('width'=> 35))?></a>
-                <a href="#" data-bind="click: function(){adn().currentMesa().currentComanda().comanda.imprimir( 0 )}, visible: adn().currentMesa().currentComanda().comanda.imprimir()"><?php echo $html->image('print48.png', array('width'=> 35))?></a>
-                <a href="#" data-bind="click: function(){adn().currentMesa().currentComanda().comanda.imprimir( 1 )}, visible: !adn().currentMesa().currentComanda().comanda.imprimir()" ><?php echo $html->image('dontprint48.png', array('width'=> 35))?></a>
+                <a href="#" title="Agregar Observación" onclick="$('#comanda-add-observacion').toggle('slow').focus();"><?php echo $html->image('pencil_48.png', array('width'=> 35))?></a>
+                <a href="#" title="Haga click para desactivar la impresión de comanda" data-bind="click: function(){adn().currentMesa().currentComanda().comanda.imprimir( 0 )}, visible: adn().currentMesa().currentComanda().comanda.imprimir()"><?php echo $html->image('print48.png', array('width'=> 35))?></a>
+                <a href="#" title="Haga click para activar impresión de comanda" data-bind="click: function(){adn().currentMesa().currentComanda().comanda.imprimir( 1 )}, visible: !adn().currentMesa().currentComanda().comanda.imprimir()" ><?php echo $html->image('dontprint48.png', array('width'=> 35))?></a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <a href="#mesa-view" data-role="button" id="comanda-add-guardar"  data-inline="true" data-icon="check" data-theme="b">Guardar</a>        
                 

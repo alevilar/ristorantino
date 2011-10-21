@@ -55,7 +55,7 @@ class CategoriasController extends AppController {
             $this->rutaUrl_for_layout[] =array('name'=> 'Categorias','link'=>'/categorias' );
 
                 if( !empty($this->data['Categoria']['newfile']['name'])){
-                    $path = WWW_ROOT.'img/';
+                    $path = IMG_MENU;
                     
                     $name = Inflector::slug(strstr($this->data['Categoria']['newfile']['name'], '.', true));
                     $ext = substr(strrchr($this->data['Categoria']['newfile']['name'], "."),1);

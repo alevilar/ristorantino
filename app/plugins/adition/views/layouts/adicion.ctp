@@ -91,9 +91,22 @@
 
     <script type="text/javascript">
     <!--
-        $.mobile.page.prototype.options.backBtnText = "Volver";
+        $(document).bind("mobileinit", function(){
+          $.extend(  $.mobile , {
+            backBtnText: "Volver"
+          });
+        });
         
-        $.mobile.page.prototype.options.defaultPageTransition = "none";
+        <?php 
+        $animar = Configure::read('Adicion.jqm_page_transition');
+        if (!empty($animar)){ 
+            if (!$animar) {
+            ?>
+                $(document).bind("mobileinit", function(){
+                  $.mobile.defaultPageTransition = 'none';
+                });
+//                $.mobile.page.prototype.options.defaultPageTransition = "none";
+        <?php }} ?>
         
         
         

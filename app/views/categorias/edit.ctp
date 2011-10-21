@@ -2,7 +2,8 @@
         echo $this->element('menuadmin');
         
         debug($this->data['Categoria']['image_url']);
-        echo $html->image($this->data['Categoria']['image_url'], array('width'=>100));
+        
+        echo $html->image(MENU_FOLDER.'/'.$this->data['Categoria']['image_url'], array('width'=>100));
         ?>
 
 <div class="categorias form">

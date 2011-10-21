@@ -187,9 +187,6 @@ background-color: #EDEDED;
     overflow: visible !important;   
 }
 
-.ui-btn-inner{
-    padding-left: 21px; 
-} 
 
 .mesa-total {
     color: #FF0000;
@@ -294,12 +291,13 @@ ul.listado-mozos-para-mesas{
 
 .menu-letra-con-imagen{
     font-size: xx-small;
-    clear: both;
-    position: absolute;
-    width: 86px;
-    white-space: normal;
-    bottom: 2px;
-    left: 5px;
+    
+}
+
+.btn-categoria{
+    min-width: 92px;
+    min-height: 76px;
+    padding: 3px;
 }
 
 
