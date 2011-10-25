@@ -145,21 +145,19 @@
 listado de mesas que será refrescado continuamente mediante 
 el ajax que verifica el estado de las mesas (si fue abierta o cerrada alguna. -->
 <script id="listaMesas" type="text/x-jquery-tmpl">
-
     <li data-bind="attr: {mozo: mozo().id(), 'class': getEstadoIcon()}">
         <a  data-bind="click: seleccionar, attr: {accesskey: numero, id: 'mesa-id-'+id()}" 
             data-theme="c"
             data-role="button" 
             href="#mesa-view" 
-            class="ui-btn ui-btn-icon-left ui-btn-corner-all ui-shadow ui-btn-up-c">
-            <span class="mesa-span ui-btn-inner ui-btn-corner-all">
+            class="ui-btn ui-btn-up-c">
+            <span class="mesa-span ui-btn-inner">
                 <span class="ui-btn-text">
                     <span class="mesa-numero" data-bind="text: numero"></span>
                     
                     <br />
                     <span class="mesa-time" data-bind="text: textoHora()"></span>
                 </span>
-                <span class="mesa-icon ui-icon ui-icon-shadow" data-bind="css: {'ui-icon-mesa-abierta': getEstadoIcon()!='mesa-cerrada', 'ui-icon-mesa-cerrada': getEstadoIcon()=='mesa-cerrada', 'ui-icon-mesa-cobrada': getEstadoIcon()=='mesa-cobrada'}"></span>
             </span>
             <span class="mesa-mozo" data-bind="text: mozo().numero"></span>
         </a>
@@ -177,8 +175,9 @@ es igual al de las mesas de la adicion salvo que al hacer click tienen otro comp
         <a  data-bind="click: seleccionar" 
             data-theme="c"
             data-role="button" 
-            href="#mesa-cobrar" 
+            href="#mesa-cobrar"
             data-rel="dialog"
+            data-transition="none" 
             class="ui-btn ui-btn-icon-left ui-btn-corner-all ui-shadow ui-btn-up-c">
             <span class="mesa-span ui-btn-inner ui-btn-corner-all">
                 <span class="ui-btn-text">

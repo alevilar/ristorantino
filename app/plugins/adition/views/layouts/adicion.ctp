@@ -14,10 +14,7 @@
 	</title>
     
         <base href="<?= $html->url('/')?>" />
-        
-
-        
-	<?php
+            <?php
 		echo $html->meta('icon');
 		
 		// para los modal window
@@ -54,8 +51,8 @@
 //                    'jquery/fg.menu',
                     'ristorantino/generic',
                     
-                    'knockout-1.2.1',
-                    'knockout.mapping',
+                    'knockout-1.2.1.debug',
+                    'knockout.mapping.debug',
                     
                     // OJO !! EL ORDEN IMPORTA !!
                     '/adition/js/adition.package',
@@ -88,7 +85,11 @@
                     ));
                 
                 ?>
-
+<?php
+    //scripts de Cake
+    echo $scripts_for_layout;
+?>
+        
     <script type="text/javascript">
     <!--
         $(document).bind("mobileinit", function(){
@@ -102,10 +103,9 @@
         if (!empty($animar)){ 
             if (!$animar) {
             ?>
-                $(document).bind("mobileinit", function(){
-                  $.mobile.defaultPageTransition = 'none';
+                $(document).bind('mobileinit', function(){
+                    $.mobile.defaultPageTransition = "none";
                 });
-//                $.mobile.page.prototype.options.defaultPageTransition = "none";
         <?php }} ?>
         
         
@@ -124,10 +124,7 @@
     -->
     </script>
 
-<?php
-    //scripts de Cake
-    echo $scripts_for_layout;
-?>
+
 </head>
 
 <body>

@@ -8,28 +8,33 @@ var urlDomain,
     ajaxSending = false,
     mesasLastUpdatedTime = 0,
     firstRun    = true, 
-    onLine      = true;
+    onLine      = true,
+    intervalTime    = 15000;
 
 
 // inicializacion con parametros enviados desde el instanciador del worker
 self.onmessage = function(obj) {
     
-//    postMessage( obj.data );
+    postMessage( obj.data );
     if (obj.data.urlDomain) {
         urlDomain = obj.data.urlDomain;
+        
+        if (firstRun) {
+            // la primera vez hacer esto
+            firstRun = false;
+            AditionModel.getMesas();
+        }
     }    
+    
     if (obj.data.onLine !== undefined) {
         onLine = obj.data.onLine;
     }
-    
-    if (firstRun) {
-        // la primera vez hacer esto
-        firstRun = false;
-        AditionModel.getMesas();
+    if (obj.data.updateInterval !== undefined && obj.data.updateInterval > 0) {
+        intervalTime = obj.data.updateInterval;
     }
     
     if (!interval) {
-        interval = setInterval( AditionModel.getMesas, 4000 );
+        interval = setInterval( AditionModel.getMesas, intervalTime );
     }
     
 }

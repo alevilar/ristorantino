@@ -43,7 +43,7 @@ Risto.Adition.adicionar = {
      * Constructor
      */
     initialize: function() {
-//        this.reloadMesasAbiertas();
+        Risto.Adition.adicionar.mozosOrder('numero');
         
         // Crea el Web Worker
         var worker = new Worker("adition/js/adicion.model.js");
@@ -52,6 +52,7 @@ Risto.Adition.adicionar = {
             Risto.Adition.adicionar.__actualizarMozosConMesasAbiertas( evt.data );
         }        
         
+        worker.postMessage( {updateInterval: MESAS_RELOAD_INTERVAL} );
 
         $(window).bind("online", function(){
              worker.postMessage( {onLine: true} );
@@ -59,17 +60,11 @@ Risto.Adition.adicionar = {
         $(window).bind("offline", function(){
              worker.postMessage( {onLine: false} );
         });
+       
         
-        time = this.mesasLastUpdatedTime();
+        var time = this.mesasLastUpdatedTime();
         worker.postMessage( {urlDomain: urlDomain, timeText: time} );
-    },
-    
-    reloadMesasAbiertas: function(){
-        Risto.Adition.adicionar.getMesasAbiertas();
-
-        // ordenar por numero de mesa
-        Risto.Adition.adicionar.mozosOrder('numero');
-    },
+    },    
     
 
    
@@ -237,28 +232,26 @@ Risto.Adition.adicionar = {
      * 
      */
     __actualizarMozosConMesasAbiertas: function( data ) {
+        if (!data.mozos) return -1;
+        
         Risto.Adition.adicionar.mesasLastUpdatedTime( data.time );
         
-        var adn = Risto.Adition.adicionar;
-        if ( !adn.yaMapeado ) {
-            // si aun no fue mappeado
-            var mapOps = {
-                'mozos': {
-                    create: function(ops) {
-                        return new Mozo(ops.data);
-                    },
-                    key: function(data) {
-                        return ko.utils.unwrapObservable(data.id);
-                    }
+        var adn    = Risto.Adition.adicionar, 
+        
+        mapOps = {};
+        // si aun no fue mappeado
+        mapOps = {
+            'mozos': {
+                create: function(ops) {
+                    return new Mozo(ops.data);
+                },
+                key: function(data) {
+                    return ko.utils.unwrapObservable(data.id);
                 }
             }
-            adn.yaMapeado = true;
-            ko.mapping.fromJS( data, mapOps, adn );
-        } else {
-            if (data.mozos.length) {
-                ko.mapping.updateFromJS(adn, data);
-            }
         }
+        
+        ko.mapping.fromJS( data, mapOps, adn );
         $(document).trigger('adicionMesasActualizadas');
     },
     

@@ -80,9 +80,13 @@ class MozosController extends AppController {
         function mesas_abiertas($microTime = 0) {
             
             $mesas = array();
-            if ( $this->Actualizador->huboCambios($microTime) ) {
+            if ( $microTime && $this->Actualizador->huboCambios($microTime) ) {
                 $mesas = $this->Mozo->mesasAbiertas(); 
-            }            
+            }
+            if ($microTime == 0){
+                $mesas = $this->Mozo->mesasAbiertas(); 
+            }
+            
             $this->set('mesasLastUpdatedTime', $this->Actualizador->val() );
             $this->set('mesas', $mesas);
         }
