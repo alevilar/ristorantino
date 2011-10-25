@@ -218,12 +218,22 @@ class MesasController extends AppController {
 
 
     
-
+    /**
+     * Imprime un ticket fiscal
+     * @param type $mesa_id 
+     */
     private function __imprimir($mesa_id) {
         $this->Printer->doPrint($mesa_id);
     }
 
 
+    /**
+     * Cierra la mesa, calculando el total y, si se lo indica,
+     * imprime el ticket fiscal.
+     * @param type $mesa_id
+     * @param type $imprimir_ticket
+     * @return type 
+     */
     function cerrarMesa($mesa_id, $imprimir_ticket = true) {
         $this->Actualizador->actualizar();
         

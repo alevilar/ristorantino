@@ -1,10 +1,6 @@
 <?php
 
 
-//App::import('Vendor', 'comandos_fiscales'.DS.'comandos_fiscales_hasar_441'); // loads example/example.php
-
-
-
 //define('CORTAR_PAPEL','i');
 
 // COMANDOS ESC/P
@@ -116,7 +112,7 @@ class PrinterComponent extends Object {
             $cont  = 0;
             $total = 0;
             $prod = array();
-            if($this->Mesa['Mesa']['menu']>0) {
+            if ( $this->Mesa['Mesa']['menu'] > 0 ) {
                 $prod = $this->Controller->Mesa->getProductosSinDescripcion($this->Mesa['Mesa']['menu']);
             } else {
                 $prod = $this->Controller->Mesa->dameProductosParaTicket();
@@ -129,17 +125,13 @@ class PrinterComponent extends Object {
 
             $imprimio = false;
             
-            //imprimir pre-ticket en caso de que este configurado asi
+            
+            //imprimir pre-ticket al cerrar la mesa. Solo si esta configurado asi y la mesa esta cerrada por primera vez (o que aun este abierta)
             if (Configure::read('Mesa.imprimePrimeroRemito') && !$this->Controller->Mesa->estaCerrada()){
-                    $this->print_success = $this->imprimirTicketConComandera($prod, $mozo_nro, $mesa_nro,$this->porcentaje_descuento);
-                    $this->log("se imprimio un ticket no fiscal desde comandera como remito para la mesa $mesa_nro, mozo $mozo_nro",LOG_INFO);
-                    $this->tipoticket = 'Remito';
-                    $this->imprimio_ticket = true;
-                    $imprimio = true;
-            }
-
-            if(($this->Mesa['Cliente']['imprime_ticket'] > 0 || $this->Mesa['Cliente']['imprime_ticket'] == '') && !$imprimio):
-                switch($this->Mesa['Cliente']['tipofactura']):
+                    return $this->imprimirTicketConComandera($prod, $mozo_nro, $mesa_nro,$this->porcentaje_descuento);
+            } elseif 
+                (( $this->Mesa['Cliente']['imprime_ticket'] > 0 || $this->Mesa['Cliente']['imprime_ticket'] == '') && !$imprimio ){
+                switch($this->Mesa['Cliente']['tipofactura']){
                     case 'A':
                         $ivaresp = $this->Controller->Mesa->Cliente->getResponsabilidadIva($this->Mesa['Cliente']['id']);
                         $this->Mesa['Cliente']['responsabilidad_iva'] = $ivaresp['IvaResponsabilidad']['codigo_fiscal'];
@@ -147,34 +139,17 @@ class PrinterComponent extends Object {
                         $tipodoc = $this->Controller->Mesa->Cliente->getTipoDocumento($this->Mesa['Cliente']['id']);
                         $this->Mesa['Cliente']['tipodocumento'] = $tipodoc['TipoDocumento']['codigo_fiscal'];
 
-                        $this->print_success = $this->imprimirTicketFacturaA($prod, $this->Mesa['Cliente'], $mozo_nro, $mesa_nro, $this->importe_descuento);
-                        $this->tipoticket = 'Ticket Factura "A"';
-
-                        $this->log("se imprimio una factura A para la mesa $mesa_nro, mozo $mozo_nro",LOG_INFO);
-                        $this->imprimio_ticket = true;
-                        break;
+                        return $this->imprimirTicketFacturaA($prod, $this->Mesa['Cliente'], $mozo_nro, $mesa_nro, $this->importe_descuento);
                     case '':
                     case 'B':
-                        $this->print_success = $this->imprimirTicket($prod, $mozo_nro, $mesa_nro, $this->importe_descuento);
-                        $this->tipoticket = 'Ticket Factura "B"';
-                        $this->log("se imprimio una factura B para la mesa $mesa_nro, mozo $mozo_nro",LOG_INFO);
-                        $this->imprimio_ticket = true;
-                        break;
+                        return $this->imprimirTicket($prod, $mozo_nro, $mesa_nro, $this->importe_descuento);
                     default:
-                        $this->print_success = $this->imprimirTicketConComandera($prod, $mozo_nro, $mesa_nro,$this->porcentaje_descuento);
-                        $this->log("se imprimio un ticket no fiscal desde comandera como remito para la mesa $mesa_nro, mozo $mozo_nro",LOG_INFO);
-                        $this->tipoticket = 'Ticket Descuento';
-                        $this->imprimio_ticket = true;
-                    endswitch;
-            endif;
-
-            $vreturn['print_success'] = $this->print_success;
-            $vreturn['imprimio_ticket'] = $this->imprimio_ticket;
-            $vreturn['tipoticket'] = $this->tipoticket;
-            $vreturn['porcentaje_descuento'] = $this->porcentaje_descuento;
-            $vreturn['Mesa'] = $this->Mesa = $this->Mesa;
-
-            return $vreturn;
+                        break;
+                };
+            }
+            
+            // por default imprimir un  pre-ticket, en caso de no pasar ningun parametro
+            return $this->imprimirTicketConComandera($prod, $mozo_nro, $mesa_nro,$this->porcentaje_descuento);
         }
 
 
@@ -602,7 +577,7 @@ class PrinterComponent extends Object {
 			}
 		}
 		return true;
-	}
+	}                
 
 
 
@@ -619,6 +594,7 @@ class PrinterComponent extends Object {
 	 */
 	function imprimirTicketConComandera($productos, $mozo , $mesa, $porcentaje_descuento = 0){
 		$this->__inicio_manual();
+                $prod_a_imprimir = array();
 		if($comandera = $this->__find_comandera_que_imprima_tickets()){
 			$comandera_id = $comandera['Comandera']['id'];
 				
@@ -659,98 +635,9 @@ class PrinterComponent extends Object {
 				if(!file_exists($arch_name)){
 					// si el archivo no existe lo creo
 					$archivo_comanda = fopen($arch_name, "w+t");
-						
-					// pongo el ESC para comenzar ESC/P
-					fwrite($archivo_comanda,ESC.'@');
-			
-					
-					
-					
-					/*****
-					 * 				 ENCABEZADO
-					 */
-					$header = Configure::read('Restaurante.name');
-					if ($header) {
-                                            fwrite($archivo_comanda,$header);
-                                            fwrite($archivo_comanda,"\n\n");
-                                        }
-
-                                        if (Configure::read('Restaurante.razon_social')){
-                                            fwrite($archivo_comanda,Configure::read('Restaurante.razon_social'));
-                                            fwrite($archivo_comanda,"\n");
-                                        }
-                                        if (Configure::read('Restaurante.cuit')){
-                                            fwrite($archivo_comanda,Configure::read('Restaurante.cuit'));
-                                            fwrite($archivo_comanda,"\n");
-                                        }
-                                        if (Configure::read('Restaurante.ib')){
-                                            fwrite($archivo_comanda,Configure::read('Restaurante.ib'));
-                                            fwrite($archivo_comanda,"\n");
-                                        }
-                                        if (Configure::read('Restaurante.iva_resp')){
-                                            fwrite($archivo_comanda,Configure::read('Restaurante.iva_resp'));
-                                            fwrite($archivo_comanda,"\n");
-                                        }
-					fwrite($archivo_comanda,'Fecha: '.date('d/m/y',strtotime('now')).'   Hora: '.date('H:i:s',strtotime('now')));
-					fwrite($archivo_comanda,"\n");
-					fwrite($archivo_comanda,"\n");
-					fwrite($archivo_comanda,"\n");
-					
-					fwrite($archivo_comanda,'Cant. P.Unit. Item               Total');
-					fwrite($archivo_comanda,"\n");
-					
-						
-					foreach($prod_a_imprimir as $item){
-						if(!fwrite($archivo_comanda,$item)) throw new Exception("no se puede escribir en el archivo: $arch_name");
-						fwrite($archivo_comanda,"\n");
-					}
-						
-						
-
-					$descuento = $porcentaje_descuento/100;
-					$total_c_descuento = cqs_round($total - ($total*$descuento));
-						
-					if($porcentaje_descuento){
-						$tail = " -     SUBTOTAL                $$total";
-						fwrite($archivo_comanda,$tail);
-						fwrite($archivo_comanda,"\n");
-							
-						$tail = " -     DTO.                   -%$porcentaje_descuento";
-						fwrite($archivo_comanda,$tail);
-						fwrite($archivo_comanda,"\n");
-					}
-						
-						$tail = " -     TOTAL                   $".$total_c_descuento;
-					fwrite($archivo_comanda,$tail);
-					
-					fwrite($archivo_comanda,"\n\n");
-						
-					$tail  = " \n - MOZO: ".$mozo;
-					$tail .= " \n - MESA: ".$mesa."\n";
-					fwrite($archivo_comanda,$tail);
-					
-					//  retorno de carro
-					fwrite($archivo_comanda,chr(13));
-					
-					fwrite($archivo_comanda,'  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -');
-					fwrite($archivo_comanda,"\n");
-					fwrite($archivo_comanda,'           Verifique antes de abonar');
-					fwrite($archivo_comanda,"\n");
-					fwrite($archivo_comanda,'        NO VALIDO COMO COMPROBANTE FISCAL');
-					fwrite($archivo_comanda,"\n");
-					fwrite($archivo_comanda,"\n");
-					fwrite($archivo_comanda,"\n");
-					fwrite($archivo_comanda,"\n");
-					fwrite($archivo_comanda,"\n");
-					fwrite($archivo_comanda,"\n");
-					fwrite($archivo_comanda,"\n");
-					
-					
-					
-					// probando corte completo ESC/P
-					fwrite($archivo_comanda,ESC.'i');
-				
-						
+                                        
+                                        include (ROOT . DS . APP_DIR . DS .'vendors/ticket_templates/pre_ticket_comandera.php');
+                                        
 					fclose($archivo_comanda);
 				}
 			} catch (Exception $e) {
@@ -761,7 +648,8 @@ class PrinterComponent extends Object {
 				
 			//si paso todo bien la creacion del archivo la mando a imprimir
 			$comandera_name = $this->comanderas[$comandera_id]['Comandera']['name'];
-			$comando = "lpr -P $comandera_name $arch_name";
+                        $serverImpresoraFiscal = Configure::read('ImpresoraFiscal.server');
+			$comando = "lpr -H $serverImpresoraFiscal -P $comandera_name $arch_name";
 			$retorno = exec($comando);
 			//debug("Se mando el comando". $comando." ---El EL JOB ID es->> ".$retorno);
 
@@ -840,8 +728,8 @@ class PrinterComponent extends Object {
 		   1 => array("pipe", "/tmp/lprstdout.txt", "a"),  // el stdout a un archivo tmp
 		   2 => array("file", "/tmp/lprerrout.txt", "a") // el stderr a un archivo tmp
 		);
-        $process = proc_open('lpr -H '.$serverImpresoraFiscal.' -P '.$nombreImpresoraFiscal, $descriptorspec, $pipes, null, null);
-        if (is_resource($process)) 
+                $process = proc_open('lpr -H '.$serverImpresoraFiscal.' -P '.$nombreImpresoraFiscal, $descriptorspec, $pipes, null, null);
+                if (is_resource($process)) 
 		{
 			foreach($this->vcomandos as $comando):
                 fwrite($pipes[0],$comando);
