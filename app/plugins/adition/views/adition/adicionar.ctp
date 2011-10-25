@@ -33,7 +33,7 @@
         <div  data-role="content" class="content_mesas">           
 
                 <!-- aca va el listado de mesas que se carga dinamicamente en un script de abajo -->
-                <a href="#mesa-add" data-rel="dialog"  data-transition="none" class="grid_1 abrir-mesa" href="#" data-role="button" data-theme="a">Abrir<br>Mesa</a>  
+                <a href="#mesa-add" data-rel="dialog"  data-transition="none" class="grid_1 abrir-mesa" data-role="button" data-theme="a">Abrir<br>Mesa</a>  
                 <ul id="mesas_container" class="listado-adicion" data-bind='template: { name: "listaMesas", foreach: adn().mesas }'>
                         
                 </ul>
@@ -129,6 +129,7 @@
             <form name="form-mesa-add" action="#" id="form-mesa-add">
                 <div data-role="">
                     <fieldset data-role="controlgroup" data-type="horizontal">
+                        <legend>Seleccionar Mozo</legend>
                         <?php
                         $first = true;
                             foreach ($mozos as $m) {
@@ -136,7 +137,7 @@
                                 $n = $m['Mozo']['numero'];
                                 $cheked = '';
                                 if ($first) {
-                                    $cheked = "checked='true'";
+                                    $cheked = "checked='checked'";
                                     $first = false;
                                 }
                                 echo "<input $cheked type='radio' name='mozo_id' id='radio-mozo-id-$k' value='$k'/>";
@@ -146,13 +147,13 @@
                     </fieldset>
 
                     <fieldset data-role="fieldcontain">
-                        <label for="numero">Escribir Número de Mesa:</label>
-                        <input type="text" name="numero" data-risto="mesa"/>
+                        <label for="mesa-add-numero">Escribir Número de Mesa:</label>
+                        <input type="text" name="numero" data-risto="mesa" id="mesa-add-numero"/>
                     </fieldset>
                     
                      <fieldset data-role="fieldcontain">
-                        <label for="cant_comensales">Cantidad de Cubiertos:</label>
-                        <input type="text" name="cant_comensales"/>
+                        <label for="mesa-add-cant_comensales">Cantidad de Cubiertos:</label>
+                        <input type="text" name="cant_comensales" id="mesa-add-cant_comensales"/>
                     </fieldset>
                     
                     <fieldset>
@@ -178,7 +179,7 @@
     </div>
     <div data-role="content">
         <form name="comanda" id="form-comanda-producto-observacion">
-            <textarea name="obs" id="obstext" autofocus="true"></textarea>
+            <textarea name="obs" id="obstext" autofocus="autofocus"></textarea>
         </form>
         
         <div class="observaciones-list">
@@ -259,7 +260,9 @@
                         <a href="#listado-mesas" id="mesa-reabrir"><?= $html->image('/adition/css/img/reabrir.png')?>Re Abrir</a>
                     </li>
                     
-                    <hr />
+                    <li>
+                        &nbsp;
+                    </li>
                     <li id="mesa-action-borrar" data-bind="attr: {'estado': 'mesa-borrar_'+adn().currentMesa().getEstadoIcon()}">
                         <a href="#listado-mesas" id="mesa-borrar" data-rel="back"><?= $html->image('/adition/css/img/borrarmesa.png')?>Borrar Mesa</a>
                     </li>
@@ -314,7 +317,7 @@
     <div data-role="content">   
         <div style="display: none" id="comanda-add-observacion" class="ui-corner-bottom ui-overlay-shadow ui-content">
             <h4>Agregar observación general para la comanda</h4>
-            <textarea data-bind="value: adn().currentMesa().currentComanda().comanda.observacion, valueUpdate: 'keyup'" autofocus="true" id="obstext" name="obs" class="ui-input-text ui-body-null ui-corner-all ui-shadow-inset ui-body-a"></textarea>
+            <textarea data-bind="value: adn().currentMesa().currentComanda().comanda.observacion, valueUpdate: 'keyup'" autofocus="autofocus" name="obs" class="obstext ui-input-text ui-body-null ui-corner-all ui-shadow-inset ui-body-a"></textarea>
             <a href="#" onclick="$('#comanda-add-observacion').toggle('slow')" data-role="button">Aceptar</a>
         </div>
         <!--        PRODUCTOS SELECCIONADOS    -->
@@ -393,7 +396,7 @@
                                 foreach ($mozos as $m) {
                                     $k = $m['Mozo']['id'];
                                     $n = $m['Mozo']['numero'];
-                                    echo "<input  type='radio' name='mozo_id' id='radio-mozo-id-$k' value='$k'/>";
+                                    echo "<input  type='radio' name='mozo_id' value='$k'/>";
                                     echo "<label for='radio-mozo-id-$k'>$n</label>";
                                 }
                             ?>
@@ -427,8 +430,8 @@
         </p>
         <form name="cambiar-mozo" id="form-cambiar-numero" action="#" data-ajax="false"  data-direction="reverse">
             <fieldset data-role="controlgroup" data-type="horizontal">
-                <legend for="numeroacambiar">Ingresar nuevo número</legend>
-                <input type="text" name="numero" />
+                <label for="numeroacambiar">Ingresar nuevo número</label>
+                <input type="text" name="numero" id="numeroacambiar" />
             </fieldset>
             
             <fieldset class="ui-grid-a">

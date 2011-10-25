@@ -244,9 +244,6 @@ Risto.Adition.adicionar = {
             'mozos': {
                 create: function(ops) {
                     return new Mozo(ops.data);
-                },
-                key: function(data) {
-                    return ko.utils.unwrapObservable(data.id);
                 }
             }
         }

@@ -234,9 +234,6 @@ Mesa.prototype = {
                 'Comanda': {
                     create: function(ops) {
                         return new Risto.Adition.comanda(ops.data);
-                    },
-                    key: function(data) {
-                        return ko.utils.unwrapObservable(data.id);
                     }
                 }
             }
