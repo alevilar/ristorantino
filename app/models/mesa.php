@@ -429,7 +429,6 @@ LEFT JOIN
             $limit = empty($conds['limit']) ? '' : $conds['limit'];
             $desde = empty($fechaDesde) ? date('Y-m-d', strtotime('now')) : $fechaDesde;
             $hasta = empty($fechaHasta) ? date('Y-m-d', strtotime('now')) : $fechaHasta;
-            $desdeHasta = "m.created BETWEEN '$desde' AND '$hasta'";
             
             $fieldConds = empty($conds['fields']) ? array() : $conds['fields'];
             $fields = array_merge( array( 'count(*) as "cant_mesas"'), $fieldConds );
@@ -475,21 +474,21 @@ LEFT JOIN
             
             $query = '    SELECT 
                     '.$fieldsText.'
-                   FROM (
-                    SELECT m.id, m.numero, m.mozo_id, m.total, m.cant_comensales, 
-                    m.cliente_id, m.menu, ADDDATE(m.created,-1) as created, m.modified, m.time_cerro, m.time_cobro 
-                    FROM mesas m
-                    WHERE
-                        HOUR(m.created) BETWEEN 0 AND ' . $horarioCorte . '
-                    UNION
-                    SELECT id,numero,mozo_id,total, cant_comensales, cliente_id,menu, created, modified, time_cerro, time_cobro from mesas m
-                    WHERE
-                        HOUR(m.created) BETWEEN ' . $horarioCorte . ' AND 24) as m                  
-                    LEFT JOIN mozos z ON z.id = m.mozo_id
-                WHERE ' . $desdeHasta . '                    
-                '. $groupByText .'
-                '. $orderByText. '    
-                '. $limit;
+FROM (
+    SELECT m.id, m.numero, m.mozo_id, m.total,m.subtotal, m.cant_comensales, 
+    m.cliente_id, m.menu, ADDDATE(m.created,-1) as created, m.modified, m.time_cerro, m.time_cobro 
+    FROM mesas m
+    WHERE DATE(m.created) BETWEEN DATE(ADDDATE("'.$desde.'",+1)) AND DATE(ADDDATE("'.$hasta.'",+1)) 
+          AND HOUR(m.created) BETWEEN 0 AND '. $horarioCorte.'
+UNION
+    SELECT id,numero,mozo_id,total, m.total, cant_comensales, cliente_id,menu, created, modified, time_cerro, time_cobro 
+    FROM mesas m
+    WHERE DATE(m.created) BETWEEN "'.$desde.'" AND "'.$hasta.'" AND HOUR(m.created) BETWEEN '.$horarioCorte.' AND 24) as m    
+              
+LEFT JOIN mozos z ON z.id = m.mozo_id              
+'. $groupByText .'
+'. $orderByText. '    
+'. $limit;
             return $this->query($query);
         }
 }

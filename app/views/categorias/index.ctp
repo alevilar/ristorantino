@@ -12,23 +12,29 @@
 
 <?php
 $i = 0;
-
-while(list($categoria_id, $categoria_name) = each($categorias)):
+foreach($categorias as $catId => $catName){
 	$class = null;
 	if ($i++ % 2 == 0) {
 		$class = ' class="altrow"';
 	}
 ?>
-	<tr<?php echo $class;?>>
+    <tr>
 		<td align="left" width="200px;">
-			<span style="text-align: left;"><?php echo $html->image('right.png',array('width'=>'22px;'))."($categoria_id) $categoria_name"; ?></span>
+			<span style="text-align: left;">
+        <?php  
+       
+        if( !empty($imagenes[$catId])) {
+                echo $html->image('menu/'.$imagenes[$catId],array('height'=>'22px;')); 
+        }
+        echo "($catId) $catName";
+        ?></span>
 		</td>
 		<td class="actions" align="left">
-			<?php echo $html->link(__('Editar', true), array('action'=>'edit', $categoria_id)); ?>
-			<?php echo $html->link(__('Borrar', true), array('action'=>'delete', $categoria_id), null, sprintf(__('Seguro que querés borrar la categoria # %s?', true), $categoria_name)); ?>
+			<?php echo $html->link(__('Editar', true), array('action'=>'edit', $catId)); ?>
+			<?php echo $html->link(__('Borrar', true), array('action'=>'delete', $catId), null, sprintf(__('Seguro que querés borrar la categoria # %s?', true), $catName)); ?>
 		</td>
 	</tr>
-<?php endwhile; ?>
+<?php } ?>
 </table>
 </div>
 

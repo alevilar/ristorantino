@@ -67,16 +67,13 @@
                     <?php 
                     echo $this->element('menu_' . $this->params['controller']);
                     ?>
-                    <div style="float:right; font-size: 140%;">
-                         <div style="text-align: right;">
+                    <div class="box_user_login">
                             <?php  
                             echo $session->read('Auth.User.nombre') . " " . $session->read('Auth.User.apellido');
                             
-                            echo "<br />- ".$session->read('Auth.User.role') ." -";
+                            echo " - ".$session->read('Auth.User.role') ." -";
                             ?>
-                        </div>     
-
-                        <?php echo $html->link('Cambiar de usuario', array('controller' => 'users', 'action' => 'logout', 'plugin' => null), array('style' => 'float: right; margin-top:20px;')); ?>
+                        <?php echo $html->link('salir', array('controller' => 'users', 'action' => 'logout', 'plugin' => null)); ?>
                     </div>
                         
                     <div id="mesajes"><?php $session->flash(); $session->flash('auth'); ?></div>

@@ -1,14 +1,61 @@
- 
-<?php
+<style>
+    table.data-activo{
+        border: 3px solid #E47211;
+    }
+    
+    h2.data-activo{
+        color: white;
+        background-color: #E47211;
+        margin-bottom: -11px;
+        padding-bottom: 11px;
+    }
+    
+    .wrapper1, .wrapper2{
+        width: 100%; border: none 0px RED;
+    overflow-x: scroll; overflow-y:hidden;}
+    .wrapper1{ }
+    .wrapper2{}
+    .div1 {width:999999px; height: 20px;}
+    .div2 {width:999999px; background-color: whitesmoke;
+    overflow: auto;}
+</style>
 
+
+<script>
+(function($){
+    $(function(){
+        $(".wrapper1").scroll(function(){
+            $(".wrapper2")
+                .scrollLeft($(".wrapper1").scrollLeft());
+        });
+        $(".wrapper2").scroll(function(){
+            $(".wrapper1")
+                .scrollLeft($(".wrapper2").scrollLeft());
+        });
+    })
+})(jQuery);
+</script>
+
+
+<div class="wrapper1">
+    <div class="div1">
+    </div>
+</div>
+
+<div class="wrapper2">
+    
+<div class="div2">
+<?php
+$first = true;
 foreach ($fechas as $fecha=>$mozo) {
 ?>
-<h2><?php echo date('d-m-Y',strtotime($fecha))?></h2>
-<table class="fecha-<?php echo "fecha"?>" cellspacing="0" cellpadding="0" style="text-align: center">
+    <div style="float: left; margin-left: 10px;">
+<h2 class="centrado <?= $first ? 'data-activo':'';?>"><?php echo date('d-m-Y',strtotime($fecha))?></h2>
+<table class="fecha-<?php echo "fecha"?> <?= $first ? 'data-activo' : ''; $first = false ?>" cellspacing="0" cellpadding="0" style="text-align: center; width: 200px;">
         <thead>
             <tr>
-                <th>Mozo</th>
-                <th>Total</th>
+                <th style="text-align: center">Mozo</th>
+                <th style="text-align: center">Total</th>
             </tr>
         </thead>
         
@@ -25,7 +72,12 @@ foreach ($fechas as $fecha=>$mozo) {
         ?>
     </tbody>              
     </table>
+    </div>
 <?php } ?>
+
+
+</div>
+</div>
 
 
 <div class="grid_12 alpha omega">

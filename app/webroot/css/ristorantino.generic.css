@@ -474,6 +474,10 @@ li.selected    {
         
 }        
 
+.administracion_menu p{
+    margin-top: 10px;
+}
+
 .admin_m,.admin_m li  {
      margin: 0;
      text-decoration: none;
@@ -637,11 +641,20 @@ li.selected    {
         margin-left:0; 
 }
 
-.mozo_active{
+.mozo_activo{
     font-size: 18px; 
     padding-left: 25px;
     padding-top:0;
     padding-bottom: 0;
+    color: #0f0;
+}
+
+.mozo_inactivo{
+    font-size: 18px; 
+    padding-left: 25px;
+    padding-top:0;
+    padding-bottom: 0;
+    color: grey;
 }
 
 .detallesmesa {
@@ -683,12 +696,12 @@ li.selected    {
 }
 
 .menubread li a {
-    color: #E7E7E7;
     font-weight: bold;
     padding-bottom: 5px;
     padding-top: 5px;
     padding-left: 0;
     padding-right: 5px;
+    text-decoration: underline;
 }
 .menubread li a:hover {
     color: #000000;
@@ -716,4 +729,19 @@ li.selected    {
 
 #gastos_impuestos .input .checkbox label,#gastos_impuestos .input label  {
     display: inline;
+}
+
+
+.box_user_login{
+    float:right;
+    text-align: right;
+}
+
+.box_user_login a{
+    text-decoration: underline;
+    color: blue;
+}
+
+.centrado{
+    text-align: center;
 }

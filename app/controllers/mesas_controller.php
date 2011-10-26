@@ -23,6 +23,9 @@ class MesasController extends AppController {
         $condiciones = array();
 
         if (!empty($this->passedArgs)){
+            if ( $this->passedArgs['Mesa.estado_cerrada'] ){
+                    $this->data['Mesa']['estado_cerrada'] = $this->passedArgs['Mesa.estado_cerrada'];
+            }
             if (!empty($this->passedArgs['Mesa.numero'])){
                 $this->data['Mesa']['numero'] = $this->passedArgs['Mesa.numero'];
             }
@@ -97,7 +100,7 @@ class MesasController extends AppController {
             if (!empty( $this->data['Mesa']['estado_cerrada'])){
                 switch ($this->data['Mesa']['estado_cerrada']) {
                     case 'abiertas':
-                        $condiciones['Mesa.estado_id'] = MESA_ABIERTA;
+                        $condiciones['Mesa.estado_id'] = array(MESA_ABIERTA, 0);
                         break;
                     case 'cerradas':
                         $condiciones['Mesa.estado_id'] = MESA_CERRADA;
@@ -109,7 +112,6 @@ class MesasController extends AppController {
                         break;
                 }
             }
-
             $this->Producto->recursive = 0;
 
             $this->paginate['Mesa'] = array(

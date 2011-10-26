@@ -1,11 +1,12 @@
 <?php
-    echo $html->css('/pquery/css/examples');
-    echo $html->css('jquery-ui/jquery-ui-1.8.14.custom');
-    echo $html->css('estadisticas');
+    echo $html->css('/pquery/css/examples', false);
+    echo $html->css('jquery-ui/jquery-ui-1.8.14.custom', false);
+    echo $html->css('estadisticas', false);
 
-    echo $javascript->link('/pquery/js/jquery.jqplot.js'); //plugin estadisticas
-    echo $javascript->link('/pquery/js/plugins/jqplot.dateAxisRenderer.js');
-    echo $javascript->link('/pquery/js/plugins/jqplot.highlighter.js');
+    echo $javascript->link('/pquery/js/jquery.jqplot.js', false); //plugin estadisticas
+    echo $javascript->link('/pquery/js/plugins/jqplot.dateAxisRenderer.js', false);
+    echo $javascript->link('/pquery/js/plugins/jqplot.highlighter.js', false);
+    
 ?>
 
 
@@ -20,7 +21,6 @@
         $.each(mesas,function(l){  
            var coordxLinea = [];
             $.each(mesas[l],function(i){
-                
                 var coordMesa = [mesas[l][i].Mesa.fecha, parseFloat(mesas[l][i].Mesa.total)];
                 coordxLinea.push(coordMesa);  
             })

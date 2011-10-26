@@ -56,6 +56,7 @@ class StatsController extends PqueryAppController {
                     
                     $fields = array(
                          'sum(m.cant_comensales) as "cant_cubiertos"' ,
+                         'sum(m.subtotal) as "subtotal"', 
                          'sum(m.total) as "total"', 
                          'sum(m.total)/sum(m.cant_comensales) as "promedio_cubiertos"',
                     );
@@ -69,7 +70,12 @@ class StatsController extends PqueryAppController {
                             );
                             break;
                         case 'month':
-                            $fields[] = 'GET_FORMAT( DATE(m.created),"%Y-%m") as "fecha"';
+//                            $fields[] = 'GET_FORMAT( DATE(m.created),"%Y-%m") as "fecha"';
+                            $fields[] = 'DATE(m.created) as "fecha"';
+                            $fields[] = 'YEAR(m.created) as "anio"';
+                            $fields[] = 'MONTH(m.created) as "mes"';
+                            $fields[] = 'CONCAT(YEAR(m.created),"-",MONTH(m.created)) as "fecha"';
+                            
                             $group = array(
                                  'YEAR(m.created)','MONTH(m.created)',
                             );
@@ -83,22 +89,23 @@ class StatsController extends PqueryAppController {
                     }
                     
                     
-                    
-                    
                     $mesas = $this->Mesa->totalesDeMesasEntre($desde, $hasta, array(
                         'fields' => $fields,
                         'group' => $group,
                     ));
+                    
                     foreach ($mesas as &$m) {
                         $m['Mesa'] = $m[0];
-                        $m['Mesa']['fecha'] = date('d-M-y',strtotime($m['Mesa']['fecha']));
+                        
+                         $m['Mesa']['fecha'] = date('d-M-y',strtotime($m['Mesa']['fecha']));
+                            
                         unset($m[0]);
                     }
                     $mesasLineas[] = $mesas;
                 }
             }
         }
-        
+
         $this->set('mesas', $mesasLineas);
     }
 

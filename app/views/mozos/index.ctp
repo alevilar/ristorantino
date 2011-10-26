@@ -31,16 +31,8 @@ foreach ($mozos as $mozo):
 	}
 ?>
 	<tr<?php echo $class;?>>
-		<td class="mozo_active"
-		<?php 
-                        if($mozo['Mozo']['activo']==1){
-                            echo(' style="color:green;">');
-                                     echo('■');
-                        }else{
-                            echo(' style="color:##000000;">');
-                                     echo('■');    
-                        }
-                ?>
+		<td class="<?php echo $mozo['Mozo']['activo'] ? 'mozo_activo' : 'mozo_inactivo' ?>">
+                    ■
 		</td>
 		<td>
 			<?php echo $html->link($mozo['User']['nombre']." ".$mozo['User']['apellido'], array('controller'=> 'users', 'action'=>'view', $mozo['User']['id'])); ?>
