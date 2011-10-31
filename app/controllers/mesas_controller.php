@@ -245,14 +245,15 @@ class MesasController extends AppController {
             $this->Printer->doPrint($mesa_id);
         }
 
-        $this->Mesa->cerrar_mesa();
+        $retData = $this->Mesa->cerrar_mesa();
 
         if($this->RequestHandler->isAjax()){
             $this->autoRender = false;
             $this->layout = 'ajax';
+            debug($retData);
             return 1;
         } else {
-            $this->redirect($this->referer());
+            $this->redirect( $this->referer() );
         }
     }
 

@@ -1,0 +1,64 @@
+
+.alekeyboard{
+    position: fixed;
+    bottom: 0px;   
+    padding: 30px;
+    background: silver;
+    text-align: center;
+}
+
+.numpad{
+    width: 160px;
+    left: 40%;
+}
+
+.words{
+    width: 460px;
+    left: 32%;
+}
+
+.numpad button{
+    width: 33%;
+}
+
+.alekeyboard button{
+  font-size: xx-large;
+/*  width: 33%;*/
+}
+
+
+.key-0, .key-enter{
+    width: 100% !important;
+}
+
+.key-enter{
+    background-color: khaki;
+    width: 50% !important;
+    text-indent: -1000px;
+    background-color: transparent;
+    border: none;
+    background-image: url(alekeyboard/ok.png);
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    height: 60px;
+    overflow: hidden;
+}
+
+.key-back{
+    background-color: cornsilk;
+    width: 50% !important;
+    overflow: hidden;
+    text-indent: -1000px;
+    background-color: transparent;
+    border: none;
+    background-image: url(alekeyboard/back.png);
+    background-position: 50% 50%;
+    height: 60px;
+    background-repeat: no-repeat;    
+}
+
+.key-{
+    width: 100% !important;
+    height: 1.32em;
+    
+}

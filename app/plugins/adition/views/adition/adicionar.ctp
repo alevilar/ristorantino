@@ -146,15 +146,21 @@
                         ?>
                     </fieldset>
 
-                    <fieldset data-role="fieldcontain">
-                        <label for="mesa-add-numero">Escribir Número de Mesa:</label>
-                        <input type="text" name="numero" data-risto="mesa" id="mesa-add-numero"/>
-                    </fieldset>
-                    
-                     <fieldset data-role="fieldcontain">
-                        <label for="mesa-add-cant_comensales">Cantidad de Cubiertos:</label>
-                        <input type="text" name="cant_comensales" id="mesa-add-cant_comensales"/>
-                    </fieldset>
+                    <div class="ui-grid-a">
+                        <div class="ui-block-a">
+                            <fieldset data-role="fieldcontain">
+                                <label for="mesa-add-numero">Número de Mesa:</label>
+                                <input pattern="[0-9]*" maxlength="10" type="text" name="numero" data-risto="mesa" id="mesa-add-numero" required="required"/>
+                            </fieldset>
+                        </div>
+                        
+                        <div class="ui-block-b">
+                             <fieldset data-role="fieldcontain">
+                                <label for="mesa-add-cant_comensales">Cantidad de Cubiertos:</label>
+                                <input pattern="[0-9]*" maxlength="10" type="text" name="cant_comensales" id="mesa-add-cant_comensales"/>
+                            </fieldset>
+                        </div>
+                    </div>
                     
                     <fieldset>
                         <button type="submit"  data-theme="b">Abrir Mesa</button>
@@ -388,19 +394,22 @@
             El mozo actual es el <span data-bind="text: adn().currentMesa().mozo().numero"></span>
         </div>
         
+        
         <form name="cambiar-mozo" id="form-cambiar-mozo" action="#" data-ajax="false"  data-direction="reverse">
             <input type="hidden" name="mesa_id" data-bind="value: adn().currentMesa().id"/>
+            
             <fieldset data-role="controlgroup" data-type="horizontal">
-                            <legend style="display: block; clear: both;">Seleccionar Mozo:</legend>
-                            <?php
-                                foreach ($mozos as $m) {
-                                    $k = $m['Mozo']['id'];
-                                    $n = $m['Mozo']['numero'];
-                                    echo "<input  type='radio' name='mozo_id' value='$k'/>";
-                                    echo "<label for='radio-mozo-id-$k'>$n</label>";
-                                }
-                            ?>
-            </fieldset>
+                        <legend>Seleccionar Mozo</legend>
+                        <?php
+                            foreach ($mozos as $m) {
+                                $k = $m['Mozo']['id'];
+                                $n = $m['Mozo']['numero'];
+                                echo "<input type='radio' name='mozo_id' id='radio-mozo-cambiar-id-$k' value='$k'/>";
+                                echo "<label for='radio-mozo-cambiar-id-$k'>$n</label>";
+                            }
+                        ?>
+                    </fieldset>
+            
             
             <fieldset class="ui-grid-a">
                 <div class="ui-block-a"><a href="#" data-role="button" data-rel="back" data-theme="e">Cancelar</a></div>

@@ -68,6 +68,7 @@ $(document).ready(function() {
     
     
     
+    
     //creacion de comandas
     // producto seleccionado
     $(document).bind(  MENU_ESTADOS_POSIBLES.productoSeleccionado.event , productoSeleccionado);

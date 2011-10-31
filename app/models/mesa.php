@@ -92,7 +92,8 @@ class Mesa extends AppModel {
                     $mesaData['Mesa']['time_cobro'] = DATETIME_NULL;
                 }
 
-                return $this->save($mesaData, false);
+                $this->save($mesaData, false);
+                return $mesaData;
 		
 	}
 
@@ -132,6 +133,7 @@ from (
 	where 
 	c.mesa_id = $this->id AND
 	(dc.cant-dc.cant_eliminada) > 0
+        group by mesa_id
 UNION ALL
 select c.mesa_id as mesa_id, sum(p.precio*(dc.cant-dc.cant_eliminada)) as total
 	from comandas c
@@ -140,6 +142,7 @@ select c.mesa_id as mesa_id, sum(p.precio*(dc.cant-dc.cant_eliminada)) as total
 	where 
 	c.mesa_id = $this->id AND
 	(dc.cant-dc.cant_eliminada) > 0
+        group by mesa_id
 ) as sumadas
 
 LEFT JOIN

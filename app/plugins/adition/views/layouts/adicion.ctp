@@ -26,6 +26,8 @@
                     'jquery-mobile/jquery.mobile.actionsheet',
                     '/adition/css/ristorantino',
                     'jquery-mobile/jquery.mobile-custom',
+                    'keyboard',
+                    'alekeyboard',
                     ));
 
                 $cssUserRole = "acl-".$session->read('Auth.User.role');
@@ -81,7 +83,12 @@
 //                    'jquery/jquery.easing.1.3',
 //                    'jquery/jquery.mobile.actionsheet',
 //                    'jquery/jquery.mobile.scrollview.js',
-                   
+//                    'jquery/keyboard/jquery.mousewheel',
+//                    'jquery/keyboard/jquery.keyboard',
+//                    'jquery/keyboard/jquery.keyboard.extension-typing',
+////                    'jquery/keyboard/jquery.keyboard.extension-mobile',
+//                    'jquery/keyboard/jquery.keyboard.extension-autocomplete',
+                   'alekeyboard',
                     ));
                 
                 ?>
