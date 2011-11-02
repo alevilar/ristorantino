@@ -42,18 +42,23 @@ Risto.Adition.comandaFabrica.prototype = {
     
     /**
      *
-     * Inserta el DetalleComanda en la vista de la mesa
+     * Inserta el DetalleComanda en la vista de la mesa y las envia ajaxa para guardar
      * inserta tantas comandas como se le hayan pasado de parametro
      * @param comandaJsonCopy Object con los atributos de la comanda
      * @param comanderas Array listado de comandas
      */
-    __colocarListadoDeProductosEnVistaDeMesa: function( comandaJsonCopy, comanderas ){
+    __generarComanda: function( comandaJsonCopy, comanderas ){
          // creo una nueva comanda para cada comandera
         for (var com in comanderas ) {
             comanderaComanda = new Risto.Adition.comanda( comandaJsonCopy );
             comanderaComanda.DetalleComanda( comanderas[com] );
-          
-            this.mesa.Comanda.unshift( comanderaComanda );
+            this.mesa.Comanda.push( comanderaComanda );
+            
+             //  para cada comandera
+            $cakeSaver.send({
+                url: urlDomain + 'detalle_comandas/add.json', 
+                obj: comanderaComanda
+            });
         }
     },
     
@@ -62,6 +67,16 @@ Risto.Adition.comandaFabrica.prototype = {
         if ( !this.mesa){
                 jQuery.error("no hay una mesa setteada. No se puede guardar una comanda de ninguna mesa");
                 return null;
+        }
+        
+        // si la mesa no tiene ID es porque aun no se guardo.. entonces vuelvo 
+        // a llamar a este metodo pero dentro de un rato
+        if ( !this.mesa.id() ) {
+            var este = this;
+            setTimeout( function(){ 
+                este.save();
+            }, MESAS_RELOAD_INTERVAL); 
+            return null;
         }
         
         
@@ -89,33 +104,7 @@ Risto.Adition.comandaFabrica.prototype = {
                 imprimir: this.comanda.imprimir()
             }
         
-        if ( !this.puestoEnVistaDeMesa ) {
-            
-            this.__colocarListadoDeProductosEnVistaDeMesa(comandaJsonCopy, comanderas);
-            this.puestoEnVistaDeMesa = true;
-        }
-        
-        // si la mesa no tiene ID es porque aun no se guardo.. entonces vuelvo 
-        // a llamar a este metodo pero dentro de un rato
-        if ( !this.mesa.id() ) {
-            var este = this;
-            setTimeout( function(){ 
-                este.save();
-            }, MESAS_RELOAD_INTERVAL); 
-            return null;
-        }
-        
-        // creo una nueva comanda para cada comandera
-        for (var com in comanderas ) {
-            comanderaComanda = new Risto.Adition.comanda( comandaJsonCopy );
-            comanderaComanda.DetalleComanda( comanderas[com] );
-            
-            $cakeSaver.send({
-                url: urlDomain+'detalle_comandas/add.json', 
-                obj: comanderaComanda
-            });
-        }
-        
+        this.__generarComanda(comandaJsonCopy, comanderas);
         
         return this.comanda;
     },

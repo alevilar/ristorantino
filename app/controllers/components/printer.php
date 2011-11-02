@@ -254,111 +254,17 @@ class PrinterComponent extends Object {
 			
 			// imprimo el array de esta primer comanda
 			try {
-				//path y nombre del txt que voy a guardar en elpath temporal de la impresora par luego mandarlo a imprimir
-				$arch_name = $this->comanderas[$comandera_id]['Comandera']['path']."/printer_".$comandera_id."_comanda_".$comanda_id.".txt";
-	
-				if(!file_exists($arch_name)){
-					// si el archivo no existe lo creo
-					$archivo_comanda = fopen($arch_name, "w+t");
-
-					// pongo el ESC para comenzar ESC/P
-					fwrite($archivo_comanda,ESC.'@');
-					
-					//DOBLE_ALTO
-					fwrite($archivo_comanda,ESC.DOBLE_ALTO);
-						
-					// IMPRIMO EL HEADER
-					if($productos[0]['Comanda']['prioridad']){
-						$header = " - $title # $comanda_id -";
-						fwrite($archivo_comanda,'*****************************************');
-						fwrite($archivo_comanda,"\n");
-						fwrite($archivo_comanda,'*********** COMANDA PRIORIDAD ***********');
-						fwrite($archivo_comanda,"\n");
-						fwrite($archivo_comanda,"                 #$comanda_id");
-						fwrite($archivo_comanda,"\n");
-						fwrite($archivo_comanda,'*****************************************');
-						fwrite($archivo_comanda,"\n\n");
-					}else{
-						fwrite($archivo_comanda,"              Comanda  #$comanda_id");
-						fwrite($archivo_comanda,"\n\n");
-					}
-					
-					
-									
-						
-					foreach($prod_a_imprimir as $item){
-						if(!fwrite($archivo_comanda,iconv('UTF-8', Configure::read('ImpresoraFiscal.encoding'), $item))) throw new Exception("no se puede escribir en el archivo: $arch_name");
-						fwrite($archivo_comanda,"\n");
-					}				
-					
-					
-					if($productos[0]['Comanda']['observacion']){
-						fwrite($archivo_comanda,"\n");
-						fwrite($archivo_comanda,'||||||||||||    OBSERVACION     |||||||||');
-						fwrite($archivo_comanda,"\n");
-						fwrite($archivo_comanda, iconv('UTF-8', Configure::read('ImpresoraFiscal.encoding'), $productos[0]['Comanda']['observacion']));
-						fwrite($archivo_comanda,"\n");
-						fwrite($archivo_comanda,'|||||||||||||||||||||||||||||||||||||||||');
-						fwrite($archivo_comanda,"\n");
-						fwrite($archivo_comanda,"\n");
-					}
-					
-					fwrite($archivo_comanda,"\n");
-					
-					
-					// DOBLE ANCHO
-					fwrite($archivo_comanda,ESC.ENFATIZADO);
-					$tail = " - Mesa #: ".$productos[0]['Comanda']['Mesa']['numero'];
-					fwrite($archivo_comanda,$tail);
-					// SACA DOBLE ANCHO
-					fwrite($archivo_comanda,ESC.SACA_ENFATIZADO);
-					
-					
-					fwrite($archivo_comanda,"\n");
-					// DOBLE ANCHO
-					fwrite($archivo_comanda,ESC.ENFATIZADO);
-					$tail = " - Mozo #: ".$productos[0]['Comanda']['Mesa']['Mozo']['numero'];
-					fwrite($archivo_comanda,$tail);
-					// SACA DOBLE ANCHO
-					fwrite($archivo_comanda,ESC.SACA_ENFATIZADO);
-					
-					
-					fwrite($archivo_comanda,ESC.SACA_DOBLE_ALTO);
-					
-					fwrite($archivo_comanda,"\n");
-					
-					$tail ="                          ".date('H:i:s',strtotime('now'))."\n";
-					fwrite($archivo_comanda,$tail);
-					
-					
-					
-					//  retorno de carro
-					fwrite($archivo_comanda,chr(13));
-					fwrite($archivo_comanda,'-  -  -  -  -  -  -  -  -  -  -  -  -  -  -');
-					fwrite($archivo_comanda,"\n");
-					fwrite($archivo_comanda,"\n");
-					fwrite($archivo_comanda,"\n");
-					fwrite($archivo_comanda,"\n");
-					fwrite($archivo_comanda,"\n");
-					fwrite($archivo_comanda,"\n");
-					fwrite($archivo_comanda,"\n");					
-					
-					// probando corte completo ESC/P
-					fwrite($archivo_comanda,ESC.CORTAR_PAPEL);
-					
-						
-					fclose($archivo_comanda);
-				}
+                            $textoAImprimir = '';
+                            include (ROOT . DS . APP_DIR . DS .'vendors/ticket_templates/comanda_comandera.php');
 			} catch (Exception $e) {
-				return 'Error: '.  $e->getMessage();
+                            return 'Error: '.  $e->getMessage();
 			}
-			
-			
-			//si paso todo bien la creacion del archivo la mando a imprimir
+                        
+                        
+                        //si paso todo bien la creacion del archivo la mando a imprimir
 			$comandera_name = $this->comanderas[$comandera_id]['Comandera']['name'];
-			$comando = "lpr -P $comandera_name $arch_name";
-			$retorno = exec($comando);
-			//debug("Se mando el comando". $comando." ---El EL JOB ID es->> ".$retorno);
+                        $serverImpresoraFiscal = Configure::read('ImpresoraFiscal.server');
+                        return $this->cupsPrint($serverImpresoraFiscal, $comandera_name, $textoAImprimir);
 				
 			return $retorno;
 		endforeach;
@@ -449,7 +355,7 @@ class PrinterComponent extends Object {
 	function __setProductosYCerrar($productos, $importe_descuento = 0){
 		foreach ($productos as $p):
 		$this->vcomandos[] = $this->generadorComando->printLineItem(
-                        iconv('UTF-8', Configure::read('ImpresoraFiscal.encoding'), $p['nombre']),
+                        $p['nombre'],
                         $p['cantidad'],
                         $p['precio']);
 		//$this->vcomandos[] = "B".FS.$p['nombre'].FS.$p['cantidad'].FS.$p['precio'].FS."21.00".FS."M".FS."0.11".FS."1".FS."T";
@@ -620,41 +526,20 @@ class PrinterComponent extends Object {
 				$j++;
 			endforeach;
 				
+                        $textoAImprimir = '';
 				
-			// imprimo el array de esta primer comanda
-			try {
-				//path y nombre del txt que voy a guardar en elpath temporal de la impresora par luego mandarlo a imprimir
-				$arch_name = $this->comanderas[$comandera_id]['Comandera']['path']."/TicketComanda_Mesa".$mesa.".txt";
-
-				
-				if(file_exists($arch_name)){
-					// lo borro
-					unlink($arch_name);					
-				}
-				
-				if(!file_exists($arch_name)){
-					// si el archivo no existe lo creo
-					$archivo_comanda = fopen($arch_name, "w+t");
-                                        
-                                        include (ROOT . DS . APP_DIR . DS .'vendors/ticket_templates/pre_ticket_comandera.php');
-                                        
-					fclose($archivo_comanda);
-				}
+                        // armo el temṕlate del ticket importando el archivo de templates
+                        
+                        try {
+                            include (ROOT . DS . APP_DIR . DS .'vendors/ticket_templates/pre_ticket_comandera.php');
 			} catch (Exception $e) {
-				$this->log($e->getMessage(), LOG_ERROR);
-				return false;
+                            return 'Error: '.  $e->getMessage();
 			}
-				
 				
 			//si paso todo bien la creacion del archivo la mando a imprimir
 			$comandera_name = $this->comanderas[$comandera_id]['Comandera']['name'];
                         $serverImpresoraFiscal = Configure::read('ImpresoraFiscal.server');
-			$comando = "lpr -H $serverImpresoraFiscal -P $comandera_name $arch_name";
-			$retorno = exec($comando);
-			//debug("Se mando el comando". $comando." ---El EL JOB ID es->> ".$retorno);
-
-			return $retorno;
-
+                        return $this->cupsPrint($serverImpresoraFiscal, $comandera_name, $textoAImprimir);
 		}
 		else return false;
 	}
@@ -722,24 +607,51 @@ class PrinterComponent extends Object {
 		if(!$this->__validarComandos()){
 			return false;
 		}
+                
+                $texto = '';
+                foreach ($this->vcomandos as $c){
+                    $texto .= $c.'\n';
+                }
+                $this->cupsPrint( $serverImpresoraFiscal, $nombreImpresoraFiscal, $texto );
 
-		$descriptorspec = array(
-		   0 => array("pipe", "r"), //esto lo uso para mandarle comandos
-		   1 => array("pipe", "/tmp/lprstdout.txt", "a"),  // el stdout a un archivo tmp
-		   2 => array("file", "/tmp/lprerrout.txt", "a") // el stderr a un archivo tmp
-		);
-                $process = proc_open('lpr -H '.$serverImpresoraFiscal.' -P '.$nombreImpresoraFiscal, $descriptorspec, $pipes, null, null);
-                if (is_resource($process)) 
-		{
-			foreach($this->vcomandos as $comando):
-                fwrite($pipes[0],$comando);
-                fwrite($pipes[0],"\n");
-			endforeach;
-			fclose($pipes[0]);
-			$ret =  proc_close($process);
-			return true;
-		}
 		return false;
 	}
+        
+        
+        /**
+         *  Comando cups de impresion
+         * 
+         * @param type $serverImpresoraFiscal es el nombre del host o IP
+         * @param type $nombreImpresoraFiscal nombre CUPS de la impresora 
+         * @param type $texto es el texto a imprimir
+         * @return type boolean true si salio todo bien false caso contrario
+         */
+        function cupsPrint( $serverImpresoraFiscal, $nombreImpresoraFiscal, $texto ) {
+            
+            // cambiar el encoding del texto si esta configurado
+            $encoding = Configure::read('ImpresoraFiscal.encoding');
+            if (!empty( $encoding )) {
+                $texto = mb_convert_encoding($texto, $encoding, mb_detect_encoding($texto));
+            }
+                    
+                    
+            $descriptorspec = array(
+               0 => array("pipe", "r"), //esto lo uso para mandarle comandos
+               1 => array("pipe", "w"),  // el stdout a un archivo tmp
+               2 => array("file", "/tmp/lprerrout.txt", "a") // el stderr a un archivo tmp
+            );
+            $process = proc_open('lp -h '.$serverImpresoraFiscal.' -d '.$nombreImpresoraFiscal, $descriptorspec, $pipes, '/tmp', null);
+
+            if (is_resource($process)) 
+            {
+                    fwrite($pipes[0],$texto);
+                    
+                    fclose($pipes[0]);
+                    fclose($pipes[1]);
+                    $ret =  proc_close($process);
+                    return true;
+            }
+            return false;
+        }
 }
 ?>

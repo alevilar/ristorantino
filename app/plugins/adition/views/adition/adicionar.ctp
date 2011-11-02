@@ -39,7 +39,7 @@
                 </ul>
         </div><!-- /navbar -->
             
-        <div  data-role="footer" data-position="fixed">
+        <div  data-role="footer" >
                 <div data-role="navbar">
                         <ul>
                             <li><a href="#listado-mesas" class="ui-btn-active ui-state-persist">Modo Adicionista</a></li>
@@ -97,7 +97,7 @@
                 </ul>
         </div><!-- /navbar -->
             
-        <div  data-role="footer" data-position="fixed">
+        <div  data-role="footer">
                 <div data-role="navbar">
                         <ul>
                             <li><a href="#listado-mesas">Modo Adicionista</a></li>
@@ -285,7 +285,7 @@
             
         </div>
     
-    <div data-role="footer" data-position="fixed">
+    <div data-role="footer">
         <h3>
             <span class="cant_comensales" data-bind="visible: adn().currentMesa().cant_comensales() > 0"><span data-bind="text: adn().currentMesa().cant_comensales()"></span> Cubiertos</span>
             <span class="mesa-total"><span data-bind="text: adn().currentMesa().textoTotalCalculado"></span></span>

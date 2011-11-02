@@ -63,7 +63,6 @@ Risto.Adition.sabor.prototype = {
     
     hrefSegunSabor: function(){
         if ( this.Categoria.Sabor.length > 0 ) {
-            console.info("quiero este");
             return 'page-sabores';
         }
         return '#';

@@ -1,9 +1,6 @@
 <?
-
 // pongo el ESC para comenzar ESC/P
-    fwrite($archivo_comanda,ESC.'@');
-
-
+    $textoAImprimir .= ESC.'@';
 
 
     /*****
@@ -11,38 +8,38 @@
      */
     $header = Configure::read('Restaurante.name');
     if ($header) {
-        fwrite($archivo_comanda,$header);
-        fwrite($archivo_comanda,"\n\n");
+        $textoAImprimir .= $header;
+        $textoAImprimir .= "\n\n";
     }
 
     if (Configure::read('Restaurante.razon_social')){
-        fwrite($archivo_comanda,Configure::read('Restaurante.razon_social'));
-        fwrite($archivo_comanda,"\n");
+        $textoAImprimir .= Configure::read('Restaurante.razon_social');
+        $textoAImprimir .= "\n";
     }
     if (Configure::read('Restaurante.cuit')){
-        fwrite($archivo_comanda,Configure::read('Restaurante.cuit'));
-        fwrite($archivo_comanda,"\n");
+        $textoAImprimir .= Configure::read('Restaurante.cuit');
+        $textoAImprimir .= "\n";
     }
     if (Configure::read('Restaurante.ib')){
-        fwrite($archivo_comanda,Configure::read('Restaurante.ib'));
-        fwrite($archivo_comanda,"\n");
+        $textoAImprimir .= Configure::read('Restaurante.ib');
+        $textoAImprimir .= "\n";
     }
     if (Configure::read('Restaurante.iva_resp')){
-        fwrite($archivo_comanda,Configure::read('Restaurante.iva_resp'));
-        fwrite($archivo_comanda,"\n");
+        $textoAImprimir .= Configure::read('Restaurante.iva_resp');
+        $textoAImprimir .= "\n";
     }
-    fwrite($archivo_comanda,'Fecha: '.date('d/m/y',strtotime('now')).'   Hora: '.date('H:i:s',strtotime('now')));
-    fwrite($archivo_comanda,"\n");
-    fwrite($archivo_comanda,"\n");
-    fwrite($archivo_comanda,"\n");
+    $textoAImprimir .= 'Fecha: '.date('d/m/y',strtotime('now')).'   Hora: '.date('H:i:s',strtotime('now'));
+    $textoAImprimir .= "\n";
+    $textoAImprimir .= "\n";
+    $textoAImprimir .= "\n";
 
-    fwrite($archivo_comanda,'Cant. P.Unit. Item               Total');
-    fwrite($archivo_comanda,"\n");
+    $textoAImprimir .= 'Cant. P.Unit. Item               Total';
+    $textoAImprimir .= "\n";
 
 
     foreach($prod_a_imprimir as $item){
-            if(!fwrite($archivo_comanda,$item)) throw new Exception("no se puede escribir en el archivo: $arch_name");
-            fwrite($archivo_comanda,"\n");
+            if(!$textoAImprimir .= $item) throw new Exception("no se puede escribir en el archivo: $arch_name");
+            $textoAImprimir .= "\n";
     }
 
 
@@ -52,42 +49,42 @@
 
     if($porcentaje_descuento){
             $tail = " -     SUBTOTAL                $$total";
-            fwrite($archivo_comanda,$tail);
-            fwrite($archivo_comanda,"\n");
+            $textoAImprimir .= $tail;
+            $textoAImprimir .= "\n";
 
             $tail = " -     DTO.                   -%$porcentaje_descuento";
-            fwrite($archivo_comanda,$tail);
-            fwrite($archivo_comanda,"\n");
+            $textoAImprimir .= $tail;
+            $textoAImprimir .= "\n";
     }
 
             $tail = " -     TOTAL                   $".$total_c_descuento;
-    fwrite($archivo_comanda,$tail);
+    $textoAImprimir .= $tail;
 
-    fwrite($archivo_comanda,"\n\n");
+    $textoAImprimir .= "\n\n";
 
     $tail  = " \n - MOZO: ".$mozo;
     $tail .= " \n - MESA: ".$mesa."\n";
-    fwrite($archivo_comanda,$tail);
+    $textoAImprimir .= $tail;
 
     //  retorno de carro
-    fwrite($archivo_comanda,chr(13));
+    $textoAImprimir .= chr(13);
 
-    fwrite($archivo_comanda,'  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -');
-    fwrite($archivo_comanda,"\n");
-    fwrite($archivo_comanda,'           Verifique antes de abonar');
-    fwrite($archivo_comanda,"\n");
-    fwrite($archivo_comanda,'        NO VALIDO COMO COMPROBANTE FISCAL');
-    fwrite($archivo_comanda,"\n");
-    fwrite($archivo_comanda,"\n");
-    fwrite($archivo_comanda,"\n");
-    fwrite($archivo_comanda,"\n");
-    fwrite($archivo_comanda,"\n");
-    fwrite($archivo_comanda,"\n");
-    fwrite($archivo_comanda,"\n");
+    $textoAImprimir .= '  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -';
+    $textoAImprimir .= "\n";
+    $textoAImprimir .= '           Verifique antes de abonar';
+    $textoAImprimir .= "\n";
+    $textoAImprimir .= '        NO VALIDO COMO COMPROBANTE FISCAL';
+    $textoAImprimir .= "\n";
+    $textoAImprimir .= "\n";
+    $textoAImprimir .= "\n";
+    $textoAImprimir .= "\n";
+    $textoAImprimir .= "\n";
+    $textoAImprimir .= "\n";
+    $textoAImprimir .= "\n";
 
 
 
     // probando corte completo ESC/P
-    fwrite($archivo_comanda,ESC.'i');
+    $textoAImprimir .= ESC.'i';
                                         
 ?>

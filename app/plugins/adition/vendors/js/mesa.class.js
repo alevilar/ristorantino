@@ -13,15 +13,18 @@ var Mesa = function(mozo, jsonData) {
          *@return float
          */
         this.totalCalculadoNeto = ko.dependentObservable(function(){
-            var total = 0;
+            var tam = this.Comanda().length;
             
-            for (var c in this.Comanda()){
-                for (dc in this.Comanda()[c].DetalleComanda() ){
-                    total += parseFloat( this.Comanda()[c].DetalleComanda()[dc].precio() * this.Comanda()[c].DetalleComanda()[dc].realCant() );
-                }
-            }
-            
-            return Math.round( total*100)/100;
+//            var total = 0;
+//            
+//            for (var c in this.Comanda()){
+//                for (dc in this.Comanda()[c].DetalleComanda() ){
+//                    total += parseFloat( this.Comanda()[c].DetalleComanda()[dc].precio() * this.Comanda()[c].DetalleComanda()[dc].realCant() );
+//                }
+//            }
+//            
+//            return Math.round( total*100)/100;
+             return this.totalStatic();
         }, this);
         
         
@@ -133,7 +136,7 @@ var Mesa = function(mozo, jsonData) {
             if (estado){
                 return estado.icon;
             }
-            return '';
+            return 'mesa-abierta';
         }, this);
         
         
@@ -300,7 +303,7 @@ Mesa.prototype = {
      * @constructor
      */
     nuevaComanda: function(){
-        this.currentComanda( new Risto.Adition.comandaFabrica(this)  );
+        this.currentComanda( new Risto.Adition.comandaFabrica( this ) );
     },
     
     
@@ -606,6 +609,23 @@ Mesa.prototype = {
                 ctx.Cliente(null);
             }
         });
+    },
+    
+    
+    /**
+     * A diferencia de los otros totales, este no esta bindeado con knocout por lo tanto da el total real en el momento 
+     * que se llama a esta funcion
+     */
+    totalStatic: function(){
+        var total = 0;
+            
+        for (var c in this.Comanda()){
+            for (dc in this.Comanda()[c].DetalleComanda() ){
+                total += parseFloat( this.Comanda()[c].DetalleComanda()[dc].precio() * this.Comanda()[c].DetalleComanda()[dc].realCant() );
+            }
+        }
+
+        return Math.round( total*100)/100;
     }
 
 };

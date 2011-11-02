@@ -21,13 +21,14 @@ var $cakeSaver = {
      *  @param fn funcion callback a ejecutar onSuccess
      */
     send: function( sendObj , fn){
+        var i = 0;
         var obj = sendObj['obj'];
+        
         var url = sendObj['url'];
         var errorHandler = sendObj.error || function(){};
         var method = sendObj['method'] || this.method;       
-        var ob = this.__processObj(obj, obj.model); // objeto aplanado
-
-        this.__doSend(url, ob, method, errorHandler, fn, obj);
+        var obAplanado = this.__processObj(obj, obj.model); // objeto aplanado
+        this.__doSend(url, obAplanado, method, errorHandler, fn, obj);
        
     },
     
@@ -44,7 +45,7 @@ var $cakeSaver = {
                         fn.call(data);
                     } else {
                         try { 
-                        if ( obj.handleAjaxSuccess ) {
+                            if ( typeof obj.handleAjaxSuccess == 'function' ) {
                                 obj.handleAjaxSuccess(data, url, method);
                             } else {
                                 throw "$cakeSaver:: EL objeto '"+obj.model+"' pasado para enviar vía ajax no tiene una función llamada 'handleAjaxSuccess'. La misma es indispensable para tratar la respuesta.";

@@ -5,18 +5,17 @@
  */
 
 Risto.Adition.comanda = function(jsonData){
-    this.DetalleComanda = ko.observableArray([]);
     return this.initialize( jsonData );
 }
 
 
 Risto.Adition.comanda.prototype = {
     // Array de DetalleComanda, cada detalleComanda es 1 producto
-    DetalleComanda  : function( ) { return [] },
+    DetalleComanda  : function( ) {return []},
     created         : function( ) { },
     model           : 'Comanda',
-    imprimir        : function( ) { return true },
-    id              : function( ) {},
+    imprimir        : function( ) {return true},
+    id              : ko.observable(),
     observacion     : function( ) {},
     
     initialize: function(jsonData) {
@@ -24,6 +23,7 @@ Risto.Adition.comanda.prototype = {
         this.imprimir = ko.observable( true );
         this.observacion = ko.observable(  );
         this.created = ko.observable();
+        this.DetalleComanda = ko.observableArray( [] );
         
         if ( jsonData ) {
             // si aun no fue mappeado
@@ -59,10 +59,9 @@ Risto.Adition.comanda.prototype = {
     
     
     handleAjaxSuccess: function(data){
-//        ko.mapping.updateFromJS(this, data.Comanda)
-
         this.id( data.Comanda.Comanda.id );
         this.created( data.Comanda.Comanda.created );
+        return this;
     },
     
      timeCreated: function(){
