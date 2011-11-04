@@ -55,9 +55,11 @@ AditionModel = {
             url = urlDomain;
         }
         
-        if ( mesasLastUpdatedTime > 0) {
+        if ( mesasLastUpdatedTime) {
+            // si mesasLastUpdatedTime tiene valor es porque ahora solo quiero que me traiga las que fueron actualizadas ultimamente
             url = url + 'mozos/mesas_abiertas/'+ mesasLastUpdatedTime +'.json'
         } else {
+            // traer todas
             url = url + 'mozos/mesas_abiertas.json';
         }
         
@@ -82,18 +84,7 @@ AditionModel = {
                 mesasLastUpdatedTime = data.time;
             }
             
-            if (data.mozos.length) {
-                // actualizar el storage de mozos
-//                var mozos = data.mozos;
-                
-                // actualizar el storage de mesas
-//                var mesas = AditionModel._juntarMesasDeMozos( mozos );
-//                mesas = AditionModel._ordenarMesas( mesas );                
-//                data.mesas = mesas;
-                
-                //mandar la nueva data
-                postMessage(data);            
-            }
+            postMessage(data);
             
             ajaxSending = false;
         }

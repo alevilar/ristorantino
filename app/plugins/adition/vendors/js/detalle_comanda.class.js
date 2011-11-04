@@ -8,14 +8,14 @@
 Risto.Adition.detalleComanda = function(jsonData) {
     this.initialize(jsonData);
     
+    
     // Observables Dependientes
     this.producto_id = ko.dependentObservable( function(){
-        var prod = this.Producto();
-        if ( prod ) {
-            return prod.id;
+        if ( this.Producto() ) {
+            return this.Producto().id;
         }
         return undefined;
-    }, this);
+    },this);
     
     
     this.comandera_id = ko.dependentObservable( function(){
@@ -26,20 +26,21 @@ Risto.Adition.detalleComanda = function(jsonData) {
         return undefined;
     }, this);
     
+    
     return this;
 }
 
 
 Risto.Adition.detalleComanda.prototype = {
     Producto    : function( ) {},
-    DetalleSabor: function( ) { return [] }, // array de Sabores
+    DetalleSabor: function( ) {return []}, // array de Sabores
 
     // cant de este producto seleccionado
-    cant        : function( ) { return 0 },
-    cant_eliminada: function( ) { return 0 },
-    es_entrada  : function( ) { return 0 },
-    observacion : function( ) { return '' },
-    modificada  : function( ) { return false },
+    cant        : function( ) {return 0},
+    cant_eliminada: function( ) {return 0},
+    es_entrada  : function( ) {return 0},
+    observacion : function( ) {return ''},
+    modificada  : function( ) {return false},
     model       : 'DetalleComanda',
     
     
@@ -69,14 +70,14 @@ Risto.Adition.detalleComanda.prototype = {
         }
         
         ko.mapping.fromJS( jsonData, {} , this );
+        return this;
     },
     
     /**
      *Es el valor del producto sumandole los sabores
      */
     precio: function(){
-        var total = 0;
-        total += parseFloat(this.Producto().precio);
+        var total = parseFloat( this.Producto().precio );
         for (var s in this.DetalleSabor() ){
             total += parseFloat( this.DetalleSabor()[s].precio );
         }

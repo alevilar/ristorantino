@@ -42,6 +42,12 @@ class DetalleComanda extends AppModel {
 								'counterQuery' => ''
 			)
 	);
+        
+       function beforeSave($options = array()) {
+           $this->data[$this->name]['modified'] = date('Y-m-d H:i:s', strtotime('now'));
+           
+           return parent::beforeSave($options);
+       }
 	
 	
 	function guardar($data){		

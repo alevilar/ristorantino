@@ -1,14 +1,5 @@
 <?php
 
-foreach($mesas as &$m){
-    $aux = $m['Mozo'];
-    $aux['mesas'] = $m['Mesa'];
-    $m = $aux;
-}
+$mesas['time'] = $mesasLastUpdatedTime; // curren Unix server time
 
-$res = array(
-    'mozos' => $mesas,
-    'time'  =>  $mesasLastUpdatedTime, // curren Unix server time
-);
-
-echo json_encode($res);
+echo json_encode($mesas);

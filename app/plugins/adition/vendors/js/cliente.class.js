@@ -11,7 +11,14 @@ Risto.Adition.cliente = function(jsonMap){
 Risto.Adition.cliente.prototype = {
     Descuento: ko.observable(),
     
-    initialize: function(jsonMap){
+    initialize: function( jsonMap ){
+        if ( !jsonMap ) {
+            return null;
+        }
+        if (jsonMap.hasOwnProperty( 'Cliente' ) ) {
+            jsonMap = cliente.Cliente;
+        }
+        
         this.Descuento = ko.observable( null );
         
         if (jsonMap.Descuento && jsonMap.Descuento.id) {

@@ -83,16 +83,29 @@ class Mozo extends AppModel {
          * @param int $mozo_id id del mozo, en caso de que no le pase ninguno, me busca todos
          * @return array Mozos con sus mesas, Comandas, detalleComanda, productos y sabores
          */
-        function mesasAbiertas($mozo_id = null){
+        function mesasAbiertas($mozo_id = null, $lastAccess = null){
             $conditions = array();
+            
+            // si vino el mozo por parametro, es porque solo quiero las mesas de ese mozo
             if ( !empty($mozo_id) ){
                $conditions['Mozo.id'] =  $mozo_id;
             } else {
-                // mozos activos
+                // todos los mozos activos
                 $conditions['Mozo.activo'] =  1;
             }
             
-            $options = array(
+            // condiciones para traer mesas abiertas y pendientes de cobro
+            $conditionsMesa = array(
+                "Mesa.estado_id <" => MESA_COBRADA,
+                'Mesa.deleted' => 0,        
+            );
+            
+            // si vino el parametro lastAccess, traer solo las mesas actualizadas luego del ultimo pedido
+            if ( !empty($lastAccess) ) {
+                $conditionsMesa['Mesa.modified >'] = $lastAccess;
+            }
+            
+            $optionsCobrada = $optionsUpdated = $optionsCreated = array(
                 'contain' => array(
                     'Mesa' => array(
                         'Cliente' => 'Descuento',
@@ -100,17 +113,36 @@ class Mozo extends AppModel {
                             'DetalleComanda' => array(
                                 'Producto','DetalleSabor.Sabor'),
                         ),
-                        'conditions' => array(
-                            "Mesa.estado_id <" => MESA_COBRADA,
-                            'Mesa.deleted' => 0,
-                        ),
+                        'conditions' => $conditionsMesa,
                         'order' => 'Mesa.numero DESC',
                     ),
                  ),
                 'conditions'=> $conditions,
             );
+            
+            if ( !empty($lastAccess) ) {
+                
+                // las que fueron creadas
+                $optionsCreated['contain']['Mesa']['conditions']['created >='] = $lastAccess;
+                $mesasABM['created'] = $this->find('all', $optionsCreated);
 
-            return $this->find('all', $options);
+                
+
+                // las que fueron actualizadas
+                
+                $optionsUpdated['contain']['Mesa']['conditions']['created <'] = $lastAccess;
+                $mesasABM['updated'] = $this->find('all', $optionsUpdated);
+                
+                // las que fueron cobradas
+                unset( $optionsCobrada['contain']['Mesa']['conditions']["Mesa.estado_id <"] );
+                $optionsCobrada['contain']['Mesa']['conditions']['Mesa.estado_id >'] = MESA_COBRADA;
+                $mesasABM['cobradas'] = $this->find('all', $optionsCobrada);
+            } else {
+                // traigo a todas como que son creadas, si no fue pasado un lastAccess
+                $mesasABM['created'] = $this->find('all', $optionsCreated);
+            }
+
+            return $mesasABM;
         }
 
 }

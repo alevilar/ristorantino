@@ -31,6 +31,7 @@
 setlocale(LC_TIME, 'es_AR');
 setlocale(LC_MONETARY, 'es_AR');
 
+ 
 /**
  * CakePHP Debug Level:
  *
@@ -45,11 +46,12 @@ setlocale(LC_MONETARY, 'es_AR');
  * In production mode, flash messages redirect after a time interval.
  * In development mode, you need to click the flash message to continue.
  */
-	Configure::write('debug', 1);
+	Configure::write('debug', 2);
 /**
  * Application wide charset encoding
  */
 	Configure::write('App.encoding', 'UTF-8');
+//        Configure::write('App.encoding', 'ISO-8859-1');
 /**
  * To configure CakePHP *not* to use mod_rewrite and to
  * use CakePHP pretty URLs, remove these .htaccess

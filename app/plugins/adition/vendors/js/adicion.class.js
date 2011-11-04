@@ -48,8 +48,23 @@ Risto.Adition.adicionar = {
         // Crea el Web Worker
         var worker = new Worker("adition/js/adicion.model.js");
         
+        var primeraVez = true;
         worker.onmessage = function (evt) {
-            Risto.Adition.adicionar.__actualizarMozosConMesasAbiertas( evt.data );
+            
+            if ( evt.data.created && evt.data.created.mozos && evt.data.created.mozos.length ) {
+                Risto.Adition.adicionar.__crearMozosConMesasAbiertas( evt.data.created , primeraVez);
+                primeraVez = false;
+            }
+            
+            if ( evt.data.updated && evt.data.updated.mozos && evt.data.updated.mozos.length ) {
+                Risto.Adition.adicionar.__actualizarMozosConMesasAbiertas( evt.data.updated , primeraVez);
+                primeraVez = false;
+            }
+            
+            
+            if ( evt.data.time ) {
+                Risto.Adition.adicionar.mesasLastUpdatedTime( evt.data.time );
+            }
         }        
         
         worker.postMessage( {updateInterval: MESAS_RELOAD_INTERVAL} );
@@ -66,7 +81,7 @@ Risto.Adition.adicionar = {
         worker.postMessage( {urlDomain: urlDomain, timeText: time} );
     },    
     
-
+    
    
     /**
      * Me dice si tiene una mesa setteada
@@ -222,7 +237,32 @@ Risto.Adition.adicionar = {
     },
     
 
+    /**
+     * 
+     * Recibiendo un json con el listado de mozos, que a su vez 
+     * cada uno tiene el listado de mesas abiertas de c/u, actualiza 
+     * el listado de mesas de la adicion
+     * 
+     */
+    __crearMozosConMesasAbiertas: function( data ) {
+        
+        if (!data.mozos) return -1;
+        
+        var mapOps = {
+            'mozos': {
+                create: function(ops) {
+                    return new Mozo(ops.data);
+                },
+                key: function(data) {
+                    return ko.utils.unwrapObservable(data.id);
+                }
+            }
+        }
 
+        return ko.mapping.fromJS( data, mapOps, Risto.Adition.adicionar );
+        
+        $(document).trigger('adicionMesasActualizadas');
+    },
 
     /**
      * 
@@ -233,22 +273,17 @@ Risto.Adition.adicionar = {
      */
     __actualizarMozosConMesasAbiertas: function( data ) {
         if (!data.mozos) return -1;
-        
-        Risto.Adition.adicionar.mesasLastUpdatedTime( data.time );
-        
-        var adn    = Risto.Adition.adicionar, 
-        
-        mapOps = {};
-        // si aun no fue mappeado
-        mapOps = {
-            'mozos': {
-                create: function(ops) {
-                    return new Mozo(ops.data);
-                }
+        var mesaEncontrada;
+        for(var z in data.mozos){
+            for( var m in data.mozos[z].mesas ) {
+                console.info('actualice la mesa '+ data.mozos[z].mesas[m].id);
+                mesaEncontrada = Risto.Adition.adicionar.findMesaById( data.mozos[z].mesas[m].id );
+                console.info(data.mozos[z].mesas[m]);
+                ko.mapping.fromJS( data.mozos[z].mesas[m], {}, mesaEncontrada );
+                console.info( mesaEncontrada.setEstadoById() );
             }
         }
         
-        ko.mapping.fromJS( data, mapOps, adn );
         $(document).trigger('adicionMesasActualizadas');
     },
     

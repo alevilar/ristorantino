@@ -52,7 +52,7 @@ Risto.Adition.comandaFabrica.prototype = {
         for (var com in comanderas ) {
             comanderaComanda = new Risto.Adition.comanda( comandaJsonCopy );
             comanderaComanda.DetalleComanda( comanderas[com] );
-            this.mesa.Comanda.push( comanderaComanda );
+            this.mesa.Comanda.unshift( comanderaComanda );
             
              //  para cada comandera
             $cakeSaver.send({

@@ -3,7 +3,7 @@ class MesasController extends AppController {
 
     var $name = 'Mesas';
     var $helpers = array('Html', 'Form');
-    var $components = array('Printer', 'Actualizador');
+    var $components = array('Printer');
 
     /* @var $Printer PrinterComponent */
     var $Printer;
@@ -237,7 +237,6 @@ class MesasController extends AppController {
      * @return type 
      */
     function cerrarMesa($mesa_id, $imprimir_ticket = true) {
-        $this->Actualizador->actualizar();
         
         $this->Mesa->id = $mesa_id;
 
@@ -277,7 +276,6 @@ class MesasController extends AppController {
 
 
     function abrirMesa(){
-        $this->Actualizador->actualizar();
         
         $insertedId = 0;
         if (!empty($this->data['Mesa'])){
@@ -292,8 +290,6 @@ class MesasController extends AppController {
     }
     
     function add() {
-        $this->Actualizador->actualizar();
-        
         if (!empty($this->data)) {
             $this->Mesa->create();
             $this->data['Mesa']['created'] = $this->data['Mesa']['time_cobro'];
@@ -350,7 +346,6 @@ $tipo_pagos = $this->Mesa->Pago->TipoDePago->find('list');
         $returnFlag = 1;
 
         if (!empty($this->data)) {
-            $this->Actualizador->actualizar();
             if(isset($this->data['Mesa']['id'])) {
                 if(($this->data['Mesa']['id'] != '') || ($this->data['Mesa']['id'] != null) || ($this->data['Mesa']['id'] != 0)) {
                     $this->Mesa->recursive = -1;
@@ -380,7 +375,6 @@ $tipo_pagos = $this->Mesa->Pago->TipoDePago->find('list');
 
 
     function edit($id = null) {
-        $this->Actualizador->actualizar();
         
         $this->rutaUrl_for_layout[] =array('name'=> 'Mesas','link'=>'/mesas' );
         if (!$id && empty($this->data)) {
@@ -417,7 +411,6 @@ $tipo_pagos = $this->Mesa->Pago->TipoDePago->find('list');
     }
 
     function delete($id = null) {
-        $this->Actualizador->actualizar();
         if (!$id) {
             $this->Session->setFlash(__('Invalid id for Mesa', true));
         }
@@ -463,7 +456,6 @@ $tipo_pagos = $this->Mesa->Pago->TipoDePago->find('list');
 
 
     function reabrir($id){
-        $this->Actualizador->actualizar();
         $this->Session->setFlash('Se reabrió la mesa', true);
         $this->Mesa->reabrir($id);
         if ($this->RequestHandler->isAjax()) {
@@ -475,7 +467,6 @@ $tipo_pagos = $this->Mesa->Pago->TipoDePago->find('list');
     
     
     function addClienteToMesa($mesa_id, $cliente_id = 0){
-        $this->Actualizador->actualizar();
         if ($cliente_id) {
             $this->Mesa->Cliente->contain(array(
                         'Descuento',

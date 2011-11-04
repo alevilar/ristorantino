@@ -104,3 +104,11 @@ NULL ,  '4',  'reload_interval_timeout',  '60000',  'valor en milisegundos que d
 ), (
 NULL ,  '4',  'jqm_page_transition',  '',  'Utilizar animaciones de jquery mobile o no? poner valores de verdadero o falso de sistemas (dejar vacio "" si no quiero animaciones.'
 );
+
+
+ALTER TABLE `comandas` ADD `modified` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP AFTER `created` ;
+
+
+ALTER TABLE `configs` ADD `created` TIMESTAMP NULL AFTER `description` ;
+ALTER TABLE `configs` ADD `modified` TIMESTAMP NULL AFTER `created` ;
+

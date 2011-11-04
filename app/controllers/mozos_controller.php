@@ -2,7 +2,6 @@
 class MozosController extends AppController {
 
 	var $name = 'Mozos';
-        var $components = array('Actualizador');
 	var $helpers = array('Html', 'Form');
 
         function beforeFilter() {
@@ -76,18 +75,38 @@ class MozosController extends AppController {
 		}
 	}
 
-
-        function mesas_abiertas($microTime = 0) {
+        /**
+         * Me devuelve las mesas abiertas de cada mozo
+         * @param boolean $microtime microtime desde donde yo quiero tomar omo referencia a la hora de traer las mesas
+         */
+        function mesas_abiertas($microtime = 0) {
             
             $mesas = array();
-            if ( $microTime && $this->Actualizador->huboCambios($microTime) ) {
-                $mesas = $this->Mozo->mesasAbiertas(); 
+            $lastAccess = null;
+            if ( !empty($microtime) ) {
+                $lastAccess = date('Y-m-d H:i:s', microtime($microtime));
+                
+                if ( $this->Session->check('lastAccess') ) {
+                    $lastAccess = $this->Session->read('lastAccess');
+                }
             }
-            if ($microTime == 0){
-                $mesas = $this->Mozo->mesasAbiertas(); 
+            $mesas = $this->Mozo->mesasAbiertas(null, $lastAccess); 
+
+            $mozosMesa = array();
+            foreach ( $mesas as $key=>$abmMesas ) {
+                $i = 0;
+                foreach ( $abmMesas as $m ) {
+                    if ( !empty($m['Mesa']) ) {
+                        $m['Mozo']['mesas'] = $m['Mesa'];
+                        $mozosMesa[$key]['mozos'][] = $m['Mozo'];
+                        $i++;
+                    }
+                }
             }
-            
-            $this->set('mesasLastUpdatedTime', $this->Actualizador->val() );
+            $mesas = $mozosMesa;
+            $lastAccess = date('Y-m-d H:i:s', strtotime('now'));
+            $this->Session->write('lastAccess', $lastAccess );
+            $this->set('mesasLastUpdatedTime', microtime()  );
             $this->set('mesas', $mesas);
         }
 

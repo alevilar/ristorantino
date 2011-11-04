@@ -22,6 +22,14 @@ class DetalleSabor extends AppModel {
 								'order' => ''
 			)
 	);
+        
+        
+        function beforeSave($options = array()) {
+           if (!empty($this->data[$this->name]['modified'])){
+                unset($this->data[$this->name]['modified']);
+           }
+           return parent::beforeSave($options);
+       }
 
 }
 ?>

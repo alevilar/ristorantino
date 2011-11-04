@@ -20,7 +20,7 @@
 		// para los modal window
 		echo $html->css(array(
 //                    'http://code.jquery.com/mobile/latest/jquery.mobile.min.css',
-                    'jquery-mobile/jquery.mobile.min',
+                    'jquery-mobile/jquery.mobile-1.0rc2',
 //                    'jquery-mobile/jquery.mobile-1.0rc1.min',
 //                    'jquery-mobile/jquery-mobile-fluid960',
                     'jquery-mobile/jquery.mobile.actionsheet',
@@ -46,7 +46,8 @@
                     '/adition/js/cake_saver',
                     'risto/risto',
 //                    'http://code.jquery.com/jquery-1.6.2.min.js',
-                    'jquery/jquery-1.6.4.min',
+                    'jquery/jquery-1.6.4',
+//                    'jquery/jquery-1.6.4.min',
                     'jquery/jquery.tmpl.min',
 //                    'jquery/jquery.periodicalupdater',
                     
@@ -54,7 +55,9 @@
                     'ristorantino/generic',
                     
                     'knockout-1.2.1.debug',
-                    'knockout.mapping.debug',
+//                    'knockout.mapping.debug',
+                    'knockout.mapping-2.0.debug',
+                    'knockout.updateData',
                     
                     // OJO !! EL ORDEN IMPORTA !!
                     '/adition/js/adition.package',
@@ -79,7 +82,8 @@
                     '/adition/js/menu',
                     
 //                    'http://code.jquery.com/mobile/latest/jquery.mobile.min.js',
-                    'jquery/jquery.mobile-1.0rc1.min',
+//                    'jquery/jquery.mobile-1.0rc1.min',
+                    'jquery/jquery.mobile-1.0rc2',
 //                    'jquery/jquery.easing.1.3',
 //                    'jquery/jquery.mobile.actionsheet',
 //                    'jquery/jquery.mobile.scrollview.js',

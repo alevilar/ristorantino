@@ -39,9 +39,9 @@ var Mozo = function(jsonData){
 
 
 Mozo.prototype = {
-    id      : function( ) { return 0 },
-    numero  : function( ) { return 0 },
-    mesas   : function( ) { return [] },
+    id      : function( ) {return 0},
+    numero  : function( ) {return 0},
+    mesas   : function( ) {return []},
 
     initialize: function(jsonData) {
         var mozoNuevo = this;
@@ -56,9 +56,6 @@ Mozo.prototype = {
                 'mesas': {
                     create: function(ops) {
                         return new Mesa(mozoNuevo, ops.data);
-                    },
-                    key: function(data) {
-                        return ko.utils.unwrapObservable( data.id );
                     }
                 }
             }
@@ -121,5 +118,20 @@ Mozo.prototype = {
         var eventoMozoSeleccionado = $.Event(MOZOS_POSIBLES_ESTADOS.seleccionado.event);
         eventoMozoSeleccionado.mozo = this;
         $(document).trigger(eventoMozoSeleccionado);
+    },
+
+    
+    /**
+     * Busca una mesa por su id en el listado de mesas que tiene le mozo
+     * @param integer idToSearch 
+     * @return Mesa si encontro, null en caso de no encontrar nada
+     */
+    findMesaById: function( idToSearch ){
+        for( var m in this.mesas() ) {
+            if ( this.mesas()[m].id() === idToSearch ) {
+                return this.mesas()[m];
+            }
+        }
+        return null;
     }
 };

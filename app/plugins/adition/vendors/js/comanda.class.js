@@ -31,9 +31,6 @@ Risto.Adition.comanda.prototype = {
                 'DetalleComanda': {
                     create: function(ops) {
                         return new Risto.Adition.detalleComanda(ops.data);
-                    },
-                    key: function(data) {
-                        return ko.utils.unwrapObservable(data.id);
                     }
                 }
             }
@@ -51,7 +48,7 @@ Risto.Adition.comanda.prototype = {
         for (var dc in this.DetalleComanda() ){
             if (dc > 0){
                 name += ', ';
-            }
+            }        
             name += this.DetalleComanda()[dc].realCant()+' '+this.DetalleComanda()[dc].Producto().name;
         }
         return name;

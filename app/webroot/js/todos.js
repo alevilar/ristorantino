@@ -16,38 +16,46 @@ var $cakeSaver = {
      *  'url' => es la url donde se enviara el post
      *  'obj' => es el objeto que voy a enviar$cakeSaver
      *  'error' => function handler
+     *  'if'    => es una funcion que devuelve un boolean, Si el boolean da false, entonces el envio se posterga hasta que sea "true"
+     *  'ifDo'  => es una funcion que se ejecuta cuando devuelve true el IF y pasa como parametro el objeto aplanado para hacerle los cambios que sean 
      *  @param fn funcion callback a ejecutar onSuccess
      */
     send: function( sendObj , fn){
         var obj = sendObj['obj'];
         var url = sendObj['url'];
         var errorHandler = sendObj.error || function(){};
-        var method = sendObj['method'] || this.method;
-        var ob = this.__processObj(obj, obj.model);
+        var method = sendObj['method'] || this.method;       
+        var ob = this.__processObj(obj, obj.model); // objeto aplanado
 
+        this.__doSend(url, ob, method, errorHandler, fn, obj);
+       
+    },
+    
+    
+    
+    __doSend: function(url, ob, method, errorHandler, fn, obj){
         $.ajax({
-            'url': url,
-            'data': ob,
-            'type': method,
-            error: errorHandler,
-            success: function(data){
-                if (typeof fn == 'function'){
-                    fn.call(data);
-                } else {
-                    try { 
-                    if ( obj.handleAjaxSuccess ) {
-                            obj.handleAjaxSuccess(data, url, method);
-                        } else {
-                            throw "$cakeSaver:: EL objeto '"+obj.model+"' pasado para enviar vía ajax no tiene una función llamada 'handleAjaxSuccess'. La misma es indispensable para tratar la respuesta.";
+                'url': url,
+                'data': ob,
+                'type': method,
+                error: errorHandler,
+                success: function(data){
+                    if (typeof fn == 'function'){
+                        fn.call(data);
+                    } else {
+                        try { 
+                        if ( obj.handleAjaxSuccess ) {
+                                obj.handleAjaxSuccess(data, url, method);
+                            } else {
+                                throw "$cakeSaver:: EL objeto '"+obj.model+"' pasado para enviar vía ajax no tiene una función llamada 'handleAjaxSuccess'. La misma es indispensable para tratar la respuesta.";
+                            }
+                        }
+                        catch(er) {
+                            jQuery.error(er);
                         }
                     }
-                    catch(er) {
-                        jQuery.error(er);
-                    }
                 }
-            }
-        });
-       
+            });
     },
     
     
@@ -456,14 +464,7 @@ Mozo.prototype = {
         eventoMozoSeleccionado.mozo = this;
         $(document).trigger(eventoMozoSeleccionado);
     }
-};/*--------------------------------------------------------------------------------------------------- Risto.Adicion.mesa
- *
- *
- * Clase Mesa
- */
-
-
-/**
+};/**
  * @var Static MESAS_POSIBLES_ESTADOS
  * 
  *  esta variable es simplemenete un catalogo de estados posibles que
@@ -519,12 +520,14 @@ var MESA_ESTADOS_POSIBLES =  {
         icon: ''
     }
 };
-
-/**
+/*--------------------------------------------------------------------------------------------------- Risto.Adicion.mesa
  *
- *Definicion de la Clase Mesa
  *
- **/
+ * Clase Mesa
+ * 
+ * para inicializarla es necesario pasarle el objeto Mozo
+ * tambien se le puede pasar un jsonData para ser mappeado con knockout
+ */
 var Mesa = function(mozo, jsonData) {
     
         /**
@@ -588,7 +591,10 @@ var Mesa = function(mozo, jsonData) {
         
         
         /**
+         * dependentObservable
          * 
+         * Chequea si la mesa esta con el estado: cerrada. (por lo general, lo que interesa
+         * es saber que si no esta cerrada es porque esta abierta :-)
          * @return boolean
          **/
         this.estaCerrada = ko.dependentObservable(function(){
@@ -596,6 +602,13 @@ var Mesa = function(mozo, jsonData) {
         }, this);
         
         
+        /**
+         * dependentObservable
+         * 
+         * chequea el ID del estado y devuelve el id del mismo
+         * @return integer
+         *
+         */
         this.estado_id = ko.dependentObservable(function(){
             var est = this.estado();
             if (est){
@@ -604,6 +617,15 @@ var Mesa = function(mozo, jsonData) {
             return 0;
         }, this);
         
+        
+        /**
+         * dependentObservable
+         * 
+         * Devuelve el nombre del Cliente si es que hay alguno setteado
+         * en caso de no haber cliente, devuelve el string vacio ''
+         *
+         *@return string
+         */
         this.clienteNameData = ko.dependentObservable(function(){
             var cliente = this.Cliente();
             if (cliente){
@@ -617,6 +639,17 @@ var Mesa = function(mozo, jsonData) {
         }, this);
         
         
+        /**
+         *  dependentObservable
+         *  
+         *  devuelve el nombre del icono (jqm data-icon) que tiene el estado 
+         *  en el que la mesa se encuentra actualmente
+         *  el nombre del icono sirve para manejar cuestiones esteticas y es definido
+         *  en "mesa.estados.class.js"
+         *  
+         *  @return string
+         *
+         */
         this.getEstadoIcon = ko.dependentObservable( function(){
             var estado = this.estado();
             if (estado){
@@ -626,9 +659,32 @@ var Mesa = function(mozo, jsonData) {
         }, this);
         
         
-        this.initialize(mozo, jsonData);
-         
-        return this;
+        /**
+         * Devuelve un texto con la hora
+         * si la mesa esta cerrada, dice "Cerró: 14:35"
+         * si esta aberta dice: "Abrió 13:22"
+         */
+        this.textoHora = ko.dependentObservable( function() {
+            var date, txt;
+            if ( this.getEstado() == MESA_ESTADOS_POSIBLES.cerrada ) {
+                txt = 'Cerró a las ';
+                if (typeof this.time_cerro == 'function') {
+                    date =  mysqlTimeStampToDate(this.time_cerro());
+                }
+            } else {
+                txt = 'Abrió a las ';
+                if (typeof this.created == 'function') {
+                    date = mysqlTimeStampToDate(this.created());            
+                }
+            }
+            if ( !date ) {
+                date = new Date();
+            }
+            return txt + date.getHours() + ':' + date.getMinutes() + 'hs';
+        }, this);
+        
+        
+        return this.initialize(mozo, jsonData);
 }
 
 
@@ -646,6 +702,7 @@ Mesa.prototype = {
     cant_comensales: function( ) { return 0 },
     
     // es la comanda que actualmente se esta haciendo objeto comandaFabrica
+    /** @param currentComanda comandaFabrica **/
     currentComanda: function( ) { },
     Comanda     : function( ) { return [] },
     Pago        : function( ) { return [] }, // cantidad de pagos asociados a la mesa
@@ -654,6 +711,10 @@ Mesa.prototype = {
     // attributos
     mozo: function( ) { return {} },
     
+    /**
+     * es timeCreated o sea la fecha de creacion del mysql timestamp
+     * @return string timestamp
+     **/
     timeAbrio: function(){
         if (!this.timeCreated) {
             Risto.modelizar(this);
@@ -661,6 +722,9 @@ Mesa.prototype = {
         return this.timeCreated();
     },
 
+    /**
+     *@constructor
+     */
     initialize: function( mozo, jsonData ) {
         this.id             = ko.observable();
         this.created        = ko.observable();
@@ -720,6 +784,12 @@ Mesa.prototype = {
         return this;
     },
     
+    /**
+     * Inicializa el estado de la mesa en base al json pasada como parametro
+     * o sea, convierte el id del estado que viene de la bbdd, a un objeto
+     * "estado" que son los que estan en mesa.estados.class.js
+     * @return MesaEstado
+     */
     __inicializar_estado: function(jsonData){
         var estado = MESA_ESTADOS_POSIBLES.abierta;
          if (jsonData.estado_id) {
@@ -746,16 +816,22 @@ Mesa.prototype = {
         this.currentComanda().agregarProducto(prod);
     },
     
+    /**
+     * Inicializa currentComanda para poder hacer una nueva comanda con
+     * el objeto comandaFabrica
+     * @constructor
+     */
     nuevaComanda: function(){
         this.currentComanda( new Risto.Adition.comandaFabrica(this)  );
     },
     
+    
     getData: function(){
-        $.get(this.urlGetData(), function(){
-            
-        });
+        $.get(this.urlGetData());
     },
     
+    
+    /* listado de URLS de accion con la mesa */
     urlGetData: function(){return urlDomain+'mesas/ticket_view/'+this.id()},
     urlView: function(){return urlDomain+'mesas/view/'+this.id()},
     urlEdit: function(){return urlDomain+'mesas/ajax_edit/'+this.id()},
@@ -778,27 +854,7 @@ Mesa.prototype = {
      *  es utilizada en el action mesas/view
      */
     domElementContainer: function(){return 'mesa-' + this.id();},
-
-
-    /**
-     * devuelve un Button con el elemento mesa
-     * @return jQuery Element button
-     */
-    getButton: function(){
-        if (this.hasOwnProperty('mozo') && !this.button) {
-            var btn = document.createElement('button');
-            btn.setAttribute('mozo_id', this.mozo.id);
-            btn.mesa_id = this.id;
-            btn.innerHTML = this.numero;
-            btn.mesa = this;
-            this.button = btn;
-            var cntx = this;
-            this.button.onclick = function(){
-                cntx.seleccionar.call(cntx)
-            }
-        }
-        return this.button;
-    },
+ 
 
     
 
@@ -812,25 +868,9 @@ Mesa.prototype = {
         $(document).trigger(event);
     },
 
-
-    cloneFromJson: function(json){
-        //copio solo lo decclarado en el prototype de este modelo
-        for (var i in this){
-            if ((typeof this[i] != 'function') && (typeof this[i] != 'object')){
-                this[i] = json[i];
-            }
-
-            if ((typeof this[i] == 'function') && json.hasOwnProperty(i) && (typeof this[i] != 'object')){
-                this[i](json[i]);
-            }
-        }
-        return this;
-    },
-
-    deseleccionar: function() {
-        
-    },
-
+    /**
+     * dispara un evento de mesa seleccionada
+     */
     seleccionar: function() {
         var event =  $.Event(MESA_ESTADOS_POSIBLES.seleccionada.event);
         event.mesa = this;
@@ -839,7 +879,13 @@ Mesa.prototype = {
     },
     
     
-    
+    /**
+     * cambia el estado de la mesa y lo envia vía ajax. Para ser modificado 
+     * en bbdd.
+     * En caso de error en el ajax la mesa vuelve a su estado anterior.
+     * 
+     * dispara el evento de cambio de estado. en caso de error lo dispararia 2 veces
+     */
     cambioDeEstadoAjax: function(estado){
         var estadoAnt = this.getEstado();
         var mesa = this;
@@ -850,43 +896,71 @@ Mesa.prototype = {
         }
     },
 
+    /**
+     * dispara un evento de mesa Abierta
+     */
     setEstadoAbierta : function(){
         this.setEstado(MESA_ESTADOS_POSIBLES.abierta);
         return this;
     },
     
+    /**
+     * dispara un evento de mesa cobrada
+     */
     setEstadoCobrada : function(){
         this.time_cobro( jsToMySqlTimestamp() );
         this.setEstado(MESA_ESTADOS_POSIBLES.cobrada);
         return this;
     },
 
+
+    /**
+     * dispara un evento de mesa cerrada
+     */
     setEstadoCerrada : function(){
         this.time_cerro = jsToMySqlTimestamp();
         this.setEstado(MESA_ESTADOS_POSIBLES.cerrada);
         return this;
     },
 
+    /**
+     * dispara un evento de mesa borrada
+     */
     setEstadoBorrada: function() {
         this.setEstado(MESA_ESTADOS_POSIBLES.borrada);
         return this;
     },
 
+    /**
+     * dispara un evento de mesa con cupon pendiente
+     */
     setEstadoCuponPendiente : function(){        
         this.setEstado(MESA_ESTADOS_POSIBLES.cuponPendiente);
         return this;
     },
     
+    /**
+     * Cambia el estado de la mesa y genera un disparador del evento
+     */
     setEstado: function(nuevoestado){
         this.estado(nuevoestado);
         this.__triggerEventCambioDeEstado();
     },
 
+    /**
+     * devuelve el estado actual de la mesa
+     * @return MesaEstado
+     */
     getEstado: function(){
         return this.estado();
     },
     
     
+    /**
+     * devuelve el string que identifica como nombre al estado
+     * es el atributo del objeto estado llamado msg
+     * el objeto de estado de la mesa es el de mesa.estados.class.js
+     */
     getEstadoName: function(){
         if (this.estado()){
             return this.estado().msg;
@@ -913,28 +987,29 @@ Mesa.prototype = {
         return this.estaCerrada();
     },
 
-
+    
+    /**
+     * modifica el ID del la mesa
+     */
     setId : function(id){
         this.id = id;
     },
 
 
-    tieneMenu : function(){
-        if (this.menu > 0)
-            return this.menu;
-        else
-            return 0;
-    },
-
-
+    /**
+     *devuelve la cantidad de comensales o cubiertos seteado en la mesa
+     *@return integer
+     */        
     getCantComensales : function(){
         return this.cantComensales();
     },
 
-
+    /**
+     * Envia un ajax con la peticion de imprimir el ticket para esta mesa
+     */
     reimprimir : function(){
         var url = window.urlDomain+'mesas/imprimirTicket';
-        $.post( url+"/"+this.id);
+        $.get( url+"/"+this.id);
     },
 
 
@@ -953,39 +1028,25 @@ Mesa.prototype = {
         this.setEstadoAbierta();
     },
 
-
+    /**
+     * Envia un ajax con la peticion de cerrar esta mesa
+     */
     cerrar: function(){
         var url = window.urlDomain + 'mesas/cerrarMesa' + '/' + this.currentMesa.id + '/0';
         var context = this;
         $.get(url, {}, function(){context.setEstadoCerrada();});
     },
 
-
+    /**
+     * Envia un ajax con la peticion de borrar esta mesa
+     */
     borrar : function(){
         var url = window.urlDomain + 'mesas/delete/' +this.id;
         var context = this;
         $.get(url, {}, function(){context.setEstadoBorrada()});
     },
 
-
-    __abrir: function(){
-        if (this.id) {
-            alert('no se puede abrir una mesa que ya esta abierta. El ID ya existe. Consulte con el administrador del Sistema');
-            return;
-        }
-        var context = this;
-        alert("voy a abrir");
-        var response = $.post( urlDomain + 'mesas/abrirMesa.json',
-                {'data[Mesa][numero]': this.numero, 'data[Mesa][mozo_id]': this.mozo.id},
-                function() {
-                    context.setEstadoAbierta();
-                },
-            'json');
-            
-         response.error = function(t) {
-             alert("error de ajax: "+t);
-         }
-    },
+    
     
     /**
      * Si tiene un mozo setteado retorna true, caso contrario false
@@ -1021,12 +1082,15 @@ Mesa.prototype = {
     },
 
 
-    abrirlaConMozo: function(nuevoMozo){
-        this.setMozo(nuevoMozo);
-        return this.__abrir();
-    },
-
-
+    /**
+     * Realiza una edicion rapida via Ajax del Model Mesa de Cakephp
+     * o sea, desde aca se puede tcoar facilmente cualquier campo de la bbdd
+     * siempre y cuando el parametro data respete la forma de los inputs de cake.
+     * 
+     * @param data Array los keys del array deben ser de la forma cake:
+     *                      Ej: data['data[Mesa][cant_comensales]'] o data['data[Mesa][cliente_id]']
+     *                      
+     */
     editar: function(data) {
         if (!data['data[Mesa][id]']){
             data['data[Mesa][id]'] = this.id;
@@ -1035,43 +1099,21 @@ Mesa.prototype = {
     },
     
     
-    
-    keepUpdated: function() {
-        $.PeriodicalUpdater({
-            url: urlDomain+'/comandas/de_mesa/'+this.id()
-        }, function(data) {
-            console.debug(data);
-        });
+    /**
+     * Es el callback que recibe la actualizacion de las mesas via json desde 
+     * cakeSaver
+     */
+    handleAjaxSuccess: function(data, action, method) {
+        if (data[this.model]) {
+            ko.mapping.updateFromJS( this, data[this.model] );
+        }
     },
     
     
     /**
-     * Si tiene un detalleComanda modificado dentro del listado de comandas
-     * eme devuelve true
-     * @return boolean
+     * Dado un objeto cliente se setea el mismo a la mesa
+     * @param objCliente Object que debe tener como atributos al menos un id
      */
-    tieneComandaModificada: function(){
-        var cc, ddcc;
-        for (var c in this.Comanda() ) {
-            cc = this.Comanda()[c];
-            for (var dc in cc.DetalleComanda() ){
-                // caa detalle comanda dentro del array de comandas
-                ddcc = cc.DetalleComanda()[dc];
-                if ( ddcc.modificada() == true ) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    },
-    
-    
-    
-    handleAjaxSuccess: function(data, action, method) {
-        ko.mapping.updateFromJS( this, data[this.model] );  
-    },
-    
-    
     setCliente: function( objCliente ){
         var ctx = this, clienteId = null;
         
@@ -1086,33 +1128,8 @@ Mesa.prototype = {
                 ctx.Cliente(null);
             }
         });
-    },
-    
-    
-    /**
-     * Devuelve un texto con la hora
-     * si la mesa esta cerrada, dice "Cerró: 14:35"
-     * si esta aberta dice: "Abrió 13:22"
-     */
-    textoHora: function() {
-        var date, txt;
-        if ( this.getEstado() == MESA_ESTADOS_POSIBLES.cerrada ) {
-            txt = 'Cerró a las ';
-            if (typeof this.time_cerro == 'function') {
-                date =  mysqlTimeStampToDate(this.time_cerro());
-            }
-        } else {
-            txt = 'Abrió a las ';
-            if (typeof this.created == 'function') {
-                date = mysqlTimeStampToDate(this.created());            
-            }
-        }
-        if ( !date ) {
-            date = new Date();
-        }
-        return txt + date.getHours() + ':' + date.getMinutes() + 'hs';
     }
-    
+
 };
 
 /*--------------------------------------------------------------------------------------------------- Risto.Adicion.comanda
@@ -1205,7 +1222,7 @@ Risto.Adition.comandaFabrica.prototype = {
     comanda: {},
     
     // array de los sabores del producto seleccionado
-    currentSabores: function( ) { return [] },
+    currentSabores: function( ) {return []},
     
     productoSaborTmp: {}, //producto temporal (que esta esperando la seleccion de sabores)
     saboresSeleccionados: [], // listado de sabores seleccionados para el productoSaborTmp
@@ -1230,17 +1247,36 @@ Risto.Adition.comandaFabrica.prototype = {
     },
     
     
+    /**
+     *
+     * Inserta el DetalleComanda en la vista de la mesa
+     * inserta tantas comandas como se le hayan pasado de parametro
+     * @param comandaJsonCopy Object con los atributos de la comanda
+     * @param comanderas Array listado de comandas
+     */
+    __colocarListadoDeProductosEnVistaDeMesa: function( comandaJsonCopy, comanderas ){
+         // creo una nueva comanda para cada comandera
+        for (var com in comanderas ) {
+            comanderaComanda = new Risto.Adition.comanda( comandaJsonCopy );
+            comanderaComanda.DetalleComanda( comanderas[com] );
+          
+            this.mesa.Comanda.unshift( comanderaComanda );
+        }
+    },
+    
+    
     save: function() {
         if ( !this.mesa){
                 jQuery.error("no hay una mesa setteada. No se puede guardar una comanda de ninguna mesa");
                 return null;
         }
-            
+        
+        
         // separo la comanda generada en varias comandas
         // se genera 1 comanda por cada impresora que haya (comandera)
         var ccdc;
         var comanderas = [];
-        var comanderaComanda;
+        
         // separo los detalleComanda por comandera
         for (var dc in this.comanda.DetalleComanda()) {
             ccdc = this.comanda.DetalleComanda()[dc];
@@ -1255,19 +1291,36 @@ Risto.Adition.comandaFabrica.prototype = {
         }
         
         var comandaJsonCopy = {
-            mesa_id: this.comanda.mesa_id,
-            observacion: this.comanda.observacion(),
-            imprimir: this.comanda.imprimir()
+                mesa_id: this.mesa.id(),
+                observacion: this.comanda.observacion(),
+                imprimir: this.comanda.imprimir()
+            }
+        
+        if ( !this.puestoEnVistaDeMesa ) {
+            
+            this.__colocarListadoDeProductosEnVistaDeMesa(comandaJsonCopy, comanderas);
+            this.puestoEnVistaDeMesa = true;
         }
         
+        // si la mesa no tiene ID es porque aun no se guardo.. entonces vuelvo 
+        // a llamar a este metodo pero dentro de un rato
+        if ( !this.mesa.id() ) {
+            var este = this;
+            setTimeout( function(){ 
+                este.save();
+            }, MESAS_RELOAD_INTERVAL); 
+            return null;
+        }
         
         // creo una nueva comanda para cada comandera
         for (var com in comanderas ) {
             comanderaComanda = new Risto.Adition.comanda( comandaJsonCopy );
             comanderaComanda.DetalleComanda( comanderas[com] );
             
-            this.mesa.Comanda.unshift( comanderaComanda );
-            $cakeSaver.send({url:urlDomain+'detalle_comandas/add.json', obj: comanderaComanda});
+            $cakeSaver.send({
+                url: urlDomain+'detalle_comandas/add.json', 
+                obj: comanderaComanda
+            });
         }
         
         
@@ -1417,21 +1470,6 @@ Risto.Adition.comandaFabrica.prototype = {
  * se lo suele encontrar muchas veces como objeto adicionar o adn() para simplicar
  */
 
-// intervalo en milisegundos en el que seran renovadas las mesas
-MESAS_RELOAD_INTERVAL = 5500;
-MESA_RELOAD_TIMEOUT = 60000;
-
-
-
-//Parametros de configuracion
-Risto.Adition.cubiertosObligatorios   = true;
-
-
-/**
- * extencion del objeto array
- *
- *
- * */
 Risto.Adition.adicionar = {
 
     yaMapeado: false,
@@ -1516,22 +1554,6 @@ Risto.Adition.adicionar = {
         return mozosTags;
     },
 
-
-    mesasButonizadas: function() {
-        var btns = [];
-        for(var m in this.mesas) {
-            btns.push(this.mesas[m].getButton());
-        }
-        return btns;
-    },
-
-    mozosButonizados: function() {
-        var btns = [];
-        for(var m in this.mozos) {
-            btns.push(this.mozos[m].getButton());
-        }
-        return btns;
-    },
 
     nombrificar: function(list, text) {
         for (var i in list) {
@@ -2422,6 +2444,14 @@ $('#listado-mesas').live('pageshow',function(event, ui){
 });
 
 
+
+$('#page-sabores').live('pageshow', function(){
+    var closeIcon = $('#page-sabores a[data-icon="delete"]');
+    closeIcon.bind('click',function(){
+                Risto.Adition.adicionar.currentMesa().currentComanda().limpiarSabores();
+                closeIcon.unbind('click');
+            });
+});
         
 
 /**
@@ -2461,7 +2491,7 @@ $(document).ready(function() {
         var btnMozo = $('.listado-mozos-para-mesas .ui-btn-active');
         var mozoId = 0;
         if ( btnMozo[0] ) {
-            mozoId = $(btnMozo[0]).attr('mozoId');
+            mozoId = $(btnMozo[0]).attr('data-mozo-id');
         }
         mostrarMesasDeMozo(mozoId);
     });
@@ -2479,6 +2509,10 @@ $(document).ready(function() {
         Risto.Adition.adicionar.nuevaComandaParaCurrentMesa();
     });
     
+    $('#comanda-add-guardar').click(function(){
+        Risto.Adition.adicionar.currentMesa().currentComanda().save()
+    });
+    
     $('A[href="#mesa-cobrar"]').live('click',function(){
         Risto.Adition.adicionar.pagos( [] );
     });
@@ -2489,19 +2523,19 @@ $(document).ready(function() {
     
     
     
-    $('#mesa-cerrar').click(function(){
+    $('#mesa-cerrar').bind('click', function(){
         var mesa = Risto.Adition.adicionar.currentMesa();
         mesa.cambioDeEstadoAjax( MESA_ESTADOS_POSIBLES.cerrada );
     });
     
-    $('#mesa-reimprimir').click(function(){
+    $('#mesa-reimprimir').bind('click', function(){
         var mesa = Risto.Adition.adicionar.currentMesa();
         var url = mesa.urlReimprimirTicket();
         $.get(url);
     });
     
     
-    $('#mesa-borrar').click(function(){
+    $('#mesa-borrar').bind('click', function(){
         if (window.confirm('Seguro que desea borrar la mesa '+Risto.Adition.adicionar.currentMesa().numero())){
             var mesa = Risto.Adition.adicionar.currentMesa();
             mesa.cambioDeEstadoAjax( MESA_ESTADOS_POSIBLES.borrada );
@@ -2509,13 +2543,13 @@ $(document).ready(function() {
     });
     
     
-    $('#mesa-reabrir').click(function(){
+    $('#mesa-reabrir').bind('click',function(){
         var mesa = Risto.Adition.adicionar.currentMesa();
         mesa.cambioDeEstadoAjax( MESA_ESTADOS_POSIBLES.reabierta );
     });
     
     
-    $('#mesa-eliminar-cliente').live('click',function(){
+    $('#mesa-eliminar-cliente').bind('click',function(){
         Risto.Adition.adicionar.currentMesa().setCliente(null);
         return true;
     });
@@ -2523,7 +2557,7 @@ $(document).ready(function() {
     
     // al hacer click n un mozo del menu bar
     // se muestran solo lasmesas de ese mozo
-    $('.listado-mozos-para-mesas a').click(function(){
+    $('.listado-mozos-para-mesas a').bind('click',function(){
         var mId = undefined;
         mostrarMesasDeMozo( $(this).attr('data-mozo-id') );
         
@@ -2564,34 +2598,31 @@ $(document).ready(function() {
                  
 });
 
-$('#page-sabores').live('pageshow', function(){
-    var closeIcon = $('#page-sabores a[data-icon="delete"]');
-    closeIcon.bind('click',function(){
-                Risto.Adition.adicionar.currentMesa().currentComanda().limpiarSabores();
-                closeIcon.unbind('click');
-            });
-});
-//
 
 
 function agregarNuevaMesa(e){
     e.preventDefault();
     
-    var rta = $('#form-mesa-add').serializeArray();
-        
+    var rta = $('#form-mesa-add').serializeArray();    
     var miniMesa = {};
+    
     for (var r in rta ) {
-        if (!rta[r].value){
-            alert("Debe completar numero de mozo y de mesa");
+        if (rta[r].name == 'numero' && !rta[r].value){
+            alert("Debe completar numero de mesa");
+            return false;
+        }
+        
+        if (rta[r].name == 'cant_comensales' && !rta[r].value && Risto.Adition.cubiertosObligatorios){
+            alert("Debe indicar la cantidad de cubiertos");
             return false;
         }
         miniMesa[rta[r].name] = rta[r].value;
     }
     
-    var mesa = Risto.Adition.adicionar.crearNuevaMesa(miniMesa);
+    var mesa = Risto.Adition.adicionar.crearNuevaMesa( miniMesa );
     Risto.Adition.adicionar.setCurrentMesa( mesa );
     document.getElementById('form-mesa-add').reset(); // limpio el formulario
-    $('.ui-dialog').dialog('close');
+    $.mobile.changePage('#mesa-view');
 
     return false;
 }

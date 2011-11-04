@@ -15,18 +15,32 @@ var Mesa = function(mozo, jsonData) {
         this.totalCalculadoNeto = ko.dependentObservable(function(){
             var tam = this.Comanda().length;
             
-//            var total = 0;
-//            
-//            for (var c in this.Comanda()){
-//                for (dc in this.Comanda()[c].DetalleComanda() ){
-//                    total += parseFloat( this.Comanda()[c].DetalleComanda()[dc].precio() * this.Comanda()[c].DetalleComanda()[dc].realCant() );
-//                }
-//            }
-//            
-//            return Math.round( total*100)/100;
-             return this.totalStatic();
+            var total = 0;
+            
+            for (var c in this.Comanda()){
+                for (dc in this.Comanda()[c].DetalleComanda() ){
+                    total += parseFloat( this.Comanda()[c].DetalleComanda()[dc].precio() * this.Comanda()[c].DetalleComanda()[dc].realCant() );
+                }
+            }
+            
+            return Math.round( total*100)/100;
         }, this);
         
+        
+        /**
+         *
+         *  Depende del cliente.
+         *  es un atajo al porcentaje de descuento que tiene el cliente
+         */
+        this.porcentajeDescuento = function(){
+            var porcentaje = 0;
+            if (this.Cliente() && !this.Cliente().hasOwnProperty('length') &&  this.Cliente().Descuento()){
+                if ( typeof this.Cliente().Descuento().porcentaje == 'function') {
+                    porcentaje = this.Cliente().Descuento().porcentaje();
+                }
+            }
+            return parseFloat( porcentaje );
+        }
         
         /**
          *Devuelve el total aplicandole los descuentos
@@ -36,11 +50,10 @@ var Mesa = function(mozo, jsonData) {
             var total = this.totalCalculadoNeto(), 
                 dto = 0,
                 totalText = total;
+               
+            dto = Math.floor(total * this.porcentajeDescuento() / 100);
+            totalText = total - dto;
             
-            if (this.Cliente() && !this.Cliente().hasOwnProperty('length') &&  this.Cliente().Descuento()){
-                dto = Math.floor(total * this.Cliente().Descuento().porcentaje() / 100);
-                totalText = total - dto;
-            }
             return totalText;
         }, this);
         
@@ -50,22 +63,20 @@ var Mesa = function(mozo, jsonData) {
          *@return String
          */
         this.textoTotalCalculado = ko.dependentObservable(function(){
-            var total = this.totalCalculadoNeto(), dto = 0, totalText = '$-';
+            var total = this.totalCalculadoNeto(), 
+                dto = 0, 
+                totalText = '$'+total ;
             
-            for (var c in this.Comanda()){
-                for (dc in this.Comanda()[c].DetalleComanda() ){
-                    totalText = '$'+total;
-                }
-            }
             
             if (this.Cliente() && !this.Cliente().hasOwnProperty('length') && this.Cliente().tipofactura().toLowerCase() == 'a'){               
                 totalText = 'Factura "A" '+totalText;
             }
-            
-            if (this.Cliente() && !this.Cliente().hasOwnProperty('length') && this.Cliente().Descuento()){
-                dto = Math.round( Math.floor( total * this.Cliente().Descuento().porcentaje() / 100 ) *100 ) /100;
-                totalText = totalText+' - [Dto '+this.Cliente().Descuento().porcentaje()+'%] $'+dto+' = $'+ Math.round( (total - dto)*100)/100;
+
+            if ( this.porcentajeDescuento() ) {
+                dto = Math.round( Math.floor( total * this.porcentajeDescuento()  / 100 ) *100 ) /100;
+                totalText = totalText+' - [Dto '+this.porcentajeDescuento()+'%] $'+dto+' = $'+ this.totalCalculado();
             }
+            
             return totalText;
         }, this);
         
@@ -82,21 +93,6 @@ var Mesa = function(mozo, jsonData) {
             return MESA_ESTADOS_POSIBLES.cerrada == this.estado();
         }, this);
         
-        
-        /**
-         * dependentObservable
-         * 
-         * chequea el ID del estado y devuelve el id del mismo
-         * @return integer
-         *
-         */
-        this.estado_id = ko.dependentObservable(function(){
-            var est = this.estado();
-            if (est){
-                return est.id;
-            }
-            return 0;
-        }, this);
         
         
         /**
@@ -172,25 +168,26 @@ var Mesa = function(mozo, jsonData) {
 
 Mesa.prototype = {
     model       : 'Mesa',
-    id          : function( ) { return 0 },
-    total       : function( ) { return 0 },
-    numero      : function( ) { return 0 },
-    mozo_id     : function( ) { return 0 },
-    created     : function( ) { return 0 },
-    time_cerro  : function( ) { return 0 },
+    id          : function( ) {return 0},
+    total       : function( ) {return 0},
+    numero      : function( ) {return 0},
+    mozo_id     : function( ) {return 0},
+    created     : function( ) {return 0},
+    time_cerro  : function( ) {return 0},
     Cliente     : function( ) { }, 
-    estado      : function( ) { return 0 },
-    cant_comensales: function( ) { return 0 },
+    estado      : function( ) {return 0}, // objeto estado
+    estado_id     : function( ) {return 0}, // bbdd estado_id
+    cant_comensales: function( ) {return 0},
     
     // es la comanda que actualmente se esta haciendo objeto comandaFabrica
     /** @param currentComanda comandaFabrica **/
     currentComanda: function( ) { },
-    Comanda     : function( ) { return [] },
-    Pago        : function( ) { return [] }, // cantidad de pagos asociados a la mesa
+    Comanda     : function( ) {return []},
+    Pago        : function( ) {return []}, // cantidad de pagos asociados a la mesa
     
     
     // attributos
-    mozo: function( ) { return {} },
+    mozo: function( ) {return {}},
     
     /**
      * es timeCreated o sea la fecha de creacion del mysql timestamp
@@ -217,6 +214,7 @@ Mesa.prototype = {
         this.mozo_id        = this.mozo().id;
         this.Cliente        = ko.observable();
         this.estado         = ko.observable();
+        this.estado_id         = ko.observable();
         this.Pago           = ko.observableArray( [] );
         this.cant_comensales= ko.observable(0);
         var mapOps          = {};
@@ -224,19 +222,30 @@ Mesa.prototype = {
         
         // si vino jsonData mapeo con koMapp
         if ( jsonData ) {
-            if (jsonData.Cliente && jsonData.Cliente.id){
-                this.Cliente( new Risto.Adition.cliente(jsonData.Cliente) );
-            } else {               
-                this.Cliente( null );
-            }
-            delete jsonData.Cliente;
+//            if (jsonData.Cliente && jsonData.Cliente.id){
+//                this.Cliente( new Risto.Adition.cliente(jsonData.Cliente) );
+//            } else {               
+//                this.Cliente( null );
+//            }
+//            delete jsonData.Cliente;
             
             // si aun no fue mappeado
             mapOps = {
-                'ignore': ["Cliente"],
+//                'ignore': ["Cliente"],
                 'Comanda': {
                     create: function(ops) {
                         return new Risto.Adition.comanda(ops.data);
+                    },
+                    key: function(data) {
+                        return ko.utils.unwrapObservable( data.id );
+                    }
+                },
+                'Cliente': {
+                    create: function(ops) {
+                        return new Risto.Adition.cliente(ops.data);
+                    },
+                    key: function(data) {
+                        return ko.utils.unwrapObservable( data.id );
                     }
                 }
             }
@@ -426,6 +435,25 @@ Mesa.prototype = {
     setEstado: function(nuevoestado){
         this.estado(nuevoestado);
         this.__triggerEventCambioDeEstado();
+    },
+    
+    /**
+     * Cambia el estado de la mesa y genera un disparador del evento
+     */
+    setEstadoById: function(nuevoestado_id){
+        var estado_id = nuevoestado_id || this.estado_id();
+        
+        for (var est in MESA_ESTADOS_POSIBLES) {
+            console.info("leyendo el estado "+est);
+            console.debug(MESA_ESTADOS_POSIBLES[est]);
+            console.debug( MESA_ESTADOS_POSIBLES[est].id );
+            console.debug( estado_id);
+            if ( MESA_ESTADOS_POSIBLES[est].id == estado_id ) {
+                this.setEstado(MESA_ESTADOS_POSIBLES[est]);
+                return this.getEstado();
+            }
+        }
+        return false;
     },
 
     /**

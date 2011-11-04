@@ -3,7 +3,7 @@ class DetalleComandasController extends AppController {
 
 	var $name = 'DetalleComandas';
 	var $helpers = array('Html', 'Form');
-	var $components = array( 'Printer', 'Actualizador');
+	var $components = array( 'Printer');
 
 	function index() {
 		$this->DetalleComanda->recursive = 0;
@@ -42,7 +42,6 @@ class DetalleComandasController extends AppController {
 
 	
 	function sacarProductos(){
-            $this->Actualizador->actualizar();
 		$this->autoRender = false;
 		$ok = false;
 		//Configure::write('debug',1);
@@ -54,7 +53,6 @@ class DetalleComandasController extends AppController {
 	}
 	
 	function add(){
-		$this->Actualizador->actualizar();
 		$ok = false;
                 
 		$imprimir = $this->data['Comanda']['imprimir'] ? true : false;
@@ -130,36 +128,51 @@ class DetalleComandasController extends AppController {
 	}
 
 	function edit($id = null) {
-            $this->Actualizador->actualizar();
-		if (!$id && empty($this->data)) {
-			$this->Session->setFlash(__('Invalid Comanda', true));
-			$this->redirect(array('action'=>'index'));
-		}
-		if (!empty($this->data)) {
-			if ($this->DetalleComanda->save($this->data)) {
-                            if($this->RequestHandler->isAjax()){
-                                return 1;
-                            }
-                            $this->Session->setFlash(__('The Comanda has been saved', true));
-				$this->redirect(array('action'=>'index'));
-			} else {
-                            if($this->RequestHandler->isAjax()){
-                                return "edit failed";
-                            }
-                            $this->Session->setFlash(__('The Comanda could not be saved. Please, try again.', true));
-			}
-		}
+            
+            if($this->RequestHandler->isAjax()){
+                $this->autoRender = false;
+            }
+                        
+            if (!$id && empty($this->data)) {
+                    $this->Session->setFlash(__('Invalid Comanda', true));
+                    $this->redirect(array('action'=>'index'));
+            }
+            if (!empty($this->data)) {
+                    if ($this->DetalleComanda->save($this->data)) {
+                        if($this->RequestHandler->isAjax()){
+                            $dMesa = $this->DetalleComanda->find('first', array(
+                                'contain' => array('Comanda(mesa_id)'),
+                                'conditions' => array('DetalleComanda.id' => $this->data['DetalleComanda']['id'])
+                            ));
+                            $this->DetalleComanda->Comanda->Mesa->id = $dMesa['Comanda']['mesa_id'];
+                            $this->DetalleComanda->Comanda->Mesa->saveField('modified', $dMesa['DetalleComanda']['modified'], false);
+                            return 1;
+                        }
+                        $this->Session->setFlash(__('The Comanda has been saved', true));
+                            $this->redirect(array('action'=>'index'));
+                    } else {
+                        if($this->RequestHandler->isAjax()){
+                            return "edit failed";
+                        }
+                        $this->Session->setFlash(__('The Comanda could not be saved. Please, try again.', true));
+                    }
+            }
+            
+            if (empty($this->data)) {
+                        $this->data = $this->DetalleComanda->read(null, $id);
+            }           
+             
+            if ( !$this->RequestHandler->isAjax() ) {
                 
-		if (empty($this->data)) {
-			$this->data = $this->DetalleComanda->read(null, $id);
-		}
-		$productos = $this->DetalleComanda->Producto->find('list');
-		$mesas = $this->DetalleComanda->Mesa->find('list');
-		$this->set(compact('productos','mesas'));
+                $productos = $this->DetalleComanda->Producto->find('list');
+                $mesas = $this->DetalleComanda->Comanda->Mesa->find('list');
+                $this->set(compact('productos','mesas'));
+            } else {
+                return 1;
+            }
 	}
 
 	function delete($id = null) {
-            $this->Actualizador->actualizar();
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for Comanda', true));
 			$this->redirect(array('action'=>'index'));

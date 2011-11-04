@@ -36,6 +36,21 @@ class Comanda extends AppModel {
 								'order' => ''
 			)
 	);
+        
+        
+        
+        function beforeSave($options = array()) {
+           $this->data[$this->name]['modified'] = date('Y-m-d H:i:s', strtotime('now'));
+           
+           return parent::beforeSave($options);
+        }
+       
+        
+        function afterSave(){
+            $this->Mesa->id = $this->data['Comanda']['mesa_id'];
+            $this->Mesa->saveField('modified', date('Y-m-d H:i:s', strtotime('now')), false);
+            return true;
+        }
 	
 	
 	function dame_las_comandas_abiertas(){
