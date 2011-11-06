@@ -1,6 +1,7 @@
 <!DOCTYPE html> 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+    
         <script type="text/javascript">
         <!--
             // Inicializacion de variable global de url
@@ -12,6 +13,8 @@
 	<title>
 		<?php echo $title_for_layout; ?>
 	</title>
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1"> 
     
         <base href="<?= $html->url('/')?>" />
             <?php
@@ -114,8 +117,10 @@
         if (!empty($animar)){ 
             if (!$animar) {
             ?>
-                $(document).bind('mobileinit', function(){
-                    $.mobile.defaultPageTransition = "none";
+                $(document).bind("mobileinit", function(){
+                  $.extend(  $.mobile , {
+                    defaultPageTransition: 'none'
+                  });
                 });
         <?php }} ?>
         

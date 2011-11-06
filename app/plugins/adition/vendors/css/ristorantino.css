@@ -337,3 +337,16 @@ ul.listado-mozos-para-mesas{
 #comanda-add-observacion TEXTAREA{
     width: 100%;
 }
+
+
+
+.btn-comanda-icon{
+    width: 15px;
+    position: relative;
+    left: -15px;
+}
+
+
+#comanda-add-menu .ui-header, #comanda-add-menu .ui-content, #comanda-add-menu .ui-footer { max-width: 100% !important;}
+
+/*.ui-dialog .ui-header, .ui-dialog .ui-content, .ui-dialog .ui-footer { max-width: 100% !important; }*/

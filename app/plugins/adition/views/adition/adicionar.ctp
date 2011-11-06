@@ -299,31 +299,34 @@
                         COMANDA-ADD
 
 -->
-<div data-role="page" id="comanda-add-menu">
-    <div  data-role="header"  data-position="inline">
-<!--        <a data-rel="back" data-transition="reverse" href="#">Cancelar</a>-->
+<div data-role="page" id="comanda-add-menu" class="comanda">
+    
 
-        <div style="margin-left: 40px; text-align: center; height: 40px; margin-top: 5px;">
+    <div data-role="content">
+        
+        <div  data-theme="c" style="height: 70px;">
+            <a data-role="button" data-inline="true" data-icon="back" data-rel="back" data-transition="reverse" href="#">volver</a>
+
             <h3 style="display: inline; text-align: center; margin-top: 8px;">Nueva Comanda para la mesa <span data-bind="text: adn().currentMesa().numero"></span></h3>
-            
+
             <span style="float: right; margin-right: 10px;">
+
+                <a href="#" data-role="button" data-inline="true" title="Actualizar Menú" onclick="Risto.Adition.menu.update()"><?php echo $html->image('refresh.png', array('class'=> 'btn-comanda-icon'))?> Actualizar Menú</a>
+
+                <a href="#" data-role="button" data-inline="true" title="Agregar Observación" onclick="$('#comanda-add-observacion').toggle('slow').focus();"><?php echo $html->image('pencil_48.png', array('class'=> 'btn-comanda-icon'))?>Observación</a>
                 
-                <a href="#" title="Actualizar Menú" onclick="Risto.Adition.menu.update()"><?php echo $html->image('refresh.png', array('width'=> 35))?></a>
+                <a href="#" data-role="button" data-inline="true" title="Haga click para desactivar la impresión de comanda" data-bind="click: function(){adn().currentMesa().currentComanda().comanda.imprimir( 0 )}, visible: adn().currentMesa().currentComanda().comanda.imprimir()"><?php echo $html->image('print48.png', array('class'=> 'btn-comanda-icon'))?>Imprime</a>
+                <a href="#" data-role="button" data-inline="true" title="Haga click para activar impresión de comanda" data-bind="click: function(){adn().currentMesa().currentComanda().comanda.imprimir( 1 )}, visible: !adn().currentMesa().currentComanda().comanda.imprimir()" ><?php echo $html->image('dontprint48.png', array('class'=> 'btn-comanda-icon'))?>No Imprime</a>
                 
-                <a href="#" title="Agregar Observación" onclick="$('#comanda-add-observacion').toggle('slow').focus();"><?php echo $html->image('pencil_48.png', array('width'=> 35))?></a>
-                <a href="#" title="Haga click para desactivar la impresión de comanda" data-bind="click: function(){adn().currentMesa().currentComanda().comanda.imprimir( 0 )}, visible: adn().currentMesa().currentComanda().comanda.imprimir()"><?php echo $html->image('print48.png', array('width'=> 35))?></a>
-                <a href="#" title="Haga click para activar impresión de comanda" data-bind="click: function(){adn().currentMesa().currentComanda().comanda.imprimir( 1 )}, visible: !adn().currentMesa().currentComanda().comanda.imprimir()" ><?php echo $html->image('dontprint48.png', array('width'=> 35))?></a>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <a href="#mesa-view" data-role="button" id="comanda-add-guardar"  data-inline="true" data-icon="check" data-theme="b">Guardar</a>        
-                
+                <a href="#mesa-view" data-role="button" id="comanda-add-guardar"  data-inline="true" data-icon="check" data-theme="b">Guardar</a>
+
             </span>
         </div>
-    </div>
-
-    <div data-role="content">   
+        
+        
         <div style="display: none" id="comanda-add-observacion" class="ui-corner-bottom ui-overlay-shadow ui-content">
             <h4>Agregar observación general para la comanda</h4>
-            <textarea data-bind="value: adn().currentMesa().currentComanda().comanda.observacion, valueUpdate: 'keyup'" autofocus="autofocus" name="obs" class="obstext ui-input-text ui-body-null ui-corner-all ui-shadow-inset ui-body-a"></textarea>
+            <textarea style="width: 97%" data-bind="value: adn().currentMesa().currentComanda().comanda.observacion, valueUpdate: 'keyup'" autofocus="autofocus" name="obs" class="obstext ui-input-text ui-body-null ui-corner-all ui-shadow-inset ui-body-a"></textarea>
             <a href="#" onclick="$('#comanda-add-observacion').toggle('slow')" data-role="button">Aceptar</a>
         </div>
         <!--        PRODUCTOS SELECCIONADOS    -->

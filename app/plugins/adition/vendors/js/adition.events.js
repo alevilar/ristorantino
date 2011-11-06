@@ -80,13 +80,33 @@ $(document).ready(function() {
     
     // para refrescar las mesas segun el mozo marcado
     $(document).bind('adicionMesasActualizadas', function(){
-        var btnMozo = $('.listado-mozos-para-mesas .ui-btn-active');
-        var mozoId = 0;
-        if ( btnMozo[0] ) {
-            mozoId = $(btnMozo[0]).attr('data-mozo-id');
+        /**
+         *
+         *  definicion del objeto que manejara las distintas respuestas dependiendo de la pagina activa
+         *  Cada clave de este objeto es el ID de la page de JQM utilizada
+         *  
+         * */
+        var onMesasActualizadasHandlerByPage = {
+            'listado-mesas': function(){
+                var btnMozo = $('.listado-mozos-para-mesas .ui-btn-active');
+                var mozoId = 0;
+                if ( btnMozo[0] ) {
+                    mozoId = $(btnMozo[0]).attr('data-mozo-id');
+                }
+                mostrarMesasDeMozo(mozoId);
+            },
+            'mesa-view': function() {
+                $('#comanda-detalle-collapsible').trigger('create');
+            }
         }
-        mostrarMesasDeMozo(mozoId);
+        
+        // llamar a la funcion correspondiente segun la pagina en la que estoy
+        if ( $.mobile.activePage[0].id && onMesasActualizadasHandlerByPage.hasOwnProperty( $.mobile.activePage[0].id) ) {
+            onMesasActualizadasHandlerByPage[$.mobile.activePage[0].id].call();
+        }
+        
     });
+    
     
     
     // Form SUBMITS
@@ -173,6 +193,7 @@ $(document).ready(function() {
     });
     
     
+    // Al apretar el boton de cobro de pago procesa los pagos correspondientes
     $('#mesa-pagos-procesar').click(function(){
         // lipieza de pagos, selecciono solo los que se les haya agregado algun valor en el input
         for (var p in Risto.Adition.adicionar.pagos() ) {

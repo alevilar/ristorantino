@@ -1,5 +1,6 @@
 <?php
 
-$mesas['time'] = $mesasLastUpdatedTime; // curren Unix server time
+$vec['mesas'] = $mesas;
+$vec['time'] = $mesasLastUpdatedTime; // curren Unix server time
 
-echo json_encode($mesas);
+echo json_encode($vec);

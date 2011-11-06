@@ -51,16 +51,16 @@ Risto.Adition.adicionar = {
         var primeraVez = true;
         worker.onmessage = function (evt) {
             
-            if ( evt.data.created && evt.data.created.mozos && evt.data.created.mozos.length ) {
-                Risto.Adition.adicionar.__crearMozosConMesasAbiertas( evt.data.created , primeraVez);
-                primeraVez = false;
+            if ( evt.data && evt.data.mesas ) {
+                for ( var cbk in evt.data.mesas ) {
+                    if ( typeof Risto.Adition.adicionar.handleMesasRecibidas[cbk] == 'function' ) {
+                        Risto.Adition.adicionar.handleMesasRecibidas[cbk].call( Risto.Adition.adicionar, evt.data.mesas[cbk] );
+                    } else {
+                        throw cbk + ' vino como opción en el arrar de mesas, pero no es una función válida que pueda manejar el handleMesasRecibidas';
+                        Error('no es una funcion');
+                    }
+                }
             }
-            
-            if ( evt.data.updated && evt.data.updated.mozos && evt.data.updated.mozos.length ) {
-                Risto.Adition.adicionar.__actualizarMozosConMesasAbiertas( evt.data.updated , primeraVez);
-                primeraVez = false;
-            }
-            
             
             if ( evt.data.time ) {
                 Risto.Adition.adicionar.mesasLastUpdatedTime( evt.data.time );
@@ -236,55 +236,129 @@ Risto.Adition.adicionar = {
         $(document).trigger(event);
     },
     
-
+    
     /**
-     * 
-     * Recibiendo un json con el listado de mozos, que a su vez 
-     * cada uno tiene el listado de mesas abiertas de c/u, actualiza 
-     * el listado de mesas de la adicion
-     * 
+     *
+     *  Este objeto maneja las mesas recibidas con el json mozos/mesas_abiertas.json
+     *  
+     *  Cada uno de los keys, son las claves recibidas en el json que viene de esas mesas recibidas
+     *
      */
-    __crearMozosConMesasAbiertas: function( data ) {
+    handleMesasRecibidas: {
+         /**
+         * 
+         * Recibiendo un json con el listado de mozos, que a su vez 
+         * cada uno tiene el listado de mesas abiertas de c/u, actualiza 
+         * el listado de mesas de la adicion
+         * 
+         */
+        created: function( data ){
+            if (!data.mozos) return -1;
+
+            
+            if ( this.mesas().length ) {
+                // si ya hay mesas entonces meto las mesas nuevas de forma indidual
+                var mozo;
+                
+                for ( var z in data.mozos ) {
+                    mozo = this.findMozoById(  data.mozos[z].id );
+                    for ( var m in data.mozos[z].mesas ) {
+                        // si no esta en el listado de mesas, la agrego
+                        if ( !this.findMesaById( data.mozos[z].mesas[m].id ) ) {
+                            new Mesa(mozo, data.mozos[z].mesas[m] );
+                        }
+                    }
+                }
+            } else {
+                // si no habia mesas, entonces debo hacer todo el proceso de creacion con el mapping
+                var mapOps = {
+                    'mozos': {
+                        create: function(ops) {
+                            return new Mozo(ops.data);
+                        },
+                        key: function(data) {
+                            return ko.utils.unwrapObservable(data.id);
+                        }
+                    }
+                }
+
+                ko.mapping.fromJS( data, mapOps, Risto.Adition.adicionar );
+            }
+            
+
+            $(document).trigger('adicionMesasActualizadas');
+        },
         
-        if (!data.mozos) return -1;
         
-        var mapOps = {
-            'mozos': {
-                create: function(ops) {
-                    return new Mozo(ops.data);
-                },
-                key: function(data) {
-                    return ko.utils.unwrapObservable(data.id);
+        /**
+         * 
+         * Recibiendo un json con el listado de mozos, que a su vez 
+         * cada uno tiene el listado de mesas abiertas de c/u, actualiza 
+         * el listado de mesas de la adicion
+         * 
+         */
+        modified: function( data ) {
+            if (!data.mozos) return -1;
+            var mesaEncontrada;
+            for(var z in data.mozos){
+                for( var m in data.mozos[z].mesas ) {
+                    mesaEncontrada = Risto.Adition.adicionar.findMesaById( data.mozos[z].mesas[m].id );
+                    ko.mapping.fromJS( data.mozos[z].mesas[m], {}, mesaEncontrada );
+                    mesaEncontrada.setEstadoById();
                 }
             }
-        }
-
-        return ko.mapping.fromJS( data, mapOps, Risto.Adition.adicionar );
+            $(document).trigger('adicionMesasActualizadas');
+            return 1;
+        },
         
-        $(document).trigger('adicionMesasActualizadas');
-    },
+        
+        /**
+         * 
+         * Recibiendo las mesas cobradas las manejo 
+         * 
+         */
+        cobradas: function( data ) {
+            if (!data.mozos) return -1;
+            var mesaEncontrada, i;
+            for (var z in data.mozos) {
+                for( var m in data.mozos[z].mesas ) {
+                    mesaEncontrada = Risto.Adition.adicionar.findMesaById( data.mozos[z].mesas[m].id );
+                    i = Risto.Adition.adicionar.mesas().indexOf( mesaEncontrada );
+                    ko.mapping.fromJS( data.mozos[z].mesas[m], {}, mesaEncontrada );
+                    mesaEncontrada.setEstadoById();
+                    setTimeout(function(){
+                        Risto.Adition.adicionar.mesas.splice( i , 1);
+                        delete mesaEncontrada;
+                        alert("la borre");
+                    }, 10000);
 
-    /**
-     * 
-     * Recibiendo un json con el listado de mozos, que a su vez 
-     * cada uno tiene el listado de mesas abiertas de c/u, actualiza 
-     * el listado de mesas de la adicion
-     * 
-     */
-    __actualizarMozosConMesasAbiertas: function( data ) {
-        if (!data.mozos) return -1;
-        var mesaEncontrada;
-        for(var z in data.mozos){
-            for( var m in data.mozos[z].mesas ) {
-                console.info('actualice la mesa '+ data.mozos[z].mesas[m].id);
-                mesaEncontrada = Risto.Adition.adicionar.findMesaById( data.mozos[z].mesas[m].id );
-                console.info(data.mozos[z].mesas[m]);
-                ko.mapping.fromJS( data.mozos[z].mesas[m], {}, mesaEncontrada );
-                console.info( mesaEncontrada.setEstadoById() );
+                }
             }
-        }
+            
+            return 1;
+        },
         
-        $(document).trigger('adicionMesasActualizadas');
+        
+        /**
+         * 
+         * Manejo de las mesas eliminadas
+         * 
+         */
+        deleted: function( data ) {
+            if (!data.mozos) return -1;
+            var mesaEncontrada, i;
+            for (var z in data.mozos) {
+                for( var m in data.mozos[z].mesas ) {
+                    mesaEncontrada = Risto.Adition.adicionar.findMesaById( data.mozos[z].mesas[m].id );
+                    if ( mesaEncontrada ) {
+                        mesaEncontrada.mozo().sacarMesa( mesaEncontrada );
+                        delete mesaEncontrada;
+                    }
+                }
+            }
+            $(document).trigger('adicionMesasActualizadas');
+            return 1;
+        }
     },
     
     

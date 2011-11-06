@@ -444,10 +444,6 @@ Mesa.prototype = {
         var estado_id = nuevoestado_id || this.estado_id();
         
         for (var est in MESA_ESTADOS_POSIBLES) {
-            console.info("leyendo el estado "+est);
-            console.debug(MESA_ESTADOS_POSIBLES[est]);
-            console.debug( MESA_ESTADOS_POSIBLES[est].id );
-            console.debug( estado_id);
             if ( MESA_ESTADOS_POSIBLES[est].id == estado_id ) {
                 this.setEstado(MESA_ESTADOS_POSIBLES[est]);
                 return this.getEstado();

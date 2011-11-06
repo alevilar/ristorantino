@@ -278,7 +278,8 @@ class MesasController extends AppController {
     function abrirMesa(){
         
         $insertedId = 0;
-        if (!empty($this->data['Mesa'])){
+        if (!empty($this->data['Mesa'])) {
+            $this->data['Mesa']['estado_id'] = MESA_ABIERTA;
 //            unset( $this->data['Mesa']['created'] );
             if ( $this->Mesa->save($this->data) ){
                 $insertedId = $this->Mesa->getLastInsertId();
