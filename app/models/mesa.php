@@ -106,16 +106,94 @@ class Mesa extends AppModel {
 	}
 
 
+        
+        function calcular_total_productos ($id = null) {
+            if (!empty($id)) $this->id = $id;
+            
+            $total =  $this->query("
+                select sumadas.mesa_id as mesa_id,sum(total) as subtotal, cant_comensales
+                from (
+                        select c.mesa_id as mesa_id, sum(s.precio*(dc.cant-dc.cant_eliminada)) as total
+                        from comandas c
+                        left join detalle_comandas dc on (dc.comanda_id =  c.id)
+                        left join detalle_sabores ds on (ds.detalle_comanda_id =  dc.id)
+                        left join sabores s on (s.id = ds.sabor_id)
+                        where 
+                        c.mesa_id = $this->id AND
+                        (dc.cant-dc.cant_eliminada) > 0
+                        group by mesa_id
+                UNION ALL
+                select c.mesa_id as mesa_id, sum(p.precio*(dc.cant-dc.cant_eliminada)) as total
+                        from comandas c
+                        left join detalle_comandas dc on (dc.comanda_id = c.id)
+                        left join productos p on (dc.producto_id = p.id)
+                        where 
+                        c.mesa_id = $this->id AND
+                        (dc.cant-dc.cant_eliminada) > 0
+                        group by mesa_id
+                ) as sumadas
+
+                LEFT JOIN
+
+                        (select id as mesa_id, cant_comensales
+                                from mesas
+                                where 
+                                id = $this->id
+                        ) as dd on (dd.mesa_id = sumadas.mesa_id)
+                        group by sumadas.mesa_id			
+
+                ");
+            
+            return $total[0][0]['subtotal'];
+        }
+        
+        
+        function calcular_descuentos($id = null) {
+            if (!empty($id)) $this->id = $id;
+            
+            $total =  $this->query("
+                select mesa_id, IF(ISNULL(descuentos.porcentaje), 0 , descuentos.porcentaje) as descuento
+		from detalle_comandas
+		left join comandas on (comanda_id = comandas.id)
+		left join mesas on (mesa_id = mesas.id)
+		left join clientes on (clientes.id = mesas.cliente_id )
+		left join descuentos on (clientes.descuento_id = descuentos.id)
+		where 
+		mesa_id = $this->id
+		group by mesa_id        
+            ");
+            return $total[0][0]['descuento'];
+            
+        }
+        
+        
+        
         function calcular_subtotal($id = null){
             if (!empty($id)) $this->id = $id;
-            $this->calcular_total();
-            if(!empty($this->total['Mesa']['subtotal'])){
-                return $this->total['Mesa']['subtotal'];
-            }else {
-                return 0;
+
+            if (!empty($this->total)) {
+                return $this->total['Mesa']['total'];
             }
+            
+            if ($this->cantidadDeProductos() == 0) return 0;
+            
+
+            $totalProductos = $this->calcular_total_productos();
+            $totalPorcentajeDescuento = $this->calcular_descuentos();
+            $conversionDescuento = 1-($totalPorcentajeDescuento/100);
+            
+            $this->recursive = -1;
+            $mesa = $this->read();
+            $this->total['Mesa']['cant_comensales'] = $mesa['Mesa']['cant_comensales'];
+                        
+            $valor_cubierto = Configure::read('Restaurante.valorCubierto') * $this->total['Mesa']['cant_comensales'];
+            $this->total['Mesa']['subtotal'] = $totalProductos + $valor_cubierto;
+            $this->total['Mesa']['total'] = cqs_round(  $this->total['Mesa']['subtotal'] * $conversionDescuento );
+            $this->total['Mesa']['descuento'] = $totalPorcentajeDescuento;
+
+            return $this->total['Mesa']['subtotal'];
         }
-	
+            
 
 	
 	/**
@@ -125,54 +203,10 @@ class Mesa extends AppModel {
 	function calcular_total($id = null){
             if (!empty($id)) $this->id = $id;
 
-            if (!empty($this->total)) {
-                return $this->total['Mesa']['total'];
+            if ( empty($this->total) ) {
+                $this->calcular_subtotal();
             }
             
-            if ($this->cantidadDeProductos() == 0) return 0;
-		$total =  $this->query("
-				select sumadas.mesa_id as mesa_id,sum(total) as subtotal, dd.descuento,  sum(total)*(1-dd.descuento/100) as total
-from (
-	select c.mesa_id as mesa_id, sum(s.precio*(dc.cant-dc.cant_eliminada)) as total
-	from comandas c
-	left join detalle_comandas dc on (dc.comanda_id =  c.id)
-	left join detalle_sabores ds on (ds.detalle_comanda_id =  dc.id)
-	left join sabores s on (s.id = ds.sabor_id)
-	where 
-	c.mesa_id = $this->id AND
-	(dc.cant-dc.cant_eliminada) > 0
-        group by mesa_id
-UNION ALL
-select c.mesa_id as mesa_id, sum(p.precio*(dc.cant-dc.cant_eliminada)) as total
-	from comandas c
-	left join detalle_comandas dc on (dc.comanda_id = c.id)
-	left join productos p on (dc.producto_id = p.id)
-	where 
-	c.mesa_id = $this->id AND
-	(dc.cant-dc.cant_eliminada) > 0
-        group by mesa_id
-) as sumadas
-
-LEFT JOIN
-
-	(select mesa_id, IF(ISNULL(descuentos.porcentaje), 0 , descuentos.porcentaje) as descuento
-		from detalle_comandas
-		left join comandas on (comanda_id = comandas.id)
-		left join mesas on (mesa_id = mesas.id)
-		left join clientes on (clientes.id = mesas.cliente_id )
-		left join descuentos on (clientes.descuento_id = descuentos.id)
-		where 
-		mesa_id = $this->id
-		group by mesa_id
-	) as dd on (dd.mesa_id = sumadas.mesa_id)
-	group by sumadas.mesa_id				
-										
-		");
-
-            $this->total['Mesa']['subtotal'] = $total[0][0]['subtotal'];
-            $this->total['Mesa']['total'] = cqs_round($total[0][0]['total']);
-            $this->total['Mesa']['descuento'] = $total[0]['dd']['descuento'];
-
             return $this->total['Mesa']['total'];
 	}
 	
@@ -181,11 +215,11 @@ LEFT JOIN
             if($id != 0) 	$this->id = $id;
 
 		$items = $this->Comanda->DetalleComanda->find('count',array(
-									'conditions'=>array(
-										'Comanda.mesa_id'=>$this->id,
-										'(DetalleComanda.cant - DetalleComanda.cant_eliminada) >'=>0),
-									'order'=>'Comanda.id ASC, Producto.categoria_id ASC, Producto.id ASC',
-									'contain'=>array('Producto','Comanda','DetalleSabor'=>'Sabor(name,precio)')
+                                                    'conditions'=>array(
+                                                            'Comanda.mesa_id'=>$this->id,
+                                                            '(DetalleComanda.cant - DetalleComanda.cant_eliminada) >'=>0),
+                                                    'order'=>'Comanda.id ASC, Producto.categoria_id ASC, Producto.id ASC',
+                                                    'contain'=>array('Producto','Comanda','DetalleSabor'=>'Sabor(name,precio)')
 						));
 
 		return $items;

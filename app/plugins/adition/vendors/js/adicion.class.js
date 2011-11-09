@@ -209,26 +209,6 @@ Risto.Adition.adicionar = {
     },
 
 
-    /**
-     *
-     * Dado un Json arma el listado de mozos
-     * @param json mozos
-     */
-    setMozos: function(mozos){
-        var mozoaux;
-        for (var m in mozos){
-            if (!$.isEmptyObject(mozos[m])) {
-                
-                mozoaux = new Mozo();
-                mozoaux.cloneFromJson(mozos[m].Mozo);
-                
-                mozoaux.User = mozos[m].User;
-                this.mozos.push(mozoaux);
-            }
-        }
-    },
-
-
     setCurrentMozo: function(mozo){
         this.currentMozo( mozo );
         var event = $.Event('adicionCambioMozo');
@@ -299,12 +279,13 @@ Risto.Adition.adicionar = {
          */
         modified: function( data ) {
             if (!data.mozos) return -1;
-            var mesaEncontrada;
+            var mesaEncontrada, 
+                mozo;
             for(var z in data.mozos){
+                mozo = Risto.Adition.adicionar.findMozoById( data.mozos[z].id );
                 for( var m in data.mozos[z].mesas ) {
                     mesaEncontrada = Risto.Adition.adicionar.findMesaById( data.mozos[z].mesas[m].id );
-                    ko.mapping.fromJS( data.mozos[z].mesas[m], {}, mesaEncontrada );
-                    mesaEncontrada.setEstadoById();
+                    mesaEncontrada.update( mozo, data.mozos[z].mesas[m]);
                 }
             }
             $(document).trigger('adicionMesasActualizadas');
@@ -440,7 +421,12 @@ Risto.Adition.adicionar.mesasCerradas = ko.dependentObservable(function(){
  * son los productos seleccionados
  */
 Risto.Adition.adicionar.productosSeleccionados = ko.dependentObservable( function(){
-    return this.currentMesa().currentComanda().comanda.DetalleComanda();    
+    if ( this.currentMesa() && this.currentMesa().currentComanda() && this.currentMesa().currentComanda().comanda && this.currentMesa().currentComanda().comanda.DetalleComanda()) {
+        return this.currentMesa().currentComanda().comanda.DetalleComanda();    
+    } else {
+        return [];
+    }
+    
 }, Risto.Adition.adicionar);     
 
 
@@ -449,7 +435,9 @@ Risto.Adition.adicionar.productosSeleccionados = ko.dependentObservable( functio
  * son los sabores de un producto seleccionado
  */
 Risto.Adition.adicionar.currentSabores = ko.dependentObservable( function(){
-    return this.currentMesa().currentComanda().currentSabores();    
+    if ( this.currentMesa() && this.currentMesa().currentComanda() && this.currentMesa().currentComanda().currentSabores() ) {
+        return this.currentMesa().currentComanda().currentSabores();    
+    }
 }, Risto.Adition.adicionar);   
 
 

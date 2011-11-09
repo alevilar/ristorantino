@@ -7,6 +7,8 @@
  * tambien se le puede pasar un jsonData para ser mappeado con knockout
  */
 var Mesa = function(mozo, jsonData) {
+        // agrego atributos generales
+        Risto.modelizar(this);
     
         /**
          *Devuelve el total neto, sin aplicar descuentos
@@ -15,7 +17,12 @@ var Mesa = function(mozo, jsonData) {
         this.totalCalculadoNeto = ko.dependentObservable(function(){
             var tam = this.Comanda().length;
             
-            var total = 0;
+            var valorPorCubierto = 0;
+            if ( typeof VALOR_POR_CUBIERTO != 'undefined') {
+                valorPorCubierto = VALOR_POR_CUBIERTO;
+            }
+            var cantCubierto = this.cant_comensales() * valorPorCubierto;
+            var total = cantCubierto;
             
             for (var c in this.Comanda()){
                 for (dc in this.Comanda()[c].DetalleComanda() ){
@@ -174,14 +181,14 @@ Mesa.prototype = {
     mozo_id     : function( ) {return 0},
     created     : function( ) {return 0},
     time_cerro  : function( ) {return 0},
-    Cliente     : function( ) { }, 
+    Cliente     : function( ) {return null}, 
     estado      : function( ) {return 0}, // objeto estado
     estado_id     : function( ) {return 0}, // bbdd estado_id
     cant_comensales: function( ) {return 0},
     
     // es la comanda que actualmente se esta haciendo objeto comandaFabrica
     /** @param currentComanda comandaFabrica **/
-    currentComanda: function( ) { },
+    currentComanda: function( ) { return new Risto.Adition.comandaFabrica()},
     Comanda     : function( ) {return []},
     Pago        : function( ) {return []}, // cantidad de pagos asociados a la mesa
     
@@ -204,6 +211,9 @@ Mesa.prototype = {
      *@constructor
      */
     initialize: function( mozo, jsonData ) {
+        
+        if ( typeof jsonData == 'undefined' ) return this;
+        
         this.id             = ko.observable();
         this.created        = ko.observable();
         this.total          = ko.observable( 0 );
@@ -212,22 +222,40 @@ Mesa.prototype = {
         this.currentComanda = ko.observable( new Risto.Adition.comandaFabrica() );
         this.Comanda        = ko.observableArray( [] );
         this.mozo_id        = this.mozo().id;
-        this.Cliente        = ko.observable();
+        this.Cliente        = ko.observable( null );
         this.estado         = ko.observable();
-        this.estado_id         = ko.observable();
+        this.estado_id      = ko.observable();
         this.Pago           = ko.observableArray( [] );
         this.cant_comensales= ko.observable(0);
-        var mapOps          = {};
+
+        // mapea el objeto this usando ko.mapping
+        this.__koMapp( jsonData, mozo);
         
-        
+        return this;
+    },
+    
+    /**
+     *  Actualiza el estado de la mesa con el json pasado
+     */
+    update: function( mozo, jsonData ) {
+        // mapea el objeto this usando ko.mapping
+        return this.__koMapp( jsonData, mozo );
+//        this.setEstadoById();  
+    },
+    
+    
+    __koMapp: function( jsonData, mozo ) {
+        var jsonData = jsonData || {},
+            mapOps          = {};
+            mozo = mozo || null;
         // si vino jsonData mapeo con koMapp
-        if ( jsonData ) {
-//            if (jsonData.Cliente && jsonData.Cliente.id){
-//                this.Cliente( new Risto.Adition.cliente(jsonData.Cliente) );
-//            } else {               
-//                this.Cliente( null );
-//            }
-//            delete jsonData.Cliente;
+        if ( jsonData != {} ) {
+            if (jsonData.Cliente && jsonData.Cliente.id){
+                this.Cliente( new Risto.Adition.cliente( jsonData.Cliente ) );
+            } else {               
+                this.Cliente( null );
+            }
+            delete jsonData.Cliente;
             
             // si aun no fue mappeado
             mapOps = {
@@ -239,38 +267,19 @@ Mesa.prototype = {
                     key: function(data) {
                         return ko.utils.unwrapObservable( data.id );
                     }
-                },
-                'Cliente': {
-                    create: function(ops) {
-                        return new Risto.Adition.cliente(ops.data);
-                    },
-                    key: function(data) {
-                        return ko.utils.unwrapObservable( data.id );
-                    }
                 }
             }
-            
-            if (mozo) {
-                // meto al mozo sin agregarle la mesa al listado porque seguramente vino en el json
-                this.setMozo(mozo, false);
-            }
-            
-            // meto el estado como Objeto Observable Estado
-            this.__inicializar_estado(jsonData);
-            
-        } else {
-            if (mozo) {
-                // meto al mozo agregandole al mozo
-                this.setMozo(mozo, true);
-            }
-            jsonData = {};
         }
         
-        // agrego atributos generales
-        Risto.modelizar(this);
-        
+        if ( mozo ) {
+            // meto al mozo sin agregarle la mesa al listado porque seguramente vino en el json
+            this.setMozo(mozo, false);
+        }
         ko.mapping.fromJS(jsonData, mapOps, this);
-       
+
+        // meto el estado como Objeto Observable Estado
+        this.__inicializar_estado( jsonData );
+        
         return this;
     },
     
@@ -330,7 +339,7 @@ Mesa.prototype = {
     urlReimprimirTicket: function(){return urlDomain+'mesas/imprimirTicket/'+this.id()},
     urlCerrarMesa: function(){return urlDomain+'mesas/cerrarMesa/'+this.id()},
     urlReabrir: function(){return urlDomain+'mesas/reabrir/'+this.id()},
-    urlAddCliente: function(clienteId){
+    urlAddCliente: function( clienteId ){
         var url = urlDomain+'mesas/addClienteToMesa/'+this.id();
         if (clienteId){
             url += '/'+clienteId;
@@ -620,13 +629,13 @@ Mesa.prototype = {
      * @param objCliente Object que debe tener como atributos al menos un id
      */
     setCliente: function( objCliente ){
-        var ctx = this, clienteId = null;
+        var ctx = this, 
+            clienteId = null;
         
-        if (objCliente) {
+        if ( objCliente ) {
             clienteId = objCliente.id;
         }
-        
-        $.get(this.urlAddCliente(clienteId),function(data){
+        $.get( this.urlAddCliente( clienteId ), function(data) {
             if ( data.Cliente ){
                 ctx.Cliente( new Risto.Adition.cliente(data.Cliente) );
             } else{

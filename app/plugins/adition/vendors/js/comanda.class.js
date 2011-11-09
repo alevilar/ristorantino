@@ -46,10 +46,12 @@ Risto.Adition.comanda.prototype = {
     productsStringListing: function(){
         var name = '';        
         for (var dc in this.DetalleComanda() ){
-            if (dc > 0){
-                name += ', ';
-            }        
-            name += this.DetalleComanda()[dc].realCant()+' '+this.DetalleComanda()[dc].Producto().name;
+            if ( this.DetalleComanda()[dc].realCant() ) {
+                if ( name ){
+                    name += ', ';
+                }        
+                name += this.DetalleComanda()[dc].realCant()+' '+this.DetalleComanda()[dc].Producto().name;
+            }
         }
         return name;
     },

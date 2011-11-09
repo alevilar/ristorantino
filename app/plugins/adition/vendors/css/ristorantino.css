@@ -347,6 +347,7 @@ ul.listado-mozos-para-mesas{
 }
 
 
-#comanda-add-menu .ui-header, #comanda-add-menu .ui-content, #comanda-add-menu .ui-footer { max-width: 100% !important;}
 
-/*.ui-dialog .ui-header, .ui-dialog .ui-content, .ui-dialog .ui-footer { max-width: 100% !important; }*/
+.dialog-arriba .ui-header{margin-top: 10px;}
+.dialog-ancho .ui-header, .dialog-ancho .ui-content, .dialog-ancho .ui-footer { max-width: 100% !important;}
+.dialog-reancho .ui-header, .dialog-reancho .ui-content, .dialog-reancho .ui-footer { max-width: 100% !important; width: 94% !important; margin-left: 2% !important;}

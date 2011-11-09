@@ -157,7 +157,7 @@ $(document).ready(function() {
         mesa.cambioDeEstadoAjax( MESA_ESTADOS_POSIBLES.cerrada );
     });
     
-    $('#mesa-reimprimir').bind('click', function(){
+    $('.mesa-reimprimir').bind('click', function(){
         var mesa = Risto.Adition.adicionar.currentMesa();
         var url = mesa.urlReimprimirTicket();
         $.get(url);
@@ -178,8 +178,8 @@ $(document).ready(function() {
     });
     
     
-    $('#mesa-eliminar-cliente').bind('click',function(){
-        Risto.Adition.adicionar.currentMesa().setCliente(null);
+    $('#mesa-eliminar-cliente').live('click',function(){
+        Risto.Adition.adicionar.currentMesa().setCliente( null );
         return true;
     });
     

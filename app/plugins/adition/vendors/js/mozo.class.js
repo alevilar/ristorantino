@@ -44,11 +44,16 @@ Mozo.prototype = {
     mesas   : function( ) {return []},
 
     initialize: function(jsonData) {
-        var mozoNuevo = this;
+        var mozoNuevo = this,
+            jsonData = jsonData || {},
+            mapOps  = {};
+
+        if ( jsonData == {} ) return this;
+        
         this.id     = ko.observable( 0 );
         this.numero = ko.observable( 0 );
         this.mesas  = ko.observableArray( [] );
-        var mapOps  = {};
+        
         
         if (jsonData) {
             // si aun no fue mappeado
@@ -59,10 +64,10 @@ Mozo.prototype = {
                     }
                 }
             }
-            ko.mapping.fromJS(jsonData, mapOps, this);
-        } else {
-            ko.mapping.fromJS({}, mapOps, this);
-        }
+            
+        } 
+        
+        ko.mapping.fromJS(jsonData, mapOps, this);
         return this;
     },
 

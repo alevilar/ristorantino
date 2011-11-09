@@ -129,6 +129,8 @@
         // intervalo en milisegundos en el que seran renovadas las mesas
         MESAS_RELOAD_INTERVAL = <?php echo Configure::read('Adicion.reload_interval')?>;
         MESA_RELOAD_TIMEOUT = <?php echo Configure::read('Adicion.reload_interval_timeout')?>;
+        
+        VALOR_POR_CUBIERTO = <?php echo Configure::read('Restaurante.valorCubierto')?>;
 
         //Parametros de configuracion
         Risto.Adition.cubiertosObligatorios   = <?php echo Configure::read('Adicion.cantidadCubiertosObligatorio')?'true':'false'?>;
