@@ -155,11 +155,10 @@ el ajax que verifica el estado de las mesas (si fue abierta o cerrada alguna. --
                 <span class="ui-btn-text">
                     <span class="mesa-numero" data-bind="text: numero"></span>
                     
-                    <br />
-                    <span class="mesa-time" data-bind="text: textoHora()"></span>
                 </span>
             </span>
             <span class="mesa-mozo" data-bind="text: mozo().numero"></span>
+            <span class="mesa-time" data-bind="text: textoHora()"></span>
         </a>
     </li>
 </script>
@@ -180,12 +179,10 @@ es igual al de las mesas de la adicion salvo que al hacer click tienen otro comp
             <span class="mesa-span ui-btn-inner">
                 <span class="ui-btn-text">
                     <span class="mesa-numero" data-bind="text: numero"></span>
-                    
-                    <br />
-                    <span class="mesa-time" data-bind="text: textoHora()"></span>
                 </span>
             </span>
             <span class="mesa-mozo" data-bind="text: mozo().numero"></span>
+            <span class="mesa-time" data-bind="text: textoHora()"></span>
         </a>
     </li>
 </script>
