@@ -1,3 +1,5 @@
+body{
+}
 
 ul.listado-adicion{
     list-style: none;
@@ -255,7 +257,7 @@ ul.listado-mozos-para-mesas{
 }
 
 
-.tipo_de_pagos ul{
+ul.tipo_de_pagos ,.tipo_de_pagos ul{
     margin: 0px;
     padding: 0px;
         
@@ -264,8 +266,7 @@ ul.listado-mozos-para-mesas{
 .tipo_de_pagos li{
     text-align: center;
     display: inline-block;
-    font-size: x-small;
-    margin: 0px 8px;
+    margin: 8px;
 }
 
 .tipo_de_pagos li a{

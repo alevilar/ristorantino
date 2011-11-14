@@ -38,29 +38,20 @@
                     echo $html->css($cssUserRole,'stylesheet', array('media'=>'screen'));
                 }
                 
-//                echo $javascript->link('todos');
+               
 
-
-                /*
-                 * 
-                 * ESTO SOLO PARA DESARROLLO, el de arriba va a produccion
-                 */
+                
 		echo $javascript->link( array(
-                    '/adition/js/cake_saver',
-                    'risto/risto',
-//                    'http://code.jquery.com/jquery-1.6.2.min.js',
                     'jquery/jquery-1.6.4',
-//                    'jquery/jquery-1.6.4.min',
                     'jquery/jquery.tmpl.min',
-//                    'jquery/jquery.periodicalupdater',
-                    
-//                    'jquery/fg.menu',
-                    'ristorantino/generic',
-                    
+
                     'knockout-1.2.1.debug',
-//                    'knockout.mapping.debug',
                     'knockout.mapping-2.0.debug',
-                    'knockout.updateData',
+                    
+                    '/adition/js/cake_saver',
+                    '/adition/js/risto',
+                    
+//                    'knockout.updateData',
                     
                     // OJO !! EL ORDEN IMPORTA !!
                     '/adition/js/adition.package',
@@ -70,35 +61,25 @@
                     '/adition/js/comanda.class',
                     '/adition/js/comanda_fabrica.class',
                     '/adition/js/adicion.class', // depende de Mozo, Mesa y Comanda
-                    
                     '/adition/js/producto',
                     '/adition/js/categoria',
                     '/adition/js/sabor.class',
                     '/adition/js/cliente.class',
                     '/adition/js/descuento.class',
                     '/adition/js/pago.class',
-                    
                     '/adition/js/detalle_comanda.class',
-                    
                     '/adition/js/ko_adicion_model',
                     '/adition/js/adition.events',
                     '/adition/js/menu',
-                    
 //                    'http://code.jquery.com/mobile/latest/jquery.mobile.min.js',
-//                    'jquery/jquery.mobile-1.0rc1.min',
                     'jquery/jquery.mobile-1.0rc2',
-//                    'jquery/jquery.easing.1.3',
-//                    'jquery/jquery.mobile.actionsheet',
-//                    'jquery/jquery.mobile.scrollview.js',
-//                    'jquery/keyboard/jquery.mousewheel',
-//                    'jquery/keyboard/jquery.keyboard',
-//                    'jquery/keyboard/jquery.keyboard.extension-typing',
-////                    'jquery/keyboard/jquery.keyboard.extension-mobile',
-//                    'jquery/keyboard/jquery.keyboard.extension-autocomplete',
                    'alekeyboard',
                     ));
                 
-                ?>
+//                echo $javascript->link('todos.min');
+
+ 
+            ?>
 <?php
     //scripts de Cake
     echo $scripts_for_layout;

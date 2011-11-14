@@ -36,10 +36,5 @@ function mostrarMesasDeMozo( mozoId ) {
             $('#mesas_container li[mozo!='+mozoId+']').hide();
             $('.listado-mozos-para-mesas a').removeClass('ui-btn-active');
             $('.listado-mozos-para-mesas a[data-mozo-id='+mozoId+']').addClass('ui-btn-active');
-            
-            // pongo a este mozo como el seleccionado en el formulario de nueva mesa
-            var radio = $('#radio-mozo-id-'+mozoId);
-            radio.prop('checked', true);
-            radio.next().addClass('ui-btn-active');
         }
 }

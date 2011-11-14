@@ -308,9 +308,9 @@ Risto.Adition.adicionar = {
                     ko.mapping.fromJS( data.mozos[z].mesas[m], {}, mesaEncontrada );
                     mesaEncontrada.setEstadoById();
                     setTimeout(function(){
-                        Risto.Adition.adicionar.mesas.splice( i , 1);
+                        var mozo = mesaEncontrada.mozo();
+                        mozo.sacarMesa( mesaEncontrada );
                         delete mesaEncontrada;
-                        alert("la borre");
                     }, 10000);
 
                 }

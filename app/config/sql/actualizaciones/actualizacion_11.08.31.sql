@@ -70,6 +70,7 @@ CREATE TABLE  `observaciones` (
 `created` TIMESTAMP NULL ,
 `modified` TIMESTAMP NULL
 ) ENGINE = MYISAM ;
+ALTER TABLE `observaciones` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
 
 
 
@@ -112,3 +113,11 @@ ALTER TABLE `comandas` ADD `modified` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTA
 ALTER TABLE `configs` ADD `created` TIMESTAMP NULL AFTER `description` ;
 ALTER TABLE `configs` ADD `modified` TIMESTAMP NULL AFTER `created` ;
 
+
+CREATE TABLE  `observacion_comandas` (
+`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`name` VARCHAR( 64 ) NOT NULL ,
+`created` TIMESTAMP NULL ,
+`modified` TIMESTAMP NULL
+) ENGINE = MYISAM ;
+ALTER TABLE `observacion_comandas` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci

@@ -130,46 +130,59 @@
         </div>
     
         <div data-role="content">
-            <form name="form-mesa-add" action="#" id="form-mesa-add">
-                <div data-role="">
-                    <fieldset data-role="controlgroup" data-type="horizontal">
-                        <legend>Seleccionar Mozo</legend>
-                        <?php
-                        $first = true;
-                            foreach ($mozos as $m) {
-                                $k = $m['Mozo']['id'];
-                                $n = $m['Mozo']['numero'];
-                                $cheked = '';
-                                if ($first) {
-                                    $cheked = "checked='checked'";
-                                    $first = false;
-                                }
-                                echo "<input $cheked type='radio' name='mozo_id' id='radio-mozo-id-$k' value='$k'/>";
-                                echo "<label for='radio-mozo-id-$k'>$n</label>";
-                            }
-                        ?>
-                    </fieldset>
+            <form name="form-mesa-add" action="#" id="form-mesa-add" class="pasos">
+                
+                <div  id="add-mesa-paso1">
+                    <h3>Mozos</h3>
+                    <fieldset data-role="controlgroup" data-type="horizontal" style="margin: auto;">
 
-                    <div class="ui-grid-a">
-                        <div class="ui-block-a">
-                            <fieldset data-role="fieldcontain">
-                                <label for="mesa-add-numero">Número de Mesa:</label>
-                                <input pattern="[0-9]*" maxlength="10" type="text" name="numero" data-risto="mesa" id="mesa-add-numero" required="required"/>
-                            </fieldset>
-                        </div>
-                        
-                        <div class="ui-block-b">
-                             <fieldset data-role="fieldcontain">
-                                <label for="mesa-add-cant_comensales">Cantidad de Cubiertos:</label>
-                                <input pattern="[0-9]*" maxlength="10" type="text" name="cant_comensales" id="mesa-add-cant_comensales"/>
-                            </fieldset>
-                        </div>
-                    </div>
-                    
-                    <fieldset>
-                        <button type="submit"  data-theme="b">Abrir Mesa</button>
+                            <legend>Presione sobre el Mozo al cual desea abrirle la mesa</legend>
+                            <?php
+                            $first = true;
+                                foreach ($mozos as $m) {
+                                    $k = $m['Mozo']['id'];
+                                    $n = $m['Mozo']['numero'];
+                                    $cheked = '';
+                                    if ($first) {
+                                        $cheked = "checked='checked'";
+                                        $first = false;
+                                    }
+                                    echo "<input $cheked type='radio' name='mozo_id' id='radio-mozo-id-$k' value='$k'/>";
+                                    echo "<label for='radio-mozo-id-$k'>$n</label>";
+                                }
+                            ?>                     
                     </fieldset>
                 </div>
+                    
+                <div id="add-mesa-paso2" style="display: none">
+                    <fieldset data-role="fieldcontain">
+                            <h3>Número de Mesa</h3>
+                            <label for="mesa-add-numero">Ingresar el número de Mesa</label>
+                            <input pattern="[0-9]*" maxlength="10" type="text" name="numero" data-risto="mesa" id="mesa-add-numero" required="required"/>
+                            <div class="ui-grid-a">
+                                <div class="ui-block-a"><button type="button"  data-theme="c" id="add-mesa-paso2-volver">Volver</button></div>
+                                <div class="ui-block-b"><button type="button"  data-theme="b" id="add-mesa-paso2-submit">Siguiente</button></div>
+                            </div>
+
+                    </fieldset>
+                </div>
+
+                <div id="add-mesa-paso3" style="display: none">
+                    
+                    <fieldset data-role="fieldcontain">
+                        <h3>Cubiertos</h3>
+                            <label for="mesa-add-cant_comensales">Ingresar la cantidad de Cubiertos</label>
+                            <input pattern="[0-9]*" maxlength="10" type="text" name="cant_comensales" id="mesa-add-cant_comensales"/>
+
+                            <div class="ui-grid-a">
+                                <div class="ui-block-a"><button type="button"  data-theme="c" id="add-mesa-paso3-volver">Volver</button></div>
+
+                                <div class="ui-block-b"><button type="submit"  data-theme="b" id="add-mesa-paso3-submit">Abrir Mesa</button></div>
+                            </div>
+
+                    </fieldset>
+                </div>
+                        
             </form>
         </div>
 </div> 
@@ -304,9 +317,7 @@
 
 -->
 <div data-role="page" id="comanda-add-menu" class="comanda dialog-ancho dialog-arriba">
-    <div data-role="header">
-        
-            <h3 style="display: inline; text-align: center; position: relative; top: 15px;">Nueva Comanda para la mesa <span data-bind="text: adn().currentMesa().numero"></span></h3>
+    <div data-role="header">                   
 
             <div data-role="controlgroup" data-type="horizontal" style="float: right;">
 
@@ -325,12 +336,16 @@
 
     <div data-role="content">
         
-        
-        
         <div style="display: none" id="comanda-add-observacion" class="ui-corner-bottom ui-overlay-shadow ui-content">
             <h4>Agregar observación general para la comanda</h4>
-            <textarea style="width: 97%" data-bind="value: adn().currentMesa().currentComanda().comanda.observacion, valueUpdate: 'keyup'" autofocus="autofocus" name="obs" class="obstext ui-input-text ui-body-null ui-corner-all ui-shadow-inset ui-body-a"></textarea>
+            <textarea id="obscomandatext" style="width: 97%" data-bind="value: adn().currentMesa().currentComanda().comanda.observacion, valueUpdate: 'keyup'" autofocus="autofocus" name="obs" class="obstext ui-input-text ui-body-null ui-corner-all ui-shadow-inset ui-body-a"></textarea>
             <a href="#" onclick="$('#comanda-add-observacion').toggle('slow')" data-role="button">Aceptar</a>
+            
+            <div class="observaciones-list">
+                <?php foreach($observacionesComanda as $o) { ?>
+                <a data-role="button" data-inline="true" href="#" onclick="$('#obscomandatext').val( $('#obscomandatext').val()+', <?php echo $o?>' )"><?php echo $o?></a>
+                <?php } ?>
+            </div>
         </div>
         <!--        PRODUCTOS SELECCIONADOS    -->
         <div  style="width: 28%; margin-right: 2%; display: inline; float: left;">
@@ -466,7 +481,7 @@
                     MESA COBRAR
 
 -->
-<div data-role="page" id="mesa-cobrar" data-theme="e" class="dialog-reancho">
+<div data-role="page" id="mesa-cobrar" data-theme="e" class="dialog-reancho dialog-arriba">
     <div data-role="header">
         <h1>Mesa <span data-bind="text: adn().currentMesa().numero"></span> | <span data-bind="text: adn().vueltoText"></span></h1>
         <a href="#mesa-view" data-transition="slide" data-direction="reverse" data-theme="e">Ir a la Mesa</a>

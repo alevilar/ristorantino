@@ -43,7 +43,8 @@ $('#page-sabores').live('pageshow', function(){
             });
 });
 
-        
+
+
 
 /**
  *
@@ -51,7 +52,9 @@ $('#page-sabores').live('pageshow', function(){
  *
  *
  */ 
-$(document).ready(function() {    
+$(document).ready(function() {   
+  
+   hacerQueNoFuncioneElClickEnPagina();
     
     $(document).keydown(onKeyDown);
     $(document).keypress(onKeyPress);
@@ -68,10 +71,33 @@ $(document).ready(function() {
     
     
     
-    
     //creacion de comandas
     // producto seleccionado
     $(document).bind(  MENU_ESTADOS_POSIBLES.productoSeleccionado.event , productoSeleccionado);
+    
+    
+    
+    
+    // Eventos para abrir una mesa
+    $('a[href="#mesa-add"]').bind('click', function(){
+    });
+    
+    $('#add-mesa-paso1 LABEL, #add-mesa-paso3-volver').bind('click', function(){
+       $('#add-mesa-paso1, #add-mesa-paso3').hide(); $('#add-mesa-paso2').show(); 
+       $('#add-mesa-paso2 input').focus();
+    });
+    
+    $('#add-mesa-paso2-submit').bind('click', function(){
+       $('#add-mesa-paso2, #add-mesa-paso1').hide(); $('#add-mesa-paso3').show();
+       $('#add-mesa-paso3 input').focus();
+    });
+    
+    $('#add-mesa-paso3-submit, #add-mesa-paso2-volver').bind('click', function(){
+       $('#add-mesa-paso3, #add-mesa-paso2').hide(); $('#add-mesa-paso1').show();
+    });
+    
+    
+    
     
     
 
@@ -478,4 +504,21 @@ function cambiarNumeroMesa(){
     }
     $cakeSaver.send(sendOb);
     return false;
+}
+
+
+
+/**
+ *  para que no titile el cursor. Que no se pueda hacer click
+ */
+function hacerQueNoFuncioneElClickEnPagina() {
+   if(document.all){
+      document.onselectstart = function(e) {return false;} // ie
+   } else {
+      document.onmousedown = function(e)
+      {
+         if(e.target.type!='text' && e.target.type!='button' && e.target.type!='textarea') return false;
+         else return true;
+      } // mozilla
+   }
 }

@@ -42,7 +42,8 @@
     <?php
     echo $html->link('Categorias','/categorias');
     echo $html->link('Productos','/productos');
-    echo $html->link('Observaciones Predefinidas','/observaciones');
+    echo $html->link('Observaciones de Productos','/observaciones');
+    echo $html->link('Observaciones de Comandas','/observacion_comandas');
     echo $html->link('Gustos y Sabores','/sabores');
     echo $html->link('Precios Futuros','/productos_precios_futuros');
     ?>
