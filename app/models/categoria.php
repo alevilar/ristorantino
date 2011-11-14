@@ -9,10 +9,11 @@ class Categoria extends AppModel {
 	var $validate = array(
 		'name' => array('notempty')
 	);
+        
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 	var $hasMany = array('Producto' => array(
-                                'order'=>'Producto.name',
+                                'order'=>'Producto.order',
                                 'conditions' => array('Producto.deleted <>'=>1)),
                              'Sabor' => array(
                                 'order'=>'Sabor.name',
