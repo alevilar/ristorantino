@@ -80,6 +80,8 @@
         
             <a href="#listado-mesas-cerradas" data-role="button">Modo Cajero</a>
             
+            <a href="#" data-role="button" title="Actualizar Menú" onclick="Risto.Adition.menu.update()"><?php echo $html->image('refresh.png', array('class'=> 'btn-comanda-icon'))?> Actualizar Menú</a>
+            
             <a data-icon="home" href="<?php echo $html->url('/');?>" rel="external" data-role="button">Ir a Página Principal: HOME</a>
             
             
@@ -142,12 +144,7 @@
                                 foreach ($mozos as $m) {
                                     $k = $m['Mozo']['id'];
                                     $n = $m['Mozo']['numero'];
-                                    $cheked = '';
-                                    if ($first) {
-                                        $cheked = "checked='checked'";
-                                        $first = false;
-                                    }
-                                    echo "<input $cheked type='radio' name='mozo_id' id='radio-mozo-id-$k' value='$k'/>";
+                                    echo "<input type='radio' name='mozo_id' id='radio-mozo-id-$k' value='$k'/>";
                                     echo "<label for='radio-mozo-id-$k'>$n</label>";
                                 }
                             ?>                     
@@ -320,10 +317,6 @@
     <div data-role="header">                   
 
             <div data-role="controlgroup" data-type="horizontal" style="float: right;">
-
-<!--            <span >-->
-
-                <a style="min-width: 190px" href="#" data-role="button" title="Actualizar Menú" onclick="Risto.Adition.menu.update()"><?php echo $html->image('refresh.png', array('class'=> 'btn-comanda-icon'))?> Actualizar Menú</a>
 
                 <a style="min-width: 160px" href="#" data-role="button" title="Haga click para desactivar la impresión de comanda" data-bind="click: function(){adn().currentMesa().currentComanda().comanda.imprimir( 0 )}, visible: adn().currentMesa().currentComanda().comanda.imprimir()"><?php echo $html->image('print48.png', array('class'=> 'btn-comanda-icon'))?>Si Imprime</a>
                 <a style="min-width: 160px" href="#" data-role="button" title="Haga click para activar impresión de comanda" data-bind="click: function(){adn().currentMesa().currentComanda().comanda.imprimir( 1 )}, visible: !adn().currentMesa().currentComanda().comanda.imprimir()" ><?php echo $html->image('dontprint48.png', array('class'=> 'btn-comanda-icon'))?>No Imprime</a>

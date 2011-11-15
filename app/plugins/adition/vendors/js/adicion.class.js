@@ -261,10 +261,9 @@ Risto.Adition.adicionar = {
                         }
                     }
                 }
-
+            
                 ko.mapping.fromJS( data, mapOps, Risto.Adition.adicionar );
             }
-            
 
             $(document).trigger('adicionMesasActualizadas');
         },
@@ -350,12 +349,12 @@ Risto.Adition.adicionar = {
     },
     
     
-    crearNuevaMesa: function(mesaJSON){
+    crearNuevaMesa: function( mesaJSON ){
         var mozo = this.findMozoById(mesaJSON.mozo_id);
         var mesa = new Mesa(mozo, mesaJSON);
         
         $cakeSaver.send({url:urlDomain+'mesas/abrirMesa.json', obj: mesa});
-        return mesa;        
+        return mesa;
     }
 };
 

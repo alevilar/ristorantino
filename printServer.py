@@ -25,17 +25,19 @@ def daemon_main():
 		for s in inputready:
 			conn, addr = s.accept()
 			with NamedTemporaryFile(suffix=sockets[s]["suffix"], prefix=sockets[s]["prefix"], dir=sockets[s]["dir"], delete=False) as f:
+                                os.chmod(sockets[s]["dir"]+f.name, 0o000)
 				while 1:
 					data = conn.recv(1024)
 					if not data: 
 						break
-					f.write(data)
+                                        f.write(data)
 				conn.close()
 
 def main():
 	for opt in opts:
 		if not os.path.exists(opt["dir"]):	
 			os.makedirs(opt["dir"])
+                        os.chmod(opt["dir"], 0o777)
 		s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		s.bind(('', opt["port"]))
 		s.listen(1)

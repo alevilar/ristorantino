@@ -92,18 +92,29 @@ class MozosController extends AppController {
             }
             $mesas = $this->Mozo->mesasAbiertas(null, $lastAccess); 
 
-            $mozosMesa = array();
-            foreach ( $mesas as $key=>$abmMesas ) {
-                $i = 0;
-                foreach ( $abmMesas as $m ) {
-                    if ( !empty($m['Mesa']) ) {
-                        $m['Mozo']['mesas'] = $m['Mesa'];
-                        $mozosMesa[$key]['mozos'][] = $m['Mozo'];
-                        $i++;
+            
+           
+                $mozosMesa = array();
+                foreach ( $mesas as $key=>$abmMesas ) {
+                    $i = 0;
+                    foreach ( $abmMesas as $m ) {
+                        // si es la primera vez que pido esta action, entonces me trae a TODOS los mozos del array
+                        // caso contrario solo me traera los mozos que tienen alguna mesa donde se haya realizado algun cambio
+                        if ( !empty($microtime) ) {
+                            if ( !empty($m['Mesa']) ) {
+                                $m['Mozo']['mesas'] = $m['Mesa'];
+                                $mozosMesa[$key]['mozos'][] = $m['Mozo'];
+                                $i++;
+                            }
+                        } else {
+                            $m['Mozo']['mesas'] = $m['Mesa'];
+                            $mozosMesa[$key]['mozos'][] = $m['Mozo'];
+                            $i++;
+                        }
                     }
                 }
-            }
-            $mesas = $mozosMesa;
+                $mesas = $mozosMesa;
+            
             $lastAccess = date('Y-m-d H:i:s', strtotime('now'));
             $this->Session->write('lastAccess', $lastAccess );
             $this->set('mesasLastUpdatedTime', microtime()  );

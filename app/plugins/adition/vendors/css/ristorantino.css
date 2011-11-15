@@ -145,8 +145,9 @@ ul.listado-adicion .mesa-mozo,ul.listado-adicion .mozo-cant-mesas {
 
 
 .mesa-total {
-    color: #FF0000;
-    font-size: 110%;
+    color: #FFF1A8;
+    display: block;
+    font-size: 140%;
 }
 .hora-abrio {
     position: absolute;

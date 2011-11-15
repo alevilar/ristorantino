@@ -76,7 +76,7 @@
        <span class="ui-btn-inner ui-btn-corner-all btn-categoria">
                <image class="menu-img" data-bind="visible: image_url, attr: {src: urlDomain+'img/menu/'+image_url}"/>
                <br />
-               <span class="menu-letra-con-imagen" data-bind="text: name"></span>                         
+               <span class="menu-letra-con-imagen" data-bind="text: name, attr:{'class': image_url}"></span>
        </span>
    </a>
 </script>
@@ -179,6 +179,7 @@ es igual al de las mesas de la adicion salvo que al hacer click tienen otro comp
             <span class="mesa-span ui-btn-inner">
                 <span class="ui-btn-text">
                     <span class="mesa-numero" data-bind="text: numero"></span>
+                    <span class="mesa-total">$ <span data-bind="text: totalCalculado"></span></span>
                 </span>
             </span>
             <span class="mesa-mozo" data-bind="text: mozo().numero"></span>

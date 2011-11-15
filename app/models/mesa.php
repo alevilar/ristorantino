@@ -523,12 +523,12 @@ FROM (
     SELECT m.id, m.numero, m.mozo_id, m.total,m.subtotal, m.cant_comensales, 
     m.cliente_id, m.menu, ADDDATE(m.created,-1) as created, m.modified, m.time_cerro, m.time_cobro 
     FROM mesas m
-    WHERE DATE(m.created) BETWEEN DATE(ADDDATE("'.$desde.'",+1)) AND DATE(ADDDATE("'.$hasta.'",+1)) 
+    WHERE m.deleted = 0 AND DATE(m.created) BETWEEN DATE(ADDDATE("'.$desde.'",+1)) AND DATE(ADDDATE("'.$hasta.'",+1)) 
           AND HOUR(m.created) BETWEEN 0 AND '. $horarioCorte.'
 UNION
     SELECT id,numero,mozo_id,total, m.total, cant_comensales, cliente_id,menu, created, modified, time_cerro, time_cobro 
     FROM mesas m
-    WHERE DATE(m.created) BETWEEN "'.$desde.'" AND "'.$hasta.'" AND HOUR(m.created) BETWEEN '.$horarioCorte.' AND 24) as m    
+    WHERE m.deleted = 0 AND DATE(m.created) BETWEEN "'.$desde.'" AND "'.$hasta.'" AND HOUR(m.created) BETWEEN '.$horarioCorte.' AND 24) as m    
               
 LEFT JOIN mozos z ON z.id = m.mozo_id              
 '. $groupByText .'

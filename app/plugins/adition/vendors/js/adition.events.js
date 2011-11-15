@@ -97,6 +97,9 @@ $(document).ready(function() {
     });
     
     
+    $('#form-mesa-add').submit(agregarNuevaMesa);
+    
+    
     
     
     
@@ -136,7 +139,6 @@ $(document).ready(function() {
     
     
     // Form SUBMITS
-    $('#form-mesa-add').submit(agregarNuevaMesa);
     $('#form-cambiar-mozo').submit(cambiarMozo);
     $('#form-cambiar-numero').submit(cambiarNumeroMesa);
     
