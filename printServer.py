@@ -9,7 +9,7 @@ sudo lpadmin -p [NOMBRE] -E -v socket://localhost:[PUERTO] -m raw
 (el puerto debe coincidir con alguno de la configuracion de puerto-archivo que esta mas abajo)
 
 """ 
-import os, socket, select, daemon
+import os, socket, select, daemon, shutil
 from tempfile import NamedTemporaryFile
 
 #CONFIGURACION DE PUERTOS-ARCHIVOS
@@ -24,13 +24,18 @@ def daemon_main():
 		inputready,outputready,exceptready = select.select(sockets.keys(),[],[])
 		for s in inputready:
 			conn, addr = s.accept()
-			with NamedTemporaryFile(suffix=sockets[s]["suffix"], prefix=sockets[s]["prefix"], dir=sockets[s]["dir"], delete=False) as f:
-				while 1:
-					data = conn.recv(1024)
-					if not data: 
-						break
-					f.write(data)
-				conn.close()
+			f = NamedTemporaryFile(suffix=sockets[s]["suffix"], prefix=sockets[s]["prefix"], delete=False)
+			name = f.name
+			
+			while 1:
+				data = conn.recv(1024)
+				if not data: 
+					break
+				f.write(data)
+			conn.close()
+			f.close()
+
+			shutil.copy(name, sockets[s]["dir"])
 
 def main():
 	for opt in opts:
