@@ -609,8 +609,11 @@ class PrinterComponent extends Object {
 		}
                 
                 $texto = '';
+                // retorno de carro
+                $CR = chr(13);
+                $LF = chr(10);
                 foreach ($this->vcomandos as $c){
-                    $texto .= $c.'\n';
+                    $texto .= $c . $CR . $LF;
                 }
                 $this->cupsPrint( $serverImpresoraFiscal, $nombreImpresoraFiscal, $texto );
 
