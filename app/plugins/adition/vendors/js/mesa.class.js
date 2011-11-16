@@ -135,11 +135,11 @@ var Mesa = function(mozo, jsonData) {
          *
          */
         this.getEstadoIcon = ko.dependentObservable( function(){
-            var estado = this.estado();
-            if (estado){
-                return estado.icon;
+            if ( this.estado() ){
+                return this.estado().icon;
+            } else {
+                return 'mesa-abierta';
             }
-            return 'mesa-abierta';
         }, this);
         
         
@@ -182,7 +182,7 @@ Mesa.prototype = {
     created     : function( ) {return 0},
     time_cerro  : function( ) {return 0},
     Cliente     : function( ) {return null}, 
-    estado      : function( ) {return 0}, // objeto estado
+    estado      : function( ) {return null}, // objeto estado
     estado_id     : function( ) {return 0}, // bbdd estado_id
     cant_comensales: function( ) {return 0},
     
@@ -388,10 +388,10 @@ Mesa.prototype = {
     cambioDeEstadoAjax: function(estado){
         var estadoAnt = this.getEstado();
         var mesa = this;
-        this.setEstado(estado);
+        this.setEstado( estado );
         var ajax = $.get( estado.url+'/'+this.id() );
         ajax.error = function(){
-            mesa.setEstado(estadoAnt);
+            mesa.setEstado( estadoAnt );
         }
     },
 
@@ -442,7 +442,7 @@ Mesa.prototype = {
      * Cambia el estado de la mesa y genera un disparador del evento
      */
     setEstado: function(nuevoestado){
-        this.estado(nuevoestado);
+        this.estado( nuevoestado );
         this.__triggerEventCambioDeEstado();
     },
     

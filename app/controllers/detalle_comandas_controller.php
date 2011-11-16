@@ -64,7 +64,9 @@ class DetalleComandasController extends AppController {
 		
 		//cuento la cantidad de comanderas involucradas en este pedido para genrar la cantidad de comandas correspondientes
 		$v_comanderas = array();
-		foreach($this->data['DetalleComanda'] as $find_data):
+		foreach($this->data['DetalleComanda'] as &$find_data):
+                        $find_data['cant'] = $find_data['cant'] - $find_data['cant_eliminada'];
+                        $find_data['cant_eliminada'] = 0;
 			$v_comanderas[$find_data['comandera_id']] = $find_data['comandera_id'];
 		endforeach;
 		

@@ -23,7 +23,7 @@ class MesasController extends AppController {
         $condiciones = array();
 
         if (!empty($this->passedArgs)){
-            if ( $this->passedArgs['Mesa.estado_cerrada'] ){
+            if ( !empty($this->passedArgs['Mesa.estado_cerrada']) ){
                     $this->data['Mesa']['estado_cerrada'] = $this->passedArgs['Mesa.estado_cerrada'];
             }
             if (!empty($this->passedArgs['Mesa.numero'])){

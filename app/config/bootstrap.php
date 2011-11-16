@@ -63,10 +63,10 @@ $estadosMesaMsg = array(
 
 function comandosDeReinicializacionServidorImpresion($devName = null) {
     
-    exec("sudo /etc/init.d/spooler_srv stop");
+    exec("sh /etc/init.d/spooler_srv stop");
     $devName = empty($devName) ? $devName : ' '.$devName;
     debug($devName);
-    exec("sudo /etc/init.d/spooler_srv start$devName");
+    exec("sh /etc/init.d/spooler_srv start$devName");
     exec("cd /");	
 }
 

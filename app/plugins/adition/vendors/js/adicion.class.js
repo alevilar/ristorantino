@@ -284,7 +284,9 @@ Risto.Adition.adicionar = {
                 mozo = Risto.Adition.adicionar.findMozoById( data.mozos[z].id );
                 for( var m in data.mozos[z].mesas ) {
                     mesaEncontrada = Risto.Adition.adicionar.findMesaById( data.mozos[z].mesas[m].id );
-                    mesaEncontrada.update( mozo, data.mozos[z].mesas[m]);
+                    if ( mesaEncontrada ) {
+                        mesaEncontrada.update( mozo, data.mozos[z].mesas[m]);
+                    }
                 }
             }
             $(document).trigger('adicionMesasActualizadas');

@@ -283,20 +283,20 @@ function agregarNuevaMesa(e){
     
     var mesa = Risto.Adition.adicionar.crearNuevaMesa( miniMesa );
     Risto.Adition.adicionar.setCurrentMesa( mesa );
-    document.getElementById('form-mesa-add').reset(); // limpio el formulario
     $.mobile.changePage('#mesa-view');
+    document.getElementById('form-mesa-add').reset(); // limpio el formulario
 
     return false;
 }
 
 
 function mesaCerrada(e){
-    $("#mesa-id-"+e.mesa.id()).find('.ui-icon').removeClass('ui-icon-'+MESA_ESTADOS_POSIBLES.abierta.icon);
-    $("#mesa-id-"+e.mesa.id()).find('.ui-icon').addClass('ui-icon-'+MESA_ESTADOS_POSIBLES.cerrada.icon);   
+    $("#mesa-li-id-"+e.mesa.id()).attr('class', '');
+    $("#mesa-li-id-"+e.mesa.id()).addClass(e.mesa.estado().icon);   
 }
 
 function mesaCuponPendiente(){
-    alert('mesa cupon pendiente');
+    
 }
 
 function mesaBorrada(e){

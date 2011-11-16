@@ -30,8 +30,9 @@ class TipoDePagosController extends AppController {
                 if( !empty($this->data['TipoDePago']['newfile']['name'])){
                     $path = WWW_ROOT.'img/';
                   
-                    $name = Inflector::slug(strstr($this->data['TipoDePago']['newfile']['name'], '.', true));
-                    $ext = substr(strrchr($this->data['TipoDePago']['newfile']['name'], "."),1);
+                    $cadToVec = explode('.', $this->data['TipoDePago']['newfile']['name']);
+                    $name = Inflector::slug( $cadToVec[0] );
+                    $ext = $cadToVec[1];
                     $nameFile = $name.".$ext";
                     
                     if ( file_exists($path.$nameFile) ){

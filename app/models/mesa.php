@@ -143,7 +143,6 @@ class Mesa extends AppModel {
                         group by sumadas.mesa_id			
 
                 ");
-            
             return $total[0][0]['subtotal'];
         }
         
@@ -190,7 +189,6 @@ class Mesa extends AppModel {
             $this->total['Mesa']['subtotal'] = $totalProductos + $valor_cubierto;
             $this->total['Mesa']['total'] = cqs_round(  $this->total['Mesa']['subtotal'] * $conversionDescuento );
             $this->total['Mesa']['descuento'] = $totalPorcentajeDescuento;
-
             return $this->total['Mesa']['subtotal'];
         }
             
@@ -206,7 +204,6 @@ class Mesa extends AppModel {
             if ( empty($this->total) ) {
                 $this->calcular_subtotal();
             }
-            
             return $this->total['Mesa']['total'];
 	}
 	
@@ -447,6 +444,34 @@ class Mesa extends AppModel {
 
             if ($ret > 0) return false;
             else return true;
+        }
+        
+        
+        
+        
+        /**
+         * Dice si una mesa esta abierta o no
+         * @param integer $id
+         * @return boolean
+         */
+        function estaAbierta($id = null){
+            if (!empty($id)){
+                $this->id = $id;
+            }
+            // si lo tengo en memoria primero busco por aca
+            if ( !empty($this->data[$this->name]['estado_id']) ){
+                return $this->data[$this->name]['estado_id'] == MESA_ABIERTA;
+            }
+            // lo busco en BBDD        
+            $ret = $this->find('count', array(
+                'conditions' => array(
+                    'Mesa.estado_id' => MESA_ABIERTA,
+                    'Mesa.id' => $this->id,
+
+                )
+            ));
+
+            return ($ret > 0);
         }
 
 

@@ -92,6 +92,10 @@ Risto.Adition.comandaFabrica.prototype = {
             // entonces no debo guardarla
             if ( ccdc.realCant() == 0) continue;
             
+            // inicializo la cantidad eliminada para que no sea enviada ni guardada
+//            ccdc.cant = ccdc.realCant();
+//            ccdc.cant_eliminada = 0;
+            
             if ( !comanderas[ccdc.comandera_id()] || !comanderas[ccdc.comandera_id()].length ) {
                comanderas[ccdc.comandera_id()] = [];
             }

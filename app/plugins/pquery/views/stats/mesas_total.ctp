@@ -95,7 +95,7 @@
 </script>
 
 <div class="clear" style="height: 20px;"></div>
-<div class="grid_9 alpha">
+<div class="grid_8 alpha">
     <div id="chart1" class="grid_12 alpha omega" style="height:350px;"></div>
     
     <div class="grid_12 alpha omega">
@@ -122,12 +122,14 @@
         foreach($mesas as $i=>$mozo){
             if(!empty ($mozo['desde']))
     ?>
-    <div class="grid_3 omega tabla-info">
+    <div class="grid_4 omega tabla-info">
     <table cellspacing="0" cellpadding="0" style="text-align: center">
         <thead>
                         <tr>
                             <th <?php if($i==0){echo('class="coloruno"'); }else{echo('class="colordos"');}?>>Fecha</th>
                             <th <?php if($i==0){echo('class="coloruno"'); }else{echo('class="colordos"');}?>>Total</th>
+                            <th <?php if($i==0){echo('class="coloruno"'); }else{echo('class="colordos"');}?>>Mesas</th>
+                            <th <?php if($i==0){echo('class="coloruno"'); }else{echo('class="colortres"');}?>>Cubiertos</th>
                         </tr>
         </thead>
         <tbody>
@@ -138,11 +140,17 @@
                 foreach($mozo as $m){
                     echo('<tr>');
                     echo('<td>');
-                    echo(date('d-m-Y', strtotime($m['Mesa']['fecha'])));
+                    echo(date('d-m', strtotime($m['Mesa']['fecha'])));
                     echo('</td>');
                     echo('<td>');
                     echo('$');
                     echo($m['Mesa']['total']);
+                    echo('</td>');
+                    echo('<td>');
+                    echo($m['Mesa']['cant_mesas']);
+                    echo('</td>');
+                    echo('<td>');
+                    echo($m['Mesa']['cant_cubiertos']);
                     echo('</td>');
                     echo('</tr>');
             }        
