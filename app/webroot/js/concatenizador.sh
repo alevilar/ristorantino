@@ -4,7 +4,7 @@ SCRIPT_NAME=todos.js
 SCRIPT_MIN_NAME=todos.min.js
 
 rm $SCRIPT_NAME
-#rm $SCRIPT_MIN_NAME
+rm $SCRIPT_MIN_NAME
 
 
 cat jquery/jquery-1.6.4.min.js >> $SCRIPT_NAME

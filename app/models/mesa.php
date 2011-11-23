@@ -91,6 +91,7 @@ class Mesa extends AppModel {
                     'subtotal'  => $this->calcular_subtotal(),
                     'time_cerro'=> date( "Y-m-d H:i:s",strtotime('now')),
                 );
+                debug($mesaData);
 
                 // si no estoy usando cajero, entonces poner como que ya esta cerrada y cobrada
                 if (!Configure::read('Adicion.usarCajero'))  {
@@ -171,7 +172,7 @@ class Mesa extends AppModel {
             if (!empty($id)) $this->id = $id;
 
             if (!empty($this->total)) {
-                return $this->total['Mesa']['total'];
+                return $this->total['Mesa']['subtotal'];
             }
             
             if ($this->cantidadDeProductos() == 0) return 0;
@@ -201,7 +202,7 @@ class Mesa extends AppModel {
 	function calcular_total($id = null){
             if (!empty($id)) $this->id = $id;
 
-            if ( empty($this->total) ) {
+            if ( empty($this->total['Mesa']['total']) ) {
                 $this->calcular_subtotal();
             }
             return $this->total['Mesa']['total'];

@@ -89,7 +89,7 @@ class PrinterComponent extends Object {
         }
 
 
-        function doPrint($mesa_id){
+        function doPrint($mesa_id) {
             $this->Controller->Mesa->id = $mesa_id;
 
             $this->Mesa = $this->Controller->Mesa->find('first',array(
@@ -98,7 +98,10 @@ class PrinterComponent extends Object {
                     'Cliente'=>array(
                         'Descuento'
                         )
-                    )
+                    ),
+                'condition' => array(
+                    'Mesa.id' => $mesa_id
+                ),
                 )
                     );
             if(empty($this->Mesa['Cliente'])){
@@ -120,7 +123,8 @@ class PrinterComponent extends Object {
 
             if(!empty($this->Mesa['Cliente']['Descuento']['porcentaje'])) {
                 $this->porcentaje_descuento = $this->Mesa['Cliente']['Descuento']['porcentaje'];
-                $this->importe_descuento = cqs_round(($this->porcentaje_descuento/100)*$this->Mesa['Mesa']['subtotal']);
+                
+                $this->importe_descuento = abs($this->Mesa['Mesa']['subtotal'] - $this->Mesa['Mesa']['total']);
             }
 
             $imprimio = false;

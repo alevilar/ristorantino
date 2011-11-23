@@ -24,10 +24,4 @@
         <?php echo $html->link('Contabilidad','/account',array('id'=>'bton-contabilidad'));?>
         </li>       
         
-        <li>
-            <?php echo $html->link('Ventas','/pquery/queries/list_view/5');?>
-        </li>
-        <li>
-            <?php echo $html->link('Ventas Mozo','/pquery/queries/list_view/10');?>
-        </li>
 </ul>

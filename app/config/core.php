@@ -30,6 +30,12 @@
 
 setlocale(LC_TIME, 'es_AR');
 setlocale(LC_MONETARY, 'es_AR');
+//
+//Configure::write('Email.port', );
+//Configure::write('Email.timeout');
+//Configure::write('Email.host');
+//Configure::write('Email.username');
+//Configure::write('Email.password');
 
  
 /**

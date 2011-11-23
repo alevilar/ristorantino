@@ -20,7 +20,7 @@
             <h4>Seleccionar Cliente</h4>
 
             <a data-role="button" id="mesa-eliminar-cliente" data-inline="true" href="#mesa-view" data-transition="fade" data-theme="b" data-direction="reverse" data-bind="visible: adn().currentMesa().Cliente()}">
-                    Borrar Cliente</span>
+                    Borrar</span>
             </a>
 
         </div>

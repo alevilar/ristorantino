@@ -4,21 +4,72 @@ class CashierController extends CashierAppController {
 
 	var $helpers = array('Html', 'Form');
 	var $uses = array('Mozo','Mesa');
-	var $components = array( 'Printer', 'RequestHandler');
+	var $components = array( 'Printer', 'RequestHandler', 'Email');
 	
 	
 	var $layout = 'cajero';
 
 
-	
 	function reiniciar(){
 		debug(exec('sudo reboot'));
 		die("Aguarde, el servidor esta reiniciando. Esto puede demorar unos minutos...");
 	}
 
-        function apagar(){
-		debug(exec('sudo halt'));
-		die("El servidor se esta apagando");
+        function apagar() {
+            $mesa = ClassRegistry::init('Mesa');
+            
+            $desde =  date('Y-m-d', strtotime('-1 day') );
+            $hasta =  date('Y-m-d', strtotime('-1 day'));
+            
+            $hora =  date('H', strtotime('now'));
+            
+            // solo enviar el mail si estamos en un horario comprendido entre las 23 y las 6 AM
+            if ( !($hora > 13 && $hora < 23) ) {
+                $fields = array(
+                         'sum(m.cant_comensales) as "cant_cubiertos"' ,
+                         'sum(m.subtotal) as "subtotal"', 
+                         'sum(m.total) as "total"', 
+                         'sum(m.total)/sum(m.cant_comensales) as "promedio_cubiertos"',
+                    );
+
+                $fields[] = 'DATE(m.created) as "fecha"';
+                $group = array(
+                     'DATE(m.created)',
+                );
+
+                $mesas = $this->Mesa->totalesDeMesasEntre($desde, $hasta, array(
+                            'fields' => $fields,
+                            'group' => $group,
+                        ));
+
+                if ( !empty($mesas) ) {
+                    $fecha = date('d-m-y', strtotime('-1 day'));
+                    $mensaje = 'Fecha: '. $fecha .'. ';
+
+                    $mensaje .= "Total de Ventas: $". $mesas[0][0]['total'].'. ';                    
+                    $mensaje .= "Cubiertos: ". $mesas[0][0]['cant_cubiertos'].'. ';
+                    $mensaje .= "Mesas: ". $mesas[0][0]['cant_mesas'].'. ';
+                    $mensaje .= "Promedio por Cubierto: ". number_format($mesas[0][0]['promedio_cubiertos'],2).'. ';
+                    $mensaje .= "Sub-total de Ventas (total Neto, o sea, sin aplicar descuento): $". $mesas[0][0]['subtotal'].'. ';
+                    $mensaje .= "Promedio por Cubierto NETO (si no se hubiese aplicado descuento): $". number_format( $mesas[0][0]['subtotal']/$mesas[0][0]['cant_cubiertos'],2).'. ';
+                    
+                    $mensaje .= '-- Chocha 012 --';
+    
+                    $email = Configure::read('Restaurante.name');
+                    $nombreResto = Configure::read('Restaurante.mail');
+                    $mail = $nombreResto.' <'. $email .'>';
+                    $this->Email->from    = $mail;
+                    $this->Email->to      = $mail;
+
+                    $this->Email->subject = 'Resumen de ventas del día '.$fecha;
+
+                    $this->Email->send($mensaje);
+                }
+
+            }
+            
+            debug(exec('sudo halt'));
+            die("El servidor se esta apagando");
 	}
 
 

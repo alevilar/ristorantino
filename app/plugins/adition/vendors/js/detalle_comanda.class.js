@@ -161,9 +161,10 @@ Risto.Adition.detalleComanda.prototype = {
             this.cant_eliminada( parseInt( this.cant_eliminada() ) + 1 );
             this.modificada(true);
         }
+        var dc = this;
         $cakeSaver.send({
-           url: urlDomain + '/detalle_comandas/edit/' + this.id(),
-           obj: this
+           url: urlDomain + '/detalle_comandas/edit/' + dc.id(),
+           obj: dc
         }, function() {
         });
     },

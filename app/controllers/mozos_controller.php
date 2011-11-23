@@ -79,46 +79,47 @@ class MozosController extends AppController {
          * Me devuelve las mesas abiertas de cada mozo
          * @param boolean $microtime microtime desde donde yo quiero tomar omo referencia a la hora de traer las mesas
          */
-        function mesas_abiertas($microtime = 0) {
-            
+        function mesas_abiertas( $microtime = 0 ) {
             $mesas = array();
-            $lastAccess = null;
-            if ( !empty($microtime) ) {
-                $lastAccess = date('Y-m-d H:i:s', microtime($microtime));
-                
-                if ( $this->Session->check('lastAccess') ) {
-                    $lastAccess = $this->Session->read('lastAccess');
-                }
-            }
-            $mesas = $this->Mozo->mesasAbiertas(null, $lastAccess); 
-
             
+            $lastAccess = null;    
+            if ( empty($microtime) ) {
+                $this->Session->write('lastAccess', 0);
+            }
+            if ( $this->Session->check('lastAccess') ) {
+                $lastAccess = $this->Session->read('lastAccess');
+            }
+            
+            $this->Session->write('lastAccess', date('Y-m-d H:i:s', strtotime('now')));                
+            
+//            debug( $this->Session->read('lastAccess') );
+            $mesas = $this->Mozo->mesasAbiertas(null, $lastAccess); 
            
-                $mozosMesa = array();
-                foreach ( $mesas as $key=>$abmMesas ) {
-                    $i = 0;
-                    foreach ( $abmMesas as $m ) {
-                        // si es la primera vez que pido esta action, entonces me trae a TODOS los mozos del array
-                        // caso contrario solo me traera los mozos que tienen alguna mesa donde se haya realizado algun cambio
-                        if ( !empty($microtime) ) {
-                            if ( !empty($m['Mesa']) ) {
-                                $m['Mozo']['mesas'] = $m['Mesa'];
-                                $mozosMesa[$key]['mozos'][] = $m['Mozo'];
-                                $i++;
-                            }
-                        } else {
+            $mozosMesa = array();
+//            debug( $lastAccess );
+            foreach ( $mesas as $key=>$abmMesas ) {
+                $i = 0;
+                foreach ( $abmMesas as $m ) {
+//                    debug($m);
+                    // si es la primera vez que pido esta action, entonces me trae a TODOS los mozos del array
+                    // caso contrario solo me traera los mozos que tienen alguna mesa donde se haya realizado algun cambio
+                    if ( !empty($lastAccess) ) {
+                        // solo mandar un array con los mozos que tienen mesas modificadas despues del $lastAccess
+                        if ( !empty($m['Mesa']) ) {  
                             $m['Mozo']['mesas'] = $m['Mesa'];
                             $mozosMesa[$key]['mozos'][] = $m['Mozo'];
                             $i++;
                         }
+                    } else {
+                        $m['Mozo']['mesas'] = $m['Mesa'];
+                        $mozosMesa[$key]['mozos'][] = $m['Mozo'];
+                        $i++;
                     }
                 }
-                $mesas = $mozosMesa;
+            }
             
-            $lastAccess = date('Y-m-d H:i:s', strtotime('now'));
-            $this->Session->write('lastAccess', $lastAccess );
             $this->set('mesasLastUpdatedTime', microtime()  );
-            $this->set('mesas', $mesas);
+            $this->set('mesas', $mozosMesa);
         }
 
 }

@@ -321,11 +321,6 @@ function mostrarMesasDeMozo( mozoId ) {
             $('#mesas_container li[mozo!='+mozoId+']').hide();
             $('.listado-mozos-para-mesas a').removeClass('ui-btn-active');
             $('.listado-mozos-para-mesas a[data-mozo-id='+mozoId+']').addClass('ui-btn-active');
-            
-            // pongo a este mozo como el seleccionado en el formulario de nueva mesa
-            var radio = $('#radio-mozo-id-'+mozoId);
-            radio.prop('checked', true);
-            radio.next().addClass('ui-btn-active');
         }
 }
 /*--------------------------------------------------------------------------------------------------- Risto.Adicion.mozo
@@ -373,7 +368,7 @@ Mozo.prototype = {
     numero  : function( ) {return 0},
     mesas   : function( ) {return []},
 
-    initialize: function(jsonData) {
+    initialize: function( jsonData ) {
         var mozoNuevo = this,
             jsonData = jsonData || {},
             mapOps  = {};
@@ -383,7 +378,7 @@ Mozo.prototype = {
         this.id     = ko.observable( 0 );
         this.numero = ko.observable( 0 );
         this.mesas  = ko.observableArray( [] );
-        
+
         
         if (jsonData) {
             // si aun no fue mappeado
@@ -391,10 +386,10 @@ Mozo.prototype = {
                 'mesas': {
                     create: function(ops) {
                         return new Mesa(mozoNuevo, ops.data);
-                    }
+        }
                 }
             }
-            
+        
         } 
         
         ko.mapping.fromJS(jsonData, mapOps, this);
@@ -537,95 +532,6 @@ var Mesa = function(mozo, jsonData) {
         // agrego atributos generales
         Risto.modelizar(this);
     
-        /**
-         *Devuelve el total neto, sin aplicar descuentos
-         *@return float
-         */
-        this.totalCalculadoNeto = ko.dependentObservable(function(){
-            var tam = this.Comanda().length;
-            
-            var valorPorCubierto = 0;
-            if ( typeof VALOR_POR_CUBIERTO != 'undefined') {
-                valorPorCubierto = VALOR_POR_CUBIERTO;
-            }
-            var cantCubierto = this.cant_comensales() * valorPorCubierto;
-            var total = cantCubierto;
-            
-            for (var c in this.Comanda()){
-                for (dc in this.Comanda()[c].DetalleComanda() ){
-                    total += parseFloat( this.Comanda()[c].DetalleComanda()[dc].precio() * this.Comanda()[c].DetalleComanda()[dc].realCant() );
-                }
-            }
-            
-            return Math.round( total*100)/100;
-        }, this);
-        
-        
-        /**
-         *
-         *  Depende del cliente.
-         *  es un atajo al porcentaje de descuento que tiene el cliente
-         */
-        this.porcentajeDescuento = function(){
-            var porcentaje = 0;
-            if (this.Cliente() && !this.Cliente().hasOwnProperty('length') &&  this.Cliente().Descuento()){
-                if ( typeof this.Cliente().Descuento().porcentaje == 'function') {
-                    porcentaje = this.Cliente().Descuento().porcentaje();
-                }
-            }
-            return parseFloat( porcentaje );
-        }
-        
-        /**
-         *Devuelve el total aplicandole los descuentos
-         *@return float
-         */
-        this.totalCalculado = ko.dependentObservable(function(){
-            var total = this.totalCalculadoNeto(), 
-                dto = 0,
-                totalText = total;
-               
-            dto = Math.floor(total * this.porcentajeDescuento() / 100);
-            totalText = total - dto;
-            
-            return totalText;
-        }, this);
-        
-        
-        /**
-         *Devuelve el total mostrando un texto
-         *@return String
-         */
-        this.textoTotalCalculado = ko.dependentObservable(function(){
-            var total = this.totalCalculadoNeto(), 
-                dto = 0, 
-                totalText = '$'+total ;
-            
-            
-            if (this.Cliente() && !this.Cliente().hasOwnProperty('length') && this.Cliente().tipofactura().toLowerCase() == 'a'){               
-                totalText = 'Factura "A" '+totalText;
-            }
-
-            if ( this.porcentajeDescuento() ) {
-                dto = Math.round( Math.floor( total * this.porcentajeDescuento()  / 100 ) *100 ) /100;
-                totalText = totalText+' - [Dto '+this.porcentajeDescuento()+'%] $'+dto+' = $'+ this.totalCalculado();
-            }
-            
-            return totalText;
-        }, this);
-        
-        
-        
-        /**
-         * dependentObservable
-         * 
-         * Chequea si la mesa esta con el estado: cerrada. (por lo general, lo que interesa
-         * es saber que si no esta cerrada es porque esta abierta :-)
-         * @return boolean
-         **/
-        this.estaCerrada = ko.dependentObservable(function(){
-            return MESA_ESTADOS_POSIBLES.cerrada == this.estado();
-        }, this);
         
         
         
@@ -650,24 +556,6 @@ var Mesa = function(mozo, jsonData) {
         }, this);
         
         
-        /**
-         *  dependentObservable
-         *  
-         *  devuelve el nombre del icono (jqm data-icon) que tiene el estado 
-         *  en el que la mesa se encuentra actualmente
-         *  el nombre del icono sirve para manejar cuestiones esteticas y es definido
-         *  en "mesa.estados.class.js"
-         *  
-         *  @return string
-         *
-         */
-        this.getEstadoIcon = ko.dependentObservable( function(){
-            var estado = this.estado();
-            if (estado){
-                return estado.icon;
-            }
-            return 'mesa-abierta';
-        }, this);
         
         
         /**
@@ -708,14 +596,15 @@ Mesa.prototype = {
     mozo_id     : function( ) {return 0},
     created     : function( ) {return 0},
     time_cerro  : function( ) {return 0},
+    menu        : function( ) {return 0},
     Cliente     : function( ) {return null}, 
-    estado      : function( ) {return 0}, // objeto estado
+    estado      : function( ) {return MESA_ESTADOS_POSIBLES.abierta}, // objeto estado
     estado_id     : function( ) {return 0}, // bbdd estado_id
     cant_comensales: function( ) {return 0},
     
     // es la comanda que actualmente se esta haciendo objeto comandaFabrica
     /** @param currentComanda comandaFabrica **/
-    currentComanda: function( ) { return new Risto.Adition.comandaFabrica()},
+    currentComanda: function( ) {return new Risto.Adition.comandaFabrica()},
     Comanda     : function( ) {return []},
     Pago        : function( ) {return []}, // cantidad de pagos asociados a la mesa
     
@@ -745,12 +634,13 @@ Mesa.prototype = {
         this.created        = ko.observable();
         this.total          = ko.observable( 0 );
         this.numero         = ko.observable( 0 );
+        this.menu          = ko.observable( 0 );
         this.mozo           = ko.observable( new Mozo() );
         this.currentComanda = ko.observable( new Risto.Adition.comandaFabrica() );
         this.Comanda        = ko.observableArray( [] );
         this.mozo_id        = this.mozo().id;
         this.Cliente        = ko.observable( null );
-        this.estado         = ko.observable();
+        this.estado         = ko.observable( MESA_ESTADOS_POSIBLES.abierta );
         this.estado_id      = ko.observable();
         this.Pago           = ko.observableArray( [] );
         this.cant_comensales= ko.observable(0);
@@ -765,6 +655,7 @@ Mesa.prototype = {
      *  Actualiza el estado de la mesa con el json pasado
      */
     update: function( mozo, jsonData ) {
+        
         // mapea el objeto this usando ko.mapping
         return this.__koMapp( jsonData, mozo );
 //        this.setEstadoById();  
@@ -802,10 +693,13 @@ Mesa.prototype = {
             // meto al mozo sin agregarle la mesa al listado porque seguramente vino en el json
             this.setMozo(mozo, false);
         }
+        
         ko.mapping.fromJS(jsonData, mapOps, this);
-
+        
         // meto el estado como Objeto Observable Estado
         this.__inicializar_estado( jsonData );
+
+        
         
         return this;
     },
@@ -816,7 +710,7 @@ Mesa.prototype = {
      * "estado" que son los que estan en mesa.estados.class.js
      * @return MesaEstado
      */
-    __inicializar_estado: function(jsonData){
+    __inicializar_estado: function( jsonData ){
         var estado = MESA_ESTADOS_POSIBLES.abierta;
          if (jsonData.estado_id) {
             for(var ee in MESA_ESTADOS_POSIBLES){
@@ -826,8 +720,7 @@ Mesa.prototype = {
                 }
             }
          }
-         
-        this.estado( estado );
+        this.setEstado( estado );
         return estado;
     },
     
@@ -915,10 +808,10 @@ Mesa.prototype = {
     cambioDeEstadoAjax: function(estado){
         var estadoAnt = this.getEstado();
         var mesa = this;
-        this.setEstado(estado);
+        this.setEstado( estado );
         var ajax = $.get( estado.url+'/'+this.id() );
         ajax.error = function(){
-            mesa.setEstado(estadoAnt);
+            mesa.setEstado( estadoAnt );
         }
     },
 
@@ -969,7 +862,7 @@ Mesa.prototype = {
      * Cambia el estado de la mesa y genera un disparador del evento
      */
     setEstado: function(nuevoestado){
-        this.estado(nuevoestado);
+        this.estado( nuevoestado );
         this.__triggerEventCambioDeEstado();
     },
     
@@ -1008,6 +901,27 @@ Mesa.prototype = {
         }
         return '';
     },
+    
+    
+    /**
+         *  dependentObservable
+         *  
+         *  devuelve el nombre del icono (jqm data-icon) que tiene el estado 
+         *  en el que la mesa se encuentra actualmente
+         *  el nombre del icono sirve para manejar cuestiones esteticas y es definido
+         *  en "mesa.estados.class.js"
+         *  
+         *  @return string
+         *
+         */
+     getEstadoIcon: function(){
+            if (this.estado()){
+                return this.estado().icon;
+            }
+            return MESA_ESTADOS_POSIBLES.abierta.icon;
+            
+        },
+        
     
 
     /**
@@ -1112,6 +1026,10 @@ Mesa.prototype = {
         // lo debo sacar, eliminandole la mesa de su listado de mesas
         if ( this.tieneMozo() ){
             var mozoViejo = this.mozo();
+            // si era el mismo mozo no hacer nada
+            if (mozoViejo.id() == nuevoMozo.id()) {
+                return 0;
+            }
             mozoViejo.sacarMesa(this);
         }
         
@@ -1133,7 +1051,7 @@ Mesa.prototype = {
      *                      
      */
     editar: function(data) {
-        if (!data['data[Mesa][id]']){
+        if (!data['data[Mesa][id]']) {
             data['data[Mesa][id]'] = this.id;
         }
         $.post( window.urlDomain +'mesas/ajax_edit', data);
@@ -1186,7 +1104,108 @@ Mesa.prototype = {
         }
 
         return Math.round( total*100)/100;
-    }
+    },
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    /**
+     *Devuelve el total neto, sin aplicar descuentos
+     *@return float
+     */
+    totalCalculadoNeto: function(){
+        var tam = this.Comanda().length;
+
+        var valorPorCubierto = 0;
+        if ( typeof VALOR_POR_CUBIERTO != 'undefined') {
+            valorPorCubierto = VALOR_POR_CUBIERTO;
+        }
+        var cantCubierto = this.cant_comensales() * valorPorCubierto;
+        var total = cantCubierto;
+
+        for (var c in this.Comanda()){
+            for (dc in this.Comanda()[c].DetalleComanda() ){
+                total += parseFloat( this.Comanda()[c].DetalleComanda()[dc].precio() * this.Comanda()[c].DetalleComanda()[dc].realCant() );
+            }
+        }
+
+        return Math.round( total*100)/100;
+    },
+        
+        
+        /**
+         *
+         *  Depende del cliente.
+         *  es un atajo al porcentaje de descuento que tiene el cliente
+         */
+       porcentajeDescuento : function(){
+            var porcentaje = 0;
+            if (this.Cliente() && !this.Cliente().hasOwnProperty('length') &&  this.Cliente().Descuento()){
+                if ( typeof this.Cliente().Descuento().porcentaje == 'function') {
+                    porcentaje = this.Cliente().Descuento().porcentaje();
+                }
+            }
+            return parseFloat( porcentaje );
+        },
+        
+        /**
+         *Devuelve el total aplicandole los descuentos
+         *@return float
+         */
+        totalCalculado : function(){
+            var total = this.totalCalculadoNeto(), 
+                dto = 0,
+                totalText = total;
+               
+            dto = Math.floor(total * this.porcentajeDescuento() / 100);
+            totalText = total - dto;
+            
+            return totalText;
+        },
+        
+        
+        /**
+         *Devuelve el total mostrando un texto
+         *@return String
+         */
+        textoTotalCalculado : function(){
+            var total = this.totalCalculadoNeto(), 
+                dto = 0, 
+                totalText = '$'+total ;
+            
+            
+            if (this.Cliente() && !this.Cliente().hasOwnProperty('length') && this.Cliente().tipofactura().toLowerCase() == 'a'){               
+                totalText = 'Factura "A" '+totalText;
+            }
+
+            if ( this.porcentajeDescuento() ) {
+                dto = Math.round( Math.floor( total * this.porcentajeDescuento()  / 100 ) *100 ) /100;
+                totalText = totalText+' - [Dto '+this.porcentajeDescuento()+'%] $'+dto+' = $'+ this.totalCalculado();
+            }
+            
+            return totalText;
+        },
+        
+        
+        
+        
+         /**
+         * dependentObservable
+         * 
+         * Chequea si la mesa esta con el estado: cerrada. (por lo general, lo que interesa
+         * es saber que si no esta cerrada es porque esta abierta :-)
+         * @return boolean
+         **/
+        estaCerrada : function(){
+            return MESA_ESTADOS_POSIBLES.cerrada == this.estado();
+        }
 
 };
 
@@ -1355,6 +1374,10 @@ Risto.Adition.comandaFabrica.prototype = {
             //si el detalleComanda no tiene cantidad mayor a cero (se agregaron demas por error y luego se quitaron)
             // entonces no debo guardarla
             if ( ccdc.realCant() == 0) continue;
+            
+            // inicializo la cantidad eliminada para que no sea enviada ni guardada
+//            ccdc.cant = ccdc.realCant();
+//            ccdc.cant_eliminada = 0;
             
             if ( !comanderas[ccdc.comandera_id()] || !comanderas[ccdc.comandera_id()].length ) {
                comanderas[ccdc.comandera_id()] = [];
@@ -1561,6 +1584,7 @@ Risto.Adition.adicionar = {
         var primeraVez = true;
         worker.onmessage = function (evt) {
             
+            // si tiene mesas las proceso
             if ( evt.data && evt.data.mesas ) {
                 for ( var cbk in evt.data.mesas ) {
                     if ( typeof Risto.Adition.adicionar.handleMesasRecibidas[cbk] == 'function' ) {
@@ -1717,6 +1741,25 @@ Risto.Adition.adicionar = {
             };
         this.currentMesa.editar(ops);
     },
+    
+    
+    agregarMenu: function(){
+        var menu = prompt('Nuevo Número de Mesa', this.currentMesa().menu());
+        var ops = {
+                'data[Mesa][menu]': menu
+            };
+        this.currentMesa().menu( menu );
+        this.currentMesa().editar(ops);
+    },
+    
+    agregarCantCubiertos: function(){
+        var menu = prompt('Ingrese cantidad de Cubiertos', this.currentMesa().cant_comensales());
+        var ops = {
+                'data[Mesa][cant_comensales]': menu
+            };
+        this.currentMesa().cant_comensales( menu );
+        this.currentMesa().editar(ops);
+    },
 
 
     setCurrentMozo: function(mozo){
@@ -1745,7 +1788,6 @@ Risto.Adition.adicionar = {
         created: function( data ){
             if (!data.mozos) return -1;
 
-            
             if ( this.mesas().length ) {
                 // si ya hay mesas entonces meto las mesas nuevas de forma indidual
                 var mozo;
@@ -1771,10 +1813,9 @@ Risto.Adition.adicionar = {
                         }
                     }
                 }
-
+            
                 ko.mapping.fromJS( data, mapOps, Risto.Adition.adicionar );
             }
-            
 
             $(document).trigger('adicionMesasActualizadas');
         },
@@ -1795,7 +1836,9 @@ Risto.Adition.adicionar = {
                 mozo = Risto.Adition.adicionar.findMozoById( data.mozos[z].id );
                 for( var m in data.mozos[z].mesas ) {
                     mesaEncontrada = Risto.Adition.adicionar.findMesaById( data.mozos[z].mesas[m].id );
-                    mesaEncontrada.update( mozo, data.mozos[z].mesas[m]);
+                    if ( mesaEncontrada ) {
+                        mesaEncontrada.update( mozo, data.mozos[z].mesas[m] );
+                    }
                 }
             }
             $(document).trigger('adicionMesasActualizadas');
@@ -1810,19 +1853,22 @@ Risto.Adition.adicionar = {
          */
         cobradas: function( data ) {
             if (!data.mozos) return -1;
-            var mesaEncontrada, i;
+            var mesaEncontrada, i, mozo;
+            
+                       
             for (var z in data.mozos) {
                 for( var m in data.mozos[z].mesas ) {
                     mesaEncontrada = Risto.Adition.adicionar.findMesaById( data.mozos[z].mesas[m].id );
-                    i = Risto.Adition.adicionar.mesas().indexOf( mesaEncontrada );
-                    ko.mapping.fromJS( data.mozos[z].mesas[m], {}, mesaEncontrada );
-                    mesaEncontrada.setEstadoById();
-                    setTimeout(function(){
-                        var mozo = mesaEncontrada.mozo();
+                    
+                    if ( mesaEncontrada ) {  
+                        i = Risto.Adition.adicionar.mesas().indexOf( mesaEncontrada );
+                        ko.mapping.fromJS( data.mozos[z].mesas[m], {}, mesaEncontrada );
+                        mesaEncontrada.estado( MESA_ESTADOS_POSIBLES.cobrada );
+                        
+                        mozo = mesaEncontrada.mozo();
                         mozo.sacarMesa( mesaEncontrada );
                         delete mesaEncontrada;
-                    }, 10000);
-
+                    }
                 }
             }
             
@@ -1860,12 +1906,12 @@ Risto.Adition.adicionar = {
     },
     
     
-    crearNuevaMesa: function(mesaJSON){
+    crearNuevaMesa: function( mesaJSON ){
         var mozo = this.findMozoById(mesaJSON.mozo_id);
         var mesa = new Mesa(mozo, mesaJSON);
         
         $cakeSaver.send({url:urlDomain+'mesas/abrirMesa.json', obj: mesa});
-        return mesa;        
+        return mesa;
     }
 };
 
@@ -2109,7 +2155,7 @@ Risto.Adition.sabor.prototype = {
     
 
      initialize: function(jsonData){
-         this.cantSeleccionada('init');
+        this.cantSeleccionada('init');
         for (var i in jsonData){
                 this[i] = jsonData[i];
         }
@@ -2395,9 +2441,10 @@ Risto.Adition.detalleComanda.prototype = {
             this.cant_eliminada( parseInt( this.cant_eliminada() ) + 1 );
             this.modificada(true);
         }
+        var dc = this;
         $cakeSaver.send({
-           url: urlDomain + '/detalle_comandas/edit/' + this.id(),
-           obj: this
+           url: urlDomain + '/detalle_comandas/edit/' + dc.id(),
+           obj: dc
         }, function() {
         });
     },
@@ -2502,7 +2549,7 @@ Risto.Adition.koAdicionModel = {
  */
 
 // mensaje de confirmacion cuando se esta por salir de la pagina (evitar perdidas de datos no actualizados)
-window.onbeforeunload=confirmacionDeSalida;
+//window.onbeforeunload=confirmacionDeSalida;
 
 
 
@@ -2567,10 +2614,36 @@ $(document).ready(function() {
     
     
     
-    
     //creacion de comandas
     // producto seleccionado
     $(document).bind(  MENU_ESTADOS_POSIBLES.productoSeleccionado.event , productoSeleccionado);
+    
+    
+    
+    
+    // Eventos para abrir una mesa
+    $('a[href="#mesa-add"]').bind('click', function(){
+    });
+    
+    $('#add-mesa-paso1 LABEL, #add-mesa-paso3-volver').bind('click', function(){
+       $('#add-mesa-paso1, #add-mesa-paso3').hide();$('#add-mesa-paso2').show(); 
+       $('#add-mesa-paso2 input').focus();
+    });
+    
+    $('#add-mesa-paso2-submit').bind('click', function(){
+       $('#add-mesa-paso2, #add-mesa-paso1').hide();$('#add-mesa-paso3').show();
+       $('#add-mesa-paso3 input').focus();
+    });
+    
+    $('#add-mesa-paso3-submit, #add-mesa-paso2-volver').bind('click', function(){
+       $('#add-mesa-paso3, #add-mesa-paso2').hide();$('#add-mesa-paso1').show();
+    });
+    
+    
+    $('#form-mesa-add').submit(agregarNuevaMesa);
+    
+    
+    
     
     
 
@@ -2609,7 +2682,6 @@ $(document).ready(function() {
     
     
     // Form SUBMITS
-    $('#form-mesa-add').submit(agregarNuevaMesa);
     $('#form-cambiar-mozo').submit(cambiarMozo);
     $('#form-cambiar-numero').submit(cambiarNumeroMesa);
     
@@ -2638,7 +2710,7 @@ $(document).ready(function() {
     });
     
     $('#comanda-add-guardar').click(function(){
-        Risto.Adition.adicionar.currentMesa().currentComanda().save()
+        Risto.Adition.adicionar.currentMesa().currentComanda().save();
     });
     
     $('A[href="#mesa-cobrar"]').live('click',function(){
@@ -2647,6 +2719,14 @@ $(document).ready(function() {
     
      $('#btn-comanda-opciones').click(function(){
          $('#comanda-opciones').toggle();
+      });
+      
+      $('#mesa-menu').click(function(){
+          Risto.Adition.adicionar.agregarMenu();
+      });
+      
+      $('.cant_comensales').click(function(){
+          Risto.Adition.adicionar.agregarCantCubiertos();
       });
     
     
@@ -2710,6 +2790,13 @@ $(document).ready(function() {
     });
     
     
+    $('#modo-k').live('change',function(){
+        IMPRIME_REMITO_PRIMERO = !IMPRIME_REMITO_PRIMERO;
+        $.get(urlDomain+'/configs/toggle_remito');
+        
+    });
+    
+    
     
     // Los botones que tengan la clase silent-click sirven para los dialogs
     // la idea es que al ser apretados el dialog se cierre, pero que se envie 
@@ -2753,21 +2840,23 @@ function agregarNuevaMesa(e){
     }
     
     var mesa = Risto.Adition.adicionar.crearNuevaMesa( miniMesa );
+    mesaSeleccionada( {"mesa": mesa} );
     Risto.Adition.adicionar.setCurrentMesa( mesa );
-    document.getElementById('form-mesa-add').reset(); // limpio el formulario
     $.mobile.changePage('#mesa-view');
+    document.getElementById('form-mesa-add').reset(); // limpio el formulario
 
     return false;
 }
 
 
 function mesaCerrada(e){
-    $("#mesa-id-"+e.mesa.id()).find('.ui-icon').removeClass('ui-icon-'+MESA_ESTADOS_POSIBLES.abierta.icon);
-    $("#mesa-id-"+e.mesa.id()).find('.ui-icon').addClass('ui-icon-'+MESA_ESTADOS_POSIBLES.cerrada.icon);   
+//    e.mesa.estado( MESA_ESTADOS_POSIBLES.cerrada );
+//    $("#mesa-li-id-"+e.mesa.id()).attr('class', '');
+//    $("#mesa-li-id-"+e.mesa.id()).addClass(e.mesa.estado().icon);   
 }
 
 function mesaCuponPendiente(){
-    alert('mesa cupon pendiente');
+    
 }
 
 function mesaBorrada(e){
@@ -2797,6 +2886,8 @@ function mesaCobrada(e){
         }, function(d){
             
         });
+        
+        e.mesa.mozo().sacarMesa( e.mesa );
 }
 
 
@@ -2814,8 +2905,6 @@ function mesaSeleccionada(e){
 function abrirMesa(e) {
     if (!e.mesa.id) {
         setTimeout(function(){abrirMesa(e)},1000);
-    } else {
-        mesaSeleccionada(e);
     }
 }
 

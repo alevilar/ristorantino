@@ -6,7 +6,7 @@
     /*****
      * 				 ENCABEZADO
      */
-    $header = Configure::read('Restaurante.name');
+    $header .= Configure::read('Adicion.preTicketHeader');
     if ($header) {
         $textoAImprimir .= $header;
         $textoAImprimir .= "\n\n";

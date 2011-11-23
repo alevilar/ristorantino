@@ -10,95 +10,6 @@ var Mesa = function(mozo, jsonData) {
         // agrego atributos generales
         Risto.modelizar(this);
     
-        /**
-         *Devuelve el total neto, sin aplicar descuentos
-         *@return float
-         */
-        this.totalCalculadoNeto = ko.dependentObservable(function(){
-            var tam = this.Comanda().length;
-            
-            var valorPorCubierto = 0;
-            if ( typeof VALOR_POR_CUBIERTO != 'undefined') {
-                valorPorCubierto = VALOR_POR_CUBIERTO;
-            }
-            var cantCubierto = this.cant_comensales() * valorPorCubierto;
-            var total = cantCubierto;
-            
-            for (var c in this.Comanda()){
-                for (dc in this.Comanda()[c].DetalleComanda() ){
-                    total += parseFloat( this.Comanda()[c].DetalleComanda()[dc].precio() * this.Comanda()[c].DetalleComanda()[dc].realCant() );
-                }
-            }
-            
-            return Math.round( total*100)/100;
-        }, this);
-        
-        
-        /**
-         *
-         *  Depende del cliente.
-         *  es un atajo al porcentaje de descuento que tiene el cliente
-         */
-        this.porcentajeDescuento = function(){
-            var porcentaje = 0;
-            if (this.Cliente() && !this.Cliente().hasOwnProperty('length') &&  this.Cliente().Descuento()){
-                if ( typeof this.Cliente().Descuento().porcentaje == 'function') {
-                    porcentaje = this.Cliente().Descuento().porcentaje();
-                }
-            }
-            return parseFloat( porcentaje );
-        }
-        
-        /**
-         *Devuelve el total aplicandole los descuentos
-         *@return float
-         */
-        this.totalCalculado = ko.dependentObservable(function(){
-            var total = this.totalCalculadoNeto(), 
-                dto = 0,
-                totalText = total;
-               
-            dto = Math.floor(total * this.porcentajeDescuento() / 100);
-            totalText = total - dto;
-            
-            return totalText;
-        }, this);
-        
-        
-        /**
-         *Devuelve el total mostrando un texto
-         *@return String
-         */
-        this.textoTotalCalculado = ko.dependentObservable(function(){
-            var total = this.totalCalculadoNeto(), 
-                dto = 0, 
-                totalText = '$'+total ;
-            
-            
-            if (this.Cliente() && !this.Cliente().hasOwnProperty('length') && this.Cliente().tipofactura().toLowerCase() == 'a'){               
-                totalText = 'Factura "A" '+totalText;
-            }
-
-            if ( this.porcentajeDescuento() ) {
-                dto = Math.round( Math.floor( total * this.porcentajeDescuento()  / 100 ) *100 ) /100;
-                totalText = totalText+' - [Dto '+this.porcentajeDescuento()+'%] $'+dto+' = $'+ this.totalCalculado();
-            }
-            
-            return totalText;
-        }, this);
-        
-        
-        
-        /**
-         * dependentObservable
-         * 
-         * Chequea si la mesa esta con el estado: cerrada. (por lo general, lo que interesa
-         * es saber que si no esta cerrada es porque esta abierta :-)
-         * @return boolean
-         **/
-        this.estaCerrada = ko.dependentObservable(function(){
-            return MESA_ESTADOS_POSIBLES.cerrada == this.estado();
-        }, this);
         
         
         
@@ -123,24 +34,6 @@ var Mesa = function(mozo, jsonData) {
         }, this);
         
         
-        /**
-         *  dependentObservable
-         *  
-         *  devuelve el nombre del icono (jqm data-icon) que tiene el estado 
-         *  en el que la mesa se encuentra actualmente
-         *  el nombre del icono sirve para manejar cuestiones esteticas y es definido
-         *  en "mesa.estados.class.js"
-         *  
-         *  @return string
-         *
-         */
-        this.getEstadoIcon = ko.dependentObservable( function(){
-            if ( this.estado() ){
-                return this.estado().icon;
-            } else {
-                return 'mesa-abierta';
-            }
-        }, this);
         
         
         /**
@@ -181,14 +74,15 @@ Mesa.prototype = {
     mozo_id     : function( ) {return 0},
     created     : function( ) {return 0},
     time_cerro  : function( ) {return 0},
+    menu        : function( ) {return 0},
     Cliente     : function( ) {return null}, 
-    estado      : function( ) {return null}, // objeto estado
+    estado      : function( ) {return MESA_ESTADOS_POSIBLES.abierta}, // objeto estado
     estado_id     : function( ) {return 0}, // bbdd estado_id
     cant_comensales: function( ) {return 0},
     
     // es la comanda que actualmente se esta haciendo objeto comandaFabrica
     /** @param currentComanda comandaFabrica **/
-    currentComanda: function( ) { return new Risto.Adition.comandaFabrica()},
+    currentComanda: function( ) {return new Risto.Adition.comandaFabrica()},
     Comanda     : function( ) {return []},
     Pago        : function( ) {return []}, // cantidad de pagos asociados a la mesa
     
@@ -218,12 +112,13 @@ Mesa.prototype = {
         this.created        = ko.observable();
         this.total          = ko.observable( 0 );
         this.numero         = ko.observable( 0 );
+        this.menu          = ko.observable( 0 );
         this.mozo           = ko.observable( new Mozo() );
         this.currentComanda = ko.observable( new Risto.Adition.comandaFabrica() );
         this.Comanda        = ko.observableArray( [] );
         this.mozo_id        = this.mozo().id;
         this.Cliente        = ko.observable( null );
-        this.estado         = ko.observable();
+        this.estado         = ko.observable( MESA_ESTADOS_POSIBLES.abierta );
         this.estado_id      = ko.observable();
         this.Pago           = ko.observableArray( [] );
         this.cant_comensales= ko.observable(0);
@@ -238,6 +133,7 @@ Mesa.prototype = {
      *  Actualiza el estado de la mesa con el json pasado
      */
     update: function( mozo, jsonData ) {
+        
         // mapea el objeto this usando ko.mapping
         return this.__koMapp( jsonData, mozo );
 //        this.setEstadoById();  
@@ -275,10 +171,13 @@ Mesa.prototype = {
             // meto al mozo sin agregarle la mesa al listado porque seguramente vino en el json
             this.setMozo(mozo, false);
         }
+        
         ko.mapping.fromJS(jsonData, mapOps, this);
-
+        
         // meto el estado como Objeto Observable Estado
         this.__inicializar_estado( jsonData );
+
+        
         
         return this;
     },
@@ -289,7 +188,7 @@ Mesa.prototype = {
      * "estado" que son los que estan en mesa.estados.class.js
      * @return MesaEstado
      */
-    __inicializar_estado: function(jsonData){
+    __inicializar_estado: function( jsonData ){
         var estado = MESA_ESTADOS_POSIBLES.abierta;
          if (jsonData.estado_id) {
             for(var ee in MESA_ESTADOS_POSIBLES){
@@ -299,8 +198,7 @@ Mesa.prototype = {
                 }
             }
          }
-         
-        this.estado( estado );
+        this.setEstado( estado );
         return estado;
     },
     
@@ -482,6 +380,27 @@ Mesa.prototype = {
         return '';
     },
     
+    
+    /**
+         *  dependentObservable
+         *  
+         *  devuelve el nombre del icono (jqm data-icon) que tiene el estado 
+         *  en el que la mesa se encuentra actualmente
+         *  el nombre del icono sirve para manejar cuestiones esteticas y es definido
+         *  en "mesa.estados.class.js"
+         *  
+         *  @return string
+         *
+         */
+     getEstadoIcon: function(){
+            if (this.estado()){
+                return this.estado().icon;
+            }
+            return MESA_ESTADOS_POSIBLES.abierta.icon;
+            
+        },
+        
+    
 
     /**
      * Me dice si la mesa pidio el cierre y esta pendiente de cobro
@@ -585,6 +504,10 @@ Mesa.prototype = {
         // lo debo sacar, eliminandole la mesa de su listado de mesas
         if ( this.tieneMozo() ){
             var mozoViejo = this.mozo();
+            // si era el mismo mozo no hacer nada
+            if (mozoViejo.id() == nuevoMozo.id()) {
+                return 0;
+            }
             mozoViejo.sacarMesa(this);
         }
         
@@ -606,7 +529,7 @@ Mesa.prototype = {
      *                      
      */
     editar: function(data) {
-        if (!data['data[Mesa][id]']){
+        if (!data['data[Mesa][id]']) {
             data['data[Mesa][id]'] = this.id;
         }
         $.post( window.urlDomain +'mesas/ajax_edit', data);
@@ -659,7 +582,108 @@ Mesa.prototype = {
         }
 
         return Math.round( total*100)/100;
-    }
+    },
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    /**
+     *Devuelve el total neto, sin aplicar descuentos
+     *@return float
+     */
+    totalCalculadoNeto: function(){
+        var tam = this.Comanda().length;
+
+        var valorPorCubierto = 0;
+        if ( typeof VALOR_POR_CUBIERTO != 'undefined') {
+            valorPorCubierto = VALOR_POR_CUBIERTO;
+        }
+        var cantCubierto = this.cant_comensales() * valorPorCubierto;
+        var total = cantCubierto;
+
+        for (var c in this.Comanda()){
+            for (dc in this.Comanda()[c].DetalleComanda() ){
+                total += parseFloat( this.Comanda()[c].DetalleComanda()[dc].precio() * this.Comanda()[c].DetalleComanda()[dc].realCant() );
+            }
+        }
+
+        return Math.round( total*100)/100;
+    },
+        
+        
+        /**
+         *
+         *  Depende del cliente.
+         *  es un atajo al porcentaje de descuento que tiene el cliente
+         */
+       porcentajeDescuento : function(){
+            var porcentaje = 0;
+            if (this.Cliente() && !this.Cliente().hasOwnProperty('length') &&  this.Cliente().Descuento()){
+                if ( typeof this.Cliente().Descuento().porcentaje == 'function') {
+                    porcentaje = this.Cliente().Descuento().porcentaje();
+                }
+            }
+            return parseFloat( porcentaje );
+        },
+        
+        /**
+         *Devuelve el total aplicandole los descuentos
+         *@return float
+         */
+        totalCalculado : function(){
+            var total = this.totalCalculadoNeto(), 
+                dto = 0,
+                totalText = total;
+               
+            dto = Math.floor(total * this.porcentajeDescuento() / 100);
+            totalText = total - dto;
+            
+            return totalText;
+        },
+        
+        
+        /**
+         *Devuelve el total mostrando un texto
+         *@return String
+         */
+        textoTotalCalculado : function(){
+            var total = this.totalCalculadoNeto(), 
+                dto = 0, 
+                totalText = '$'+total ;
+            
+            
+            if (this.Cliente() && !this.Cliente().hasOwnProperty('length') && this.Cliente().tipofactura().toLowerCase() == 'a'){               
+                totalText = 'Factura "A" '+totalText;
+            }
+
+            if ( this.porcentajeDescuento() ) {
+                dto = Math.round( Math.floor( total * this.porcentajeDescuento()  / 100 ) *100 ) /100;
+                totalText = totalText+' - [Dto '+this.porcentajeDescuento()+'%] $'+dto+' = $'+ this.totalCalculado();
+            }
+            
+            return totalText;
+        },
+        
+        
+        
+        
+         /**
+         * dependentObservable
+         * 
+         * Chequea si la mesa esta con el estado: cerrada. (por lo general, lo que interesa
+         * es saber que si no esta cerrada es porque esta abierta :-)
+         * @return boolean
+         **/
+        estaCerrada : function(){
+            return MESA_ESTADOS_POSIBLES.cerrada == this.estado();
+        }
 
 };
 

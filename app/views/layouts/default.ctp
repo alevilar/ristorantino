@@ -64,6 +64,8 @@
                 <div class="grid_12 header">
                 <?php echo $html->link("Inicio", '/pages/home', array('class' => 'inicio')) ?>
                     
+                    <h3 style="color: grey; float: left">Chocha 012</h3>
+                    
                     <?php 
                     echo $this->element('menu_' . $this->params['controller']);
                     ?>

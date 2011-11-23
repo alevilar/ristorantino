@@ -66,14 +66,12 @@ class CashierController extends AditionAppController {
 	
 	
 	function vaciar_cola_impresion_fiscal($devName = null){
-		$this->Printer->eliminarComandosEncolados();
-		$this->Session->setFlash("Se eliminaron todos los tickets que estaban por
-imprimirse");
+            $this->autoRender = false;
+//		$this->Printer->eliminarComandosEncolados();
 
                 // reinicia el servidor de impresion
 		comandosDeReinicializacionServidorImpresion($devName);
-
-		$this->redirect($this->referer());
+                return 1;die;
 	}
 
         function listar_dispositivos(){            

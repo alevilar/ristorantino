@@ -35,7 +35,7 @@ Risto.Adition.sabor.prototype = {
     
 
      initialize: function(jsonData){
-         this.cantSeleccionada('init');
+        this.cantSeleccionada('init');
         for (var i in jsonData){
                 this[i] = jsonData[i];
         }

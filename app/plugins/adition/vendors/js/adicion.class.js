@@ -51,6 +51,7 @@ Risto.Adition.adicionar = {
         var primeraVez = true;
         worker.onmessage = function (evt) {
             
+            // si tiene mesas las proceso
             if ( evt.data && evt.data.mesas ) {
                 for ( var cbk in evt.data.mesas ) {
                     if ( typeof Risto.Adition.adicionar.handleMesasRecibidas[cbk] == 'function' ) {
@@ -207,6 +208,25 @@ Risto.Adition.adicionar = {
             };
         this.currentMesa.editar(ops);
     },
+    
+    
+    agregarMenu: function(){
+        var menu = prompt('Nuevo Número de Mesa', this.currentMesa().menu());
+        var ops = {
+                'data[Mesa][menu]': menu
+            };
+        this.currentMesa().menu( menu );
+        this.currentMesa().editar(ops);
+    },
+    
+    agregarCantCubiertos: function(){
+        var menu = prompt('Ingrese cantidad de Cubiertos', this.currentMesa().cant_comensales());
+        var ops = {
+                'data[Mesa][cant_comensales]': menu
+            };
+        this.currentMesa().cant_comensales( menu );
+        this.currentMesa().editar(ops);
+    },
 
 
     setCurrentMozo: function(mozo){
@@ -235,7 +255,6 @@ Risto.Adition.adicionar = {
         created: function( data ){
             if (!data.mozos) return -1;
 
-            
             if ( this.mesas().length ) {
                 // si ya hay mesas entonces meto las mesas nuevas de forma indidual
                 var mozo;
@@ -285,7 +304,7 @@ Risto.Adition.adicionar = {
                 for( var m in data.mozos[z].mesas ) {
                     mesaEncontrada = Risto.Adition.adicionar.findMesaById( data.mozos[z].mesas[m].id );
                     if ( mesaEncontrada ) {
-                        mesaEncontrada.update( mozo, data.mozos[z].mesas[m]);
+                        mesaEncontrada.update( mozo, data.mozos[z].mesas[m] );
                     }
                 }
             }
@@ -301,19 +320,22 @@ Risto.Adition.adicionar = {
          */
         cobradas: function( data ) {
             if (!data.mozos) return -1;
-            var mesaEncontrada, i;
+            var mesaEncontrada, i, mozo;
+            
+                       
             for (var z in data.mozos) {
                 for( var m in data.mozos[z].mesas ) {
                     mesaEncontrada = Risto.Adition.adicionar.findMesaById( data.mozos[z].mesas[m].id );
-                    i = Risto.Adition.adicionar.mesas().indexOf( mesaEncontrada );
-                    ko.mapping.fromJS( data.mozos[z].mesas[m], {}, mesaEncontrada );
-                    mesaEncontrada.setEstadoById();
-                    setTimeout(function(){
-                        var mozo = mesaEncontrada.mozo();
+                    
+                    if ( mesaEncontrada ) {  
+                        i = Risto.Adition.adicionar.mesas().indexOf( mesaEncontrada );
+                        ko.mapping.fromJS( data.mozos[z].mesas[m], {}, mesaEncontrada );
+                        mesaEncontrada.estado( MESA_ESTADOS_POSIBLES.cobrada );
+                        
+                        mozo = mesaEncontrada.mozo();
                         mozo.sacarMesa( mesaEncontrada );
                         delete mesaEncontrada;
-                    }, 10000);
-
+                    }
                 }
             }
             

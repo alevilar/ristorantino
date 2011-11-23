@@ -145,7 +145,7 @@ ul.listado-adicion .mesa-mozo,ul.listado-adicion .mozo-cant-mesas {
 
 
 .mesa-total {
-    color: #FFF1A8;
+    color: #FF0000;
     font-size: 110%;
 }
 .hora-abrio {
@@ -242,11 +242,18 @@ ul.listado-mozos-para-mesas{
 
 .menu-img{
     width: 50px; 
+    height: 50px;
 }
 
 .menu-letra-con-imagen{
     font-size: xx-small;
     
+}
+
+.btn-categoria{
+    min-width: 92px;
+    min-height: 76px;
+    padding: 3px;
 }
 
 
@@ -346,21 +353,7 @@ ul.tipo_de_pagos ,.tipo_de_pagos ul{
 .dialog-reancho .ui-header, .dialog-reancho .ui-content, .dialog-reancho .ui-footer { max-width: 100% !important; width: 94% !important; margin-left: 2% !important;}
 
 
-.btn-comandas{
-    max-width: 18%;
-    font-size: small;
-}
 
-.btn-categoria{
-   
-}
-
-.btn-comandas .ui-btn-inner{
-   white-space: normal !important;
-}
-
-
-#ul-productos .ui-btn-inner, #ul-categorias .ui-btn-inner{
-    padding: .9em 5px !important;
-    width: 92px;
+#ul-productos > a .ui-btn-inner{
+ 
 }

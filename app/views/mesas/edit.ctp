@@ -12,6 +12,7 @@
 		echo $form->input('id');
 		echo $form->input('numero',array('after'=>'</br>Si cambia este número, cambiara el número de la mesa','label'=>'Cambiar Número de Mesa'));
 		echo $form->input('mozo_id',array('after'=>'</br>Aquí puede cambiar el mozo de la mesa'));
+                echo $form->input('cant_comensales',array('after'=>'</br>Aquí puede cambiar la cantidad de cubiertos de la mesa'));
 		echo $form->input('total',array('after'=>'</br>Aquí puede cambiar el total de la mesa.'));
                 //echo $form->input('Cliente_descuento_porcentaje',array('after'=>'</br>Aquí puede cambiar el total de la mesa.'));                   
                 

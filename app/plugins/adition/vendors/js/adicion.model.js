@@ -7,6 +7,7 @@ var urlDomain,
     interval, 
     ajaxSending = false,
     mesasLastUpdatedTime = 0,
+    anteriorUpdatedTime = 0, // fecha temporal por si fallo el ajax
     firstRun    = true, 
     onLine      = true,
     intervalTime    = 15000;
@@ -44,9 +45,9 @@ self.onmessage = function(obj) {
 AditionModel = {
     
     getMesas: function(){
-        if ( onLine ) {
+//        if ( onLine ) {
             AditionModel.getRemoteMesasAbiertas();
-        }
+//        }
     },
     
     getRemoteMesasAbiertas: function () {
@@ -55,6 +56,7 @@ AditionModel = {
             url = urlDomain;
         }
         
+        anteriorUpdatedTime = mesasLastUpdatedTime;
         if ( mesasLastUpdatedTime) {
             // si mesasLastUpdatedTime tiene valor es porque ahora solo quiero que me traiga las que fueron actualizadas ultimamente
             url = url + 'mozos/mesas_abiertas/'+ mesasLastUpdatedTime +'.json'
@@ -71,23 +73,34 @@ AditionModel = {
             // callbacl en caso de exito al recibir el ajax
             xhr.onreadystatechange = this._processOnSuccess;
             
-            // mando el ajax pidiendo las mesas
-            xhr.open('GET', url, false);
-            xhr.send();
+            try
+              {
+                // mando el ajax pidiendo las mesas
+                xhr.open('GET', url, false);
+                xhr.send();
+              }
+            catch(err)
+              {
+                  // si hubo algun error dejo el timestamp anterior, para volver a pedir las mesas
+                  mesasLastUpdatedTime = anteriorUpdatedTime;
+              }
+            
         }
     },
     
     _processOnSuccess: function(){
+
         if (this.readyState == 4 && this.responseText) {
             var data = JSON.parse( this.responseText );
             if (data.time) {
                 mesasLastUpdatedTime = data.time;
-            }
-            
+            } 
             postMessage(data);
             
             ajaxSending = false;
-        }
+        } else {
+            mesasLastUpdatedTime = anteriorUpdatedTime;
+        }            
     },
     
     _juntarMesasDeMozos: function( aMozo ){        

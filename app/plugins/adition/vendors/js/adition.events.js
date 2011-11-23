@@ -6,7 +6,7 @@
  */
 
 // mensaje de confirmacion cuando se esta por salir de la pagina (evitar perdidas de datos no actualizados)
-window.onbeforeunload=confirmacionDeSalida;
+//window.onbeforeunload=confirmacionDeSalida;
 
 
 
@@ -83,17 +83,17 @@ $(document).ready(function() {
     });
     
     $('#add-mesa-paso1 LABEL, #add-mesa-paso3-volver').bind('click', function(){
-       $('#add-mesa-paso1, #add-mesa-paso3').hide(); $('#add-mesa-paso2').show(); 
+       $('#add-mesa-paso1, #add-mesa-paso3').hide();$('#add-mesa-paso2').show(); 
        $('#add-mesa-paso2 input').focus();
     });
     
     $('#add-mesa-paso2-submit').bind('click', function(){
-       $('#add-mesa-paso2, #add-mesa-paso1').hide(); $('#add-mesa-paso3').show();
+       $('#add-mesa-paso2, #add-mesa-paso1').hide();$('#add-mesa-paso3').show();
        $('#add-mesa-paso3 input').focus();
     });
     
     $('#add-mesa-paso3-submit, #add-mesa-paso2-volver').bind('click', function(){
-       $('#add-mesa-paso3, #add-mesa-paso2').hide(); $('#add-mesa-paso1').show();
+       $('#add-mesa-paso3, #add-mesa-paso2').hide();$('#add-mesa-paso1').show();
     });
     
     
@@ -167,7 +167,7 @@ $(document).ready(function() {
     });
     
     $('#comanda-add-guardar').click(function(){
-        Risto.Adition.adicionar.currentMesa().currentComanda().save()
+        Risto.Adition.adicionar.currentMesa().currentComanda().save();
     });
     
     $('A[href="#mesa-cobrar"]').live('click',function(){
@@ -176,6 +176,14 @@ $(document).ready(function() {
     
      $('#btn-comanda-opciones').click(function(){
          $('#comanda-opciones').toggle();
+      });
+      
+      $('#mesa-menu').click(function(){
+          Risto.Adition.adicionar.agregarMenu();
+      });
+      
+      $('.cant_comensales').click(function(){
+          Risto.Adition.adicionar.agregarCantCubiertos();
       });
     
     
@@ -239,6 +247,13 @@ $(document).ready(function() {
     });
     
     
+    $('#modo-k').live('change',function(){
+        IMPRIME_REMITO_PRIMERO = !IMPRIME_REMITO_PRIMERO;
+        $.get(urlDomain+'/configs/toggle_remito');
+        
+    });
+    
+    
     
     // Los botones que tengan la clase silent-click sirven para los dialogs
     // la idea es que al ser apretados el dialog se cierre, pero que se envie 
@@ -282,6 +297,7 @@ function agregarNuevaMesa(e){
     }
     
     var mesa = Risto.Adition.adicionar.crearNuevaMesa( miniMesa );
+    mesaSeleccionada( {"mesa": mesa} );
     Risto.Adition.adicionar.setCurrentMesa( mesa );
     $.mobile.changePage('#mesa-view');
     document.getElementById('form-mesa-add').reset(); // limpio el formulario
@@ -291,8 +307,9 @@ function agregarNuevaMesa(e){
 
 
 function mesaCerrada(e){
-    $("#mesa-li-id-"+e.mesa.id()).attr('class', '');
-    $("#mesa-li-id-"+e.mesa.id()).addClass(e.mesa.estado().icon);   
+//    e.mesa.estado( MESA_ESTADOS_POSIBLES.cerrada );
+//    $("#mesa-li-id-"+e.mesa.id()).attr('class', '');
+//    $("#mesa-li-id-"+e.mesa.id()).addClass(e.mesa.estado().icon);   
 }
 
 function mesaCuponPendiente(){
@@ -326,6 +343,8 @@ function mesaCobrada(e){
         }, function(d){
             
         });
+        
+        e.mesa.mozo().sacarMesa( e.mesa );
 }
 
 
@@ -343,8 +362,6 @@ function mesaSeleccionada(e){
 function abrirMesa(e) {
     if (!e.mesa.id) {
         setTimeout(function(){abrirMesa(e)},1000);
-    } else {
-        mesaSeleccionada(e);
     }
 }
 

@@ -40,7 +40,7 @@
                 
                
 
-                
+     /*           
 		echo $javascript->link( array(
                     'jquery/jquery-1.6.4',
                     'jquery/jquery.tmpl.min',
@@ -76,7 +76,8 @@
                    'alekeyboard',
                     ));
                 
-//                echo $javascript->link('todos.min');
+*/
+                echo $javascript->link('todos.min');
 
  
             ?>
@@ -112,6 +113,12 @@
         MESA_RELOAD_TIMEOUT = <?php echo Configure::read('Adicion.reload_interval_timeout')?>;
         
         VALOR_POR_CUBIERTO = <?php echo Configure::read('Restaurante.valorCubierto')?>;
+        
+        // hace que luego de cobrar una mesa, esta quede activa durante X segundos
+        ESPERAR_DESPUES_DE_COBRAR = 0;
+        
+        
+        IMPRIME_REMITO_PRIMERO = <?php echo Configure::read('Mesa.imprimePrimeroRemito')?1:0?>;
 
         //Parametros de configuracion
         Risto.Adition.cubiertosObligatorios   = <?php echo Configure::read('Adicion.cantidadCubiertosObligatorio')?'true':'false'?>;

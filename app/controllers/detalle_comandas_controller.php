@@ -75,7 +75,7 @@ class DetalleComandasController extends AppController {
 		while (list($key, $value) = each($v_comanderas)):
 			// Creo una comanda
                         $this->DetalleComanda->Comanda->create();
-			if($this->DetalleComanda->Comanda->save($comanda)){
+			if($this->DetalleComanda->Comanda->save( $comanda )){
 					$ok = true;
 					$v_comandera_y_comanda[$key] = $this->DetalleComanda->Comanda->getLastInsertID();
 			}
@@ -87,19 +87,22 @@ class DetalleComandasController extends AppController {
 		endwhile;
 		
 		// por cada Comanda que hice (o sea por cada comandera) genero elDetalleComanda
-		while(list($comandera_id, $comanda_id) = each($v_comandera_y_comanda)){
+		foreach($v_comandera_y_comanda as $comandera_id => $comanda_id){
 			foreach($this->data['DetalleComanda'] as $data):
 				$data['comanda_id'] = $comanda_id;
 				if ($data['comandera_id'] == $comandera_id){
                                     $dataToSave['DetalleComanda'] = $data;
                                         $this->DetalleComanda->create();
+                            debug( $dataToSave );
 					if ($this->DetalleComanda->save($dataToSave)){
 						$ok = true;
-                                                if (!empty($data['DetalleSabor'])){
+                            debug( $data['DetalleSabor'] );
+                                                if (!empty($data['DetalleSabor'])){                                                    
                                                     $detalleSabor = $data['DetalleSabor'];
                                                     foreach ($detalleSabor as $ds){
                                                         $ds['detalle_comanda_id'] = $this->DetalleComanda->getLastInsertID();
                                                         $dataToSave['DetalleSabor'] = $ds;
+                                                        unset($dataToSave['DetalleSabor']['id']);
                                                         $this->DetalleComanda->DetalleSabor->create();
                                                         if ($this->DetalleComanda->DetalleSabor->save($dataToSave)){
                                                             $ok = 3;

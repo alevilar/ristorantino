@@ -130,6 +130,7 @@
                             <th <?php if($i==0){echo('class="coloruno"'); }else{echo('class="colordos"');}?>>Total</th>
                             <th <?php if($i==0){echo('class="coloruno"'); }else{echo('class="colordos"');}?>>Mesas</th>
                             <th <?php if($i==0){echo('class="coloruno"'); }else{echo('class="colortres"');}?>>Cubiertos</th>
+                            <th <?php if($i==0){echo('class="coloruno"'); }else{echo('class="colortres"');}?>>Promedio x Cubierto</th>
                         </tr>
         </thead>
         <tbody>
@@ -143,14 +144,19 @@
                     echo(date('d-m', strtotime($m['Mesa']['fecha'])));
                     echo('</td>');
                     echo('<td>');
+                    
                     echo('$');
                     echo($m['Mesa']['total']);
+                    
                     echo('</td>');
                     echo('<td>');
                     echo($m['Mesa']['cant_mesas']);
                     echo('</td>');
                     echo('<td>');
                     echo($m['Mesa']['cant_cubiertos']);
+                    echo('</td>');
+                    echo('<td>');
+                    echo('$'.number_format( $m['Mesa']['total']/$m['Mesa']['cant_cubiertos'], 2));
                     echo('</td>');
                     echo('</tr>');
             }        

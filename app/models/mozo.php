@@ -102,7 +102,7 @@ class Mozo extends AppModel {
             
             // si vino el parametro lastAccess, traer solo las mesas actualizadas luego del ultimo pedido
             if ( !empty($lastAccess) ) {
-                $conditionsMesa['Mesa.modified >'] = $lastAccess;
+                $conditionsMesa['Mesa.modified >='] = $lastAccess;
             }
             
             $optionsEliminada = $optionsCobrada = $optionsUpdated = $optionsCreated = array(
@@ -121,7 +121,6 @@ class Mozo extends AppModel {
             );
             
             if ( !empty($lastAccess) ) {
-                
                 // las que fueron creadas
                 $optionsCreated['contain']['Mesa']['conditions']['created >='] = $lastAccess;
                 $mesasABM['created'] = $this->find('all', $optionsCreated);
