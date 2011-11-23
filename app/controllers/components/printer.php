@@ -120,6 +120,19 @@ class PrinterComponent extends Object {
             } else {
                 $prod = $this->Controller->Mesa->dameProductosParaTicket();
             }
+            
+            // agregar el valor del cubierto
+            $valorCubierto = Configure::read('Restaurante.valorCubierto');
+            if ( empty ( $valorCubierto ) ) {
+                $valorCubierto = 0;
+            }
+            if ( $valorCubierto >= 0) {
+                $prod[] = array(
+                    'nombre'   => 'Cubiertos',
+                    'cantidad' => $this->Mesa['Mesa']['cant_comensales'],
+                    'precio'   => $valorCubierto,
+                            );
+            }
 
             if(!empty($this->Mesa['Cliente']['Descuento']['porcentaje'])) {
                 $this->porcentaje_descuento = $this->Mesa['Cliente']['Descuento']['porcentaje'];
