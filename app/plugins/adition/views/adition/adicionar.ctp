@@ -128,7 +128,7 @@
                     
         <div  data-role="content" class="content_mesas">
                 <!-- aca va el listado de mesas que se carga dinamicamente en un script de abajo -->
-                <ul class="listado-adicion" data-bind='template: { name: "listaMesasCajero", foreach: adn().mesasCerradas }'>
+                <ul id="ul-mesas-cajero" class="listado-adicion" data-bind='template: { name: "listaMesasCajero", foreach: adn().mesasCerradas }'>
                        
                 </ul>
         </div><!-- /navbar -->

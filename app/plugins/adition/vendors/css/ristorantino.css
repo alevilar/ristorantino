@@ -79,7 +79,7 @@ ul.listado-adicion .mesa-abierta A:focus, ul.listado-adicion .mesa-abierta A:act
     font-size: 138%;
 }
 
-.mesa-cerrada .mesa-numero{
+#ul-mesas-cajero  .mesa-numero{
     padding: 10px 0px 7px 0px;
     width: 39px;
     text-align: right;

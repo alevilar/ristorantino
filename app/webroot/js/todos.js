@@ -1160,6 +1160,10 @@ Mesa.prototype = {
          *@return float
          */
         totalCalculado : function(){
+            if ( this.total() ) {
+                return this.total();
+            }
+            
             var total = this.totalCalculadoNeto(), 
                 dto = 0,
                 totalText = total;
@@ -1205,6 +1209,24 @@ Mesa.prototype = {
          **/
         estaCerrada : function(){
             return MESA_ESTADOS_POSIBLES.cerrada == this.estado();
+        },
+        
+        
+        clienteTipoFacturaText: function(){
+            var texto = 'B';
+            if ( this.Cliente() ) {
+                texto = this.Cliente().getTipoFactura();
+            }
+            return texto;
+        },
+        
+        
+        clienteDescuentoText: function(){
+            var texto = '';
+            if ( this.Cliente() &&  this.Cliente().tieneDescuento() != undefined ) {
+                texto = this.Cliente().getDescuentoText();
+            }
+            return texto;
         }
 
 };
@@ -2193,12 +2215,38 @@ Risto.Adition.sabor.prototype = {
  * Clase Cliente
  */
 
-Risto.Adition.cliente = function(jsonMap){    
+Risto.Adition.cliente = function(jsonMap){   
+    
     return this.initialize(jsonMap);
 }
 
 Risto.Adition.cliente.prototype = {
-    Descuento: ko.observable(),
+    Descuento: ko.observable(null),
+    
+    tieneDescuento: function(){
+        var porcentaje = undefined;
+        if (this.descuento_id() && this.Descuento() && this.Descuento().porcentaje()) {
+            porcentaje = parseInt( this.Descuento().porcentaje() );
+        }
+        return porcentaje;
+    },
+    
+    
+    getDescuentoText : function(){
+        var porcentaje = 0;
+        if (this.Descuento() && this.Descuento().porcentaje()) {
+            porcentaje = parseInt( this.Descuento().porcentaje() )+ '%';
+        }
+        return porcentaje;
+    },
+    
+    getTipoFactura: function(){
+        var tipo = 'R';
+        if ( this.tipofactura() && this.tipofactura() != '0' ) {
+            tipo = this.tipofactura();
+        }
+        return tipo;
+    },
     
     initialize: function( jsonMap ){
         if ( !jsonMap ) {
