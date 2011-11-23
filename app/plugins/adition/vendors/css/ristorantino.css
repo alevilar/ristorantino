@@ -76,8 +76,18 @@ ul.listado-adicion .mesa-abierta A:focus, ul.listado-adicion .mesa-abierta A:act
 }
 
 .mesa-numero, .mozo-numero{
-    font-size: 125%;
-    padding-left: 8%;
+    font-size: 138%;
+}
+
+.mesa-cerrada .mesa-numero{
+    padding: 10px 0px 7px 0px;
+    width: 39px;
+    text-align: right;
+    position: absolute;
+    right: 20px;
+    top: -10px;
+    text-shadow: none !important;
+    font-weight:bold;
 }
 
 
@@ -101,6 +111,30 @@ ul.listado-adicion .mesa-mozo,ul.listado-adicion .mozo-cant-mesas {
     font-weight:bold;
     background-image: url(../../css/jquery-mobile/images/mozomonio.png);
     background-repeat: no-repeat;
+}
+
+.mesa-tipofactura{
+    padding: 10px 0px 7px 0px;
+    width: 15px;
+    text-align: center;
+    font-size: small;
+    position: absolute;
+    left: 3px;
+    top: -10px;
+    text-shadow: none !important;
+    font-weight:bold;
+}
+
+.mesa-descuento{
+    padding: 10px 0px 7px 0px;
+    width: 15px;
+    text-align: center;
+    font-size: small;
+    position: absolute;
+    left: 28px;
+    top: -10px;
+    text-shadow: none !important;
+    font-weight:bold;
 }
 
 .mesa {
@@ -146,7 +180,7 @@ ul.listado-adicion .mesa-mozo,ul.listado-adicion .mozo-cant-mesas {
 
 .mesa-total {
     color: #FFF1A8;
-    font-size: 110%;
+    font-size: 152%;
 }
 .hora-abrio {
     position: absolute;

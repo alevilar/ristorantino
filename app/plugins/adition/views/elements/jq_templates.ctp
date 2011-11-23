@@ -161,6 +161,10 @@ el ajax que verifica el estado de las mesas (si fue abierta o cerrada alguna. --
                 </span>
             </span>
             <span class="mesa-mozo" data-bind="text: mozo().numero"></span>
+            <span class="mesa-descuento" data-bind="visible: clienteDescuentoText(),text: clienteDescuentoText()"></span>
+            <span  class="mesa-tipofactura" data-bind="visible: clienteTipoFacturaText()">
+                "<span data-bind="text: clienteTipoFacturaText()"></span>"
+            </span>
             <span class="mesa-time" data-bind="text: textoHora()"></span>
         </a>
     </li>
@@ -181,14 +185,22 @@ es igual al de las mesas de la adicion salvo que al hacer click tienen otro comp
             data-icon="none"
             href="#mesa-cobrar" 
             class="ui-btn ui-btn-up-c">
-            <span class="mesa-span ui-btn-inner">
-                <span class="ui-btn-text">
-                    <span class="mesa-numero" data-bind="text: numero"></span>
-                    <br />
-                    <span class="mesa-total">$ <span data-bind="text: totalCalculado()"></span></span>
-                </span>
-            </span>
             <span class="mesa-mozo" data-bind="text: mozo().numero"></span>
+            
+            <span class="mesa-descuento" data-bind="visible: clienteDescuentoText(),text: clienteDescuentoText()"></span>
+            <span  class="mesa-tipofactura" data-bind="visible: clienteTipoFacturaText()">
+                "<span data-bind="text: clienteTipoFacturaText()"></span>"
+            </span>
+            
+            <span class="mesa-numero" data-bind="text: numero"></span>
+            
+            <span class="mesa-descuento" data-bind="visible: clienteDescuentoText(),text: clienteDescuentoText()"></span>
+            
+            <br />
+            <br />
+            <span class="mesa-total">$ <span data-bind="text: totalCalculado()"></span></span><br />
+            
+            
             <span class="mesa-time" data-bind="text: textoHora()"></span>
         </a>
     </li>

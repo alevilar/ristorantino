@@ -40,7 +40,7 @@
                 
                
 
-     /*           
+              
 		echo $javascript->link( array(
                     'jquery/jquery-1.6.4',
                     'jquery/jquery.tmpl.min',
@@ -76,8 +76,8 @@
                    'alekeyboard',
                     ));
                 
-*/
-                echo $javascript->link('todos.min');
+
+//                echo $javascript->link('todos.min');
 
  
             ?>

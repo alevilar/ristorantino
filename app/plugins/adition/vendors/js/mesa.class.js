@@ -638,6 +638,10 @@ Mesa.prototype = {
          *@return float
          */
         totalCalculado : function(){
+            if ( this.total() ) {
+                return this.total();
+            }
+            
             var total = this.totalCalculadoNeto(), 
                 dto = 0,
                 totalText = total;
@@ -683,6 +687,24 @@ Mesa.prototype = {
          **/
         estaCerrada : function(){
             return MESA_ESTADOS_POSIBLES.cerrada == this.estado();
+        },
+        
+        
+        clienteTipoFacturaText: function(){
+            var texto = 'B';
+            if ( this.Cliente() ) {
+                texto = this.Cliente().getTipoFactura();
+            }
+            return texto;
+        },
+        
+        
+        clienteDescuentoText: function(){
+            var texto = '';
+            if ( this.Cliente() &&  this.Cliente().tieneDescuento() != undefined ) {
+                texto = this.Cliente().getDescuentoText();
+            }
+            return texto;
         }
 
 };

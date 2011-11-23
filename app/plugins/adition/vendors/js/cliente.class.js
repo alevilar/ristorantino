@@ -4,12 +4,38 @@
  * Clase Cliente
  */
 
-Risto.Adition.cliente = function(jsonMap){    
+Risto.Adition.cliente = function(jsonMap){   
+    
     return this.initialize(jsonMap);
 }
 
 Risto.Adition.cliente.prototype = {
-    Descuento: ko.observable(),
+    Descuento: ko.observable(null),
+    
+    tieneDescuento: function(){
+        var porcentaje = undefined;
+        if (this.descuento_id() && this.Descuento() && this.Descuento().porcentaje()) {
+            porcentaje = parseInt( this.Descuento().porcentaje() );
+        }
+        return porcentaje;
+    },
+    
+    
+    getDescuentoText : function(){
+        var porcentaje = 0;
+        if (this.Descuento() && this.Descuento().porcentaje()) {
+            porcentaje = parseInt( this.Descuento().porcentaje() )+ '%';
+        }
+        return porcentaje;
+    },
+    
+    getTipoFactura: function(){
+        var tipo = 'R';
+        if ( this.tipofactura() && this.tipofactura() != '0' ) {
+            tipo = this.tipofactura();
+        }
+        return tipo;
+    },
     
     initialize: function( jsonMap ){
         if ( !jsonMap ) {
