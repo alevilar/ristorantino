@@ -11,7 +11,7 @@
 	<div  data-role="header">
             <h1><span style="color: #fcf0b5" data-bind="text: adn().mesas().length">0</span> Mesas</h1>
 
-            <a href='#adicion-opciones' data-icon="gear" data-rel="dialog" class="ui-btn-right" data-transition="none">Opciones</a>
+            <a href='#adicion-opciones' data-icon="gear" data-rel="dialog" class="ui-btn-right">Opciones</a>
             
             <div data-role="navbar">
                 <ul class="listado-mozos-para-mesas">
@@ -33,7 +33,7 @@
         <div  data-role="content" class="content_mesas">           
 
                 <!-- aca va el listado de mesas que se carga dinamicamente en un script de abajo -->
-                <a href="#mesa-add" data-rel="dialog"  data-transition="none" class="grid_1 abrir-mesa" data-role="button" data-theme="a">Abrir<br>Mesa</a>  
+                <a href="#mesa-add" data-rel="dialog"  class="grid_1 abrir-mesa" data-role="button" data-theme="a">Abrir<br>Mesa</a>  
                 <ul id="mesas_container" class="listado-adicion" data-bind='template: { name: "listaMesas", foreach: adn().mesas }'>
                         
                 </ul>
@@ -57,10 +57,10 @@
             
             <h3>Informes Fiscales</h3>
             <div class="ui-grid-a">
-                <div class="ui-block-a"><a href="#listado-mesas-cerradas" data-role="button" data-href="<?php echo $html->url('/adition/cashier/cierre_x');?>" data-direction="reverse" data-transition="slide" data-role="button">Imprimir informe "X"</a></div>
-                <div class="ui-block-b"><a href="#listado-mesas-cerradas" data-role="button" data-href="<?php echo $html->url('/adition/cashier/cierre_z');?>" data-direction="reverse" data-transition="slide" data-role="button">Imprimir informe "Z"</a></div>
+                <div class="ui-block-a"><a href="#listado-mesas-cerradas" data-role="button" data-href="<?php echo $html->url('/adition/cashier/cierre_x');?>" data-direction="reverse">Imprimir informe "X"</a></div>
+                <div class="ui-block-b"><a href="#listado-mesas-cerradas" data-role="button" data-href="<?php echo $html->url('/adition/cashier/cierre_z');?>" data-direction="reverse">Imprimir informe "Z"</a></div>
             </div>
-            <a href="<?php echo $html->url('/adition/cashier/nota_credito');?>" data-role="button" data-transition="slide">Nota de crédito</a>
+            <a href="<?php echo $html->url('/adition/cashier/nota_credito');?>" data-role="button">Nota de crédito</a>
             
             
             <hr />
@@ -73,13 +73,13 @@
                             <option value="1" <?php echo Configure::read('Mesa.imprimePrimeroRemito')?'selected="selected"':''?>>Si</option>
                     </select> 
             </div>
-            <a href="#listado-mesas-cerradas" data-role="button" data-href="<?php echo $html->url('/adition/cashier/vaciar_cola_impresion_fiscal');?>" data-role="button" class="silent-click" >Vaciar cola de impresión</a>
+            <a href="#listado-mesas-cerradas" data-role="button" data-href="<?php echo $html->url('/adition/cashier/vaciar_cola_impresion_fiscal');?>" class="silent-click" >Vaciar cola de impresión</a>
             
             <hr />
             
             <div class="ui-grid-a">
                 <div class="ui-block-a"><a href="#" data-rel="back" data-role="button">Cancelar</a></div>
-                <div class="ui-block-b"><a data-icon="home" data-role="button" href="<?php echo $html->url('/');?>" rel="external" data-role="button" data-theme="b">Ir a Página Principal</a></div>
+                <div class="ui-block-b"><a data-icon="home" data-role="button" href="<?php echo $html->url('/');?>" rel="external" data-theme="b">Ir a Página Principal</a></div>
             </div>
     </div>
 </div>
@@ -104,7 +104,7 @@
             
              <div class="ui-grid-a">
                 <div class="ui-block-a"><a href="#" data-rel="back" data-role="button">Cancelar</a></div>
-                <div class="ui-block-b"><a data-icon="home" data-role="button" href="<?php echo $html->url('/');?>" rel="external" data-role="button" data-theme="b">Ir a Página Principal</a></div>
+                <div class="ui-block-b"><a data-icon="home" data-role="button" href="<?php echo $html->url('/');?>" rel="external" data-theme="b">Ir a Página Principal</a></div>
             </div>
             
     </div>
@@ -122,7 +122,7 @@
                 y <span data-bind="text: Math.abs(adn().mesasCerradas().length - adn().mesas().length)"></span> abiertas
             </h1>
 
-            <a href='#cajero-opciones' data-icon="gear" data-rel="dialog" class="ui-btn-right" data-transition="none">Opciones</a>
+            <a href='#cajero-opciones' data-icon="gear" data-rel="dialog" class="ui-btn-right">Opciones</a>
         </div>
 
                     
@@ -241,7 +241,7 @@
 -->
 <div data-role="page" id="mesa-view">
 	<div  data-role="header" data-bind="css: {'ui-bar-f': adn().currentMesa().estaCerrada()}">
-            <a href="#listado-mesas" data-transition="slide" data-direction="reverse">Volver</a>
+            <a href="#listado-mesas" data-direction="reverse">Volver</a>
             <h1>
                 <span class="mesa-id" style="float: left;">
                     #<span data-bind="text: adn().currentMesa().id()"></span>
@@ -264,11 +264,11 @@
                 <ul data-role="listview"  data-bind="attr: {'estado': adn().currentMesa().estado().icon}">
                     
                     <li id="mesa-action-comanda" data-bind="attr: {'estado': 'comanda-add-menu_'+adn().currentMesa().estado().icon}">
-                        <a href="#comanda-add-menu" data-rel="dialog"  data-transition="none"><?= $html->image('/adition/css/img/chef_64.png')?>Comanda</a>
+                        <a href="#comanda-add-menu" data-rel="dialog"><?= $html->image('/adition/css/img/chef_64.png')?>Comanda</a>
                     </li>
                     
                     <li id="mesa-action-cliente" data-bind="attr: {'estado': 'mesa-cliente_'+adn().currentMesa().estado().icon}">
-                        <a href="<?php echo $html->url('/clientes/jqm_clientes')?>" data-rel="dialog" data-transition="none">
+                        <a href="<?php echo $html->url('/clientes/jqm_clientes')?>" data-rel="dialog">
                                 <?= $html->image('/adition/css/img/customers.png')?>
                             <span data-bind="visible: !adn().currentMesa().Cliente()">Agregar Cliente</span>
                             <span data-bind="visible: adn().currentMesa().Cliente()" style="white-space: normal"><span data-bind="text: adn().currentMesa().clienteNameData()"></span></span>
@@ -276,7 +276,7 @@
                     </li>
                     
                     <li id="mesa-action-cerrar" data-bind="attr: {'estado': 'mesa-cerrar_'+adn().currentMesa().estado().icon}">
-                        <a href="#listado-mesas" id="mesa-cerrar" data-direction="reverse" data-transition="slide"><?= $html->image('/adition/css/img/cerrarmesa.png')?>Cerrar Mesa</a>
+                        <a href="#listado-mesas" id="mesa-cerrar" data-direction="reverse"><?= $html->image('/adition/css/img/cerrarmesa.png')?>Cerrar Mesa</a>
                     </li>
                     
                     
@@ -290,11 +290,11 @@
 
                     
                     <li id="mesa-action-cambiar-mozo">
-                        <a href="#mesa-cambiar-mozo" data-rel="dialog"  data-transition="pop"><?= $html->image('/adition/css/img/cambiarmozo.png')?>Cambiar Mozo</a>
+                        <a href="#mesa-cambiar-mozo" data-rel="dialog"><?= $html->image('/adition/css/img/cambiarmozo.png')?>Cambiar Mozo</a>
                     </li>
                     
                     <li id="mesa-action-cambiar-numero">
-                        <a href="#mesa-cambiar-numero" data-rel="dialog"  data-transition="pop"><?= $html->image('/adition/css/img/cambiarmesa.png')?>Cambiar N°</a>
+                        <a href="#mesa-cambiar-numero" data-rel="dialog"><?= $html->image('/adition/css/img/cambiarmesa.png')?>Cambiar N°</a>
                     </li>
                     
                     <li id="mesa-action-reabrir" data-bind="attr: {'estado': 'mesa-reabrir_'+adn().currentMesa().estado().icon}">
@@ -505,7 +505,7 @@
 <div data-role="page" id="mesa-cobrar" data-theme="e" class="dialog-reancho dialog-arriba">
     <div data-role="header">
         <h1>Mesa <span data-bind="text: adn().currentMesa().numero"></span> | <span data-bind="text: adn().vueltoText"></span></h1>
-        <a href="#mesa-view" data-transition="slide" data-direction="reverse" data-theme="e">Ir a la Mesa</a>
+        <a href="#mesa-view" data-direction="reverse" data-theme="e">Ir a la Mesa</a>
     </div>
 
     <div data-role="content">                  

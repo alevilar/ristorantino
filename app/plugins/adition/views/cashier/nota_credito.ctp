@@ -16,8 +16,13 @@ echo $form->create('Cajero', array(
     'data-direction' =>"reverse",
     ));
 
-echo $form->input('tipo', array('options'=> array('B'=>'"B"', 'A' => '"A"')));
-
+?>
+           <fieldset data-role="controlgroup" data-type="horizontal">
+           <?php
+echo $form->input('tipo', array('label' => 'Seleccionar Tipo de Factura','options'=> array('B'=>'"B"', 'A' => '"A"'), 'type'=>'radio', 'required'=>'required'));
+?>
+           </fieldset>
+<?
 $cc = $form->input('Cliente.razonsocial', array('label'=>'Razon Social (sin acentos ni eñies, ningún carácter "raro")'));
 $cc .= $form->input('Cliente.numerodoc', array('label'=>'CUIT'));
 $cc .= $form->input('Cliente.respo_iva', array('type'=>'hidden', 'value'=>'I'));
@@ -25,11 +30,11 @@ $cc .= $form->input('Cliente.tipodoc', array('type'=>'hidden', 'value'=>'C'));
 
 echo $html->div('factura_a',$cc,array('style'=>'display:none'),false);
 
-echo $form->input('numero_ticket');
+echo $form->input('numero_ticket', array('label' => 'Número de Ticket (sin guiones "-")'));
 
 echo $form->input('importe');
 
-echo $form->input('descripcion', array('default'=>'Error Corregido'));
+echo $form->input('descripcion', array('default'=>'Error Corregido', 'label' => 'Ingresar una pequeña descripción'));
 
 ?>
             <div class="ui-grid-a">
@@ -43,12 +48,12 @@ echo $form->input('descripcion', array('default'=>'Error Corregido'));
             
    <?php echo $form->end() ?>         
 <script type="text/javascript">
-    $('#CajeroTipo').bind('change', function(){
-        if ($(this).val() == 'A') {
-            $('.factura_a').show();
-        } else {
-            $('.factura_a').hide();
-        }
+    jQuery('#CajeroTipoA').live('change', function(){
+            jQuery('.factura_a').show();
+    });
+    
+    jQuery('#CajeroTipoB').live('change', function(){
+        jQuery('.factura_a').hide();
     });
 </script>
 

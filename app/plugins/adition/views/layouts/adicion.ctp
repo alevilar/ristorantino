@@ -88,22 +88,19 @@
         
     <script type="text/javascript">
     <!--
-        $(document).bind("mobileinit", function(){
           $.extend(  $.mobile , {
             backBtnText: "Volver"
           });
-        });
         
         <?php 
         $animar = Configure::read('Adicion.jqm_page_transition');
-        if (!empty($animar)){ 
+        if ( empty($animar) ){ 
             if (!$animar) {
             ?>
-                $(document).bind("mobileinit", function(){
-                  $.extend(  $.mobile , {
-                    defaultPageTransition: 'none'
-                  });
-                });
+              $.extend(  $.mobile , {
+                defaultPageTransition: 'none',
+                defaultDialogTransition: 'none'
+              });
         <?php }} ?>
         
         
