@@ -39,45 +39,45 @@
                 }
                 
                
+                $debug = Configure::read('debug');
+                if ( $debug > 0 ) {
+                    echo $javascript->link( array(
+                        'jquery/jquery-1.6.4',
+                        'jquery/jquery.tmpl.min',
 
-              
-		echo $javascript->link( array(
-                    'jquery/jquery-1.6.4',
-                    'jquery/jquery.tmpl.min',
+                        'knockout-1.2.1.debug',
+                        'knockout.mapping-2.0.debug',
 
-                    'knockout-1.2.1.debug',
-                    'knockout.mapping-2.0.debug',
-                    
-                    '/adition/js/cake_saver',
-                    '/adition/js/risto',
-                    
-//                    'knockout.updateData',
-                    
-                    // OJO !! EL ORDEN IMPORTA !!
-                    '/adition/js/adition.package',
-                    '/adition/js/mozo.class',
-                    '/adition/js/mesa.estados.class',
-                    '/adition/js/mesa.class',
-                    '/adition/js/comanda.class',
-                    '/adition/js/comanda_fabrica.class',
-                    '/adition/js/adicion.class', // depende de Mozo, Mesa y Comanda
-                    '/adition/js/producto',
-                    '/adition/js/categoria',
-                    '/adition/js/sabor.class',
-                    '/adition/js/cliente.class',
-                    '/adition/js/descuento.class',
-                    '/adition/js/pago.class',
-                    '/adition/js/detalle_comanda.class',
-                    '/adition/js/ko_adicion_model',
-                    '/adition/js/adition.events',
-                    '/adition/js/menu',
-//                    'http://code.jquery.com/mobile/latest/jquery.mobile.min.js',
-                    'jquery/jquery.mobile-1.0rc2',
-                   'alekeyboard',
-                    ));
-                
+                        '/adition/js/cake_saver',
+                        '/adition/js/risto',
 
-//                echo $javascript->link('todos.min');
+    //                    'knockout.updateData',
+
+                        // OJO !! EL ORDEN IMPORTA !!
+                        '/adition/js/adition.package',
+                        '/adition/js/mozo.class',
+                        '/adition/js/mesa.estados.class',
+                        '/adition/js/mesa.class',
+                        '/adition/js/comanda.class',
+                        '/adition/js/comanda_fabrica.class',
+                        '/adition/js/adicion.class', // depende de Mozo, Mesa y Comanda
+                        '/adition/js/producto',
+                        '/adition/js/categoria',
+                        '/adition/js/sabor.class',
+                        '/adition/js/cliente.class',
+                        '/adition/js/descuento.class',
+                        '/adition/js/pago.class',
+                        '/adition/js/detalle_comanda.class',
+                        '/adition/js/ko_adicion_model',
+                        '/adition/js/adition.events',
+                        '/adition/js/menu',
+    //                    'http://code.jquery.com/mobile/latest/jquery.mobile.min.js',
+                        'jquery/jquery.mobile-1.0rc2',
+                       'alekeyboard',
+                        ));
+                } else {
+                    echo $javascript->link('todos.min');
+                }
 
  
             ?>
