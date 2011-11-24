@@ -15,7 +15,7 @@
     overflow-x: scroll; overflow-y:hidden;}
     .wrapper1{ }
     .wrapper2{}
-    .div1 {width:999999px; height: 20px;}
+    .div1 {width:999999px; height: 1px;}
     .div2 {width:999999px; background-color: whitesmoke;
     overflow: auto;}
 </style>
@@ -65,7 +65,7 @@ foreach ($fechas as $fecha=>$mozo) {
             ?>
             <tr>
                 <td><?php echo $m['Mozo']['numero']; ?></td>
-                <td><?php echo $m['Mozo']['total']; ?></td>
+                <td style="text-align: right">$<?php echo number_format ( $m['Mozo']['total'] , 2 , ',' , $thousands_sep = '.' ); ?></td>
             </tr>
             <?php
         }

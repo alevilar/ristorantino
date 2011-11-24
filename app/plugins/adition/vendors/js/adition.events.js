@@ -208,7 +208,7 @@ $(document).ready(function() {
     });
     
     
-    $('#mesa-reabrir').bind('click',function(){
+    $('#mesa-reabrir, #mesa-cajero-reabrir').bind('click',function(){
         var mesa = Risto.Adition.adicionar.currentMesa();
         mesa.cambioDeEstadoAjax( MESA_ESTADOS_POSIBLES.reabierta );
     });

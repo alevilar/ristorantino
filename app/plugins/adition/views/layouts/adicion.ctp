@@ -109,7 +109,9 @@
         MESAS_RELOAD_INTERVAL = <?php echo Configure::read('Adicion.reload_interval')?>;
         MESA_RELOAD_TIMEOUT = <?php echo Configure::read('Adicion.reload_interval_timeout')?>;
         
-        VALOR_POR_CUBIERTO = <?php echo Configure::read('Restaurante.valorCubierto')?>;
+        VALOR_POR_CUBIERTO = <?php 
+                                    $valorCubierto = Configure::read('Restaurante.valorCubierto');
+                                    echo $valorCubierto > 0 ? $valorCubierto : 0;  ?>;
         
         // hace que luego de cobrar una mesa, esta quede activa durante X segundos
         ESPERAR_DESPUES_DE_COBRAR = 0;

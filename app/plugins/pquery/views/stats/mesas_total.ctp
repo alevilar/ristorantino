@@ -95,7 +95,7 @@
 </script>
 
 <div class="clear" style="height: 20px;"></div>
-<div class="grid_8 alpha">
+<div class="grid_7 alpha">
     <div id="chart1" class="grid_12 alpha omega" style="height:350px;"></div>
     
     <div class="grid_12 alpha omega">
@@ -122,7 +122,7 @@
         foreach($mesas as $i=>$mozo){
             if(!empty ($mozo['desde']))
     ?>
-    <div class="grid_4 omega tabla-info">
+    <div class="grid_5 omega tabla-info">
     <table cellspacing="0" cellpadding="0" style="text-align: center">
         <thead>
                         <tr>
@@ -130,7 +130,7 @@
                             <th <?php if($i==0){echo('class="coloruno"'); }else{echo('class="colordos"');}?>>Total</th>
                             <th <?php if($i==0){echo('class="coloruno"'); }else{echo('class="colordos"');}?>>Mesas</th>
                             <th <?php if($i==0){echo('class="coloruno"'); }else{echo('class="colortres"');}?>>Cubiertos</th>
-                            <th <?php if($i==0){echo('class="coloruno"'); }else{echo('class="colortres"');}?>>Promedio x Cubierto</th>
+                            <th <?php if($i==0){echo('class="coloruno"'); }else{echo('class="colortres"');}?>>Promedio<br />x Cubierto</th>
                         </tr>
         </thead>
         <tbody>

@@ -536,10 +536,11 @@
             data-bind='template: { name: "li-pagos-creados", foreach: adn().pagos }'>
         </ul>
         
-            <div class="ui-grid-b">
+            <div class="ui-grid-c">
                 <div class="ui-block-a"><a href="#" data-role="button" data-rel="back">Cancelar</a></div>
-                <div class="ui-block-b"><a href="#" data-role="button" data-rel="back" class="mesa-reimprimir">Imprimir Ticket</a></div>
-                <div class="ui-block-c"><a href="#" data-role="button" data-rel="back" data-theme="b" id="mesa-pagos-procesar">Cobrar Mesa</a></div>
+                <div class="ui-block-b"><a href="#" data-role="button" data-rel="back" id="mesa-cajero-reabrir">Re Abrir</a></div>
+                <div class="ui-block-c"><a href="#" data-role="button" data-rel="back" class="mesa-reimprimir">Imprimir Ticket</a></div>
+                <div class="ui-block-d"><a href="#" data-role="button" data-rel="back" data-theme="b" id="mesa-pagos-procesar">Cobrar Mesa</a></div>
 	    </div>
     </div>
     
