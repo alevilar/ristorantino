@@ -186,7 +186,11 @@ class Mesa extends AppModel {
             $mesa = $this->read();
             $this->total['Mesa']['cant_comensales'] = $mesa['Mesa']['cant_comensales'];
                         
-            $valor_cubierto = Configure::read('Restaurante.valorCubierto') * $this->total['Mesa']['cant_comensales'];
+            $precioCubierto = Configure::read('Restaurante.valorCubierto');
+            $valor_cubierto = 0;
+            if ($precioCubierto > 0) {
+                $valor_cubierto =  $precioCubierto * $this->total['Mesa']['cant_comensales'];
+            }
             $this->total['Mesa']['subtotal'] = $totalProductos + $valor_cubierto;
             $this->total['Mesa']['total'] = cqs_round(  $this->total['Mesa']['subtotal'] * $conversionDescuento );
             $this->total['Mesa']['descuento'] = $totalPorcentajeDescuento;

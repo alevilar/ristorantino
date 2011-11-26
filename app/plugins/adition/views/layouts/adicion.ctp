@@ -72,7 +72,7 @@
                         '/adition/js/adition.events',
                         '/adition/js/menu',
     //                    'http://code.jquery.com/mobile/latest/jquery.mobile.min.js',
-                        'jquery/jquery.mobile-1.0rc2',
+                        'jquery/jquery.mobile-1.0',
                        'alekeyboard',
                         ));
                 } else {

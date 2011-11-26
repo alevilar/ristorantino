@@ -246,5 +246,7 @@ Risto.Adition.comandaFabrica.prototype = {
         }
         
     }
+    
+    
 }
 

@@ -16,12 +16,12 @@ Risto.Adition.comanda.prototype = {
     model           : 'Comanda',
     imprimir        : function( ) {return true},
     id              : ko.observable(),
-    observacion     : function( ) {},
+    observacion     : function( ) { return '' },
     
     initialize: function(jsonData) {
         this.id = ko.observable();
         this.imprimir = ko.observable( true );
-        this.observacion = ko.observable(  );
+        this.observacion = ko.observable( '' );
         this.created = ko.observable();
         this.DetalleComanda = ko.observableArray( [] );
         
@@ -68,6 +68,22 @@ Risto.Adition.comanda.prototype = {
             Risto.modelizar(this);
     }
         return this.timeCreated();
-     }
+     },
+     
+     
+     borrarObservacionGeneral: function(){
+        this.observacion('');
+    },
+    
+    
+    agregarTextoAObservacionGeneral: function( textToAdd ){ 
+        var txt = this.observacion();
+        if ( txt ) {
+            txt += ', ';
+        }
+        txt += textToAdd;
+        this.observacion( txt );
+        return txt;
+    }
     
 }

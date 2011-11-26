@@ -429,7 +429,7 @@ Risto.Adition.adicionar.mesasCerradas = ko.dependentObservable(function(){
     if ( order ) {
         mesas.sort(function(left, right) {
             if (left[order] && typeof left[order] == 'function' && right[order] && typeof right[order] == 'function') {
-                return left[order]() == right[order]() ? 0 : (parseInt(left[order]()) < parseInt(right[order]()) ? -1 : 1) 
+                return left[order]() == right[order]() ? 0 : (parseInt(left[order]()) < parseInt(right[order]()) ? 1 : -1) 
             }
         })
     }

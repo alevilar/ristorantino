@@ -9,57 +9,6 @@
 var Mesa = function(mozo, jsonData) {
         // agrego atributos generales
         Risto.modelizar(this);
-    
-        
-        
-        
-        /**
-         * dependentObservable
-         * 
-         * Devuelve el nombre del Cliente si es que hay alguno setteado
-         * en caso de no haber cliente, devuelve el string vacio ''
-         *
-         *@return string
-         */
-        this.clienteNameData = ko.dependentObservable(function(){
-            var cliente = this.Cliente();
-            if (cliente){
-                if (typeof cliente == 'function') {
-                    return cliente.nombre();
-                } else {
-                    return cliente.nombre;
-                }
-            }
-            return '';
-        }, this);
-        
-        
-        
-        
-        /**
-         * Devuelve un texto con la hora
-         * si la mesa esta cerrada, dice "Cerró: 14:35"
-         * si esta aberta dice: "Abrió 13:22"
-         */
-        this.textoHora = ko.dependentObservable( function() {
-            var date, txt;
-            if ( this.getEstado() == MESA_ESTADOS_POSIBLES.cerrada ) {
-                txt = 'Cerró a las ';
-                if (typeof this.time_cerro == 'function') {
-                    date =  mysqlTimeStampToDate(this.time_cerro());
-                }
-            } else {
-                txt = 'Abrió a las ';
-                if (typeof this.created == 'function') {
-                    date = mysqlTimeStampToDate(this.created());            
-                }
-            }
-            if ( !date ) {
-                date = new Date();
-            }
-            return txt + date.getHours() + ':' + date.getMinutes() + 'hs';
-        }, this);
-        
         
         return this.initialize(mozo, jsonData);
 }
@@ -602,7 +551,7 @@ Mesa.prototype = {
         var tam = this.Comanda().length;
 
         var valorPorCubierto = 0;
-        if ( typeof VALOR_POR_CUBIERTO != 'undefined') {
+        if ( typeof VALOR_POR_CUBIERTO != 'undefined' && VALOR_POR_CUBIERTO > 0 ) {
             valorPorCubierto = VALOR_POR_CUBIERTO;
         }
         var cantCubierto = this.cant_comensales() * valorPorCubierto;
@@ -692,7 +641,7 @@ Mesa.prototype = {
         
         clienteTipoFacturaText: function(){
             var texto = 'B';
-            if ( this.Cliente() ) {
+            if ( this.Cliente() && typeof this.Cliente().getTipoFactura == 'function' ) {
                 texto = this.Cliente().getTipoFactura();
             }
             return texto;
@@ -701,10 +650,57 @@ Mesa.prototype = {
         
         clienteDescuentoText: function(){
             var texto = '';
-            if ( this.Cliente() &&  this.Cliente().tieneDescuento() != undefined ) {
+            if ( this.Cliente() &&  this.Cliente().tieneDescuento && this.Cliente().tieneDescuento() != undefined ) {
                 texto = this.Cliente().getDescuentoText();
             }
             return texto;
+        },
+        
+        
+        /**
+         * dependentObservable
+         * 
+         * Devuelve el nombre del Cliente si es que hay alguno setteado
+         * en caso de no haber cliente, devuelve el string vacio ''
+         *
+         *@return string
+         */
+        clienteNameData : function() {
+            var cliente = this.Cliente();
+            if (cliente){
+                if (typeof cliente == 'function') {
+                    return cliente.nombre();
+                } else {
+                    return cliente.nombre;
+                }
+            }
+            return '';
+        },
+        
+        
+        
+        /**
+         * Devuelve un texto con la hora
+         * si la mesa esta cerrada, dice "Cerró: 14:35"
+         * si esta aberta dice: "Abrió 13:22"
+         */
+        textoHora : function() {
+            var date, txt;
+            if ( this.getEstado() == MESA_ESTADOS_POSIBLES.cerrada ) {
+                txt = 'Cerró a las ';
+                if (typeof this.time_cerro == 'function') {
+                    date =  mysqlTimeStampToDate(this.time_cerro());
+                }
+            } else {
+                txt = 'Abrió a las ';
+                if (typeof this.created == 'function') {
+                    date = mysqlTimeStampToDate(this.created());            
+                }
+            }
+            if ( !date ) {
+                date = new Date();
+            }
+            return txt + date.getHours() + ':' + date.getMinutes() + 'hs';
         }
 
 };

@@ -210,10 +210,10 @@
 
 
 <!--
-                        OBSERVACIONES
+                        OBSERVACIONES DE CADA PRODUCTO
 
 -->
-<div  data-role="page"  id="obss">
+<div  data-role="page"  id="comanda-add-product-obss">
     <div  data-role="header"  data-position="inline">
         <h1>Observacion</h1>
         <a href="#"  data-rel="back"  onclick="$('#form-comanda-producto-observacion').submit();" data-theme="b">Guardar Observación</a>
@@ -349,7 +349,7 @@
                 <a style="min-width: 160px" href="#" data-role="button" title="Haga click para desactivar la impresión de comanda" data-bind="click: function(){adn().currentMesa().currentComanda().comanda.imprimir( 0 )}, visible: adn().currentMesa().currentComanda().comanda.imprimir()"><?php echo $html->image('print48.png', array('class'=> 'btn-comanda-icon'))?>Si Imprime</a>
                 <a style="min-width: 160px" href="#" data-role="button" title="Haga click para activar impresión de comanda" data-bind="click: function(){adn().currentMesa().currentComanda().comanda.imprimir( 1 )}, visible: !adn().currentMesa().currentComanda().comanda.imprimir()" ><?php echo $html->image('dontprint48.png', array('class'=> 'btn-comanda-icon'))?>No Imprime</a>
 
-                <a style="min-width: 160px" href="#" data-role="button" title="Agregar Observación" onclick="$('#comanda-add-observacion').toggle('slow').focus();"><?php echo $html->image('pencil_48.png', array('class'=> 'btn-comanda-icon'))?>Observación</a>
+                <a style="min-width: 160px" href="#" data-role="button" title="Agregar Observación"  onclick="$('#comanda-add-observacion').toggle('slow').focus();"><?php echo $html->image('pencil_48.png', array('class'=> 'btn-comanda-icon'))?>Observación</a>
                 <a href="#mesa-view" data-role="button" id="comanda-add-guardar"  data-icon="check" data-theme="b">Enviar Comanda</a>
 
             </div>
@@ -358,13 +358,17 @@
     <div data-role="content">
         
         <div style="display: none" id="comanda-add-observacion" class="ui-corner-bottom ui-overlay-shadow ui-content">
-            <h4>Agregar observación general para la comanda</h4>
+            <h4 style="color: #fff">Agregar observación general para la comanda</h4>
             <textarea id="obscomandatext" style="width: 97%" data-bind="value: adn().currentMesa().currentComanda().comanda.observacion, valueUpdate: 'keyup'" autofocus="autofocus" name="obs" class="obstext ui-input-text ui-body-null ui-corner-all ui-shadow-inset ui-body-a"></textarea>
-            <a href="#" onclick="$('#comanda-add-observacion').toggle('slow')" data-role="button">Aceptar</a>
+            
+            <div class="ui-grid-a">
+                <div class="ui-block-a"><a href="#" onclick="" id="mesa-comanda-add-obs-gen-cancel" data-role="button">Cancelar</a></div>
+                <div class="ui-block-b"><a href="#" id="mesa-comanda-add-obs-gen-aceptar" data-role="button" data-theme="b">Aceptar</a></div>
+            </div>
             
             <div class="observaciones-list">
                 <?php foreach($observacionesComanda as $o) { ?>
-                <a data-role="button" data-inline="true" href="#" onclick="$('#obscomandatext').val( $('#obscomandatext').val()+', <?php echo $o?>' )"><?php echo $o?></a>
+                <button data-inline="true" value="<?php echo $o?>"><?php echo $o?></>
                 <?php } ?>
             </div>
         </div>

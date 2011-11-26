@@ -103,6 +103,29 @@ $(document).ready(function() {
     
     
     
+    // Eventos para la observacion General de la Comanda ADD
+    (function(){
+        var domObs = $('#comanda-add-observacion');
+        $("#mesa-comanda-add-obs-gen-cancel").click(function(){
+            domObs.toggle('slow'); 
+            Risto.Adition.adicionar.currentMesa().currentComanda().comanda.borrarObservacionGeneral();
+        });
+
+        $("#mesa-comanda-add-obs-gen-aceptar").click(function(){
+            domObs.toggle('slow');
+        });
+        
+        var domObsList = $('#comanda-add-menu .observaciones-list button');
+        domObsList.click(function(e){
+            if ( this.value ) {
+                Risto.Adition.adicionar.currentMesa().currentComanda().comanda.agregarTextoAObservacionGeneral( this.value );
+            }
+        });
+    })();
+    
+       
+    
+    
 
     $(document).bind("adicionCambioMozo", cambioMozo);
     

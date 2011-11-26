@@ -25,18 +25,20 @@ class PagosController extends AppController {
                         $this->Pago->Mesa->save($this->data['Mesa']);
                     }
                     
-                    if ( count($this->data['Pago']) == 1 && empty($this->data['Pago'][0]['valor']) ) {
+                    if ( !empty( $this->data['Pago'] ) && count($this->data['Pago']) == 1 && empty($this->data['Pago'][0]['valor']) ) {
                         if (!empty($this->data['Mesa'])) {
                             $total_pagado = $this->Pago->Mesa->calcular_total($this->data['Mesa']['id']);
                             $this->data['Pago'][0]['valor'] = $total_pagado;
                         }                    
+                        
+                        if ($this->Pago->saveAll($this->data['Pago'])) {				
+                            $this->Session->setFlash(__('The Pago has been saved', true));
+                        } else {
+                            $this->Session->setFlash(__('The Pago could not be saved. Please, try again.', true));
+                        }
                     }
                     
-                    if ($this->Pago->saveAll($this->data['Pago'])) {				
-                            $this->Session->setFlash(__('The Pago has been saved', true));
-                    } else {
-                            $this->Session->setFlash(__('The Pago could not be saved. Please, try again.', true));
-                    }
+                    
 		}
                 if (!$this->RequestHandler->isAjax()) {
                     $this->redirect($this->referer());

@@ -71,6 +71,59 @@ class CashierController extends CashierAppController {
             debug(exec('sudo halt'));
             die("El servidor se esta apagando");
 	}
+        
+        function enviar_informe(){
+            $mesa = ClassRegistry::init('Mesa');
+            
+            $desde =  date('Y-m-d', strtotime('-1 day') );
+            $hasta =  date('Y-m-d', strtotime('-1 day'));
+            
+            $fields = array(
+                     'sum(m.cant_comensales) as "cant_cubiertos"' ,
+                     'sum(m.subtotal) as "subtotal"', 
+                     'sum(m.total) as "total"', 
+                     'sum(m.total)/sum(m.cant_comensales) as "promedio_cubiertos"',
+                );
+
+            $fields[] = 'DATE(m.created) as "fecha"';
+            $group = array(
+                 'DATE(m.created)',
+            );
+
+            $mesas = $this->Mesa->totalesDeMesasEntre($desde, $hasta, array(
+                        'fields' => $fields,
+                        'group' => $group,
+                    ));
+
+            if ( !empty($mesas) ) {
+                $fecha = date('d-m-y', strtotime('-1 day'));
+                $mensaje = 'Fecha: '. $fecha .'. ';
+
+                $mensaje .= "Total de Ventas: $". $mesas[0][0]['total'].'. ';                    
+                $mensaje .= "Cubiertos: ". $mesas[0][0]['cant_cubiertos'].'. ';
+                $mensaje .= "Mesas: ". $mesas[0][0]['cant_mesas'].'. ';
+                $mensaje .= "Promedio por Cubierto: ". number_format($mesas[0][0]['promedio_cubiertos'],2).'. ';
+                $mensaje .= "Sub-total de Ventas (total Neto, o sea, sin aplicar descuento): $". $mesas[0][0]['subtotal'].'. ';
+                $mensaje .= "Promedio por Cubierto NETO (si no se hubiese aplicado descuento): $". number_format( $mesas[0][0]['subtotal']/$mesas[0][0]['cant_cubiertos'],2).'. ';
+
+                $mensaje .= '-- Chocha 012 --';
+
+                $email = Configure::read('Restaurante.name');
+                $nombreResto = Configure::read('Restaurante.mail');
+                $mail = $nombreResto.' <'. $email .'>';
+                $this->Email->from    = $mail;
+                $this->Email->to      = $mail;
+
+                $this->Email->subject = 'Resumen de ventas del día '.$fecha;
+
+                $this->Email->send($mensaje);
+                $this->Session->setFlash('Informe enviado a "'.$nombreResto.' <'. $email .'>"');
+            } else {
+                $this->Session->setFlash('No hubo ventas, por lo tanto no se envía el informe.');
+            }
+            
+            $this->redirect( $this->referer() );
+        }
 
 
         function cierre_z(){

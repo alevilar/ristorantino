@@ -87,6 +87,7 @@
     <p>
     <h2>Servidor</h2>
     <?
+    echo $html->link('Enviar informe estadístico','/cashier/enviar_informe');
     echo $html->link('Reiniciar servidor','/cashier/reiniciar', null, 'Esta accion reinicia el servidor, y no se puede operar el sistema hasta que se vuelva a iniciar.\n¿Desea hacerlo?');
     echo $html->link('Apagar servidor','/cashier/apagar', null, '¿Desea apagar el servidor?.\n');
     ?>

@@ -11,10 +11,12 @@ Risto.Adition.cliente = function(jsonMap){
 
 Risto.Adition.cliente.prototype = {
     Descuento: ko.observable(null),
+    porcentaje: ko.observable( undefined ),
     
-    tieneDescuento: function(){
+    
+    tieneDescuento: function() {
         var porcentaje = undefined;
-        if (this.descuento_id() && this.Descuento() && this.Descuento().porcentaje()) {
+        if (this.descuento_id() && this.Descuento() && this.Descuento().porcentaje && this.Descuento().porcentaje()) {
             porcentaje = parseInt( this.Descuento().porcentaje() );
         }
         return porcentaje;
@@ -45,7 +47,8 @@ Risto.Adition.cliente.prototype = {
             jsonMap = cliente.Cliente;
         }
         
-        this.Descuento = ko.observable( null );
+        this.Descuento  = ko.observable( null );
+        this.porcentaje = ko.observable( undefined );
         
         if (jsonMap.Descuento && jsonMap.Descuento.id) {
             this.Descuento( new Risto.Adition.descuento(jsonMap.Descuento) );

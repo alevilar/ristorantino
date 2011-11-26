@@ -28,7 +28,7 @@
                data-role="button"
                data-iconpos="notext" 
                data-icon="grid" 
-               href="#obss" 
+               href="#comanda-add-product-obss" 
                title="Observación" 
                data-theme="c" class="ui-btn ui-btn-icon-notext ui-btn-up-c">
                 <span class="ui-btn-inner">
