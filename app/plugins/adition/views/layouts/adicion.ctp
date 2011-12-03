@@ -23,7 +23,7 @@
 		// para los modal window
 		echo $html->css(array(
 //                    'http://code.jquery.com/mobile/latest/jquery.mobile.min.css',
-                    'jquery-mobile/jquery.mobile-1.0rc2',
+                    'jquery-mobile/jquery.mobile-1.0',
 //                    'jquery-mobile/jquery.mobile-1.0rc1.min',
 //                    'jquery-mobile/jquery-mobile-fluid960',
                     'jquery-mobile/jquery.mobile.actionsheet',

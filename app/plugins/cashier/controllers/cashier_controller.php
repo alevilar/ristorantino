@@ -23,7 +23,7 @@ class CashierController extends CashierAppController {
             
             $hora =  date('H', strtotime('now'));
             
-            // solo enviar el mail si estamos en un horario comprendido entre las 23 y las 6 AM
+            // solo enviar el mail si estamos en un horario comprendido entre las 23 y las 13hs
             if ( !($hora > 13 && $hora < 23) ) {
                 $fields = array(
                          'sum(m.cant_comensales) as "cant_cubiertos"' ,
@@ -55,13 +55,13 @@ class CashierController extends CashierAppController {
                     
                     $mensaje .= '-- Chocha 012 --';
     
-                    $email = Configure::read('Restaurante.name');
-                    $nombreResto = Configure::read('Restaurante.mail');
+                    $email = Configure::read('Restaurante.mail');
+                    $nombreResto = Configure::read('Restaurante.name');
                     $mail = $nombreResto.' <'. $email .'>';
                     $this->Email->from    = $mail;
                     $this->Email->to      = $mail;
 
-                    $this->Email->subject = 'Resumen de ventas del día '.$fecha;
+                    $this->Email->subject = 'Resumen de Ventas - Día '.$fecha;
 
                     $this->Email->send($mensaje);
                 }
@@ -108,8 +108,8 @@ class CashierController extends CashierAppController {
 
                 $mensaje .= '-- Chocha 012 --';
 
-                $email = Configure::read('Restaurante.name');
-                $nombreResto = Configure::read('Restaurante.mail');
+                $email = Configure::read('Restaurante.mail');
+                $nombreResto = Configure::read('Restaurante.name');
                 $mail = $nombreResto.' <'. $email .'>';
                 $this->Email->from    = $mail;
                 $this->Email->to      = $mail;

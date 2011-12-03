@@ -7,7 +7,7 @@
         ?>
 
 <div class="categorias form">
-<?php echo $form->create('Categoria', array('type' => 'file'));?>
+<?php echo $form->create('Categoria', array('type' => 'file', 'url'=>'/categorias/edit'));?>
 	<fieldset>
  		<legend><?php __('Editar Categoria');?></legend>
                 

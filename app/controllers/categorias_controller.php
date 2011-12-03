@@ -89,11 +89,16 @@ class CategoriasController extends AppController {
 			} else {
 				$this->Session->setFlash(__('The Categoria could not be saved. Please, try again.', true));
 			}
+                        
+                        if ( empty($id) ) {
+                            $this->redirect('/categorias/index');
+                        }
 		}
 		if (empty($this->data)) {
 			$this->data = $this->Categoria->read(null, $id);
 		}
 		$this->set('categorias', $this->Categoria->generatetreelist(null, null, null, '-- '));
+                
 	}
 
 	function delete($id = null) {

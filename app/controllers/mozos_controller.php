@@ -82,21 +82,13 @@ class MozosController extends AppController {
         function mesas_abiertas( $microtime = 0 ) {
             $mesas = array();
             
-            $lastAccess = null;    
-            if ( empty($microtime) ) {
-                $this->Session->write('lastAccess', 0);
-            }
-            if ( $this->Session->check('lastAccess') ) {
+            $lastAccess = null;
+            if ( $microtime != 0 ) {
                 $lastAccess = $this->Session->read('lastAccess');
             }
-            
-            $this->Session->write('lastAccess', date('Y-m-d H:i:s', strtotime('now')));                
-            
-//            debug( $this->Session->read('lastAccess') );
             $mesas = $this->Mozo->mesasAbiertas(null, $lastAccess); 
-           
+                      
             $mozosMesa = array();
-//            debug( $lastAccess );
             foreach ( $mesas as $key=>$abmMesas ) {
                 $i = 0;
                 foreach ( $abmMesas as $m ) {
@@ -111,14 +103,22 @@ class MozosController extends AppController {
                             $i++;
                         }
                     } else {
+                        // traer todos los mozos, con su array de mesas
                         $m['Mozo']['mesas'] = $m['Mesa'];
                         $mozosMesa[$key]['mozos'][] = $m['Mozo'];
                         $i++;
                     }
                 }
             }
+//            debug( $mozosMesa );
+            if ( !empty( $mozosMesa ) ) {
+                $nowTime = date('Y-m-d H:i:s', strtotime('now'));
+                $this->Session->write('lastAccess', $nowTime );
+//                debug( $this->Session->read('lastAccess') );
+            }
             
-            $this->set('mesasLastUpdatedTime', microtime()  );
+            $this->set('mesasLastUpdatedTime', 1 );
+            $this->set('modified', $lastAccess );
             $this->set('mesas', $mozosMesa);
         }
 

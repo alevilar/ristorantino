@@ -32,7 +32,7 @@ cat ../../plugins/adition/vendors/js/ko_adicion_model.js >> $SCRIPT_NAME
 cat ../../plugins/adition/vendors/js/adition.events.js >> $SCRIPT_NAME
 cat ../../plugins/adition/vendors/js/menu.js >> $SCRIPT_NAME
 cat alekeyboard.js >> $SCRIPT_NAME
-cat jquery/jquery.mobile-1.0rc2.min.js >> $SCRIPT_NAME
+cat jquery/jquery.mobile-1.0.min.js >> $SCRIPT_NAME
 chmod 755 $SCRIPT_NAME
 
 

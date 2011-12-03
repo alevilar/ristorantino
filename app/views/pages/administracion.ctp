@@ -12,6 +12,7 @@
    <p>
        <h2>Clientes</h2>
         <?php
+        echo $html->link('Reservas','/reservas');
         echo $html->link('Clientes','/clientes');
         echo $html->link('Descuentos','/descuentos');
         echo $html->link('Tipo de Pagos','/TipoDePagos');

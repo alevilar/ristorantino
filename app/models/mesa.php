@@ -363,7 +363,7 @@ class Mesa extends AppModel {
             }
             $prod[0]['nombre'] = $descripcion;
             $total = $this->calcular_subtotal();
-            $prod[0]['precio'] = $total/$cantMenues;
+            $prod[0]['precio'] = number_format( $total/$cantMenues, 2);
             $prod[0]['cantidad'] = $cantMenues;
             return $prod;
         }

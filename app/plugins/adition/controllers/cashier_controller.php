@@ -4,7 +4,7 @@ class CashierController extends AditionAppController {
 
 	var $helpers = array('Html', 'Form');
 	var $uses = array('Mozo','Mesa');
-	var $components = array( 'Printer', 'RequestHandler');
+	var $components = array( 'Printer', 'RequestHandler', 'Email');
 	
 	
 //	var $layout = 'cajero';
