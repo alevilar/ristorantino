@@ -54,27 +54,10 @@ class ProductosController extends AppController {
 		 }   
 		 
 		 
-		/***
-                 * 
-                 * ES PARA BORRARRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
-                 * 
-               
-                 $prodsConPrecioFuturo = $this->Producto->ProductosPreciosFuturo->find('all', array(
-                     'fields' => 'producto_id'
-                 ));
-                 if ( count($prodsConPrecioFuturo) > 1 ) {
-                    $this->paginate['Producto']['conditions']['Producto.id NOT IN'] = array('874','3267');
-                 } else {
-                     $this->paginate['Producto']['conditions']['Producto.id <>'] = array('874');
-                 }
-		 /****************************
-                  * 
-                  * ------------------------------------------------------
-                  */
-                 
-                 
-                 
 		$this->Producto->recursive = 0;
+                $comanderas = $this->Producto->Comandera->find('list',array('fields'=>array('id','description')));
+		$categorias = $this->Producto->Categoria->generatetreelist(null, null, null, '___');
+                $this->set(compact('categorias','comanderas'));
 		$this->set('productos', $this->paginate());
 	}
 
@@ -273,6 +256,22 @@ class ProductosController extends AppController {
         
         
         
+        
+        function update()
+        {
+            $this->Producto->id = $this->params['form']['product_id'];
+            
+            $pf = 'precio_futuro';
+            
+            
+            if ($this->Producto->saveField($this->params['form']['field'], $this->params['form']['value'], false)) {
+                $txtShow = (!empty($this->params['form']['text'])) ? $this->params['form']['text'] : $this->params['form']['value'];
+                echo $txtShow;
+            } else {
+                echo "error al guardar";
+            }
+            exit;
+        }
         
         
         

@@ -59,4 +59,13 @@ class ProductsController extends InventoryAppController
         $this->set('categories', $cats);
     }
     
+    
+    function view($id) {
+        $this->Producto->id = $id;
+        $prods = $this->Product->read();
+        
+        $this->set('prods', $prods);
+        
+    }
+    
 }

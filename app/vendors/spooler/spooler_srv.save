@@ -1,7 +1,7 @@
 #set -x
 #!/bin/bash
 
-<SCRIPT=/var/www/ristorantino/app/vendors/spooler/hasar_spooler.sh
+SCRIPT=/var/www/ristorantino/app/vendors/spooler/hasar_spooler.sh
 DIA=`date +%d-%m-%y`
 SCRIPTKEEPALIVE=/var/www/ristorantino/app/vendors/spooler/hasar_spooler_keep_alive.sh
 

@@ -6,10 +6,13 @@
 		echo $form->input('id');
 		echo $form->input('nombre');
 		echo $form->input('personas');
+                echo $form->input('menores');
 		echo $form->input('mesa');
+                echo $form->input('debe_pagar');
+                echo $form->input('pago');
+		echo $form->input('observaciones');
 		echo $form->input('evento');
 		echo $form->input('fecha');
-		echo $form->input('observaciones');
 	?>
 	</fieldset>
 <?php echo $form->end('Submit');?>

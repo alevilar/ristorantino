@@ -24,7 +24,7 @@ Risto.Adition.adicionar = {
     mesas: ko.observableArray( [] ),
     
     // microtime de la ultima actualizacion de las mesas
-    mesasLastUpdatedTime : ko.observable(  ),
+    mesasLastUpdatedTime : ko.observable( 0 ),
     
     // pagos seleccionado de la currentMesa en proceso de pago. es una variable temporal de estado
     pagos: ko.observableArray( [] ),
@@ -45,41 +45,72 @@ Risto.Adition.adicionar = {
     initialize: function() {
         Risto.Adition.adicionar.mozosOrder('numero');
         
-        // Crea el Web Worker
-        var worker = new Worker("adition/js/adicion.model.js");
+        if ( Worker ) {
+            // Crea el Web Worker
+            var worker = new Worker("adition/js/adicion.model.js");
         
-        var primeraVez = true;
-        worker.onmessage = function (evt) {
-            
-            // si tiene mesas las proceso
-            if ( evt.data && evt.data.mesas ) {
-                for ( var cbk in evt.data.mesas ) {
-                    if ( typeof Risto.Adition.adicionar.handleMesasRecibidas[cbk] == 'function' ) {
-                        Risto.Adition.adicionar.handleMesasRecibidas[cbk].call( Risto.Adition.adicionar, evt.data.mesas[cbk] );
-                    } else {
-                        throw cbk + ' vino como opción en el arrar de mesas, pero no es una función válida que pueda manejar el handleMesasRecibidas';
-                        Error('no es una funcion');
+        
+            var primeraVez = true;
+            worker.onmessage = function (evt) {
+
+                // si tiene mesas las proceso
+                if ( evt.data && evt.data.mesas ) {
+                    for ( var cbk in evt.data.mesas ) {
+                        if ( typeof Risto.Adition.adicionar.handleMesasRecibidas[cbk] == 'function' ) {
+                            Risto.Adition.adicionar.handleMesasRecibidas[cbk].call( Risto.Adition.adicionar, evt.data.mesas[cbk] );
+                        } else {
+                            throw cbk + ' vino como opción en el arrar de mesas, pero no es una función válida que pueda manejar el handleMesasRecibidas';
+                            Error('no es una funcion');
+                        }
                     }
                 }
+
+                if ( evt.data.time ) {
+                    Risto.Adition.adicionar.mesasLastUpdatedTime( evt.data.time );
+                }
+            }        
+
+            worker.postMessage( {updateInterval: Risto.MESAS_RELOAD_INTERVAL} );
+
+            $(window).bind("online", function(){
+                 worker.postMessage( {onLine: true} );
+            });
+            $(window).bind("offline", function(){
+                 worker.postMessage( {onLine: false} );
+            });
+
+
+            var time = this.mesasLastUpdatedTime();
+            worker.postMessage( {urlDomain: urlDomain, timeText: time} );
+        } else {
+//            alert('Debe actualizar su browser a uno que soprte Web Workers!');
+
+            
+            var traerMesas = function() {
+                var url = urlDomain+'mozos/mesas_abiertas/'+ Risto.Adition.adicionar.mesasLastUpdatedTime() +'.json';
+                $.get(url, function(data){
+                     for ( var cbk in data.mesas ) {
+                        if ( typeof Risto.Adition.adicionar.handleMesasRecibidas[cbk] == 'function' ) {
+                            Risto.Adition.adicionar.handleMesasRecibidas[cbk].call( Risto.Adition.adicionar, data.mesas[cbk] );
+                        } else {
+                            throw cbk + ' vino como opción en el arrar de mesas, pero no es una función válida que pueda manejar el handleMesasRecibidas';
+                            Error('no es una funcion');
+                        }
+                    }
+                    
+                    if ( data.time ) {
+                        Risto.Adition.adicionar.mesasLastUpdatedTime( data.time );
+                    }
+                });
+            }
+            traerMesas();
+            
+            // si tiene mesas las proceso
+            if (!Risto.Adition.adicionar.interval) {
+                Risto.Adition.adicionar.interval = setInterval( traerMesas, Risto.MESAS_RELOAD_INTERVAL );
             }
             
-            if ( evt.data.time ) {
-                Risto.Adition.adicionar.mesasLastUpdatedTime( evt.data.time );
-            }
-        }        
-        
-        worker.postMessage( {updateInterval: MESAS_RELOAD_INTERVAL} );
-
-        $(window).bind("online", function(){
-             worker.postMessage( {onLine: true} );
-        });
-        $(window).bind("offline", function(){
-             worker.postMessage( {onLine: false} );
-        });
-       
-        
-        var time = this.mesasLastUpdatedTime();
-        worker.postMessage( {urlDomain: urlDomain, timeText: time} );
+        }
     },    
     
     

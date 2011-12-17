@@ -551,8 +551,8 @@ Mesa.prototype = {
         var tam = this.Comanda().length;
 
         var valorPorCubierto = 0;
-        if ( typeof VALOR_POR_CUBIERTO != 'undefined' && VALOR_POR_CUBIERTO > 0 ) {
-            valorPorCubierto = VALOR_POR_CUBIERTO;
+        if ( typeof Risto.VALOR_POR_CUBIERTO != 'undefined' && Risto.VALOR_POR_CUBIERTO > 0 ) {
+            valorPorCubierto = Risto.VALOR_POR_CUBIERTO;
         }
         var cantCubierto = this.cant_comensales() * valorPorCubierto;
         var total = cantCubierto;
@@ -587,8 +587,9 @@ Mesa.prototype = {
          *@return float
          */
         totalCalculado : function(){
-            if ( this.total() ) {
-                return this.total();
+            var total = parseFloat( this.total() );
+            if ( total ) {
+                return total;
             }
             
             var total = this.totalCalculadoNeto(), 

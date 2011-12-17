@@ -17,8 +17,8 @@ el 3 y el 2 los hice yo
 
 los pasos a sseguir son los siguientes:
 
-1) 
-copiar el spooler dentro de /users/bin/
+1)
+copiar el spooler dentro de /users/sbin/
 
 2)
 para que funcione lo que hay que hacer es copiar con permisos deejecucion 777 al spooler_srv dentro de la carpeta /etc/init.d/

@@ -75,7 +75,7 @@ Risto.Adition.comandaFabrica.prototype = {
             var este = this;
             setTimeout( function(){ 
                 este.save();
-            }, MESAS_RELOAD_INTERVAL); 
+            }, Risto.MESAS_RELOAD_INTERVAL); 
             return null;
         }
         

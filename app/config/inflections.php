@@ -61,6 +61,7 @@
                                                 'inventory' => 'inventories',
                                                 'category' => 'categories',
                                                 'config_category' => 'config_categories',
+                                                'habitación' => 'habitaciones',
             );
 
 /**

@@ -4,12 +4,13 @@ CARPETA_FUENTE=/tmp/fuente
 CARPETA_DESTINO=/tmp/dest
 LOG_FILE=/tmp/spooler.log
 CARPETA_TEMP=/tmp
+SPOOLER=/user/sbin/spooler
 
 
-
+# Funcion para encontrar el ultimo dispositivo creado, se supone que es el que deberia funcionar
 encontrar_ultimo_dispositivo_creado(){
 	cd /dev
-	DBS=`ls ttyUSB*`
+	DBS=`ls -t ttyUSB*`
 	CANT=`ls ttyUSB* | wc -w`
 
 	for b in $DBS ;	 do	
@@ -19,28 +20,10 @@ encontrar_ultimo_dispositivo_creado(){
 	      sudo rm /dev/$b
 	      CANT=`expr $CANT - 1`
 	   else
-	      echo $b
+	      echo "$b"
 	   fi
 	done
-}
-
-
-arrancar_spooler(){
-	if [ -d "$CARPETA_FUENTE" ]; then
-		echo "leyendo $DEVICE_NAME"
-		if [ -c /dev/$DEVICE_NAME ]; then
-			cd $CARPETA_FUENTE	
-			echo "arranco el spooler en $DEVICE_NAME"
-			spooler -p$DEVICE_NAME -s $CARPETA_FUENTE -a $CARPETA_DESTINO -l -d $LOG_FILE -b $CARPETA_TEMP
-			echo "se corto el spooler"
-		else
-			echo "el dispositivo $DEVICE_NAME no existe"
-			exit
-		fi
-	else
-		mkdir $CARPETA_FUENTE
-		chmod 777 $CARPETA_FUENTE
-	fi
+        echo ""
 }
 
 
@@ -65,15 +48,17 @@ while true ; do
 		DEVICE_NAME="$1"
 	fi
 	
-	arrancar_spooler
+	#arrancar_spooler
+        echo "leyendo $DEVICE_NAME"
+        if [ -c /dev/$DEVICE_NAME ]; then
+                cd $CARPETA_FUENTE	
+                echo "arranco el spooler en $DEVICE_NAME"
+                $SPOOLER -p $DEVICE_NAME -s $CARPETA_FUENTE -a $CARPETA_DESTINO -l -d $LOG_FILE -b $CARPETA_TEMP
+                echo "se corto el spooler"
+        else
+                echo "el dispositivo $DEVICE_NAME no existe"
+        fi
 	
 	sleep 2
 	RETVAL=$?
 done
-exit $RETVAL
-
-
-
-
-
-

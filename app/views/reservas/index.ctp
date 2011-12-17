@@ -18,7 +18,11 @@ echo $paginator->counter(array(
 	<th><?php echo $paginator->sort('id');?></th>
 	<th><?php echo $paginator->sort('nombre');?></th>
 	<th><?php echo $paginator->sort('personas');?></th>
+        <th><?php echo $paginator->sort('menores');?></th>
 	<th><?php echo $paginator->sort('mesa');?></th>
+        <th><?php echo $paginator->sort('pago');?></th>
+        <th><?php echo $paginator->sort('debe_pagar');?></th>
+        <th>Saldo</th>
 	<th><?php echo $paginator->sort('evento');?></th>
 	<th><?php echo $paginator->sort('fecha');?></th>
         <th><?php echo $paginator->sort('observaciones');?></th>
@@ -42,9 +46,31 @@ foreach ($reservas as $reserva):
 		<td>
 			<?php echo $reserva['Reserva']['personas']; ?>
 		</td>
+                <td>
+			<?php echo $reserva['Reserva']['menores']; ?>
+		</td>
 		<td>
 			<?php echo $reserva['Reserva']['mesa']; ?>
 		</td>
+                
+                <td>
+			$<?php echo $reserva['Reserva']['pago']; ?>
+		</td>
+                <td>
+			$<?php echo $reserva['Reserva']['debe_pagar']; ?>
+		</td>
+                <td>
+			<?php 
+                        if ( $reserva['Reserva']['debe_pagar'] - $reserva['Reserva']['pago'] > 0 ) {
+                            echo "<span style='color: red'>Faltan $". ($reserva['Reserva']['debe_pagar'] - $reserva['Reserva']['pago']) ."</span>";
+                        } else {
+                            echo "<span style='color: green'>Listo</span>";
+                        }
+                        
+                        
+                        ?>
+		</td>
+                
 		
 		<td>
 			<?php echo $reserva['Reserva']['evento']; ?>

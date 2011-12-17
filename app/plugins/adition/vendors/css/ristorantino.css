@@ -398,3 +398,26 @@ ul.tipo_de_pagos ,.tipo_de_pagos ul{
     padding: .9em 5px !important;
     width: 92px;
 }
+
+
+
+
+h1.numero-mesa , h2.numero-mesa , h3.numero-mesa{
+    padding-left: 50px;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    background: url('img/azul2.png') no-repeat 0% 50%;
+}
+h1.numero-mozo , h2.numero-mozo , h3.numero-mozo{
+    padding-left: 50px;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    background: url('img/rojo1.png') no-repeat 0% 50%;
+}
+h1.cubiertos , h2.cubiertos , h3.cubiertos{
+    padding-left: 50px;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    background: url('img/verde3.png') no-repeat 0% 50%;
+}
+

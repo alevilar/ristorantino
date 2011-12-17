@@ -1,12 +1,30 @@
-        <?php    
+
+
+    <?php    
+    echo $javascript->link('jquery/jquery.jeditable.mini', false);
+    echo $javascript->link('ale_fieldupdates', false);
+
         $menubread=array();   
         echo $this->element('menuadmin', array('menubread'=>$menubread));
-        ?>
+        ?>x
+
+
+<script type="text/javascript">
+    new Afups('<?php echo $html->url('/productos/update')?>');
+</script>
+
 
 <div class="productos index">
 <h2><?php __('Productos');?></h2>
+
+<div>
+    <?php
+    echo $html->link('Aplicar Precios Futuros', '/productos/actualizarPreciosFuturos', array('class' => 'button' ), 'Está por modificar todos los precios, por su valor futuro. ¿Seguro?');
+    ?>
+</div>
+<br>
 <p>
-<?php
+    <?php
 echo $paginator->options(array('url'=>$this->params['PaginateConditions']));
 //debug($paginator->params['paging']['Producto']['count']);
 echo $paginator->counter(array('format' => __('Pagina %page% de %pages%, mostrando %current% elementos de %count%.', true)));?></p>
@@ -26,7 +44,7 @@ echo $paginator->counter(array('format' => __('Pagina %page% de %pages%, mostran
 <tr>
 	<th><?php echo $paginator->sort('Nombre','name');?></th>
 	<th><?php echo $paginator->sort('Abreviatura','abrev');?></th>
-	<th><?php echo $paginator->sort('Comandera','Comandera.name');?></th>
+	<th><?php echo $paginator->sort('Comandera','Comandera.description');?></th>
 	<th><?php echo $paginator->sort('Categoria','Categoria.name');?></th>
 	<th><?php echo $paginator->sort('Precio','precio');?></th>
         <th><?php echo $paginator->sort('Orden','order');?></th>
@@ -42,33 +60,38 @@ foreach ($productos as $producto):
 	if ($i++ % 2 == 0) {
 		$class = ' class="altrow"';
 	}
+        $prodId = $producto['Producto']['id'];
 ?>
 	<tr<?php echo $class;?>>
-		<td>
-			<?php 
+		<td class='edit' field='name' product_id='<?php echo $prodId ?>'><?php 
                          $name = ($producto['Producto']['deleted'])? 
                             $producto['Producto']['name']." (borrado el ".date("d/m/y H:i:s", strtotime($producto['Producto']['deleted_date']))." )"
                             :
                             $producto['Producto']['name'];
 
-                        echo $name;
-                        ?>
+                        echo trim($name);
+                ?></td>
+                
+		<td class='edit' field='abrev' product_id='<?php echo $prodId ?>'><?php 
+                    echo $producto['Producto']['abrev']; 
+                ?></td>
+                
+		<td class="edit_field_types" options_types='<?php print json_encode($comanderas) ?>' field="comandera_id" product_id="<?php echo $prodId; ?>">
+			<?php echo $producto['Comandera']['description']; ?>
 		</td>
-		<td>
-			<?php echo $producto['Producto']['abrev']; ?>
-		</td>
-		<td>
-			<?php echo $producto['Comandera']['name']; ?>
-		</td>
-		<td>
+		<td class="edit_field_types" options_types='<?php print json_encode($categorias) ?>' field="categoria_id" product_id="<?php echo $prodId; ?>">
 			<?php echo $producto['Categoria']['name']; ?>
 		</td>
-		<td>
-			<?php echo "$".$producto['Producto']['precio']; echo !empty($producto['ProductosPreciosFuturo']['precio'])?" <b>[$".$producto['ProductosPreciosFuturo']['precio']."]</b>":''?>
-		</td>
-                <td>
-			<?php echo $producto['Producto']['order']; ?>
-		</td>
+		<td  class='edit' field='precio' product_id='<?php echo $prodId ?>'><?php 
+                        echo trim( "$".$producto['Producto']['precio'] ); 
+                        if ( !empty($producto['ProductosPreciosFuturo']['precio']) ) {
+                          echo " <b>[$".$producto['ProductosPreciosFuturo']['precio']."]</b>" ;
+                        }
+                ?></td>
+                
+                <td  class='edit' field='order' product_id='<?php echo $prodId ?>'><?php 
+                    echo $producto['Producto']['order']; 
+                ?></td>
 		<td>
 			<?php echo date('d-m-y',strtotime($producto['Producto']['created'])); ?>
 		</td>

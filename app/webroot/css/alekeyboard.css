@@ -3,8 +3,29 @@
     position: fixed;
     bottom: 0px;   
     padding: 30px;
-    background: silver;
+    background: white;
     text-align: center;
+    border: 2px solid grey;
+    -webkit-border-top-left-radius: 10px;
+    -webkit-border-top-right-radius: 10px;
+    -moz-border-radius-topleft: 10px;
+    -moz-border-radius-topright: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    
+    background-image: linear-gradient(bottom, rgb(232,232,232) 27%, rgb(252,252,252) 82%);
+    background-image: -o-linear-gradient(bottom, rgb(232,232,232) 27%, rgb(252,252,252) 82%);
+    background-image: -moz-linear-gradient(bottom, rgb(232,232,232) 27%, rgb(252,252,252) 82%);
+    background-image: -webkit-linear-gradient(bottom, rgb(232,232,232) 27%, rgb(252,252,252) 82%);
+    background-image: -ms-linear-gradient(bottom, rgb(232,232,232) 27%, rgb(252,252,252) 82%);
+
+    background-image: -webkit-gradient(
+            linear,
+            left bottom,
+            left top,
+            color-stop(0.27, rgb(232,232,232)),
+            color-stop(0.82, rgb(252,252,252))
+    );
 }
 
 .numpad{

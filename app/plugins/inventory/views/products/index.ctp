@@ -1,41 +1,18 @@
 <?php
 echo $javascript->link('jquery/jquery.jeditable.mini', false);
+echo $javascript->link('ale_fieldupdates', false);
+
 
 echo $this->element('menu');
 
 ?>
+
+
+
 <script type="text/javascript">
-
-    (function($){
-        $(document).ready(function() {
-             $('.edit').editable('<?php echo $html->url('/inventory/products/update')?>', {
-                 submit: 'OK',
-                 submitdata: function(){
-                     return {
-                         field: $(this).attr('field'),
-                         product_id: $(this).attr('product_id')
-                     }
-                 }
-             });
-
-
-             $('.edit_field_types').editable('<?php echo $html->url('/inventory/products/update')?>', {
-                 data: function() {return $(this).attr('options_types')},
-                 type: 'select',
-                 submit: 'OK',
-                 submitdata: function(){
-                     return {
-                         field: $(this).attr('field'),
-                         product_id: $(this).attr('product_id'),
-                         text: $(this).find('select :selected').text()
-                     }
-                 }
-             });
-         });
-
-    })(jQuery);
-    
+    new Afups('<?php echo $html->url('/inventory/products/update')?>');
 </script>
+
 
 <h1>Listado de Productos</h1>
 
@@ -54,10 +31,11 @@ echo $paginator->sort('Product.name');
         echo $form->input('Product.name', array('label' => 'Producto')).'</th>';
         echo "<th>".$form->input('Category.name', array('label' => 'Categoria')).'</th>';
         echo "<th>".$form->end('Buscar')."</th>";
+        echo "<th></th>";
 ?>
             </tr>
         <tr>
-            <th>Nombre</th><th>Categoria</th><th>fecha creación</th>
+            <th>Nombre</th><th>Categoria</th><th>fecha creación</th><th>Acciones</th>
         </tr>
     </thead>
 <?php
@@ -71,6 +49,10 @@ foreach ($products as $p){
     echo "<td class='edit_field_types' options_types='$categoriesJson' field='category_id' product_id='$prodId'>".$p['Category']['name']."</td>";
     
     echo "<td>".date('d-m-Y H:i:s',strtotime($p['Product']['created']))."</td>";
+    
+    echo "<td>". $html->link('Ver inventario', '/inventory/products/view/'.$p['Product']['id']) ."</td>";
+    
+    
     echo "</tr>";
 }
 

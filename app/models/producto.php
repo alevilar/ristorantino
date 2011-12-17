@@ -67,15 +67,28 @@ class Producto extends AppModel {
         if ( !empty($this->data['Producto']['id']) && !empty($this->data['Producto']['precio'])) {
             $precioViejo = $this->field('precio', array('Producto.id'=>$this->data['Producto']['id']));
             if ($this->data['Producto']['precio'] != $precioViejo ){
-                if (!$this->HistoricoPrecio->save(array(
+                                
+                $this->ProductosPreciosFuturo->create();
+                if ( !$this->ProductosPreciosFuturo->save(array(
+                    'ProductosPreciosFuturo' => array(
+                        'precio' => $this->data['Producto']['precio'] ,
+                        'producto_id' => $this->data['Producto']['id'],
+                        )
+                ), false)){
+                    return false;
+                    }
+                
+                $this->HistoricoPrecio->create();
+                if ( !$this->HistoricoPrecio->save(array(
                     'HistoricoPrecio' => array(
                         'precio' => $precioViejo ,
                         'producto_id' => $this->data['Producto']['id'],
                         )
-                ))){
+                ), false)){
                     return false;
                     }
             }
+            $this->data['Producto']['precio'] = $precioViejo;
         }
         return true;
        

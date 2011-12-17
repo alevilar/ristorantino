@@ -1,5 +1,5 @@
-<!DOCTYPE html> 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE HTML>
+<html xml:lang="es-ES" lang="es-ES" dir="ltr">    
 <head>
     
         <script type="text/javascript">
@@ -78,57 +78,13 @@
                 } else {
                     echo $javascript->link('todos.min');
                 }
-
- 
             ?>
 <?php
     //scripts de Cake
     echo $scripts_for_layout;
+    
+    echo $this->element('js_init');
 ?>
-        
-    <script type="text/javascript">
-    <!--
-          $.extend(  $.mobile , {
-            backBtnText: "Volver"
-          });
-        
-        <?php 
-        $animar = Configure::read('Adicion.jqm_page_transition');
-        if ( empty($animar) ){ 
-            if (!$animar) {
-            ?>
-              $.extend(  $.mobile , {
-                defaultPageTransition: 'none',
-                defaultDialogTransition: 'none'
-              });
-        <?php }} ?>
-        
-        
-        
-        // intervalo en milisegundos en el que seran renovadas las mesas
-        MESAS_RELOAD_INTERVAL = <?php echo Configure::read('Adicion.reload_interval')?>;
-        MESA_RELOAD_TIMEOUT = <?php echo Configure::read('Adicion.reload_interval_timeout')?>;
-        
-        VALOR_POR_CUBIERTO = <?php 
-                                    $valorCubierto = Configure::read('Restaurante.valorCubierto');
-                                    echo $valorCubierto > 0 ? $valorCubierto : 0;  ?>;
-        
-        // hace que luego de cobrar una mesa, esta quede activa durante X segundos
-        ESPERAR_DESPUES_DE_COBRAR = 0;
-        
-        
-        IMPRIME_REMITO_PRIMERO = <?php echo Configure::read('Mesa.imprimePrimeroRemito')?1:0?>;
-
-        //Parametros de configuracion
-        Risto.Adition.cubiertosObligatorios   = <?php echo Configure::read('Adicion.cantidadCubiertosObligatorio')?'true':'false'?>;
-
-
-        // instancio el objeto adicion que sera el kernel de la app
-        Risto.Adition.adicionar.initialize();
-        
-    -->
-    </script>
-
 
 </head>
 

@@ -745,3 +745,14 @@ li.selected    {
 .centrado{
     text-align: center;
 }
+
+td.edit{
+    cursor: hand;
+    cursor: pointer;
+}
+
+.button{
+    padding: 5px;
+    border: 1px solid grey;
+    margin: 10px;
+}

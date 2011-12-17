@@ -2,35 +2,6 @@
 
 
 
-// inicializacion con parametros enviados desde el instanciador del worker
-self.onmessage = function(obj) {
-    
-    postMessage( obj.data );
-    if (obj.data.urlDomain) {
-        AditionModel.urlDomain = obj.data.urlDomain;
-        
-        if (AditionModel.firstRun) {
-            // la primera vez hacer esto
-            AditionModel.firstRun = false;
-            AditionModel.getMesas();
-        }
-    }    
-    
-    if (obj.data.onLine !== undefined) {
-        AditionModel.onLine = obj.data.onLine;
-    }
-    if (obj.data.updateInterval !== undefined && obj.data.updateInterval > 0) {
-        AditionModel.intervalTime = obj.data.updateInterval;
-    }
-    
-    if (!AditionModel.interval) {
-        AditionModel.interval = setInterval( AditionModel.getMesas, AditionModel.intervalTime );
-    }
-    
-}
-
-
-
 AditionModel = {
     urlDomain : '', 
     timeText : '', 
@@ -89,18 +60,23 @@ AditionModel = {
     },
     
     _processOnSuccess: function(){
-
+        var data, evt;
         if (this.readyState == 4 && this.responseText) {
-            var data = JSON.parse( this.responseText );
+            data = JSON.parse( this.responseText );
             if (data.time) {
                 AditionModel.mesasLastUpdatedTime = data.time;
             } 
-            postMessage(data);
+            
             
             AditionModel.ajaxSending = false;
+            
+            evt = new Event('mesas_actualizadas');
+            evt.mesas = data;
+            $(document).trigger( evt );
         } else {
             AditionModel.mesasLastUpdatedTime = AditionModel.anteriorUpdatedTime;
         }            
+        return (data);
     },
     
     _juntarMesasDeMozos: function( aMozo ){        

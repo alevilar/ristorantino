@@ -271,7 +271,7 @@ $(document).ready(function() {
     
     
     $('#modo-k').live('change',function(){
-        IMPRIME_REMITO_PRIMERO = !IMPRIME_REMITO_PRIMERO;
+        Risto.IMPRIME_REMITO_PRIMERO = !Risto.IMPRIME_REMITO_PRIMERO;
         $.get(urlDomain+'/configs/toggle_remito');
         
     });
