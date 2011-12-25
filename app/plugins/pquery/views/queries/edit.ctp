@@ -1,39 +1,52 @@
-<?php
-echo $javascript->link('jquery-ui-1.8.5.custom.min', false);
-echo $html->css('smoothness/jquery-ui-1.8.5.custom',null, false);
-?>
 
 <script type="text/javascript">
-        $(function(){
-            jQUery('.editable').editable();
-        })
+    (function(){
+        jQuery(document).ready(function() {
+            jQuery("#vigenciaDatePicker").datepicker({ 
+                minDate: 1, 
+                dateFormat: 'yy/mm/dd' 
+            });
+        });
+        
+    })();
+    
+    
+    
 </script>
-
-
+<h2><?php __('Editar Descarga');?></h2>
 <div class="queries form">
 <?php echo $form->create('Query');?>
 	<fieldset>
- 		<legend><?php __('Editar Query');?></legend>
 	<?php
 		echo $form->input('id');
+                if ( !empty($urlFrom) ) {
+                    echo $form->hidden('url_from', array('value' => $urlFrom) );
+                }
 		echo $form->input('name');
 		echo $form->input('description');
 
-		 /* @var $ajax AjaxHelper */
-		echo $ajax->autoComplete('categoria', '/pquery/queries/listado_categorias');
+                echo $form->input('pquery_category_id', array(
+                                            'label' => 'Category',
+                                            'type' => 'select',
+                                            'id' => 'categoria',
+                                            'options' => $pquery_categories,
+                                            'default' => '1'));
                 
-		echo "<div>";
-		echo $form->input('ver_online',array('label'=>'¿Ver Online?','after'=>'si se tilda esta opcion se habiiltara la query para ver de forma online como una pagina normal.'));
-		echo "</div>";
+                echo $form->input('expiration_time', array(
+                                                    'label' => 'Fecha de expiraciÃ³n',
+                                                    'id'=>'vigenciaDatePicker',
+                                                    'type'=>'text',
+                    ));
+
 		
 		echo $form->input('query');
 	?>
 	</fieldset>
-<?php echo $form->end('Submit');?>
+<?php echo $form->end('Editar');?>
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $html->link(__('Delete', true), array('action'=>'delete', $form->value('Query.id')), null, sprintf(__('Are you sure you want to delete # %s?', true), $form->value('Query.id'))); ?></li>
-		<li><?php echo $html->link(__('List Queries', true), array('action'=>'index'));?></li>
+		<li><?php echo $html->link(__('Eliminar', true), array('action'=>'delete', $form->value('Query.id')), null, sprintf(__('Seguro deseas eliminar esta Descarga?', true), $form->value('Query.id'))); ?></li>
+		<li><?php echo $html->link(__('Listado de Descargas', true), array('action'=>'index'));?></li>
 	</ul>
 </div>

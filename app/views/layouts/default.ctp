@@ -37,6 +37,7 @@
             echo $html->css('ristorantino.generic');
             echo $html->css('cake.generic.croogo');
             echo $html->css('fluid_grid');
+            echo $html->css('jquery-ui/pepper-grinder/jquery-ui-1.8.16.custom');
             
             $cssUserRole = "acl-".$session->read('Auth.User.role');
             if (is_file(APP.WEBROOT_DIR.DS."css".DS.$cssUserRole.".css")) {
@@ -44,10 +45,10 @@
             }
 
 
-            echo $javascript->link('prototype');
-            echo $javascript->link('scriptaculous');
-            echo $javascript->link('jquery/jquery-1.6.1.min');
-            echo $javascript->link('jquery/jquery-ui-1.8.14.custom.min');
+//            echo $javascript->link('prototype');
+//            echo $javascript->link('scriptaculous');
+            echo $javascript->link('jquery/jquery-1.6.4.min');
+            echo $javascript->link('jquery/jquery-ui-1.8.16.custom.min');
             
             //echo $javascript->link('Controls'); // PAD numerico
         ?>
@@ -61,37 +62,48 @@
         </head>
         <body>
             <div id="container" class="container_12">
-                <div class="grid_12 header">
-                <?php echo $html->link("Inicio", '/pages/home', array('class' => 'inicio')) ?>
-                    
-                    <h3 style="color: grey; float: left">Chocha 012</h3>
-                    
-                    <?php 
-                    echo $this->element('menu_' . $this->params['controller']);
-                    ?>
-                    <div class="box_user_login">
-                            <?php  
-                            echo $session->read('Auth.User.nombre') . " " . $session->read('Auth.User.apellido');
-                            
-                            echo " - ".$session->read('Auth.User.role') ." -";
-                            ?>
-                        <?php echo $html->link('salir', array('controller' => 'users', 'action' => 'logout', 'plugin' => null)); ?>
-                    </div>
-                        
-                    <div id="mesajes"><?php $session->flash(); $session->flash('auth'); ?></div>
+            
+                <div id="nav" class="grid_10">
+                    <?php echo $html->link("Inicio", '/pages/home', array('class' => 'inicio')) ?>
+                    <?php echo $this->element('menu_' . $this->params['controller']); ?>
                 </div>
-                <div id="content" class="grid_12">
-                    <?php echo $content_for_layout; ?>
-                    <div class="clear"></div>
+                <div class="box_user_login grid_2">
+                        <?php  
+                        echo $session->read('Auth.User.nombre') . " " . $session->read('Auth.User.apellido');
+
+                        echo " - ".$session->read('Auth.User.role') ." -";
+                        ?>
+                    <?php echo $html->link('salir', array('controller' => 'users', 'action' => 'logout', 'plugin' => null)); ?>
                 </div>
                 
                 <div class="clear"></div>
-        </div>
+                <hr />
+                
+                <div class="grid_12">
+                     <div id="mesajes"><?php $session->flash(); $session->flash('auth'); ?></div>
+                </div>
+                <div class="clear"></div>
+                        
+            
+                <div id="content" class="grid_12">
+                    <?php echo $content_for_layout; ?>
+                </div>
+                <div class="clear"></div>
+            
+                
+                <hr />
+                <div id="footer" class="container_12">
+                    <div class="grid_12">
+                        <?php echo $cakeDebug; ?>
 
-        <div class="clear"></div>
-        <div class="container_12">
-            <?php echo $cakeDebug; ?>
-        </div>
+                        <div class="logo">
+                            <h1><?php echo Configure::read('System.name'). ' '. Configure::read('System.version')?></h1>                    
+                        </div>
+                    </div>
+                </div>
+                <div class="clear"></div>
 
+            </div>
+            
     </body>
 </html>

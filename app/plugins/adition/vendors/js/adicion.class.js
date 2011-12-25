@@ -19,7 +19,7 @@ Risto.Adition.adicionar = {
     // listado de mozos
     mozos: ko.observableArray( [] ),
      // orden del listado de mozos: Se puede poner cualquier valor que venga como atributo (campos de la bbdd de la tabla mozos)
-    mozosOrder: ko.observable('mozo_id'),
+    mozosOrder: ko.observable('numero'),
     
     mesas: ko.observableArray( [] ),
     
@@ -43,16 +43,15 @@ Risto.Adition.adicionar = {
      * Constructor
      */
     initialize: function() {
-        Risto.Adition.adicionar.mozosOrder('numero');
         
-        if ( Worker ) {
+        if ( Worker ) {  
+            
             // Crea el Web Worker
-            var worker = new Worker("adition/js/adicion.model.js");
-        
-        
+            
+            var worker = new Worker(urlDomain + "adition/js/adicion.model.js");
+                
             var primeraVez = true;
             worker.onmessage = function (evt) {
-
                 // si tiene mesas las proceso
                 if ( evt.data && evt.data.mesas ) {
                     for ( var cbk in evt.data.mesas ) {
@@ -252,19 +251,27 @@ Risto.Adition.adicionar = {
     
     agregarCantCubiertos: function(){
         var menu = prompt('Ingrese cantidad de Cubiertos', this.currentMesa().cant_comensales());
-        var ops = {
+        menu = parseInt(menu);
+        
+        if ( menu && typeof menu == 'number' && menu > 0) {
+             var ops = {
                 'data[Mesa][cant_comensales]': menu
             };
-        this.currentMesa().cant_comensales( menu );
-        this.currentMesa().editar(ops);
+            
+            this.currentMesa().cant_comensales( menu );
+            this.currentMesa().editar(ops);
+        }        
     },
 
 
     setCurrentMozo: function(mozo){
         this.currentMozo( mozo );
-        var event = $.Event('adicionCambioMozo');
+        
+        
+        var event = {};
         event.mozo = mozo;
-        $(document).trigger(event);
+        $raeh.trigger('adicionCambioMozo',event);
+        
     },
     
     
@@ -315,7 +322,7 @@ Risto.Adition.adicionar = {
                 ko.mapping.fromJS( data, mapOps, Risto.Adition.adicionar );
             }
 
-            $(document).trigger('adicionMesasActualizadas');
+            Risto.Adition.EventHandler.adicionMesasActualizadas();
         },
         
         
@@ -339,7 +346,7 @@ Risto.Adition.adicionar = {
                     }
                 }
             }
-            $(document).trigger('adicionMesasActualizadas');
+            Risto.Adition.EventHandler.adicionMesasActualizadas();
             return 1;
         },
         
@@ -391,7 +398,7 @@ Risto.Adition.adicionar = {
                     }
                 }
             }
-            $(document).trigger('adicionMesasActualizadas');
+            Risto.Adition.EventHandler.adicionMesasActualizadas();
             return 1;
         }
     },
@@ -493,6 +500,33 @@ Risto.Adition.adicionar.currentSabores = ko.dependentObservable( function(){
         return this.currentMesa().currentComanda().currentSabores();    
     }
 }, Risto.Adition.adicionar);   
+
+
+
+
+// al procesar un pago aqui se escribe el vuelto para manejar en la vista
+Risto.Adition.adicionar.vuelto = ko.dependentObservable( function(){
+   var pagos = this.pagos(),
+       sumPagos = 0,
+       totMesa = Risto.Adition.adicionar.currentMesa().totalCalculado(),
+       vuelto = 0,
+       retText = undefined;
+   if (pagos && pagos.length) {
+       for (var p in pagos) {
+           if ( pagos[p].valor() ) {
+            sumPagos += parseFloat(pagos[p].valor());
+           }
+       }
+       vuelto = (sumPagos - totMesa);
+       if (vuelto <= 0 ){
+           retText = (vuelto);
+       } else {
+           retText = (vuelto);
+       }
+   }
+   return retText;
+}, Risto.Adition.adicionar);
+
 
 
 // al procesar un pago aqui se escribe el vuelto para manejar en la vista

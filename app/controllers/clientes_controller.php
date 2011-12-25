@@ -182,6 +182,8 @@ class ClientesController extends AppController {
         
         
          function jqm_clientes($tipo = 'todos'){
+             $this->conHeader = false;
+             $this->pageTitle = 'Listado de Clientes';
              $tipo = '';
              $clientes = array();
              switch ($tipo) {
@@ -200,8 +202,8 @@ class ClientesController extends AppController {
                          $clientes = $this->Cliente->todos();
                      break;
              }
-             
-             $this->set('tipo',$tipo);
+            $this->layout = 'jqm' ;
+            $this->set('tipo',$tipo);
             $this->set('clientes',$clientes);
         }
 	

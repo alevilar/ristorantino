@@ -1,4 +1,9 @@
+<?php 
+echo $html->css('alekeyboard');
 
+echo $javascript->link('alekeyboard');
+
+?>
 
 
 <div class="grid_4 prefix_4 login">

@@ -1,6 +1,10 @@
 body{
 }
 
+.ui-dialog .ui-header{
+    margin: 2% auto 15px auto;
+}
+
 ul.listado-adicion{
     list-style: none;
     padding: 0px;
@@ -256,20 +260,23 @@ ul.listado-adicion .mesa-mozo,ul.listado-adicion .mozo-cant-mesas {
 
 
 
-ul.listado-mozos-para-mesas{
+ul#listado-mozos-para-mesas{
     padding: 0px;
     margin: 0px;
     background-color: #E7E7E7;
 }
 
-.listado-mozos-para-mesas li{
+#listado-mozos-para-mesas li{
     display: inline-block;
     min-width: 40px;
     min-height: 30px;
     text-align: center;
+    padding: 0px;
+    margin: 0px;
+    float: left;
 }
 
-.listado-mozos-para-mesas li a{
+#listado-mozos-para-mesas li a{
     text-decoration: none;
 }
 
@@ -421,3 +428,14 @@ h1.cubiertos , h2.cubiertos , h3.cubiertos{
     background: url('img/verde3.png') no-repeat 0% 50%;
 }
 
+ .header-cliente{
+        text-align: center;
+        height: 80px;
+    }
+    
+    .header-cliente h4{
+        display: inline-block;
+        width: 200px;
+        top: -12px;
+        position: relative;
+    }

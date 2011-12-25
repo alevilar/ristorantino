@@ -209,19 +209,19 @@ Mesa.prototype = {
      *
      **/
     __triggerEventCambioDeEstado: function(){
-        var event =  $.Event(this.estado().event);
+        
+        var event =  {};
         event.mesa = this;
-        $(document).trigger(event);
+        this.estado().event( event );
     },
 
     /**
      * dispara un evento de mesa seleccionada
      */
     seleccionar: function() {
-        var event =  $.Event(MESA_ESTADOS_POSIBLES.seleccionada.event);
+        var event =  {};
         event.mesa = this;
-        $(document).trigger(event);
-        return this;
+        MESA_ESTADOS_POSIBLES.seleccionada.event( event );
     },
     
     

@@ -9,16 +9,13 @@ body {
 	background-color: #6b6b6e;
 	color: #000000;
 	font-family: helvetica,arial,sans-serif;
-	font-size:80%;
-	margin: 5px;
         background-position:  top;
         background-repeat: no-repeat;
 	background-image:url("../img/bgluz.png");      
         /* Css degrade */
 }
 span {
-    font-size:75%;
-    font-family:arial,sans-serif;
+    
 }
 label {
     font-size:85%;
@@ -74,12 +71,13 @@ ul, li {
 #container {
 	background: #fff;
         min-height: 250px;
+        margin-top: 10px;
+        margin-bottom: 10px;
 	color: #333;
-        -webkit-border-radius: 15px;
-        -moz-border-radius: 15px;
-        border-radius: 15px; 
-        padding: 15px;
-        left: -15px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px; 
+        padding: 5px;
         background: #f0f0f0;
 	background-image: -moz-linear-gradient(top,#eeeeee,#dddddd);
 	background-image: -webkit-gradient(linear,left top,left bottom,
@@ -88,32 +86,10 @@ ul, li {
 	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#eeeeee', EndColorStr='#dddddd')";
 }
 
-.header{
-	padding-top: 0;
-        padding-bottom: 5px;
-        border-bottom: 1px solid #6B6B6E;
-}
-.header a {
-	color: #CCCCCC;
-	text-decoration: none;
-	font-weight: normal;
+#content{
+    margin: 15px 0px;
 }
 
-.header a {
-	color: #CCCCCC;
-	text-decoration: none;
-	font-weight: normal;
-}
-
-.header a:hover {
-	color: #000000;
-	font-weight: normal;
-	text-decoration: none;
-}
-
-.header h1 {
-	color: #e3e3e4;
-}
 
 
 #footer {

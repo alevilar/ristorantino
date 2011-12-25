@@ -14,14 +14,16 @@
             <a href='#adicion-opciones' data-icon="gear" data-rel="dialog" class="ui-btn-right">Opciones</a>
             
             <div data-role="navbar">
-                <ul class="listado-mozos-para-mesas">
-                    <li><a href="#" onclick="$('#mesas_container li').show();" class="ui-btn-active">Todos</a></li>
+                <ul id="listado-mozos-para-mesas">
+                    <li  style="width: <?php echo floor( 100/ (count($mozos) +1) )?>%"><a href="#" class="ui-btn-active">Todos</a></li>
                     <?php
                         foreach ($mozos as $m) {
                             $k = $m['Mozo']['id'];
                             $n = $m['Mozo']['numero'];
                             ?>
-                            <li><a href="#" data-mozo-id="<?php echo $k?>"><?php echo $n?></a></li>
+                    <li  style="width: <?php echo floor( 100/ (count($mozos) +1) )?>%">
+                                <a href="#" data-mozo-id="<?php echo $k?>"><?php echo $n?></a>
+                            </li>
                         <?
                         }
                     ?>
@@ -33,7 +35,7 @@
         <div  data-role="content" class="content_mesas">           
 
                 <!-- aca va el listado de mesas que se carga dinamicamente en un script de abajo -->
-                <a href="#mesa-add" data-rel="dialog"  class="grid_1 abrir-mesa" data-role="button" data-theme="a">Abrir<br><?php echo Configure::read('Mesa.tituloMesa')?></a>  
+                <a href="#mesa-add" id="mesa-abrir-mesa-btn" data-rel="dialog"  class="abrir-mesa" data-role="button" data-theme="a">Abrir<br><?php echo Configure::read('Mesa.tituloMesa')?></a>  
                 <ul id="mesas_container" class="listado-adicion" data-bind='template: { name: "listaMesas", foreach: adn().mesas }'>
                         
                 </ul>
@@ -176,7 +178,7 @@
                     <fieldset data-role="fieldcontain">
                             <h3 class="numero-mesa">Número de <?php echo Configure::read('Mesa.tituloMesa') ?></h3>
                             <label for="mesa-add-numero">Ingresar el número</label>
-                            <input pattern="[0-9]*" maxlength="10" type="text" name="numero" data-risto="mesa" id="mesa-add-numero" required="required"/>
+                            <input type="number" min="1" name="numero" data-risto="mesa" id="mesa-add-numero" required="required"/>
                             <div class="ui-grid-a">
                                 <div class="ui-block-a"><button type="button"  data-theme="c" id="add-mesa-paso2-volver">Volver</button></div>
                                 <div class="ui-block-b"><button type="button"  data-theme="b" id="add-mesa-paso2-submit">Siguiente</button></div>
@@ -190,7 +192,7 @@
                     <fieldset data-role="fieldcontain">
                         <h3 class="cubiertos">Cubiertos</h3>
                             <label for="mesa-add-cant_comensales">Ingresar la cantidad de Cubiertos</label>
-                            <input pattern="[0-9]*" maxlength="10" type="text" name="cant_comensales" id="mesa-add-cant_comensales"/>
+                            <input type="number" name="cant_comensales" id="mesa-add-cant_comensales"/>
 
                             <div class="ui-grid-a">
                                 <div class="ui-block-a"><button type="button"  data-theme="c" id="add-mesa-paso3-volver">Volver</button></div>
@@ -329,9 +331,14 @@
         </div>
     
     <div data-role="footer" data-position="fixed">
-        <a data-role="button" style="float: left" class="cant_comensales" data-bind="visible: adn().currentMesa().cant_comensales() == 0">Ingresar Cubiertos</a>
+        
+        
+        
         <h3>
-            <span class="cant_comensales" id="mesa-cant-comensales" data-bind="visible: adn().currentMesa().cant_comensales() > 0"><span data-bind="text: adn().currentMesa().cant_comensales()"></span> Cubiertos</span>
+            <span id="mesa-cant-comensales"  style="float: left">
+                <a data-role="button" data-bind="visible: !adn().currentMesa().cant_comensales()">Ingresar Cubiertos</a>
+                <span data-bind="visible: adn().currentMesa().cant_comensales() > 0"><span data-bind="text: adn().currentMesa().cant_comensales()"></span> Cubiertos</span>
+            </span>
             <span class="mesa-total"><span data-bind="text: adn().currentMesa().textoTotalCalculado()"></span></span>
             <span class="hora-abrio">Abrió a las <span data-bind="text: adn().currentMesa().timeCreated()"></span></span>
         </h3>
@@ -357,7 +364,7 @@
             </div>
     </div>
 
-    <div data-role="content">
+    <div data-role="content" style="min-height: 300px">
         
         <div style="display: none" id="comanda-add-observacion" class="ui-corner-bottom ui-overlay-shadow ui-content">
             <h4 style="color: #fff">Agregar observación general para la comanda</h4>
@@ -461,7 +468,7 @@
             
             <fieldset class="ui-grid-a">
                 <div class="ui-block-a"><a href="#" data-role="button" data-rel="back" data-theme="e">Cancelar</a></div>
-                <div class="ui-block-b"><button type="submit" data-theme="b">Cambiar de <?php echo Configure::read('Mesa.tituloMesa') ?></button></div>
+                <div class="ui-block-b"><button type="submit" data-theme="b">Cambiar de <?php echo Configure::read('Mesa.tituloMozo') ?></button></div>
 	    </fieldset>
         </form>
     </div>
@@ -485,10 +492,10 @@
         <p>
         El número actual es <span data-bind="text: adn().currentMesa().numero"></span>
         </p>
-        <form name="cambiar-mozo" id="form-cambiar-numero" action="#" data-ajax="false"  data-direction="reverse">
+        <form name="cambiar-mozo" id="form-cambiar-numero" action="#mesa-view" data-ajax="false"  data-transition="reverse">
             <fieldset data-role="controlgroup" data-type="horizontal">
                 <label for="numeroacambiar">Ingresar nuevo número</label>
-                <input type="text" name="numero" id="numeroacambiar" />
+                <input type="number" name="numero" id="numeroacambiar" />
             </fieldset>
             
             <fieldset class="ui-grid-a">
@@ -515,7 +522,7 @@
     </div>
 
     <div data-role="content">                  
-        <h2>Cobrar la <?php echo Configure::read('Mesa.tituloMesa')?></h2>
+        <h2>Cobrar la <?php echo Configure::read('Mesa.tituloMesa')?> <span data-bind="text: adn().currentMesa().numero"></span> <span class="mesa-total" style="float: right; color: red;">Total $<span data-bind="text: adn().currentMesa().total"></span></span></h2>
         
         <ul class="tipo_de_pagos">
         <?php 
@@ -537,7 +544,7 @@
         ?>
         </ul>
         
-        <h4>Pagos Seleccionados</h4>
+        <h4>Pagos Seleccionados <span style="float: right; font-size: 24px; color: #003366">Vuelto: $<span data-bind="text: adn().vuelto"></span></span></h4>
         <ul class="pagos_creados"
             data-bind='template: { name: "li-pagos-creados", foreach: adn().pagos }'>
         </ul>

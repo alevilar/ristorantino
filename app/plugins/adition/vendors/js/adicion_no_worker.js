@@ -70,9 +70,8 @@ AditionModel = {
             
             AditionModel.ajaxSending = false;
             
-            evt = new Event('mesas_actualizadas');
-            evt.mesas = data;
-            $(document).trigger( evt );
+            $raev.trigger('mesas_actualizadas', evt);
+            
         } else {
             AditionModel.mesasLastUpdatedTime = AditionModel.anteriorUpdatedTime;
         }            

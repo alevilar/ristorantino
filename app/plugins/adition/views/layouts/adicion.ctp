@@ -56,6 +56,7 @@
                         // OJO !! EL ORDEN IMPORTA !!
                         '/adition/js/adition.package',
                         '/adition/js/mozo.class',
+                        '/adition/js/adicion.event_handler',
                         '/adition/js/mesa.estados.class',
                         '/adition/js/mesa.class',
                         '/adition/js/comanda.class',

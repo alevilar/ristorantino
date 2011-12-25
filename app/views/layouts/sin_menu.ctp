@@ -59,7 +59,7 @@
 
 
                 <div id="header" >
-                        <h1>El Ristorantino Mágico - versión 11.01.11</h1>
+                        <h1><?php echo Configure::read('System.name'). ' '. Configure::read('System.version')?></h1>
 			<div id="mesajes"><?php $session->flash(); ?></div>
 			<?php echo $html->link("Inicio",'/pages/home',array('class'=>'inicio'))?>
                 </div>

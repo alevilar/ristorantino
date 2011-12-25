@@ -1,0 +1,31 @@
+/* 
+    Document   : pquery
+    Created on : 17/12/2011, 19:36:13
+    Author     : alejandro
+    Description:
+        Diseño general para le plugin Pquery
+*/
+
+.preview{  
+    background: url('img/preview.png') 0% 50% no-repeat;
+    padding: 10px 10px 10px 32px;
+    margin-left: 10px;
+    border: 1px solid silver;
+}
+
+.descargar{
+    background: url('img/download.png') 0% 50% no-repeat;
+    padding: 10px 10px 10px 32px;
+    margin-left: 10px;
+    border: 1px solid silver;
+}
+
+.ver{
+    background: url('img/view.png') 0% 50% no-repeat;
+    padding: 10px 10px 10px 32px;
+    margin-left: 10px;
+    border: 1px solid silver;
+}
+
+
+

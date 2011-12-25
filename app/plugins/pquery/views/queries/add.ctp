@@ -1,29 +1,51 @@
 <?php
 echo $javascript->link('jquery-ui-1.8.5.custom.min', false);
-echo $html->css('smoothness/jquery-ui-1.8.5.custom',null, false);
+echo $html->css('smoothness/jquery-ui-1.8.6.custom',null, false);
 ?>
+<script type="text/javascript">
+jQuery(document).ready(function() {
+    jQuery("#vigenciaDatePicker").datepicker({ minDate: 1, dateFormat: 'dd/mm/yy' });
 
+    toogleVigencia();
+});
+
+function toogleVigencia() {
+    if (jQuery("#categoria").val() == '2') {
+        jQuery('.vigenciaDatePickerDiv').show();
+    }
+    else {
+        jQuery('.vigenciaDatePickerDiv').hide();
+    }
+}
+</script>
+
+<h2><?php __('Crear Descarga');?></h2>
 <div class="queries form">
 <?php echo $form->create('Query');?>
 	<fieldset>
- 		<legend><?php __('Add Query');?></legend>
 	<?php
 		echo $form->input('name');
 		echo $form->input('description');
-		
-                /* @var $ajax AjaxHelper */
-		echo $ajax->autoComplete('categoria', '/pquery/queries/listado_categorias');
-		
-		echo $form->input('ver_online',array('label'=>'¿Ver Online?','after'=>'si se tilda esta opcion se habiiltara la query para ver de forma online como una pagina normal.'));
-		
-		
+                echo $form->input('pquery_category_id', array(
+                                            'label' => 'Category',
+                                            'type' => 'select',
+                                            'id' => 'categoria',
+                                            'options' => $pquery_categories,
+                                            'style' => 'width:150px; clear:none; float:left;',
+                                            'onchange' => 'toogleVigencia();',
+                                            'default' => '1'));
+                echo $form->input('expiration_time', array('id'=>'vigenciaDatePicker',
+                                                    'type'=>'text',
+                                                    'div' => 'vigenciaDatePickerDiv',
+                                                    'style' => 'width:100px; clear:none; float:left;'));
+
 		echo $form->input('query');
 	?>
 	</fieldset>
-<?php echo $form->end('Submit');?>
+<?php echo $form->end('Guardar');?>
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $html->link(__('List Queries', true), array('action'=>'index'));?></li>
+		<li><?php echo $html->link(__('Listado de Descargas', true), array('action'=>'index'));?></li>
 	</ul>
 </div>

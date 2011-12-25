@@ -1,41 +1,21 @@
 <?php
 class Query extends PqueryAppModel {
 
+    
 	var $validate = array(
 		'name' => array('notempty'),
 		'query' => array('notempty'),
 	);
 
-	
-	/**
-	 * Me lista todas las categorias que existen en la Queries
-	 * si se le pasa como parametro un "*" me trae todas
-	 *  
-	 * @param string $filtro
-	 * @return array $categorias find(all)
-	 */
-	function listarCategorias($filtro = '*'){
-
-		$conditions[] = array('categoria <>'=>"");
-
-		if($filtro != '*'){
-			$conditions[] = array("categoria LIKE" => "%".$filtro."%");
-		}
-		$this->recursive = -1;
-
-		$categorias =  $this->find('all', array(
-					'group' => 'categoria',
-					'conditions'=> $conditions,
-					'fields' => array('categoria')
-		));
-
-		return $categorias;
-	}
-	
+        var $belongsTo = array('Pquery.Category');
 	
 	
 	function beforeSave(){
 		parent::beforeSave();
+                
+                if ( empty($this->data['Query']['expiration_time']) || $this->data['Query']['expiration_time'] == '0000-00-00 00:00:00') {
+                     $this->data['Query']['expiration_time'] = null;
+                }
 		
 		//----------------------------------------------------
 		// Con esto hago que si se puso un punto y coma en la consulta, lo elimine.

@@ -5,6 +5,34 @@
  * 
  * Convierte objetos de javascript en algo que CakePhp pueda leer bajo el $this->data
  * o sea, convierte los objetos a un array para enviar via method POST en ajax
+ * 
+ * EL objeto debe tener un atributo (key denominada: "Model", con el nombre del modelo.
+ * 
+ * Objeto a enviar, ejemplo:
+ * 
+ * var product = {
+ *      model: 'Producto',
+ *      name: 'Zapatillas Nike',
+ *      precio: 34.76
+ *      observacion: 'una observacion re copada ...'
+ * }
+ * 
+ * var objetoEnviar = {
+ *      obj: product,
+ *      method: 'post', // por defecto ya viene en post, puede ser get tambien. no es obligatorio ponerlo
+ *      url: '/url/enviar' // es la url a donde se enviara el ajax
+ * }
+ * 
+ * Envia un ajax post para que Cake pueda crear 
+ *      $this->data['Producto']['name']
+ *      $this->data['Producto']['precio']
+ *      $this->data['Producto']['observacion']
+ *      
+ *      
+ *      El objeto debe tener lso siguientes atributos o claves:
+ *      'obj': Obligatorio, Objeto js a enviar
+ *      'url': Obligatorio, es la url donde se enviara el ajax
+ *      'method': puede ser get o post, es el method de envio ajax
  */
 var $cakeSaver = {
     

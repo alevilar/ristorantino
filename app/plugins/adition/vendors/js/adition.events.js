@@ -18,32 +18,453 @@
  *
  */
 
-// enrquiqueecr con JQM el listado ed comandas de la mesa en msa-view
-$('#mesa-view').live('pageshow',function(event, ui){  
-  $('#comanda-detalle-collapsible').trigger('create');
-});
+$(document).bind("mobileinit", function(){
 
-
-// acomodar todos mozos al ancho ed la pantalla segun resolucion
-$('#listado-mesas').live('pageshow',function(event, ui){
-  var tot = $('.listado-mozos-para-mesas > li');
-  var por = 100/tot.length;
-  tot.removeClass('ui-block-a');
-  tot.removeClass('ui-block-b');
-  tot.css({'width':por+'%', padding: '0px', margin: '0px', 'float': 'left'});
-});
+    $('#comanda-add-product-obss').live('pageshow',function(event, ui){    
+        $('input, textarea', '#comanda-add-product-obss').focus();
+    });
 
 
 
-$('#page-sabores').live('pageshow', function(){
-    var closeIcon = $('#page-sabores a[data-icon="delete"]');
-    closeIcon.bind('click',function(){
-                Risto.Adition.adicionar.currentMesa().currentComanda().limpiarSabores();
-                closeIcon.unbind('click');
+    /**
+     *
+     *
+     *          Mesa View -> Cambiar Mozo
+     *
+     *
+     */
+    
+
+
+    // enrquiqueecr con JQM el listado ed comandas de la mesa en msa-view
+    $('#mesa-cambiar-mozo').live('pageshow',function(event, ui){    
+        // Form SUBMITS
+        $('#form-cambiar-mozo').bind('submit', function(e){
+            e.preventDefault();
+            $raeh.trigger('cambiarMozo', e, this);
+            return false;
+        });
+    });
+
+    // enrquiqueecr con JQM el listado ed comandas de la mesa en msa-view
+    $('#mesa-cambiar-mozo').live('pagehide',function(event, ui){ 
+        console.info("oculte a pantalla mozo");
+        // Form SUBMITS
+        $('#form-cambiar-mozo').unbind('submit');
+    });
+
+
+
+
+
+
+    /**
+     *
+     *
+     *          COMANDA ADD
+     *
+     */
+    $('#comanda-add-menu').live('pageshow', function(){
+        //creacion de comandas
+        // producto seleccionado
+        $(document).bind(  MENU_ESTADOS_POSIBLES.productoSeleccionado.event , productoSeleccionado);
+
+
+        $('#comanda-add-guardar').bind('click', function(){
+            Risto.Adition.adicionar.currentMesa().currentComanda().save();
+        });
+
+        // Eventos para la observacion General de la Comanda ADD
+        (function(){
+            var $domObs = $('#comanda-add-observacion');
+            $("#mesa-comanda-add-obs-gen-cancel").bind('click', function(){
+                $domObs.toggle('slow'); 
+                Risto.Adition.adicionar.currentMesa().currentComanda().comanda.borrarObservacionGeneral();
             });
+
+            $("#mesa-comanda-add-obs-gen-aceptar").bind('click', function(){
+                $domObs.toggle('slow');
+            });
+
+            var domObsList = $('#comanda-add-menu .observaciones-list button');
+            domObsList.bind('click' , function(e){
+                if ( this.value ) {
+                    Risto.Adition.adicionar.currentMesa().currentComanda().comanda.agregarTextoAObservacionGeneral( this.value );
+                }
+            });
+        })();
+    });
+
+    $('#comanda-add-menu').live('pagebeforehide', function(){
+        $(document).unbind(  MENU_ESTADOS_POSIBLES.productoSeleccionado.event);
+
+        $("#mesa-comanda-add-obs-gen-cancel").unbind('click');
+        $("#mesa-comanda-add-obs-gen-aceptar").unbind('click');
+        $('#comanda-add-menu .observaciones-list button').unbind('click');
+        $('#comanda-add-guardar').unbind('click');
+    });
+
+
+
+
+
+
+    /**
+     *
+     *
+     *          Mesa View -> Cambiar N° Mesa
+     *
+     *
+     */
+
+    // enrquiqueecr con JQM el listado ed comandas de la mesa en msa-view
+    $('#mesa-cambiar-numero').live('pageshow',function(event, ui){ 
+
+        $('input:first', '#form-cambiar-numero').focus().val('');
+        // Form SUBMITS
+        $('#form-cambiar-numero').bind( 'submit', function(){
+            $raeh.trigger('cambiarNumeroMesa', null, this);
+            return false;
+        });
+    });
+
+    // enrquiqueecr con JQM el listado ed comandas de la mesa en msa-view
+    $('#mesa-cambiar-numero').live('pagebeforehide',function(event, ui){ 
+        console.info("oculta");
+        // Form SUBMITS
+         $('#form-cambiar-numero').unbind( 'submit');
+    });
+
+
+    /**
+     *
+     *
+     *          Mesa View
+     *
+     *
+     */
+
+    // enrquiqueecr con JQM el listado ed comandas de la mesa en msa-view
+    $('#mesa-view').live('pageshow',function(event, ui){  
+        $('#comanda-detalle-collapsible').trigger('create');
+
+         // CLICKS
+        $('#mesa-action-comanda').bind( 'click', function(){
+            Risto.Adition.adicionar.nuevaComandaParaCurrentMesa();
+        });
+
+        $('#mesa-action-cobrar').bind('click',function(){
+            Risto.Adition.adicionar.pagos( [] );
+        });
+
+
+          $('#mesa-menu').bind( 'click', function(){
+              Risto.Adition.adicionar.agregarMenu();
+          });
+
+          $('#mesa-cant-comensales').bind('click', function(){
+              Risto.Adition.adicionar.agregarCantCubiertos();
+          });
+
+
+        $('#mesa-cerrar').bind('click', function(){
+            var mesa = Risto.Adition.adicionar.currentMesa();
+            mesa.cambioDeEstadoAjax( MESA_ESTADOS_POSIBLES.cerrada );
+        });
+
+        $('#mesa-action-reimprimir').bind('click', function(){
+            var mesa = Risto.Adition.adicionar.currentMesa();
+            var url = mesa.urlReimprimirTicket();
+            $.get(url);
+        });
+
+
+        $('#mesa-borrar').bind('click', function(){
+            if (window.confirm('Seguro que desea borrar la mesa '+Risto.Adition.adicionar.currentMesa().numero())){
+                var mesa = Risto.Adition.adicionar.currentMesa();
+                mesa.cambioDeEstadoAjax( MESA_ESTADOS_POSIBLES.borrada );
+            }
+        });
+
+
+        $('#mesa-reabrir').bind('click',function(){
+            var mesa = Risto.Adition.adicionar.currentMesa();
+            mesa.cambioDeEstadoAjax( MESA_ESTADOS_POSIBLES.reabierta );
+        });
+
+    });
+
+    $('#mesa-view').live('pagebeforehide',function(event, ui){  
+        $('#mesa-action-comanda').unbind( 'click');
+        $('#mesa-action-cobrar').unbind('click');
+        $('#mesa-menu').unbind( 'click');
+        $('#mesa-cant-comensales').unbind('click');
+        $('#mesa-cerrar').unbind('click');
+        $('#mesa-action-reimprimir').unbind('click');
+        $('#mesa-borrar').unbind('click');
+        $('#mesa-reabrir').unbind('click');
+    });
+
+
+
+
+
+
+
+    /**
+     *
+     *      LISTADO DE MESAS
+     *
+     *
+     */
+
+
+    $('#listado-mesas').live('pageshow',function(event, ui){
+        var $listadoMozos = $('#listado-mozos-para-mesas');
+        $listadoMozos.removeClass('ui-grid-a');
+
+
+        // al hacer click n un mozo del menu bar
+        // se muestran solo lasmesas de ese mozo
+
+        $listadoMozos.delegate('a', 'click', function(e) {
+            $raeh.trigger('mostrarMesasDeMozo', e.currentTarget);
+            return false;        
+        });
+
+
+      /**
+         *
+         * Logica del abrir Mesa, se activa cuando se aprieta el boton de abrir mesa
+         *
+         */
+        (function(){
+            $p3 = $('#add-mesa-paso3');
+            $p2 = $( '#add-mesa-paso2');
+            $p1 = $( '#add-mesa-paso1');
+
+            /**
+             * Desbindea los eventos para liberar memoria
+             *
+             */
+            function unbindALl() {
+                 $('#add-mesa-paso3-submit, #add-mesa-paso2-volver').unbind('click');
+                 $('#add-mesa-paso1 LABEL, #add-mesa-paso3-volver').unbind('click');
+                 $('#add-mesa-paso2-submit').unbind('click');
+                 $('#form-mesa-add').unbind('submit');
+            }
+
+
+            /**
+             *
+             * Luego de apretar el submit del formulario agregar mesa....
+             */
+            function agregarNuevaMesa(e){
+                unbindALl();
+                e.preventDefault();
+
+                var rta = $('#form-mesa-add').serializeArray();    
+                var miniMesa = {};
+
+                for (var r in rta ) {
+                    if (rta[r].name == 'numero' && !rta[r].value){
+                        alert("Debe completar numero de mesa");
+                        return false;
+                    }
+
+                    if (rta[r].name == 'cant_comensales' && !rta[r].value && Risto.Adition.cubiertosObligatorios){
+                        alert("Debe indicar la cantidad de cubiertos");
+                        return false;
+                    }
+                    miniMesa[rta[r].name] = rta[r].value;
+                }
+
+                var mesa = Risto.Adition.adicionar.crearNuevaMesa( miniMesa );
+                Risto.Adition.EventHandler.mesaSeleccionada( {"mesa": mesa} );
+                Risto.Adition.adicionar.setCurrentMesa( mesa );
+                $.mobile.changePage('#mesa-view');
+                document.getElementById('form-mesa-add').reset(); // limpio el formulario
+
+                return false;
+            }
+
+            // Eventos para abrir una mesa
+            $('#mesa-abrir-mesa-btn').bind('click', function(){
+                   $p2.hide();
+                   $p3.hide();
+                   $p1.show();
+
+
+                // Ir al paso 1
+                $('#add-mesa-paso3-submit, #add-mesa-paso2-volver').bind('click', function(){
+                  $p3.hide();
+                  $p2.hide();
+                  $p1.show();
+                });
+
+                // Ir al paso 2
+                $('#add-mesa-paso1 LABEL, #add-mesa-paso3-volver').bind('click', function(){
+                   $p1.hide();
+                   $p3.hide();
+                   $p2.show();           
+                   $('#add-mesa-paso2').find( 'input').focus();
+                });
+
+                // Ir al paso 3
+                $('#add-mesa-paso2-submit').bind('click', function(){
+                   $p1.hide();
+                   $p2.hide();
+                   $p3.show();   
+                   $('#add-mesa-paso3').find( 'input').focus();
+                });
+
+                $('#form-mesa-add').submit(agregarNuevaMesa);
+            });
+        })();
+
+    });
+
+
+    $('#listado-mesas').live('pagebeforehide',function(event, ui){
+        $('#mesa-abrir-mesa-btn').unbind('click');
+        $('#listado-mozos-para-mesas').unbind('click');
+    });
+
+
+
+    /**
+     *
+     *          COBROS               -------    CAJERO
+     *
+     */
+    $('#mesa-cobrar').live('pageshow',function(event, ui){
+        $('#mesa-cajero-reabrir').bind('click',function(){
+            var mesa = Risto.Adition.adicionar.currentMesa();
+            mesa.cambioDeEstadoAjax( MESA_ESTADOS_POSIBLES.reabierta );
+        });
+    });
+
+    $('#mesa-cobrar').live('pagebeforehide',function(event, ui){
+        $('#mesa-cajero-reabrir').unbind('click');
+        Risto.Adition.adicionar.pagos([]);
+    });
+
+
+    /**
+     *
+     *          OPCIONES    ----   CAJERO
+     *
+     */
+    $('#cajero-opciones').live('pageshow',function(event, ui){
+        $('#modo-k').bind('change',function(){
+            Risto.IMPRIME_REMITO_PRIMERO = !Risto.IMPRIME_REMITO_PRIMERO;
+            $.get(urlDomain+'/configs/toggle_remito');
+
+        });
+    });
+
+    $('#cajero-opciones').live('pagebeforehide',function(event, ui){
+         $('#modo-k').unbind('change');
+    });
+
+
+    /**
+     *
+     *          CLIENTES LISTADO
+     *
+     */
+    $('#listado_de_clientes').live('pageshow',function(event, ui){
+
+        $('input', '#contenedor-listado-clientes-factura-a').bind('keypress', function(){
+                    $('.factura-a-cliente-add').show();
+         });
+
+        var $fform = $('#form-cliente-add');
+        $fform.bind('submit', function(e){
+          var contenedorForm = $fform.parent();
+           e.preventDefault();
+           $.post(
+               $fform.attr('action'), 
+               $fform.serialize(),
+               function(data){
+                   contenedorForm.html(data);
+                   contenedorForm.trigger('refresh');
+               }
+           );
+           return false; 
+        });
+
+        $('#mesa-eliminar-cliente').bind('click',function(){
+            Risto.Adition.adicionar.currentMesa().setCliente( null );
+            return true;
+        });
+
+    });
+
+    $('#listado_de_clientes').live('pagebeforehide',function(event, ui){
+
+        $('#form-cliente-add').unbind('submit');
+        $('#mesa-eliminar-cliente').unbind('click');
+
+        $('input', '#contenedor-listado-clientes-factura-a').unbind('keypress');
+    });
+
+
+
+
+
+
+    /**
+     *
+     *
+     *          Page COBRAR
+     *
+     */
+    $('#mesa-cobrar').live('pageshow', function(){
+
+        // Al apretar el boton de cobro de pago procesa los pagos correspondientes
+        $('#mesa-pagos-procesar').bind('click', function(){
+            // lipieza de pagos, selecciono solo los que se les haya agregado algun valor en el input
+            for (var p in Risto.Adition.adicionar.pagos() ) {
+                if ( Risto.Adition.adicionar.pagos()[p] ) {
+                    // agrego el pago a la mesa
+                    Risto.Adition.adicionar.currentMesa().Pago.push( Risto.Adition.adicionar.pagos()[p] );
+                }
+            }
+
+            // reinicio los pagos
+            Risto.Adition.adicionar.pagos([]);
+
+            // cambio el estado de la mesa para disparar el evento
+            Risto.Adition.adicionar.currentMesa().setEstadoCobrada();
+        });
+    });
+
+    $('#mesa-cobrar').live('pagebeforehide', function(){
+        $('#mesa-pagos-procesar').unbind('click');
+    });
+
+
+
+
+
+    /**
+     *
+     *
+     *          Page SABORES
+     *
+     */
+
+    $('#page-sabores').live('pageshow', function(){
+        var $closeIcon = $('#page-sabores').find( 'a[data-icon="delete"]' );
+        $closeIcon.bind('click',function(){
+                    Risto.Adition.adicionar.currentMesa().currentComanda().limpiarSabores();
+                    $closeIcon.unbind('click');
+                });
+    });
+
+
 });
-
-
 
 
 /**
@@ -58,335 +479,20 @@ $(document).ready(function() {
     
     $(document).keydown(onKeyDown);
     $(document).keypress(onKeyPress);
-
-    $(document).bind(MESA_ESTADOS_POSIBLES.seleccionada.event, mesaSeleccionada);
-
-    // cambios de estado de la mesa
-    $(document).bind(MESA_ESTADOS_POSIBLES.abierta.event, abrirMesa); //funcion vacia de jQuery
-    $(document).bind(MESA_ESTADOS_POSIBLES.cerrada.event, mesaCerrada);
-    $(document).bind(MESA_ESTADOS_POSIBLES.cuponPendiente.event, mesaCuponPendiente);
-    $(document).bind(MESA_ESTADOS_POSIBLES.cobrada.event, mesaCobrada);
-    $(document).bind(MESA_ESTADOS_POSIBLES.borrada.event, mesaBorrada);
-    $(document).bind(MOZOS_POSIBLES_ESTADOS.agragaMesa.event, ponerMesaComoCurrent);
     
     
-    
-    //creacion de comandas
-    // producto seleccionado
-    $(document).bind(  MENU_ESTADOS_POSIBLES.productoSeleccionado.event , productoSeleccionado);
-    
-    
-    
-    
-    // Eventos para abrir una mesa
-    $('a[href="#mesa-add"]').bind('click', function(){
-    });
-    
-    $('#add-mesa-paso1 LABEL, #add-mesa-paso3-volver').bind('click', function(){
-       $('#add-mesa-paso1, #add-mesa-paso3').hide();$('#add-mesa-paso2').show(); 
-       $('#add-mesa-paso2 input').focus();
-    });
-    
-    $('#add-mesa-paso2-submit').bind('click', function(){
-       $('#add-mesa-paso2, #add-mesa-paso1').hide();$('#add-mesa-paso3').show();
-       $('#add-mesa-paso3 input').focus();
-    });
-    
-    $('#add-mesa-paso3-submit, #add-mesa-paso2-volver').bind('click', function(){
-       $('#add-mesa-paso3, #add-mesa-paso2').hide();$('#add-mesa-paso1').show();
-    });
-    
-    
-    $('#form-mesa-add').submit(agregarNuevaMesa);
-    
-    
-    
-    
-    
-    // Eventos para la observacion General de la Comanda ADD
-    (function(){
-        var domObs = $('#comanda-add-observacion');
-        $("#mesa-comanda-add-obs-gen-cancel").click(function(){
-            domObs.toggle('slow'); 
-            Risto.Adition.adicionar.currentMesa().currentComanda().comanda.borrarObservacionGeneral();
-        });
-
-        $("#mesa-comanda-add-obs-gen-aceptar").click(function(){
-            domObs.toggle('slow');
-        });
-        
-        var domObsList = $('#comanda-add-menu .observaciones-list button');
-        domObsList.click(function(e){
-            if ( this.value ) {
-                Risto.Adition.adicionar.currentMesa().currentComanda().comanda.agregarTextoAObservacionGeneral( this.value );
-            }
-        });
-    })();
-    
-       
-    
-    
-
-    $(document).bind("adicionCambioMozo", cambioMozo);
-    
-    
-    // para refrescar las mesas segun el mozo marcado
-    $(document).bind('adicionMesasActualizadas', function(){
-        /**
-         *
-         *  definicion del objeto que manejara las distintas respuestas dependiendo de la pagina activa
-         *  Cada clave de este objeto es el ID de la page de JQM utilizada
-         *  
-         * */
-        var onMesasActualizadasHandlerByPage = {
-            'listado-mesas': function(){
-                var btnMozo = $('.listado-mozos-para-mesas .ui-btn-active');
-                var mozoId = 0;
-                if ( btnMozo[0] ) {
-                    mozoId = $(btnMozo[0]).attr('data-mozo-id');
-                }
-                mostrarMesasDeMozo(mozoId);
-            },
-            'mesa-view': function() {
-                $('#comanda-detalle-collapsible').trigger('create');
-            }
-        }
-        
-        // llamar a la funcion correspondiente segun la pagina en la que estoy
-        if ( $.mobile.activePage[0].id && onMesasActualizadasHandlerByPage.hasOwnProperty( $.mobile.activePage[0].id) ) {
-            onMesasActualizadasHandlerByPage[$.mobile.activePage[0].id].call();
-        }
-        
-    });
-    
-    
-    
-    // Form SUBMITS
-    $('#form-cambiar-mozo').submit(cambiarMozo);
-    $('#form-cambiar-numero').submit(cambiarNumeroMesa);
-    
-    
-    
-    $('#form-cliente-add').live('submit', function(e){
-      var form = $('#form-cliente-add');
-      var contenedorForm = form.parent();
-       e.preventDefault();
-       $.post(
-           form.attr('action'), 
-           form.serialize(),
-           function(data){
-               contenedorForm.html(data);
-               contenedorForm.trigger('refresh');
-           }
-       );
-       return false; 
-    });
-    
-    
-    
-    // CLICKS
-    $('A[href="#comanda-add-menu"]').click(function(){
-        Risto.Adition.adicionar.nuevaComandaParaCurrentMesa();
-    });
-    
-    $('#comanda-add-guardar').click(function(){
-        Risto.Adition.adicionar.currentMesa().currentComanda().save();
-    });
-    
-    $('A[href="#mesa-cobrar"]').live('click',function(){
-        Risto.Adition.adicionar.pagos( [] );
-    });
-    
-     $('#btn-comanda-opciones').click(function(){
-         $('#comanda-opciones').toggle();
-      });
-      
-      $('#mesa-menu').click(function(){
-          Risto.Adition.adicionar.agregarMenu();
-      });
-      
-      $('.cant_comensales').click(function(){
-          Risto.Adition.adicionar.agregarCantCubiertos();
-      });
-    
-    
-    
-    $('#mesa-cerrar').bind('click', function(){
-        var mesa = Risto.Adition.adicionar.currentMesa();
-        mesa.cambioDeEstadoAjax( MESA_ESTADOS_POSIBLES.cerrada );
-    });
-    
-    $('.mesa-reimprimir').bind('click', function(){
-        var mesa = Risto.Adition.adicionar.currentMesa();
-        var url = mesa.urlReimprimirTicket();
-        $.get(url);
-    });
-    
-    
-    $('#mesa-borrar').bind('click', function(){
-        if (window.confirm('Seguro que desea borrar la mesa '+Risto.Adition.adicionar.currentMesa().numero())){
-            var mesa = Risto.Adition.adicionar.currentMesa();
-            mesa.cambioDeEstadoAjax( MESA_ESTADOS_POSIBLES.borrada );
-        }
-    });
-    
-    
-    $('#mesa-reabrir, #mesa-cajero-reabrir').bind('click',function(){
-        var mesa = Risto.Adition.adicionar.currentMesa();
-        mesa.cambioDeEstadoAjax( MESA_ESTADOS_POSIBLES.reabierta );
-    });
-    
-    
-    $('#mesa-eliminar-cliente').live('click',function(){
-        Risto.Adition.adicionar.currentMesa().setCliente( null );
-        return true;
-    });
-    
-    
-    // al hacer click n un mozo del menu bar
-    // se muestran solo lasmesas de ese mozo
-    $('.listado-mozos-para-mesas a').bind('click',function(){
-        var mId = undefined;
-        mostrarMesasDeMozo( $(this).attr('data-mozo-id') );
-        
-    });
-    
-    
-    // Al apretar el boton de cobro de pago procesa los pagos correspondientes
-    $('#mesa-pagos-procesar').click(function(){
-        // lipieza de pagos, selecciono solo los que se les haya agregado algun valor en el input
-        for (var p in Risto.Adition.adicionar.pagos() ) {
-            if ( Risto.Adition.adicionar.pagos()[p] ) {
-                // agrego el pago a la mesa
-                Risto.Adition.adicionar.currentMesa().Pago.push( Risto.Adition.adicionar.pagos()[p] );
-            }
-        }
-        
-        // reinicio los pagos
-        Risto.Adition.adicionar.pagos([]);
-        
-        // cambio el estado de la mesa para disparar el evento
-        Risto.Adition.adicionar.currentMesa().setEstadoCobrada();
-    });
-    
-    
-    $('#modo-k').live('change',function(){
-        Risto.IMPRIME_REMITO_PRIMERO = !Risto.IMPRIME_REMITO_PRIMERO;
-        $.get(urlDomain+'/configs/toggle_remito');
-        
-    });
-    
-    
-    
-    // Los botones que tengan la clase silent-click sirven para los dialogs
+     // Los botones que tengan la clase silent-click sirven para los dialogs
     // la idea es que al ser apretados el dialog se cierre, pero que se envie 
     // el href via ajax, Es util para las ocasiones en las que quiero mandar
-    // una accion al servidor del cual no espero respuesta.
-    $('[data-href]').live('click',function(e){
+    // una accion al servidor del cual no espero respuesta.    
+    $('[data-href]').bind('click',function(e){
         var att = $(this).attr('data-href');
         if (att) {
             $.get( att );
         }
         $('.ui-dialog').dialog('close');
-    });
-
-    
-    
-    $('#contenedor-listado-clientes-factura-a input').live('keypress', function(){
-                $('.factura-a-cliente-add').show();
-     });
-                 
+    });   
 });
-
-
-
-function agregarNuevaMesa(e){
-    e.preventDefault();
-    
-    var rta = $('#form-mesa-add').serializeArray();    
-    var miniMesa = {};
-    
-    for (var r in rta ) {
-        if (rta[r].name == 'numero' && !rta[r].value){
-            alert("Debe completar numero de mesa");
-            return false;
-        }
-        
-        if (rta[r].name == 'cant_comensales' && !rta[r].value && Risto.Adition.cubiertosObligatorios){
-            alert("Debe indicar la cantidad de cubiertos");
-            return false;
-        }
-        miniMesa[rta[r].name] = rta[r].value;
-    }
-    
-    var mesa = Risto.Adition.adicionar.crearNuevaMesa( miniMesa );
-    mesaSeleccionada( {"mesa": mesa} );
-    Risto.Adition.adicionar.setCurrentMesa( mesa );
-    $.mobile.changePage('#mesa-view');
-    document.getElementById('form-mesa-add').reset(); // limpio el formulario
-
-    return false;
-}
-
-
-function mesaCerrada(e){
-//    e.mesa.estado( MESA_ESTADOS_POSIBLES.cerrada );
-//    $("#mesa-li-id-"+e.mesa.id()).attr('class', '');
-//    $("#mesa-li-id-"+e.mesa.id()).addClass(e.mesa.estado().icon);   
-}
-
-function mesaCuponPendiente(){
-    
-}
-
-function mesaBorrada(e){
-    var mesa = e.mesa;
-    e.mesa.mozo().sacarMesa(mesa);
-}
-
-
-// Procesar los pagos de la mesa
-function mesaCobrada(e){
-    // envio los datos al servidor
-    var m = e.mesa;
-    var mes = {
-            Mesa: {
-                id: m.id(),
-                estado_id: m.estado_id(),
-                time_cobro: m.time_cobro(),
-                model: 'Mesa'
-            },
-            Pago: m.Pago()
-        };
-        
-        // guardo los pagos
-        $cakeSaver.send({
-            url: urlDomain+'pagos/add',
-            obj: mes
-        }, function(d){
-            
-        });
-        
-        e.mesa.mozo().sacarMesa( e.mesa );
-}
-
-
-
-function cambioMozo(e){
-}
-
-
-function mesaSeleccionada(e){
-    Risto.Adition.adicionar.setCurrentMesa(e.mesa);
-}
-
-
-
-function abrirMesa(e) {
-    if (!e.mesa.id) {
-        setTimeout(function(){abrirMesa(e)},1000);
-    }
-}
 
 
 
@@ -398,12 +504,6 @@ function productoSeleccionado(e) {
     Risto.Adition.adicionar.currentMesa().agregarProducto(e.producto);
 }
 
-
-function ponerMesaComoCurrent(e) {
-//    alert("meti esta mesa actual");
-//    Risto.Adition.adicionar.setCurrentMesa( e.mesa );
-//    $.mobile.changePage( "#mesa-view", { transition: "slideup"} );	
-}
 
 
 
@@ -424,31 +524,56 @@ function confirmacionDeSalida(e) {
   
 
 function irMesaPrev() {
-    var mesaContainer = $('#mesas_container');
     
+    var mesaContainer = $('.listado-adicion', $.mobile.activePage );
+    
+    if ( !mesaContainer ) {
+        return;
+    }
+
+    if ( Risto.Adition.mesaCurrentContainer != mesaContainer ){
+        Risto.Adition.mesaCurrentIndex = null;
+    }
+    
+    Risto.Adition.mesaCurrentContainer = mesaContainer;
+        
     if ( Risto.Adition.mesaCurrentIndex !== null) {
         var aaa = Risto.Adition.mesaCurrentIndex.parent().prev().find('a');
         if ( aaa.length ) {
             Risto.Adition.mesaCurrentIndex = aaa;
+        } else {
+            return;
         }
     } else {
-        Risto.Adition.mesaCurrentIndex = mesaContainer.find('a').first();
+        Risto.Adition.mesaCurrentIndex = Risto.Adition.mesaCurrentContainer.find('a').first();
     }
     Risto.Adition.mesaCurrentIndex.focus();
 }
 
 function irMesaNext() {
-    var mesaContainer = $('#mesas_container');
+    var mesaContainer = $('.listado-adicion', $.mobile.activePage );
+
+    if ( !mesaContainer ) {
+        return;
+    }
+
+    if ( Risto.Adition.mesaCurrentContainer != mesaContainer ){
+        Risto.Adition.mesaCurrentIndex = null;
+    }
+    Risto.Adition.mesaCurrentContainer = mesaContainer;
     
-    if ( Risto.Adition.mesaCurrentIndex !== null) {
+    console.debug( Risto.Adition.mesaCurrentIndex );
+    if ( Risto.Adition.mesaCurrentIndex != null) {
         var aaa = Risto.Adition.mesaCurrentIndex.parent().next().find('a');
         if ( aaa.length ) {
             Risto.Adition.mesaCurrentIndex = aaa;
+        } else {
+            return;
         }
     } else {
-        Risto.Adition.mesaCurrentIndex = mesaContainer.find('a').first();
-        Risto.Adition.mesaCurrentIndex.focus();
+        Risto.Adition.mesaCurrentIndex = Risto.Adition.mesaCurrentContainer.find('a').first();
     }
+    
     Risto.Adition.mesaCurrentIndex.focus();
 }
 
@@ -462,6 +587,25 @@ function onKeyDown(e) {
             history.back();
         }
     }
+    
+    
+    // Ctrol DERECHO + M ir a modo Cajero
+    if( (code == 'l'.charCodeAt() || code == 'L'.charCodeAt()) && e.ctrlKey) {
+        $.mobile.changePage('#listado-mesas-cerradas');
+        return false;
+    }
+    
+    // Ctrol Derecho + N ir a modo Adicionista
+    if( ( code == 'p'.charCodeAt() || code == 'P'.charCodeAt() ) && e.ctrlKey) {
+        $.mobile.changePage('#listado-mesas')
+        return false;
+    }
+    
+    
+    if(code == 23 && e.ctrlKey) {
+        $.mobile.changePage('#mesa-view')
+    }
+        
     
     // mesa siguiente a la seleccionada (focus) del listado de mesas
     if (code == 39 ) { //btn flecha derecha
@@ -494,58 +638,6 @@ function onKeyPress(e) {
             Risto.Adition.mesaBuscarAccessKey = '';
         },1000);
     }
-}
-
-
-
-function cambiarMozo(e){    
-    var mozoId = $(this).find('[name="mozo_id"]:checked').val();
-    var mozo = Risto.Adition.adicionar.findMozoById(mozoId);
-    var mozoAnterior = Risto.Adition.adicionar.currentMesa().mozo();
-    Risto.Adition.adicionar.currentMesa().setMozo( mozo );
-    
-    $('.ui-dialog').dialog('close');
-    
-    var sendOb = {
-        obj: {
-            id: Risto.Adition.adicionar.currentMesa().id(),
-            mozo_id: mozoId,
-            model: 'Mesa',
-            handleAjaxSuccess: function(){}
-        },
-        url: Risto.Adition.adicionar.currentMesa().urlEdit(),
-        error: function(){
-            Risto.Adition.adicionar.currentMesa().setMozo( mozoAnterior );
-            alert("debido a un error en el servidor, el mozo no fue modificado");
-        }
-    }
-
-    $cakeSaver.send(sendOb);
-    
-    return false;
-}
-
-function cambiarNumeroMesa(){
-    var numeroMesa = $(this).find('[name="numero"]').val();
-    var numAnt = Risto.Adition.adicionar.currentMesa().numero( numeroMesa );
-    Risto.Adition.adicionar.currentMesa().numero( numeroMesa );
-    $('.ui-dialog').dialog('close');
-    
-    var sendOb = {
-        obj: {
-            id: Risto.Adition.adicionar.currentMesa().id(),
-            numero: numeroMesa,
-            model: 'Mesa',
-            handleAjaxSuccess: function(){}
-        },
-        url: Risto.Adition.adicionar.currentMesa().urlEdit(),
-        error: function(){
-            Risto.Adition.adicionar.currentMesa().numero( numAnt );
-            alert("debido a un error en el servidor, el numero de mesa no fue modificado");
-        }
-    }
-    $cakeSaver.send(sendOb);
-    return false;
 }
 
 

@@ -40,6 +40,13 @@ class AppController extends Controller {
 	var $helpers = array('Html', 'Form','Javascript','Ajax');
         var $components = array('Configurator', 'Acl', 'Session', 'Auth', 'RequestHandler');
 	
+        
+        /**
+         * Es para el layout de Jquery Mobile
+         * indica si quiero que muestre el header o no
+         * @var boolean
+         */
+        var $conHeader = true;
 	
 	
 	 function beforeFilter()
@@ -89,7 +96,8 @@ class AppController extends Controller {
          *
          */
         function beforeRender(){
-                $this->set('rutaUrl_for_layout', $this->rutaUrl_for_layout);               
+                $this->set('rutaUrl_for_layout', $this->rutaUrl_for_layout);
+                 $this->set('conHeader', $this->conHeader);   
         }
 
    

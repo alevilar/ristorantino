@@ -1,12 +1,17 @@
 <?php
-App::import('Model','Pquery.CustomQUery');
+App::import('Model','Pquery.CustomQuery');
+
+App::import('Vendor', 'Pquery.ExtraFunctions', array('file' => 'extra_functions.php'));
 
 class QueriesController extends PqueryAppController {
 
 	var $name = 'Queries';
-	var $helpers = array('Html', 'Form','Ajax');
-	var $components = array('Auth','RequestHandler');
+	var $helpers = array('Time');
         
+        function beforeFilter() {
+            parent::beforeFilter();
+//            $this->RequestHandler->setContent('xls', 'application/vnd.ms-excel');
+        }
 
 	function index() {
 		$this->Query->recursive = 0;
@@ -23,14 +28,21 @@ class QueriesController extends PqueryAppController {
 
 	function add() {
 		if (!empty($this->data)) {
-			$this->Query->create();
-			if ($this->Query->save($this->data)) {
-				$this->Session->setFlash(__('The Query has been saved', true));
-				$this->redirect(array('action'=>'index'));
-			} else {
-				$this->Session->setFlash(__('The Query could not be saved. Please, try again.', true));
-			}
+                        if($this->validate($this->data['Query']['query'])){
+                            $this->data['Query']['columns'] = implode(",",$this->get_columnas($this->data['Query']['query']));
+                            $this->Query->create();
+                            if ($this->Query->save($this->data)) {
+                                    $this->Session->setFlash(__('The Query has been saved', true));
+                                    $this->redirect(array('action'=>'index'));
+                            } else {
+                                    $this->Session->setFlash(__('The Query could not be saved. Please, try again.', true));
+                            }
+                        }
+                        else{
+                            $this->Session->setFlash(__('La consulta SQL tiene errores', true));
+                        }
 		}
+                $this->set('pquery_categories',$this->Query->Category->find('list'));
 	}
 
 	function edit($id = null) {
@@ -39,16 +51,34 @@ class QueriesController extends PqueryAppController {
 			$this->redirect(array('action'=>'index'));
 		}
 		if (!empty($this->data)) {
-			if ($this->Query->save($this->data)) {
-				$this->Session->setFlash(__('The Query has been saved', true));
-				$this->redirect(array('action'=>'index'));
-			} else {
-				$this->Session->setFlash(__('The Query could not be saved. Please, try again.', true));
-			}
+                        if($this->validate($this->data['Query']['query'])){
+                            $this->data['Query']['columns'] = implode(", ",$this->get_columnas($this->data['Query']['query']));
+                            if ($this->Query->save($this->data)) {
+                                    $this->Session->setFlash(__('The Query has been saved', true));
+                                    
+                                    if ( !empty($this->data['Query']['url_from']) && $this->data['Query']['url_from'] != '/' ) {
+                                        $returnTo = $this->data['Query']['url_from'];
+                                    } else {
+                                        $returnTo = array('action'=>'index');
+                                    }
+                                    
+                                    $this->redirect( $returnTo );
+                                    
+                            } else {
+                                    $this->Session->setFlash(__('The Query could not be saved. Please, try again.', true));
+                            }
+                        } else {
+                                $this->Session->setFlash(__('La consulta SQL tiene errores', true));
+                        }
 		}
 		if (empty($this->data)) {
 			$this->data = $this->Query->read(null, $id);
 		}
+                
+                if ( empty($this->data['Query']['url_from']) ) {
+                    $this->set('urlFrom',$this->referer());
+                }
+                $this->set('pquery_categories',$this->Query->Category->find('list'));
 	}
 
 	function delete($id = null) {
@@ -61,40 +91,37 @@ class QueriesController extends PqueryAppController {
 			$this->redirect(array('action'=>'index'));
 		}
 	}
-	
+
+        
 	function descargar_queries() {
-		$categoria=(isset($this->data['Query']['categoria']))? $this->data['Query']['categoria'] : "";
-		$this->set('categoria',$categoria);
+            $categorias = $this->Query->Category->find('list');
+            
+            $this->set('categorias',$categorias);
 
-		$categorias = array();
-		$categorias[''] = 'Todos';
-		$categorias_aux = $this->Query->listarCategorias();
-		foreach($categorias_aux as $c){
-			$categorias[$c['Query']['categoria']] = $c['Query']['categoria'];
-		}
-		$this->set('categorias',$categorias);
-
-		$conditions=array();
-		if($categoria!=""){
-			$conditions['categoria']=$categoria;
-		}
-		if(isset($this->data['Query']['description']) && $this->data['Query']['description']!="") {
-			$conditions['OR']['lower(to_ascii(Query.description)) SIMILAR TO ?'] = array($this->Query->convertir_para_busqueda_avanzada(utf8_decode($this->data['Query']['description'])));
-			$conditions['OR']['lower(to_ascii(Query.name)) SIMILAR TO ?'] = array($this->Query->convertir_para_busqueda_avanzada(utf8_decode($this->data['Query']['description'])));
-		}
-
-		$queries=$this->Query->find('all',array('order'=>'modified DESC', 'conditions'=>$conditions));
-		$this->set('queries',$queries);
+            $queries = array();
+            foreach ($categorias as $k=>$c) {
+                $queries[$c]  = $this->Query->find('all',array(
+                    'order' => 'Query.id, Query.modified DESC',
+                    'conditions' => array(
+                        'OR' => array (
+                            'Query.expiration_time <=' => 'NOW()',
+                            'Query.expiration_time IS NULL',
+                        ),
+                        'Query.category_id' => $k,
+                    )
+                    ));
+            }
+            
+            $this->set('queries',$queries);
 	}
+        
 	
 	/**
 	 * esto me construye un excel en la vista con el id de la query
 	 * @param $id
 	 */
 	function contruye_excel($id){
-		$this->layout = 'excel';
-		Configure::write('debug',0);
-		$this->RequestHandler->setContent('xls', 'application/vnd.ms-excel');
+                
 		$res = $this->Query->findById($id);
 		$sql = $res['Query']['query'];
 		$this->Query->recursive = -1;
@@ -107,37 +134,41 @@ class QueriesController extends PqueryAppController {
 			$columnas[] = $key;
 		endwhile;
 
-		$this->set('nombre',$res['Query']['name']);
+		$this->set('nombre',limpiar_nombre($res['Query']['name']));
 		$this->set('columnas',$columnas);
 		$this->set('filas',$consulta_ejecutada);
-
 	}
-	
-	
-	function listado_categorias()
-	{
-		Configure::write('debug', 0);
-		$this->Query->recursive = -1;
+
+        function validate($query){
+
+                Configure::write('debug',0);
                 
-		$categorias = array();
-		if(!empty($this->data['Query']['categoria'])){
-			$categorias = $this->Query->listarCategorias($this->data['Query']['categoria']);
-		}
-                if (!empty($this->passedArgs['term'])) {
-                    $categorias = $this->passedArgs['term'];
-                }
-		if (empty($categorias)) {
-			$categorias = $this->Query->listarCategorias('*'); // me trae todas
-		}
+		$sql = $query . ' LIMIT 1';
+		$this->Query->recursive = -1;
+		$consulta_ejecutada = $this->Query->query($sql);
 
+                Configure::write('debug',2);
 
+                return !empty($consulta_ejecutada);
 
-		$this->set('categorias',$categorias);
-		$this->set('string_categoria',$this->data['Query']['categoria']);
-		$this->layout = 'ajax';
 	}
 
+        function get_columnas($query){
 
+		$sql = $query . ' LIMIT 1';
+		$this->Query->recursive = -1;
+		$consulta_ejecutada = $this->Query->query($sql);
+
+		$precols = array_keys($consulta_ejecutada[0]);
+
+                $quitar_columnas = $consulta_ejecutada[0][0];
+		while(list($key,$value) = each($quitar_columnas)):
+			$columnas[] = $key;
+		endwhile;
+
+		return $columnas;
+	}
+	
 
         function list_view($id="") {
             $this->layout = "sin_menu";
@@ -157,10 +188,24 @@ class QueriesController extends PqueryAppController {
 
             $this->CustomQuery->setSql($res['Query']['query']);
 
+            if ( $this->RequestHandler->ext == 'xls' ) {
+                $this->passedArgs['viewAll'] = 'true';
+            }
             if (!empty($this->passedArgs['viewAll'])) {
                 if ($this->passedArgs['viewAll'] == 'true') {
                     $data = $this->CustomQuery->query();
                     $viewAll = false;
+                } else {
+                    $data = $this->paginate($this->CustomQuery);
+                    $viewAll = true;
+                }
+            }
+            else if (!empty($this->passedArgs['preview'])) {
+                if ($this->passedArgs['preview']) {
+                    $this->layout = null;
+                    $this->CustomQuery->setSql($res['Query']['query']. " LIMIT 5");
+                    $data = $this->CustomQuery->query();
+                    $viewAll = true;
                 }
             } else {
                 $data = $this->paginate($this->CustomQuery);
@@ -176,6 +221,7 @@ class QueriesController extends PqueryAppController {
             $this->set('name', $res['Query']['name']);
             $this->set('descripcion', $res['Query']['description']);
             $this->set('viewAll', $viewAll);
+            $this->set('preview', !empty($this->passedArgs['preview']));
 
 
             if ($this->RequestHandler->ext == 'xls') {

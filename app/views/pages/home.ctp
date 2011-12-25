@@ -1,3 +1,4 @@
+
 <ul class="dashboard-buttons">
         <li>
         <?php echo $html->link('Adición','/adition/adicionar',array('id'=>'bton-adicion'));?>
@@ -17,7 +18,7 @@
     
         
         <li>  
-        <?php echo $html->link('Estadisticas','/pquery/stats/mesas_total',array('id'=>'bton-estadisticas'));?>
+        <?php echo $html->link('Estadisticas','/stats/mesas_total',array('id'=>'bton-estadisticas'));?>
         </li>     
     
         <li>  
