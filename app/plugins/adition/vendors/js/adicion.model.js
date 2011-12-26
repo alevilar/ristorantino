@@ -82,7 +82,7 @@ AditionModel = {
             catch(err)
               {
                   // si hubo algun error dejo el timestamp anterior, para volver a pedir las mesas
-                  AditionModel.mesasLastUpdatedTime = anteriorUpdatedTime;
+                  AditionModel.mesasLastUpdatedTime = AditionModel.anteriorUpdatedTime;
               }
             
         }
