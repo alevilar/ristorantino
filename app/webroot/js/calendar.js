@@ -47,7 +47,6 @@ calendar = {
 		var y = 0;
                 var firstTime = true;
 		while (ele) {
-                    console.debug
                     if (!firstTime){ // first time is an input, so dont add offset
 			x += ele.offsetLeft;
 			y += ele.offsetTop;

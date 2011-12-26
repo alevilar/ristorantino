@@ -31,7 +31,6 @@ function Cajero(){
            elemm.click(function(e){
                if (!m.Mesa.cant) m.Mesa.cant = 0;
                m.Mesa.cant++;
-               console.debug(m.Mesa);
            });
 
            $('#mesas-cerradas').append(elemm);

@@ -22,7 +22,6 @@
             }
             return false;
         });
-console.debug(menu);
     });
 
     

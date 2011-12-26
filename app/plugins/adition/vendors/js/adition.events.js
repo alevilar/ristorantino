@@ -48,7 +48,6 @@ $(document).bind("mobileinit", function(){
 
     // enrquiqueecr con JQM el listado ed comandas de la mesa en msa-view
     $('#mesa-cambiar-mozo').live('pagehide',function(event, ui){ 
-        console.info("oculte a pantalla mozo");
         // Form SUBMITS
         $('#form-cambiar-mozo').unbind('submit');
     });
@@ -130,7 +129,6 @@ $(document).bind("mobileinit", function(){
 
     // enrquiqueecr con JQM el listado ed comandas de la mesa en msa-view
     $('#mesa-cambiar-numero').live('pagebeforehide',function(event, ui){ 
-        console.info("oculta");
         // Form SUBMITS
          $('#form-cambiar-numero').unbind( 'submit');
     });
@@ -520,10 +518,17 @@ function confirmacionDeSalida(e) {
 	}
     }
     
-    
-  
 
-function irMesaPrev() {
+
+/**
+ *
+ *@param String to. es una funcion de jQuery que hace ir para adelante o para atras en la dom 
+ *se puede poner: 
+ *                  'next' (por default) busca el siguiente elemento
+ *                  'prev' busca el anterior
+ */
+function __irMesaTo(to) {
+    var toWhat = to || 'next';
     
     var mesaContainer = $('.listado-adicion', $.mobile.activePage );
     
@@ -531,14 +536,14 @@ function irMesaPrev() {
         return;
     }
 
-    if ( Risto.Adition.mesaCurrentContainer != mesaContainer ){
+    if ( Risto.Adition.mesaCurrentContainer && Risto.Adition.mesaCurrentContainer.attr('id') != mesaContainer.attr('id') ){
         Risto.Adition.mesaCurrentIndex = null;
     }
     
     Risto.Adition.mesaCurrentContainer = mesaContainer;
         
     if ( Risto.Adition.mesaCurrentIndex !== null) {
-        var aaa = Risto.Adition.mesaCurrentIndex.parent().prev().find('a');
+        var aaa = Risto.Adition.mesaCurrentIndex.parent()[toWhat]().find('a');
         if ( aaa.length ) {
             Risto.Adition.mesaCurrentIndex = aaa;
         } else {
@@ -549,32 +554,15 @@ function irMesaPrev() {
     }
     Risto.Adition.mesaCurrentIndex.focus();
 }
+  
+
+function irMesaPrev() {
+    __irMesaTo('prev');
+    
+}
 
 function irMesaNext() {
-    var mesaContainer = $('.listado-adicion', $.mobile.activePage );
-
-    if ( !mesaContainer ) {
-        return;
-    }
-
-    if ( Risto.Adition.mesaCurrentContainer != mesaContainer ){
-        Risto.Adition.mesaCurrentIndex = null;
-    }
-    Risto.Adition.mesaCurrentContainer = mesaContainer;
-    
-    console.debug( Risto.Adition.mesaCurrentIndex );
-    if ( Risto.Adition.mesaCurrentIndex != null) {
-        var aaa = Risto.Adition.mesaCurrentIndex.parent().next().find('a');
-        if ( aaa.length ) {
-            Risto.Adition.mesaCurrentIndex = aaa;
-        } else {
-            return;
-        }
-    } else {
-        Risto.Adition.mesaCurrentIndex = Risto.Adition.mesaCurrentContainer.find('a').first();
-    }
-    
-    Risto.Adition.mesaCurrentIndex.focus();
+    __irMesaTo('next');
 }
 
 
@@ -591,15 +579,17 @@ function onKeyDown(e) {
     
     // Ctrol DERECHO + M ir a modo Cajero
     if( (code == 'l'.charCodeAt() || code == 'L'.charCodeAt()) && e.ctrlKey) {
-        $.mobile.changePage('#listado-mesas-cerradas');
+        var pageId = $.mobile.activePage.attr('id');
+        
+        if ( pageId == 'listado-mesas-cerradas' ) {
+            $.mobile.changePage('#listado-mesas');
+        }
+        
+        if ( pageId == 'listado-mesas' ) {
+            $.mobile.changePage('#listado-mesas-cerradas');
+        }
         return false;
-    }
-    
-    // Ctrol Derecho + N ir a modo Adicionista
-    if( ( code == 'p'.charCodeAt() || code == 'P'.charCodeAt() ) && e.ctrlKey) {
-        $.mobile.changePage('#listado-mesas')
-        return false;
-    }
+    }        
     
     
     if(code == 23 && e.ctrlKey) {
@@ -625,7 +615,7 @@ function onKeyPress(e) {
         
         // buscar la mesa con ese numero, busca por accesskey
         Risto.Adition.mesaBuscarAccessKey += String.fromCharCode( code );
-        var domFinded = $("[accesskey^='"+Risto.Adition.mesaBuscarAccessKey+"']");
+        var domFinded = $("[accesskey^='"+Risto.Adition.mesaBuscarAccessKey+"']", $.mobile.activePage);
         if ( domFinded.length ) {
             Risto.Adition.mesaCurrentIndex = $(domFinded[0]);
             domFinded[0].focus();
