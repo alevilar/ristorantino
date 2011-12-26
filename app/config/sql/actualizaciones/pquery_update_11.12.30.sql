@@ -9,8 +9,8 @@ CREATE TABLE IF NOT EXISTS `pquery_categories` (
 
 
 
--- ALTER TABLE `pquery_queries` ADD COLUMN `pquery_category_id` int NOT NULL DEFAULT 0;
--- ALTER TABLE `pquery_queries` DROP COLUMN `categoria`;
+ALTER TABLE `pquery_queries` ADD COLUMN `category_id` int NOT NULL DEFAULT 0;
+ALTER TABLE `pquery_queries` DROP COLUMN `categoria`;
 ALTER TABLE `pquery_queries` ADD COLUMN `expiration_time` timestamp NULL;
 ALTER TABLE `pquery_queries` ADD COLUMN `columns` text;
 
@@ -25,4 +25,4 @@ VALUES('Temporales');
 
 /*Habituales*/
 UPDATE pquery_queries
-SET pquery_category_id = 1
+SET category_id = 1

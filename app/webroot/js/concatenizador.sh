@@ -16,7 +16,7 @@ cat ../../plugins/adition/vendors/js/cake_saver.js >> $SCRIPT_NAME
 cat ../../plugins/adition/vendors/js/risto.js >> $SCRIPT_NAME
 cat ../../plugins/adition/vendors/js/adition.package.js >> $SCRIPT_NAME
 cat ../../plugins/adition/vendors/js/mozo.class.js >> $SCRIPT_NAME
-cat ../../plugins/adition/js/adicion.event_handler.js >> $SCRIPT_NAME
+cat ../../plugins/adition/vendors/js/adicion.event_handler.js >> $SCRIPT_NAME
 cat ../../plugins/adition/vendors/js/mesa.estados.class.js >> $SCRIPT_NAME
 cat ../../plugins/adition/vendors/js/mesa.class.js >> $SCRIPT_NAME
 cat ../../plugins/adition/vendors/js/comanda.class.js >> $SCRIPT_NAME
