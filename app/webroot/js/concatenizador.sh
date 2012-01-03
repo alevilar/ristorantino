@@ -9,7 +9,7 @@ rm $SCRIPT_MIN_NAME
 
 cat jquery/jquery-1.6.4.min.js >> $SCRIPT_NAME
 cat jquery/jquery.tmpl.min.js >> $SCRIPT_NAME
-cat knockout-1.2.1.js >> $SCRIPT_NAME
+cat knockout-2.0.0.min.js >> $SCRIPT_NAME
 cat knockout.mapping-2.0.min.js >> $SCRIPT_NAME
 
 cat ../../plugins/adition/vendors/js/cake_saver.js >> $SCRIPT_NAME

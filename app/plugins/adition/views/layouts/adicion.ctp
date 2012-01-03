@@ -23,7 +23,8 @@
 		// para los modal window
 		echo $html->css(array(
 //                    'http://code.jquery.com/mobile/latest/jquery.mobile.min.css',
-                    'jquery-mobile/jquery.mobile-1.0',
+//                    'jquery-mobile/jquery.mobile-1.0',
+                    'jquery-mobile/jquerymobile.coqus',
 //                    'jquery-mobile/jquery.mobile-1.0rc1.min',
 //                    'jquery-mobile/jquery-mobile-fluid960',
                     'jquery-mobile/jquery.mobile.actionsheet',
@@ -45,7 +46,8 @@
                         'jquery/jquery-1.6.4',
                         'jquery/jquery.tmpl.min',
 
-                        'knockout-1.2.1.debug',
+                        'knockout-2.0.0.min.js',
+//                        'knockout-1.2.1.debug',
                         'knockout.mapping-2.0.debug',
 
                         '/adition/js/cake_saver',

@@ -282,13 +282,9 @@ ul#listado-mozos-para-mesas{
 
 
 .menu-img{
-    width: 50px; 
+
 }
 
-.menu-letra-con-imagen{
-    font-size: xx-small;
-    
-}
 
 
 ul.tipo_de_pagos ,.tipo_de_pagos ul{
@@ -401,6 +397,62 @@ ul.tipo_de_pagos ,.tipo_de_pagos ul{
 }
 
 
+#ul-categorias{
+    display: block;
+}
+
+
+#ul-categorias a.sin-imagen{
+    width: 130px;
+    height: 50px
+}
+
+#ul-categorias a.con-imagen{
+    width: 70px;
+    height: 85px;
+    font-size: 12px;
+}
+
+#ul-categorias a{
+    overflow: hidden;
+    color: white;
+    padding: 5px;
+    margin: 5px;
+    background: #4596ce /*{global-active-background-color}*/;
+    border: 1px solid #155678;
+    float: left;
+    text-align: center;
+    text-shadow: none;
+    text-decoration: none;
+}
+
+
+#ul-productos a.active{
+    border: 1px solid  orangered/*{e-bup-border}*/;
+    background: #fad38e;
+}
+
+#ul-productos a.producto-con-sabor{
+    border: 1px solid #F7C942 /*{e-bup-border}*/;
+    background: pink;
+}
+
+#ul-productos a{
+    overflow: hidden;
+    color: white;
+    padding: 13px 5px;
+    margin: 5px;
+    border: 1px solid #F7C942 /*{e-bup-border}*/;
+    background: #fadb4e;
+    float: left;
+    text-align: center;
+    text-shadow: none;
+    text-decoration: none;
+    color: #333 /*{e-bup-color}*/;
+    text-shadow: 0 /*{e-bup-shadow-x}*/ 
+}
+
+
 #ul-productos .ui-btn-inner, #ul-categorias .ui-btn-inner{
     padding: .9em 5px !important;
     width: 92px;
@@ -438,4 +490,51 @@ h1.cubiertos , h2.cubiertos , h3.cubiertos{
         width: 200px;
         top: -12px;
         position: relative;
+    }
+    
+    
+        
+    #add-mesa-paso3 input{
+        background-color: #0a0;
+        color: white;
+    }
+    
+    #add-mesa-paso2 input{
+        background-color: #155678;
+        color: white;
+    }
+    
+    
+    #ul-productos-seleccionados a.ui-btn-icon-notext {
+        width: 40px; height: 40px;
+    }
+    
+    #ul-productos-seleccionados .ui-btn-icon-notext .ui-icon {
+        width: 30px; height: 30px;
+    }
+    
+    #ul-productos-seleccionados .ui-icon-plus {
+        background-position: -0.8%;
+    }
+    
+    #ul-productos-seleccionados .ui-icon-minus {
+        background-position: -30px 50%;
+    }
+    
+    #ul-productos-seleccionados .ui-icon-grid {
+        background-position: -426px 50%;
+    }
+    
+    #ul-productos-seleccionados .ui-li-count{
+        font-size: 19px;
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+    
+    #ul-productos-seleccionados li.es-entrada{
+        background: #437FBE;
+    }
+    
+    #ul-productos-seleccionados li.tiene-observacion{
+        
     }

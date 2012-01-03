@@ -330,10 +330,7 @@
             
         </div>
     
-    <div data-role="footer" data-position="fixed">
-        
-        
-        
+    <div data-role="footer">
         <h3>
             <span id="mesa-cant-comensales"  style="float: left">
                 <a data-role="button" data-bind="visible: !adn().currentMesa().cant_comensales()">Ingresar Cubiertos</a>
@@ -394,12 +391,12 @@
             
             <!--           SELECCION DE CATEGORIAS                           -->
            <div id="ul-categorias" 
-                data-bind="template: {name: 'listaCategoriasTree', foreach: menu().currentSubCategorias} ">
+                data-bind="template: {name: 'listaCategoriasTree', foreach: menu().currentSubCategorias()} ">
            </div>
            
             <!--           SELECCION DE PRODUCTOS                            -->
            <div id="ul-productos" style="clear: both" 
-                data-bind="template: {name: 'categorias-productos', foreach: menu().currentProductos} ">
+                data-bind="template: {name: 'categorias-productos', foreach: menu().currentProductos()} ">
            </div>
         </div>
     </div>
@@ -500,7 +497,7 @@
             
             <fieldset class="ui-grid-a">
                 <div class="ui-block-a"><a href="#" data-role="button" data-rel="back" data-theme="e">Cancelar</a></div>
-                <div class="ui-block-b"><button type="submit" data-theme="b">Guardar nuevo Número de <?php echo Configure::read('Mesa.tituloMesa')?></button></div>
+                <div class="ui-block-b"><button type="submit" data-theme="b">Modificar</button></div>
 	    </fieldset>
             
         </form>

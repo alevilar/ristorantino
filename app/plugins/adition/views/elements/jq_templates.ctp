@@ -19,8 +19,8 @@
 
 <!--  TEmplate: Productos seleccionados en el menu. comandas add -->
 <script id="categorias-productos-seleccionados" type="text/x-jquery-tmpl">
-     <li data-bind="visible: cant()"  class="ui-li ui-li-static ui-body-c">
-         <span data-type="horizontal" data-role="controlgroup" class="ui-corner-all ui-controlgroup ui-controlgroup-horizontal">
+    <li data-bind="visible: cant(), css:{'es-entrada': esEntrada(), 'tiene-observacion': observacion()}"  class="ui-li ui-li-static ui-body-c" onmouseover="$(this).children(':first-child').show()" onmouseout="$(this).children(':first-child').hide()" >
+         <div style="display: none" data-type="horizontal" data-role="controlgroup" class="ui-corner-all ui-controlgroup ui-controlgroup-horizontal">
             <a data-bind="click: seleccionar" data-role="button" data-icon="plus" data-iconpos="notext" href="#" title="+" data-theme="c" class="ui-btn ui-btn-icon-notext ui-corner-left ui-btn-up-c"><span class="ui-btn-inner ui-corner-left"><span class="ui-btn-text" >+</span><span class="ui-icon ui-icon-plus ui-icon-shadow"></span></span></a>
             <a data-bind="click: deseleccionar" data-role="button" data-icon="minus" data-iconpos="notext" href="#" title="-" data-theme="c" class="ui-btn ui-btn-icon-notext ui-btn-up-c"><span class="ui-btn-inner"><span class="ui-btn-text">-</span><span class="ui-icon ui-icon-minus ui-icon-shadow"></span></span></a>
             <a data-bind="click: addObservacion, style: { background: observacion() ? '#437FBE' : ''}" 
@@ -47,11 +47,13 @@
                     <span class="ui-icon ui-icon-entrada ui-icon-shadow"></span>
                 </span>
             </a>
-         </span>
+         </div>
+                
+        <span data-bind="text: realCant()" class="ui-li-count ui-btn-up-c ui-btn-corner-all"></span>
+         
+        <span data-bind="text: nameConSabores()"></span>
 
-         <span data-bind="text: nameConSabores()"></span>
-
-         <span data-bind="text: realCant()" class="ui-li-count ui-btn-up-c ui-btn-corner-all"></span>
+         
      </li>
  </script>
  
@@ -59,7 +61,12 @@
  
  <!-- Template: Comanda Add menu path-->
  <script id="boton" type="text/x-jquery-tmpl">
-        <a data-bind="attr: {'data-icon': esUltimoDelPath()?'':'back', 'data-theme': esUltimoDelPath()?'a':''}, click: seleccionar" data-bind="click: seleccionar" class="ui-btn ui-btn-inline ui-btn-icon-left ui-btn-corner-all ui-shadow ui-btn-up-c">
+        <a data-bind="attr: {
+                         'data-icon': esUltimoDelPath()?'':'back', 
+                         'css': {'ui-btn-active': esUltimoDelPath()}
+                         }, 
+                      click: seleccionar" 
+            class="ui-btn ui-btn-inline ui-btn-icon-left ui-btn-corner-all ui-shadow ui-btn-up-c">
              <span class="ui-btn-inner ui-btn-corner-all">
                  <span class="ui-btn-text" data-bind="text: name" ></span>
                  <span class="ui-icon ui-icon-right ui-icon-shadow"></span>
@@ -72,28 +79,22 @@
 
 <!-- Template: Caomanda add: listado de categorias                                  -->
 <script id="listaCategoriasTree" type="text/x-jquery-tmpl">
-   <a  href="#" data-bind="click: seleccionar" data-theme="b" data-inline="true" 
-       data-bind="css: {'con-imagen': image_url == ''}"
-       data-role="button" class="ui-btn ui-btn-inline ui-btn-corner-all ui-shadow ui-btn-up-b">
-       <span class="ui-btn-inner ui-btn-corner-all">
-               <image class="menu-img" data-bind="visible: image_url, attr: {src: urlDomain+'img/menu/'+image_url}"/>
-               <br data-bind="visible: image_url"/>
-               <span data-bind="text: name, css:{'menu-letra-con-imagen': image_url, sinimagen: !image_url}"></span>
-       </span>
+   <a  href="#" data-theme="b" data-inline="true" 
+       data-bind="css: {'sin-imagen': !image_url, 'con-imagen': image_url}"
+       class="">
+           <image class="menu-img" data-bind="visible: image_url, attr: {src: urlDomain+'img/menu/'+image_url}"/>           
+           <span data-bind="text: name"></span>
    </a>
 </script>
 
 
 <!-- Template: Caomanda add: listado de productos -->
 <script id="categorias-productos" type="text/x-jquery-tmpl">
-     <a data-bind="click: seleccionar, attr: { href: tieneSabores() ? '#page-sabores' : '#'}" 
-        data-rel="dialog"  data-transition="fade" 
+     <a data-bind="attr: { href: tieneSabores() ? '#page-sabores' : '#'}, css: {'producto-con-sabor': tieneSabores()}" 
+        data-rel="dialog"
         data-icon="none"
-        class="ui-btn ui-btn-inline  ui-btn-corner-all ui-shadow ui-btn-up-e btn-comandas">
-         <span class="ui-btn-inner ui-btn-corner-all">
+        class="">
              <span class="ui-btn-text" data-bind="text: name" ></span>
-             <span class="ui-icon ui-icon-right ui-icon-shadow" data-bind="css: {'ui-icon-forward': tieneSabores()}"></span>
-         </span>
      </a>
  </script>
  
@@ -101,7 +102,7 @@
  
  <!-- Template: Comanda Add, Listado de sabores de categorias       -->
 <script id="listaSabores" type="text/x-jquery-tmpl">
-   <a href="#"  data-bind="click: seleccionar" data-theme="c" data-inline="true" data-role="button" class="ui-btn ui-btn-inline ui-btn-corner-all ui-shadow ui-btn-up-c">
+   <a href="#" data-theme="c" data-inline="true" data-role="button" class="ui-btn ui-btn-inline ui-btn-corner-all ui-shadow ui-btn-up-c">
        <span class="ui-btn-inner ui-btn-corner-all">
            <span class="ui-btn-text">
                <span data-bind="text: name"></span>                         

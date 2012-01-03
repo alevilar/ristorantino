@@ -21,7 +21,10 @@
 $(document).bind("mobileinit", function(){
 
     $('#comanda-add-product-obss').live('pageshow',function(event, ui){    
-        $('input, textarea', '#comanda-add-product-obss').focus();
+        $('input, textarea', '#comanda-add-product-obss').bind('focus');
+    });
+    $('#comanda-add-product-obss').live('pagehide',function(event, ui){    
+        $('input, textarea', '#comanda-add-product-obss').unbind('focus');
     });
 
 
@@ -33,8 +36,6 @@ $(document).bind("mobileinit", function(){
      *
      *
      */
-    
-
 
     // enrquiqueecr con JQM el listado ed comandas de la mesa en msa-view
     $('#mesa-cambiar-mozo').live('pageshow',function(event, ui){    
@@ -71,8 +72,23 @@ $(document).bind("mobileinit", function(){
 
         $('#comanda-add-guardar').bind('click', function(){
             Risto.Adition.adicionar.currentMesa().currentComanda().save();
+            Risto.Adition.menu.reset();
         });
 
+        function seleccionar(){
+            //retrieve the context
+            var context = ko.contextFor(this);
+            $(this).addClass('active');
+            if (context) {
+                // $data es es el objeto producto
+                context.$data.seleccionar();
+            }
+        }
+
+        $('#ul-categorias').delegate("a", "click", seleccionar);
+        $('#ul-productos').delegate("a", "click", seleccionar);
+        
+            
         // Eventos para la observacion General de la Comanda ADD
         (function(){
             var $domObs = $('#comanda-add-observacion');
@@ -85,7 +101,7 @@ $(document).bind("mobileinit", function(){
                 $domObs.toggle('slow');
             });
 
-            var domObsList = $('#comanda-add-menu .observaciones-list button');
+            var domObsList = $('.observaciones-list button', '#comanda-add-menu');
             domObsList.bind('click' , function(e){
                 if ( this.value ) {
                     Risto.Adition.adicionar.currentMesa().currentComanda().comanda.agregarTextoAObservacionGeneral( this.value );
@@ -96,11 +112,17 @@ $(document).bind("mobileinit", function(){
 
     $('#comanda-add-menu').live('pagebeforehide', function(){
         $(document).unbind(  MENU_ESTADOS_POSIBLES.productoSeleccionado.event);
+        
+        $('a.active','#ul-productos').removeClass('active');
+        
+        $('#ul-categorias').undelegate("a", "click");
+        $('#ul-productos').undelegate("a", "click");
 
         $("#mesa-comanda-add-obs-gen-cancel").unbind('click');
         $("#mesa-comanda-add-obs-gen-aceptar").unbind('click');
-        $('#comanda-add-menu .observaciones-list button').unbind('click');
+        $('.observaciones-list button', '#comanda-add-menu').unbind('click');
         $('#comanda-add-guardar').unbind('click');
+        
     });
 
 
@@ -230,68 +252,91 @@ $(document).bind("mobileinit", function(){
             return false;        
         });
 
+    });
 
-      /**
-         *
-         * Logica del abrir Mesa, se activa cuando se aprieta el boton de abrir mesa
+
+    $('#listado-mesas').live('pagebeforehide',function(event, ui){
+        $('#mesa-abrir-mesa-btn').unbind('click');
+        $('#listado-mozos-para-mesas').unbind('click');
+        
+        // al hacer click n un mozo del menu bar
+        // se muestran solo lasmesas de ese mozo
+        var $listadoMozos = $('#listado-mozos-para-mesas');
+        $listadoMozos.undelegate('a', 'click');
+        
+        
+    });
+    
+    
+    
+    /**
+     *
+     * Logica del abrir Mesa, se activa cuando se aprieta el boton de abrir mesa
+     *
+     */
+    (function(){
+        
+        var $formMesaAdd = null;
+         
+         
+        /**
+         * Desbindea los eventos para liberar memoria
          *
          */
-        (function(){
-            $p3 = $('#add-mesa-paso3');
-            $p2 = $( '#add-mesa-paso2');
-            $p1 = $( '#add-mesa-paso1');
+        function unbindALl() {
+                     $('#add-mesa-paso3-submit, #add-mesa-paso2-volver').unbind('click');
+                     $('#add-mesa-paso1 LABEL, #add-mesa-paso3-volver').unbind('click');
+                     $('#add-mesa-paso2-submit').unbind('click');
+                     $formMesaAdd.unbind('submit');
+        }
+                
+                
+        $('#mesa-add').live( 'pageshow', function(){
+                $formMesaAdd = $('#form-mesa-add');
+                $p3 = $('#add-mesa-paso3');
+                $p2 = $( '#add-mesa-paso2');
+                $p1 = $( '#add-mesa-paso1');
 
-            /**
-             * Desbindea los eventos para liberar memoria
-             *
-             */
-            function unbindALl() {
-                 $('#add-mesa-paso3-submit, #add-mesa-paso2-volver').unbind('click');
-                 $('#add-mesa-paso1 LABEL, #add-mesa-paso3-volver').unbind('click');
-                 $('#add-mesa-paso2-submit').unbind('click');
-                 $('#form-mesa-add').unbind('submit');
-            }
+                /**
+                 *
+                 * Luego de apretar el submit del formulario agregar mesa....
+                 */
+                function agregarNuevaMesa(e){
+                    
+                    unbindALl();
+                    e.preventDefault();
 
+                    var rta = $formMesaAdd.serializeArray();    
+                    var miniMesa = {};
 
-            /**
-             *
-             * Luego de apretar el submit del formulario agregar mesa....
-             */
-            function agregarNuevaMesa(e){
-                unbindALl();
-                e.preventDefault();
+                    for (var r in rta ) {
+                        if (rta[r].name == 'numero' && !rta[r].value){
+                            alert("Debe completar numero de mesa");
+                            return false;
+                        }
 
-                var rta = $('#form-mesa-add').serializeArray();    
-                var miniMesa = {};
-
-                for (var r in rta ) {
-                    if (rta[r].name == 'numero' && !rta[r].value){
-                        alert("Debe completar numero de mesa");
-                        return false;
+                        if (rta[r].name == 'cant_comensales' && !rta[r].value && Risto.Adition.cubiertosObligatorios){
+                            alert("Debe indicar la cantidad de cubiertos");
+                            return false;
+                        }
+                        miniMesa[rta[r].name] = rta[r].value;
                     }
 
-                    if (rta[r].name == 'cant_comensales' && !rta[r].value && Risto.Adition.cubiertosObligatorios){
-                        alert("Debe indicar la cantidad de cubiertos");
-                        return false;
-                    }
-                    miniMesa[rta[r].name] = rta[r].value;
+                    var mesa = Risto.Adition.adicionar.crearNuevaMesa( miniMesa );
+                    Risto.Adition.EventHandler.mesaSeleccionada( {"mesa": mesa} );
+                    Risto.Adition.adicionar.setCurrentMesa( mesa );
+                    $.mobile.changePage('#mesa-view');
+                    document.getElementById('form-mesa-add').reset(); // limpio el formulario
+
+                    return false;
                 }
-
-                var mesa = Risto.Adition.adicionar.crearNuevaMesa( miniMesa );
-                Risto.Adition.EventHandler.mesaSeleccionada( {"mesa": mesa} );
-                Risto.Adition.adicionar.setCurrentMesa( mesa );
-                $.mobile.changePage('#mesa-view');
-                document.getElementById('form-mesa-add').reset(); // limpio el formulario
-
-                return false;
-            }
-
-            // Eventos para abrir una mesa
-            $('#mesa-abrir-mesa-btn').bind('click', function(){
-                   $p2.hide();
-                   $p3.hide();
-                   $p1.show();
-
+    
+                // Eventos para abrir una mesa
+                $('#mesa-abrir-mesa-btn').bind('click', function(){
+                       $p2.hide();
+                       $p3.hide();
+                       $p1.show();
+                });
 
                 // Ir al paso 1
                 $('#add-mesa-paso3-submit, #add-mesa-paso2-volver').bind('click', function(){
@@ -316,19 +361,21 @@ $(document).bind("mobileinit", function(){
                    $('#add-mesa-paso3').find( 'input').focus();
                 });
 
-                $('#form-mesa-add').submit(agregarNuevaMesa);
-            });
-        })();
+                $('#form-mesa-add').bind('submit', agregarNuevaMesa);
 
-    });
+        });
 
-
-    $('#listado-mesas').live('pagebeforehide',function(event, ui){
-        $('#mesa-abrir-mesa-btn').unbind('click');
-        $('#listado-mozos-para-mesas').unbind('click');
-    });
+        $('#mesa-add').live( 'pagehide', function(){
+            unbindALl();
+            document.getElementById('form-mesa-add').reset();
+        });
 
 
+        
+        
+    })();
+     
+    
 
     /**
      *
@@ -340,10 +387,16 @@ $(document).bind("mobileinit", function(){
             var mesa = Risto.Adition.adicionar.currentMesa();
             mesa.cambioDeEstadoAjax( MESA_ESTADOS_POSIBLES.reabierta );
         });
+        $('.mesa-reimprimir', '#mesa-cobrar').bind('click', function(){
+            var mesa = Risto.Adition.adicionar.currentMesa();
+            var url = mesa.urlReimprimirTicket();
+            $.get(url);
+        });
     });
 
     $('#mesa-cobrar').live('pagebeforehide',function(event, ui){
         $('#mesa-cajero-reabrir').unbind('click');
+        $('.mesa-reimprimir', '#mesa-cobrar').unbind('click');
         Risto.Adition.adicionar.pagos([]);
     });
 
@@ -459,6 +512,23 @@ $(document).bind("mobileinit", function(){
                     Risto.Adition.adicionar.currentMesa().currentComanda().limpiarSabores();
                     $closeIcon.unbind('click');
                 });
+                
+        function seleccionar(e){
+            
+            //retrieve the context
+            var context = ko.contextFor(this);
+            $(this).addClass('active');
+            if (context) {
+                // $data es es el objeto producto
+                context.$data.seleccionar(e);
+            }
+        }
+
+        $('#ul-sabores').delegate("a", "click", seleccionar);
+    });
+    
+    $('#page-sabores').live('pagehide', function(){
+        $('#ul-sabores').undelegate("a", "click");
     });
 
 

@@ -27,12 +27,20 @@ Risto.Adition.menu = {
     
     
     // path de categorias del menu en la que estoy Ej: "/ - Gaseosas - Sin Alcohol""
-    path: ko.observableArray([]),
+    path: ko.observableArray( [] ),
     
     initialize: function(){
         this.__armarMenu();
         Risto.Adition.koAdicionModel.menu(this);
         return this;
+    },
+    
+    
+    /**
+     *  Reinicia el path de comandas, con la categoria root
+     */
+    reset: function() {
+        this.seleccionarCategoria( this.categoriasTree() );
     },
     
     update: function(){
@@ -84,7 +92,7 @@ Risto.Adition.menu = {
      * en base a la categoria seleccionda
      * @param cat Categoria
      */
-    updatePath: function(cat, pathArg, first ){
+    __updatePath: function(cat, pathArg, first ){
         var path = pathArg || [];
         var isFirst = true;
         if (first === false) {
@@ -97,7 +105,7 @@ Risto.Adition.menu = {
         
         
         if ( cat.hasOwnProperty('Padre') && cat.Padre ) {
-             path = this.updatePath(cat.Padre, path, false );
+             path = this.__updatePath(cat.Padre, path, false );
         }
         path.push(cat);
           
@@ -110,34 +118,38 @@ Risto.Adition.menu = {
         this.currentCategoria( cat );
         
         // actualizo el path
-        this.path(this.updatePath(cat));
+        this.path( this.__updatePath(cat) );
         
         return true;
+    },
+    
+    
+    /******---      COMANDA         -----******/
+    currentSubCategorias : function() {
+            if ( this.currentCategoria ) {
+                if (this.currentCategoria() && this.currentCategoria().Hijos ) {
+                    return this.currentCategoria().Hijos;
+                }
+                
+            }
+            return [];
+    },
+
+
+
+    
+    currentProductos : function(){
+        if ( this.currentCategoria ) {
+            if (this.currentCategoria() && this.currentCategoria().Producto ) {
+                return this.currentCategoria().Producto;
+            }
+            
+        }
+        return [];
     }
 }
 
 
-
-
-/******---      COMANDA         -----******/
-Risto.Adition.menu.currentSubCategorias = ko.dependentObservable(function() {
-        if ( this.currentCategoria ) {
-            if (this.currentCategoria() && this.currentCategoria().Hijos ) {
-                return this.currentCategoria().Hijos;
-            }
-            return [];
-        }
-}, Risto.Adition.menu);
-
-
-Risto.Adition.menu.currentProductos = ko.dependentObservable(function(){
-    if ( this.currentCategoria ) {
-        if (this.currentCategoria() && this.currentCategoria().Producto ) {
-            return this.currentCategoria().Producto;
-        }
-        return [];
-    }
-}, Risto.Adition.menu);
 
 
 Risto.Adition.menu.initialize();
