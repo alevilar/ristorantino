@@ -165,7 +165,7 @@ $(document).bind("mobileinit", function(){
      */
 
     // enrquiqueecr con JQM el listado ed comandas de la mesa en msa-view
-    $('#mesa-view').live('pageshow',function(event, ui){  
+    $('#mesa-view').live('pageshow',function(event, ui) {
         $('#comanda-detalle-collapsible').trigger('create');
 
          // CLICKS
@@ -306,8 +306,9 @@ $(document).bind("mobileinit", function(){
                     unbindALl();
                     e.preventDefault();
 
-                    var rta = $formMesaAdd.serializeArray();    
-                    var miniMesa = {};
+                    var rta = $formMesaAdd.serializeArray(), 
+                        miniMesa = {}, // json modelo, para crear la mesa
+                        mesa; // nueva mesa creada
 
                     for (var r in rta ) {
                         if (rta[r].name == 'numero' && !rta[r].value){
@@ -322,7 +323,7 @@ $(document).bind("mobileinit", function(){
                         miniMesa[rta[r].name] = rta[r].value;
                     }
 
-                    var mesa = Risto.Adition.adicionar.crearNuevaMesa( miniMesa );
+                    mesa = Risto.Adition.adicionar.crearNuevaMesa( miniMesa );
                     Risto.Adition.EventHandler.mesaSeleccionada( {"mesa": mesa} );
                     Risto.Adition.adicionar.setCurrentMesa( mesa );
                     $.mobile.changePage('#mesa-view');
@@ -430,21 +431,6 @@ $(document).bind("mobileinit", function(){
                     $('.factura-a-cliente-add').show();
          });
 
-        var $fform = $('#form-cliente-add');
-        $fform.bind('submit', function(e){
-          var contenedorForm = $fform.parent();
-           e.preventDefault();
-           $.post(
-               $fform.attr('action'), 
-               $fform.serialize(),
-               function(data){
-                   contenedorForm.html(data);
-                   contenedorForm.trigger('refresh');
-               }
-           );
-           return false; 
-        });
-
         $('#mesa-eliminar-cliente').bind('click',function(){
             Risto.Adition.adicionar.currentMesa().setCliente( null );
             return true;
@@ -454,15 +440,38 @@ $(document).bind("mobileinit", function(){
 
     $('#listado_de_clientes').live('pagebeforehide',function(event, ui){
 
-        $('#form-cliente-add').unbind('submit');
         $('#mesa-eliminar-cliente').unbind('click');
-
         $('input', '#contenedor-listado-clientes-factura-a').unbind('keypress');
     });
 
 
 
-
+    /**
+     *
+     *
+     *    Agregar Clientes ADD
+     */
+    $('#clientes-addfacturaa').live('pageshow', function() {
+        var $fform = $('#form-cliente-add', '#clientes-addfacturaa');
+        $fform.bind('submit', function(e){
+          var contenedorForm = $fform.parent();
+           e.preventDefault();
+           $.post(
+               $fform.attr('action'), 
+               $fform.serialize(),
+               function(data){
+                   contenedorForm.html(data);
+                   contenedorForm.trigger('create');
+                   contenedorForm.trigger('refresh');
+               }
+           );
+           return false; 
+        });
+    });
+    
+    $('#clientes-addfacturaa').live('pagehide', function() {
+        $('#form-cliente-add', '#clientes-addfacturaa').unbind('submit');
+    });
 
 
     /**

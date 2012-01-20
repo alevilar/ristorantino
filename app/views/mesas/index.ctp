@@ -1,7 +1,7 @@
 <?php
 
-echo $html->css('protoplasm',false);
-echo $javascript->link('protoplasm/protoplasm', false);
+//echo $html->css('protoplasm',false);
+//echo $javascript->link('protoplasm/protoplasm', false);
 
 echo $javascript->link('mesas/index_head', false);
 

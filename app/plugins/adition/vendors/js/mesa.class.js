@@ -7,6 +7,22 @@
  * tambien se le puede pasar un jsonData para ser mappeado con knockout
  */
 var Mesa = function(mozo, jsonData) {
+        
+        this.id             = ko.observable();
+        this.created        = ko.observable();
+        this.total          = ko.observable( 0 );
+        this.numero         = ko.observable( 0 );
+        this.menu           = ko.observable( 0 );
+        this.mozo           = ko.observable( new Mozo() );
+        this.currentComanda = ko.observable( new Risto.Adition.comandaFabrica() );
+        this.Comanda        = ko.observableArray( [] );
+        this.mozo_id        = this.mozo().id;
+        this.Cliente        = ko.observable( null );
+        this.estado         = ko.observable( MESA_ESTADOS_POSIBLES.abierta );
+        this.estado_id      = ko.observable();
+        this.Pago           = ko.observableArray( [] );
+        this.cant_comensales= ko.observable(0);
+        
         // agrego atributos generales
         Risto.modelizar(this);
         
@@ -17,27 +33,6 @@ var Mesa = function(mozo, jsonData) {
 
 Mesa.prototype = {
     model       : 'Mesa',
-    id          : function( ) {return 0},
-    total       : function( ) {return 0},
-    numero      : function( ) {return 0},
-    mozo_id     : function( ) {return 0},
-    created     : function( ) {return 0},
-    time_cerro  : function( ) {return 0},
-    menu        : function( ) {return 0},
-    Cliente     : function( ) {return null}, 
-    estado      : function( ) {return MESA_ESTADOS_POSIBLES.abierta}, // objeto estado
-    estado_id     : function( ) {return 0}, // bbdd estado_id
-    cant_comensales: function( ) {return 0},
-    
-    // es la comanda que actualmente se esta haciendo objeto comandaFabrica
-    /** @param currentComanda comandaFabrica **/
-    currentComanda: function( ) {return new Risto.Adition.comandaFabrica()},
-    Comanda     : function( ) {return []},
-    Pago        : function( ) {return []}, // cantidad de pagos asociados a la mesa
-    
-    
-    // attributos
-    mozo: function( ) {return {}},
     
     /**
      * es timeCreated o sea la fecha de creacion del mysql timestamp
@@ -56,21 +51,6 @@ Mesa.prototype = {
     initialize: function( mozo, jsonData ) {
         
         if ( typeof jsonData == 'undefined' ) return this;
-        
-        this.id             = ko.observable();
-        this.created        = ko.observable();
-        this.total          = ko.observable( 0 );
-        this.numero         = ko.observable( 0 );
-        this.menu          = ko.observable( 0 );
-        this.mozo           = ko.observable( new Mozo() );
-        this.currentComanda = ko.observable( new Risto.Adition.comandaFabrica() );
-        this.Comanda        = ko.observableArray( [] );
-        this.mozo_id        = this.mozo().id;
-        this.Cliente        = ko.observable( null );
-        this.estado         = ko.observable( MESA_ESTADOS_POSIBLES.abierta );
-        this.estado_id      = ko.observable();
-        this.Pago           = ko.observableArray( [] );
-        this.cant_comensales= ko.observable(0);
 
         // mapea el objeto this usando ko.mapping
         this.__koMapp( jsonData, mozo);
@@ -138,9 +118,10 @@ Mesa.prototype = {
      * @return MesaEstado
      */
     __inicializar_estado: function( jsonData ){
-        var estado = MESA_ESTADOS_POSIBLES.abierta;
+        var estado = MESA_ESTADOS_POSIBLES.abierta,
+            ee = 0; // countador de estados posibles
          if (jsonData.estado_id) {
-            for(var ee in MESA_ESTADOS_POSIBLES){
+            for(ee in MESA_ESTADOS_POSIBLES){
                 if ( MESA_ESTADOS_POSIBLES[ee].id && MESA_ESTADOS_POSIBLES[ee].id == jsonData.estado_id ){
                     estado = MESA_ESTADOS_POSIBLES[ee];
                     break;
@@ -178,14 +159,14 @@ Mesa.prototype = {
     
     
     /* listado de URLS de accion con la mesa */
-    urlGetData: function(){return urlDomain+'mesas/ticket_view/'+this.id()},
-    urlView: function(){return urlDomain+'mesas/view/'+this.id()},
-    urlEdit: function(){return urlDomain+'mesas/ajax_edit/'+this.id()},
-    urlDelete: function(){return urlDomain+'mesas/delete/'+this.id()},
-    urlComandaAdd: function(){return urlDomain+'comandas/add/'+this.id()},
-    urlReimprimirTicket: function(){return urlDomain+'mesas/imprimirTicket/'+this.id()},
-    urlCerrarMesa: function(){return urlDomain+'mesas/cerrarMesa/'+this.id()},
-    urlReabrir: function(){return urlDomain+'mesas/reabrir/'+this.id()},
+    urlGetData: function() { return urlDomain+'mesas/ticket_view/'+this.id() },
+    urlView: function() { return urlDomain+'mesas/view/'+this.id() },
+    urlEdit: function() { return urlDomain+'mesas/ajax_edit/'+this.id() },
+    urlDelete: function() { return urlDomain+'mesas/delete/'+this.id() },
+    urlComandaAdd: function() { return urlDomain+'comandas/add/'+this.id() },
+    urlReimprimirTicket: function() { return urlDomain+'mesas/imprimirTicket/'+this.id() },
+    urlCerrarMesa: function() { return urlDomain+'mesas/cerrarMesa/'+this.id() },
+    urlReabrir: function() { return urlDomain+'mesas/reabrir/'+this.id() },
     urlAddCliente: function( clienteId ){
         var url = urlDomain+'mesas/addClienteToMesa/'+this.id();
         if (clienteId){
@@ -193,15 +174,7 @@ Mesa.prototype = {
         }
         url += '.json';
         return url;
-    },
-    
-    /**
-     *  Id del elemento que contiene los datos de esta mesa
-     *  es utilizada en el action mesas/view
-     */
-    domElementContainer: function(){return 'mesa-' + this.id();},
- 
-
+    },        
     
 
     /**
@@ -233,11 +206,13 @@ Mesa.prototype = {
      * dispara el evento de cambio de estado. en caso de error lo dispararia 2 veces
      */
     cambioDeEstadoAjax: function(estado){
-        var estadoAnt = this.getEstado();
-        var mesa = this;
+        var estadoAnt = this.getEstado(),
+            mesa = this,
+            $ajax; // jQuery Ajax object
+            
         this.setEstado( estado );
-        var ajax = $.get( estado.url+'/'+this.id() );
-        ajax.error = function(){
+        $ajax = $.get( estado.url+'/'+this.id() );
+        $ajax.error = function(){
             mesa.setEstado( estadoAnt );
         }
     },
@@ -246,7 +221,7 @@ Mesa.prototype = {
      * dispara un evento de mesa Abierta
      */
     setEstadoAbierta : function(){
-        this.setEstado(MESA_ESTADOS_POSIBLES.abierta);
+        this.setEstado( MESA_ESTADOS_POSIBLES.abierta );
         return this;
     },
     
@@ -414,18 +389,25 @@ Mesa.prototype = {
      * Envia un ajax con la peticion de cerrar esta mesa
      */
     cerrar: function(){
-        var url = window.urlDomain + 'mesas/cerrarMesa' + '/' + this.currentMesa.id + '/0';
-        var context = this;
-        $.get(url, {}, function(){context.setEstadoCerrada();});
+        var url = window.urlDomain + 'mesas/cerrarMesa' + '/' + this.currentMesa.id + '/0',
+            self = this;
+            
+        $.get(url, {}, function(){
+            self.setEstadoCerrada();
+        });
+        return this;
     },
 
     /**
      * Envia un ajax con la peticion de borrar esta mesa
      */
     borrar : function(){
-        var url = window.urlDomain + 'mesas/delete/' +this.id;
-        var context = this;
-        $.get(url, {}, function(){context.setEstadoBorrada()});
+        var url = window.urlDomain + 'mesas/delete/' +this.id,
+            self = this;
+        $.get(url, {}, function(){
+            self.setEstadoBorrada()
+        });
+        return this;
     },
 
     
@@ -436,7 +418,11 @@ Mesa.prototype = {
      * @return Boolean
      */
     tieneMozo: function(){
-        return this.mozo().id() ? true: false;
+        var tiene = false;
+        if ( this.mozo() !== {} || this.mozo() !== null ) {
+            tiene = this.mozo().id() ? true: false;
+        }
+        return tiene;
     },
 
 
@@ -444,7 +430,7 @@ Mesa.prototype = {
      * Setea el mozo a la mesa.
      * si agregarMesa es true, se agrega la mesa al listado de mesas del mozo
      * @param nuevoMozo Mozo es el mozo que voy a setear
-     * @param agregarMesa Boolean indica si agrego la mesa al listado de mesas que tiene el mozo
+     * @param agregarMesa Boolean indica si agrego la mesa al listado de mesas que tiene el mozo, por default es true
      */
     setMozo: function(nuevoMozo, agregarMesa){
         var laAgrego = agregarMesa || true; // por default sera true
@@ -465,6 +451,7 @@ Mesa.prototype = {
         if (laAgrego) {
             this.mozo().agregarMesa(this);
         }
+        return this;
     },
 
 
@@ -479,9 +466,10 @@ Mesa.prototype = {
      */
     editar: function(data) {
         if (!data['data[Mesa][id]']) {
-            data['data[Mesa][id]'] = this.id;
+            data['data[Mesa][id]'] = this.id();
         }
         $.post( window.urlDomain +'mesas/ajax_edit', data);
+        return this;
     },
     
     
@@ -514,6 +502,8 @@ Mesa.prototype = {
                 ctx.Cliente(null);
             }
         });
+        
+        return this;
     },
     
     
@@ -522,9 +512,11 @@ Mesa.prototype = {
      * que se llama a esta funcion
      */
     totalStatic: function(){
-        var total = 0;
+        var total = 0,
+            c, // index de Comandas
+            dc; // index del for DetalleComandas
             
-        for (var c in this.Comanda()){
+        for (c in this.Comanda()){
             for (dc in this.Comanda()[c].DetalleComanda() ){
                 total += parseFloat( this.Comanda()[c].DetalleComanda()[dc].precio() * this.Comanda()[c].DetalleComanda()[dc].realCant() );
             }
@@ -534,30 +526,16 @@ Mesa.prototype = {
     },
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
     /**
      *Devuelve el total neto, sin aplicar descuentos
      *@return float
      */
     totalCalculadoNeto: function(){
-        var tam = this.Comanda().length;
+        var valorPorCubierto =  Risto.VALOR_POR_CUBIERTO || 0,
+            total = this.cant_comensales() * valorPorCubierto,
+            c = 0;
 
-        var valorPorCubierto = 0;
-        if ( typeof Risto.VALOR_POR_CUBIERTO != 'undefined' && Risto.VALOR_POR_CUBIERTO > 0 ) {
-            valorPorCubierto = Risto.VALOR_POR_CUBIERTO;
-        }
-        var cantCubierto = this.cant_comensales() * valorPorCubierto;
-        var total = cantCubierto;
-
-        for (var c in this.Comanda()){
+        for (c in this.Comanda()){
             for (dc in this.Comanda()[c].DetalleComanda() ){
                 total += parseFloat( this.Comanda()[c].DetalleComanda()[dc].precio() * this.Comanda()[c].DetalleComanda()[dc].realCant() );
             }
@@ -592,14 +570,14 @@ Mesa.prototype = {
                 return total;
             }
             
-            var total = this.totalCalculadoNeto(), 
-                dto = 0,
-                totalText = total;
+            total = this.totalCalculadoNeto();
+            
+            var dto = 0;
                
             dto = Math.floor(total * this.porcentajeDescuento() / 100);
-            totalText = total - dto;
+            total = total - dto;
             
-            return totalText;
+            return total;
         },
         
         
@@ -705,4 +683,3 @@ Mesa.prototype = {
         }
 
 };
-

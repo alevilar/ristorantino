@@ -1,288 +1,11 @@
-/*--------------------------------------------------------------------------------------------------- Risto.Adicion.adicion
+/**
  *
+ *  Este objeto maneja las mesas recibidas con el json mozos/mesas_abiertas.json
+ *  
+ *  Cada uno de los keys, son las claves recibidas en el json que viene de esas mesas recibidas
  *
- * Clase Adicion
- * ees el Kernel de la aplicacion
- * se lo suele encontrar muchas veces como objeto adicionar o adn() para simplicar
  */
-
-Risto.Adition.adicionar = {
-
-    yaMapeado: false,
-    
-    // Mozo Actualmente Activo
-    currentMozo: ko.observable( new Mozo() ),
-    
-    // Mesa Actualmente activa
-    currentMesa: ko.observable( new Mesa() ),
-    
-    // listado de mozos
-    mozos: ko.observableArray( [] ),
-     // orden del listado de mozos: Se puede poner cualquier valor que venga como atributo (campos de la bbdd de la tabla mozos)
-    mozosOrder: ko.observable('numero'),
-    
-    mesas: ko.observableArray( [] ),
-    
-    // microtime de la ultima actualizacion de las mesas
-    mesasLastUpdatedTime : ko.observable( 0 ),
-    
-    // pagos seleccionado de la currentMesa en proceso de pago. es una variable temporal de estado
-    pagos: ko.observableArray( [] ),
-    
-    
-    nuevaComandaParaCurrentMesa: function(){
-        this.currentMesa().nuevaComanda();
-    },
-    
-    menu: function(){
-        return Risto.Adition.koAdicionModel.menu.apply(Risto.Adition.koAdicionModel, arguments);
-    },
-    
-
-    /**
-     * Constructor
-     */
-    initialize: function() {
-        
-        if ( Worker ) {  
-            
-            // Crea el Web Worker
-            
-            var worker = new Worker(urlDomain + "adition/js/adicion.model.js");
-                
-            var primeraVez = true;
-            worker.onmessage = function (evt) {
-                // si tiene mesas las proceso
-                if ( evt.data && evt.data.mesas ) {
-                    for ( var cbk in evt.data.mesas ) {
-                        if ( typeof Risto.Adition.adicionar.handleMesasRecibidas[cbk] == 'function' ) {
-                            Risto.Adition.adicionar.handleMesasRecibidas[cbk].call( Risto.Adition.adicionar, evt.data.mesas[cbk] );
-                        } else {
-                            throw cbk + ' vino como opción en el arrar de mesas, pero no es una función válida que pueda manejar el handleMesasRecibidas';
-                            Error('no es una funcion');
-                        }
-                    }
-                }
-
-                if ( evt.data.time ) {
-                    Risto.Adition.adicionar.mesasLastUpdatedTime( evt.data.time );
-                }
-            }        
-
-            worker.postMessage( {updateInterval: Risto.MESAS_RELOAD_INTERVAL} );
-
-            $(window).bind("online", function(){
-                 worker.postMessage( {onLine: true} );
-            });
-            $(window).bind("offline", function(){
-                 worker.postMessage( {onLine: false} );
-            });
-
-
-            var time = this.mesasLastUpdatedTime();
-            worker.postMessage( {urlDomain: urlDomain, timeText: time} );
-        } else {
-//            alert('Debe actualizar su browser a uno que soprte Web Workers!');
-
-            
-            var traerMesas = function() {
-                var url = urlDomain+'mozos/mesas_abiertas/'+ Risto.Adition.adicionar.mesasLastUpdatedTime() +'.json';
-                $.get(url, function(data){
-                     for ( var cbk in data.mesas ) {
-                        if ( typeof Risto.Adition.adicionar.handleMesasRecibidas[cbk] == 'function' ) {
-                            Risto.Adition.adicionar.handleMesasRecibidas[cbk].call( Risto.Adition.adicionar, data.mesas[cbk] );
-                        } else {
-                            throw cbk + ' vino como opción en el arrar de mesas, pero no es una función válida que pueda manejar el handleMesasRecibidas';
-                            Error('no es una funcion');
-                        }
-                    }
-                    
-                    if ( data.time ) {
-                        Risto.Adition.adicionar.mesasLastUpdatedTime( data.time );
-                    }
-                });
-            }
-            traerMesas();
-            
-            // si tiene mesas las proceso
-            if (!Risto.Adition.adicionar.interval) {
-                Risto.Adition.adicionar.interval = setInterval( traerMesas, Risto.MESAS_RELOAD_INTERVAL );
-            }
-            
-        }
-    },    
-    
-    
-   
-    /**
-     * Me dice si tiene una mesa setteada
-     * @return boolean
-     */
-    tieneMesaSeleccionada: function(){
-        var retornar = false;
-        if(this.currentMesa){
-            if(this.currentMesa.estaAbierta())
-                retornar = true;
-            else
-                retornar = false;
-        }
-        else{
-            retornar = false;
-        }
-        return retornar;
-    },
-    
-    
-    /**
-     * Busca una mesa por su ID en el listado de mesas
-     * devuelve la mesa en caso de encontrarla.
-     * caso contrario devuelve false
-     * @param id Integer id de la mesa a buscar
-     * @return Mesa en caso de encontrarla, false caso contrario
-     */
-    findMesaById: function(id){
-        for (var m in this.mesas()) {
-            if ( this.mesas()[m].id() == id ) {
-                return this.mesas()[m];
-            }            
-        }
-        return false;
-    },
-    
-    
-    /**
-     * Busca un mozo por su ID en el listado de mozos
-     * devuelve al objeto Mozo en caso de encontrarlo.
-     * caso contrario devuelve false
-     * @param id Integer id del Mozo a buscar
-     * @return Mozo en caso de encontrarlo, false caso contrario
-     */
-    findMozoById: function(id){
-        for (var m in this.mozos()) {
-            if ( this.mozos()[m].id() == id ) {
-                return this.mozos()[m];
-            }            
-        }
-        return false;
-    },
-    	
-		
-    borrarCurrentMesa: function(){
-        delete this.currentMesa;
-        this.currentMesa = null;
-    },
-
-    /**
-     * Setter de la currentMesa
-     * @param mesa Mesa or Number . Le puedo pasar una Mesa o un Id de la mesa, da lo mismo.
-     * @return Mesa o false en caso de que el ID pasado no exista
-     */
-    setCurrentMesa: function(mesa) {
-        if ( typeof mesa == 'number') { // en caso que le paso un ID en lugar del objeto mesa
-            mesa = this.findMesaById(mesa);           
-        }
-        this.currentMesa( mesa );
-        if (mesa.mozo) {
-            this.setCurrentMozo(mesa.mozo());
-        }
-        return this.currentMesa();
-    },
-		
-
-
-    /**
-     * // envia la mesa para ser cerrada
-     * @param Boolean cubiertosObligatorios
-     **/
-    cerrarCurrentMesa: function(cubiertosObligatorios ){
-        var cubiertosObs = cubiertosObligatorios || 'undefined';
-
-        if (this.tieneMesaSeleccionada()) {
-            // si aun no se settearon la cantidad de comensales DEBE HACERLO !!
-            if (cubiertosObs && (this.currentMesa.getCantComensales() == 0) && (this.currentMozo.numero != 99)) {
-                    showComensalesWindow();
-            } else {
-                if(this.tieneMesaSeleccionada()){
-                    if(this.currentMesa.productos){
-                        var okCerrar = window.confirm("Se va a cerrar la mesa Nº "+this.currentMesa.numero);
-
-                        if ( okCerrar ) {
-                            this.currentMesa.cerrar()
-                        }
-                        return okCerrar;
-                    }
-                    else{
-                        mensajero.error("No se puede cerrar una mesa que no tiene productos cargados.");
-                        return -1;
-                    }
-                }
-            } 
-        } else {
-            mensajero.error("Debe seleccionar una mesa para cerrar.");
-            return -2;
-        }	
-    },
-
-
-    ticketView: function(elementToUpdate){
-        var elem = elementToUpdate || document.createElement('div');
-        var url = window.urlDomain+'mesas/ticket_view' + '/'+this.currentMesa.id ;
-        return $(elem).load(url);
-    },
-
-
-    cambiarNumeroMesa: function(){
-        var numero = prompt('Nuevo Número de Mesa',this.currentMesa.numero);
-        var ops = {
-                'data[Mesa][numero]': numero
-            };
-        this.currentMesa.editar(ops);
-    },
-    
-    
-    agregarMenu: function(){
-        var menu = prompt('Nuevo Número de Mesa', this.currentMesa().menu());
-        var ops = {
-                'data[Mesa][menu]': menu
-            };
-        this.currentMesa().menu( menu );
-        this.currentMesa().editar(ops);
-    },
-    
-    agregarCantCubiertos: function(){
-        var menu = prompt('Ingrese cantidad de Cubiertos', this.currentMesa().cant_comensales());
-        menu = parseInt(menu);
-        
-        if ( menu && typeof menu == 'number' && menu > 0) {
-             var ops = {
-                'data[Mesa][cant_comensales]': menu
-            };
-            
-            this.currentMesa().cant_comensales( menu );
-            this.currentMesa().editar(ops);
-        }        
-    },
-
-
-    setCurrentMozo: function(mozo){
-        this.currentMozo( mozo );
-        
-        
-        var event = {};
-        event.mozo = mozo;
-        $raeh.trigger('adicionCambioMozo',event);
-        
-    },
-    
-    
-    /**
-     *
-     *  Este objeto maneja las mesas recibidas con el json mozos/mesas_abiertas.json
-     *  
-     *  Cada uno de los keys, son las claves recibidas en el json que viene de esas mesas recibidas
-     *
-     */
-    handleMesasRecibidas: {
+Risto.Adition.handleMesasRecibidas = {
          /**
          * 
          * Recibiendo un json con el listado de mozos, que a su vez 
@@ -404,6 +127,217 @@ Risto.Adition.adicionar = {
     },
     
     
+    
+
+/*-------------------------------------------------------- Risto.Adicion.adicion
+ *
+ *
+ * Clase Adicion
+ * ees el Kernel de la aplicacion
+ * se lo suele encontrar muchas veces como objeto adicionar o adn() para simplicar
+ */
+
+Risto.Adition.adicionar = {
+
+    // Mozo Actualmente Activo
+    currentMozo: ko.observable( new Mozo() ),
+    
+    // Mesa Actualmente activa
+    currentMesa: ko.observable( new Mesa() ),
+    
+    // listado de mozos
+    mozos: ko.observableArray( [] ),
+     // orden del listado de mozos: Se puede poner cualquier valor que venga como atributo (campos de la bbdd de la tabla mozos)
+    mozosOrder: ko.observable('numero'),
+    
+    mesas: ko.observableArray( [] ),
+    
+    // microtime de la ultima actualizacion de las mesas
+    mesasLastUpdatedTime : ko.observable( 0 ),
+    
+    // pagos seleccionado de la currentMesa en proceso de pago. es una variable temporal de estado
+    pagos: ko.observableArray( [] ),
+    
+    
+    /**
+     *  Inicializacion para cargar una nueva comanda, es el que activa las variables
+     *  creando un nuevo objeto mediante la Fabrica de Comandas. ComandaFabrica
+     */
+    nuevaComandaParaCurrentMesa: function() {
+        this.currentMesa().nuevaComanda();
+        return this;
+    },
+    
+    
+    /**
+     *  Referencia al objeto Menu para que pueda ser utilizado como un Modelo de Knoclkout.js
+     *  desde este objeto de adicion.
+     */
+    menu: function() {
+        return Risto.Adition.koAdicionModel.menu.apply(Risto.Adition.koAdicionModel, arguments);
+    },
+    
+
+    /**
+     * Constructor
+     */
+    initialize: function() {
+        var worker = null, // webWorker
+            cbk = 0, // contaddor para el for de mesas
+            time = ''; // timestamp php que envia el server
+            
+        if ( Worker ) {  
+            
+            // Crea el Web Worker
+            
+            worker = new Worker(urlDomain + "adition/js/adicion.model.js");
+                
+            worker.onmessage = function (evt) {
+                // si tiene mesas las proceso
+                if ( evt.data && evt.data.mesas ) {
+                    for ( cbk in evt.data.mesas ) {
+                        if ( typeof Risto.Adition.handleMesasRecibidas[cbk] == 'function' ) {
+                            Risto.Adition.handleMesasRecibidas[cbk].call( Risto.Adition.adicionar, evt.data.mesas[cbk] );
+                        } else {
+                            throw cbk + ' vino como opción en el arrar de mesas, pero no es una función válida que pueda manejar el handleMesasRecibidas';
+                            Error('no es una funcion');
+                        }
+                    }
+                }
+
+                if ( evt.data.time ) {
+                    Risto.Adition.adicionar.mesasLastUpdatedTime( evt.data.time );
+                }
+            }        
+
+            // inicializacion y parametros de configuracion del worker
+            worker.postMessage( {updateInterval: Risto.MESAS_RELOAD_INTERVAL} );
+
+            $(window).bind("online", function(){
+                 worker.postMessage( {onLine: true} );
+            });
+            $(window).bind("offline", function(){
+                 worker.postMessage( {onLine: false} );
+            });
+
+
+            time = this.mesasLastUpdatedTime();
+            worker.postMessage( {urlDomain: urlDomain, timeText: time} );
+        }
+    },    
+    
+    
+    /**
+     * Busca una mesa por su ID en el listado de mesas
+     * devuelve la mesa en caso de encontrarla.
+     * caso contrario devuelve false
+     * @param id Integer id de la mesa a buscar
+     * @return Mesa en caso de encontrarla, false caso contrario
+     */
+    findMesaById: function(id){
+        var m = 0;
+        for (m in this.mesas()) {
+            if ( this.mesas()[m].id() == id ) {
+                return this.mesas()[m];
+            }
+        }
+        return false;
+    },
+    
+    
+    /**
+     * Busca un mozo por su ID en el listado de mozos
+     * devuelve al objeto Mozo en caso de encontrarlo.
+     * caso contrario devuelve false
+     * @param id Integer id del Mozo a buscar
+     * @return Mozo en caso de encontrarlo, false caso contrario
+     */
+    findMozoById: function(id){
+        var m
+        for (m in this.mozos()) {
+            if ( this.mozos()[m].id() == id ) {
+                return this.mozos()[m];
+            }            
+        }
+        return false;
+    },
+    
+
+    /**
+     * Setter de la currentMesa
+     * @param mesa Mesa or Number . Le puedo pasar una Mesa o un Id de la mesa, da lo mismo.
+     * @return Mesa o false en caso de que el ID pasado no exista
+     */
+    setCurrentMesa: function ( mesa ) {
+        if ( typeof mesa == 'number') { // en caso que le paso un ID en lugar del objeto mesa
+            mesa = this.findMesaById(mesa);           
+        }
+        this.currentMesa( mesa );
+        if (mesa.mozo) {
+            this.setCurrentMozo(mesa.mozo());
+        }
+        return this.currentMesa();
+    },
+		
+                
+
+    /**
+     *  Vista rápida de ticket
+     *  @param {DOM Element} elementToUpdate
+     *  @return {jQUery} DOM element
+     */
+    ticketView: function ( elementToUpdate ) {
+        var elem = elementToUpdate || document.createElement('div');
+        var url = window.urlDomain+'mesas/ticket_view' + '/'+this.currentMesa.id ;
+        return $(elem).load(url);
+    },
+
+    
+    /**
+     *  Tira un prompt para settear un numero 
+     *  y actualizando el valor en la current mesa
+     *
+     */
+    agregarMenu: function(){
+        var menu = prompt('Nuevo Número de Mesa', this.currentMesa().menu());
+        var ops = {
+                'data[Mesa][menu]': menu
+            };
+        this.currentMesa().menu( menu );
+        this.currentMesa().editar(ops);
+    },
+    
+    /**
+     *  Tira un prompt para settear la cantidad de cubiertos
+     */
+    agregarCantCubiertos: function(){
+        var menu = prompt('Ingrese cantidad de Cubiertos', this.currentMesa().cant_comensales());
+        menu = parseInt(menu);
+        
+        if ( menu && typeof menu == 'number' && menu > 0) {
+             var ops = {
+                'data[Mesa][cant_comensales]': menu
+            };
+            
+            this.currentMesa().cant_comensales( menu );
+            this.currentMesa().editar(ops);
+        }        
+    },
+
+
+     /**
+     *  Modifica el mozo atual por el que se le pasa como parametro
+     *  Dispara el evento "adicionCambioMozo"
+     * @param Mozo mozo
+     */
+    setCurrentMozo: function(mozo){
+        this.currentMozo( mozo );
+        var event = {};
+        event.mozo = mozo;
+        $raeh.trigger('adicionCambioMozo',event);
+        
+    },
+    
     ordenarMesasPorNumero: function(){
         return this.mesas().sort(function(left, right) {
             return left.numero() == right.numero() ? 0 : (parseInt(left.numero()) < parseInt(right.numero()) ? -1 : 1) 
@@ -411,33 +345,123 @@ Risto.Adition.adicionar = {
     },
     
     
+    /**
+     *  Pasado un JSON con los datos y atributos de una mesa, lo convierte
+     *  en un objeto Mesa
+     *  @param Mesa mesaJSON
+     *  @return Mesa
+     */
     crearNuevaMesa: function( mesaJSON ){
-        var mozo = this.findMozoById(mesaJSON.mozo_id);
-        var mesa = new Mesa(mozo, mesaJSON);
+        var mozo = this.findMozoById(mesaJSON.mozo_id),
+            mesa = new Mesa(mozo, mesaJSON);
         
         $cakeSaver.send({url:urlDomain+'mesas/abrirMesa.json', obj: mesa});
         return mesa;
+    },
+    
+    
+    /**
+     *  Devueve todas las mesas qu ehay en el sistema
+     *  Concatena las mesas que tiene cada mozo
+     *  @return Array
+     */
+    todasLasMesas : function () {
+        var mesasList = [];
+        if ( this.mozos ) {
+            for ( var m in this.mozos() ) {
+                mesasList = mesasList.concat( this.mozos()[m].mesas() );
+            }
+        }
+        return mesasList;
+    },
+    
+    
+
+    /**
+     * Variable de estado generada cuando se esta armando una comanda
+     * son los productos seleccionados.
+     * Retorna todos lso productos seleccionados para el armado de una DetalleComanda
+     * @return Array
+     */
+    productosSeleccionados : function () {
+        if ( this.currentMesa() && this.currentMesa().currentComanda() && this.currentMesa().currentComanda().comanda && this.currentMesa().currentComanda().comanda.DetalleComanda()) {
+            return this.currentMesa().currentComanda().comanda.DetalleComanda();    
+        } else {
+            return [];
+        }
+
+    },
+
+
+    /**
+     * Variable de estado generada cuando se esta armando una comanda
+     * son los sabores de un producto seleccionado
+     * Retorna el listado de sabores seleccionados
+     * @Return Array
+     */
+    currentSabores : function(){
+        if ( this.currentMesa() && this.currentMesa().currentComanda() && this.currentMesa().currentComanda().currentSabores() ) {
+            return this.currentMesa().currentComanda().currentSabores();    
+        }
+    },
+
+
+    /**
+     *  Toma los valores ingresados en los pagos y calcula el vuelto a devolver
+     *  @return Float
+     */
+    vuelto : function () {
+       var pagos = this.pagos(),
+           sumPagos = 0,
+           totMesa = Risto.Adition.adicionar.currentMesa().totalCalculado(),
+           vuelto = 0,
+           retText = undefined;
+       if (pagos && pagos.length) {
+           for (var p in pagos) {
+               if ( pagos[p].valor() ) {
+                sumPagos += parseFloat(pagos[p].valor());
+               }
+           }
+           vuelto = (sumPagos - totMesa);
+           if (vuelto <= 0 ){
+               retText = (vuelto);
+           } else {
+               retText = (vuelto);
+           }
+       }
+       return retText;
+    },
+
+
+
+    /**
+     * El vuelto a devolver pero ingresando un texto
+     * Ej: Vuelto: $35
+     * @return String
+     */
+    vueltoText : function () {
+       var pagos = this.pagos(),
+           sumPagos = 0,
+           totMesa = Risto.Adition.adicionar.currentMesa().totalCalculado(),
+           vuelto = 0,
+           retText = 'Total: '+Risto.Adition.adicionar.currentMesa().textoTotalCalculado();
+       if (pagos && pagos.length) {
+           for (var p in pagos) {
+               if ( pagos[p].valor() ) {
+                sumPagos += parseFloat(pagos[p].valor());
+               }
+           }
+           vuelto = (totMesa - sumPagos);
+           if (vuelto <= 0 ){
+               retText = retText+'   -  Vuelto: $  '+Math.abs(vuelto);
+           } else {
+               retText = retText+'   -  ¡¡¡¡ Faltan: $  '+vuelto+' !!!';
+           }
+       }
+       return retText;
     }
 };
 
-
-
-
-
-/*____________________________________ OBSERVABLES DEPENDIENTES ___________________________*/
-
-/******---      ADICION         -----******/
-
-
-Risto.Adition.adicionar.todasLasMesas = ko.dependentObservable( function(){
-    var mesasList = [];
-    if ( this.mozos ) {
-        for ( var m in this.mozos() ) {
-            mesasList = mesasList.concat( this.mozos()[m].mesas() );
-        }
-    }
-    return mesasList;
-}, Risto.Adition.adicionar);
 
 // listado de mesas, depende de las mesas de cada mozo, y el orden que le haya indicado
 Risto.Adition.adicionar.mesas = ko.dependentObservable( function(){
@@ -454,7 +478,8 @@ Risto.Adition.adicionar.mesas = ko.dependentObservable( function(){
                 return mesasList;
 
 }, Risto.Adition.adicionar);
-     
+
+
     
 Risto.Adition.adicionar.mesasCerradas = ko.dependentObservable(function(){
     var mesas = [];
@@ -472,82 +497,6 @@ Risto.Adition.adicionar.mesasCerradas = ko.dependentObservable(function(){
         })
     }
                 
-                
     return mesas;
 
-}, Risto.Adition.adicionar);
-     
-/**
- * Variable de estado generada cuando se esta armando una comanda
- * son los productos seleccionados
- */
-Risto.Adition.adicionar.productosSeleccionados = ko.dependentObservable( function(){
-    if ( this.currentMesa() && this.currentMesa().currentComanda() && this.currentMesa().currentComanda().comanda && this.currentMesa().currentComanda().comanda.DetalleComanda()) {
-        return this.currentMesa().currentComanda().comanda.DetalleComanda();    
-    } else {
-        return [];
-    }
-    
-}, Risto.Adition.adicionar);     
-
-
-/**
- * Variable de estado generada cuando se esta armando una comanda
- * son los sabores de un producto seleccionado
- */
-Risto.Adition.adicionar.currentSabores = ko.dependentObservable( function(){
-    if ( this.currentMesa() && this.currentMesa().currentComanda() && this.currentMesa().currentComanda().currentSabores() ) {
-        return this.currentMesa().currentComanda().currentSabores();    
-    }
-}, Risto.Adition.adicionar);   
-
-
-
-
-// al procesar un pago aqui se escribe el vuelto para manejar en la vista
-Risto.Adition.adicionar.vuelto = ko.dependentObservable( function(){
-   var pagos = this.pagos(),
-       sumPagos = 0,
-       totMesa = Risto.Adition.adicionar.currentMesa().totalCalculado(),
-       vuelto = 0,
-       retText = undefined;
-   if (pagos && pagos.length) {
-       for (var p in pagos) {
-           if ( pagos[p].valor() ) {
-            sumPagos += parseFloat(pagos[p].valor());
-           }
-       }
-       vuelto = (sumPagos - totMesa);
-       if (vuelto <= 0 ){
-           retText = (vuelto);
-       } else {
-           retText = (vuelto);
-       }
-   }
-   return retText;
-}, Risto.Adition.adicionar);
-
-
-
-// al procesar un pago aqui se escribe el vuelto para manejar en la vista
-Risto.Adition.adicionar.vueltoText = ko.dependentObservable( function(){
-   var pagos = this.pagos(),
-       sumPagos = 0,
-       totMesa = Risto.Adition.adicionar.currentMesa().totalCalculado(),
-       vuelto = 0,
-       retText = 'Total: '+Risto.Adition.adicionar.currentMesa().textoTotalCalculado();
-   if (pagos && pagos.length) {
-       for (var p in pagos) {
-           if ( pagos[p].valor() ) {
-            sumPagos += parseFloat(pagos[p].valor());
-           }
-       }
-       vuelto = (totMesa - sumPagos);
-       if (vuelto <= 0 ){
-           retText = retText+'   -  Vuelto: $  '+Math.abs(vuelto);
-       } else {
-           retText = retText+'   -  ¡¡¡¡ Faltan: $  '+vuelto+' !!!';
-       }
-   }
-   return retText;
 }, Risto.Adition.adicionar);

@@ -95,6 +95,7 @@ class ClientesController extends AppController {
 	}
 
         function addFacturaA() {
+            $this->pageTitle = 'Agregar Factura A';
 		if (!empty($this->data)) {
 			$this->Cliente->create();
 			if ($this->Cliente->save($this->data)) {

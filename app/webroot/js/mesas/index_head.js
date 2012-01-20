@@ -1,8 +1,5 @@
-
-
-Protoplasm.use('datepicker')
-          .transform('input.datepicker', {
-              'locale': 'es_AR',
-              'timePicker' : true,
-              'use24hrs': true
-          });
+ true
+//          });°SZZ
+jQuery( function(){
+    jQuery('input.datepicker').datepicker();
+} );

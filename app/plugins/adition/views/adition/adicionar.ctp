@@ -514,12 +514,12 @@
 -->
 <div data-role="page" id="mesa-cobrar" data-theme="e" class="dialog-reancho dialog-arriba">
     <div data-role="header">
-        <h1><?php echo Configure::read('Mesa.tituloMesa')?> <span data-bind="text: adn().currentMesa().numero"></span> | <span data-bind="text: adn().vueltoText"></span></h1>
+        <h1><?php echo Configure::read('Mesa.tituloMesa')?> <span data-bind="text: adn().currentMesa().numero()"></span> | <span data-bind="text: adn().vueltoText()"></span></h1>
         <a href="#mesa-view" data-direction="reverse" data-theme="e">Ir a la <?php echo Configure::read('Mesa.tituloMesa')?></a>
     </div>
 
     <div data-role="content">                  
-        <h2>Cobrar la <?php echo Configure::read('Mesa.tituloMesa')?> <span data-bind="text: adn().currentMesa().numero"></span> <span class="mesa-total" style="float: right; color: red;">Total $<span data-bind="text: adn().currentMesa().total"></span></span></h2>
+        <h2>Cobrar la <?php echo Configure::read('Mesa.tituloMesa')?> <span data-bind="text: adn().currentMesa().numero"></span> <span class="mesa-total" style="float: right; color: red;">Total $<span data-bind="text: adn().currentMesa().total()"></span></span></h2>
         
         <ul class="tipo_de_pagos">
         <?php 
@@ -541,7 +541,7 @@
         ?>
         </ul>
         
-        <h4>Pagos Seleccionados <span style="float: right; font-size: 24px; color: #003366">Vuelto: $<span data-bind="text: adn().vuelto"></span></span></h4>
+        <h4>Pagos Seleccionados <span style="float: right; font-size: 24px; color: #003366">Vuelto: $<span data-bind="text: adn().vuelto()"></span></span></h4>
         <ul class="pagos_creados"
             data-bind='template: { name: "li-pagos-creados", foreach: adn().pagos }'>
         </ul>

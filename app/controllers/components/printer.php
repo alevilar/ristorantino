@@ -126,7 +126,7 @@ class PrinterComponent extends Object {
             if ( empty ( $valorCubierto ) ) {
                 $valorCubierto = 0;
             }
-            if ( $valorCubierto >= 0) {
+            if ( $valorCubierto >= 0 && is_numeric($this->Mesa['Mesa']['cant_comensales']) ) {
                 $prod[] = array(
                     'nombre'   => 'Cubiertos',
                     'cantidad' => $this->Mesa['Mesa']['cant_comensales'],
