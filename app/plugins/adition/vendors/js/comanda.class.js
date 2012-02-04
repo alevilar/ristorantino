@@ -56,6 +56,12 @@ Risto.Adition.comanda.prototype = {
         return name;
     },
     
+    imprimirComanda: function() {
+        if (window.confirm("¿Seguro desea reimprimir comanda?")) {
+            $.get(urlDomain + '/comandas/imprimir/' +this.id());
+        }
+    },
+    
     
     handleAjaxSuccess: function(data){
         this.id( data.Comanda.Comanda.id );

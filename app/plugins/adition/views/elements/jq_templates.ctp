@@ -4,6 +4,10 @@
        <h3>
            <span class="id-comanda">#<span data-bind="text: id()"></span></span>  <span class="hora-comanda"  data-bind="text: timeCreated()"></span>&nbsp;&nbsp;&nbsp;
            <span class="comanda-listado-productos-string" data-bind="text: productsStringListing()"></span>
+           
+           <a style="float: right;" href="#" data-bind="click: imprimirComanda" class="btn-comanda-icon">
+               imprimir
+           </a>
        </h3>
 
         <ul class="comanda-items" data-role="listview"
@@ -19,8 +23,9 @@
 
 <!--  TEmplate: Productos seleccionados en el menu. comandas add -->
 <script id="categorias-productos-seleccionados" type="text/x-jquery-tmpl">
-    <li data-bind="visible: cant(), css:{'es-entrada': esEntrada(), 'tiene-observacion': observacion()}"  class="ui-li ui-li-static ui-body-c" onmouseover="$(this).children(':first-child').show()" onmouseout="$(this).children(':first-child').hide()" >
-         <div style="display: none" data-type="horizontal" data-role="controlgroup" class="ui-corner-all ui-controlgroup ui-controlgroup-horizontal">
+    <li data-bind="visible: cant(), css:{'es-entrada': esEntrada(), 'tiene-observacion': observacion()}"  class="ui-li ui-li-static ui-body-c listado-productos-seleccionados" >
+        
+        <div style="display: none" data-type="horizontal" data-role="controlgroup" class="ui-corner-all ui-controlgroup ui-controlgroup-horizontal ui-options">
             <a data-bind="click: seleccionar" data-role="button" data-icon="plus" data-iconpos="notext" href="#" title="+" data-theme="c" class="ui-btn ui-btn-icon-notext ui-corner-left ui-btn-up-c"><span class="ui-btn-inner ui-corner-left"><span class="ui-btn-text" >+</span><span class="ui-icon ui-icon-plus ui-icon-shadow"></span></span></a>
             <a data-bind="click: deseleccionar" data-role="button" data-icon="minus" data-iconpos="notext" href="#" title="-" data-theme="c" class="ui-btn ui-btn-icon-notext ui-btn-up-c"><span class="ui-btn-inner"><span class="ui-btn-text">-</span><span class="ui-icon ui-icon-minus ui-icon-shadow"></span></span></a>
             <a data-bind="click: addObservacion, style: { background: observacion() ? '#437FBE' : ''}" 
@@ -48,12 +53,17 @@
                 </span>
             </a>
          </div>
-                
+        
+        
         <span data-bind="text: realCant()" class="ui-li-count ui-btn-up-c ui-btn-corner-all"></span>
          
-        <span data-bind="text: nameConSabores()"></span>
-
-         
+        <span data-bind="text: nameConSabores() + ' ' +observacion()"></span>
+        
+        <span class="ui-options-btn">
+            
+            Opciones
+        
+        </span>
      </li>
  </script>
  
@@ -137,7 +147,7 @@
      </span>
 
      <span data-bind="text: realCant()" style="padding-left: 20px;"></span>
-     <span data-bind="text: nameConSabores(), css: {tachada: realCant()==0}" style="padding-left: 20px;"></span>
+     <span data-bind="text: nameConSabores() + ' ' +observacion(), css: {tachada: realCant()==0}" style="padding-left: 20px;"></span>
      <span class="producto-precio">p/u: {{= '$'}}<span data-bind="text: precio()"></span></span>
  </li>
 </script>

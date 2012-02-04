@@ -69,6 +69,36 @@ $(document).bind("mobileinit", function(){
         // producto seleccionado
         $(document).bind(  MENU_ESTADOS_POSIBLES.productoSeleccionado.event , productoSeleccionado);
 
+        
+        
+        var abierto = false;
+        $('#ul-productos-seleccionados').delegate(
+                '.listado-productos-seleccionados',
+                'mouseleave',
+                function(){
+                    $(this).children('.ui-options').hide();
+                    $(this).children('.ui-options-btn').removeClass('ui-options-btn-open');
+                    abierto = false;
+                }
+        );                
+        
+        $('#ul-productos-seleccionados').delegate(
+                '.ui-options-btn',
+                'mouseover',
+                function(){
+                    var $ops = $(this).parent().find('.ui-options'),
+                        $opsBtn = $(this).parent().find('.ui-options-btn');
+                        
+                    if ( abierto ) {
+                        $ops.hide();
+                        $opsBtn.removeClass('ui-options-btn-open');
+                    } else {
+                        $ops.show();
+                        $opsBtn.addClass('ui-options-btn-open');
+                    }
+                    abierto = !abierto;
+                }
+        );            
 
         $('#comanda-add-guardar').bind('click', function(){
             Risto.Adition.adicionar.currentMesa().currentComanda().save();
@@ -119,6 +149,19 @@ $(document).bind("mobileinit", function(){
         
         $('#ul-categorias').undelegate("a", "click");
         $('#ul-productos').undelegate("a", "click");
+        
+        
+        $('#ul-productos-seleccionados').undelegate(
+                '.listado-productos-seleccionados',
+                'mouseleave'
+        );                
+        
+        $('#ul-productos-seleccionados').undelegate(
+                '.ui-options-btn',
+                'mouseover'
+        ); 
+            
+            
 
         $("#mesa-comanda-add-obs-gen-cancel").unbind('click');
         $("#mesa-comanda-add-obs-gen-aceptar").unbind('click');
@@ -178,6 +221,12 @@ $(document).bind("mobileinit", function(){
         $('#mesa-action-cobrar').bind('click',function(){
             Risto.Adition.adicionar.pagos( [] );
         });
+        
+        var $hrefEdit = $('a:first-child','#mesa-action-edit'),
+            hrefToEditMesa = $hrefEdit.attr('data-href');
+        if ( hrefToEditMesa ) {
+            $hrefEdit.attr('href', hrefToEditMesa + Risto.Adition.adicionar.currentMesa().id() );
+        }
 
 
           $('#mesa-menu').bind( 'click', function(){
@@ -717,6 +766,7 @@ function onKeyPress(e) {
  *  para que no titile el cursor. Que no se pueda hacer click
  */
 function hacerQueNoFuncioneElClickEnPagina() {
+    return 1;
    if(document.all){
       document.onselectstart = function(e) {return false;} // ie
    } else {

@@ -6,61 +6,80 @@
 
 <div class="mesas form">
 <?php echo $form->create('Mesa');?>
-	<fieldset>
- 		<legend><?php __('Editar Mesa');?></legend>
+    <div class="grid_6 ">
+        <fieldset>
+ 		<legend><?php __('Datos Generales');?></legend>
 	<?php
 		echo $form->input('id');
+                echo $form->input('estado_id');
 		echo $form->input('numero',array('after'=>'</br>Si cambia este número, cambiara el número de la mesa','label'=>'Cambiar Número de Mesa'));
-		echo $form->input('mozo_id',array('after'=>'</br>Aquí puede cambiar el mozo de la mesa'));
+                echo $form->input('mozo_id',array('after'=>'</br>Aquí puede cambiar el mozo de la mesa'));                
+        ?>
+	</fieldset>
+    </div>
+    
+    <div class="grid_6">
+        <fieldset>
+ 		<legend><?php __('Totales de Mesa');?></legend>
+	<?php
                 echo $form->input('cant_comensales',array('after'=>'</br>Aquí puede cambiar la cantidad de cubiertos de la mesa'));
 		echo $form->input('total',array('after'=>'</br>Aquí puede cambiar el total de la mesa.'));
-                //echo $form->input('Cliente_descuento_porcentaje',array('after'=>'</br>Aquí puede cambiar el total de la mesa.'));                   
-                
-                
         ?>
 <?php echo $form->end('Guardar Cambios');?>
 	</fieldset>
+        </div>
 </div>
 
+<div class="clear"></div>
 <div class="detallesmesa">
     <h2>Detalles de la Mesa</h2>
     
     <dl>
     <?php
             echo "<dt>Tipo Factura</dt>";
-            if ($mozo['Cliente']['tipofactura'] == ''){
+            if ($mesa['Cliente']['tipofactura'] == ''){
                     $tipofac = "B";
-                    $mozo['Cliente']['tipofactura'] = "B";
+                    $mesa['Cliente']['tipofactura'] = "B";
             }
 
-            if ($mozo['Cliente']['tipofactura'] === 0){
+            if ($mesa['Cliente']['tipofactura'] === 0){
                     $tipofac = 'Remito';	
             }
             else{
-                    $tipofac = $mozo['Cliente']['tipofactura'];
+                    $tipofac = $mesa['Cliente']['tipofactura'];
             }
 
             echo "<dd>\"$tipofac\" &nbsp;</dd>";
 
-            if(empty($mozo['Cliente']['tipofactura'])){
+            if(empty($mesa['Cliente']['tipofactura'])){
                     echo "<dt>Nombre</dt>";
-                    echo "<dd>". $mozo['Cliente']['nombre']."&nbsp;</dd>";
+                    echo "<dd>". $mesa['Cliente']['nombre']."&nbsp;</dd>";
 
                     echo "<dt>Descuento</dt>";
-                    $dto = (!empty($mozo['Cliente']['Descuento']['porcentaje']))?$mozo['Cliente']['Descuento']['porcentaje']:"0";
+                    $dto = (!empty($mesa['Cliente']['Descuento']['porcentaje']))?$mesa['Cliente']['Descuento']['porcentaje']:"0";
                     echo "<dd>". $dto."% &nbsp;</dd>";
             }
 
             echo "<dt>Imprime Ticket</dt>";
             echo "<dd>";
-            echo ($mozo['Cliente']['imprime_ticket'])?'SI':'NO';
+            echo ($mesa['Cliente']['imprime_ticket'])?'SI':'NO';
             echo "</dd>"
     ?>
     </dl>
 
+    <p>
     <?php 
-    echo "<strong><p>Abrió a las ".date('H:i', strtotime($this->data['Mesa']['created']))."</strong></p>";
+    echo "Abrió a las <b>".date('H:i', strtotime($this->data['Mesa']['created']))."</b>";
+    
+    if ( !empty($this->data['Mesa']['time_cerro']) ) {
+        echo ", Cerró a las <b>".date('H:i', strtotime($this->data['Mesa']['time_cerro']))."</b>";
+    }
+    
+    if ( !empty($this->data['Mesa']['time_cobro']) ) {
+        echo ", Cobrada a las <b>".date('H:i', strtotime($this->data['Mesa']['time_cobro']))."</b>";
+    }
     ?>
+        </p>
 </div>
 
 <ul class="items_mesas">
@@ -126,7 +145,7 @@
     //echo "<p><br>Segun funciones especiales:";
 
     echo "<h3>SUBTOTAL = <span>$$subtotal</span></h3>";
-    $dto = empty($mozo['Cliente']['Descuento']['porcentaje'])?0:$mozo['Cliente']['Descuento']['porcentaje'];
+    $dto = empty($mesa['Cliente']['Descuento']['porcentaje'])?0:$mesa['Cliente']['Descuento']['porcentaje'];
     echo "<h3>TOTAL = <span>$$total</span> </h3>";
             if($dto!='0') {
                  echo "(Dto: $dto%)";

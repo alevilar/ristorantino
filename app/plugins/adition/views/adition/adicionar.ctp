@@ -305,6 +305,10 @@
                         <a href="#listado-mesas" id="mesa-reabrir"><?= $html->image('/adition/css/img/reabrir.png')?>Re Abrir</a>
                     </li>
                     
+                    <li style="" id="mesa-action-menu" data-bind="attr: {'estado': 'mesa-borrar_'+adn().currentMesa().estado().icon}">
+                        <a href="#" id="mesa-menu"><?= $html->image('/adition/css/img/write.png')?>Menú <span style="color: red" data-bind="visible: adn().currentMesa().menu() != 0,text: adn().currentMesa().menu"></span></a>
+                    </li>
+                    
                     <li>
                         &nbsp;
                     </li>
@@ -313,9 +317,15 @@
                         <a href="#listado-mesas" id="mesa-borrar" data-rel="back"><?= $html->image('/adition/css/img/borrarmesa.png')?>Borrar</a>
                     </li>
                     
-                    <li style="width: 49%; float: right;" id="mesa-action-menu" data-bind="attr: {'estado': 'mesa-borrar_'+adn().currentMesa().estado().icon}">
-                        <a href="#" id="mesa-menu"><?= $html->image('/adition/css/img/write.png')?>Menú <span style="color: red" data-bind="visible: adn().currentMesa().menu() != 0,text: adn().currentMesa().menu"></span></a>
+                    <li style="width: 49%; float: right;" id="mesa-action-edit" data-bind="attr: {'estado': 'mesa-borrar_'+adn().currentMesa().estado().icon}">
+                        <a href="#" data-href="<? echo $html->url('/mesas/edit/') ?>">Editar</a>
                     </li>
+                    
+                    
+                    
+                    
+                    
+                   
                     
                 </ul>
             </div>

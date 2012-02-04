@@ -371,9 +371,23 @@ ul.tipo_de_pagos ,.tipo_de_pagos ul{
 
 
 .btn-comanda-icon{
+    background: url("img/print48.png") no-repeat;
+    background-size: 22px;
+    width: 45px;
+    height: 22px;
+    text-indent: -9999px;
+}
+
+.btn-comanda-icon:hover{
+    background-size: 28px;
+    text-indent: -66px;
+}
+
+#comanda-add-menu .btn-comanda-icon{
     width: 15px;
     position: relative;
     left: -15px;
+    background: none;
 }
 
 
@@ -506,7 +520,7 @@ h1.cubiertos , h2.cubiertos , h3.cubiertos{
     
     
     #ul-productos-seleccionados a.ui-btn-icon-notext {
-        width: 40px; height: 40px;
+        width: 47px; height: 40px;
     }
     
     #ul-productos-seleccionados .ui-btn-icon-notext .ui-icon {
@@ -517,8 +531,8 @@ h1.cubiertos , h2.cubiertos , h3.cubiertos{
         background-position: -0.8%;
     }
     
-    #ul-productos-seleccionados .ui-icon-minus {
-        background-position: -30px 50%;
+    #ul-productos-seleccionados .ui-icon-minus, .comanda-items .ui-icon-minus {
+        background-position: -24px 50%;
     }
     
     #ul-productos-seleccionados .ui-icon-grid {
@@ -537,4 +551,16 @@ h1.cubiertos , h2.cubiertos , h3.cubiertos{
     
     #ul-productos-seleccionados li.tiene-observacion{
         
+    }
+    
+    .ui-options-btn{
+        float: right;
+        text-indent: -1999px;
+        background-color: #F7C942;
+        width: 20px;
+    }
+    
+    .ui-options-btn-open{
+        height: 91px;
+        margin-top: -66px;
     }

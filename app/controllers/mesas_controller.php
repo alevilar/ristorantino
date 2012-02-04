@@ -4,6 +4,12 @@ class MesasController extends AppController {
     var $name = 'Mesas';
     var $helpers = array('Html', 'Form');
     var $components = array('Printer');
+    
+    var $estados = array(
+        1 => "Abierta",
+        2 => "Cerrada",
+        3 => "Cobrada",
+        );
 
     /* @var $Printer PrinterComponent */
     var $Printer;
@@ -403,12 +409,25 @@ $tipo_pagos = $this->Mesa->Pago->TipoDePago->find('list');
 
         $items = $this->data['Comanda'];
         $mesa = $this->data;
-        $mozos = $this->Mesa->Mozo->find('list',array('fields'=>array('id','numero')));
+        
+        $mozos = $this->Mesa->Mozo->find('all',array(
+            'contain' => array('User'),
+            'conditions' => array('Mozo.activo' => 1),
+            ));
+        $mooo = array();
+        foreach ( $mozos as $mm) {
+            $mooo[$mm['Mozo']['id']] = $mm['Mozo']['numero'] ."- ";
+            if (!empty( $mm['User'] )) {
+                $mooo[$mm['Mozo']['id']] .= " " . $mm['User']['nombre'] . " " . $mm['User']['apellido'];
+            }
+        }
         
         $this->id = $id;
         $this->set('subtotal',$this->Mesa->calcular_subtotal());
         $this->set('total',$this->Mesa->calcular_total());
-        $this->set(compact('mozos','mesa', 'items'));
+        $this->set('estados', $this->estados);
+        $this->set('mozos', $mooo);
+        $this->set(compact('mesa', 'items'));
     }
 
     function delete($id = null) {
