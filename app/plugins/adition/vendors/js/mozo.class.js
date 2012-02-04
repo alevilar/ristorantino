@@ -104,11 +104,9 @@ Mozo.prototype = {
     },
 
 
-    sacarMesa: function(mesa){
-        if ( this.mesas.remove(mesa) ) { 
-            var evento = $.Event(MOZOS_POSIBLES_ESTADOS.sacaMesa.event);
-            evento.mozo = this;
-            $(document).trigger(evento);
+    sacarMesa: function ( mesa ) {
+        if ( this.mesas.remove(mesa) ) {
+            delete mesa;            
             return true
         }
         return false;

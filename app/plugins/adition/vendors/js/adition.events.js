@@ -115,6 +115,8 @@ $(document).bind("mobileinit", function(){
         
         $('a.active','#ul-productos').removeClass('active');
         
+        $('#comanda-add-observacion').hide();
+        
         $('#ul-categorias').undelegate("a", "click");
         $('#ul-productos').undelegate("a", "click");
 

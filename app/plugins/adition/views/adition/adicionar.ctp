@@ -257,7 +257,7 @@
                 echo $html->image('mesa-abrio.png') . " " . Configure::read('Mesa.tituloMesa') ." - " .
                 Configure::read('Mesa.tituloMozo') . " " . $html->image('mozomoniob.png') 
                 ?>
-                <span data-bind="text: adn().currentMesa().mozo().numero"></span>
+                <span data-bind="text: adn().currentMesa().mozo().numero()"></span>
                  
                 <span class="hora-abrio">Estado: <span data-bind="text: adn().currentMesa().getEstadoName()"></span></span>
             </h1>
@@ -382,12 +382,12 @@
         <div  style="width: 28%; margin-right: 2%; display: inline; float: left;">
             
            <ul id="ul-productos-seleccionados" class="ui-listview" data-role="listview"
-               data-bind="template: {name: 'categorias-productos-seleccionados', foreach: adn().productosSeleccionados}"
+               data-bind="template: {name: 'categorias-productos-seleccionados', foreach: adn().productosSeleccionados()}"
                style="margin-top: 8px;" ></ul>
         </div>    
            
         <div style="width: 70%; display: inline; float: right;">
-            <div id="path" data-bind="template: {name: 'boton', foreach: menu().path}"></div> 
+            <div id="path" data-bind="template: {name: 'boton', foreach: menu().path()}"></div> 
             
             <!--           SELECCION DE CATEGORIAS                           -->
            <div id="ul-categorias" 
@@ -420,7 +420,7 @@
 
     <div data-role="content">                  
            <div id="ul-sabores" 
-                data-bind="template: {name: 'listaSabores', foreach: adn().currentSabores} ">
+                data-bind="template: {name: 'listaSabores', foreach: adn().currentSabores()} ">
            </div>
     </div>
             

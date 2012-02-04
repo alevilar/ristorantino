@@ -13,7 +13,7 @@ Risto.Adition.handleMesasRecibidas = {
          * el listado de mesas de la adicion
          * 
          */
-        created: function( data ){
+        created: function ( data ) {
             if (!data.mozos) return -1;
 
             if ( this.mesas().length ) {
@@ -56,7 +56,7 @@ Risto.Adition.handleMesasRecibidas = {
          * el listado de mesas de la adicion
          * 
          */
-        modified: function( data ) {
+        modified: function ( data ) {
             if (!data.mozos) return -1;
             var mesaEncontrada, 
                 mozo;
@@ -79,27 +79,23 @@ Risto.Adition.handleMesasRecibidas = {
          * Recibiendo las mesas cobradas las manejo 
          * 
          */
-        cobradas: function( data ) {
+        cobradas: function ( data ) {
             if (!data.mozos) return -1;
-            var mesaEncontrada, i, mozo;
-            
+            var mesaEncontrada, 
+                z; // contador index de mozos
                        
-            for (var z in data.mozos) {
+            for (z in data.mozos) {
                 for( var m in data.mozos[z].mesas ) {
                     mesaEncontrada = Risto.Adition.adicionar.findMesaById( data.mozos[z].mesas[m].id );
                     
                     if ( mesaEncontrada ) {  
-                        i = Risto.Adition.adicionar.mesas().indexOf( mesaEncontrada );
-                        ko.mapping.fromJS( data.mozos[z].mesas[m], {}, mesaEncontrada );
-                        mesaEncontrada.estado( MESA_ESTADOS_POSIBLES.cobrada );
-                        
-                        mozo = mesaEncontrada.mozo();
-                        mozo.sacarMesa( mesaEncontrada );
-                        delete mesaEncontrada;
+//                        ko.mapping.fromJS( data.mozos[z].mesas[m], {}, mesaEncontrada );
+                        mesaEncontrada.mozo().sacarMesa( mesaEncontrada );
                     }
                 }
             }
-            
+            // reinicializar vistas
+            $rae.adicionMesasActualizadas();
             return 1;
         },
         
@@ -109,21 +105,8 @@ Risto.Adition.handleMesasRecibidas = {
          * Manejo de las mesas eliminadas
          * 
          */
-        deleted: function( data ) {
-            if (!data.mozos) return -1;
-            var mesaEncontrada, i;
-            for (var z in data.mozos) {
-                for( var m in data.mozos[z].mesas ) {
-                    mesaEncontrada = Risto.Adition.adicionar.findMesaById( data.mozos[z].mesas[m].id );
-                    if ( mesaEncontrada ) {
-                        mesaEncontrada.mozo().sacarMesa( mesaEncontrada );
-                        delete mesaEncontrada;
-                    }
-                }
-            }
-            Risto.Adition.EventHandler.adicionMesasActualizadas();
-            return 1;
-        }
+        deleted: Risto.Adition.handleMesasRecibidas
+        
     },
     
     
@@ -163,7 +146,7 @@ Risto.Adition.adicionar = {
      *  Inicializacion para cargar una nueva comanda, es el que activa las variables
      *  creando un nuevo objeto mediante la Fabrica de Comandas. ComandaFabrica
      */
-    nuevaComandaParaCurrentMesa: function() {
+    nuevaComandaParaCurrentMesa: function () {
         this.currentMesa().nuevaComanda();
         return this;
     },
@@ -173,7 +156,7 @@ Risto.Adition.adicionar = {
      *  Referencia al objeto Menu para que pueda ser utilizado como un Modelo de Knoclkout.js
      *  desde este objeto de adicion.
      */
-    menu: function() {
+    menu: function () {
         return Risto.Adition.koAdicionModel.menu.apply(Risto.Adition.koAdicionModel, arguments);
     },
     
@@ -181,7 +164,7 @@ Risto.Adition.adicionar = {
     /**
      * Constructor
      */
-    initialize: function() {
+    initialize: function () {
         var worker = null, // webWorker
             cbk = 0, // contaddor para el for de mesas
             time = ''; // timestamp php que envia el server
@@ -189,7 +172,6 @@ Risto.Adition.adicionar = {
         if ( Worker ) {  
             
             // Crea el Web Worker
-            
             worker = new Worker(urlDomain + "adition/js/adicion.model.js");
                 
             worker.onmessage = function (evt) {
@@ -252,8 +234,8 @@ Risto.Adition.adicionar = {
      * @param id Integer id del Mozo a buscar
      * @return Mozo en caso de encontrarlo, false caso contrario
      */
-    findMozoById: function(id){
-        var m
+    findMozoById: function ( id ) {
+        var m;
         for (m in this.mozos()) {
             if ( this.mozos()[m].id() == id ) {
                 return this.mozos()[m];
@@ -389,7 +371,6 @@ Risto.Adition.adicionar = {
         } else {
             return [];
         }
-
     },
 
 

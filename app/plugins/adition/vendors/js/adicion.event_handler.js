@@ -12,20 +12,17 @@
 $raeh = Risto.Adition.EventHandler = {
     
     trigger: function( eventName, extra, context ) {  
-        $(document).bind(eventName, function(){
-            $(document).unbind(eventName);
-            if ( Risto.Adition.EventHandler.hasOwnProperty(eventName ) && typeof Risto.Adition.EventHandler[eventName] == 'function') {
+        if ( Risto.Adition.EventHandler.hasOwnProperty(eventName ) && typeof Risto.Adition.EventHandler[eventName] == 'function') {
                 if ( context ) {
-                    return Risto.Adition.EventHandler[eventName].call(context, extra);
+                    setTimeout(function(){
+                        Risto.Adition.EventHandler[eventName].call(context, extra);
+                    }, 1);
                 } else {
-                    return Risto.Adition.EventHandler[eventName].call(this, extra);
+                    setTimeout(function(){
+                        return Risto.Adition.EventHandler[eventName].call(this, extra);
+                    }, 1);
                 }
-                
-            }
-            $.error('no existe el método que capture el evento: '+eventName);
-
-        });
-        $(document).trigger(eventName);
+        }
         
         return -1;
     },
@@ -81,7 +78,13 @@ $raeh = Risto.Adition.EventHandler = {
     },
     
     
-    adicionMesasActualizadas: function(e) {
+    /**
+     *  Llama a una funcion dependiendo de la pagina en la que estoy
+     *  sirve para realizar las mismas acciones de inicializacion, o preparacion
+     *  de alguna pagina despues de haber realizado una determinada accion
+     *  Utiliza funciones de JQM para determinar la pagina actual
+     */
+    adicionMesasActualizadas: function () {
         /**
          *
          *  definicion del objeto que manejara las distintas respuestas dependiendo de la pagina activa
@@ -90,8 +93,8 @@ $raeh = Risto.Adition.EventHandler = {
          * */
         var onMesasActualizadasHandlerByPage = {
             'listado-mesas': function(){
-                var btnMozo = $('#listado-mozos-para-mesas .ui-btn-active');
-                var mozoId = 0;
+                var btnMozo = $('#listado-mozos-para-mesas .ui-btn-active'),
+                    mozoId = 0;
                 if ( btnMozo[0] ) {
                     mozoId = $(btnMozo[0]).attr('data-mozo-id');
                 }
