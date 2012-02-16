@@ -32,18 +32,9 @@ class Mesa extends AppModel {
 	
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 	var $belongsTo = array(
-			'Mozo' => array('className' => 'Mozo',
-								'foreignKey' => 'mozo_id',
-								'conditions' => '',
-								'fields' => '',
-								'order' => ''
-			),
-			'Cliente' => array('className' => 'Cliente',
-								'foreignKey' => 'cliente_id',
-								'conditions' => '',
-								'fields' => '',
-								'order' => ''
-			),
+			'Mozo',
+			'Cliente',
+                        'Descuento',
 	);
 
 

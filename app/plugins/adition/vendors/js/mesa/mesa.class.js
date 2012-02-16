@@ -13,6 +13,8 @@ var Mesa = function(mozo, jsonData) {
         this.total          = ko.observable( 0 );
         this.numero         = ko.observable( 0 );
         this.menu           = ko.observable( 0 );
+        this.descuento_id   = ko.observable( 0 );
+        this.Descuento      = ko.observable( null );
         this.mozo           = ko.observable( new Mozo() );
         this.currentComanda = ko.observable( new Risto.Adition.comandaFabrica() );
         this.Comanda        = ko.observableArray( [] );
@@ -159,14 +161,14 @@ Mesa.prototype = {
     
     
     /* listado de URLS de accion con la mesa */
-    urlGetData: function() { return urlDomain+'mesas/ticket_view/'+this.id() },
-    urlView: function() { return urlDomain+'mesas/view/'+this.id() },
-    urlEdit: function() { return urlDomain+'mesas/ajax_edit/'+this.id() },
-    urlDelete: function() { return urlDomain+'mesas/delete/'+this.id() },
-    urlComandaAdd: function() { return urlDomain+'comandas/add/'+this.id() },
-    urlReimprimirTicket: function() { return urlDomain+'mesas/imprimirTicket/'+this.id() },
-    urlCerrarMesa: function() { return urlDomain+'mesas/cerrarMesa/'+this.id() },
-    urlReabrir: function() { return urlDomain+'mesas/reabrir/'+this.id() },
+    urlGetData: function() {return urlDomain+'mesas/ticket_view/'+this.id()},
+    urlView: function() {return urlDomain+'mesas/view/'+this.id()},
+    urlEdit: function() {return urlDomain+'mesas/ajax_edit/'+this.id()},
+    urlDelete: function() {return urlDomain+'mesas/delete/'+this.id()},
+    urlComandaAdd: function() {return urlDomain+'comandas/add/'+this.id()},
+    urlReimprimirTicket: function() {return urlDomain+'mesas/imprimirTicket/'+this.id()},
+    urlCerrarMesa: function() {return urlDomain+'mesas/cerrarMesa/'+this.id()},
+    urlReabrir: function() {return urlDomain+'mesas/reabrir/'+this.id()},
     urlAddCliente: function( clienteId ){
         var url = urlDomain+'mesas/addClienteToMesa/'+this.id();
         if (clienteId){
@@ -464,12 +466,25 @@ Mesa.prototype = {
      *                      Ej: data['data[Mesa][cant_comensales]'] o data['data[Mesa][cliente_id]']
      *                      
      */
-    editar: function(data) {
+    editar: function (data, callback) {
         if (!data['data[Mesa][id]']) {
             data['data[Mesa][id]'] = this.id();
         }
-        $.post( window.urlDomain +'mesas/ajax_edit', data);
+        $.post( window.urlDomain +'mesas/ajax_edit', data, callback);
         return this;
+    },
+    
+    /**
+     *  Es para realizar ediciones rapida de un valor de la mesa en BBDD
+     *  dado un campo, se actualiza el valor que se haya pasado
+     *  @param field String campo de la BBDD a actualizar
+     *  @param value String es el valor a insertar en la BBDD
+     *
+     */
+    saveField: function ( field, value, callback) {
+        var data;
+        data['data[Mesa][' + field + ']'] = value;
+        return this.editar(data, callback);
     },
     
     
@@ -481,6 +496,18 @@ Mesa.prototype = {
         if (data[this.model]) {
             ko.mapping.fromJS( data[this.model], {}, this );
         }
+    },
+    
+    setDescuento: function( objDescuento ) {
+        var descuento_id;
+        
+        if ( objDescuento ) {
+            descuento_id = objDescuento.id;
+        }
+        
+        this.descuento_id( descuento_id );
+        this.Descuento( new Risto.Adition.descuento(objDescuento) );
+        this.saveField('descuento_id', descuento_id);
     },
     
     
@@ -495,13 +522,16 @@ Mesa.prototype = {
         if ( objCliente ) {
             clienteId = objCliente.id;
         }
-        $.get( this.urlAddCliente( clienteId ), function(data) {
+        
+        var toDoAfterSave = function(data) {
             if ( data.Cliente ){
                 ctx.Cliente( new Risto.Adition.cliente(data.Cliente) );
             } else{
                 ctx.Cliente(null);
             }
-        });
+        };
+        
+        this.saveField('cliente_id', clienteId, toDoAfterSave);
         
         return this;
     },

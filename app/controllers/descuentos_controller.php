@@ -13,6 +13,12 @@ class DescuentosController extends AppController {
 		$this->Descuento->recursive = 0;
 		$this->set('descuentos', $this->paginate());
 	}
+        
+	function jqm_descuentos() {
+		$this->Descuento->recursive = 0;
+		$this->set('descuentos', $this->Descuento->find('all'));
+	}
+        
 
 	function view($id = null) {
 		if (!$id) {

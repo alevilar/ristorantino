@@ -270,14 +270,29 @@
                     <li id="mesa-action-comanda" data-bind="attr: {'estado': 'comanda-add-menu_'+adn().currentMesa().estado().icon}">
                         <a href="#comanda-add-menu" data-rel="dialog"><?= $html->image('/adition/css/img/chef_64.png')?>Comanda</a>
                     </li>
+                                       
                     
-                    <li id="mesa-action-cliente" data-bind="attr: {'estado': 'mesa-cliente_'+adn().currentMesa().estado().icon}">
+                    <li style="padding: 0px; clear: both"></li>
+                    
+                    <li id="mesa-action-cliente" style="float: left; width: 50%" data-bind="attr: {'estado': 'mesa-cliente_'+adn().currentMesa().estado().icon}">
                         <a href="<?php echo $html->url('/clientes/jqm_clientes')?>" data-rel="dialog">
                                 <?= $html->image('/adition/css/img/customers.png')?>
-                            <span data-bind="visible: !adn().currentMesa().Cliente()">Agregar Cliente</span>
+                            <span data-bind="visible: !adn().currentMesa().Cliente()">Cliente</span>
                             <span data-bind="visible: adn().currentMesa().Cliente()" style="white-space: normal"><span data-bind="text: adn().currentMesa().clienteNameData()"></span></span>
                         </a>
                     </li>
+                    
+                    
+                    <li id="mesa-action-descuento" style="float: right; width: 49%" data-bind="attr: {'estado': 'mesa-cliente_'+adn().currentMesa().estado().icon}">
+                        <a href="<?php echo $html->url('/descuentos/jqm_descuentos')?>" data-rel="dialog">
+                                <?= $html->image('/adition/css/img/customers.png')?>
+                            <span>Descuento</span>
+                            <span style="white-space: normal"><span data-bind="text: adn().currentMesa().descuento_id()"></span></span>
+                        </a>
+                    </li>
+                    
+                    <li style="padding: 0px; clear: both"></li>
+                    
                     
                     <li id="mesa-action-cerrar" data-bind="attr: {'estado': 'mesa-cerrar_'+adn().currentMesa().estado().icon}">
                         <a href="#listado-mesas" id="mesa-cerrar" data-direction="reverse"><?= $html->image('/adition/css/img/cerrarmesa.png')?>Cerrar</a>
@@ -309,23 +324,15 @@
                         <a href="#" id="mesa-menu"><?= $html->image('/adition/css/img/write.png')?>Menú <span style="color: red" data-bind="visible: adn().currentMesa().menu() != 0,text: adn().currentMesa().menu"></span></a>
                     </li>
                     
-                    <li>
-                        &nbsp;
-                    </li>
+                    <li style="padding: 0px;"></li>
                     
                     <li style="width: 49%; float: left;" id="mesa-action-borrar" data-bind="attr: {'estado': 'mesa-borrar_'+adn().currentMesa().estado().icon}">
                         <a href="#listado-mesas" id="mesa-borrar" data-rel="back"><?= $html->image('/adition/css/img/borrarmesa.png')?>Borrar</a>
                     </li>
                     
                     <li style="width: 49%; float: right;" id="mesa-action-edit" data-bind="attr: {'estado': 'mesa-borrar_'+adn().currentMesa().estado().icon}">
-                        <a href="#" data-href="<? echo $html->url('/mesas/edit/') ?>">Editar</a>
+                        <a href="#" data-href="<? echo $html->url('/mesas/edit/') ?>"><?= $html->image('/adition/css/img/borrarmesa.png')?>Editar</a>
                     </li>
-                    
-                    
-                    
-                    
-                    
-                   
                     
                 </ul>
             </div>

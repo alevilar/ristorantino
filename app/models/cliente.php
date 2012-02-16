@@ -31,7 +31,7 @@ class Cliente extends AppModel {
 								'order' => ''
 			),
 			'IvaResponsabilidad',
-			'TipoDocumento'
+			'TipoDocumento',
 	);
 
 	var $hasMany = array(
