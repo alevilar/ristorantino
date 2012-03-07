@@ -63,10 +63,10 @@ class Producto extends AppModel {
 
 
         function   beforeSave($options = array()) 
-    {
-        if ( !empty($this->data['Producto']['id']) && !empty($this->data['Producto']['precio'])) {
+    {            
+        if ( isset($options['validate']) && $options['validate'] && !empty($this->data['Producto']['id']) && !empty($this->data['Producto']['precio'])) {
             $precioViejo = $this->field('precio', array('Producto.id'=>$this->data['Producto']['id']));
-            if ($this->data['Producto']['precio'] != $precioViejo ){
+            if ( $this->data['Producto']['precio'] != $precioViejo ){
                                 
                 $this->ProductosPreciosFuturo->create();
                 if ( !$this->ProductosPreciosFuturo->save(array(
@@ -76,20 +76,25 @@ class Producto extends AppModel {
                         )
                 ), false)){
                     return false;
-                    }
-                
-                $this->HistoricoPrecio->create();
-                if ( !$this->HistoricoPrecio->save(array(
-                    'HistoricoPrecio' => array(
-                        'precio' => $precioViejo ,
-                        'producto_id' => $this->data['Producto']['id'],
-                        )
-                ), false)){
-                    return false;
-                    }
+                    }                                
+            } else {
+                $this->data['Producto']['precio'] = $precioViejo;                
             }
-            $this->data['Producto']['precio'] = $precioViejo;
         }
+        
+        if (!empty($precioViejo)) {
+            $this->HistoricoPrecio->create();
+            if ( !$this->HistoricoPrecio->save(array(
+                        'HistoricoPrecio' => array(
+                            'precio' => $precioViejo ,
+                            'producto_id' => $this->data['Producto']['id'],
+                            )
+                    ), false)){
+                        return false;
+            }
+        }
+                    
+                    
         return true;
        
     }

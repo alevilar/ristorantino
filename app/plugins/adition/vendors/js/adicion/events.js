@@ -160,8 +160,6 @@ $(document).bind("mobileinit", function(){
                 '.ui-options-btn',
                 'mouseover'
         ); 
-            
-            
 
         $("#mesa-comanda-add-obs-gen-cancel").unbind('click');
         $("#mesa-comanda-add-obs-gen-aceptar").unbind('click');
@@ -182,24 +180,30 @@ $(document).bind("mobileinit", function(){
      *
      *
      */
+    (function(){
+        var $formulario = $('#form-cambiar-numero'),
+            $paginaJQM = $('#mesa-cambiar-numero');
+        
+        // enrquiqueecr con JQM el listado ed comandas de la mesa en msa-view
+        $paginaJQM.live('pageshow',function(event, ui){ 
 
-    // enrquiqueecr con JQM el listado ed comandas de la mesa en msa-view
-    $('#mesa-cambiar-numero').live('pageshow',function(event, ui){ 
-
-        $('input:first', '#form-cambiar-numero').focus().val('');
-        // Form SUBMITS
-        $('#form-cambiar-numero').bind( 'submit', function(){
-            $raeh.trigger('cambiarNumeroMesa', null, this);
-            return false;
+            $('input:first', $formulario).focus().val('');
+            // Form SUBMITS
+            $formulario.bind( 'submit', function(){
+                console.debug("mirando");
+//                $raeh.trigger('cambiarNumeroMesa', null, this);
+                return false;
+            });
         });
-    });
 
-    // enrquiqueecr con JQM el listado ed comandas de la mesa en msa-view
-    $('#mesa-cambiar-numero').live('pagebeforehide',function(event, ui){ 
-        // Form SUBMITS
-         $('#form-cambiar-numero').unbind( 'submit');
-    });
+        // enrquiqueecr con JQM el listado ed comandas de la mesa en msa-view
+        $paginaJQM.live('pagebeforehide',function(event, ui){ 
+            // Form SUBMITS
+             $formulario.unbind( 'submit');
+        });
 
+    })();
+    
 
     /**
      *

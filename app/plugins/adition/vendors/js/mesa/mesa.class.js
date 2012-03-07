@@ -481,10 +481,20 @@ Mesa.prototype = {
      *  @param value String es el valor a insertar en la BBDD
      *
      */
-    saveField: function ( field, value, callback) {
-        var data;
-        data['data[Mesa][' + field + ']'] = value;
-        return this.editar(data, callback);
+    saveField: function ( field, value, cbkSuccess, cbkError) {
+        var data = {
+            id: this.id(),
+            model: 'Mesa',
+            handleAjaxSuccess : cbkSuccess
+        }
+        data[field] = value;
+        
+        var sendOb = {
+            obj: data,
+            url: this.urlEdit(),
+            error: cbkError
+        }
+        $cakeSaver.send(sendOb);
     },
     
     

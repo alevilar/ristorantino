@@ -148,27 +148,19 @@ $raeh = Risto.Adition.EventHandler = {
     },
 
     cambiarNumeroMesa: function() {
-        
-        var numeroMesa = $(this).find('[name="numero"]').val();
-        var numAnt = Risto.Adition.adicionar.currentMesa().numero( );
-        
-        Risto.Adition.adicionar.currentMesa().numero( numeroMesa );
+        var numeroMesa = $(this).find('[name="numero"]').val(),
+            selfMesa = Risto.Adition.adicionar.currentMesa(),
+            numAnt = selfMesa.numero( ),
+            onSuccess = function(){},
+            onError = function(){
+                selfMesa.numero( numAnt );
+                alert("debido a un error en el servidor, el numero de mesa no fue modificado");
+            }        
+        selfMesa.numero( numeroMesa );
         $('.ui-dialog').dialog('close');
 
-        var sendOb = {
-            obj: {
-                id: Risto.Adition.adicionar.currentMesa().id(),
-                numero: numeroMesa,
-                model: 'Mesa',
-                handleAjaxSuccess: function(){}
-            },
-            url: Risto.Adition.adicionar.currentMesa().urlEdit(),
-            error: function(){
-                Risto.Adition.adicionar.currentMesa().numero( numAnt );
-                alert("debido a un error en el servidor, el numero de mesa no fue modificado");
-            }
-        }
-        $cakeSaver.send(sendOb);
+        selfMesa.saveField('numero', numeroMesa, onSuccess, onError);
+            
         return false;
     },
     
