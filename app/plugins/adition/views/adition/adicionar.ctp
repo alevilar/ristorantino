@@ -335,7 +335,7 @@
                     </li>
                     
                     <li style="width: 49%; float: right;" id="mesa-action-edit" data-bind="attr: {'estado': 'mesa-borrar_'+adn().currentMesa().estado().icon}">
-                        <a href="#" data-href="<? echo $html->url('/mesas/edit/') ?>"><?= $html->image('/adition/css/img/borrarmesa.png')?>Editar</a>
+                        <a href="#" data-href="<? echo $html->url('/mesas/edit/') ?>"><?= $html->image('/adition/css/img/editarmesa.png')?>Editar</a>
                     </li>
                     
                 </ul>
