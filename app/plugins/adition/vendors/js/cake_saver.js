@@ -72,15 +72,8 @@ var $cakeSaver = {
                     if (typeof fn == 'function'){
                         fn.call(data);
                     } else {
-                        try { 
-                            if ( typeof obj.handleAjaxSuccess == 'function' ) {
-                                obj.handleAjaxSuccess(data, url, method);
-                            } else {
-                                throw "$cakeSaver:: EL objeto '"+obj.model+"' pasado para enviar vía ajax no tiene una función llamada 'handleAjaxSuccess'. La misma es indispensable para tratar la respuesta.";
-                            }
-                        }
-                        catch(er) {
-                            jQuery.error(er);
+                        if ( typeof obj.handleAjaxSuccess == 'function' ) {
+                            obj.handleAjaxSuccess(data, url, method);
                         }
                     }
                 }

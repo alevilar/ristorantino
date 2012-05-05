@@ -14,7 +14,7 @@ var Mesa = function(mozo, jsonData) {
         this.numero         = ko.observable( 0 );
         this.menu           = ko.observable( 0 );
         this.descuento_id   = ko.observable( 0 );
-        this.Descuento      = ko.observable( null );
+        this.Descuento      = ko.observable( new Risto.Adition.descuento({porcentaje: undefined}) );
         this.mozo           = ko.observable( new Mozo() );
         this.currentComanda = ko.observable( new Risto.Adition.comandaFabrica() );
         this.Comanda        = ko.observableArray( [] );
@@ -514,10 +514,22 @@ Mesa.prototype = {
         if ( objDescuento ) {
             descuento_id = objDescuento.id;
         }
-        
+
         this.descuento_id( descuento_id );
         this.Descuento( new Risto.Adition.descuento(objDescuento) );
         this.saveField('descuento_id', descuento_id);
+    },
+    
+    
+    /**
+     *
+     * ELimina el descuento que tenia aplicado reseteando los valores 
+     * de descuento_id y el objeto Descuento de la mesa
+     */
+    eliminarDescuento: function() {
+        this.setDescuento({
+             id : 0
+        });
     },
     
     
@@ -589,6 +601,9 @@ Mesa.prototype = {
          *
          *  Depende del cliente.
          *  es un atajo al porcentaje de descuento que tiene el cliente
+         *  si ademas de tener descuento el cliente, la mesa tiene otro descuento aplicado
+         *  los suma
+         *  @return Float
          */
        porcentajeDescuento : function(){
             var porcentaje = 0;
@@ -597,8 +612,46 @@ Mesa.prototype = {
                     porcentaje = this.Cliente().Descuento().porcentaje();
                 }
             }
+            
+            if (this.Descuento() && this.Descuento().hasOwnProperty('porcentaje')){
+                if ( typeof this.Descuento().porcentaje == 'function') {
+                    porcentaje += this.Descuento().porcentaje();
+                }
+            }
+            
             return parseFloat( porcentaje );
         },
+        
+        
+        
+        /**
+         *  Depende del cliente y el descuento de la mesa
+         *  Me dice si la mesa tiene o no un descuento aplicado ya sea
+         *  por el cliente o por el descuento de la mesa
+         *  @return Boolean
+         */
+       tieneDescuento : function(){
+            var tiene = false;
+            if (this.Cliente() && !this.Cliente().hasOwnProperty('length') &&  this.Cliente().Descuento()){
+                if ( typeof this.Cliente().Descuento().porcentaje == 'function') {
+                    if ( this.Cliente().Descuento().porcentaje() > 0 ) {
+                        tiene = true;
+                    }
+                }
+            }
+            
+            if (this.Descuento() && this.Descuento().hasOwnProperty('porcentaje')){
+                if ( typeof this.Descuento().porcentaje == 'function') {
+                    if ( this.Descuento().porcentaje() > 0 ) {
+                        tiene = true;
+                    }
+                }
+            }
+            
+            return tiene;
+        },
+        
+        
         
         /**
          *Devuelve el total aplicandole los descuentos
@@ -622,25 +675,32 @@ Mesa.prototype = {
         
         
         /**
-         *Devuelve el total mostrando un texto
+         *Devuelve el total mostrando un texto con el tipo de factura y, en caso de tenerlo, 
+         *muestra el detalle del descuento que se le aplica
+         *
          *@return String
          */
-        textoTotalCalculado : function(){
-            var total = this.totalCalculadoNeto(), 
+        textoTotalCalculado : function () {
+            var totalNeto = this.totalCalculadoNeto(), 
                 dto = 0, 
-                totalText = '$'+total ;
+                totalNetoText = '$'+totalNeto ;
             
-            
-            if (this.Cliente() && !this.Cliente().hasOwnProperty('length') && this.Cliente().tipofactura().toLowerCase() == 'a'){               
-                totalText = 'Factura "A" '+totalText;
+            if ( this.Cliente() && !this.Cliente().hasOwnProperty('length') ) {
+                if (  this.Cliente().esTipoFactura('A') ) {               
+                    totalNetoText = 'Factura "A" '+totalNetoText;
+                } else if ( this.Cliente().esTipoFactura('B')) {
+                    totalNetoText = 'Factura "B" '+totalNetoText;
+                } else if ( this.Cliente().esTipoFactura('R')) {
+                    totalNetoText = 'Remito '+totalNetoText;
+                }
             }
 
             if ( this.porcentajeDescuento() ) {
-                dto = Math.round( Math.floor( total * this.porcentajeDescuento()  / 100 ) *100 ) /100;
-                totalText = totalText+' - [Dto '+this.porcentajeDescuento()+'%] $'+dto+' = $'+ this.totalCalculado();
+                dto = Math.round( Math.floor( totalNeto * this.porcentajeDescuento()  / 100 ) *100 ) /100;
+                totalNetoText = totalNetoText+' - $'+dto+' (Dto '+this.porcentajeDescuento()+'%) = $'+ this.totalCalculado();
             }
             
-            return totalText;
+            return totalNetoText;
         },
         
         
@@ -667,10 +727,15 @@ Mesa.prototype = {
         },
         
         
+        /**
+         * EN caso de que la mesa tenga un descuento apicado me devuelve el valor 
+         * en formato texto
+         * @return String
+         */
         clienteDescuentoText: function(){
             var texto = '';
-            if ( this.Cliente() &&  this.Cliente().tieneDescuento && this.Cliente().tieneDescuento() != undefined ) {
-                texto = this.Cliente().getDescuentoText();
+            if ( this.tieneDescuento() ) {
+                texto = this.porcentajeDescuento()+"%";
             }
             return texto;
         },

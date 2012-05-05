@@ -5,6 +5,7 @@
  */
 
 Risto.Adition.descuento = function(jsonData){
+    this.descuento = ko.observable( 0 );
     return this.initialize(jsonData);
 }
 

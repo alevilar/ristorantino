@@ -14,6 +14,10 @@ Risto.Adition.cliente.prototype = {
     porcentaje: ko.observable( undefined ),
     
     
+    /**
+     * @return Boolean
+     * Devuelve true o false dependiendo si el cliente tiene o no un descuento aplicado
+     */
     tieneDescuento: function() {
         var porcentaje = undefined;
         if (this.descuento_id() && this.Descuento() && this.Descuento().porcentaje && this.Descuento().porcentaje()) {
@@ -23,6 +27,11 @@ Risto.Adition.cliente.prototype = {
     },
     
     
+    /**
+     * @return String
+     * Devuelve el porcentaje que tiene el cliente con el "%" Concatenado.
+     * Ej: "10%"
+     */
     getDescuentoText : function(){
         var porcentaje = 0;
         if (this.Descuento() && this.Descuento().porcentaje()) {
@@ -37,6 +46,20 @@ Risto.Adition.cliente.prototype = {
             tipo = this.tipofactura();
         }
         return tipo;
+    },
+    
+    /**
+     * @param Char val por ejemplo puede ser "A" o "B", tambien se pueden ingresar en minusculas y da igual
+     * 
+     * Es para determinar si el tipo de factura de este cliente es la consultada
+     * 
+     */
+    esTipoFactura: function( val ){        
+        var ret = false
+        if ( this.tipofactura().toLowerCase() == val.toLowerCase() ) {
+            ret = true;
+        }
+        return ret;
     },
     
     initialize: function( jsonMap ){

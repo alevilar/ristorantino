@@ -5,7 +5,7 @@
 
                         <a href="#mesa-view" data-direction="reverse" data-role="button" data-inline="true">Volver</a>                       
 
-                        <a href="#mesa-view" data-role="button" id="mesa-eliminar-descuento" data-inline="true" href="#mesa-view" data-theme="b" data-direction="reverse" data-bind="visible: adn().currentMesa().Descuento()}">
+                        <a href="#mesa-view" data-role="button" id="mesa-eliminar-descuento" data-inline="true" href="#mesa-view" data-theme="b" data-direction="reverse" data-bind="visible: adn().currentMesa().Descuento()">
                                 Borrar</span>
                         </a>
 

@@ -15,13 +15,17 @@
             
             <div data-role="navbar">
                 <ul id="listado-mozos-para-mesas">
-                    <li  style="width: <?php echo floor( 100/ (count($mozos) +1) )?>%"><a href="#" class="ui-btn-active">Todos</a></li>
+                    <?php 
+                    $anchoCalculadoPorcentual = floor( 100/ (count($mozos) + 1 ));
+                    $anchoCalculadoPorcentualPrimero = 100 - ($anchoCalculadoPorcentual*count($mozos) );
+                    ?>
+                    <li  style="width: <?php echo $anchoCalculadoPorcentualPrimero?>%"><a href="#" class="ui-btn-active">Todos</a></li>
                     <?php
                         foreach ($mozos as $m) {
                             $k = $m['Mozo']['id'];
                             $n = $m['Mozo']['numero'];
                             ?>
-                    <li  style="width: <?php echo floor( 100/ (count($mozos) +1) )?>%">
+                    <li  style="width: <?php echo $anchoCalculadoPorcentual?>%">
                                 <a href="#" data-mozo-id="<?php echo $k?>"><?php echo $n?></a>
                             </li>
                         <?
@@ -287,7 +291,7 @@
                         <a href="<?php echo $html->url('/descuentos/jqm_descuentos')?>" data-rel="dialog">
                                 <?= $html->image('/adition/css/img/customers.png')?>
                             <span>Descuento</span>
-                            <span style="white-space: normal"><span data-bind="text: adn().currentMesa().descuento_id()"></span></span>
+                            <span style="white-space: normal"><span data-bind="text: adn().currentMesa().Descuento().porcentaje"></span></span>
                         </a>
                     </li>
                     

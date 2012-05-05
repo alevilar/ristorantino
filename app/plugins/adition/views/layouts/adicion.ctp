@@ -56,11 +56,13 @@
     //                    'knockout.updateData',
 
                         // OJO !! EL ORDEN IMPORTA !!
+                        
                         '/adition/js/adicion/adition.package',
+                        '/adition/js/cliente/descuento.class',
                         '/adition/js/mozo/mozo.class',
                         '/adition/js/adicion/handle_mesas_recibidas',
                         '/adition/js/adicion/event_handler',
-                        '/adition/js/mesa/estados.class',
+                        '/adition/js/mesa/estados.class',                        
                         '/adition/js/mesa/mesa.class',
                         '/adition/js/comanda/comanda.class',
                         '/adition/js/comanda/fabrica.class',
@@ -68,8 +70,7 @@
                         '/adition/js/menu/producto',
                         '/adition/js/menu/categoria',
                         '/adition/js/menu/sabor.class',
-                        '/adition/js/cliente/cliente.class',
-                        '/adition/js/cliente/descuento.class',
+                        '/adition/js/cliente/cliente.class',                        
                         '/adition/js/mesa/pago.class',
                         '/adition/js/comanda/detalle_comanda.class',
                         '/adition/js/ko_adicion_model',
