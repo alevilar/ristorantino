@@ -10,81 +10,102 @@ t[h]}if(f.isEmptyObject(t)){var u=s.handle;u&&(u.elem=null),delete s.events,dele
  * Dual licensed under the MIT or GPL Version 2 licenses.
  * http://jquery.org/license
  */
-(function(a){var r=a.fn.domManip,d="_tmplitem",q=/^[^<]*(<[\w\W]+>)[^>]*$|\{\{\! /,b={},f={},e,p={key:0,data:{}},i=0,c=0,l=[];function g(g,d,h,e){var c={data:e||(e===0||e===false)?e:d?d.data:{},_wrap:d?d._wrap:null,tmpl:null,parent:d||null,nodes:[],calls:u,nest:w,wrap:x,html:v,update:t};g&&a.extend(c,g,{nodes:[],parent:d});if(h){c.tmpl=h;c._ctnt=c._ctnt||c.tmpl(a,c);c.key=++i;(l.length?f:b)[i]=c}return c}a.each({appendTo:"append",prependTo:"prepend",insertBefore:"before",insertAfter:"after",replaceAll:"replaceWith"},function(f,d){a.fn[f]=function(n){var g=[],i=a(n),k,h,m,l,j=this.length===1&&this[0].parentNode;e=b||{};if(j&&j.nodeType===11&&j.childNodes.length===1&&i.length===1){i[d](this[0]);g=this}else{for(h=0,m=i.length;h<m;h++){c=h;k=(h>0?this.clone(true):this).get();a(i[h])[d](k);g=g.concat(k)}c=0;g=this.pushStack(g,f,i.selector)}l=e;e=null;a.tmpl.complete(l);return g}});a.fn.extend({tmpl:function(d,c,b){return a.tmpl(this[0],d,c,b)},tmplItem:function(){return a.tmplItem(this[0])},template:function(b){return a.template(b,this[0])},domManip:function(d,m,k){if(d[0]&&a.isArray(d[0])){var g=a.makeArray(arguments),h=d[0],j=h.length,i=0,f;while(i<j&&!(f=a.data(h[i++],"tmplItem")));if(f&&c)g[2]=function(b){a.tmpl.afterManip(this,b,k)};r.apply(this,g)}else r.apply(this,arguments);c=0;!e&&a.tmpl.complete(b);return this}});a.extend({tmpl:function(d,h,e,c){var i,k=!c;if(k){c=p;d=a.template[d]||a.template(null,d);f={}}else if(!d){d=c.tmpl;b[c.key]=c;c.nodes=[];c.wrapped&&n(c,c.wrapped);return a(j(c,null,c.tmpl(a,c)))}if(!d)return[];if(typeof h==="function")h=h.call(c||{});e&&e.wrapped&&n(e,e.wrapped);i=a.isArray(h)?a.map(h,function(a){return a?g(e,c,d,a):null}):[g(e,c,d,h)];return k?a(j(c,null,i)):i},tmplItem:function(b){var c;if(b instanceof a)b=b[0];while(b&&b.nodeType===1&&!(c=a.data(b,"tmplItem"))&&(b=b.parentNode));return c||p},template:function(c,b){if(b){if(typeof b==="string")b=o(b);else if(b instanceof a)b=b[0]||{};if(b.nodeType)b=a.data(b,"tmpl")||a.data(b,"tmpl",o(b.innerHTML));return typeof c==="string"?(a.template[c]=b):b}return c?typeof c!=="string"?a.template(null,c):a.template[c]||a.template(null,q.test(c)?c:a(c)):null},encode:function(a){return(""+a).split("<").join("&lt;").split(">").join("&gt;").split('"').join("&#34;").split("'").join("&#39;")}});a.extend(a.tmpl,{tag:{tmpl:{_default:{$2:"null"},open:"if($notnull_1){__=__.concat($item.nest($1,$2));}"},wrap:{_default:{$2:"null"},open:"$item.calls(__,$1,$2);__=[];",close:"call=$item.calls();__=call._.concat($item.wrap(call,__));"},each:{_default:{$2:"$index, $value"},open:"if($notnull_1){$.each($1a,function($2){with(this){",close:"}});}"},"if":{open:"if(($notnull_1) && $1a){",close:"}"},"else":{_default:{$1:"true"},open:"}else if(($notnull_1) && $1a){"},html:{open:"if($notnull_1){__.push($1a);}"},"=":{_default:{$1:"$data"},open:"if($notnull_1){__.push($.encode($1a));}"},"!":{open:""}},complete:function(){b={}},afterManip:function(f,b,d){var e=b.nodeType===11?a.makeArray(b.childNodes):b.nodeType===1?[b]:[];d.call(f,b);m(e);c++}});function j(e,g,f){var b,c=f?a.map(f,function(a){return typeof a==="string"?e.key?a.replace(/(<\w+)(?=[\s>])(?![^>]*_tmplitem)([^>]*)/g,"$1 "+d+'="'+e.key+'" $2'):a:j(a,e,a._ctnt)}):e;if(g)return c;c=c.join("");c.replace(/^\s*([^<\s][^<]*)?(<[\w\W]+>)([^>]*[^>\s])?\s*$/,function(f,c,e,d){b=a(e).get();m(b);if(c)b=k(c).concat(b);if(d)b=b.concat(k(d))});return b?b:k(c)}function k(c){var b=document.createElement("div");b.innerHTML=c;return a.makeArray(b.childNodes)}function o(b){return new Function("jQuery","$item","var $=jQuery,call,__=[],$data=$item.data;with($data){__.push('"+a.trim(b).replace(/([\\'])/g,"\\$1").replace(/[\r\t\n]/g," ").replace(/\$\{([^\}]*)\}/g,"{{= $1}}").replace(/\{\{(\/?)(\w+|.)(?:\(((?:[^\}]|\}(?!\}))*?)?\))?(?:\s+(.*?)?)?(\(((?:[^\}]|\}(?!\}))*?)\))?\s*\}\}/g,function(m,l,k,g,b,c,d){var j=a.tmpl.tag[k],i,e,f;if(!j)throw"Unknown template tag: "+k;i=j._default||[];if(c&&!/\w$/.test(b)){b+=c;c=""}if(b){b=h(b);d=d?","+h(d)+")":c?")":"";e=c?b.indexOf(".")>-1?b+h(c):"("+b+").call($item"+d:b;f=c?e:"(typeof("+b+")==='function'?("+b+").call($item):("+b+"))"}else f=e=i.$1||"null";g=h(g);return"');"+j[l?"close":"open"].split("$notnull_1").join(b?"typeof("+b+")!=='undefined' && ("+b+")!=null":"true").split("$1a").join(f).split("$1").join(e).split("$2").join(g||i.$2||"")+"__.push('"})+"');}return __;")}function n(c,b){c._wrap=j(c,true,a.isArray(b)?b:[q.test(b)?b:a(b).html()]).join("")}function h(a){return a?a.replace(/\\'/g,"'").replace(/\\\\/g,"\\"):null}function s(b){var a=document.createElement("div");a.appendChild(b.cloneNode(true));return a.innerHTML}function m(o){var n="_"+c,k,j,l={},e,p,h;for(e=0,p=o.length;e<p;e++){if((k=o[e]).nodeType!==1)continue;j=k.getElementsByTagName("*");for(h=j.length-1;h>=0;h--)m(j[h]);m(k)}function m(j){var p,h=j,k,e,m;if(m=j.getAttribute(d)){while(h.parentNode&&(h=h.parentNode).nodeType===1&&!(p=h.getAttribute(d)));if(p!==m){h=h.parentNode?h.nodeType===11?0:h.getAttribute(d)||0:0;if(!(e=b[m])){e=f[m];e=g(e,b[h]||f[h]);e.key=++i;b[i]=e}c&&o(m)}j.removeAttribute(d)}else if(c&&(e=a.data(j,"tmplItem"))){o(e.key);b[e.key]=e;h=a.data(j.parentNode,"tmplItem");h=h?h.key:0}if(e){k=e;while(k&&k.key!=h){k.nodes.push(j);k=k.parent}delete e._ctnt;delete e._wrap;a.data(j,"tmplItem",e)}function o(a){a=a+n;e=l[a]=l[a]||g(e,b[e.parent.key+n]||e.parent)}}}function u(a,d,c,b){if(!a)return l.pop();l.push({_:a,tmpl:d,item:this,data:c,options:b})}function w(d,c,b){return a.tmpl(a.template(d),c,b,this)}function x(b,d){var c=b.options||{};c.wrapped=d;return a.tmpl(a.template(b.tmpl),b.data,c,b.item)}function v(d,c){var b=this._wrap;return a.map(a(a.isArray(b)?b.join(""):b).filter(d||"*"),function(a){return c?a.innerText||a.textContent:a.outerHTML||s(a)})}function t(){var b=this.nodes;a.tmpl(null,null,null,this).insertBefore(b[0]);a(b).remove()}})(jQuery);// Knockout JavaScript library v1.2.1
+(function(a){var r=a.fn.domManip,d="_tmplitem",q=/^[^<]*(<[\w\W]+>)[^>]*$|\{\{\! /,b={},f={},e,p={key:0,data:{}},i=0,c=0,l=[];function g(g,d,h,e){var c={data:e||(e===0||e===false)?e:d?d.data:{},_wrap:d?d._wrap:null,tmpl:null,parent:d||null,nodes:[],calls:u,nest:w,wrap:x,html:v,update:t};g&&a.extend(c,g,{nodes:[],parent:d});if(h){c.tmpl=h;c._ctnt=c._ctnt||c.tmpl(a,c);c.key=++i;(l.length?f:b)[i]=c}return c}a.each({appendTo:"append",prependTo:"prepend",insertBefore:"before",insertAfter:"after",replaceAll:"replaceWith"},function(f,d){a.fn[f]=function(n){var g=[],i=a(n),k,h,m,l,j=this.length===1&&this[0].parentNode;e=b||{};if(j&&j.nodeType===11&&j.childNodes.length===1&&i.length===1){i[d](this[0]);g=this}else{for(h=0,m=i.length;h<m;h++){c=h;k=(h>0?this.clone(true):this).get();a(i[h])[d](k);g=g.concat(k)}c=0;g=this.pushStack(g,f,i.selector)}l=e;e=null;a.tmpl.complete(l);return g}});a.fn.extend({tmpl:function(d,c,b){return a.tmpl(this[0],d,c,b)},tmplItem:function(){return a.tmplItem(this[0])},template:function(b){return a.template(b,this[0])},domManip:function(d,m,k){if(d[0]&&a.isArray(d[0])){var g=a.makeArray(arguments),h=d[0],j=h.length,i=0,f;while(i<j&&!(f=a.data(h[i++],"tmplItem")));if(f&&c)g[2]=function(b){a.tmpl.afterManip(this,b,k)};r.apply(this,g)}else r.apply(this,arguments);c=0;!e&&a.tmpl.complete(b);return this}});a.extend({tmpl:function(d,h,e,c){var i,k=!c;if(k){c=p;d=a.template[d]||a.template(null,d);f={}}else if(!d){d=c.tmpl;b[c.key]=c;c.nodes=[];c.wrapped&&n(c,c.wrapped);return a(j(c,null,c.tmpl(a,c)))}if(!d)return[];if(typeof h==="function")h=h.call(c||{});e&&e.wrapped&&n(e,e.wrapped);i=a.isArray(h)?a.map(h,function(a){return a?g(e,c,d,a):null}):[g(e,c,d,h)];return k?a(j(c,null,i)):i},tmplItem:function(b){var c;if(b instanceof a)b=b[0];while(b&&b.nodeType===1&&!(c=a.data(b,"tmplItem"))&&(b=b.parentNode));return c||p},template:function(c,b){if(b){if(typeof b==="string")b=o(b);else if(b instanceof a)b=b[0]||{};if(b.nodeType)b=a.data(b,"tmpl")||a.data(b,"tmpl",o(b.innerHTML));return typeof c==="string"?(a.template[c]=b):b}return c?typeof c!=="string"?a.template(null,c):a.template[c]||a.template(null,q.test(c)?c:a(c)):null},encode:function(a){return(""+a).split("<").join("&lt;").split(">").join("&gt;").split('"').join("&#34;").split("'").join("&#39;")}});a.extend(a.tmpl,{tag:{tmpl:{_default:{$2:"null"},open:"if($notnull_1){__=__.concat($item.nest($1,$2));}"},wrap:{_default:{$2:"null"},open:"$item.calls(__,$1,$2);__=[];",close:"call=$item.calls();__=call._.concat($item.wrap(call,__));"},each:{_default:{$2:"$index, $value"},open:"if($notnull_1){$.each($1a,function($2){with(this){",close:"}});}"},"if":{open:"if(($notnull_1) && $1a){",close:"}"},"else":{_default:{$1:"true"},open:"}else if(($notnull_1) && $1a){"},html:{open:"if($notnull_1){__.push($1a);}"},"=":{_default:{$1:"$data"},open:"if($notnull_1){__.push($.encode($1a));}"},"!":{open:""}},complete:function(){b={}},afterManip:function(f,b,d){var e=b.nodeType===11?a.makeArray(b.childNodes):b.nodeType===1?[b]:[];d.call(f,b);m(e);c++}});function j(e,g,f){var b,c=f?a.map(f,function(a){return typeof a==="string"?e.key?a.replace(/(<\w+)(?=[\s>])(?![^>]*_tmplitem)([^>]*)/g,"$1 "+d+'="'+e.key+'" $2'):a:j(a,e,a._ctnt)}):e;if(g)return c;c=c.join("");c.replace(/^\s*([^<\s][^<]*)?(<[\w\W]+>)([^>]*[^>\s])?\s*$/,function(f,c,e,d){b=a(e).get();m(b);if(c)b=k(c).concat(b);if(d)b=b.concat(k(d))});return b?b:k(c)}function k(c){var b=document.createElement("div");b.innerHTML=c;return a.makeArray(b.childNodes)}function o(b){return new Function("jQuery","$item","var $=jQuery,call,__=[],$data=$item.data;with($data){__.push('"+a.trim(b).replace(/([\\'])/g,"\\$1").replace(/[\r\t\n]/g," ").replace(/\$\{([^\}]*)\}/g,"{{= $1}}").replace(/\{\{(\/?)(\w+|.)(?:\(((?:[^\}]|\}(?!\}))*?)?\))?(?:\s+(.*?)?)?(\(((?:[^\}]|\}(?!\}))*?)\))?\s*\}\}/g,function(m,l,k,g,b,c,d){var j=a.tmpl.tag[k],i,e,f;if(!j)throw"Unknown template tag: "+k;i=j._default||[];if(c&&!/\w$/.test(b)){b+=c;c=""}if(b){b=h(b);d=d?","+h(d)+")":c?")":"";e=c?b.indexOf(".")>-1?b+h(c):"("+b+").call($item"+d:b;f=c?e:"(typeof("+b+")==='function'?("+b+").call($item):("+b+"))"}else f=e=i.$1||"null";g=h(g);return"');"+j[l?"close":"open"].split("$notnull_1").join(b?"typeof("+b+")!=='undefined' && ("+b+")!=null":"true").split("$1a").join(f).split("$1").join(e).split("$2").join(g||i.$2||"")+"__.push('"})+"');}return __;")}function n(c,b){c._wrap=j(c,true,a.isArray(b)?b:[q.test(b)?b:a(b).html()]).join("")}function h(a){return a?a.replace(/\\'/g,"'").replace(/\\\\/g,"\\"):null}function s(b){var a=document.createElement("div");a.appendChild(b.cloneNode(true));return a.innerHTML}function m(o){var n="_"+c,k,j,l={},e,p,h;for(e=0,p=o.length;e<p;e++){if((k=o[e]).nodeType!==1)continue;j=k.getElementsByTagName("*");for(h=j.length-1;h>=0;h--)m(j[h]);m(k)}function m(j){var p,h=j,k,e,m;if(m=j.getAttribute(d)){while(h.parentNode&&(h=h.parentNode).nodeType===1&&!(p=h.getAttribute(d)));if(p!==m){h=h.parentNode?h.nodeType===11?0:h.getAttribute(d)||0:0;if(!(e=b[m])){e=f[m];e=g(e,b[h]||f[h]);e.key=++i;b[i]=e}c&&o(m)}j.removeAttribute(d)}else if(c&&(e=a.data(j,"tmplItem"))){o(e.key);b[e.key]=e;h=a.data(j.parentNode,"tmplItem");h=h?h.key:0}if(e){k=e;while(k&&k.key!=h){k.nodes.push(j);k=k.parent}delete e._ctnt;delete e._wrap;a.data(j,"tmplItem",e)}function o(a){a=a+n;e=l[a]=l[a]||g(e,b[e.parent.key+n]||e.parent)}}}function u(a,d,c,b){if(!a)return l.pop();l.push({_:a,tmpl:d,item:this,data:c,options:b})}function w(d,c,b){return a.tmpl(a.template(d),c,b,this)}function x(b,d){var c=b.options||{};c.wrapped=d;return a.tmpl(a.template(b.tmpl),b.data,c,b.item)}function v(d,c){var b=this._wrap;return a.map(a(a.isArray(b)?b.join(""):b).filter(d||"*"),function(a){return c?a.innerText||a.textContent:a.outerHTML||s(a)})}function t(){var b=this.nodes;a.tmpl(null,null,null,this).insertBefore(b[0]);a(b).remove()}})(jQuery);// Knockout JavaScript library v2.0.0
 // (c) Steven Sanderson - http://knockoutjs.com/
 // License: MIT (http://www.opensource.org/licenses/mit-license.php)
 
 (function(window,undefined){ 
-function c(e){throw e;}var m=void 0,o=null,p=window.ko={};p.b=function(e,d){for(var b=e.split("."),a=window,f=0;f<b.length-1;f++)a=a[b[f]];a[b[b.length-1]]=d};p.i=function(e,d,b){e[d]=b};
-p.a=new function(){function e(a,b){if(a.tagName!="INPUT"||!a.type)return!1;if(b.toLowerCase()!="click")return!1;var d=a.type.toLowerCase();return d=="checkbox"||d=="radio"}var d=/^(\s|\u00A0)+|(\s|\u00A0)+$/g,b=/MSIE 6/i.test(navigator.userAgent),a=/MSIE 7/i.test(navigator.userAgent),f={},h={};f[/Firefox\/2/i.test(navigator.userAgent)?"KeyboardEvent":"UIEvents"]=["keyup","keydown","keypress"];f.MouseEvents=["click","dblclick","mousedown","mouseup","mousemove","mouseover","mouseout","mouseenter","mouseleave"];
-for(var g in f){var i=f[g];if(i.length)for(var k=0,j=i.length;k<j;k++)h[i[k]]=g}return{ca:["authenticity_token",/^__RequestVerificationToken(_.*)?$/],g:function(a,b){for(var d=0,e=a.length;d<e;d++)b(a[d])},h:function(a,b){if(typeof a.indexOf=="function")return a.indexOf(b);for(var d=0,e=a.length;d<e;d++)if(a[d]===b)return d;return-1},xa:function(a,b,d){for(var e=0,f=a.length;e<f;e++)if(b.call(d,a[e]))return a[e];return o},N:function(a,b){var d=p.a.h(a,b);d>=0&&a.splice(d,1)},L:function(a){for(var a=
-a||[],b=[],d=0,e=a.length;d<e;d++)p.a.h(b,a[d])<0&&b.push(a[d]);return b},M:function(a,b){for(var a=a||[],d=[],e=0,f=a.length;e<f;e++)d.push(b(a[e]));return d},K:function(a,b){for(var a=a||[],d=[],e=0,f=a.length;e<f;e++)b(a[e])&&d.push(a[e]);return d},u:function(a,b){for(var d=0,e=b.length;d<e;d++)a.push(b[d])},Q:function(a){for(;a.firstChild;)p.removeNode(a.firstChild)},Xa:function(a,b){p.a.Q(a);b&&p.a.g(b,function(b){a.appendChild(b)})},ka:function(a,b){var d=a.nodeType?[a]:a;if(d.length>0){for(var e=
-d[0],f=e.parentNode,h=0,g=b.length;h<g;h++)f.insertBefore(b[h],e);h=0;for(g=d.length;h<g;h++)p.removeNode(d[h])}},ma:function(a,b){navigator.userAgent.indexOf("MSIE 6")>=0?a.setAttribute("selected",b):a.selected=b},da:function(a,b){if(!a||a.nodeType!=1)return[];var d=[];a.getAttribute(b)!==o&&d.push(a);for(var e=a.getElementsByTagName("*"),f=0,h=e.length;f<h;f++)e[f].getAttribute(b)!==o&&d.push(e[f]);return d},k:function(a){return(a||"").replace(d,"")},ab:function(a,b){for(var d=[],e=(a||"").split(b),
-f=0,h=e.length;f<h;f++){var g=p.a.k(e[f]);g!==""&&d.push(g)}return d},Za:function(a,b){a=a||"";if(b.length>a.length)return!1;return a.substring(0,b.length)===b},Ha:function(a,b){if(b===m)return(new Function("return "+a))();return(new Function("sc","with(sc) { return ("+a+") }"))(b)},Fa:function(a,b){if(b.compareDocumentPosition)return(b.compareDocumentPosition(a)&16)==16;for(;a!=o;){if(a==b)return!0;a=a.parentNode}return!1},P:function(a){return p.a.Fa(a,document)},t:function(a,b,d){if(typeof jQuery!=
-"undefined"){if(e(a,b))var f=d,d=function(a,b){var d=this.checked;if(b)this.checked=b.Aa!==!0;f.call(this,a);this.checked=d};jQuery(a).bind(b,d)}else typeof a.addEventListener=="function"?a.addEventListener(b,d,!1):typeof a.attachEvent!="undefined"?a.attachEvent("on"+b,function(b){d.call(a,b)}):c(Error("Browser doesn't support addEventListener or attachEvent"))},qa:function(a,b){(!a||!a.nodeType)&&c(Error("element must be a DOM node when calling triggerEvent"));if(typeof jQuery!="undefined"){var d=
-[];e(a,b)&&d.push({Aa:a.checked});jQuery(a).trigger(b,d)}else if(typeof document.createEvent=="function")typeof a.dispatchEvent=="function"?(d=document.createEvent(h[b]||"HTMLEvents"),d.initEvent(b,!0,!0,window,0,0,0,0,0,!1,!1,!1,!1,0,a),a.dispatchEvent(d)):c(Error("The supplied element doesn't support dispatchEvent"));else if(typeof a.fireEvent!="undefined"){if(b=="click"&&a.tagName=="INPUT"&&(a.type.toLowerCase()=="checkbox"||a.type.toLowerCase()=="radio"))a.checked=a.checked!==!0;a.fireEvent("on"+
-b)}else c(Error("Browser doesn't support triggering events"))},d:function(a){return p.C(a)?a():a},Ea:function(a,b){return p.a.h((a.className||"").split(/\s+/),b)>=0},pa:function(a,b,d){var e=p.a.Ea(a,b);if(d&&!e)a.className=(a.className||"")+" "+b;else if(e&&!d){for(var d=(a.className||"").split(/\s+/),e="",f=0;f<d.length;f++)d[f]!=b&&(e+=d[f]+" ");a.className=p.a.k(e)}},Ua:function(a,b){for(var a=p.a.d(a),b=p.a.d(b),d=[],e=a;e<=b;e++)d.push(e);return d},U:function(a){for(var b=[],d=0,e=a.length;d<
-e;d++)b.push(a[d]);return b},S:b,Ma:a,ea:function(a,b){for(var d=p.a.U(a.getElementsByTagName("INPUT")).concat(p.a.U(a.getElementsByTagName("TEXTAREA"))),e=typeof b=="string"?function(a){return a.name===b}:function(a){return b.test(a.name)},f=[],h=d.length-1;h>=0;h--)e(d[h])&&f.push(d[h]);return f},F:function(a){if(typeof a=="string"&&(a=p.a.k(a))){if(window.JSON&&window.JSON.parse)return window.JSON.parse(a);return(new Function("return "+a))()}return o},Y:function(a){(typeof JSON=="undefined"||typeof JSON.stringify==
-"undefined")&&c(Error("Cannot find JSON.stringify(). Some browsers (e.g., IE < 8) don't support it natively, but you can overcome this by adding a script reference to json2.js, downloadable from http://www.json.org/json2.js"));return JSON.stringify(p.a.d(a))},Ta:function(a,b,d){var d=d||{},e=d.params||{},f=d.includeFields||this.ca,h=a;if(typeof a=="object"&&a.tagName=="FORM")for(var h=a.action,g=f.length-1;g>=0;g--)for(var i=p.a.ea(a,f[g]),k=i.length-1;k>=0;k--)e[i[k].name]=i[k].value;var b=p.a.d(b),
-j=document.createElement("FORM");j.style.display="none";j.action=h;j.method="post";for(var u in b)a=document.createElement("INPUT"),a.name=u,a.value=p.a.Y(p.a.d(b[u])),j.appendChild(a);for(u in e)a=document.createElement("INPUT"),a.name=u,a.value=e[u],j.appendChild(a);document.body.appendChild(j);d.submitter?d.submitter(j):j.submit();setTimeout(function(){j.parentNode.removeChild(j)},0)}}};p.b("ko.utils",p.a);p.b("ko.utils.arrayForEach",p.a.g);p.b("ko.utils.arrayFirst",p.a.xa);
-p.b("ko.utils.arrayFilter",p.a.K);p.b("ko.utils.arrayGetDistinctValues",p.a.L);p.b("ko.utils.arrayIndexOf",p.a.h);p.b("ko.utils.arrayMap",p.a.M);p.b("ko.utils.arrayPushAll",p.a.u);p.b("ko.utils.arrayRemoveItem",p.a.N);p.b("ko.utils.fieldsIncludedWithJsonPost",p.a.ca);p.b("ko.utils.getElementsHavingAttribute",p.a.da);p.b("ko.utils.getFormFields",p.a.ea);p.b("ko.utils.postJson",p.a.Ta);p.b("ko.utils.parseJson",p.a.F);p.b("ko.utils.registerEventHandler",p.a.t);p.b("ko.utils.stringifyJson",p.a.Y);
-p.b("ko.utils.range",p.a.Ua);p.b("ko.utils.toggleDomNodeCssClass",p.a.pa);p.b("ko.utils.triggerEvent",p.a.qa);p.b("ko.utils.unwrapObservable",p.a.d);Function.prototype.bind||(Function.prototype.bind=function(e){var d=this,b=Array.prototype.slice.call(arguments),e=b.shift();return function(){return d.apply(e,b.concat(Array.prototype.slice.call(arguments)))}});
-p.a.e=new function(){var e=0,d="__ko__"+(new Date).getTime(),b={};return{get:function(a,b){var d=p.a.e.getAll(a,!1);return d===m?m:d[b]},set:function(a,b,d){d===m&&p.a.e.getAll(a,!1)===m||(p.a.e.getAll(a,!0)[b]=d)},getAll:function(a,f){var h=a[d];if(!h){if(!f)return;h=a[d]="ko"+e++;b[h]={}}return b[h]},clear:function(a){var e=a[d];e&&(delete b[e],a[d]=o)}}};
-p.a.p=new function(){function e(a,d){var e=p.a.e.get(a,b);e===m&&d&&(e=[],p.a.e.set(a,b,e));return e}function d(a){var b=e(a,!1);if(b)for(var b=b.slice(0),d=0;d<b.length;d++)b[d](a);p.a.e.clear(a);typeof jQuery=="function"&&typeof jQuery.cleanData=="function"&&jQuery.cleanData([a])}var b="__ko_domNodeDisposal__"+(new Date).getTime();return{ba:function(a,b){typeof b!="function"&&c(Error("Callback must be a function"));e(a,!0).push(b)},ja:function(a,d){var h=e(a,!1);h&&(p.a.N(h,d),h.length==0&&p.a.e.set(a,
-b,m))},v:function(a){if(!(a.nodeType!=1&&a.nodeType!=9)){d(a);var b=[];p.a.u(b,a.getElementsByTagName("*"));for(var a=0,e=b.length;a<e;a++)d(b[a])}},removeNode:function(a){p.v(a);a.parentNode&&a.parentNode.removeChild(a)}}};p.v=p.a.p.v;p.removeNode=p.a.p.removeNode;p.b("ko.cleanNode",p.v);p.b("ko.removeNode",p.removeNode);p.b("ko.utils.domNodeDisposal",p.a.p);p.b("ko.utils.domNodeDisposal.addDisposeCallback",p.a.p.ba);p.b("ko.utils.domNodeDisposal.removeDisposeCallback",p.a.p.ja);
-p.a.Sa=function(e){if(typeof jQuery!="undefined")e=jQuery.clean([e]);else{var d=p.a.k(e).toLowerCase(),b=document.createElement("div"),d=d.match(/^<(thead|tbody|tfoot)/)&&[1,"<table>","</table>"]||!d.indexOf("<tr")&&[2,"<table><tbody>","</tbody></table>"]||(!d.indexOf("<td")||!d.indexOf("<th"))&&[3,"<table><tbody><tr>","</tr></tbody></table>"]||[0,"",""];for(b.innerHTML=d[1]+e+d[2];d[0]--;)b=b.lastChild;e=p.a.U(b.childNodes)}return e};
-p.a.Ya=function(e,d){p.a.Q(e);if(d!==o&&d!==m)if(typeof d!="string"&&(d=d.toString()),typeof jQuery!="undefined")jQuery(e).html(d);else for(var b=p.a.Sa(d),a=0;a<b.length;a++)e.appendChild(b[a])};
-p.l=function(){function e(){return((1+Math.random())*4294967296|0).toString(16).substring(1)}function d(a,b){if(a)if(a.nodeType==8){var e=p.l.ha(a.nodeValue);e!=o&&b.push({Da:a,Pa:e})}else if(a.nodeType==1)for(var e=0,g=a.childNodes,i=g.length;e<i;e++)d(g[e],b)}var b={};return{V:function(a){typeof a!="function"&&c(Error("You can only pass a function to ko.memoization.memoize()"));var d=e()+e();b[d]=a;return"<\!--[ko_memo:"+d+"]--\>"},ra:function(a,d){var e=b[a];e===m&&c(Error("Couldn't find any memo with ID "+
-a+". Perhaps it's already been unmemoized."));try{return e.apply(o,d||[]),!0}finally{delete b[a]}},sa:function(a,b){var e=[];d(a,e);for(var g=0,i=e.length;g<i;g++){var k=e[g].Da,j=[k];b&&p.a.u(j,b);p.l.ra(e[g].Pa,j);k.nodeValue="";k.parentNode&&k.parentNode.removeChild(k)}},ha:function(a){return(a=a.match(/^\[ko_memo\:(.*?)\]$/))?a[1]:o}}}();p.b("ko.memoization",p.l);p.b("ko.memoization.memoize",p.l.V);p.b("ko.memoization.unmemoize",p.l.ra);p.b("ko.memoization.parseMemoText",p.l.ha);
-p.b("ko.memoization.unmemoizeDomNodeAndDescendants",p.l.sa);p.$a=function(e,d){this.za=e;this.n=function(){this.La=!0;d()}.bind(this);p.i(this,"dispose",this.n)};p.Z=function(){var e=[];this.$=function(d,b){var a=b?d.bind(b):d,f=new p.$a(a,function(){p.a.N(e,f)});e.push(f);return f};this.z=function(d){p.a.g(e.slice(0),function(b){b&&b.La!==!0&&b.za(d)})};this.Ja=function(){return e.length};p.i(this,"subscribe",this.$);p.i(this,"notifySubscribers",this.z);p.i(this,"getSubscriptionsCount",this.Ja)};
-p.ga=function(e){return typeof e.$=="function"&&typeof e.z=="function"};p.b("ko.subscribable",p.Z);p.b("ko.isSubscribable",p.ga);p.A=function(){var e=[];return{ya:function(){e.push([])},end:function(){return e.pop()},ia:function(d){p.ga(d)||c("Only subscribable things can act as dependencies");e.length>0&&e[e.length-1].push(d)}}}();var x={undefined:!0,"boolean":!0,number:!0,string:!0};function y(e,d){return e===o||typeof e in x?e===d:!1}
-p.s=function(e){function d(){if(arguments.length>0){if(!d.equalityComparer||!d.equalityComparer(b,arguments[0]))b=arguments[0],d.z(b);return this}else return p.A.ia(d),b}var b=e;d.o=p.s;d.H=function(){d.z(b)};d.equalityComparer=y;p.Z.call(d);p.i(d,"valueHasMutated",d.H);return d};p.C=function(e){if(e===o||e===m||e.o===m)return!1;if(e.o===p.s)return!0;return p.C(e.o)};p.D=function(e){if(typeof e=="function"&&e.o===p.s)return!0;if(typeof e=="function"&&e.o===p.j&&e.Ka)return!0;return!1};
-p.b("ko.observable",p.s);p.b("ko.isObservable",p.C);p.b("ko.isWriteableObservable",p.D);
-p.Ra=function(e){arguments.length==0&&(e=[]);e!==o&&e!==m&&!("length"in e)&&c(Error("The argument passed when initializing an observable array must be an array, or null, or undefined."));var d=new p.s(e);p.a.g(["pop","push","reverse","shift","sort","splice","unshift"],function(b){d[b]=function(){var a=d(),a=a[b].apply(a,arguments);d.H();return a}});p.a.g(["slice"],function(b){d[b]=function(){var a=d();return a[b].apply(a,arguments)}});d.remove=function(b){for(var a=d(),e=[],h=[],g=typeof b=="function"?
-b:function(a){return a===b},i=0,k=a.length;i<k;i++){var j=a[i];g(j)?h.push(j):e.push(j)}d(e);return h};d.Va=function(b){if(b===m){var a=d();d([]);return a}if(!b)return[];return d.remove(function(a){return p.a.h(b,a)>=0})};d.O=function(b){for(var a=d(),e=typeof b=="function"?b:function(a){return a===b},h=a.length-1;h>=0;h--)e(a[h])&&(a[h]._destroy=!0);d.H()};d.Ca=function(b){if(b===m)return d.O(function(){return!0});if(!b)return[];return d.O(function(a){return p.a.h(b,a)>=0})};d.indexOf=function(b){var a=
-d();return p.a.h(a,b)};d.replace=function(b,a){var e=d.indexOf(b);e>=0&&(d()[e]=a,d.H())};p.i(d,"remove",d.remove);p.i(d,"removeAll",d.Va);p.i(d,"destroy",d.O);p.i(d,"destroyAll",d.Ca);p.i(d,"indexOf",d.indexOf);return d};p.b("ko.observableArray",p.Ra);
-p.j=function(e,d,b){function a(){p.a.g(n,function(a){a.n()});n=[]}function f(b){a();p.a.g(b,function(a){n.push(a.$(h))})}function h(){if(k&&typeof b.disposeWhen=="function"&&b.disposeWhen())g.n();else{try{p.A.ya(),i=b.owner?b.read.call(b.owner):b.read()}finally{var a=p.a.L(p.A.end());f(a)}g.z(i);k=!0}}function g(){if(arguments.length>0)if(typeof b.write==="function"){var a=arguments[0];b.owner?b.write.call(b.owner,a):b.write(a)}else c("Cannot write a value to a dependentObservable unless you specify a 'write' option. If you wish to read the current value, don't pass any parameters.");
-else return k||h(),p.A.ia(g),i}var i,k=!1;e&&typeof e=="object"?b=e:(b=b||{},b.read=e||b.read,b.owner=d||b.owner);typeof b.read!="function"&&c("Pass a function that returns the value of the dependentObservable");var j=typeof b.disposeWhenNodeIsRemoved=="object"?b.disposeWhenNodeIsRemoved:o,l=o;if(j){l=function(){g.n()};p.a.p.ba(j,l);var q=b.disposeWhen;b.disposeWhen=function(){return!p.a.P(j)||typeof q=="function"&&q()}}var n=[];g.o=p.j;g.Ia=function(){return n.length};g.Ka=typeof b.write==="function";
-g.n=function(){j&&p.a.p.ja(j,l);a()};p.Z.call(g);b.deferEvaluation!==!0&&h();p.i(g,"dispose",g.n);p.i(g,"getDependenciesCount",g.Ia);return g};p.j.o=p.s;p.b("ko.dependentObservable",p.j);
-(function(){function e(a,f,h){h=h||new b;a=f(a);if(!(typeof a=="object"&&a!==o&&a!==m))return a;var g=a instanceof Array?[]:{};h.save(a,g);d(a,function(b){var d=f(a[b]);switch(typeof d){case "boolean":case "number":case "string":case "function":g[b]=d;break;case "object":case "undefined":var j=h.get(d);g[b]=j!==m?j:e(d,f,h)}});return g}function d(a,b){if(a instanceof Array)for(var d=0;d<a.length;d++)b(d);else for(d in a)b(d)}function b(){var a=[],b=[];this.save=function(d,e){var i=p.a.h(a,d);i>=0?
-b[i]=e:(a.push(d),b.push(e))};this.get=function(d){d=p.a.h(a,d);return d>=0?b[d]:m}}p.oa=function(a){arguments.length==0&&c(Error("When calling ko.toJS, pass the object you want to convert."));return e(a,function(a){for(var b=0;p.C(a)&&b<10;b++)a=a();return a})};p.toJSON=function(a){a=p.oa(a);return p.a.Y(a)}})();p.b("ko.toJS",p.oa);p.b("ko.toJSON",p.toJSON);
-p.f={m:function(e){if(e.tagName=="OPTION"){if(e.__ko__hasDomDataOptionValue__===!0)return p.a.e.get(e,p.c.options.W);return e.getAttribute("value")}else return e.tagName=="SELECT"?e.selectedIndex>=0?p.f.m(e.options[e.selectedIndex]):m:e.value},I:function(e,d){if(e.tagName=="OPTION")switch(typeof d){case "string":case "number":p.a.e.set(e,p.c.options.W,m);"__ko__hasDomDataOptionValue__"in e&&delete e.__ko__hasDomDataOptionValue__;e.value=d;break;default:p.a.e.set(e,p.c.options.W,d),e.__ko__hasDomDataOptionValue__=
-!0,e.value=""}else if(e.tagName=="SELECT")for(var b=e.options.length-1;b>=0;b--){if(p.f.m(e.options[b])==d){e.selectedIndex=b;break}}else{if(d===o||d===m)d="";e.value=d}}};p.b("ko.selectExtensions",p.f);p.b("ko.selectExtensions.readValue",p.f.m);p.b("ko.selectExtensions.writeValue",p.f.I);
-p.r=function(){function e(a,b){return a.replace(d,function(a,d){return b[d]})}var d=/\[ko_token_(\d+)\]/g,b=/^[\_$a-z][\_$a-z0-9]*(\[.*?\])*(\.[\_$a-z][\_$a-z0-9]*(\[.*?\])*)*$/i,a=["true","false"];return{F:function(a){a=p.a.k(a);if(a.length<3)return{};for(var b=[],d=o,i,k=a.charAt(0)=="{"?1:0;k<a.length;k++){var j=a.charAt(k);if(d===o)switch(j){case '"':case "'":case "/":d=k;i=j;break;case "{":d=k;i="}";break;case "[":d=k,i="]"}else if(j==i){j=a.substring(d,k+1);b.push(j);var l="[ko_token_"+(b.length-
-1)+"]",a=a.substring(0,d)+l+a.substring(k+1);k-=j.length-l.length;d=o}}d={};a=a.split(",");i=0;for(k=a.length;i<k;i++){var l=a[i],q=l.indexOf(":");q>0&&q<l.length-1&&(j=p.a.k(l.substring(0,q)),l=p.a.k(l.substring(q+1)),j.charAt(0)=="{"&&(j=j.substring(1)),l.charAt(l.length-1)=="}"&&(l=l.substring(0,l.length-1)),j=p.a.k(e(j,b)),l=p.a.k(e(l,b)),d[j]=l)}return d},R:function(d){var e=p.r.F(d),g=[],i;for(i in e){var k=e[i],j;j=k;j=p.a.h(a,p.a.k(j).toLowerCase())>=0?!1:j.match(b)!==o;j&&(g.length>0&&g.push(", "),
-g.push(i+" : function(__ko_value) { "+k+" = __ko_value; }"))}g.length>0&&(d=d+", '_ko_property_writers' : { "+g.join("")+" } ");return d}}}();p.b("ko.jsonExpressionRewriting",p.r);p.b("ko.jsonExpressionRewriting.parseJson",p.r.F);p.b("ko.jsonExpressionRewriting.insertPropertyAccessorsIntoJson",p.r.R);p.c={};
-p.J=function(e,d,b,a){function f(a){return function(){return i[a]}}function h(){return i}var g=!0,a=a||"data-bind",i;new p.j(function(){var k;if(!(k=typeof d=="function"?d():d)){var j=e.getAttribute(a);try{var l=" { "+p.r.R(j)+" } ";k=p.a.Ha(l,b===o?window:b)}catch(q){c(Error("Unable to parse binding attribute.\nMessage: "+q+";\nAttribute value: "+j))}}i=k;if(g)for(var n in i)p.c[n]&&typeof p.c[n].init=="function"&&(0,p.c[n].init)(e,f(n),h,b);for(n in i)p.c[n]&&typeof p.c[n].update=="function"&&(0,p.c[n].update)(e,
-f(n),h,b)},o,{disposeWhenNodeIsRemoved:e});g=!1};p.ua=function(e,d){d&&d.nodeType==m&&c(Error("ko.applyBindings: first parameter should be your view model; second parameter should be a DOM node (note: this is a breaking change since KO version 1.05)"));var d=d||window.document.body,b=p.a.da(d,"data-bind");p.a.g(b,function(a){p.J(a,o,e)})};p.b("ko.bindingHandlers",p.c);p.b("ko.applyBindings",p.ua);p.b("ko.applyBindingsToNode",p.J);
-p.a.g(["click"],function(e){p.c[e]={init:function(d,b,a,f){return p.c.event.init.call(this,d,function(){var a={};a[e]=b();return a},a,f)}}});p.c.event={init:function(e,d,b,a){var f=d()||{},h;for(h in f)(function(){var f=h;typeof f=="string"&&p.a.t(e,f,function(e){var h,j=d()[f];if(j){var l=b();try{h=j.apply(a,arguments)}finally{if(h!==!0)e.preventDefault?e.preventDefault():e.returnValue=!1}if(l[f+"Bubble"]===!1)e.cancelBubble=!0,e.stopPropagation&&e.stopPropagation()}})})()}};
-p.c.submit={init:function(e,d,b,a){typeof d()!="function"&&c(Error("The value for a submit binding must be a function to invoke on submit"));p.a.t(e,"submit",function(b){var h,g=d();try{h=g.call(a,e)}finally{if(h!==!0)b.preventDefault?b.preventDefault():b.returnValue=!1}})}};p.c.visible={update:function(e,d){var b=p.a.d(d()),a=e.style.display!="none";if(b&&!a)e.style.display="";else if(!b&&a)e.style.display="none"}};
-p.c.enable={update:function(e,d){var b=p.a.d(d());if(b&&e.disabled)e.removeAttribute("disabled");else if(!b&&!e.disabled)e.disabled=!0}};p.c.disable={update:function(e,d){p.c.enable.update(e,function(){return!p.a.d(d())})}};
-p.c.value={init:function(e,d,b){var a=["change"],f=b().valueUpdate;f&&(typeof f=="string"&&(f=[f]),p.a.u(a,f),a=p.a.L(a));p.a.g(a,function(a){var f=!1;p.a.Za(a,"after")&&(f=!0,a=a.substring(5));var i=f?function(a){setTimeout(a,0)}:function(a){a()};p.a.t(e,a,function(){i(function(){var a=d(),f=p.f.m(e);p.D(a)?a(f):(a=b(),a._ko_property_writers&&a._ko_property_writers.value&&a._ko_property_writers.value(f))})})})},update:function(e,d){var b=p.a.d(d()),a=p.f.m(e),f=b!=a;b===0&&a!==0&&a!=="0"&&(f=!0);
-f&&(a=function(){p.f.I(e,b)},a(),e.tagName=="SELECT"&&setTimeout(a,0));e.tagName=="SELECT"&&(a=p.f.m(e),a!==b&&p.a.qa(e,"change"))}};
-p.c.options={update:function(e,d,b){e.tagName!="SELECT"&&c(Error("options binding applies only to SELECT elements"));var a=p.a.M(p.a.K(e.childNodes,function(a){return a.tagName&&a.tagName=="OPTION"&&a.selected}),function(a){return p.f.m(a)||a.innerText||a.textContent}),f=e.scrollTop,h=p.a.d(d());p.a.Q(e);if(h){var g=b();typeof h.length!="number"&&(h=[h]);if(g.optionsCaption){var i=document.createElement("OPTION");i.innerHTML=g.optionsCaption;p.f.I(i,m);e.appendChild(i)}b=0;for(d=h.length;b<d;b++){var i=
-document.createElement("OPTION"),k=typeof g.optionsValue=="string"?h[b][g.optionsValue]:h[b],k=p.a.d(k);p.f.I(i,k);var j=g.optionsText;optionText=typeof j=="function"?j(h[b]):typeof j=="string"?h[b][j]:k;if(optionText===o||optionText===m)optionText="";optionText=p.a.d(optionText).toString();typeof i.innerText=="string"?i.innerText=optionText:i.textContent=optionText;e.appendChild(i)}h=e.getElementsByTagName("OPTION");b=g=0;for(d=h.length;b<d;b++)p.a.h(a,p.f.m(h[b]))>=0&&(p.a.ma(h[b],!0),g++);if(f)e.scrollTop=
-f}}};p.c.options.W="__ko.bindingHandlers.options.optionValueDomData__";
-p.c.selectedOptions={fa:function(e){for(var d=[],e=e.childNodes,b=0,a=e.length;b<a;b++){var f=e[b];f.tagName=="OPTION"&&f.selected&&d.push(p.f.m(f))}return d},init:function(e,d,b){p.a.t(e,"change",function(){var a=d();p.D(a)?a(p.c.selectedOptions.fa(this)):(a=b(),a._ko_property_writers&&a._ko_property_writers.value&&a._ko_property_writers.value(p.c.selectedOptions.fa(this)))})},update:function(e,d){e.tagName!="SELECT"&&c(Error("values binding applies only to SELECT elements"));var b=p.a.d(d());if(b&&
-typeof b.length=="number")for(var a=e.childNodes,f=0,h=a.length;f<h;f++){var g=a[f];g.tagName=="OPTION"&&p.a.ma(g,p.a.h(b,p.f.m(g))>=0)}}};p.c.text={update:function(e,d){var b=p.a.d(d());if(b===o||b===m)b="";typeof e.innerText=="string"?e.innerText=b:e.textContent=b}};p.c.html={update:function(e,d){var b=p.a.d(d());p.a.Ya(e,b)}};p.c.css={update:function(e,d){var b=p.a.d(d()||{}),a;for(a in b)if(typeof a=="string"){var f=p.a.d(b[a]);p.a.pa(e,a,f)}}};
-p.c.style={update:function(e,d){var b=p.a.d(d()||{}),a;for(a in b)if(typeof a=="string"){var f=p.a.d(b[a]);e.style[a]=f||""}}};p.c.uniqueName={init:function(e,d){if(d())e.name="ko_unique_"+ ++p.c.uniqueName.Ba,p.a.S&&e.mergeAttributes(document.createElement("<input name='"+e.name+"'/>"),!1)}};p.c.uniqueName.Ba=0;
-p.c.checked={init:function(e,d,b){p.a.t(e,"click",function(){var a;if(e.type=="checkbox")a=e.checked;else if(e.type=="radio"&&e.checked)a=e.value;else return;var f=d();e.type=="checkbox"&&p.a.d(f)instanceof Array?(a=p.a.h(p.a.d(f),e.value),e.checked&&a<0?f.push(e.value):!e.checked&&a>=0&&f.splice(a,1)):p.D(f)?f()!==a&&f(a):(f=b(),f._ko_property_writers&&f._ko_property_writers.checked&&f._ko_property_writers.checked(a))});e.type=="radio"&&!e.name&&p.c.uniqueName.init(e,function(){return!0})},update:function(e,
-d){var b=p.a.d(d());if(e.type=="checkbox")e.checked=b instanceof Array?p.a.h(b,e.value)>=0:b,b&&p.a.S&&e.mergeAttributes(document.createElement("<input type='checkbox' checked='checked' />"),!1);else if(e.type=="radio")e.checked=e.value==b,e.value==b&&(p.a.S||p.a.Ma)&&e.mergeAttributes(document.createElement("<input type='radio' checked='checked' />"),!1)}};
-p.c.attr={update:function(e,d){var b=p.a.d(d())||{},a;for(a in b)if(typeof a=="string"){var f=p.a.d(b[a]);f===!1||f===o||f===m?e.removeAttribute(a):e.setAttribute(a,f.toString())}}};
-p.aa=function(){this.renderTemplate=function(){c("Override renderTemplate in your ko.templateEngine subclass")};this.isTemplateRewritten=function(){c("Override isTemplateRewritten in your ko.templateEngine subclass")};this.rewriteTemplate=function(){c("Override rewriteTemplate in your ko.templateEngine subclass")};this.createJavaScriptEvaluatorBlock=function(){c("Override createJavaScriptEvaluatorBlock in your ko.templateEngine subclass")}};p.b("ko.templateEngine",p.aa);
-p.G=function(){var e=/(<[a-z]+\d*(\s+(?!data-bind=)[a-z0-9\-]+(=(\"[^\"]*\"|\'[^\']*\'))?)*\s+)data-bind=(["'])([\s\S]*?)\5/gi;return{Ga:function(d,b){b.isTemplateRewritten(d)||b.rewriteTemplate(d,function(a){return p.G.Qa(a,b)})},Qa:function(d,b){return d.replace(e,function(a,d,e,g,i,k,j){a=p.r.R(j);return b.createJavaScriptEvaluatorBlock("ko.templateRewriting.applyMemoizedBindingsToNextSibling(function() {                     return (function() { return { "+a+" } })()                 })")+d})},
-va:function(d){return p.l.V(function(b,a){b.nextSibling&&p.J(b.nextSibling,d,a)})}}}();p.b("ko.templateRewriting",p.G);p.b("ko.templateRewriting.applyMemoizedBindingsToNextSibling",p.G.va);
-(function(){function e(b,a,e,h,g){var i=p.a.d(h),g=g||{},k=g.templateEngine||d;p.G.Ga(e,k);e=k.renderTemplate(e,i,g);(typeof e.length!="number"||e.length>0&&typeof e[0].nodeType!="number")&&c("Template engine must return an array of DOM nodes");e&&p.a.g(e,function(a){p.l.sa(a,[h])});switch(a){case "replaceChildren":p.a.Xa(b,e);break;case "replaceNode":p.a.ka(b,e);break;case "ignoreTargetNode":break;default:c(Error("Unknown renderMode: "+a))}g.afterRender&&g.afterRender(e,h);return e}var d;p.na=function(b){b!=
-m&&!(b instanceof p.aa)&&c("templateEngine must inherit from ko.templateEngine");d=b};p.X=function(b,a,f,h,g){f=f||{};(f.templateEngine||d)==m&&c("Set a template engine before calling renderTemplate");g=g||"replaceChildren";if(h){var i=h.nodeType?h:h.length>0?h[0]:o;return new p.j(function(){var d=typeof b=="function"?b(a):b,d=e(h,g,d,a,f);g=="replaceNode"&&(h=d,i=h.nodeType?h:h.length>0?h[0]:o)},o,{disposeWhen:function(){return!i||!p.a.P(i)},disposeWhenNodeIsRemoved:i&&g=="replaceNode"?i.parentNode:
-i})}else return p.l.V(function(d){p.X(b,a,f,d,"replaceNode")})};p.Wa=function(b,a,d,h){return new p.j(function(){var g=p.a.d(a)||[];typeof g.length=="undefined"&&(g=[g]);g=p.a.K(g,function(a){return d.includeDestroyed||!a._destroy});p.a.la(h,g,function(a){var g=typeof b=="function"?b(a):b;return e(o,"ignoreTargetNode",g,a,d)},d)},o,{disposeWhenNodeIsRemoved:h})};p.c.template={update:function(b,a,d,e){a=p.a.d(a());d=typeof a=="string"?a:a.name;if(typeof a.foreach!="undefined")e=p.Wa(d,a.foreach||[],
-{templateOptions:a.templateOptions,afterAdd:a.afterAdd,beforeRemove:a.beforeRemove,includeDestroyed:a.includeDestroyed,afterRender:a.afterRender},b);else var g=a.data,e=p.X(d,typeof g=="undefined"?e:g,{templateOptions:a.templateOptions,afterRender:a.afterRender},b);(a=p.a.e.get(b,"__ko__templateSubscriptionDomDataKey__"))&&typeof a.n=="function"&&a.n();p.a.e.set(b,"__ko__templateSubscriptionDomDataKey__",e)}}})();p.b("ko.setTemplateEngine",p.na);p.b("ko.renderTemplate",p.X);
-p.a.w=function(e,d,b){if(b===m)return p.a.w(e,d,1)||p.a.w(e,d,10)||p.a.w(e,d,Number.MAX_VALUE);else{for(var e=e||[],d=d||[],a=e,f=d,h=[],g=0;g<=f.length;g++)h[g]=[];for(var g=0,i=Math.min(a.length,b);g<=i;g++)h[0][g]=g;g=1;for(i=Math.min(f.length,b);g<=i;g++)h[g][0]=g;for(var i=a.length,k,j=f.length,g=1;g<=i;g++){var l=Math.min(j,g+b);for(k=Math.max(1,g-b);k<=l;k++)h[k][g]=a[g-1]===f[k-1]?h[k-1][g-1]:Math.min(h[k-1][g]===m?Number.MAX_VALUE:h[k-1][g]+1,h[k][g-1]===m?Number.MAX_VALUE:h[k][g-1]+1)}b=
-e.length;a=d.length;f=[];g=h[a][b];if(g===m)h=o;else{for(;b>0||a>0;){i=h[a][b];k=a>0?h[a-1][b]:g+1;j=b>0?h[a][b-1]:g+1;l=a>0&&b>0?h[a-1][b-1]:g+1;if(k===m||k<i-1)k=g+1;if(j===m||j<i-1)j=g+1;l<i-1&&(l=g+1);k<=j&&k<l?(f.push({status:"added",value:d[a-1]}),a--):(j<k&&j<l?f.push({status:"deleted",value:e[b-1]}):(f.push({status:"retained",value:e[b-1]}),a--),b--)}h=f.reverse()}return h}};p.b("ko.utils.compareArrays",p.a.w);
-(function(){function e(d,b,a){var e=[],d=p.j(function(){var d=b(a)||[];e.length>0&&p.a.ka(e,d);e.splice(0,e.length);p.a.u(e,d)},o,{disposeWhenNodeIsRemoved:d,disposeWhen:function(){return e.length==0||!p.a.P(e[0])}});return{Oa:e,j:d}}p.a.la=function(d,b,a,f){for(var b=b||[],f=f||{},h=p.a.e.get(d,"setDomNodeChildrenFromArrayMapping_lastMappingResult")===m,g=p.a.e.get(d,"setDomNodeChildrenFromArrayMapping_lastMappingResult")||[],i=p.a.M(g,function(a){return a.wa}),k=p.a.w(i,b),b=[],j=0,l=[],i=[],q=
-o,n=0,v=k.length;n<v;n++)switch(k[n].status){case "retained":var r=g[j];b.push(r);r.B.length>0&&(q=r.B[r.B.length-1]);j++;break;case "deleted":g[j].j.n();p.a.g(g[j].B,function(a){l.push({element:a,index:n,value:k[n].value});q=a});j++;break;case "added":var s=e(d,a,k[n].value),r=s.Oa;b.push({wa:k[n].value,B:r,j:s.j});for(var s=0,w=r.length;s<w;s++){var t=r[s];i.push({element:t,index:n,value:k[n].value});q==o?d.firstChild?d.insertBefore(t,d.firstChild):d.appendChild(t):q.nextSibling?d.insertBefore(t,
-q.nextSibling):d.appendChild(t);q=t}}p.a.g(l,function(a){p.v(a.element)});a=!1;if(!h){if(f.afterAdd)for(n=0;n<i.length;n++)f.afterAdd(i[n].element,i[n].index,i[n].value);if(f.beforeRemove){for(n=0;n<l.length;n++)f.beforeRemove(l[n].element,l[n].index,l[n].value);a=!0}}a||p.a.g(l,function(a){a.element.parentNode&&a.element.parentNode.removeChild(a.element)});p.a.e.set(d,"setDomNodeChildrenFromArrayMapping_lastMappingResult",b)}})();p.b("ko.utils.setDomNodeChildrenFromArrayMapping",p.a.la);
-p.T=function(){this.q=function(){if(typeof jQuery=="undefined"||!jQuery.tmpl)return 0;if(jQuery.tmpl.tag){if(jQuery.tmpl.tag.tmpl&&jQuery.tmpl.tag.tmpl.open&&jQuery.tmpl.tag.tmpl.open.toString().indexOf("__")>=0)return 3;return 2}return 1}();this.getTemplateNode=function(d){var b=document.getElementById(d);b==o&&c(Error("Cannot find template with ID="+d));return b};var e=RegExp("__ko_apos__","g");this.renderTemplate=function(d,b,a){a=a||{};this.q==0&&c(Error("jquery.tmpl not detected.\nTo use KO's default template engine, reference jQuery and jquery.tmpl. See Knockout installation documentation for more details."));
-if(this.q==1)return d='<script type="text/html">'+this.getTemplateNode(d).text+"<\/script>",b=jQuery.tmpl(d,b)[0].text.replace(e,"'"),jQuery.clean([b],document);if(!(d in jQuery.template)){var f=this.getTemplateNode(d).text;jQuery.template(d,f)}b=[b];b=jQuery.tmpl(d,b,a.templateOptions);b.appendTo(document.createElement("div"));jQuery.fragments={};return b};this.isTemplateRewritten=function(d){if(d in jQuery.template)return!0;return this.getTemplateNode(d).Na===!0};this.rewriteTemplate=function(d,
-b){var a=this.getTemplateNode(d),e=b(a.text);this.q==1&&(e=p.a.k(e),e=e.replace(/([\s\S]*?)(\${[\s\S]*?}|{{[\=a-z][\s\S]*?}}|$)/g,function(a,b,d){return b.replace(/\'/g,"__ko_apos__")+d}));a.text=e;a.Na=!0};this.createJavaScriptEvaluatorBlock=function(d){if(this.q==1)return"{{= "+d+"}}";return"{{ko_code ((function() { return "+d+" })()) }}"};this.ta=function(d,b){document.write("<script type='text/html' id='"+d+"'>"+b+"<\/script>")};p.i(this,"addTemplate",this.ta);this.q>1&&(jQuery.tmpl.tag.ko_code=
-{open:(this.q<3?"_":"__")+".push($1 || '');"})};p.T.prototype=new p.aa;p.na(new p.T);p.b("ko.jqueryTmplTemplateEngine",p.T);
+function c(a){throw a;}var l=void 0,m=!0,o=null,p=!1,r=window.ko={};r.b=function(a,b){for(var d=a.split("."),e=window,f=0;f<d.length-1;f++)e=e[d[f]];e[d[d.length-1]]=b};r.l=function(a,b,d){a[b]=d};
+r.a=new function(){function a(a,e){if("INPUT"!=a.tagName||!a.type)return p;if("click"!=e.toLowerCase())return p;var b=a.type.toLowerCase();return"checkbox"==b||"radio"==b}var b=/^(\s|\u00A0)+|(\s|\u00A0)+$/g,d={},e={};d[/Firefox\/2/i.test(navigator.userAgent)?"KeyboardEvent":"UIEvents"]=["keyup","keydown","keypress"];d.MouseEvents="click,dblclick,mousedown,mouseup,mousemove,mouseover,mouseout,mouseenter,mouseleave".split(",");for(var f in d){var h=d[f];if(h.length)for(var g=0,i=h.length;g<i;g++)e[h[g]]=
+f}var j=function(){for(var a=3,e=document.createElement("div"),b=e.getElementsByTagName("i");e.innerHTML="<\!--[if gt IE "+ ++a+"]><i></i><![endif]--\>",b[0];);return 4<a?a:l}();return{Ba:["authenticity_token",/^__RequestVerificationToken(_.*)?$/],n:function(a,e){for(var b=0,f=a.length;b<f;b++)e(a[b])},k:function(a,e){if("function"==typeof Array.prototype.indexOf)return Array.prototype.indexOf.call(a,e);for(var b=0,f=a.length;b<f;b++)if(a[b]===e)return b;return-1},Wa:function(a,e,b){for(var f=0,d=
+a.length;f<d;f++)if(e.call(b,a[f]))return a[f];return o},ca:function(a,e){var b=r.a.k(a,e);0<=b&&a.splice(b,1)},ya:function(a){for(var a=a||[],e=[],b=0,f=a.length;b<f;b++)0>r.a.k(e,a[b])&&e.push(a[b]);return e},ba:function(a,e){for(var a=a||[],b=[],f=0,d=a.length;f<d;f++)b.push(e(a[f]));return b},aa:function(a,e){for(var a=a||[],b=[],f=0,d=a.length;f<d;f++)e(a[f])&&b.push(a[f]);return b},J:function(a,e){for(var b=0,f=e.length;b<f;b++)a.push(e[b]);return a},extend:function(a,e){for(var b in e)e.hasOwnProperty(b)&&
+(a[b]=e[b]);return a},U:function(a){for(;a.firstChild;)r.removeNode(a.firstChild)},oa:function(a,e){r.a.U(a);e&&r.a.n(e,function(e){a.appendChild(e)})},Ja:function(a,e){var b=a.nodeType?[a]:a;if(0<b.length){for(var f=b[0],d=f.parentNode,h=0,g=e.length;h<g;h++)d.insertBefore(e[h],f);h=0;for(g=b.length;h<g;h++)r.removeNode(b[h])}},La:function(a,e){0<=navigator.userAgent.indexOf("MSIE 6")?a.setAttribute("selected",e):a.selected=e},z:function(a){return(a||"").replace(b,"")},Db:function(a,e){for(var b=
+[],f=(a||"").split(e),d=0,h=f.length;d<h;d++){var g=r.a.z(f[d]);""!==g&&b.push(g)}return b},Cb:function(a,e){a=a||"";return e.length>a.length?p:a.substring(0,e.length)===e},hb:function(a){for(var e=Array.prototype.slice.call(arguments,1),b="return ("+a+")",f=0;f<e.length;f++)e[f]&&"object"==typeof e[f]&&(b="with(sc["+f+"]) { "+b+" } ");return(new Function("sc",b))(e)},fb:function(a,e){if(e.compareDocumentPosition)return 16==(e.compareDocumentPosition(a)&16);for(;a!=o;){if(a==e)return m;a=a.parentNode}return p},
+ga:function(a){return r.a.fb(a,document)},s:function(e,b,f){if("undefined"!=typeof jQuery){if(a(e,b))var d=f,f=function(a,e){var b=this.checked;if(e)this.checked=e.Ya!==m;d.call(this,a);this.checked=b};jQuery(e).bind(b,f)}else"function"==typeof e.addEventListener?e.addEventListener(b,f,p):"undefined"!=typeof e.attachEvent?e.attachEvent("on"+b,function(a){f.call(e,a)}):c(Error("Browser doesn't support addEventListener or attachEvent"))},sa:function(b,f){(!b||!b.nodeType)&&c(Error("element must be a DOM node when calling triggerEvent"));
+if("undefined"!=typeof jQuery){var d=[];a(b,f)&&d.push({Ya:b.checked});jQuery(b).trigger(f,d)}else if("function"==typeof document.createEvent)"function"==typeof b.dispatchEvent?(d=document.createEvent(e[f]||"HTMLEvents"),d.initEvent(f,m,m,window,0,0,0,0,0,p,p,p,p,0,b),b.dispatchEvent(d)):c(Error("The supplied element doesn't support dispatchEvent"));else if("undefined"!=typeof b.fireEvent){if("click"==f&&"INPUT"==b.tagName&&("checkbox"==b.type.toLowerCase()||"radio"==b.type.toLowerCase()))b.checked=
+b.checked!==m;b.fireEvent("on"+f)}else c(Error("Browser doesn't support triggering events"))},d:function(a){return r.V(a)?a():a},eb:function(a,e){return 0<=r.a.k((a.className||"").split(/\s+/),e)},Qa:function(a,e,b){var f=r.a.eb(a,e);if(b&&!f)a.className=(a.className||"")+" "+e;else if(f&&!b){for(var b=(a.className||"").split(/\s+/),f="",d=0;d<b.length;d++)b[d]!=e&&(f+=b[d]+" ");a.className=r.a.z(f)}},outerHTML:function(a){if(j===l){var e=a.outerHTML;if("string"==typeof e)return e}e=window.document.createElement("div");
+e.appendChild(a.cloneNode(m));return e.innerHTML},Ma:function(a,e){var b=r.a.d(e);if(b===o||b===l)b="";"innerText"in a?a.innerText=b:a.textContent=b;if(9<=j)a.innerHTML=a.innerHTML},yb:function(a,e){for(var a=r.a.d(a),e=r.a.d(e),b=[],f=a;f<=e;f++)b.push(f);return b},X:function(a){for(var e=[],b=0,f=a.length;b<f;b++)e.push(a[b]);return e},ob:6===j,pb:7===j,Ca:function(a,e){for(var b=r.a.X(a.getElementsByTagName("INPUT")).concat(r.a.X(a.getElementsByTagName("TEXTAREA"))),f="string"==typeof e?function(a){return a.name===
+e}:function(a){return e.test(a.name)},d=[],h=b.length-1;0<=h;h--)f(b[h])&&d.push(b[h]);return d},vb:function(a){return"string"==typeof a&&(a=r.a.z(a))?window.JSON&&window.JSON.parse?window.JSON.parse(a):(new Function("return "+a))():o},qa:function(a){("undefined"==typeof JSON||"undefined"==typeof JSON.stringify)&&c(Error("Cannot find JSON.stringify(). Some browsers (e.g., IE < 8) don't support it natively, but you can overcome this by adding a script reference to json2.js, downloadable from http://www.json.org/json2.js"));
+return JSON.stringify(r.a.d(a))},wb:function(a,e,b){var b=b||{},f=b.params||{},d=b.includeFields||this.Ba,h=a;if("object"==typeof a&&"FORM"==a.tagName)for(var h=a.action,g=d.length-1;0<=g;g--)for(var j=r.a.Ca(a,d[g]),i=j.length-1;0<=i;i--)f[j[i].name]=j[i].value;var e=r.a.d(e),u=document.createElement("FORM");u.style.display="none";u.action=h;u.method="post";for(var y in e)a=document.createElement("INPUT"),a.name=y,a.value=r.a.qa(r.a.d(e[y])),u.appendChild(a);for(y in f)a=document.createElement("INPUT"),
+a.name=y,a.value=f[y],u.appendChild(a);document.body.appendChild(u);b.submitter?b.submitter(u):u.submit();setTimeout(function(){u.parentNode.removeChild(u)},0)}}};r.b("ko.utils",r.a);
+r.a.n([["arrayForEach",r.a.n],["arrayFirst",r.a.Wa],["arrayFilter",r.a.aa],["arrayGetDistinctValues",r.a.ya],["arrayIndexOf",r.a.k],["arrayMap",r.a.ba],["arrayPushAll",r.a.J],["arrayRemoveItem",r.a.ca],["extend",r.a.extend],["fieldsIncludedWithJsonPost",r.a.Ba],["getFormFields",r.a.Ca],["postJson",r.a.wb],["parseJson",r.a.vb],["registerEventHandler",r.a.s],["stringifyJson",r.a.qa],["range",r.a.yb],["toggleDomNodeCssClass",r.a.Qa],["triggerEvent",r.a.sa],["unwrapObservable",r.a.d]],function(a){r.b("ko.utils."+
+a[0],a[1])});Function.prototype.bind||(Function.prototype.bind=function(a){var b=this,d=Array.prototype.slice.call(arguments),a=d.shift();return function(){return b.apply(a,d.concat(Array.prototype.slice.call(arguments)))}});
+r.a.e=new function(){var a=0,b="__ko__"+(new Date).getTime(),d={};return{get:function(a,b){var d=r.a.e.getAll(a,p);return d===l?l:d[b]},set:function(a,b,d){d===l&&r.a.e.getAll(a,p)===l||(r.a.e.getAll(a,m)[b]=d)},getAll:function(e,f){var h=e[b];if(!(h&&"null"!==h)){if(!f)return;h=e[b]="ko"+a++;d[h]={}}return d[h]},clear:function(a){var f=a[b];f&&(delete d[f],a[b]=o)}}};r.b("ko.utils.domData",r.a.e);r.b("ko.utils.domData.clear",r.a.e.clear);
+r.a.A=new function(){function a(a,b){var h=r.a.e.get(a,d);h===l&&b&&(h=[],r.a.e.set(a,d,h));return h}function b(e){var b=a(e,p);if(b)for(var b=b.slice(0),d=0;d<b.length;d++)b[d](e);r.a.e.clear(e);"function"==typeof jQuery&&"function"==typeof jQuery.cleanData&&jQuery.cleanData([e])}var d="__ko_domNodeDisposal__"+(new Date).getTime();return{va:function(e,b){"function"!=typeof b&&c(Error("Callback must be a function"));a(e,m).push(b)},Ia:function(e,b){var h=a(e,p);h&&(r.a.ca(h,b),0==h.length&&r.a.e.set(e,
+d,l))},F:function(a){if(!(1!=a.nodeType&&9!=a.nodeType)){b(a);var f=[];r.a.J(f,a.getElementsByTagName("*"));for(var a=0,d=f.length;a<d;a++)b(f[a])}},removeNode:function(a){r.F(a);a.parentNode&&a.parentNode.removeChild(a)}}};r.F=r.a.A.F;r.removeNode=r.a.A.removeNode;r.b("ko.cleanNode",r.F);r.b("ko.removeNode",r.removeNode);r.b("ko.utils.domNodeDisposal",r.a.A);r.b("ko.utils.domNodeDisposal.addDisposeCallback",r.a.A.va);r.b("ko.utils.domNodeDisposal.removeDisposeCallback",r.a.A.Ia);
+r.a.ma=function(a){var b;if("undefined"!=typeof jQuery){if((b=jQuery.clean([a]))&&b[0]){for(a=b[0];a.parentNode&&11!==a.parentNode.nodeType;)a=a.parentNode;a.parentNode&&a.parentNode.removeChild(a)}}else{var d=r.a.z(a).toLowerCase();b=document.createElement("div");d=d.match(/^<(thead|tbody|tfoot)/)&&[1,"<table>","</table>"]||!d.indexOf("<tr")&&[2,"<table><tbody>","</tbody></table>"]||(!d.indexOf("<td")||!d.indexOf("<th"))&&[3,"<table><tbody><tr>","</tr></tbody></table>"]||[0,"",""];a="ignored<div>"+
+d[1]+a+d[2]+"</div>";for("function"==typeof window.innerShiv?b.appendChild(window.innerShiv(a)):b.innerHTML=a;d[0]--;)b=b.lastChild;b=r.a.X(b.lastChild.childNodes)}return b};r.a.Z=function(a,b){r.a.U(a);if(b!==o&&b!==l)if("string"!=typeof b&&(b=b.toString()),"undefined"!=typeof jQuery)jQuery(a).html(b);else for(var d=r.a.ma(b),e=0;e<d.length;e++)a.appendChild(d[e])};r.b("ko.utils.parseHtmlFragment",r.a.ma);r.b("ko.utils.setHtml",r.a.Z);
+r.r=function(){function a(){return(4294967296*(1+Math.random())|0).toString(16).substring(1)}function b(a,f){if(a)if(8==a.nodeType){var d=r.r.Ga(a.nodeValue);d!=o&&f.push({cb:a,tb:d})}else if(1==a.nodeType)for(var d=0,g=a.childNodes,i=g.length;d<i;d++)b(g[d],f)}var d={};return{ka:function(b){"function"!=typeof b&&c(Error("You can only pass a function to ko.memoization.memoize()"));var f=a()+a();d[f]=b;return"<\!--[ko_memo:"+f+"]--\>"},Ra:function(a,b){var h=d[a];h===l&&c(Error("Couldn't find any memo with ID "+
+a+". Perhaps it's already been unmemoized."));try{return h.apply(o,b||[]),m}finally{delete d[a]}},Sa:function(a,f){var d=[];b(a,d);for(var g=0,i=d.length;g<i;g++){var j=d[g].cb,k=[j];f&&r.a.J(k,f);r.r.Ra(d[g].tb,k);j.nodeValue="";j.parentNode&&j.parentNode.removeChild(j)}},Ga:function(a){return(a=a.match(/^\[ko_memo\:(.*?)\]$/))?a[1]:o}}}();r.b("ko.memoization",r.r);r.b("ko.memoization.memoize",r.r.ka);r.b("ko.memoization.unmemoize",r.r.Ra);r.b("ko.memoization.parseMemoText",r.r.Ga);
+r.b("ko.memoization.unmemoizeDomNodeAndDescendants",r.r.Sa);r.Aa={throttle:function(a,b){a.throttleEvaluation=b;var d=o;return r.i({read:a,write:function(e){clearTimeout(d);d=setTimeout(function(){a(e)},b)}})},notify:function(a,b){a.equalityComparer="always"==b?function(){return p}:r.w.fn.equalityComparer;return a}};r.b("ko.extenders",r.Aa);r.Oa=function(a,b){this.da=a;this.bb=b;r.l(this,"dispose",this.v)};r.Oa.prototype.v=function(){this.nb=m;this.bb()};
+r.R=function(){this.u={};r.a.extend(this,r.R.fn);r.l(this,"subscribe",this.ra);r.l(this,"extend",this.extend);r.l(this,"getSubscriptionsCount",this.kb)};
+r.R.fn={ra:function(a,b,d){var d=d||"change",a=b?a.bind(b):a,e=new r.Oa(a,function(){r.a.ca(this.u[d],e)}.bind(this));this.u[d]||(this.u[d]=[]);this.u[d].push(e);return e},notifySubscribers:function(a,b){b=b||"change";this.u[b]&&r.a.n(this.u[b].slice(0),function(b){b&&b.nb!==m&&b.da(a)})},kb:function(){var a=0,b;for(b in this.u)this.u.hasOwnProperty(b)&&(a+=this.u[b].length);return a},extend:function(a){var b=this;if(a)for(var d in a){var e=r.Aa[d];"function"==typeof e&&(b=e(b,a[d]))}return b}};
+r.Ea=function(a){return"function"==typeof a.ra&&"function"==typeof a.notifySubscribers};r.b("ko.subscribable",r.R);r.b("ko.isSubscribable",r.Ea);r.T=function(){var a=[];return{Xa:function(b){a.push({da:b,za:[]})},end:function(){a.pop()},Ha:function(b){r.Ea(b)||c("Only subscribable things can act as dependencies");if(0<a.length){var d=a[a.length-1];0<=r.a.k(d.za,b)||(d.za.push(b),d.da(b))}}}}();var B={undefined:m,"boolean":m,number:m,string:m};
+r.w=function(a){function b(){if(0<arguments.length){if(!b.equalityComparer||!b.equalityComparer(d,arguments[0]))b.H(),d=arguments[0],b.G();return this}r.T.Ha(b);return d}var d=a;r.R.call(b);b.G=function(){b.notifySubscribers(d)};b.H=function(){b.notifySubscribers(d,"beforeChange")};r.a.extend(b,r.w.fn);r.l(b,"valueHasMutated",b.G);r.l(b,"valueWillMutate",b.H);return b};r.w.fn={B:r.w,equalityComparer:function(a,b){return a===o||typeof a in B?a===b:p}};
+r.V=function(a){return a===o||a===l||a.B===l?p:a.B===r.w?m:r.V(a.B)};r.P=function(a){return"function"==typeof a&&a.B===r.w?m:"function"==typeof a&&a.B===r.i&&a.lb?m:p};r.b("ko.observable",r.w);r.b("ko.isObservable",r.V);r.b("ko.isWriteableObservable",r.P);
+r.Q=function(a){0==arguments.length&&(a=[]);a!==o&&a!==l&&!("length"in a)&&c(Error("The argument passed when initializing an observable array must be an array, or null, or undefined."));var b=new r.w(a);r.a.extend(b,r.Q.fn);r.l(b,"remove",b.remove);r.l(b,"removeAll",b.zb);r.l(b,"destroy",b.fa);r.l(b,"destroyAll",b.ab);r.l(b,"indexOf",b.indexOf);r.l(b,"replace",b.replace);return b};
+r.Q.fn={remove:function(a){for(var b=this(),d=[],e="function"==typeof a?a:function(b){return b===a},f=0;f<b.length;f++){var h=b[f];e(h)&&(0===d.length&&this.H(),d.push(h),b.splice(f,1),f--)}d.length&&this.G();return d},zb:function(a){if(a===l){var b=this(),d=b.slice(0);this.H();b.splice(0,b.length);this.G();return d}return!a?[]:this.remove(function(b){return 0<=r.a.k(a,b)})},fa:function(a){var b=this(),d="function"==typeof a?a:function(b){return b===a};this.H();for(var e=b.length-1;0<=e;e--)d(b[e])&&
+(b[e]._destroy=m);this.G()},ab:function(a){return a===l?this.fa(function(){return m}):!a?[]:this.fa(function(b){return 0<=r.a.k(a,b)})},indexOf:function(a){var b=this();return r.a.k(b,a)},replace:function(a,b){var d=this.indexOf(a);0<=d&&(this.H(),this()[d]=b,this.G())}};r.a.n("pop,push,reverse,shift,sort,splice,unshift".split(","),function(a){r.Q.fn[a]=function(){var b=this();this.H();b=b[a].apply(b,arguments);this.G();return b}});
+r.a.n(["slice"],function(a){r.Q.fn[a]=function(){var b=this();return b[a].apply(b,arguments)}});r.b("ko.observableArray",r.Q);function C(a,b){a&&"object"==typeof a?b=a:(b=b||{},b.read=a||b.read);"function"!=typeof b.read&&c("Pass a function that returns the value of the dependentObservable");return b}
+r.i=function(a,b,d){function e(){r.a.n(q,function(a){a.v()});q=[]}function f(){var a=g.throttleEvaluation;a&&0<=a?(clearTimeout(v),v=setTimeout(h,a)):h()}function h(){if(j&&"function"==typeof d.disposeWhen&&d.disposeWhen())g.v();else{try{e();r.T.Xa(function(a){q.push(a.ra(f))});var a=d.read.call(d.owner||b);g.notifySubscribers(i,"beforeChange");i=a}finally{r.T.end()}g.notifySubscribers(i);j=m}}function g(){if(0<arguments.length)"function"===typeof d.write?d.write.apply(d.owner||b,arguments):c("Cannot write a value to a dependentObservable unless you specify a 'write' option. If you wish to read the current value, don't pass any parameters.");
+else return j||h(),r.T.Ha(g),i}var i,j=p,d=C(a,d),k="object"==typeof d.disposeWhenNodeIsRemoved?d.disposeWhenNodeIsRemoved:o,n=o;if(k){n=function(){g.v()};r.a.A.va(k,n);var t=d.disposeWhen;d.disposeWhen=function(){return!r.a.ga(k)||"function"==typeof t&&t()}}var q=[],v=o;g.jb=function(){return q.length};g.lb="function"===typeof d.write;g.v=function(){k&&r.a.A.Ia(k,n);e()};r.R.call(g);r.a.extend(g,r.i.fn);d.deferEvaluation!==m&&h();r.l(g,"dispose",g.v);r.l(g,"getDependenciesCount",g.jb);return g};
+r.i.fn={B:r.i};r.i.B=r.w;r.b("ko.dependentObservable",r.i);r.b("ko.computed",r.i);
+(function(){function a(e,f,h){h=h||new d;e=f(e);if(!("object"==typeof e&&e!==o&&e!==l&&!(e instanceof Date)))return e;var g=e instanceof Array?[]:{};h.save(e,g);b(e,function(b){var d=f(e[b]);switch(typeof d){case "boolean":case "number":case "string":case "function":g[b]=d;break;case "object":case "undefined":var k=h.get(d);g[b]=k!==l?k:a(d,f,h)}});return g}function b(a,b){if(a instanceof Array)for(var d=0;d<a.length;d++)b(d);else for(d in a)b(d)}function d(){var a=[],b=[];this.save=function(d,g){var i=
+r.a.k(a,d);0<=i?b[i]=g:(a.push(d),b.push(g))};this.get=function(d){d=r.a.k(a,d);return 0<=d?b[d]:l}}r.Pa=function(b){0==arguments.length&&c(Error("When calling ko.toJS, pass the object you want to convert."));return a(b,function(a){for(var b=0;r.V(a)&&10>b;b++)a=a();return a})};r.toJSON=function(a){a=r.Pa(a);return r.a.qa(a)}})();r.b("ko.toJS",r.Pa);r.b("ko.toJSON",r.toJSON);
+r.h={q:function(a){return"OPTION"==a.tagName?a.__ko__hasDomDataOptionValue__===m?r.a.e.get(a,r.c.options.la):a.getAttribute("value"):"SELECT"==a.tagName?0<=a.selectedIndex?r.h.q(a.options[a.selectedIndex]):l:a.value},S:function(a,b){if("OPTION"==a.tagName)switch(typeof b){case "string":r.a.e.set(a,r.c.options.la,l);"__ko__hasDomDataOptionValue__"in a&&delete a.__ko__hasDomDataOptionValue__;a.value=b;break;default:r.a.e.set(a,r.c.options.la,b),a.__ko__hasDomDataOptionValue__=m,a.value="number"===typeof b?
+b:""}else if("SELECT"==a.tagName)for(var d=a.options.length-1;0<=d;d--){if(r.h.q(a.options[d])==b){a.selectedIndex=d;break}}else{if(b===o||b===l)b="";a.value=b}}};r.b("ko.selectExtensions",r.h);r.b("ko.selectExtensions.readValue",r.h.q);r.b("ko.selectExtensions.writeValue",r.h.S);
+r.j=function(){function a(a,e){for(var d=o;a!=d;)d=a,a=a.replace(b,function(a,b){return e[b]});return a}var b=/\@ko_token_(\d+)\@/g,d=/^[\_$a-z][\_$a-z0-9]*(\[.*?\])*(\.[\_$a-z][\_$a-z0-9]*(\[.*?\])*)*$/i,e=["true","false"];return{D:[],Y:function(b){var e=r.a.z(b);if(3>e.length)return[];"{"===e.charAt(0)&&(e=e.substring(1,e.length-1));for(var b=[],d=o,i,j=0;j<e.length;j++){var k=e.charAt(j);if(d===o)switch(k){case '"':case "'":case "/":d=j,i=k}else if(k==i&&"\\"!==e.charAt(j-1)){k=e.substring(d,j+
+1);b.push(k);var n="@ko_token_"+(b.length-1)+"@",e=e.substring(0,d)+n+e.substring(j+1),j=j-(k.length-n.length),d=o}}i=d=o;for(var t=0,q=o,j=0;j<e.length;j++){k=e.charAt(j);if(d===o)switch(k){case "{":d=j;q=k;i="}";break;case "(":d=j;q=k;i=")";break;case "[":d=j,q=k,i="]"}k===q?t++:k===i&&(t--,0===t&&(k=e.substring(d,j+1),b.push(k),n="@ko_token_"+(b.length-1)+"@",e=e.substring(0,d)+n+e.substring(j+1),j-=k.length-n.length,d=o))}i=[];e=e.split(",");d=0;for(j=e.length;d<j;d++)t=e[d],q=t.indexOf(":"),
+0<q&&q<t.length-1?(k=t.substring(q+1),i.push({key:a(t.substring(0,q),b),value:a(k,b)})):i.push({unknown:a(t,b)});return i},ia:function(a){for(var b="string"===typeof a?r.j.Y(a):a,g=[],a=[],i,j=0;i=b[j];j++)if(0<g.length&&g.push(","),i.key){var k;a:{k=i.key;var n=r.a.z(k);switch(n.length&&n.charAt(0)){case "'":case '"':break a;default:k="'"+n+"'"}}i=i.value;g.push(k);g.push(":");g.push(i);n=r.a.z(i);if(0<=r.a.k(e,r.a.z(n).toLowerCase())?0:n.match(d)!==o)0<a.length&&a.push(", "),a.push(k+" : function(__ko_value) { "+
+i+" = __ko_value; }")}else i.unknown&&g.push(i.unknown);b=g.join("");0<a.length&&(b=b+", '_ko_property_writers' : { "+a.join("")+" } ");return b},rb:function(a,b){for(var e=0;e<a.length;e++)if(r.a.z(a[e].key)==b)return m;return p}}}();r.b("ko.jsonExpressionRewriting",r.j);r.b("ko.jsonExpressionRewriting.bindingRewriteValidators",r.j.D);r.b("ko.jsonExpressionRewriting.parseObjectLiteral",r.j.Y);r.b("ko.jsonExpressionRewriting.insertPropertyAccessorsIntoJson",r.j.ia);
+(function(){function a(a){return 8==a.nodeType&&(f?a.text:a.nodeValue).match(h)}function b(a){return 8==a.nodeType&&(f?a.text:a.nodeValue).match(g)}function d(e,d){for(var f=e,g=1,h=[];f=f.nextSibling;){if(b(f)&&(g--,0===g))return h;h.push(f);a(f)&&g++}d||c(Error("Cannot find closing comment tag to match: "+e.nodeValue));return o}function e(a,b){var e=d(a,b);return e?0<e.length?e[e.length-1].nextSibling:a.nextSibling:o}var f="<\!--test--\>"===document.createComment("test").text,h=f?/^<\!--\s*ko\s+(.*\:.*)\s*--\>$/:
+/^\s*ko\s+(.*\:.*)\s*$/,g=f?/^<\!--\s*\/ko\s*--\>$/:/^\s*\/ko\s*$/,i={ul:m,ol:m};r.f={C:{},childNodes:function(b){return a(b)?d(b):b.childNodes},ha:function(b){if(a(b))for(var b=r.f.childNodes(b),e=0,d=b.length;e<d;e++)r.removeNode(b[e]);else r.a.U(b)},oa:function(b,e){if(a(b)){r.f.ha(b);for(var d=b.nextSibling,f=0,g=e.length;f<g;f++)d.parentNode.insertBefore(e[f],d)}else r.a.oa(b,e)},xb:function(b,e){a(b)?b.parentNode.insertBefore(e,b.nextSibling):b.firstChild?b.insertBefore(e,b.firstChild):b.appendChild(e)},
+mb:function(b,e,d){a(b)?b.parentNode.insertBefore(e,d.nextSibling):d.nextSibling?b.insertBefore(e,d.nextSibling):b.appendChild(e)},nextSibling:function(d){return a(d)?e(d).nextSibling:d.nextSibling&&b(d.nextSibling)?l:d.nextSibling},ta:function(b){return(b=a(b))?b[1]:o},ib:function(a){if(r.f.ta(a)){var b;b=r.f.childNodes(a);for(var e=[],d=0,f=b.length;d<f;d++)r.a.A.F(b[d]),e.push(r.a.outerHTML(b[d]));b=String.prototype.concat.apply("",e);r.f.ha(a);(new r.m.I(a)).text(b)}},Fa:function(d){if(i[d.tagName.toLowerCase()]){var f=
+d.firstChild;if(f){do if(1===f.nodeType){var g;g=f.firstChild;var h=o;if(g){do if(h)h.push(g);else if(a(g)){var q=e(g,m);q?g=q:h=[g]}else b(g)&&(h=[g]);while(g=g.nextSibling)}if(g=h){h=f.nextSibling;for(q=0;q<g.length;q++)h?d.insertBefore(g[q],h):d.appendChild(g[q])}}while(f=f.nextSibling)}}}}})();r.L=function(){};
+r.a.extend(r.L.prototype,{nodeHasBindings:function(a){switch(a.nodeType){case 1:return a.getAttribute("data-bind")!=o;case 8:return r.f.ta(a)!=o;default:return p}},getBindings:function(a,b){var d=this.getBindingsString(a,b);return d?this.parseBindingsString(d,b):o},getBindingsString:function(a){switch(a.nodeType){case 1:return a.getAttribute("data-bind");case 8:return r.f.ta(a);default:return o}},parseBindingsString:function(a,b){try{var d=b.$data,e=" { "+r.j.ia(a)+" } ";return r.a.hb(e,d===o?window:
+d,b)}catch(f){c(Error("Unable to parse bindings.\nMessage: "+f+";\nBindings value: "+a))}}});r.L.instance=new r.L;r.b("ko.bindingProvider",r.L);
+(function(){function a(a,d){for(var h,g=d.childNodes[0];h=g;)g=r.f.nextSibling(h),b(a,h,p)}function b(b,f,h){var g=m,i=1==f.nodeType;i&&r.f.Fa(f);if(i&&h||r.L.instance.nodeHasBindings(f))g=d(f,o,b,h).Bb;i&&g&&a(b,f)}function d(a,b,d,g){function i(a){return function(){return n[a]}}function j(){return n}var k=0;r.f.ib(a);var n,t;new r.i(function(){var q=d&&d instanceof r.K?d:new r.K(r.a.d(d)),v=q.$data;g&&r.Na(a,q);if(n=("function"==typeof b?b():b)||r.L.instance.getBindings(a,q)){if(0===k){k=1;for(var s in n){var w=
+r.c[s];w&&8===a.nodeType&&!r.f.C[s]&&c(Error("The binding '"+s+"' cannot be used with virtual elements"));if(w&&"function"==typeof w.init&&(w=(0,w.init)(a,i(s),j,v,q))&&w.controlsDescendantBindings)t!==l&&c(Error("Multiple bindings ("+t+" and "+s+") are trying to control descendant bindings of the same element. You cannot use these bindings together on the same element.")),t=s}k=2}if(2===k)for(s in n)(w=r.c[s])&&"function"==typeof w.update&&(0,w.update)(a,i(s),j,v,q)}},o,{disposeWhenNodeIsRemoved:a});
+return{Bb:t===l}}r.c={};r.K=function(a,b){this.$data=a;b?(this.$parent=b.$data,this.$parents=(b.$parents||[]).slice(0),this.$parents.unshift(this.$parent),this.$root=b.$root):(this.$parents=[],this.$root=a)};r.K.prototype.createChildContext=function(a){return new r.K(a,this)};r.Na=function(a,b){if(2==arguments.length)r.a.e.set(a,"__ko_bindingContext__",b);else return r.a.e.get(a,"__ko_bindingContext__")};r.xa=function(a,b,h){1===a.nodeType&&r.f.Fa(a);return d(a,b,h,m)};r.Ta=function(b,d){1===d.nodeType&&
+a(b,d)};r.wa=function(a,d){d&&1!==d.nodeType&&8!==d.nodeType&&c(Error("ko.applyBindings: first parameter should be your view model; second parameter should be a DOM node"));d=d||window.document.body;b(a,d,m)};r.ea=function(a){switch(a.nodeType){case 1:case 8:var b=r.Na(a);if(b)return b;if(a.parentNode)return r.ea(a.parentNode)}};r.$a=function(a){return(a=r.ea(a))?a.$data:l};r.b("ko.bindingHandlers",r.c);r.b("ko.applyBindings",r.wa);r.b("ko.applyBindingsToDescendants",r.Ta);r.b("ko.applyBindingsToNode",
+r.xa);r.b("ko.contextFor",r.ea);r.b("ko.dataFor",r.$a)})();r.a.n(["click"],function(a){r.c[a]={init:function(b,d,e,f){return r.c.event.init.call(this,b,function(){var b={};b[a]=d();return b},e,f)}}});
+r.c.event={init:function(a,b,d,e){var f=b()||{},h;for(h in f)(function(){var f=h;"string"==typeof f&&r.a.s(a,f,function(a){var h,k=b()[f];if(k){var n=d();try{var t=r.a.X(arguments);t.unshift(e);h=k.apply(e,t)}finally{if(h!==m)a.preventDefault?a.preventDefault():a.returnValue=p}if(n[f+"Bubble"]===p)a.cancelBubble=m,a.stopPropagation&&a.stopPropagation()}})})()}};
+r.c.submit={init:function(a,b,d,e){"function"!=typeof b()&&c(Error("The value for a submit binding must be a function"));r.a.s(a,"submit",function(d){var h,g=b();try{h=g.call(e,a)}finally{if(h!==m)d.preventDefault?d.preventDefault():d.returnValue=p}})}};r.c.visible={update:function(a,b){var d=r.a.d(b()),e="none"!=a.style.display;if(d&&!e)a.style.display="";else if(!d&&e)a.style.display="none"}};
+r.c.enable={update:function(a,b){var d=r.a.d(b());if(d&&a.disabled)a.removeAttribute("disabled");else if(!d&&!a.disabled)a.disabled=m}};r.c.disable={update:function(a,b){r.c.enable.update(a,function(){return!r.a.d(b())})}};function D(a,b,d){d&&b!==r.h.q(a)&&r.h.S(a,b);b!==r.h.q(a)&&r.a.sa(a,"change")}
+r.c.value={init:function(a,b,d){var e=["change"],f=d().valueUpdate;f&&("string"==typeof f&&(f=[f]),r.a.J(e,f),e=r.a.ya(e));r.a.n(e,function(e){var f=p;r.a.Cb(e,"after")&&(f=m,e=e.substring(5));var i=f?function(a){setTimeout(a,0)}:function(a){a()};r.a.s(a,e,function(){i(function(){var e=b(),f=r.h.q(a);r.P(e)?e(f):(e=d(),e._ko_property_writers&&e._ko_property_writers.value&&e._ko_property_writers.value(f))})})})},update:function(a,b){var d=r.a.d(b()),e=r.h.q(a),f=d!=e;0===d&&0!==e&&"0"!==e&&(f=m);f&&
+(e=function(){r.h.S(a,d)},e(),"SELECT"==a.tagName&&setTimeout(e,0));"SELECT"==a.tagName&&0<a.length&&D(a,d,p)}};
+r.c.options={update:function(a,b,d){"SELECT"!=a.tagName&&c(Error("options binding applies only to SELECT elements"));var e=0==a.length,f=r.a.ba(r.a.aa(a.childNodes,function(a){return a.tagName&&"OPTION"==a.tagName&&a.selected}),function(a){return r.h.q(a)||a.innerText||a.textContent}),h=a.scrollTop;a.scrollTop=0;for(var g=r.a.d(b());0<a.length;)r.F(a.options[0]),a.remove(0);if(g){d=d();"number"!=typeof g.length&&(g=[g]);if(d.optionsCaption){var i=document.createElement("OPTION");r.a.Z(i,d.optionsCaption);
+r.h.S(i,l);a.appendChild(i)}for(var b=0,j=g.length;b<j;b++){var i=document.createElement("OPTION"),k="string"==typeof d.optionsValue?g[b][d.optionsValue]:g[b],k=r.a.d(k);r.h.S(i,k);var n=d.optionsText,k="function"==typeof n?n(g[b]):"string"==typeof n?g[b][n]:k;if(k===o||k===l)k="";r.a.Ma(i,k);a.appendChild(i)}g=a.getElementsByTagName("OPTION");b=i=0;for(j=g.length;b<j;b++)0<=r.a.k(f,r.h.q(g[b]))&&(r.a.La(g[b],m),i++);if(h)a.scrollTop=h;e&&"value"in d&&D(a,r.a.d(d.value),m)}}};r.c.options.la="__ko.optionValueDomData__";
+r.c.selectedOptions={Da:function(a){for(var b=[],a=a.childNodes,d=0,e=a.length;d<e;d++){var f=a[d];"OPTION"==f.tagName&&f.selected&&b.push(r.h.q(f))}return b},init:function(a,b,d){r.a.s(a,"change",function(){var a=b();r.P(a)?a(r.c.selectedOptions.Da(this)):(a=d(),a._ko_property_writers&&a._ko_property_writers.value&&a._ko_property_writers.value(r.c.selectedOptions.Da(this)))})},update:function(a,b){"SELECT"!=a.tagName&&c(Error("values binding applies only to SELECT elements"));var d=r.a.d(b());if(d&&
+"number"==typeof d.length)for(var e=a.childNodes,f=0,h=e.length;f<h;f++){var g=e[f];"OPTION"==g.tagName&&r.a.La(g,0<=r.a.k(d,r.h.q(g)))}}};r.c.text={update:function(a,b){r.a.Ma(a,b())}};r.c.html={init:function(){return{controlsDescendantBindings:m}},update:function(a,b){var d=r.a.d(b());r.a.Z(a,d)}};r.c.css={update:function(a,b){var d=r.a.d(b()||{}),e;for(e in d)if("string"==typeof e){var f=r.a.d(d[e]);r.a.Qa(a,e,f)}}};
+r.c.style={update:function(a,b){var d=r.a.d(b()||{}),e;for(e in d)if("string"==typeof e){var f=r.a.d(d[e]);a.style[e]=f||""}}};r.c.uniqueName={init:function(a,b){if(b())a.name="ko_unique_"+ ++r.c.uniqueName.Za,(r.a.ob||r.a.pb)&&a.mergeAttributes(document.createElement("<input name='"+a.name+"'/>"),p)}};r.c.uniqueName.Za=0;
+r.c.checked={init:function(a,b,d){r.a.s(a,"click",function(){var e;if("checkbox"==a.type)e=a.checked;else if("radio"==a.type&&a.checked)e=a.value;else return;var f=b();"checkbox"==a.type&&r.a.d(f)instanceof Array?(e=r.a.k(r.a.d(f),a.value),a.checked&&0>e?f.push(a.value):!a.checked&&0<=e&&f.splice(e,1)):r.P(f)?f()!==e&&f(e):(f=d(),f._ko_property_writers&&f._ko_property_writers.checked&&f._ko_property_writers.checked(e))});"radio"==a.type&&!a.name&&r.c.uniqueName.init(a,function(){return m})},update:function(a,
+b){var d=r.a.d(b());if("checkbox"==a.type)a.checked=d instanceof Array?0<=r.a.k(d,a.value):d;else if("radio"==a.type)a.checked=a.value==d}};r.c.attr={update:function(a,b){var d=r.a.d(b())||{},e;for(e in d)if("string"==typeof e){var f=r.a.d(d[e]);f===p||f===o||f===l?a.removeAttribute(e):a.setAttribute(e,f.toString())}}};
+r.c.hasfocus={init:function(a,b,d){function e(a){var e=b();a!=r.a.d(e)&&(r.P(e)?e(a):(e=d(),e._ko_property_writers&&e._ko_property_writers.hasfocus&&e._ko_property_writers.hasfocus(a)))}r.a.s(a,"focus",function(){e(m)});r.a.s(a,"focusin",function(){e(m)});r.a.s(a,"blur",function(){e(p)});r.a.s(a,"focusout",function(){e(p)})},update:function(a,b){var d=r.a.d(b());d?a.focus():a.blur();r.a.sa(a,d?"focusin":"focusout")}};
+r.c["with"]={o:function(a){return function(){var b=a();return{"if":b,data:b,templateEngine:r.p.M}}},init:function(a,b){return r.c.template.init(a,r.c["with"].o(b))},update:function(a,b,d,e,f){return r.c.template.update(a,r.c["with"].o(b),d,e,f)}};r.j.D["with"]=p;r.f.C["with"]=m;r.c["if"]={o:function(a){return function(){return{"if":a(),templateEngine:r.p.M}}},init:function(a,b){return r.c.template.init(a,r.c["if"].o(b))},update:function(a,b,d,e,f){return r.c.template.update(a,r.c["if"].o(b),d,e,f)}};
+r.j.D["if"]=p;r.f.C["if"]=m;r.c.ifnot={o:function(a){return function(){return{ifnot:a(),templateEngine:r.p.M}}},init:function(a,b){return r.c.template.init(a,r.c.ifnot.o(b))},update:function(a,b,d,e,f){return r.c.template.update(a,r.c.ifnot.o(b),d,e,f)}};r.j.D.ifnot=p;r.f.C.ifnot=m;
+r.c.foreach={o:function(a){return function(){var b=r.a.d(a());return!b||"number"==typeof b.length?{foreach:b,templateEngine:r.p.M}:{foreach:b.data,includeDestroyed:b.includeDestroyed,afterAdd:b.afterAdd,beforeRemove:b.beforeRemove,afterRender:b.afterRender,templateEngine:r.p.M}}},init:function(a,b){return r.c.template.init(a,r.c.foreach.o(b))},update:function(a,b,d,e,f){return r.c.template.update(a,r.c.foreach.o(b),d,e,f)}};r.j.D.foreach=p;r.f.C.foreach=m;r.b("ko.allowedVirtualElementBindings",r.f.C);
+r.t=function(){};r.t.prototype.renderTemplateSource=function(){c("Override renderTemplateSource")};r.t.prototype.createJavaScriptEvaluatorBlock=function(){c("Override createJavaScriptEvaluatorBlock")};r.t.prototype.makeTemplateSource=function(a){if("string"==typeof a){var b=document.getElementById(a);b||c(Error("Cannot find template with ID "+a));return new r.m.g(b)}if(1==a.nodeType||8==a.nodeType)return new r.m.I(a);c(Error("Unknown template type: "+a))};
+r.t.prototype.renderTemplate=function(a,b,d){return this.renderTemplateSource(this.makeTemplateSource(a),b,d)};r.t.prototype.isTemplateRewritten=function(a){return this.allowTemplateRewriting===p?m:this.W&&this.W[a]?m:this.makeTemplateSource(a).data("isRewritten")};r.t.prototype.rewriteTemplate=function(a,b){var d=this.makeTemplateSource(a),e=b(d.text());d.text(e);d.data("isRewritten",m);if("string"==typeof a)this.W=this.W||{},this.W[a]=m};r.b("ko.templateEngine",r.t);
+r.$=function(){function a(a,b,d){for(var a=r.j.Y(a),g=r.j.D,i=0;i<a.length;i++){var j=a[i].key;if(g.hasOwnProperty(j)){var k=g[j];"function"===typeof k?(j=k(a[i].value))&&c(Error(j)):k||c(Error("This template engine does not support the '"+j+"' binding within its templates"))}}a="ko.templateRewriting.applyMemoizedBindingsToNextSibling(function() {             return (function() { return { "+r.j.ia(a)+" } })()         })";return d.createJavaScriptEvaluatorBlock(a)+b}var b=/(<[a-z]+\d*(\s+(?!data-bind=)[a-z0-9\-]+(=(\"[^\"]*\"|\'[^\']*\'))?)*\s+)data-bind=(["'])([\s\S]*?)\5/gi,
+d=/<\!--\s*ko\b\s*([\s\S]*?)\s*--\>/g;return{gb:function(a,b){b.isTemplateRewritten(a)||b.rewriteTemplate(a,function(a){return r.$.ub(a,b)})},ub:function(e,f){return e.replace(b,function(b,e,d,j,k,n,t){return a(t,e,f)}).replace(d,function(b,e){return a(e,"<\!-- ko --\>",f)})},Ua:function(a){return r.r.ka(function(b,d){b.nextSibling&&r.xa(b.nextSibling,a,d)})}}}();r.b("ko.templateRewriting",r.$);r.b("ko.templateRewriting.applyMemoizedBindingsToNextSibling",r.$.Ua);r.m={};r.m.g=function(a){this.g=a};
+r.m.g.prototype.text=function(){if(0==arguments.length)return"script"==this.g.tagName.toLowerCase()?this.g.text:this.g.innerHTML;var a=arguments[0];"script"==this.g.tagName.toLowerCase()?this.g.text=a:r.a.Z(this.g,a)};r.m.g.prototype.data=function(a){if(1===arguments.length)return r.a.e.get(this.g,"templateSourceData_"+a);r.a.e.set(this.g,"templateSourceData_"+a,arguments[1])};r.m.I=function(a){this.g=a};r.m.I.prototype=new r.m.g;
+r.m.I.prototype.text=function(){if(0==arguments.length)return r.a.e.get(this.g,"__ko_anon_template__");r.a.e.set(this.g,"__ko_anon_template__",arguments[0])};r.b("ko.templateSources",r.m);r.b("ko.templateSources.domElement",r.m.g);r.b("ko.templateSources.anonymousTemplate",r.m.I);
+(function(){function a(a,b,d){for(var g=0;node=a[g];g++)node.parentNode===b&&(1===node.nodeType||8===node.nodeType)&&d(node)}function b(a,b,h,g,i){var i=i||{},j=i.templateEngine||d;r.$.gb(h,j);h=j.renderTemplate(h,g,i);("number"!=typeof h.length||0<h.length&&"number"!=typeof h[0].nodeType)&&c("Template engine must return an array of DOM nodes");j=p;switch(b){case "replaceChildren":r.f.oa(a,h);j=m;break;case "replaceNode":r.a.Ja(a,h);j=m;break;case "ignoreTargetNode":break;default:c(Error("Unknown renderMode: "+
+b))}j&&(r.ua(h,g),i.afterRender&&i.afterRender(h,g.$data));return h}var d;r.pa=function(a){a!=l&&!(a instanceof r.t)&&c("templateEngine must inherit from ko.templateEngine");d=a};r.ua=function(b,d){var h=r.a.J([],b),g=0<b.length?b[0].parentNode:o;a(h,g,function(a){r.wa(d,a)});a(h,g,function(a){r.r.Sa(a,[d])})};r.na=function(a,f,h,g,i){h=h||{};(h.templateEngine||d)==l&&c("Set a template engine before calling renderTemplate");i=i||"replaceChildren";if(g){var j=g.nodeType?g:0<g.length?g[0]:o;return new r.i(function(){var d=
+f&&f instanceof r.K?f:new r.K(r.a.d(f)),n="function"==typeof a?a(d.$data):a,d=b(g,i,n,d,h);"replaceNode"==i&&(g=d,j=g.nodeType?g:0<g.length?g[0]:o)},o,{disposeWhen:function(){return!j||!r.a.ga(j)},disposeWhenNodeIsRemoved:j&&"replaceNode"==i?j.parentNode:j})}return r.r.ka(function(b){r.na(a,f,h,b,"replaceNode")})};r.Ab=function(a,d,h,g,i){function j(a,b){var d=k(a);r.ua(b,d);h.afterRender&&h.afterRender(b,d.$data)}function k(a){return i.createChildContext(r.a.d(a))}return new r.i(function(){var i=
+r.a.d(d)||[];"undefined"==typeof i.length&&(i=[i]);i=r.a.aa(i,function(a){return h.includeDestroyed||a===l||a===o||!r.a.d(a._destroy)});r.a.Ka(g,i,function(d){var f="function"==typeof a?a(d):a;return b(o,"ignoreTargetNode",f,k(d),h)},h,j)},o,{disposeWhenNodeIsRemoved:g})};r.c.template={init:function(a,b){var d=r.a.d(b());"string"!=typeof d&&!d.name&&1==a.nodeType&&((new r.m.I(a)).text(a.innerHTML),r.a.U(a));return{controlsDescendantBindings:m}},update:function(a,b,d,g,i){b=r.a.d(b());g=m;"string"==
+typeof b?d=b:(d=b.name,"if"in b&&(g=g&&r.a.d(b["if"])),"ifnot"in b&&(g=g&&!r.a.d(b.ifnot)));var j=o;"object"===typeof b&&"foreach"in b?j=r.Ab(d||a,g&&b.foreach||[],b,a,i):g?(i="object"==typeof b&&"data"in b?i.createChildContext(r.a.d(b.data)):i,j=r.na(d||a,i,b,a)):r.f.ha(a);i=j;(b=r.a.e.get(a,"__ko__templateSubscriptionDomDataKey__"))&&"function"==typeof b.v&&b.v();r.a.e.set(a,"__ko__templateSubscriptionDomDataKey__",i)}};r.j.D.template=function(a){a=r.j.Y(a);return 1==a.length&&a[0].unknown?o:r.j.rb(a,
+"name")?o:"This template engine does not support anonymous templates nested within its templates"};r.f.C.template=m})();r.b("ko.setTemplateEngine",r.pa);r.b("ko.renderTemplate",r.na);
+r.a.N=function(a,b,d){if(d===l)return r.a.N(a,b,1)||r.a.N(a,b,10)||r.a.N(a,b,Number.MAX_VALUE);for(var a=a||[],b=b||[],e=a,f=b,h=[],g=0;g<=f.length;g++)h[g]=[];for(var g=0,i=Math.min(e.length,d);g<=i;g++)h[0][g]=g;g=1;for(i=Math.min(f.length,d);g<=i;g++)h[g][0]=g;for(var i=e.length,j,k=f.length,g=1;g<=i;g++){j=Math.max(1,g-d);for(var n=Math.min(k,g+d);j<=n;j++)h[j][g]=e[g-1]===f[j-1]?h[j-1][g-1]:Math.min(h[j-1][g]===l?Number.MAX_VALUE:h[j-1][g]+1,h[j][g-1]===l?Number.MAX_VALUE:h[j][g-1]+1)}d=a.length;
+e=b.length;f=[];g=h[e][d];if(g===l)h=o;else{for(;0<d||0<e;){i=h[e][d];k=0<e?h[e-1][d]:g+1;n=0<d?h[e][d-1]:g+1;j=0<e&&0<d?h[e-1][d-1]:g+1;if(k===l||k<i-1)k=g+1;if(n===l||n<i-1)n=g+1;j<i-1&&(j=g+1);k<=n&&k<j?(f.push({status:"added",value:b[e-1]}),e--):(n<k&&n<j?f.push({status:"deleted",value:a[d-1]}):(f.push({status:"retained",value:a[d-1]}),e--),d--)}h=f.reverse()}return h};r.b("ko.utils.compareArrays",r.a.N);
+(function(){function a(a){if(2<a.length){for(var b=a[0],f=a[a.length-1],h=[b];b!==f;){b=b.nextSibling;if(!b)return;h.push(b)}Array.prototype.splice.apply(a,[0,a.length].concat(h))}}function b(b,e,f,h){var g=[],b=r.i(function(){var b=e(f)||[];0<g.length&&(a(g),r.a.Ja(g,b),h&&h(f,b));g.splice(0,g.length);r.a.J(g,b)},o,{disposeWhenNodeIsRemoved:b,disposeWhen:function(){return 0==g.length||!r.a.ga(g[0])}});return{sb:g,i:b}}r.a.Ka=function(d,e,f,h,g){for(var e=e||[],h=h||{},i=r.a.e.get(d,"setDomNodeChildrenFromArrayMapping_lastMappingResult")===
+l,j=r.a.e.get(d,"setDomNodeChildrenFromArrayMapping_lastMappingResult")||[],k=r.a.ba(j,function(a){return a.Va}),n=r.a.N(k,e),e=[],t=0,q=[],k=[],v=o,s=0,w=n.length;s<w;s++)switch(n[s].status){case "retained":var x=j[t];e.push(x);0<x.O.length&&(v=x.O[x.O.length-1]);t++;break;case "deleted":j[t].i.v();a(j[t].O);r.a.n(j[t].O,function(a){q.push({element:a,index:s,value:n[s].value});v=a});t++;break;case "added":var x=n[s].value,z=b(d,f,x,g),u=z.sb;e.push({Va:n[s].value,O:u,i:z.i});for(var z=0,y=u.length;z<
+y;z++){var A=u[z];k.push({element:A,index:s,value:n[s].value});v==o?r.f.xb(d,A):r.f.mb(d,A,v);v=A}g&&g(x,u)}r.a.n(q,function(a){r.F(a.element)});f=p;if(!i){if(h.afterAdd)for(s=0;s<k.length;s++)h.afterAdd(k[s].element,k[s].index,k[s].value);if(h.beforeRemove){for(s=0;s<q.length;s++)h.beforeRemove(q[s].element,q[s].index,q[s].value);f=m}}f||r.a.n(q,function(a){r.removeNode(a.element)});r.a.e.set(d,"setDomNodeChildrenFromArrayMapping_lastMappingResult",e)}})();
+r.b("ko.utils.setDomNodeChildrenFromArrayMapping",r.a.Ka);r.p=function(){this.allowTemplateRewriting=p};r.p.prototype=new r.t;r.p.prototype.renderTemplateSource=function(a){a=a.text();return r.a.ma(a)};r.p.M=new r.p;r.pa(r.p.M);r.b("ko.nativeTemplateEngine",r.p);
+(function(){r.ja=function(){var a=this.qb=function(){if("undefined"==typeof jQuery||!jQuery.tmpl)return 0;try{if(0<=jQuery.tmpl.tag.tmpl.open.toString().indexOf("__"))return 2}catch(a){}return 1}();this.renderTemplateSource=function(d,e,f){f=f||{};2>a&&c(Error("Your version of jQuery.tmpl is too old. Please upgrade to jQuery.tmpl 1.0.0pre or later."));var h=d.data("precompiled");h||(h=d.text()||"",h=jQuery.template(o,"{{ko_with $item.koBindingContext}}"+h+"{{/ko_with}}"),d.data("precompiled",h));
+d=[e.$data];e=jQuery.extend({koBindingContext:e},f.templateOptions);e=jQuery.tmpl(h,d,e);e.appendTo(document.createElement("div"));jQuery.fragments={};return e};this.createJavaScriptEvaluatorBlock=function(a){return"{{ko_code ((function() { return "+a+" })()) }}"};this.addTemplate=function(a,b){document.write("<script type='text/html' id='"+a+"'>"+b+"<\/script>")};if(0<a)jQuery.tmpl.tag.ko_code={open:"__.push($1 || '');"},jQuery.tmpl.tag.ko_with={open:"with($1) {",close:"} "}};r.ja.prototype=new r.t;
+var a=new r.ja;0<a.qb&&r.pa(a);r.b("ko.jqueryTmplTemplateEngine",r.ja)})();
 })(window);                  
 // Knockout Mapping plugin v2.0.2
 // (c) 2011 Steven Sanderson, Roy Jacobs - http://knockoutjs.com/
@@ -115,6 +136,34 @@ ko.mapping.toJSON);ko.exportSymbol("ko.mapping.updateFromJS",ko.mapping.updateFr
  * 
  * Convierte objetos de javascript en algo que CakePhp pueda leer bajo el $this->data
  * o sea, convierte los objetos a un array para enviar via method POST en ajax
+ * 
+ * EL objeto debe tener un atributo (key denominada: "Model", con el nombre del modelo.
+ * 
+ * Objeto a enviar, ejemplo:
+ * 
+ * var product = {
+ *      model: 'Producto',
+ *      name: 'Zapatillas Nike',
+ *      precio: 34.76
+ *      observacion: 'una observacion re copada ...'
+ * }
+ * 
+ * var objetoEnviar = {
+ *      obj: product,
+ *      method: 'post', // por defecto ya viene en post, puede ser get tambien. no es obligatorio ponerlo
+ *      url: '/url/enviar' // es la url a donde se enviara el ajax
+ * }
+ * 
+ * Envia un ajax post para que Cake pueda crear 
+ *      $this->data['Producto']['name']
+ *      $this->data['Producto']['precio']
+ *      $this->data['Producto']['observacion']
+ *      
+ *      
+ *      El objeto debe tener lso siguientes atributos o claves:
+ *      'obj': Obligatorio, Objeto js a enviar
+ *      'url': Obligatorio, es la url donde se enviara el ajax
+ *      'method': puede ser get o post, es el method de envio ajax
  */
 var $cakeSaver = {
     
@@ -154,15 +203,8 @@ var $cakeSaver = {
                     if (typeof fn == 'function'){
                         fn.call(data);
                     } else {
-                        try { 
-                            if ( typeof obj.handleAjaxSuccess == 'function' ) {
-                                obj.handleAjaxSuccess(data, url, method);
-                            } else {
-                                throw "$cakeSaver:: EL objeto '"+obj.model+"' pasado para enviar vía ajax no tiene una función llamada 'handleAjaxSuccess'. La misma es indispensable para tratar la respuesta.";
-                            }
-                        }
-                        catch(er) {
-                            jQuery.error(er);
+                        if ( typeof obj.handleAjaxSuccess == 'function' ) {
+                            obj.handleAjaxSuccess(data, url, method);
                         }
                     }
                 }
@@ -301,28 +343,36 @@ Risto.Adition = {
      * por lo tanto es usual encontrar la logica de llenado de esta variable en adition.events
      */
     mesaBuscarAccessKey: '',
-    mesaCurrentIndex: null
+    mesaCurrentIndex: null,
+    mesaCurrentContainer: null
+
 };
 
 
 $(document).ready(function(){
     Risto.Adition.koAdicionModel.refreshBinding();
-});
-  
-  
-  
-  
-  
-/********----------- EXRA FUNCTIONS ---------------------------------*******/
-function mostrarMesasDeMozo( mozoId ) {
-    var mesasDom = $('#mesas_container li');
-    mesasDom.show();
-    if ( mozoId ) {
-            $('#mesas_container li[mozo!='+mozoId+']').hide();
-            $('.listado-mozos-para-mesas a').removeClass('ui-btn-active');
-            $('.listado-mozos-para-mesas a[data-mozo-id='+mozoId+']').addClass('ui-btn-active');
-        }
+    
+    $mesasContainer = $('#mesas_container');
+    $mesasDom = $mesasContainer.find('li');
+    $listMozosContainer = $('#listado-mozos-para-mesas');
+});/*--------------------------------------------------------------------------------------------------- Risto.Adicion.descuento
+ *
+ *
+ * Clase Descuento
+ */
+
+Risto.Adition.descuento = function(jsonData){
+    this.descuento = ko.observable( 0 );
+    return this.initialize(jsonData);
 }
+
+
+Risto.Adition.descuento.prototype = {
+    initialize: function(jsonData){
+        return ko.mapping.fromJS(jsonData, {}, this);       
+    }
+}
+
 /*--------------------------------------------------------------------------------------------------- Risto.Adicion.mozo
  *
  *
@@ -429,11 +479,9 @@ Mozo.prototype = {
     },
 
 
-    sacarMesa: function(mesa){
-        if ( this.mesas.remove(mesa) ) { 
-            var evento = $.Event(MOZOS_POSIBLES_ESTADOS.sacaMesa.event);
-            evento.mozo = this;
-            $(document).trigger(evento);
+    sacarMesa: function ( mesa ) {
+        if ( this.mesas.remove(mesa) ) {
+            delete mesa;            
             return true
         }
         return false;
@@ -465,57 +513,372 @@ Mozo.prototype = {
         return null;
     }
 };/**
+ *
+ *  Este objeto maneja las mesas recibidas mediante el llamado 
+ *  al json mozos/mesas_abiertas.json
+ *  
+ *  Cada uno de los keys, son las claves recibidas en el json que viene de esas mesas recibidas
+ *
+ */
+Risto.Adition.handleMesasRecibidas = {
+         /**
+         * 
+         * Recibiendo un json con el listado de mozos, que a su vez 
+         * cada uno tiene el listado de mesas abiertas de c/u, actualiza 
+         * el listado de mesas de la adicion
+         * 
+         */
+        created: function ( data ) {
+            if (!data.mozos) return -1;
+
+            if ( this.mesas().length ) {
+                // si ya hay mesas entonces meto las mesas nuevas de forma indidual
+                var mozo;
+                
+                for ( var z in data.mozos ) {
+                    mozo = this.findMozoById(  data.mozos[z].id );
+                    for ( var m in data.mozos[z].mesas ) {
+                        // si no esta en el listado de mesas, la agrego
+                        if ( !this.findMesaById( data.mozos[z].mesas[m].id ) ) {
+                            new Mesa(mozo, data.mozos[z].mesas[m] );
+                        }
+                    }
+                }
+            } else {
+                // si no habia mesas, entonces debo hacer todo el proceso de creacion con el mapping
+                var mapOps = {
+                    'mozos': {
+                        create: function(ops) {
+                            return new Mozo(ops.data);
+                        },
+                        key: function(data) {
+                            return ko.utils.unwrapObservable(data.id);
+                        }
+                    }
+                }
+            
+                ko.mapping.fromJS( data, mapOps, Risto.Adition.adicionar );
+            }
+
+            Risto.Adition.EventHandler.adicionMesasActualizadas();
+        },
+        
+        
+        /**
+         * 
+         * Recibiendo un json con el listado de mozos, que a su vez 
+         * cada uno tiene el listado de mesas abiertas de c/u, actualiza 
+         * el listado de mesas de la adicion
+         * 
+         */
+        modified: function ( data ) {
+            if (!data.mozos) return -1;
+            var mesaEncontrada, 
+                mozo;
+            for(var z in data.mozos){
+                mozo = Risto.Adition.adicionar.findMozoById( data.mozos[z].id );
+                for( var m in data.mozos[z].mesas ) {
+                    mesaEncontrada = Risto.Adition.adicionar.findMesaById( data.mozos[z].mesas[m].id );
+                    if ( mesaEncontrada ) {
+                        mesaEncontrada.update( mozo, data.mozos[z].mesas[m] );
+                    }
+                }
+            }
+            Risto.Adition.EventHandler.adicionMesasActualizadas();
+            return 1;
+        },
+        
+        
+        /**
+         * 
+         * Recibiendo las mesas cobradas las manejo 
+         * 
+         */
+        cobradas: function ( data ) {
+            if (!data.mozos) return -1;
+            var mesaEncontrada, 
+                z; // contador index de mozos
+                       
+            for (z in data.mozos) {
+                for( var m in data.mozos[z].mesas ) {
+                    mesaEncontrada = Risto.Adition.adicionar.findMesaById( data.mozos[z].mesas[m].id );
+                    
+                    if ( mesaEncontrada ) {  
+//                        ko.mapping.fromJS( data.mozos[z].mesas[m], {}, mesaEncontrada );
+                        mesaEncontrada.mozo().sacarMesa( mesaEncontrada );
+                    }
+                }
+            }
+            // reinicializar vistas
+            $rae.adicionMesasActualizadas();
+            return 1;
+        },
+        
+        
+        /**
+         * 
+         * Manejo de las mesas eliminadas
+         * 
+         */
+        deleted: function(){
+            return Risto.Adition.handleMesasRecibidas.cobradas();
+        }
+        
+}
+    
+    /**
+ * 
+ * @scope Risto.Adition
+ * 
+ * EventHandler
+ * 
+ * Maneja la DOM
+ * Es el encargado de capturar los eventos relacionados con la adicion
+ * 
+ */
+
+$raeh = Risto.Adition.EventHandler = {
+    
+    trigger: function( eventName, extra, context ) {  
+        if ( Risto.Adition.EventHandler.hasOwnProperty(eventName ) && typeof Risto.Adition.EventHandler[eventName] == 'function') {
+                if ( context ) {
+                    setTimeout(function(){
+                        Risto.Adition.EventHandler[eventName].call(context, extra);
+                    }, 1);
+                } else {
+                    setTimeout(function(){
+                        return Risto.Adition.EventHandler[eventName].call(this, extra);
+                    }, 1);
+                }
+        }
+        
+        return -1;
+    },
+    
+    mesaAbierta: function(e) {
+        if (!e.mesa.id) {
+            setTimeout(function(){
+                abrirMesa(e)
+            },1000);
+        }
+    },
+    
+    mesaCerrada: function(e){
+    },
+    
+    
+    /**
+     * 
+     *  Procesar los pagos de la mesa
+     */
+    mesaCobrada: function(e){
+        // envio los datos al servidor
+        var m = e.mesa;
+        var mes = {
+            Mesa: {
+                id: m.id(),
+                estado_id: m.estado_id(),
+                time_cobro: m.time_cobro(),
+                model: 'Mesa'
+            },
+            Pago: m.Pago()
+        };
+        
+        // guardo los pagos
+        $cakeSaver.send({
+            url: urlDomain+'pagos/add',
+            obj: mes
+        }, function(d){
+            
+        });
+        
+        e.mesa.mozo().sacarMesa( e.mesa );
+        
+    },
+    
+    mesaBorrada: function(e){
+        var mesa = e.mesa;
+        e.mesa.mozo().sacarMesa(mesa);
+    },
+    
+    mesaSeleccionada: function(e){
+        Risto.Adition.adicionar.setCurrentMesa(e.mesa);
+    },
+    
+    
+    /**
+     *  Llama a una funcion dependiendo de la pagina en la que estoy
+     *  sirve para realizar las mismas acciones de inicializacion, o preparacion
+     *  de alguna pagina despues de haber realizado una determinada accion
+     *  Utiliza funciones de JQM para determinar la pagina actual
+     */
+    adicionMesasActualizadas: function () {
+        /**
+         *
+         *  definicion del objeto que manejara las distintas respuestas dependiendo de la pagina activa
+         *  Cada clave de este objeto es el ID de la page de JQM utilizada
+         *  
+         * */
+        var onMesasActualizadasHandlerByPage = {
+            'listado-mesas': function(){
+                var btnMozo = $('#listado-mozos-para-mesas .ui-btn-active'),
+                    mozoId = 0;
+                if ( btnMozo[0] ) {
+                    mozoId = $(btnMozo[0]).attr('data-mozo-id');
+                }
+                $raeh.mostrarMesasDeMozo(mozoId);
+            },
+            'mesa-view': function() {
+                $('#comanda-detalle-collapsible').trigger('create');
+            }
+        }
+        
+        // llamar a la funcion correspondiente segun la pagina en la que estoy
+        if ( $.mobile.activePage[0].id && onMesasActualizadasHandlerByPage.hasOwnProperty( $.mobile.activePage[0].id) ) {
+            onMesasActualizadasHandlerByPage[$.mobile.activePage[0].id].call();
+        }
+    },
+    
+    
+    adicionCambioMozo: function(){
+        return 1;
+    },
+    
+    
+    
+    
+
+    cambiarMozo: function(e){    
+        var mozoId = $(this).find('[name="mozo_id"]:checked').val();
+        var mozo = Risto.Adition.adicionar.findMozoById(mozoId);
+        var mozoAnterior = Risto.Adition.adicionar.currentMesa().mozo();
+        Risto.Adition.adicionar.currentMesa().setMozo( mozo );
+
+        $('.ui-dialog').dialog('close');
+
+        var sendOb = {
+            obj: {
+                id: Risto.Adition.adicionar.currentMesa().id(),
+                mozo_id: mozoId,
+                model: 'Mesa',
+                handleAjaxSuccess: function(){}
+            },
+            url: Risto.Adition.adicionar.currentMesa().urlEdit(),
+            error: function(){
+                Risto.Adition.adicionar.currentMesa().setMozo( mozoAnterior );
+                alert("debido a un error en el servidor, el mozo no fue modificado");
+            }
+        }
+
+        $cakeSaver.send(sendOb);
+
+        return false;
+    },
+
+    cambiarNumeroMesa: function() {
+        var numeroMesa = $(this).find('[name="numero"]').val(),
+            selfMesa = Risto.Adition.adicionar.currentMesa(),
+            numAnt = selfMesa.numero( ),
+            onSuccess = function(){},
+            onError = function(){
+                selfMesa.numero( numAnt );
+                alert("debido a un error en el servidor, el numero de mesa no fue modificado");
+            }        
+        selfMesa.numero( numeroMesa );
+        $('.ui-dialog').dialog('close');
+
+        selfMesa.saveField('numero', numeroMesa, onSuccess, onError);
+            
+        return false;
+    },
+    
+    
+    
+    
+    /**
+     * 
+     * Dado un listado de mesas, solo deja visibles las que fue seleccionado su mozo
+     * Es utilizado en el listado de mesas
+     * 
+     */
+    mostrarMesasDeMozo: function( domObj ) {   
+        if ( domObj == undefined ) {
+            domObj = 0;
+        }
+        
+        var mozoId;
+        if ( typeof domObj == 'number') {
+            mozoId = domObj;    
+        } else {
+            mozoId = domObj.getAttribute('data-mozo-id');   
+        }
+        
+        $mesasDom.show();
+        $('a.ui-btn-active', $listMozosContainer).removeClass('ui-btn-active');
+        if ( mozoId ) {
+                $( 'li[mozo!='+mozoId+']', $mesasContainer).hide();
+                $( 'li[mozo='+mozoId+']', $mesasContainer).show();
+                $('a[data-mozo-id='+mozoId+']', $listMozosContainer).addClass('ui-btn-active');
+        } else {
+            $listMozosContainer.find('a:first' ).addClass('ui-btn-active');
+            $('li', '#mesas_container' ).show();
+        }
+    }
+    
+}/**
  * @var Static MESAS_POSIBLES_ESTADOS
  * 
  *  esta variable es simplemenete un catalogo de estados posibles que
- *  la mesa pude adoptar
+ *  la mesa pude adoptar,
+ *  
+ *  utiliza el objeto adicion.event_handler: EventHandler 
  *
  **/
 
 var MESA_ESTADOS_POSIBLES =  {
     abierta : {
-        msg: 'Mesa Abierta',
-        event: 'mesaAbierta',
+        msg: 'Abierta',
+        event: Risto.Adition.EventHandler.mesaAbierta ,
         id: 1,
         icon: 'mesa-abierta',
         url: urlDomain+'mesas/add'
     },
     reabierta : {
-        msg: 'Mesa Re-Abierta',
-        event: 'mesaAbierta',
+        msg: 'Re-Abierta',
+        event: Risto.Adition.EventHandler.mesaAbierta ,
         id: 1,
         icon: 'mesa-abierta',
         url: urlDomain+'mesas/reabrir'
     },
     cerrada: {
-        msg: 'Mesa Cerrada',
-        event: 'mesaCerrada',
+        msg: 'Cerrada',
+        event: Risto.Adition.EventHandler.mesaCerrada,
         id: 2,
         icon: 'mesa-cerrada',
         url: urlDomain+'mesas/cerrarMesa'
     },
     cuponPendiente: {
-        msg: 'Mesa con Cupón Pendiente',
-        event: 'mesaCuponPendiente',
+        msg: 'con Cupón Pendiente',
+        event: Risto.Adition.EventHandler.mesaCuponPendiente,
         id: 0,
         icon: 'mesa-cobrada'
     },
     cobrada: {
-        msg: 'Mesa Cobrada',
-        event: 'mesaCobrada',
+        msg: 'Cobrada',
+        event: Risto.Adition.EventHandler.mesaCobrada,
         id: 3,
         icon: 'mesa-cobrada'
     },
     borrada: {
-        msg: 'Mesa Borrada',
-        event: 'mesaBorrada',
+        msg: 'Borrada',
+        event: Risto.Adition.EventHandler.mesaBorrada,
         id: 0,
         icon: '',
         url: urlDomain+'mesas/delete'
     },
     seleccionada: {
-        msg: 'Mesa Seleccionada',
-        event: 'mesaSeleccionada',
+        msg: 'Seleccionada',
+        event: Risto.Adition.EventHandler.mesaSeleccionada,
         id: 0,
         icon: ''
     }
@@ -529,59 +892,26 @@ var MESA_ESTADOS_POSIBLES =  {
  * tambien se le puede pasar un jsonData para ser mappeado con knockout
  */
 var Mesa = function(mozo, jsonData) {
+        
+        this.id             = ko.observable();
+        this.created        = ko.observable();
+        this.total          = ko.observable( 0 );
+        this.numero         = ko.observable( 0 );
+        this.menu           = ko.observable( 0 );
+        this.descuento_id   = ko.observable( 0 );
+        this.Descuento      = ko.observable( new Risto.Adition.descuento({porcentaje: undefined}) );
+        this.mozo           = ko.observable( new Mozo() );
+        this.currentComanda = ko.observable( new Risto.Adition.comandaFabrica() );
+        this.Comanda        = ko.observableArray( [] );
+        this.mozo_id        = this.mozo().id;
+        this.Cliente        = ko.observable( null );
+        this.estado         = ko.observable( MESA_ESTADOS_POSIBLES.abierta );
+        this.estado_id      = ko.observable();
+        this.Pago           = ko.observableArray( [] );
+        this.cant_comensales= ko.observable(0);
+        
         // agrego atributos generales
         Risto.modelizar(this);
-    
-        
-        
-        
-        /**
-         * dependentObservable
-         * 
-         * Devuelve el nombre del Cliente si es que hay alguno setteado
-         * en caso de no haber cliente, devuelve el string vacio ''
-         *
-         *@return string
-         */
-        this.clienteNameData = ko.dependentObservable(function(){
-            var cliente = this.Cliente();
-            if (cliente){
-                if (typeof cliente == 'function') {
-                    return cliente.nombre();
-                } else {
-                    return cliente.nombre;
-                }
-            }
-            return '';
-        }, this);
-        
-        
-        
-        
-        /**
-         * Devuelve un texto con la hora
-         * si la mesa esta cerrada, dice "Cerró: 14:35"
-         * si esta aberta dice: "Abrió 13:22"
-         */
-        this.textoHora = ko.dependentObservable( function() {
-            var date, txt;
-            if ( this.getEstado() == MESA_ESTADOS_POSIBLES.cerrada ) {
-                txt = 'Cerró a las ';
-                if (typeof this.time_cerro == 'function') {
-                    date =  mysqlTimeStampToDate(this.time_cerro());
-                }
-            } else {
-                txt = 'Abrió a las ';
-                if (typeof this.created == 'function') {
-                    date = mysqlTimeStampToDate(this.created());            
-                }
-            }
-            if ( !date ) {
-                date = new Date();
-            }
-            return txt + date.getHours() + ':' + date.getMinutes() + 'hs';
-        }, this);
-        
         
         return this.initialize(mozo, jsonData);
 }
@@ -590,27 +920,6 @@ var Mesa = function(mozo, jsonData) {
 
 Mesa.prototype = {
     model       : 'Mesa',
-    id          : function( ) {return 0},
-    total       : function( ) {return 0},
-    numero      : function( ) {return 0},
-    mozo_id     : function( ) {return 0},
-    created     : function( ) {return 0},
-    time_cerro  : function( ) {return 0},
-    menu        : function( ) {return 0},
-    Cliente     : function( ) {return null}, 
-    estado      : function( ) {return MESA_ESTADOS_POSIBLES.abierta}, // objeto estado
-    estado_id     : function( ) {return 0}, // bbdd estado_id
-    cant_comensales: function( ) {return 0},
-    
-    // es la comanda que actualmente se esta haciendo objeto comandaFabrica
-    /** @param currentComanda comandaFabrica **/
-    currentComanda: function( ) {return new Risto.Adition.comandaFabrica()},
-    Comanda     : function( ) {return []},
-    Pago        : function( ) {return []}, // cantidad de pagos asociados a la mesa
-    
-    
-    // attributos
-    mozo: function( ) {return {}},
     
     /**
      * es timeCreated o sea la fecha de creacion del mysql timestamp
@@ -629,21 +938,6 @@ Mesa.prototype = {
     initialize: function( mozo, jsonData ) {
         
         if ( typeof jsonData == 'undefined' ) return this;
-        
-        this.id             = ko.observable();
-        this.created        = ko.observable();
-        this.total          = ko.observable( 0 );
-        this.numero         = ko.observable( 0 );
-        this.menu          = ko.observable( 0 );
-        this.mozo           = ko.observable( new Mozo() );
-        this.currentComanda = ko.observable( new Risto.Adition.comandaFabrica() );
-        this.Comanda        = ko.observableArray( [] );
-        this.mozo_id        = this.mozo().id;
-        this.Cliente        = ko.observable( null );
-        this.estado         = ko.observable( MESA_ESTADOS_POSIBLES.abierta );
-        this.estado_id      = ko.observable();
-        this.Pago           = ko.observableArray( [] );
-        this.cant_comensales= ko.observable(0);
 
         // mapea el objeto this usando ko.mapping
         this.__koMapp( jsonData, mozo);
@@ -711,9 +1005,10 @@ Mesa.prototype = {
      * @return MesaEstado
      */
     __inicializar_estado: function( jsonData ){
-        var estado = MESA_ESTADOS_POSIBLES.abierta;
+        var estado = MESA_ESTADOS_POSIBLES.abierta,
+            ee = 0; // countador de estados posibles
          if (jsonData.estado_id) {
-            for(var ee in MESA_ESTADOS_POSIBLES){
+            for(ee in MESA_ESTADOS_POSIBLES){
                 if ( MESA_ESTADOS_POSIBLES[ee].id && MESA_ESTADOS_POSIBLES[ee].id == jsonData.estado_id ){
                     estado = MESA_ESTADOS_POSIBLES[ee];
                     break;
@@ -751,14 +1046,14 @@ Mesa.prototype = {
     
     
     /* listado de URLS de accion con la mesa */
-    urlGetData: function(){return urlDomain+'mesas/ticket_view/'+this.id()},
-    urlView: function(){return urlDomain+'mesas/view/'+this.id()},
-    urlEdit: function(){return urlDomain+'mesas/ajax_edit/'+this.id()},
-    urlDelete: function(){return urlDomain+'mesas/delete/'+this.id()},
-    urlComandaAdd: function(){return urlDomain+'comandas/add/'+this.id()},
-    urlReimprimirTicket: function(){return urlDomain+'mesas/imprimirTicket/'+this.id()},
-    urlCerrarMesa: function(){return urlDomain+'mesas/cerrarMesa/'+this.id()},
-    urlReabrir: function(){return urlDomain+'mesas/reabrir/'+this.id()},
+    urlGetData: function() {return urlDomain+'mesas/ticket_view/'+this.id()},
+    urlView: function() {return urlDomain+'mesas/view/'+this.id()},
+    urlEdit: function() {return urlDomain+'mesas/ajax_edit/'+this.id()},
+    urlDelete: function() {return urlDomain+'mesas/delete/'+this.id()},
+    urlComandaAdd: function() {return urlDomain+'comandas/add/'+this.id()},
+    urlReimprimirTicket: function() {return urlDomain+'mesas/imprimirTicket/'+this.id()},
+    urlCerrarMesa: function() {return urlDomain+'mesas/cerrarMesa/'+this.id()},
+    urlReabrir: function() {return urlDomain+'mesas/reabrir/'+this.id()},
     urlAddCliente: function( clienteId ){
         var url = urlDomain+'mesas/addClienteToMesa/'+this.id();
         if (clienteId){
@@ -766,15 +1061,7 @@ Mesa.prototype = {
         }
         url += '.json';
         return url;
-    },
-    
-    /**
-     *  Id del elemento que contiene los datos de esta mesa
-     *  es utilizada en el action mesas/view
-     */
-    domElementContainer: function(){return 'mesa-' + this.id();},
- 
-
+    },        
     
 
     /**
@@ -782,19 +1069,19 @@ Mesa.prototype = {
      *
      **/
     __triggerEventCambioDeEstado: function(){
-        var event =  $.Event(this.estado().event);
+        
+        var event =  {};
         event.mesa = this;
-        $(document).trigger(event);
+        this.estado().event( event );
     },
 
     /**
      * dispara un evento de mesa seleccionada
      */
     seleccionar: function() {
-        var event =  $.Event(MESA_ESTADOS_POSIBLES.seleccionada.event);
+        var event =  {};
         event.mesa = this;
-        $(document).trigger(event);
-        return this;
+        MESA_ESTADOS_POSIBLES.seleccionada.event( event );
     },
     
     
@@ -806,11 +1093,13 @@ Mesa.prototype = {
      * dispara el evento de cambio de estado. en caso de error lo dispararia 2 veces
      */
     cambioDeEstadoAjax: function(estado){
-        var estadoAnt = this.getEstado();
-        var mesa = this;
+        var estadoAnt = this.getEstado(),
+            mesa = this,
+            $ajax; // jQuery Ajax object
+            
         this.setEstado( estado );
-        var ajax = $.get( estado.url+'/'+this.id() );
-        ajax.error = function(){
+        $ajax = $.get( estado.url+'/'+this.id() );
+        $ajax.error = function(){
             mesa.setEstado( estadoAnt );
         }
     },
@@ -819,7 +1108,7 @@ Mesa.prototype = {
      * dispara un evento de mesa Abierta
      */
     setEstadoAbierta : function(){
-        this.setEstado(MESA_ESTADOS_POSIBLES.abierta);
+        this.setEstado( MESA_ESTADOS_POSIBLES.abierta );
         return this;
     },
     
@@ -987,18 +1276,25 @@ Mesa.prototype = {
      * Envia un ajax con la peticion de cerrar esta mesa
      */
     cerrar: function(){
-        var url = window.urlDomain + 'mesas/cerrarMesa' + '/' + this.currentMesa.id + '/0';
-        var context = this;
-        $.get(url, {}, function(){context.setEstadoCerrada();});
+        var url = window.urlDomain + 'mesas/cerrarMesa' + '/' + this.currentMesa.id + '/0',
+            self = this;
+            
+        $.get(url, {}, function(){
+            self.setEstadoCerrada();
+        });
+        return this;
     },
 
     /**
      * Envia un ajax con la peticion de borrar esta mesa
      */
     borrar : function(){
-        var url = window.urlDomain + 'mesas/delete/' +this.id;
-        var context = this;
-        $.get(url, {}, function(){context.setEstadoBorrada()});
+        var url = window.urlDomain + 'mesas/delete/' +this.id,
+            self = this;
+        $.get(url, {}, function(){
+            self.setEstadoBorrada()
+        });
+        return this;
     },
 
     
@@ -1009,7 +1305,11 @@ Mesa.prototype = {
      * @return Boolean
      */
     tieneMozo: function(){
-        return this.mozo().id() ? true: false;
+        var tiene = false;
+        if ( this.mozo() !== {} || this.mozo() !== null ) {
+            tiene = this.mozo().id() ? true: false;
+        }
+        return tiene;
     },
 
 
@@ -1017,7 +1317,7 @@ Mesa.prototype = {
      * Setea el mozo a la mesa.
      * si agregarMesa es true, se agrega la mesa al listado de mesas del mozo
      * @param nuevoMozo Mozo es el mozo que voy a setear
-     * @param agregarMesa Boolean indica si agrego la mesa al listado de mesas que tiene el mozo
+     * @param agregarMesa Boolean indica si agrego la mesa al listado de mesas que tiene el mozo, por default es true
      */
     setMozo: function(nuevoMozo, agregarMesa){
         var laAgrego = agregarMesa || true; // por default sera true
@@ -1038,6 +1338,7 @@ Mesa.prototype = {
         if (laAgrego) {
             this.mozo().agregarMesa(this);
         }
+        return this;
     },
 
 
@@ -1050,11 +1351,35 @@ Mesa.prototype = {
      *                      Ej: data['data[Mesa][cant_comensales]'] o data['data[Mesa][cliente_id]']
      *                      
      */
-    editar: function(data) {
+    editar: function (data, callback) {
         if (!data['data[Mesa][id]']) {
-            data['data[Mesa][id]'] = this.id;
+            data['data[Mesa][id]'] = this.id();
         }
-        $.post( window.urlDomain +'mesas/ajax_edit', data);
+        $.post( window.urlDomain +'mesas/ajax_edit', data, callback);
+        return this;
+    },
+    
+    /**
+     *  Es para realizar ediciones rapida de un valor de la mesa en BBDD
+     *  dado un campo, se actualiza el valor que se haya pasado
+     *  @param field String campo de la BBDD a actualizar
+     *  @param value String es el valor a insertar en la BBDD
+     *
+     */
+    saveField: function ( field, value, cbkSuccess, cbkError) {
+        var data = {
+            id: this.id(),
+            model: 'Mesa',
+            handleAjaxSuccess : cbkSuccess
+        }
+        data[field] = value;
+        
+        var sendOb = {
+            obj: data,
+            url: this.urlEdit(),
+            error: cbkError
+        }
+        $cakeSaver.send(sendOb);
     },
     
     
@@ -1066,6 +1391,30 @@ Mesa.prototype = {
         if (data[this.model]) {
             ko.mapping.fromJS( data[this.model], {}, this );
         }
+    },
+    
+    setDescuento: function( objDescuento ) {
+        var descuento_id;
+        
+        if ( objDescuento ) {
+            descuento_id = objDescuento.id;
+        }
+
+        this.descuento_id( descuento_id );
+        this.Descuento( new Risto.Adition.descuento(objDescuento) );
+        this.saveField('descuento_id', descuento_id);
+    },
+    
+    
+    /**
+     *
+     * ELimina el descuento que tenia aplicado reseteando los valores 
+     * de descuento_id y el objeto Descuento de la mesa
+     */
+    eliminarDescuento: function() {
+        this.setDescuento({
+             id : 0
+        });
     },
     
     
@@ -1080,13 +1429,18 @@ Mesa.prototype = {
         if ( objCliente ) {
             clienteId = objCliente.id;
         }
-        $.get( this.urlAddCliente( clienteId ), function(data) {
+        
+        var toDoAfterSave = function(data) {
             if ( data.Cliente ){
                 ctx.Cliente( new Risto.Adition.cliente(data.Cliente) );
             } else{
                 ctx.Cliente(null);
             }
-        });
+        };
+        
+        this.saveField('cliente_id', clienteId, toDoAfterSave);
+        
+        return this;
     },
     
     
@@ -1095,9 +1449,11 @@ Mesa.prototype = {
      * que se llama a esta funcion
      */
     totalStatic: function(){
-        var total = 0;
+        var total = 0,
+            c, // index de Comandas
+            dc; // index del for DetalleComandas
             
-        for (var c in this.Comanda()){
+        for (c in this.Comanda()){
             for (dc in this.Comanda()[c].DetalleComanda() ){
                 total += parseFloat( this.Comanda()[c].DetalleComanda()[dc].precio() * this.Comanda()[c].DetalleComanda()[dc].realCant() );
             }
@@ -1107,30 +1463,16 @@ Mesa.prototype = {
     },
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
     /**
      *Devuelve el total neto, sin aplicar descuentos
      *@return float
      */
     totalCalculadoNeto: function(){
-        var tam = this.Comanda().length;
+        var valorPorCubierto =  Risto.VALOR_POR_CUBIERTO || 0,
+            total = this.cant_comensales() * valorPorCubierto,
+            c = 0;
 
-        var valorPorCubierto = 0;
-        if ( typeof VALOR_POR_CUBIERTO != 'undefined' && VALOR_POR_CUBIERTO > 0 ) {
-            valorPorCubierto = VALOR_POR_CUBIERTO;
-        }
-        var cantCubierto = this.cant_comensales() * valorPorCubierto;
-        var total = cantCubierto;
-
-        for (var c in this.Comanda()){
+        for (c in this.Comanda()){
             for (dc in this.Comanda()[c].DetalleComanda() ){
                 total += parseFloat( this.Comanda()[c].DetalleComanda()[dc].precio() * this.Comanda()[c].DetalleComanda()[dc].realCant() );
             }
@@ -1144,6 +1486,9 @@ Mesa.prototype = {
          *
          *  Depende del cliente.
          *  es un atajo al porcentaje de descuento que tiene el cliente
+         *  si ademas de tener descuento el cliente, la mesa tiene otro descuento aplicado
+         *  los suma
+         *  @return Float
          */
        porcentajeDescuento : function(){
             var porcentaje = 0;
@@ -1152,49 +1497,95 @@ Mesa.prototype = {
                     porcentaje = this.Cliente().Descuento().porcentaje();
                 }
             }
+            
+            if (this.Descuento() && this.Descuento().hasOwnProperty('porcentaje')){
+                if ( typeof this.Descuento().porcentaje == 'function') {
+                    porcentaje += this.Descuento().porcentaje();
+                }
+            }
+            
             return parseFloat( porcentaje );
         },
+        
+        
+        
+        /**
+         *  Depende del cliente y el descuento de la mesa
+         *  Me dice si la mesa tiene o no un descuento aplicado ya sea
+         *  por el cliente o por el descuento de la mesa
+         *  @return Boolean
+         */
+       tieneDescuento : function(){
+            var tiene = false;
+            if (this.Cliente() && !this.Cliente().hasOwnProperty('length') &&  this.Cliente().Descuento()){
+                if ( typeof this.Cliente().Descuento().porcentaje == 'function') {
+                    if ( this.Cliente().Descuento().porcentaje() > 0 ) {
+                        tiene = true;
+                    }
+                }
+            }
+            
+            if (this.Descuento() && this.Descuento().hasOwnProperty('porcentaje')){
+                if ( typeof this.Descuento().porcentaje == 'function') {
+                    if ( this.Descuento().porcentaje() > 0 ) {
+                        tiene = true;
+                    }
+                }
+            }
+            
+            return tiene;
+        },
+        
+        
         
         /**
          *Devuelve el total aplicandole los descuentos
          *@return float
          */
         totalCalculado : function(){
-            if ( this.total() ) {
-                return this.total();
+            var total = parseFloat( this.total() );
+            if ( total ) {
+                return total;
             }
             
-            var total = this.totalCalculadoNeto(), 
-                dto = 0,
-                totalText = total;
+            total = this.totalCalculadoNeto();
+            
+            var dto = 0;
                
             dto = Math.floor(total * this.porcentajeDescuento() / 100);
-            totalText = total - dto;
+            total = total - dto;
             
-            return totalText;
+            return total;
         },
         
         
         /**
-         *Devuelve el total mostrando un texto
+         *Devuelve el total mostrando un texto con el tipo de factura y, en caso de tenerlo, 
+         *muestra el detalle del descuento que se le aplica
+         *
          *@return String
          */
-        textoTotalCalculado : function(){
-            var total = this.totalCalculadoNeto(), 
+        textoTotalCalculado : function () {
+            var totalNeto = this.totalCalculadoNeto(), 
                 dto = 0, 
-                totalText = '$'+total ;
+                totalNetoText = '$'+totalNeto ;
             
-            
-            if (this.Cliente() && !this.Cliente().hasOwnProperty('length') && this.Cliente().tipofactura().toLowerCase() == 'a'){               
-                totalText = 'Factura "A" '+totalText;
+            if ( this.Cliente() && !this.Cliente().hasOwnProperty('length') ) {
+                if (  this.Cliente().esTipoFactura('A') ) {               
+                    totalNetoText = 'Factura "A" '+totalNetoText;
+                } else if ( this.Cliente().esTipoFactura('B')) {
+                    totalNetoText = 'Factura "B" '+totalNetoText;
+                } else if ( this.Cliente().esTipoFactura('R')) {
+                    totalNetoText = 'Remito '+totalNetoText;
+                }
             }
 
             if ( this.porcentajeDescuento() ) {
-                dto = Math.round( Math.floor( total * this.porcentajeDescuento()  / 100 ) *100 ) /100;
-                totalText = totalText+' - [Dto '+this.porcentajeDescuento()+'%] $'+dto+' = $'+ this.totalCalculado();
+                dto = Math.round( Math.floor( totalNeto * this.porcentajeDescuento()  / 100 ) *100 ) /100;
+                totalNetoText = totalNetoText+' - $'+dto+' (Dto '+this.porcentajeDescuento()+'%) = $'+ this.totalCalculado();
             }
             
-            return totalText;
+            return totalNetoText;
         },
         
         
@@ -1214,23 +1605,74 @@ Mesa.prototype = {
         
         clienteTipoFacturaText: function(){
             var texto = 'B';
-            if ( this.Cliente() ) {
+            if ( this.Cliente() && typeof this.Cliente().getTipoFactura == 'function' ) {
                 texto = this.Cliente().getTipoFactura();
             }
             return texto;
         },
         
         
+        /**
+         * EN caso de que la mesa tenga un descuento apicado me devuelve el valor 
+         * en formato texto
+         * @return String
+         */
         clienteDescuentoText: function(){
             var texto = '';
-            if ( this.Cliente() &&  this.Cliente().tieneDescuento() != undefined ) {
-                texto = this.Cliente().getDescuentoText();
+            if ( this.tieneDescuento() ) {
+                texto = this.porcentajeDescuento()+"%";
             }
             return texto;
+        },
+        
+        
+        /**
+         * dependentObservable
+         * 
+         * Devuelve el nombre del Cliente si es que hay alguno setteado
+         * en caso de no haber cliente, devuelve el string vacio ''
+         *
+         *@return string
+         */
+        clienteNameData : function() {
+            var cliente = this.Cliente();
+            if (cliente){
+                if (typeof cliente == 'function') {
+                    return cliente.nombre();
+                } else {
+                    return cliente.nombre;
+                }
+            }
+            return '';
+        },
+        
+        
+        
+        /**
+         * Devuelve un texto con la hora
+         * si la mesa esta cerrada, dice "Cerró: 14:35"
+         * si esta aberta dice: "Abrió 13:22"
+         */
+        textoHora : function() {
+            var date, txt;
+            if ( this.getEstado() == MESA_ESTADOS_POSIBLES.cerrada ) {
+                txt = 'Cerró a las ';
+                if (typeof this.time_cerro == 'function') {
+                    date =  mysqlTimeStampToDate(this.time_cerro());
+                }
+            } else {
+                txt = 'Abrió a las ';
+                if (typeof this.created == 'function') {
+                    date = mysqlTimeStampToDate(this.created());            
+                }
+            }
+            if ( !date ) {
+                date = new Date();
+            }
+            return txt + date.getHours() + ':' + date.getMinutes() + 'hs';
         }
 
 };
-
 /*--------------------------------------------------------------------------------------------------- Risto.Adicion.comanda
  *
  *
@@ -1287,6 +1729,12 @@ Risto.Adition.comanda.prototype = {
             }
         }
         return name;
+    },
+    
+    imprimirComanda: function() {
+        if (window.confirm("¿Seguro desea reimprimir comanda?")) {
+            $.get(urlDomain + '/comandas/imprimir/' +this.id());
+        }
     },
     
     
@@ -1396,7 +1844,7 @@ Risto.Adition.comandaFabrica.prototype = {
             var este = this;
             setTimeout( function(){ 
                 este.save();
-            }, MESAS_RELOAD_INTERVAL); 
+            }, Risto.MESAS_RELOAD_INTERVAL); 
             return null;
         }
         
@@ -1571,7 +2019,9 @@ Risto.Adition.comandaFabrica.prototype = {
     
 }
 
-/*--------------------------------------------------------------------------------------------------- Risto.Adicion.adicion
+   
+
+/*-------------------------------------------------------- Risto.Adicion.adicion
  *
  *
  * Clase Adicion
@@ -1581,8 +2031,6 @@ Risto.Adition.comandaFabrica.prototype = {
 
 Risto.Adition.adicionar = {
 
-    yaMapeado: false,
-    
     // Mozo Actualmente Activo
     currentMozo: ko.observable( new Mozo() ),
     
@@ -1592,22 +2040,32 @@ Risto.Adition.adicionar = {
     // listado de mozos
     mozos: ko.observableArray( [] ),
      // orden del listado de mozos: Se puede poner cualquier valor que venga como atributo (campos de la bbdd de la tabla mozos)
-    mozosOrder: ko.observable('mozo_id'),
+    mozosOrder: ko.observable('numero'),
     
     mesas: ko.observableArray( [] ),
     
     // microtime de la ultima actualizacion de las mesas
-    mesasLastUpdatedTime : ko.observable(  ),
+    mesasLastUpdatedTime : ko.observable( 0 ),
     
     // pagos seleccionado de la currentMesa en proceso de pago. es una variable temporal de estado
     pagos: ko.observableArray( [] ),
     
     
-    nuevaComandaParaCurrentMesa: function(){
+    /**
+     *  Inicializacion para cargar una nueva comanda, es el que activa las variables
+     *  creando un nuevo objeto mediante la Fabrica de Comandas. ComandaFabrica
+     */
+    nuevaComandaParaCurrentMesa: function () {
         this.currentMesa().nuevaComanda();
+        return this;
     },
     
-    menu: function(){
+    
+    /**
+     *  Referencia al objeto Menu para que pueda ser utilizado como un Modelo de Knoclkout.js
+     *  desde este objeto de adicion.
+     */
+    menu: function () {
         return Risto.Adition.koAdicionModel.menu.apply(Risto.Adition.koAdicionModel, arguments);
     },
     
@@ -1615,65 +2073,49 @@ Risto.Adition.adicionar = {
     /**
      * Constructor
      */
-    initialize: function() {
-        Risto.Adition.adicionar.mozosOrder('numero');
-        
-        // Crea el Web Worker
-        var worker = new Worker("adition/js/adicion.model.js");
-        
-        var primeraVez = true;
-        worker.onmessage = function (evt) {
+    initialize: function () {
+        var worker = null, // webWorker
+            cbk = 0, // contaddor para el for de mesas
+            time = ''; // timestamp php que envia el server
             
-            // si tiene mesas las proceso
-            if ( evt.data && evt.data.mesas ) {
-                for ( var cbk in evt.data.mesas ) {
-                    if ( typeof Risto.Adition.adicionar.handleMesasRecibidas[cbk] == 'function' ) {
-                        Risto.Adition.adicionar.handleMesasRecibidas[cbk].call( Risto.Adition.adicionar, evt.data.mesas[cbk] );
-                    } else {
-                        throw cbk + ' vino como opción en el arrar de mesas, pero no es una función válida que pueda manejar el handleMesasRecibidas';
-                        Error('no es una funcion');
+        if ( Worker ) {  
+            
+            // Crea el Web Worker
+            worker = new Worker(urlDomain + "adition/js/adicion/model.js");
+                
+            worker.onmessage = function (evt) {
+                // si tiene mesas las proceso
+                if ( evt.data && evt.data.mesas ) {
+                    for ( cbk in evt.data.mesas ) {
+                        if ( typeof Risto.Adition.handleMesasRecibidas[cbk] == 'function' ) {
+                            Risto.Adition.handleMesasRecibidas[cbk].call( Risto.Adition.adicionar, evt.data.mesas[cbk] );
+                        } else {
+                            throw cbk + ' vino como opción en el arrar de mesas, pero no es una función válida que pueda manejar el handleMesasRecibidas';
+                            Error('no es una funcion');
+                        }
                     }
                 }
-            }
-            
-            if ( evt.data.time ) {
-                Risto.Adition.adicionar.mesasLastUpdatedTime( evt.data.time );
-            }
-        }        
-        
-        worker.postMessage( {updateInterval: MESAS_RELOAD_INTERVAL} );
 
-        $(window).bind("online", function(){
-             worker.postMessage( {onLine: true} );
-        });
-        $(window).bind("offline", function(){
-             worker.postMessage( {onLine: false} );
-        });
-       
-        
-        var time = this.mesasLastUpdatedTime();
-        worker.postMessage( {urlDomain: urlDomain, timeText: time} );
+                if ( evt.data.time ) {
+                    Risto.Adition.adicionar.mesasLastUpdatedTime( evt.data.time );
+                }
+            }        
+
+            // inicializacion y parametros de configuracion del worker
+            worker.postMessage( {updateInterval: Risto.MESAS_RELOAD_INTERVAL} );
+
+            $(window).bind("online", function(){
+                 worker.postMessage( {onLine: true} );
+            });
+            $(window).bind("offline", function(){
+                 worker.postMessage( {onLine: false} );
+            });
+
+
+            time = this.mesasLastUpdatedTime();
+            worker.postMessage( {urlDomain: urlDomain, timeText: time} );
+        }
     },    
-    
-    
-   
-    /**
-     * Me dice si tiene una mesa setteada
-     * @return boolean
-     */
-    tieneMesaSeleccionada: function(){
-        var retornar = false;
-        if(this.currentMesa){
-            if(this.currentMesa.estaAbierta())
-                retornar = true;
-            else
-                retornar = false;
-        }
-        else{
-            retornar = false;
-        }
-        return retornar;
-    },
     
     
     /**
@@ -1684,10 +2126,11 @@ Risto.Adition.adicionar = {
      * @return Mesa en caso de encontrarla, false caso contrario
      */
     findMesaById: function(id){
-        for (var m in this.mesas()) {
+        var m = 0;
+        for (m in this.mesas()) {
             if ( this.mesas()[m].id() == id ) {
                 return this.mesas()[m];
-            }            
+            }
         }
         return false;
     },
@@ -1700,27 +2143,23 @@ Risto.Adition.adicionar = {
      * @param id Integer id del Mozo a buscar
      * @return Mozo en caso de encontrarlo, false caso contrario
      */
-    findMozoById: function(id){
-        for (var m in this.mozos()) {
+    findMozoById: function ( id ) {
+        var m;
+        for (m in this.mozos()) {
             if ( this.mozos()[m].id() == id ) {
                 return this.mozos()[m];
             }            
         }
         return false;
     },
-    	
-		
-    borrarCurrentMesa: function(){
-        delete this.currentMesa;
-        this.currentMesa = null;
-    },
+    
 
     /**
      * Setter de la currentMesa
      * @param mesa Mesa or Number . Le puedo pasar una Mesa o un Id de la mesa, da lo mismo.
      * @return Mesa o false en caso de que el ID pasado no exista
      */
-    setCurrentMesa: function(mesa) {
+    setCurrentMesa: function ( mesa ) {
         if ( typeof mesa == 'number') { // en caso que le paso un ID en lugar del objeto mesa
             mesa = this.findMesaById(mesa);           
         }
@@ -1731,58 +2170,25 @@ Risto.Adition.adicionar = {
         return this.currentMesa();
     },
 		
-
+                
 
     /**
-     * // envia la mesa para ser cerrada
-     * @param Boolean cubiertosObligatorios
-     **/
-    cerrarCurrentMesa: function(cubiertosObligatorios ){
-        var cubiertosObs = cubiertosObligatorios || 'undefined';
-
-        if (this.tieneMesaSeleccionada()) {
-            // si aun no se settearon la cantidad de comensales DEBE HACERLO !!
-            if (cubiertosObs && (this.currentMesa.getCantComensales() == 0) && (this.currentMozo.numero != 99)) {
-                    showComensalesWindow();
-            } else {
-                if(this.tieneMesaSeleccionada()){
-                    if(this.currentMesa.productos){
-                        var okCerrar = window.confirm("Se va a cerrar la mesa Nº "+this.currentMesa.numero);
-
-                        if ( okCerrar ) {
-                            this.currentMesa.cerrar()
-                        }
-                        return okCerrar;
-                    }
-                    else{
-                        mensajero.error("No se puede cerrar una mesa que no tiene productos cargados.");
-                        return -1;
-                    }
-                }
-            } 
-        } else {
-            mensajero.error("Debe seleccionar una mesa para cerrar.");
-            return -2;
-        }	
-    },
-
-
-    ticketView: function(elementToUpdate){
+     *  Vista rápida de ticket
+     *  @param {DOM Element} elementToUpdate
+     *  @return {jQUery} DOM element
+     */
+    ticketView: function ( elementToUpdate ) {
         var elem = elementToUpdate || document.createElement('div');
         var url = window.urlDomain+'mesas/ticket_view' + '/'+this.currentMesa.id ;
         return $(elem).load(url);
     },
 
-
-    cambiarNumeroMesa: function(){
-        var numero = prompt('Nuevo Número de Mesa',this.currentMesa.numero);
-        var ops = {
-                'data[Mesa][numero]': numero
-            };
-        this.currentMesa.editar(ops);
-    },
     
-    
+    /**
+     *  Tira un prompt para settear un numero 
+     *  y actualizando el valor en la current mesa
+     *
+     */
     agregarMenu: function(){
         var menu = prompt('Nuevo Número de Mesa', this.currentMesa().menu());
         var ops = {
@@ -1792,152 +2198,36 @@ Risto.Adition.adicionar = {
         this.currentMesa().editar(ops);
     },
     
+    /**
+     *  Tira un prompt para settear la cantidad de cubiertos
+     */
     agregarCantCubiertos: function(){
         var menu = prompt('Ingrese cantidad de Cubiertos', this.currentMesa().cant_comensales());
-        var ops = {
+        menu = parseInt(menu);
+        
+        if ( menu && typeof menu == 'number' && menu > 0) {
+             var ops = {
                 'data[Mesa][cant_comensales]': menu
             };
-        this.currentMesa().cant_comensales( menu );
-        this.currentMesa().editar(ops);
+            
+            this.currentMesa().cant_comensales( menu );
+            this.currentMesa().editar(ops);
+        }        
     },
 
 
+     /**
+     *  Modifica el mozo atual por el que se le pasa como parametro
+     *  Dispara el evento "adicionCambioMozo"
+     * @param Mozo mozo
+     */
     setCurrentMozo: function(mozo){
         this.currentMozo( mozo );
-        var event = $.Event('adicionCambioMozo');
+        var event = {};
         event.mozo = mozo;
-        $(document).trigger(event);
+        $raeh.trigger('adicionCambioMozo',event);
+        
     },
-    
-    
-    /**
-     *
-     *  Este objeto maneja las mesas recibidas con el json mozos/mesas_abiertas.json
-     *  
-     *  Cada uno de los keys, son las claves recibidas en el json que viene de esas mesas recibidas
-     *
-     */
-    handleMesasRecibidas: {
-         /**
-         * 
-         * Recibiendo un json con el listado de mozos, que a su vez 
-         * cada uno tiene el listado de mesas abiertas de c/u, actualiza 
-         * el listado de mesas de la adicion
-         * 
-         */
-        created: function( data ){
-            if (!data.mozos) return -1;
-
-            if ( this.mesas().length ) {
-                // si ya hay mesas entonces meto las mesas nuevas de forma indidual
-                var mozo;
-                
-                for ( var z in data.mozos ) {
-                    mozo = this.findMozoById(  data.mozos[z].id );
-                    for ( var m in data.mozos[z].mesas ) {
-                        // si no esta en el listado de mesas, la agrego
-                        if ( !this.findMesaById( data.mozos[z].mesas[m].id ) ) {
-                            new Mesa(mozo, data.mozos[z].mesas[m] );
-                        }
-                    }
-                }
-            } else {
-                // si no habia mesas, entonces debo hacer todo el proceso de creacion con el mapping
-                var mapOps = {
-                    'mozos': {
-                        create: function(ops) {
-                            return new Mozo(ops.data);
-                        },
-                        key: function(data) {
-                            return ko.utils.unwrapObservable(data.id);
-                        }
-                    }
-                }
-            
-                ko.mapping.fromJS( data, mapOps, Risto.Adition.adicionar );
-            }
-
-            $(document).trigger('adicionMesasActualizadas');
-        },
-        
-        
-        /**
-         * 
-         * Recibiendo un json con el listado de mozos, que a su vez 
-         * cada uno tiene el listado de mesas abiertas de c/u, actualiza 
-         * el listado de mesas de la adicion
-         * 
-         */
-        modified: function( data ) {
-            if (!data.mozos) return -1;
-            var mesaEncontrada, 
-                mozo;
-            for(var z in data.mozos){
-                mozo = Risto.Adition.adicionar.findMozoById( data.mozos[z].id );
-                for( var m in data.mozos[z].mesas ) {
-                    mesaEncontrada = Risto.Adition.adicionar.findMesaById( data.mozos[z].mesas[m].id );
-                    if ( mesaEncontrada ) {
-                        mesaEncontrada.update( mozo, data.mozos[z].mesas[m] );
-                    }
-                }
-            }
-            $(document).trigger('adicionMesasActualizadas');
-            return 1;
-        },
-        
-        
-        /**
-         * 
-         * Recibiendo las mesas cobradas las manejo 
-         * 
-         */
-        cobradas: function( data ) {
-            if (!data.mozos) return -1;
-            var mesaEncontrada, i, mozo;
-            
-                       
-            for (var z in data.mozos) {
-                for( var m in data.mozos[z].mesas ) {
-                    mesaEncontrada = Risto.Adition.adicionar.findMesaById( data.mozos[z].mesas[m].id );
-                    
-                    if ( mesaEncontrada ) {  
-                        i = Risto.Adition.adicionar.mesas().indexOf( mesaEncontrada );
-                        ko.mapping.fromJS( data.mozos[z].mesas[m], {}, mesaEncontrada );
-                        mesaEncontrada.estado( MESA_ESTADOS_POSIBLES.cobrada );
-                        
-                        mozo = mesaEncontrada.mozo();
-                        mozo.sacarMesa( mesaEncontrada );
-                        delete mesaEncontrada;
-                    }
-                }
-            }
-            
-            return 1;
-        },
-        
-        
-        /**
-         * 
-         * Manejo de las mesas eliminadas
-         * 
-         */
-        deleted: function( data ) {
-            if (!data.mozos) return -1;
-            var mesaEncontrada, i;
-            for (var z in data.mozos) {
-                for( var m in data.mozos[z].mesas ) {
-                    mesaEncontrada = Risto.Adition.adicionar.findMesaById( data.mozos[z].mesas[m].id );
-                    if ( mesaEncontrada ) {
-                        mesaEncontrada.mozo().sacarMesa( mesaEncontrada );
-                        delete mesaEncontrada;
-                    }
-                }
-            }
-            $(document).trigger('adicionMesasActualizadas');
-            return 1;
-        }
-    },
-    
     
     ordenarMesasPorNumero: function(){
         return this.mesas().sort(function(left, right) {
@@ -1946,33 +2236,122 @@ Risto.Adition.adicionar = {
     },
     
     
+    /**
+     *  Pasado un JSON con los datos y atributos de una mesa, lo convierte
+     *  en un objeto Mesa
+     *  @param Mesa mesaJSON
+     *  @return Mesa
+     */
     crearNuevaMesa: function( mesaJSON ){
-        var mozo = this.findMozoById(mesaJSON.mozo_id);
-        var mesa = new Mesa(mozo, mesaJSON);
+        var mozo = this.findMozoById(mesaJSON.mozo_id),
+            mesa = new Mesa(mozo, mesaJSON);
         
         $cakeSaver.send({url:urlDomain+'mesas/abrirMesa.json', obj: mesa});
         return mesa;
+    },
+    
+    
+    /**
+     *  Devueve todas las mesas qu ehay en el sistema
+     *  Concatena las mesas que tiene cada mozo
+     *  @return Array
+     */
+    todasLasMesas : function () {
+        var mesasList = [];
+        if ( this.mozos ) {
+            for ( var m in this.mozos() ) {
+                mesasList = mesasList.concat( this.mozos()[m].mesas() );
+            }
+        }
+        return mesasList;
+    },
+    
+    
+
+    /**
+     * Variable de estado generada cuando se esta armando una comanda
+     * son los productos seleccionados.
+     * Retorna todos lso productos seleccionados para el armado de una DetalleComanda
+     * @return Array
+     */
+    productosSeleccionados : function () {
+        if ( this.currentMesa() && this.currentMesa().currentComanda() && this.currentMesa().currentComanda().comanda && this.currentMesa().currentComanda().comanda.DetalleComanda()) {
+            return this.currentMesa().currentComanda().comanda.DetalleComanda();    
+        } else {
+            return [];
+        }
+    },
+
+
+    /**
+     * Variable de estado generada cuando se esta armando una comanda
+     * son los sabores de un producto seleccionado
+     * Retorna el listado de sabores seleccionados
+     * @Return Array
+     */
+    currentSabores : function(){
+        if ( this.currentMesa() && this.currentMesa().currentComanda() && this.currentMesa().currentComanda().currentSabores() ) {
+            return this.currentMesa().currentComanda().currentSabores();    
+        }
+    },
+
+
+    /**
+     *  Toma los valores ingresados en los pagos y calcula el vuelto a devolver
+     *  @return Float
+     */
+    vuelto : function () {
+       var pagos = this.pagos(),
+           sumPagos = 0,
+           totMesa = Risto.Adition.adicionar.currentMesa().totalCalculado(),
+           vuelto = 0,
+           retText = undefined;
+       if (pagos && pagos.length) {
+           for (var p in pagos) {
+               if ( pagos[p].valor() ) {
+                sumPagos += parseFloat(pagos[p].valor());
+               }
+           }
+           vuelto = (sumPagos - totMesa);
+           if (vuelto <= 0 ){
+               retText = (vuelto);
+           } else {
+               retText = (vuelto);
+           }
+       }
+       return retText;
+    },
+
+
+
+    /**
+     * El vuelto a devolver pero ingresando un texto
+     * Ej: Vuelto: $35
+     * @return String
+     */
+    vueltoText : function () {
+       var pagos = this.pagos(),
+           sumPagos = 0,
+           totMesa = Risto.Adition.adicionar.currentMesa().totalCalculado(),
+           vuelto = 0,
+           retText = 'Total: '+Risto.Adition.adicionar.currentMesa().textoTotalCalculado();
+       if (pagos && pagos.length) {
+           for (var p in pagos) {
+               if ( pagos[p].valor() ) {
+                sumPagos += parseFloat(pagos[p].valor());
+               }
+           }
+           vuelto = (totMesa - sumPagos);
+           if (vuelto <= 0 ){
+               retText = retText+'   -  Vuelto: $  '+Math.abs(vuelto);
+           } else {
+               retText = retText+'   -  ¡¡¡¡ Faltan: $  '+vuelto+' !!!';
+           }
+       }
+       return retText;
     }
 };
 
-
-
-
-
-/*____________________________________ OBSERVABLES DEPENDIENTES ___________________________*/
-
-/******---      ADICION         -----******/
-
-
-Risto.Adition.adicionar.todasLasMesas = ko.dependentObservable( function(){
-    var mesasList = [];
-    if ( this.mozos ) {
-        for ( var m in this.mozos() ) {
-            mesasList = mesasList.concat( this.mozos()[m].mesas() );
-        }
-    }
-    return mesasList;
-}, Risto.Adition.adicionar);
 
 // listado de mesas, depende de las mesas de cada mozo, y el orden que le haya indicado
 Risto.Adition.adicionar.mesas = ko.dependentObservable( function(){
@@ -1989,7 +2368,8 @@ Risto.Adition.adicionar.mesas = ko.dependentObservable( function(){
                 return mesasList;
 
 }, Risto.Adition.adicionar);
-     
+
+
     
 Risto.Adition.adicionar.mesasCerradas = ko.dependentObservable(function(){
     var mesas = [];
@@ -2002,64 +2382,14 @@ Risto.Adition.adicionar.mesasCerradas = ko.dependentObservable(function(){
     if ( order ) {
         mesas.sort(function(left, right) {
             if (left[order] && typeof left[order] == 'function' && right[order] && typeof right[order] == 'function') {
-                return left[order]() == right[order]() ? 0 : (parseInt(left[order]()) < parseInt(right[order]()) ? -1 : 1) 
+                return left[order]() == right[order]() ? 0 : (parseInt(left[order]()) < parseInt(right[order]()) ? 1 : -1) 
             }
         })
     }
                 
-                
     return mesas;
 
-}, Risto.Adition.adicionar);
-     
-/**
- * Variable de estado generada cuando se esta armando una comanda
- * son los productos seleccionados
- */
-Risto.Adition.adicionar.productosSeleccionados = ko.dependentObservable( function(){
-    if ( this.currentMesa() && this.currentMesa().currentComanda() && this.currentMesa().currentComanda().comanda && this.currentMesa().currentComanda().comanda.DetalleComanda()) {
-        return this.currentMesa().currentComanda().comanda.DetalleComanda();    
-    } else {
-        return [];
-    }
-    
-}, Risto.Adition.adicionar);     
-
-
-/**
- * Variable de estado generada cuando se esta armando una comanda
- * son los sabores de un producto seleccionado
- */
-Risto.Adition.adicionar.currentSabores = ko.dependentObservable( function(){
-    if ( this.currentMesa() && this.currentMesa().currentComanda() && this.currentMesa().currentComanda().currentSabores() ) {
-        return this.currentMesa().currentComanda().currentSabores();    
-    }
-}, Risto.Adition.adicionar);   
-
-
-// al procesar un pago aqui se escribe el vuelto para manejar en la vista
-Risto.Adition.adicionar.vueltoText = ko.dependentObservable( function(){
-   var pagos = this.pagos(),
-       sumPagos = 0,
-       totMesa = Risto.Adition.adicionar.currentMesa().totalCalculado(),
-       vuelto = 0,
-       retText = 'Total: '+Risto.Adition.adicionar.currentMesa().textoTotalCalculado();
-   if (pagos && pagos.length) {
-       for (var p in pagos) {
-           if ( pagos[p].valor() ) {
-            sumPagos += parseFloat(pagos[p].valor());
-           }
-       }
-       vuelto = (totMesa - sumPagos);
-       if (vuelto <= 0 ){
-           retText = retText+'   -  Vuelto: $  '+Math.abs(vuelto);
-       } else {
-           retText = retText+'   -  ¡¡¡¡ Faltan: $  '+vuelto+' !!!';
-       }
-   }
-   return retText;
-}, Risto.Adition.adicionar);
-/*--------------------------------------------------------------------------------------------------- Risto.Adicion.producto
+}, Risto.Adition.adicionar);/*--------------------------------------------------------------------------------------------------- Risto.Adicion.producto
  *
  *
  * Clase Producto
@@ -2240,16 +2570,27 @@ Risto.Adition.cliente = function(jsonMap){
 
 Risto.Adition.cliente.prototype = {
     Descuento: ko.observable(null),
+    porcentaje: ko.observable( undefined ),
     
-    tieneDescuento: function(){
+    
+    /**
+     * @return Boolean
+     * Devuelve true o false dependiendo si el cliente tiene o no un descuento aplicado
+     */
+    tieneDescuento: function() {
         var porcentaje = undefined;
-        if (this.descuento_id() && this.Descuento() && this.Descuento().porcentaje()) {
+        if (this.descuento_id() && this.Descuento() && this.Descuento().porcentaje && this.Descuento().porcentaje()) {
             porcentaje = parseInt( this.Descuento().porcentaje() );
         }
         return porcentaje;
     },
     
     
+    /**
+     * @return String
+     * Devuelve el porcentaje que tiene el cliente con el "%" Concatenado.
+     * Ej: "10%"
+     */
     getDescuentoText : function(){
         var porcentaje = 0;
         if (this.Descuento() && this.Descuento().porcentaje()) {
@@ -2266,6 +2607,20 @@ Risto.Adition.cliente.prototype = {
         return tipo;
     },
     
+    /**
+     * @param Char val por ejemplo puede ser "A" o "B", tambien se pueden ingresar en minusculas y da igual
+     * 
+     * Es para determinar si el tipo de factura de este cliente es la consultada
+     * 
+     */
+    esTipoFactura: function( val ){        
+        var ret = false
+        if ( this.tipofactura().toLowerCase() == val.toLowerCase() ) {
+            ret = true;
+        }
+        return ret;
+    },
+    
     initialize: function( jsonMap ){
         if ( !jsonMap ) {
             return null;
@@ -2274,7 +2629,8 @@ Risto.Adition.cliente.prototype = {
             jsonMap = cliente.Cliente;
         }
         
-        this.Descuento = ko.observable( null );
+        this.Descuento  = ko.observable( null );
+        this.porcentaje = ko.observable( undefined );
         
         if (jsonMap.Descuento && jsonMap.Descuento.id) {
             this.Descuento( new Risto.Adition.descuento(jsonMap.Descuento) );
@@ -2284,24 +2640,7 @@ Risto.Adition.cliente.prototype = {
         ko.mapping.fromJS(jsonMap, {}, this);
         return this;
     }
-}/*--------------------------------------------------------------------------------------------------- Risto.Adicion.descuento
- *
- *
- * Clase Descuento
- */
-
-Risto.Adition.descuento = function(jsonData){
-    return this.initialize(jsonData);
-}
-
-
-Risto.Adition.descuento.prototype = {
-    initialize: function(jsonData){
-        return ko.mapping.fromJS(jsonData, {}, this);       
-    }
-}
-
-/*--------------------------------------------------------------------------------------------------- Risto.Adicion.pago
+}/*--------------------------------------------------------------------------------------------------- Risto.Adicion.pago
  *
  *
  * Clase Pago
@@ -2627,32 +2966,605 @@ Risto.Adition.koAdicionModel = {
  *
  */
 
-// enrquiqueecr con JQM el listado ed comandas de la mesa en msa-view
-$('#mesa-view').live('pageshow',function(event, ui){  
-  $('#comanda-detalle-collapsible').trigger('create');
-});
+$(document).bind("mobileinit", function(){
 
-
-// acomodar todos mozos al ancho ed la pantalla segun resolucion
-$('#listado-mesas').live('pageshow',function(event, ui){
-  var tot = $('.listado-mozos-para-mesas > li');
-  var por = 100/tot.length;
-  tot.removeClass('ui-block-a');
-  tot.removeClass('ui-block-b');
-  tot.css({'width':por+'%', padding: '0px', margin: '0px', 'float': 'left'});
-});
+    $('#comanda-add-product-obss').live('pageshow',function(event, ui){    
+        $('input, textarea', '#comanda-add-product-obss').bind('focus');
+    });
+    $('#comanda-add-product-obss').live('pagehide',function(event, ui){    
+        $('input, textarea', '#comanda-add-product-obss').unbind('focus');
+    });
 
 
 
-$('#page-sabores').live('pageshow', function(){
-    var closeIcon = $('#page-sabores a[data-icon="delete"]');
-    closeIcon.bind('click',function(){
-                Risto.Adition.adicionar.currentMesa().currentComanda().limpiarSabores();
-                closeIcon.unbind('click');
+    /**
+     *
+     *
+     *          Mesa View -> Cambiar Mozo
+     *
+     *
+     */
+
+    // enrquiqueecr con JQM el listado ed comandas de la mesa en msa-view
+    $('#mesa-cambiar-mozo').live('pageshow',function(event, ui){    
+        // Form SUBMITS
+        $('#form-cambiar-mozo').bind('submit', function(e){
+            e.preventDefault();
+            $raeh.trigger('cambiarMozo', e, this);
+            return false;
+        });
+    });
+
+    // enrquiqueecr con JQM el listado ed comandas de la mesa en msa-view
+    $('#mesa-cambiar-mozo').live('pagehide',function(event, ui){ 
+        // Form SUBMITS
+        $('#form-cambiar-mozo').unbind('submit');
+    });
+
+
+
+
+
+
+    /**
+     *
+     *
+     *          COMANDA ADD
+     *
+     */
+    $('#comanda-add-menu').live('pageshow', function(){
+        //creacion de comandas
+        // producto seleccionado
+        $(document).bind(  MENU_ESTADOS_POSIBLES.productoSeleccionado.event , productoSeleccionado);
+
+        
+        
+        var abierto = false;
+        $('#ul-productos-seleccionados').delegate(
+                '.listado-productos-seleccionados',
+                'mouseleave',
+                function(){
+                    $(this).children('.ui-options').hide();
+                    $(this).children('.ui-options-btn').removeClass('ui-options-btn-open');
+                    abierto = false;
+                }
+        );                
+        
+        $('#ul-productos-seleccionados').delegate(
+                '.ui-options-btn',
+                'mouseover',
+                function(){
+                    var $ops = $(this).parent().find('.ui-options'),
+                        $opsBtn = $(this).parent().find('.ui-options-btn');
+                        
+                    if ( abierto ) {
+                        $ops.hide();
+                        $opsBtn.removeClass('ui-options-btn-open');
+                    } else {
+                        $ops.show();
+                        $opsBtn.addClass('ui-options-btn-open');
+                    }
+                    abierto = !abierto;
+                }
+        );            
+
+        $('#comanda-add-guardar').bind('click', function(){
+            Risto.Adition.adicionar.currentMesa().currentComanda().save();
+            Risto.Adition.menu.reset();
+        });
+
+        function seleccionar(){
+            //retrieve the context
+            var context = ko.contextFor(this);
+            $(this).addClass('active');
+            if (context) {
+                // $data es es el objeto producto
+                context.$data.seleccionar();
+            }
+        }
+
+        $('#ul-categorias').delegate("a", "click", seleccionar);
+        $('#ul-productos').delegate("a", "click", seleccionar);
+        
+            
+        // Eventos para la observacion General de la Comanda ADD
+        (function(){
+            var $domObs = $('#comanda-add-observacion');
+            $("#mesa-comanda-add-obs-gen-cancel").bind('click', function(){
+                $domObs.toggle('slow'); 
+                Risto.Adition.adicionar.currentMesa().currentComanda().comanda.borrarObservacionGeneral();
             });
+
+            $("#mesa-comanda-add-obs-gen-aceptar").bind('click', function(){
+                $domObs.toggle('slow');
+            });
+
+            var domObsList = $('.observaciones-list button', '#comanda-add-menu');
+            domObsList.bind('click' , function(e){
+                if ( this.value ) {
+                    Risto.Adition.adicionar.currentMesa().currentComanda().comanda.agregarTextoAObservacionGeneral( this.value );
+                }
+            });
+        })();
+    });
+
+    $('#comanda-add-menu').live('pagebeforehide', function(){
+        $(document).unbind(  MENU_ESTADOS_POSIBLES.productoSeleccionado.event);
+        
+        $('a.active','#ul-productos').removeClass('active');
+        
+        $('#comanda-add-observacion').hide();
+        
+        $('#ul-categorias').undelegate("a", "click");
+        $('#ul-productos').undelegate("a", "click");
+        
+        
+        $('#ul-productos-seleccionados').undelegate(
+                '.listado-productos-seleccionados',
+                'mouseleave'
+        );                
+        
+        $('#ul-productos-seleccionados').undelegate(
+                '.ui-options-btn',
+                'mouseover'
+        ); 
+
+        $("#mesa-comanda-add-obs-gen-cancel").unbind('click');
+        $("#mesa-comanda-add-obs-gen-aceptar").unbind('click');
+        $('.observaciones-list button', '#comanda-add-menu').unbind('click');
+        $('#comanda-add-guardar').unbind('click');
+        
+    });
+
+
+
+
+
+
+    /**
+     *
+     *
+     *          Mesa View -> Cambiar N° Mesa
+     *
+     *
+     */
+    (function(){
+        var $formulario = $('#form-cambiar-numero'),
+            $paginaJQM = $('#mesa-cambiar-numero');
+        
+        // enrquiqueecr con JQM el listado ed comandas de la mesa en msa-view
+        $paginaJQM.live('pageshow',function(event, ui){ 
+
+            $('input:first', $formulario).focus().val('');
+            // Form SUBMITS
+            $formulario.bind( 'submit', function(){
+                console.debug("mirando");
+//                $raeh.trigger('cambiarNumeroMesa', null, this);
+                return false;
+            });
+        });
+
+        // enrquiqueecr con JQM el listado ed comandas de la mesa en msa-view
+        $paginaJQM.live('pagebeforehide',function(event, ui){ 
+            // Form SUBMITS
+             $formulario.unbind( 'submit');
+        });
+
+    })();
+    
+
+    /**
+     *
+     *
+     *          Mesa View
+     *
+     *
+     */
+
+    // enrquiqueecr con JQM el listado ed comandas de la mesa en msa-view
+    $('#mesa-view').live('pageshow',function(event, ui) {
+        $('#comanda-detalle-collapsible').trigger('create');
+
+         // CLICKS
+        $('#mesa-action-comanda').bind( 'click', function(){
+            Risto.Adition.adicionar.nuevaComandaParaCurrentMesa();
+        });
+
+        $('#mesa-action-cobrar').bind('click',function(){
+            Risto.Adition.adicionar.pagos( [] );
+        });
+        
+        var $hrefEdit = $('a:first-child','#mesa-action-edit'),
+            hrefToEditMesa = $hrefEdit.attr('data-href');
+        if ( hrefToEditMesa ) {
+            $hrefEdit.attr('href', hrefToEditMesa + Risto.Adition.adicionar.currentMesa().id() );
+        }
+
+
+          $('#mesa-menu').bind( 'click', function(){
+              Risto.Adition.adicionar.agregarMenu();
+          });
+
+          $('#mesa-cant-comensales').bind('click', function(){
+              Risto.Adition.adicionar.agregarCantCubiertos();
+          });
+
+
+        $('#mesa-cerrar').bind('click', function(){
+            var mesa = Risto.Adition.adicionar.currentMesa();
+            mesa.cambioDeEstadoAjax( MESA_ESTADOS_POSIBLES.cerrada );
+        });
+
+        $('#mesa-action-reimprimir').bind('click', function(){
+            var mesa = Risto.Adition.adicionar.currentMesa();
+            var url = mesa.urlReimprimirTicket();
+            $.get(url);
+        });
+
+
+        $('#mesa-borrar').bind('click', function(){
+            if (window.confirm('Seguro que desea borrar la mesa '+Risto.Adition.adicionar.currentMesa().numero())){
+                var mesa = Risto.Adition.adicionar.currentMesa();
+                mesa.cambioDeEstadoAjax( MESA_ESTADOS_POSIBLES.borrada );
+            }
+        });
+
+
+        $('#mesa-reabrir').bind('click',function(){
+            var mesa = Risto.Adition.adicionar.currentMesa();
+            mesa.cambioDeEstadoAjax( MESA_ESTADOS_POSIBLES.reabierta );
+        });
+
+    });
+
+    $('#mesa-view').live('pagebeforehide',function(event, ui){  
+        $('#mesa-action-comanda').unbind( 'click');
+        $('#mesa-action-cobrar').unbind('click');
+        $('#mesa-menu').unbind( 'click');
+        $('#mesa-cant-comensales').unbind('click');
+        $('#mesa-cerrar').unbind('click');
+        $('#mesa-action-reimprimir').unbind('click');
+        $('#mesa-borrar').unbind('click');
+        $('#mesa-reabrir').unbind('click');
+    });
+
+
+
+
+
+
+
+    /**
+     *
+     *      LISTADO DE MESAS
+     *
+     *
+     */
+
+
+    $('#listado-mesas').live('pageshow',function(event, ui){
+        var $listadoMozos = $('#listado-mozos-para-mesas');
+        $listadoMozos.removeClass('ui-grid-a');
+
+
+        // al hacer click n un mozo del menu bar
+        // se muestran solo lasmesas de ese mozo
+
+        $listadoMozos.delegate('a', 'click', function(e) {
+            $raeh.trigger('mostrarMesasDeMozo', e.currentTarget);
+            return false;        
+        });
+
+    });
+
+
+    $('#listado-mesas').live('pagebeforehide',function(event, ui){
+        $('#mesa-abrir-mesa-btn').unbind('click');
+        $('#listado-mozos-para-mesas').unbind('click');
+        
+        // al hacer click n un mozo del menu bar
+        // se muestran solo lasmesas de ese mozo
+        var $listadoMozos = $('#listado-mozos-para-mesas');
+        $listadoMozos.undelegate('a', 'click');
+        
+        
+    });
+    
+    
+    
+    /**
+     *
+     * Logica del abrir Mesa, se activa cuando se aprieta el boton de abrir mesa
+     *
+     */
+    (function(){
+        
+        var $formMesaAdd = null;
+         
+         
+        /**
+         * Desbindea los eventos para liberar memoria
+         *
+         */
+        function unbindALl() {
+                     $('#add-mesa-paso3-submit, #add-mesa-paso2-volver').unbind('click');
+                     $('#add-mesa-paso1 LABEL, #add-mesa-paso3-volver').unbind('click');
+                     $('#add-mesa-paso2-submit').unbind('click');
+                     $formMesaAdd.unbind('submit');
+        }
+                
+                
+        $('#mesa-add').live( 'pageshow', function(){
+                $formMesaAdd = $('#form-mesa-add');
+                $p3 = $('#add-mesa-paso3');
+                $p2 = $( '#add-mesa-paso2');
+                $p1 = $( '#add-mesa-paso1');
+
+                /**
+                 *
+                 * Luego de apretar el submit del formulario agregar mesa....
+                 */
+                function agregarNuevaMesa(e){
+                    
+                    unbindALl();
+                    e.preventDefault();
+
+                    var rta = $formMesaAdd.serializeArray(), 
+                        miniMesa = {}, // json modelo, para crear la mesa
+                        mesa; // nueva mesa creada
+
+                    for (var r in rta ) {
+                        if (rta[r].name == 'numero' && !rta[r].value){
+                            alert("Debe completar numero de mesa");
+                            return false;
+                        }
+
+                        if (rta[r].name == 'cant_comensales' && !rta[r].value && Risto.Adition.cubiertosObligatorios){
+                            alert("Debe indicar la cantidad de cubiertos");
+                            return false;
+                        }
+                        miniMesa[rta[r].name] = rta[r].value;
+                    }
+
+                    mesa = Risto.Adition.adicionar.crearNuevaMesa( miniMesa );
+                    Risto.Adition.EventHandler.mesaSeleccionada( {"mesa": mesa} );
+                    Risto.Adition.adicionar.setCurrentMesa( mesa );
+                    $.mobile.changePage('#mesa-view');
+                    document.getElementById('form-mesa-add').reset(); // limpio el formulario
+
+                    return false;
+                }
+    
+                // Eventos para abrir una mesa
+                $('#mesa-abrir-mesa-btn').bind('click', function(){
+                       $p2.hide();
+                       $p3.hide();
+                       $p1.show();
+                });
+
+                // Ir al paso 1
+                $('#add-mesa-paso3-submit, #add-mesa-paso2-volver').bind('click', function(){
+                  $p3.hide();
+                  $p2.hide();
+                  $p1.show();
+                });
+
+                // Ir al paso 2
+                $('#add-mesa-paso1 LABEL, #add-mesa-paso3-volver').bind('click', function(){
+                   $p1.hide();
+                   $p3.hide();
+                   $p2.show();           
+                   $('#add-mesa-paso2').find( 'input').focus();
+                });
+
+                // Ir al paso 3
+                $('#add-mesa-paso2-submit').bind('click', function(){
+                   $p1.hide();
+                   $p2.hide();
+                   $p3.show();   
+                   $('#add-mesa-paso3').find( 'input').focus();
+                });
+
+                $('#form-mesa-add').bind('submit', agregarNuevaMesa);
+
+        });
+
+        $('#mesa-add').live( 'pagehide', function(){
+            unbindALl();
+            document.getElementById('form-mesa-add').reset();
+        });
+
+
+        
+        
+    })();
+     
+    
+
+    /**
+     *
+     *          COBROS               -------    CAJERO
+     *
+     */
+    $('#mesa-cobrar').live('pageshow',function(event, ui){
+        $('#mesa-cajero-reabrir').bind('click',function(){
+            var mesa = Risto.Adition.adicionar.currentMesa();
+            mesa.cambioDeEstadoAjax( MESA_ESTADOS_POSIBLES.reabierta );
+        });
+        $('.mesa-reimprimir', '#mesa-cobrar').bind('click', function(){
+            var mesa = Risto.Adition.adicionar.currentMesa();
+            var url = mesa.urlReimprimirTicket();
+            $.get(url);
+        });
+    });
+
+    $('#mesa-cobrar').live('pagebeforehide',function(event, ui){
+        $('#mesa-cajero-reabrir').unbind('click');
+        $('.mesa-reimprimir', '#mesa-cobrar').unbind('click');
+        Risto.Adition.adicionar.pagos([]);
+    });
+
+
+    /**
+     *
+     *          OPCIONES    ----   CAJERO
+     *
+     */
+    $('#cajero-opciones').live('pageshow',function(event, ui){
+        $('#modo-k').bind('change',function(){
+            Risto.IMPRIME_REMITO_PRIMERO = !Risto.IMPRIME_REMITO_PRIMERO;
+            $.get(urlDomain+'/configs/toggle_remito');
+
+        });
+    });
+
+    $('#cajero-opciones').live('pagebeforehide',function(event, ui){
+         $('#modo-k').unbind('change');
+    });
+
+
+    /**
+     *
+     *          CLIENTES LISTADO
+     *
+     */
+    $('#listado_de_clientes').live('pageshow',function(event, ui){
+
+        $('input', '#contenedor-listado-clientes-factura-a').bind('keypress', function(){
+                    $('.factura-a-cliente-add').show();
+         });
+
+        $('#mesa-eliminar-cliente').bind('click',function(){
+            Risto.Adition.adicionar.currentMesa().setCliente( null );
+            return true;
+        });
+
+    });
+
+    $('#listado_de_clientes').live('pagebeforehide',function(event, ui){
+
+        $('#mesa-eliminar-cliente').unbind('click');
+        $('input', '#contenedor-listado-clientes-factura-a').unbind('keypress');
+    });
+    
+    
+    /**
+     *
+     *          DESCUENTOS LISTADO
+     *
+     */
+    $('#descuentos-jqm_descuentos').live('pageshow',function(event, ui){
+
+        $('#mesa-eliminar-descuento').bind('click',function(){
+            Risto.Adition.adicionar.currentMesa().eliminarDescuento( );
+            return true;
+        });
+
+    });
+
+    $('#mesa-eliminar-descuento').live('pagebeforehide',function(event, ui){
+        $('#mesa-eliminar-cliente').unbind('click');
+    });
+    
+
+
+
+    /**
+     *
+     *
+     *    Agregar Clientes ADD
+     */
+    $('#clientes-addfacturaa').live('pageshow', function() {
+        var $fform = $('#form-cliente-add', '#clientes-addfacturaa');
+        $fform.bind('submit', function(e){
+          var contenedorForm = $fform.parent();
+           e.preventDefault();
+           $.post(
+               $fform.attr('action'), 
+               $fform.serialize(),
+               function(data){
+                   contenedorForm.html(data);
+                   contenedorForm.trigger('create');
+                   contenedorForm.trigger('refresh');
+               }
+           );
+           return false; 
+        });
+    });
+    
+    $('#clientes-addfacturaa').live('pagehide', function() {
+        $('#form-cliente-add', '#clientes-addfacturaa').unbind('submit');
+    });
+
+
+    /**
+     *
+     *
+     *          Page COBRAR
+     *
+     */
+    $('#mesa-cobrar').live('pageshow', function(){
+
+        // Al apretar el boton de cobro de pago procesa los pagos correspondientes
+        $('#mesa-pagos-procesar').bind('click', function(){
+            // lipieza de pagos, selecciono solo los que se les haya agregado algun valor en el input
+            for (var p in Risto.Adition.adicionar.pagos() ) {
+                if ( Risto.Adition.adicionar.pagos()[p] ) {
+                    // agrego el pago a la mesa
+                    Risto.Adition.adicionar.currentMesa().Pago.push( Risto.Adition.adicionar.pagos()[p] );
+                }
+            }
+
+            // reinicio los pagos
+            Risto.Adition.adicionar.pagos([]);
+
+            // cambio el estado de la mesa para disparar el evento
+            Risto.Adition.adicionar.currentMesa().setEstadoCobrada();
+        });
+    });
+
+    $('#mesa-cobrar').live('pagebeforehide', function(){
+        $('#mesa-pagos-procesar').unbind('click');
+    });
+
+
+
+
+
+    /**
+     *
+     *
+     *          Page SABORES
+     *
+     */
+
+    $('#page-sabores').live('pageshow', function(){
+        var $closeIcon = $('#page-sabores').find( 'a[data-icon="delete"]' );
+        $closeIcon.bind('click',function(){
+                    Risto.Adition.adicionar.currentMesa().currentComanda().limpiarSabores();
+                    $closeIcon.unbind('click');
+                });
+                
+        function seleccionar(e){
+            
+            //retrieve the context
+            var context = ko.contextFor(this);
+            $(this).addClass('active');
+            if (context) {
+                // $data es es el objeto producto
+                context.$data.seleccionar(e);
+            }
+        }
+
+        $('#ul-sabores').delegate("a", "click", seleccionar);
+    });
+    
+    $('#page-sabores').live('pagehide', function(){
+        $('#ul-sabores').undelegate("a", "click");
+    });
+
+
 });
-
-
 
 
 /**
@@ -2667,335 +3579,20 @@ $(document).ready(function() {
     
     $(document).keydown(onKeyDown);
     $(document).keypress(onKeyPress);
-
-    $(document).bind(MESA_ESTADOS_POSIBLES.seleccionada.event, mesaSeleccionada);
-
-    // cambios de estado de la mesa
-    $(document).bind(MESA_ESTADOS_POSIBLES.abierta.event, abrirMesa); //funcion vacia de jQuery
-    $(document).bind(MESA_ESTADOS_POSIBLES.cerrada.event, mesaCerrada);
-    $(document).bind(MESA_ESTADOS_POSIBLES.cuponPendiente.event, mesaCuponPendiente);
-    $(document).bind(MESA_ESTADOS_POSIBLES.cobrada.event, mesaCobrada);
-    $(document).bind(MESA_ESTADOS_POSIBLES.borrada.event, mesaBorrada);
-    $(document).bind(MOZOS_POSIBLES_ESTADOS.agragaMesa.event, ponerMesaComoCurrent);
     
     
-    
-    //creacion de comandas
-    // producto seleccionado
-    $(document).bind(  MENU_ESTADOS_POSIBLES.productoSeleccionado.event , productoSeleccionado);
-    
-    
-    
-    
-    // Eventos para abrir una mesa
-    $('a[href="#mesa-add"]').bind('click', function(){
-    });
-    
-    $('#add-mesa-paso1 LABEL, #add-mesa-paso3-volver').bind('click', function(){
-       $('#add-mesa-paso1, #add-mesa-paso3').hide();$('#add-mesa-paso2').show(); 
-       $('#add-mesa-paso2 input').focus();
-    });
-    
-    $('#add-mesa-paso2-submit').bind('click', function(){
-       $('#add-mesa-paso2, #add-mesa-paso1').hide();$('#add-mesa-paso3').show();
-       $('#add-mesa-paso3 input').focus();
-    });
-    
-    $('#add-mesa-paso3-submit, #add-mesa-paso2-volver').bind('click', function(){
-       $('#add-mesa-paso3, #add-mesa-paso2').hide();$('#add-mesa-paso1').show();
-    });
-    
-    
-    $('#form-mesa-add').submit(agregarNuevaMesa);
-    
-    
-    
-    
-    
-    // Eventos para la observacion General de la Comanda ADD
-    (function(){
-        var domObs = $('#comanda-add-observacion');
-        $("#mesa-comanda-add-obs-gen-cancel").click(function(){
-            domObs.toggle('slow'); 
-            Risto.Adition.adicionar.currentMesa().currentComanda().comanda.borrarObservacionGeneral();
-        });
-
-        $("#mesa-comanda-add-obs-gen-aceptar").click(function(){
-            domObs.toggle('slow');
-        });
-        
-        var domObsList = $('#comanda-add-menu .observaciones-list button');
-        domObsList.click(function(e){
-            if ( this.value ) {
-                Risto.Adition.adicionar.currentMesa().currentComanda().comanda.agregarTextoAObservacionGeneral( this.value );
-            }
-        });
-    })();
-    
-       
-    
-    
-
-    $(document).bind("adicionCambioMozo", cambioMozo);
-    
-    
-    // para refrescar las mesas segun el mozo marcado
-    $(document).bind('adicionMesasActualizadas', function(){
-        /**
-         *
-         *  definicion del objeto que manejara las distintas respuestas dependiendo de la pagina activa
-         *  Cada clave de este objeto es el ID de la page de JQM utilizada
-         *  
-         * */
-        var onMesasActualizadasHandlerByPage = {
-            'listado-mesas': function(){
-                var btnMozo = $('.listado-mozos-para-mesas .ui-btn-active');
-                var mozoId = 0;
-                if ( btnMozo[0] ) {
-                    mozoId = $(btnMozo[0]).attr('data-mozo-id');
-                }
-                mostrarMesasDeMozo(mozoId);
-            },
-            'mesa-view': function() {
-                $('#comanda-detalle-collapsible').trigger('create');
-            }
-        }
-        
-        // llamar a la funcion correspondiente segun la pagina en la que estoy
-        if ( $.mobile.activePage[0].id && onMesasActualizadasHandlerByPage.hasOwnProperty( $.mobile.activePage[0].id) ) {
-            onMesasActualizadasHandlerByPage[$.mobile.activePage[0].id].call();
-        }
-        
-    });
-    
-    
-    
-    // Form SUBMITS
-    $('#form-cambiar-mozo').submit(cambiarMozo);
-    $('#form-cambiar-numero').submit(cambiarNumeroMesa);
-    
-    
-    
-    $('#form-cliente-add').live('submit', function(e){
-      var form = $('#form-cliente-add');
-      var contenedorForm = form.parent();
-       e.preventDefault();
-       $.post(
-           form.attr('action'), 
-           form.serialize(),
-           function(data){
-               contenedorForm.html(data);
-               contenedorForm.trigger('refresh');
-           }
-       );
-       return false; 
-    });
-    
-    
-    
-    // CLICKS
-    $('A[href="#comanda-add-menu"]').click(function(){
-        Risto.Adition.adicionar.nuevaComandaParaCurrentMesa();
-    });
-    
-    $('#comanda-add-guardar').click(function(){
-        Risto.Adition.adicionar.currentMesa().currentComanda().save();
-    });
-    
-    $('A[href="#mesa-cobrar"]').live('click',function(){
-        Risto.Adition.adicionar.pagos( [] );
-    });
-    
-     $('#btn-comanda-opciones').click(function(){
-         $('#comanda-opciones').toggle();
-      });
-      
-      $('#mesa-menu').click(function(){
-          Risto.Adition.adicionar.agregarMenu();
-      });
-      
-      $('.cant_comensales').click(function(){
-          Risto.Adition.adicionar.agregarCantCubiertos();
-      });
-    
-    
-    
-    $('#mesa-cerrar').bind('click', function(){
-        var mesa = Risto.Adition.adicionar.currentMesa();
-        mesa.cambioDeEstadoAjax( MESA_ESTADOS_POSIBLES.cerrada );
-    });
-    
-    $('.mesa-reimprimir').bind('click', function(){
-        var mesa = Risto.Adition.adicionar.currentMesa();
-        var url = mesa.urlReimprimirTicket();
-        $.get(url);
-    });
-    
-    
-    $('#mesa-borrar').bind('click', function(){
-        if (window.confirm('Seguro que desea borrar la mesa '+Risto.Adition.adicionar.currentMesa().numero())){
-            var mesa = Risto.Adition.adicionar.currentMesa();
-            mesa.cambioDeEstadoAjax( MESA_ESTADOS_POSIBLES.borrada );
-        }
-    });
-    
-    
-    $('#mesa-reabrir, #mesa-cajero-reabrir').bind('click',function(){
-        var mesa = Risto.Adition.adicionar.currentMesa();
-        mesa.cambioDeEstadoAjax( MESA_ESTADOS_POSIBLES.reabierta );
-    });
-    
-    
-    $('#mesa-eliminar-cliente').live('click',function(){
-        Risto.Adition.adicionar.currentMesa().setCliente( null );
-        return true;
-    });
-    
-    
-    // al hacer click n un mozo del menu bar
-    // se muestran solo lasmesas de ese mozo
-    $('.listado-mozos-para-mesas a').bind('click',function(){
-        var mId = undefined;
-        mostrarMesasDeMozo( $(this).attr('data-mozo-id') );
-        
-    });
-    
-    
-    // Al apretar el boton de cobro de pago procesa los pagos correspondientes
-    $('#mesa-pagos-procesar').click(function(){
-        // lipieza de pagos, selecciono solo los que se les haya agregado algun valor en el input
-        for (var p in Risto.Adition.adicionar.pagos() ) {
-            if ( Risto.Adition.adicionar.pagos()[p] ) {
-                // agrego el pago a la mesa
-                Risto.Adition.adicionar.currentMesa().Pago.push( Risto.Adition.adicionar.pagos()[p] );
-            }
-        }
-        
-        // reinicio los pagos
-        Risto.Adition.adicionar.pagos([]);
-        
-        // cambio el estado de la mesa para disparar el evento
-        Risto.Adition.adicionar.currentMesa().setEstadoCobrada();
-    });
-    
-    
-    $('#modo-k').live('change',function(){
-        IMPRIME_REMITO_PRIMERO = !IMPRIME_REMITO_PRIMERO;
-        $.get(urlDomain+'/configs/toggle_remito');
-        
-    });
-    
-    
-    
-    // Los botones que tengan la clase silent-click sirven para los dialogs
+     // Los botones que tengan la clase silent-click sirven para los dialogs
     // la idea es que al ser apretados el dialog se cierre, pero que se envie 
     // el href via ajax, Es util para las ocasiones en las que quiero mandar
-    // una accion al servidor del cual no espero respuesta.
-    $('[data-href]').live('click',function(e){
+    // una accion al servidor del cual no espero respuesta.    
+    $('[data-href]').bind('click',function(e){
         var att = $(this).attr('data-href');
         if (att) {
             $.get( att );
         }
         $('.ui-dialog').dialog('close');
-    });
-
-    
-    
-    $('#contenedor-listado-clientes-factura-a input').live('keypress', function(){
-                $('.factura-a-cliente-add').show();
-     });
-                 
+    });   
 });
-
-
-
-function agregarNuevaMesa(e){
-    e.preventDefault();
-    
-    var rta = $('#form-mesa-add').serializeArray();    
-    var miniMesa = {};
-    
-    for (var r in rta ) {
-        if (rta[r].name == 'numero' && !rta[r].value){
-            alert("Debe completar numero de mesa");
-            return false;
-        }
-        
-        if (rta[r].name == 'cant_comensales' && !rta[r].value && Risto.Adition.cubiertosObligatorios){
-            alert("Debe indicar la cantidad de cubiertos");
-            return false;
-        }
-        miniMesa[rta[r].name] = rta[r].value;
-    }
-    
-    var mesa = Risto.Adition.adicionar.crearNuevaMesa( miniMesa );
-    mesaSeleccionada( {"mesa": mesa} );
-    Risto.Adition.adicionar.setCurrentMesa( mesa );
-    $.mobile.changePage('#mesa-view');
-    document.getElementById('form-mesa-add').reset(); // limpio el formulario
-
-    return false;
-}
-
-
-function mesaCerrada(e){
-//    e.mesa.estado( MESA_ESTADOS_POSIBLES.cerrada );
-//    $("#mesa-li-id-"+e.mesa.id()).attr('class', '');
-//    $("#mesa-li-id-"+e.mesa.id()).addClass(e.mesa.estado().icon);   
-}
-
-function mesaCuponPendiente(){
-    
-}
-
-function mesaBorrada(e){
-    var mesa = e.mesa;
-    e.mesa.mozo().sacarMesa(mesa);
-}
-
-
-// Procesar los pagos de la mesa
-function mesaCobrada(e){
-    // envio los datos al servidor
-    var m = e.mesa;
-    var mes = {
-            Mesa: {
-                id: m.id(),
-                estado_id: m.estado_id(),
-                time_cobro: m.time_cobro(),
-                model: 'Mesa'
-            },
-            Pago: m.Pago()
-        };
-        
-        // guardo los pagos
-        $cakeSaver.send({
-            url: urlDomain+'pagos/add',
-            obj: mes
-        }, function(d){
-            
-        });
-        
-        e.mesa.mozo().sacarMesa( e.mesa );
-}
-
-
-
-function cambioMozo(e){
-}
-
-
-function mesaSeleccionada(e){
-    Risto.Adition.adicionar.setCurrentMesa(e.mesa);
-}
-
-
-
-function abrirMesa(e) {
-    if (!e.mesa.id) {
-        setTimeout(function(){abrirMesa(e)},1000);
-    }
-}
 
 
 
@@ -3007,12 +3604,6 @@ function productoSeleccionado(e) {
     Risto.Adition.adicionar.currentMesa().agregarProducto(e.producto);
 }
 
-
-function ponerMesaComoCurrent(e) {
-//    alert("meti esta mesa actual");
-//    Risto.Adition.adicionar.setCurrentMesa( e.mesa );
-//    $.mobile.changePage( "#mesa-view", { transition: "slideup"} );	
-}
 
 
 
@@ -3029,36 +3620,51 @@ function confirmacionDeSalida(e) {
 	}
     }
     
-    
-  
 
-function irMesaPrev() {
-    var mesaContainer = $('#mesas_container');
+
+/**
+ *
+ *@param String to. es una funcion de jQuery que hace ir para adelante o para atras en la dom 
+ *se puede poner: 
+ *                  'next' (por default) busca el siguiente elemento
+ *                  'prev' busca el anterior
+ */
+function __irMesaTo(to) {
+    var toWhat = to || 'next';
     
+    var mesaContainer = $('.listado-adicion', $.mobile.activePage );
+    
+    if ( !mesaContainer ) {
+        return;
+    }
+
+    if ( Risto.Adition.mesaCurrentContainer && Risto.Adition.mesaCurrentContainer.attr('id') != mesaContainer.attr('id') ){
+        Risto.Adition.mesaCurrentIndex = null;
+    }
+    
+    Risto.Adition.mesaCurrentContainer = mesaContainer;
+        
     if ( Risto.Adition.mesaCurrentIndex !== null) {
-        var aaa = Risto.Adition.mesaCurrentIndex.parent().prev().find('a');
+        var aaa = Risto.Adition.mesaCurrentIndex.parent()[toWhat]().find('a');
         if ( aaa.length ) {
             Risto.Adition.mesaCurrentIndex = aaa;
+        } else {
+            return;
         }
     } else {
-        Risto.Adition.mesaCurrentIndex = mesaContainer.find('a').first();
+        Risto.Adition.mesaCurrentIndex = Risto.Adition.mesaCurrentContainer.find('a').first();
     }
     Risto.Adition.mesaCurrentIndex.focus();
 }
+  
+
+function irMesaPrev() {
+    __irMesaTo('prev');
+    
+}
 
 function irMesaNext() {
-    var mesaContainer = $('#mesas_container');
-    
-    if ( Risto.Adition.mesaCurrentIndex !== null) {
-        var aaa = Risto.Adition.mesaCurrentIndex.parent().next().find('a');
-        if ( aaa.length ) {
-            Risto.Adition.mesaCurrentIndex = aaa;
-        }
-    } else {
-        Risto.Adition.mesaCurrentIndex = mesaContainer.find('a').first();
-        Risto.Adition.mesaCurrentIndex.focus();
-    }
-    Risto.Adition.mesaCurrentIndex.focus();
+    __irMesaTo('next');
 }
 
 
@@ -3071,6 +3677,27 @@ function onKeyDown(e) {
             history.back();
         }
     }
+    
+    
+    // Ctrol DERECHO + M ir a modo Cajero
+    if( (code == 'l'.charCodeAt() || code == 'L'.charCodeAt()) && e.ctrlKey) {
+        var pageId = $.mobile.activePage.attr('id');
+        
+        if ( pageId == 'listado-mesas-cerradas' ) {
+            $.mobile.changePage('#listado-mesas');
+        }
+        
+        if ( pageId == 'listado-mesas' ) {
+            $.mobile.changePage('#listado-mesas-cerradas');
+        }
+        return false;
+    }        
+    
+    
+    if(code == 23 && e.ctrlKey) {
+        $.mobile.changePage('#mesa-view')
+    }
+        
     
     // mesa siguiente a la seleccionada (focus) del listado de mesas
     if (code == 39 ) { //btn flecha derecha
@@ -3090,7 +3717,7 @@ function onKeyPress(e) {
         
         // buscar la mesa con ese numero, busca por accesskey
         Risto.Adition.mesaBuscarAccessKey += String.fromCharCode( code );
-        var domFinded = $("[accesskey^='"+Risto.Adition.mesaBuscarAccessKey+"']");
+        var domFinded = $("[accesskey^='"+Risto.Adition.mesaBuscarAccessKey+"']", $.mobile.activePage);
         if ( domFinded.length ) {
             Risto.Adition.mesaCurrentIndex = $(domFinded[0]);
             domFinded[0].focus();
@@ -3107,62 +3734,11 @@ function onKeyPress(e) {
 
 
 
-function cambiarMozo(e){    
-    var mozoId = $(this).find('[name="mozo_id"]:checked').val();
-    var mozo = Risto.Adition.adicionar.findMozoById(mozoId);
-    var mozoAnterior = Risto.Adition.adicionar.currentMesa().mozo();
-    Risto.Adition.adicionar.currentMesa().setMozo( mozo );
-    
-    $('.ui-dialog').dialog('close');
-    
-    var sendOb = {
-        obj: {
-            id: Risto.Adition.adicionar.currentMesa().id(),
-            mozo_id: mozoId,
-            model: 'Mesa',
-            handleAjaxSuccess: function(){}
-        },
-        url: Risto.Adition.adicionar.currentMesa().urlEdit(),
-        error: function(){
-            Risto.Adition.adicionar.currentMesa().setMozo( mozoAnterior );
-            alert("debido a un error en el servidor, el mozo no fue modificado");
-        }
-    }
-
-    $cakeSaver.send(sendOb);
-    
-    return false;
-}
-
-function cambiarNumeroMesa(){
-    var numeroMesa = $(this).find('[name="numero"]').val();
-    var numAnt = Risto.Adition.adicionar.currentMesa().numero( numeroMesa );
-    Risto.Adition.adicionar.currentMesa().numero( numeroMesa );
-    $('.ui-dialog').dialog('close');
-    
-    var sendOb = {
-        obj: {
-            id: Risto.Adition.adicionar.currentMesa().id(),
-            numero: numeroMesa,
-            model: 'Mesa',
-            handleAjaxSuccess: function(){}
-        },
-        url: Risto.Adition.adicionar.currentMesa().urlEdit(),
-        error: function(){
-            Risto.Adition.adicionar.currentMesa().numero( numAnt );
-            alert("debido a un error en el servidor, el numero de mesa no fue modificado");
-        }
-    }
-    $cakeSaver.send(sendOb);
-    return false;
-}
-
-
-
 /**
  *  para que no titile el cursor. Que no se pueda hacer click
  */
 function hacerQueNoFuncioneElClickEnPagina() {
+    return 1;
    if(document.all){
       document.onselectstart = function(e) {return false;} // ie
    } else {
@@ -3201,12 +3777,20 @@ Risto.Adition.menu = {
     
     
     // path de categorias del menu en la que estoy Ej: "/ - Gaseosas - Sin Alcohol""
-    path: ko.observableArray([]),
+    path: ko.observableArray( [] ),
     
     initialize: function(){
         this.__armarMenu();
         Risto.Adition.koAdicionModel.menu(this);
         return this;
+    },
+    
+    
+    /**
+     *  Reinicia el path de comandas, con la categoria root
+     */
+    reset: function() {
+        this.seleccionarCategoria( this.categoriasTree() );
     },
     
     update: function(){
@@ -3258,7 +3842,7 @@ Risto.Adition.menu = {
      * en base a la categoria seleccionda
      * @param cat Categoria
      */
-    updatePath: function(cat, pathArg, first ){
+    __updatePath: function(cat, pathArg, first ){
         var path = pathArg || [];
         var isFirst = true;
         if (first === false) {
@@ -3271,7 +3855,7 @@ Risto.Adition.menu = {
         
         
         if ( cat.hasOwnProperty('Padre') && cat.Padre ) {
-             path = this.updatePath(cat.Padre, path, false );
+             path = this.__updatePath(cat.Padre, path, false );
         }
         path.push(cat);
           
@@ -3284,72 +3868,60 @@ Risto.Adition.menu = {
         this.currentCategoria( cat );
         
         // actualizo el path
-        this.path(this.updatePath(cat));
+        this.path( this.__updatePath(cat) );
         
         return true;
+    },
+    
+    
+    /******---      COMANDA         -----******/
+    currentSubCategorias : function() {
+            if ( this.currentCategoria ) {
+                if (this.currentCategoria() && this.currentCategoria().Hijos ) {
+                    return this.currentCategoria().Hijos;
+                }
+                
+            }
+            return [];
+    },
+
+
+
+    
+    currentProductos : function(){
+        if ( this.currentCategoria ) {
+            if (this.currentCategoria() && this.currentCategoria().Producto ) {
+                return this.currentCategoria().Producto;
+            }
+            
+        }
+        return [];
     }
 }
 
 
 
 
-/******---      COMANDA         -----******/
-Risto.Adition.menu.currentSubCategorias = ko.dependentObservable(function() {
-        if ( this.currentCategoria ) {
-            if (this.currentCategoria() && this.currentCategoria().Hijos ) {
-                return this.currentCategoria().Hijos;
-            }
-            return [];
-        }
-}, Risto.Adition.menu);
+Risto.Adition.menu.initialize();
+if ( !jQuery ) {
+    console.info("esto no funciona sin jQuery");
+}
 
-
-Risto.Adition.menu.currentProductos = ko.dependentObservable(function(){
-    if ( this.currentCategoria ) {
-        if (this.currentCategoria() && this.currentCategoria().Producto ) {
-            return this.currentCategoria().Producto;
-        }
-        return [];
-    }
-}, Risto.Adition.menu);
-
-
-Risto.Adition.menu.initialize();(function($){
+( function($){
     
-    // variables globales para este plugin
+//    // variables globales para este plugin
     var $input;
-    var $kbdContainer = null;
+//    var $kbdContainer = null;
     
     
     
     // inicializacion de la desactivacin del teclado
     // por ahora solo se ocultaria si el input no esta en foco, y tampoco estoy con el mousse arriba
     // del teclado
-    var inputEnfocado = false;
-    var tecladoConHover = false;
-    
-    
-    
-    $(function(){
-        function verSiLoOculto(){
-            if ( !inputEnfocado && !tecladoConHover ) {
-                $kbdContainer.desactivar();
-            }
-        }
-        
-        $("input[type='text']").live('focus', function() {
-                inputEnfocado = true;
-                verSiLoOculto();
-        });
-        $("input[type='text']").live('focusout', function() {
-                    inputEnfocado = false;
-                    verSiLoOculto();
-        });  
-        $kbdContainer.hover(
-            function(){tecladoConHover = true;verSiLoOculto();}, 
-            function(){tecladoConHover = false;verSiLoOculto();}
-        );
-    });
+//    var inputEnfocado = false;
+//    var tecladoConHover = false;
+//    
+//    
     /////////////
     
     
@@ -3360,8 +3932,23 @@ Risto.Adition.menu.initialize();(function($){
      *
      */
     var $layouts = [
-        /* 0 */ {name: 'numpad', 'cssClass': 'numpad', keyMap: [[1, 2, 3, 4, 5, 6, 7, 8, 9, 0]]},
-        /* 1 */ {name: 'spanish', 'cssClass': 'words', keyMap: [['q','w','e','r','t','y','u','i','o','p'], ['a','s','d','f','g','h','j','k','l','ñ'], ['z','x','c','v','b','n','m'], [' ']]}
+        /* 0 */ {
+                    name: 'numpad',
+                    'cssClass': 'numpad', 
+                    keyMap: [[1, 2, 3, 4, 5, 6, 7, 8, 9, 0]],
+                    types: ['input[type="number"]'] // es un selector css que utilizara Jquery para encontrar al inputs
+                },
+                    
+        /* 1 */ {
+                    name: 'spanish',
+                    'cssClass': 'words', 
+                    types: ['input[type="text"]', 'textarea', 'input[type="password"]'], // es un selector css que utilizara Jquery para encontrar al inputs
+                    keyMap: [['1','2','3','4','5','6','7','8','9','0'], 
+                             ['q','w','e','r','t','y','u','i','o','p'], 
+                             ['a','s','d','f','g','h','j','k','l','ñ'], 
+                             [',','z','x','c','v','b','n','m','.','@'], 
+                             [' ']]
+                }                            
     ];
     
 
@@ -3376,36 +3963,113 @@ Risto.Adition.menu.initialize();(function($){
         activo: false,
         
 
-        init: function(){
-            $kbdContainer = $('<div>').addClass('alekeyboard '+$kbd.keys.cssClass).hide();            
+        init: function( layout ){
+            if ( !layout.types ) {
+                return null;
+            }
             
-            // inicializar el contenedor con aulgunas funciones y eventos bindeados
-            $kbdContainer.activar = $kbd.activar;
-            $kbdContainer.desactivar = $kbd.desactivar;
+            var $kbdContainer,
+                inputEnfocado   = false,
+                tecladoConHover = false 
+            ;
             
-            $("input[type='text']").live('focus', function(){
-                    $kbdContainer.activar( this );
-            });            
+            function verSiLoOculto(){
+                if ( !inputEnfocado && !tecladoConHover ) {
+                    $kbdContainer.desactivar();
+                }
+            }
+            
+
+            // inicializo cada uno de los layouts
+            $kbdContainer = $('<div id="alekeyboard-'+layout.name+'" class="'+'alekeyboard '+layout.cssClass+'">').hide(); 
             
             
+            // extiende la DOM para el DIV contenedor del teclado. lo activa mostranbdolo y
+            // enviando triggers por cada tecla tocada
+            $kbdContainer.activar = function( input ){
+                if ( !$kbd.activo ) {
+                    activo = true;
+                    var keybdContainer = this;
+                    keybdContainer.show();
+                    $input = $( input );
+
+
+                }
+                return false;
+            }
+
+            // extiende la DOM para el DIV contenedor del teclado. lo activa mostranbdolo y
+            // enviando triggers por cada tecla tocada
+            $kbdContainer.desactivar = function( input ){
+                $kbdContainer.hide();
+                activo = false;
+            }          
+
+            // cache de los inputs a bindear
+            
+            // bindeo eventos en la dom
+            $(document).ready( function(){
+                for ( var t in layout.types ) {
+                    $domInput = $( layout.types[t] );
+                    
+                    $domInput.live('click', function(){
+                        $kbdContainer.activar( this );
+                        inputEnfocado = true;
+                        verSiLoOculto();
+                    });  
+                    
+                    $domInput.live('focus', function(){
+                        $kbdContainer.activar( this );
+                        inputEnfocado = true;
+                        verSiLoOculto();
+                    });  
+
+                    $domInput.live('focusout', function() {
+                            inputEnfocado = false;
+                            verSiLoOculto();
+                    });  
+                }
+            });
+            
+            $kbdContainer.hover(
+                function(){
+                    tecladoConHover = true;
+                    verSiLoOculto();
+                }, 
+                function(){
+                    tecladoConHover = false;
+                    $kbdContainer.desactivar();
+                }
+            );
+
+
             var $lineContainer, $keyContainer;
-            for ( var line in $kbd.keys.keyMap ) {
+            for ( var line in layout.keyMap ) {
                 $lineContainer = $('<div class="keyboard-line">');
-                for(var k in $kbd.keys.keyMap[line]) {
-                    $keyContainer = $( '<'+$kbd.keyWrapper+'>' ).html( $kbd.keys.keyMap[line][k] ).addClass( 'key-'+$kbd.keys.keyMap[line][k] )
+                for(var k in layout.keyMap[line]) {
+                    $keyContainer = $( '<'+$kbd.keyWrapper+'>' ).html( layout.keyMap[line][k] ).addClass( 'key-'+layout.keyMap[line][k] )
                                                                .click( function(){
-                                                                   $input.val( $input.val() + $(this).html() ) ;
+                                                                   var character = $(this).html();
+                                                                   $input.val( $input.val() + character ) ;
                                                                    $input.focus();
+                                                                   
+                                                                   var e = $.Event('change');
+                                                                   e.which = character.charCodeAt();
+                                                                   $input.trigger(e);
                                                                });
                     $kbdContainer.append( $lineContainer.append($keyContainer) );
                 }
             }
-            
-            var enterKey = $( '<'+$kbd.keyWrapper+'>' ).html( $kbd.enterKey ).addClass( 'key-enter' )
+
+            var enterKey = $( '<'+$kbd.keyWrapper+' class="key-enter">'+ $kbd.enterKey +'</'+$kbd.keyWrapper )
                                                        .click( function(){
                                                            if ( $input ) {
                                                                $input.focusout();
                                                                $kbdContainer.hide();
+                                                               
+                                                               var e = $.Event('change');
+                                                               e.which = 10;
+                                                               $input.trigger(e)
                                                            }
                                                        });
             var backKey = $( '<'+$kbd.keyWrapper+'>' ).html( $kbd.backKey ).addClass( 'key-back' )
@@ -3413,44 +4077,26 @@ Risto.Adition.menu.initialize();(function($){
                                                            if ( $input ) {
                                                                $input.val(  $input.val().slice(0, $input.val().length-1 ) );
                                                                $input.focus();
+                                                               
+                                                               var e = $.Event('change');
+                                                               e.which = 32;
+                                                               $input.trigger(e)
                                                            }
                                                        });
-            $kbdContainer.append( backKey );
+            $kbdContainer.append( backKey )
             $kbdContainer.append( enterKey );
-            
-            
-            
+
             // ponerlo en el cuerpo del body ni bien haya cargado la DOM
             $(document).ready( function(){
                 $( 'body' ).append( $kbdContainer );
             });
-            
-            return $kbdContainer;
-        },
-        
-        // extiende la DOM para el DIV contenedor del teclado. lo activa mostranbdolo y
-        // enviando triggers por cada tecla tocada
-        activar: function( input ){
-            if ( !$kbd.activo ) {
-                activo = true;
-                var keybdContainer = this;
-                keybdContainer.show();
-                $input = $( input );
-
-
-            }
-            return false;
-        },
-        
-        // extiende la DOM para el DIV contenedor del teclado. lo activa mostranbdolo y
-        // enviando triggers por cada tecla tocada
-        desactivar: function( input ){
-            $kbdContainer.hide();
-            activo = false;
         }
+        
     }
     
-    $kbd.init();
+    for ( var l in $layouts ) {
+        $kbd.init( $layouts[l] );
+    }
 })(jQuery);
 /*! jQuery Mobile v1.0 jquerymobile.com | jquery.org/license */
 (function(a,e){if(a.cleanData){var b=a.cleanData;a.cleanData=function(f){for(var c=0,h;(h=f[c])!=null;c++)a(h).triggerHandler("remove");b(f)}}else{var d=a.fn.remove;a.fn.remove=function(b,c){return this.each(function(){c||(!b||a.filter(b,[this]).length)&&a("*",this).add([this]).each(function(){a(this).triggerHandler("remove")});return d.call(a(this),b,c)})}}a.widget=function(b,c,h){var d=b.split(".")[0],e,b=b.split(".")[1];e=d+"-"+b;if(!h)h=c,c=a.Widget;a.expr[":"][e]=function(c){return!!a.data(c,
