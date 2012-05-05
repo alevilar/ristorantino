@@ -16,7 +16,20 @@ class DescuentosController extends AppController {
         
 	function jqm_descuentos() {
 		$this->Descuento->recursive = 0;
-		$this->set('descuentos', $this->Descuento->find('all'));
+                $conds = array();
+                
+                if ( $this->Session->read('Auth.User.role') == 'mozo' ) {
+                    $descMax = Configure::read('Mozo.descuento_maximo');
+                    if ( isset($descMax) ) {
+                        $conds['Descuento.porcentaje <='] = $descMax;
+                    }
+                }
+                
+                $descs = $this->Descuento->find('all', array(
+                    'conditions' => $conds
+                ));
+                        
+		$this->set('descuentos', $descs);
 	}
         
 
