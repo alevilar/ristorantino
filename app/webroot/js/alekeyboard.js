@@ -1,6 +1,6 @@
 
 if ( !jQuery ) {
-    console.info("esto no funciona sin jQuery");
+    console.error("esto no funciona sin jQuery");
 }
 
 ( function($){
@@ -84,7 +84,7 @@ if ( !jQuery ) {
             // enviando triggers por cada tecla tocada
             $kbdContainer.activar = function( input ){
                 if ( !$kbd.activo ) {
-                    activo = true;
+                    $kbd.activo = true;
                     var keybdContainer = this;
                     keybdContainer.show();
                     $input = $( input );
@@ -98,7 +98,7 @@ if ( !jQuery ) {
             // enviando triggers por cada tecla tocada
             $kbdContainer.desactivar = function( input ){
                 $kbdContainer.hide();
-                activo = false;
+                $kbd.activo = false;
             }          
 
             // cache de los inputs a bindear

@@ -11,7 +11,7 @@ body {
 	font-family: helvetica,arial,sans-serif;
         background-position:  top;
         background-repeat: no-repeat;
-	background-image:url("../img/bgluz.png");      
+	background-image:url(img/bgluz.png);      
         /* Css degrade */
 }
 span {
