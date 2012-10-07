@@ -249,7 +249,6 @@ ul.listado-adicion .mesa-mozo,ul.listado-adicion .mozo-cant-mesas {
 .mesa-actions ul li[estado='mesa-reabrir_mesa-abierta'],
 .mesa-actions ul li[estado='mesa-re-print_mesa-abierta'],
 .mesa-actions ul li[estado='mesa-cobrar_mesa-abierta'],
-
 .mesa-actions ul li[estado='comanda-add-menu_mesa-cobrada'],
 .mesa-actions ul li[estado='mesa-cliente_mesa-cobrada'],
 .mesa-actions ul li[estado='mesa-cerrar_mesa-cobrada'],
