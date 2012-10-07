@@ -1,1 +1,0 @@
-["Is", "&#x00CD;slenska"]
