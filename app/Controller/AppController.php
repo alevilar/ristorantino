@@ -44,8 +44,8 @@ class AppController extends Controller {
     
     public function beforeFilter () {
         parent::beforeFilter();
-        
-        $this->Auth->authorize = array('Actions');
+        $this->Auth->allow('*');
+//        $this->Auth->authorize = array('Actions');
         
         $this->RequestHandler->setContent('jqm', 'xhtml');
     }

@@ -90,7 +90,7 @@ class AclAppController extends AppController
 	
     function _get_passed_aco_path()
 	{
-	    $aco_path  = isset($this->params['named']['plugin']) ? $this->params['named']['plugin'] : '';
+	$aco_path  = isset($this->params['named']['plugin']) ? $this->params['named']['plugin'] : '';
         $aco_path .= empty($aco_path) ? $this->params['named']['controller'] : '/' . $this->params['named']['controller'];
         $aco_path .= '/' . $this->params['named']['action'];
         

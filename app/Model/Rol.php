@@ -55,5 +55,20 @@ class Rol extends AppModel {
 			'counterQuery' => ''
 		)
 	);
+        
+        public function beforeSave($options = array()) {
+            $this->data['Rol']['machin_name'] = strtolower( Inflector::slug( $this->data['Rol']['name'])) ;
+            return true;
+        }
+        
+        public function afterSave($created)
+        {
+            // colocar el nombre del rol como alias den Aro ACL
+            if ( $this->Aro->saveField('alias', $this->data['Rol']['machin_name']) ) { 
+                return parent::afterSave($created);
+            } else {
+                return false;
+            }
+        }
 
 }

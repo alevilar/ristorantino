@@ -21,7 +21,7 @@
 		
 		// para los modal window
 		echo $this->Html->css(array(
-                    'jquery-mobile/jquery.mobile-1.1.1',
+                    'jquery-mobile/jquery.mobile-1.2.0',
 //                    'jquery-mobile/jquerymobile.coqus',
                     'jquery-mobile/jquery.mobile.actionsheet',
                     '/adition/css/ristorantino',
@@ -73,7 +73,7 @@
                         '/adition/js/adicion/events',
                         '/adition/js/menu/menu',
     //                    'http://code.jquery.com/mobile/latest/jquery.mobile.min.js',
-                        'jquery/jquery.mobile-1.1.1',
+                        'jquery/jquery.mobile-1.2.0',
                        'alekeyboard',
                         ));
                 } else {

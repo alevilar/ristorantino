@@ -33,8 +33,20 @@ class User extends AppModel {
 	public $validate = array(
 		'username' => array(
 			'notempty' => array(
-				'rule' => array('notempty'),
+				'rule' => array(
+                                    'notempty',
+                                    ),
 				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+                    'isUnique' => array(
+				'rule' => array(
+                                    'isUnique',
+                                    ),
+				'message' => 'Alguien tiene este nombre de usuario y no se puede repetir',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -131,6 +143,16 @@ class User extends AppModel {
         public function beforeSave($options = array()) {
             $this->data['User']['password'] = AuthComponent::password($this->data['User']['password']);
             return true;
+        }
+        
+        public function afterSave($created)
+        {
+            // colocar el nombre del rol como alias den Aro ACL
+            if ( $this->Aro->saveField('alias', $this->data['User']['username']) ) { 
+                return parent::afterSave($created);
+            } else {
+                return false;
+            }
         }
         
         
