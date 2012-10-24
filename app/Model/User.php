@@ -62,6 +62,10 @@ class User extends AppModel {
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
+                        'comparePassword' => array(
+                            'rule' => array('comparePassword'),
+                            'message' => 'No coinciden las contraseñas',
+                        )
 		),
 		'rol_id' => array(
 			'numeric' => array(
@@ -98,60 +102,39 @@ class User extends AppModel {
  * @var array
  */
 	public $hasMany = array(
-		'Cliente' => array(
-			'className' => 'Cliente',
-			'foreignKey' => 'user_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
-		'Egreso' => array(
-			'className' => 'Egreso',
-			'foreignKey' => 'user_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
-		'Mozo' => array(
-			'className' => 'Mozo',
-			'foreignKey' => 'user_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		)
+		
 	);
                
+        
+        public function comparePassword($coso) {          
+            if ( !empty($this->data['User']['password']) && !empty( $this->data['User']['password_check'] )  ) {
+                $pass1 = AuthComponent::password($this->data['User']['password']);
+                $pass2 = AuthComponent::password( $this->data['User']['password_check'] );
+                
+                if ($pass1 != $pass2){
+                    return false;
+                }
+            }
+            return true;
+        }
 
         public function beforeSave($options = array()) {
-            $this->data['User']['password'] = AuthComponent::password($this->data['User']['password']);
-            return true;
+            if ( !empty($this->data['User']['password']) ) {
+                $this->data['User']['password'] = AuthComponent::password($this->data['User']['password']);
+            }
+
+            return parent::beforeSave($options);
         }
         
         public function afterSave($created)
         {
-            // colocar el nombre del rol como alias den Aro ACL
-            if ( $this->Aro->saveField('alias', $this->data['User']['username']) ) { 
-                return parent::afterSave($created);
-            } else {
-                return false;
+            if ($created && !empty($this->data['User']['username']) ) {
+                // colocar el nombre del rol como alias den Aro ACL
+                if ( $this->Aro->saveField('alias', $this->data['User']['username']) ) { 
+                    return parent::afterSave($created);
+                } else {
+                    return false;
+                }
             }
         }
         

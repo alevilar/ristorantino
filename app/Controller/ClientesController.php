@@ -4,10 +4,8 @@ class ClientesController extends AppController {
 	var $name = 'Clientes';
 	var $helpers = array('Html', 'Form');
         
+        public $paginate = array();
         
-        function beforeFilter() {
-            parent::beforeFilter();
-        }
         
 	function index() {
            
@@ -127,12 +125,11 @@ class ClientesController extends AppController {
 		if (empty($this->request->data)) {
 			$this->request->data = $this->Cliente->read(null, $id);
 		}
-		$users = $this->Cliente->User->find('list',array('fields'=>array('User.nombre')));
 		$descuentos = $this->Cliente->Descuento->find('list');
 		$tipo_documentos = $this->Cliente->TipoDocumento->find('list');		
 		$iva_responsabilidades = $this->Cliente->IvaResponsabilidad->find('list');
 		
-		$this->set(compact('users', 'descuentos', 'iva_responsabilidades', 'tipo_documentos'));
+		$this->set(compact('descuentos', 'iva_responsabilidades', 'tipo_documentos'));
 	}
 
 	function delete($id = null) {

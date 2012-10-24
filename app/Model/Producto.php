@@ -41,6 +41,14 @@ class Producto extends AppModel {
 								'counterQuery' => ''
 			)
 	);
+        
+        
+    /**
+     * hasAndBelongsToMany associations
+     *
+     * @var array
+     */
+	public $hasAndBelongsToMany = array('Tag');
 	
 	
 	

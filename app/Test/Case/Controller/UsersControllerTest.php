@@ -1,10 +1,10 @@
 <?php
-App::uses('RolesController', 'Controller');
+App::uses('UsersController', 'Controller');
 
 /**
- * TestRolesController *
+ * TestUsersController *
  */
-class TestRolesController extends RolesController {
+class TestUsersController extends UsersController {
 /**
  * Auto render
  *
@@ -26,16 +26,16 @@ class TestRolesController extends RolesController {
 }
 
 /**
- * RolesController Test Case
+ * UsersController Test Case
  *
  */
-class RolesControllerTestCase extends CakeTestCase {
+class UsersControllerTestCase extends CakeTestCase {
 /**
  * Fixtures
  *
  * @var array
  */
-	public $fixtures = array('app.rol', 'app.user', 'app.cliente', 'app.descuento', 'app.mesa', 'app.mozo', 'app.comanda', 'app.detalle_comanda', 'app.producto', 'app.categoria', 'app.sabor', 'app.detalle_sabor', 'app.comandera', 'app.productos_precios_futuro', 'app.historico_precio', 'app.tag', 'app.productos_tag', 'app.pago', 'app.tipo_de_pago', 'app.iva_responsabilidad', 'app.tipo_documento', 'app.egreso', 'app.tipo_factura');
+	public $fixtures = array('app.user', 'app.rol', 'app.cliente', 'app.descuento', 'app.mesa', 'app.mozo', 'app.comanda', 'app.detalle_comanda', 'app.producto', 'app.categoria', 'app.sabor', 'app.detalle_sabor', 'app.comandera', 'app.productos_precios_futuro', 'app.historico_precio', 'app.tag', 'app.productos_tag', 'app.pago', 'app.tipo_de_pago', 'app.iva_responsabilidad', 'app.tipo_documento', 'app.egreso', 'app.tipo_factura');
 
 /**
  * setUp method
@@ -44,8 +44,8 @@ class RolesControllerTestCase extends CakeTestCase {
  */
 	public function setUp() {
 		parent::setUp();
-		$this->Roles = new TestRolesController();
-		$this->Roles->constructClasses();
+		$this->Users = new TestUsersController();
+		$this->Users->constructClasses();
 	}
 
 /**
@@ -54,7 +54,7 @@ class RolesControllerTestCase extends CakeTestCase {
  * @return void
  */
 	public function tearDown() {
-		unset($this->Roles);
+		unset($this->Users);
 
 		parent::tearDown();
 	}

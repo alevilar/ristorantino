@@ -3,41 +3,17 @@ class Mozo extends AppModel {
 
 	var $name = 'Mozo';
 
-        var $actsAs = array('Containable');
+//        var $actsAs = array('Containable');
         
 	var $validate = array(
-		'user_id' => array(
-                    'isUnique' => array(
-                        'rule' => 'isUnique',
-                        'message'=>'El usuario seleccionado ya tiene un numero de mozo asignado'
-                     ),
-                   // 'numero' => array('numeric')
-                    )
+            'numero' => 'notempty',
+            'nombre' => 'notempty',
+            'apellido' => 'notempty',
 	);
-
-	//The Associations below have been created with all possible keys, those that are not needed can be removed
-	var $belongsTo = array(
-			'User' => array('className' => 'User',
-								'foreignKey' => 'user_id',
-								'conditions' => '',
-								'fields' => '',
-								'order' => ''
-			)
-	);
+	
 
 	var $hasMany = array(
-			'Mesa' => array('className' => 'Mesa',
-								'foreignKey' => 'mozo_id',
-								'dependent' => true,
-								'conditions' => '',
-								'fields' => '',
-								'order' => '',
-								'limit' => '',
-								'offset' => '',
-								'exclusive' => '',
-								'finderQuery' => '',
-								'counterQuery' => ''
-			)
+			'Mesa'
 	);
 	
 	
@@ -52,7 +28,6 @@ class Mozo extends AppModel {
 		$this->recursive = $recursive;
 		return $this->find('all',array(
                     'contain' => array(
-                        'User',
                         'Mesa' => array('conditions'=> array(
                             "Mesa.time_cobro" => "0000-00-00 00:00:00",
                          ))

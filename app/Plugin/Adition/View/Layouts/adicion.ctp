@@ -23,7 +23,7 @@
 		echo $this->Html->css(array(
                     'jquery-mobile/jquery.mobile-1.2.0',
 //                    'jquery-mobile/jquerymobile.coqus',
-                    'jquery-mobile/jquery.mobile.actionsheet',
+//                    'jquery-mobile/jquery.mobile.actionsheet',
                     '/adition/css/ristorantino',
                     '/adition/css/jquery-mobile-custom/jquery.mobile-custom',
                     'keyboard',

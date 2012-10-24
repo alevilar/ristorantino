@@ -70,5 +70,9 @@ class Rol extends AppModel {
                 return false;
             }
         }
+        
+        public function parentNode(){
+            return;
+        }
 
 }

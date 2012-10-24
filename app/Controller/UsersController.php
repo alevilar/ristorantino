@@ -3,8 +3,12 @@ class UsersController extends AppController {
 
 	var $name = 'Users';
 	var $helpers = array('Html', 'Form');
-        var $scaffold;
-
+                
+        public $paginate = array(
+            'limit' => 55,
+        );
+       
+        
         
         public function beforeFilter() {
             parent::beforeFilter();
@@ -18,6 +22,23 @@ class UsersController extends AppController {
                 }
             }
             $this->set('users', $this->User->listarPorNombre($nombre));
+	}
+        
+/**
+ * index method
+ *
+ * @return void
+ */
+	public function index() {
+                if ( $this->request->is('post') && !empty($this->data['User']['txt_buscar']) ){
+                    $this->paginate['conditions'] = array('or' => array(
+                        'lower(User.username) LIKE' => '%'. strtolower( $this->data['User']['txt_buscar'] ) .'%',
+                        'lower(User.nombre) LIKE'   => '%'. strtolower( $this->data['User']['txt_buscar'] ) .'%',
+                        'lower(User.apellido) LIKE' => '%'. strtolower( $this->data['User']['txt_buscar'] ) .'%',
+                    ));
+                }
+                
+		$this->set('users', $this->paginate());
 	}
 
 	
@@ -52,22 +73,22 @@ class UsersController extends AppController {
 	 * @param id del usuario
 	 */
 	function self_user_edit($id){
-		if (!$id && empty($this->request->data) || $id != $this->Auth->user('id')) {
-			$this->Session->setFlash(__('Usuario Incorrecto', true));
-			$this->redirect('/pages/home');
-		}
-		if (!empty($this->request->data)) {
-			if ($this->User->save($this->request->data)) {
-				$this->Session->setFlash(__('Se ha guardado la información correctamente', true));
-				$this->request->data = $this->User->read(null, $id);
-			} else {
-				$this->Session->setFlash(__('El usuario no pudo ser guardado. Por favor, intente nuevamente.', true));
-			}
-		}
-		if (empty($this->request->data)) {
-			$this->request->data = $this->User->read(null, $id);
-                        $this->request->data['User']['grupo'] =$this->User->parentNodeId();
-		}
+            $this->User->id = $id;
+            if (!$id && empty($this->request->data) || $id != $this->Auth->user('id')) {
+                    $this->Session->setFlash(__('Usuario Incorrecto', true));
+                    $this->redirect('/pages/home');
+            }
+            if (!empty($this->request->data)) {
+                    if ($this->User->save($this->request->data)) {
+                            $this->Session->setFlash(__('Se ha guardado la información correctamente', true));
+                            $this->request->data = $this->User->read(null, $id);
+                    } else {
+                            $this->Session->setFlash(__('El usuario no pudo ser guardado. Por favor, intente nuevamente.', true));
+                    }
+            }
+            if (empty($this->request->data)) {
+                    $this->request->data = $this->User->read();
+            }
 	}
 
 
@@ -78,39 +99,16 @@ class UsersController extends AppController {
 	 */
 	function cambiar_password($id){
 		if (!empty($this->request->data)) {
-			if($this->comparePasswords()){ //me fijo que los passwords coincidan
-				if ($this->User->save($this->request->data, $validate = false)) {
-					$this->Session->setFlash(__('Se ha guardado el nuevo password correctamente', true));
-					$this->redirect('/');
-				} else {
-                                    debug($this->User->validationErrors);
-					$this->Session->setFlash(__('La contraseña no pudo ser guardada. Por favor, intente nuevamente.', true));
-				}
-			}
-			else $this->Session->setFlash('La contraseña no coincide, por favor reintente.');
+                    if ($this->User->save( $this->request->data )) {
+                            $this->Session->setFlash(__('Se ha guardado el nuevo password correctamente', true));
+                            $this->redirect('/');
+                    } else {
+                            $this->Session->setFlash(__('La contraseña no pudo ser guardada. Por favor, intente nuevamente.', true));
+                    }
 		}
 		if (empty($this->request->data)) {
 			$this->request->data = $this->User->read(null, $id);
 		}
-	}
-
-
-	/**
-	 *  Esta funcion me convierte los passwors para luego ser comparados
-	 *  sirve cuando quiero generar un nuevio opassword y tengo 2 imputs por comparar
-	 * @return unknown_type
-	 */
-	private function comparePasswords(){
-		if(!empty( $this->request->data['User']['password'] ) ){
-			$this->request->data['User']['password'] = $this->Auth->password($this->request->data['User']['password'] );
-		}
-		if(!empty( $this->request->data['User']['password_check'] ) ){
-			$this->request->data['User']['password_check'] = $this->Auth->password( $this->request->data['User']['password_check'] );
-		}
-
-		if ($this->request->data['User']['password'] == $this->request->data['User']['password_check']){
-			return true;
-		} else return false;
 	}
 
 
@@ -133,6 +131,74 @@ class UsersController extends AppController {
 		$this->User->recursive = 0;
 		$this->set('users', $this->paginate());
 	}
+        
+        
+        
+       
+        
+        
+/**
+ * edit method
+ *
+ * @param string $id
+ * @return void
+ */
+	public function edit($id = null) {
+		$this->User->id = $id;
+		if (!$this->User->exists()) {
+			throw new NotFoundException(__('Invalid user'));
+		}
+		if ($this->request->is('post') || $this->request->is('put')) {
+			if ($this->User->save($this->request->data)) {
+				$this->Session->setFlash(__('The user has been saved'));
+				$this->redirect(array('action' => 'index'));
+			} else {
+				$this->Session->setFlash(__('The user could not be saved. Please, try again.'));
+			}
+		} else {
+			$this->request->data = $this->User->read(null, $id);
+		}
+		$roles = $this->User->Rol->find('list');
+		$this->set(compact('roles'));
+	}
+        
+        
+        /**
+ * delete method
+ *
+ * @param string $id
+ * @return void
+ */
+	public function delete($id = null) {           
+		if (!$this->request->is('post')) {
+			throw new MethodNotAllowedException();
+		}
+		$this->User->id = $id;
+		if (!$this->User->exists()) {
+			throw new NotFoundException(__('Invalid user'));
+		}
+		if ($this->User->delete()) {
+			$this->Session->setFlash(__('User deleted'));
+			$this->redirect(array('action' => 'index'));
+		}
+		$this->Session->setFlash(__('User was not deleted'));
+		$this->redirect(array('action' => 'index'));
+	}
+        
+        
+/**
+ * view method
+ *
+ * @param string $id
+ * @return void
+ */
+	public function view($id = null) {
+		$this->User->id = $id;
+		if (!$this->User->exists()) {
+			throw new NotFoundException(__('Invalid user'));
+		}
+		$this->set('user', $this->User->read(null, $id));
+	}        
 
 }
 ?>

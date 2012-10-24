@@ -31,10 +31,5 @@ App::uses('Model', 'Model');
  * @package       app.Model
  */
 class AppModel extends Model {
-    
-    public $actsAs = array( 'Acl' );
-      
-    public function parentNode(){
-        return null;
-    }
+
 }

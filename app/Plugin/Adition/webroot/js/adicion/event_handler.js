@@ -45,29 +45,28 @@ $raeh = Risto.Adition.EventHandler = {
      */
     mesaCobrada: function(e){
         // envio los datos al servidor, siempre y cuando tenga pagos por hacer
-
-        // Hacer que la mesa se elimine en un determinado lapso de tiempo, configurado por MESAS_COBRADA_HIDE_MS
-        if ( !e.mesa.hasOwnProperty('activarTimeOut')) {
-            e.mesa.activarTimeOut = setTimeout(function(){
-                  e.mesa.mozo().sacarMesa( e.mesa );
-            }, Risto.MESAS_COBRADA_HIDE_MS);
-        }
-
-
+    
         // ir haciendo desvanecer de a poco en el listado de mesas
         var $mesa = $( '#mesa-li-id-'+e.mesa.id() );
-        if (Risto.MESAS_COBRADA_HIDE_MS  > 4 ) { // son 4 pasos para hacer opacity: 0 mediante CSS
-            var opacarCada = Risto.MESAS_COBRADA_HIDE_MS/4,
-                opacarCuant = 1,
-                opacarTimer = setInterval(function(){
-                    opacarCuant = opacarCuant - 0.25;
-                    $mesa.css('opacity', opacarCuant);
-                    if ( opacarCuant == 0) {
-                        clearTimeout(opacarTimer);
-                    }
-                }, opacarCada)
+        
+        var opacarCada = Risto.MESAS_COBRADA_HIDE_MS/4,
+            opacarCuant = 1;
+
+            e.mesa.activarTimeOut = setInterval(function(){
+                opacarCuant = opacarCuant - 0.25;
+                
+                $mesa.css('opacity', opacarCuant);
+                if ( opacarCuant > 0.01 && e.mesa.activarTimeOut) {
+                    clearTimeout(e.mesa.activarTimeOut);
+                    console.info("se saco la mesa");
+                    e.mesa.mozo().sacarMesa( e.mesa );
+                }
+                if ( !e.mesa.activarTimeOut ) {
+                    $mesa.css('opacity', 1);
+                    return;
+                }
+            }, opacarCada)
             
-        }
         
         // si no hay pagos terminar la ejecucion de esta funcion
         if ( e.mesa.Pago().length == 0 ) return;

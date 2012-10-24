@@ -13,7 +13,6 @@
    <p>
        <h2>Clientes</h2>
         <?php
-        echo $this->Html->link('Reservas','/reservas');
         echo $this->Html->link('Clientes','/clientes');
         echo $this->Html->link('Descuentos','/descuentos');
         echo $this->Html->link('Tipo de Pagos','/TipoDePagos');
@@ -43,6 +42,7 @@
     <h2>Productos</h2>
     <?php
     echo $this->Html->link('Categorias','/categorias');
+    echo $this->Html->link('Tags','/tags');
     echo $this->Html->link('Productos','/productos');
     echo $this->Html->link('Observaciones de Productos','/observaciones');
     echo $this->Html->link('Observaciones de Comandas','/observacion_comandas');

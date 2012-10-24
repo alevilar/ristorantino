@@ -1,19 +1,18 @@
     <?php    
-         echo $this->element('menuadmin');
+//         echo $this->element('menuadmin');
     ?>
 
 
 <h1>Cambiar su contraseña</h1>
 <div class="users form">
-    <?php echo $form->create('User',array('action' => 'cambiar_password'));?>
+    <?php echo $this->Form->create('User',array('action' => 'cambiar_password'));?>
     <fieldset>
         <?php
-        echo $form->input('id');
-        echo $form->input('password',array('label'=>'Ingrese una nueva contraseña'));
-        ?><br><cite>(Borre previamente los asteriscos)</cite><br /><?php
-        echo $form->input('password_check',array('label'=>'Reingrese su contraseña','type'=>'password'));
+        echo $this->Form->input('id');
+        echo $this->Form->input('password',array('label'=>'Ingrese una nueva contraseña', 'value'=>''));
+        echo $this->Form->input('password_check',array('label'=>'Reingrese su contraseña','type'=>'password'));
 
         ?>
-    <?php echo $form->end('Guardar');?>        
+    <?php echo $this->Form->end('Guardar');?>        
     </fieldset>
 </div>

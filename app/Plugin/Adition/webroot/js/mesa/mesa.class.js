@@ -23,6 +23,7 @@ var Mesa = function(mozo, jsonData) {
         this.estado_id      = ko.observable();
         this.Pago           = ko.observableArray( [] );
         this.cant_comensales= ko.observable(0);
+        this.activarTimeOut = 0; // cuando una mesa se vuelve "cobrada" se le activa el timeout para eliminarla del listado de mesas. O sea. es un "autodestruirá"
         
         // agrego atributos generales
         Risto.modelizar(this);
@@ -265,6 +266,7 @@ Mesa.prototype = {
      * Cambia el estado de la mesa y genera un disparador del evento
      */
     setEstado: function(nuevoestado){
+        this.activarTimeOut = null;
         this.estado( nuevoestado );
         this.__triggerEventCambioDeEstado();
     },

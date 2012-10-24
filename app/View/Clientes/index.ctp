@@ -36,7 +36,6 @@
                 
         <tr>
                 <th><?php echo $this->Paginator->sort('nombre');?></th>
-                <th><?php echo $this->Paginator->sort('Usuario','User.username');?></th>
                 <th><?php echo $this->Paginator->sort('Descuento','Descuento.name');?></th>
                 <th style="text-align: center;"><?php echo $this->Paginator->sort('IVA','IvaResponsabilidad');?></th>
                 <th><?php echo $this->Paginator->sort('Factura','tipofactura');?></th>
@@ -58,9 +57,6 @@
                 <tr<?php echo $class;?>>
                         <td>
                                 <?php echo $cliente['Cliente']['nombre']; ?>
-                        </td>
-                        <td title="<?php echo $cliente['User']['nombre'].", ".$cliente['User']['apellido']; ?>">
-                                <?php echo $cliente['User']['username']; ?>
                         </td>
                         <td title="<?php echo $cliente['Descuento']['description']." (%".$cliente['Descuento']['porcentaje'].")"; ?>">
                                 <?php echo $cliente['Descuento']['name']; ?>

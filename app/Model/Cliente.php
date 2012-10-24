@@ -14,39 +14,28 @@
 class Cliente extends AppModel {
 
 	var $name = 'Cliente';
-	
+        
+/**
+ * Display field
+ *
+ * @var string
+ */
+	public $displayField = 'nombre';
+        
+        public $virtualFields = array(
+            'nombre_nrodocumento' => 'CONCAT(Cliente.nombre, " (", Cliente.nrodocumento, ")")'
+        );
+
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
-	var $belongsTo = array(
-			'User' => array('className' => 'User',
-								'foreignKey' => 'user_id',
-								'conditions' => '',
-								'fields' => '',
-								'order' => ''
-			),
-			'Descuento' => array('className' => 'Descuento',
-								'foreignKey' => 'descuento_id',
-								'conditions' => '',
-								'fields' => '',
-								'order' => ''
-			),
+	var $belongsTo = array(			
+			'Descuento',
 			'IvaResponsabilidad',
 			'TipoDocumento',
 	);
 
 	var $hasMany = array(
-			'Mesa' => array('className' => 'Mesa',
-								'foreignKey' => 'cliente_id',
-								'dependent' => false,
-								'conditions' => '',
-								'fields' => '',
-								'order' => '',
-								'limit' => '',
-								'offset' => '',
-								'exclusive' => '',
-								'finderQuery' => '',
-								'counterQuery' => ''
-			)
+			'Mesa'
 	);
 	
 	

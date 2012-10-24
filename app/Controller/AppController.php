@@ -34,20 +34,24 @@ App::uses('Controller', 'Controller');
 class AppController extends Controller {
 //    public $helpers = array('Html', 'Form');
     public $components = array(
-        'Acl',     
+//        'Acl',     
         'Auth', 
             'Configurator', 
             'RequestHandler', 
             'Session',
         );
     
+    public $helpers = array('Html', 'Form','Paginator', 'Session');
+    
     
     public function beforeFilter () {
-        parent::beforeFilter();
+        
         $this->Auth->allow('*');
-//        $this->Auth->authorize = array('Actions');
+        $this->Auth->authorize = array('Actions');
         
         $this->RequestHandler->setContent('jqm', 'xhtml');
+        
+        return parent::beforeFilter();
     }
     
 }
