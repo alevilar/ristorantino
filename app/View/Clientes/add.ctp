@@ -1,123 +1,60 @@
     <?php    
-    echo $this->element('menuadmin');
+//    echo $this->element('menuadmin');
     ?>
 
-<script type="text/javascript">
-    Event.observe(window, 'load', function(){
-        if ($F('ClienteTipofactura') == 0){
-            $('datosParaRemito').show();
-        }
-        else if ($F('ClienteTipofactura') == 'A'){
-            $('datosParaFacturaA').show();
-        }
-    });
-</script>
-
-
 <div class="clientes form">
-    <?php echo $form->create('Cliente');?>
+    <?php echo $this->Form->create('Cliente');?>
     <fieldset>
-        <legend><?php __('Agregar Nuevo Cliente');?></legend>
+        <legend><?php __('Add Cliente');?></legend>
         <?php
-        echo $form->input('user_id', 
-                    array(  'empty'=> 'Seleccione',
-                            'label'=>'Usuario',
-                            'after'=>'<br>Esta opción sirve para relacionar clientes con algún usuario del sistema. Por ejemplo, clientes relacionados con el Dueño, el encargado, o algún mozo. De esa forma se pude calcular las invitaciones y vales que cada uno usara.'
-                        ));
-
-
-        
-
-        echo $form->input('nombre',
+       
+        echo $this->Form->input('nombre',
                                array(
                                   'label'=>'Nombre/Denominación',
-                                  'after'=>'Ej: La Serenissima S.A.'));
+                                  'placeholder'=>'Ej: La Serenissima S.A.'));
 
-        echo $form->input('domicilio');
-        echo $form->input('codigo', array('after'=>'<br>Aquí se debe ingresar el código de cliente'));
-        echo $form->input('mail');
-        echo $form->input('telefono');
-
-
-        echo $form->input(
-            'tipofactura',
-            array(
-                'label'=>'Tipo Factura',
-                'options'=>array('B'=>'"B"', '0'=>'Remito','A'=>'"A"'),
-                'after'=> '<br>Tipo de comprobante a imprimir.'
-            )
-        );
+        echo $this->Form->input('domicilio');
+        echo $this->Form->input('codigo', array('label' => 'Código de cliente'));
+        echo $this->Form->input('mail');
+        echo $this->Form->input('telefono');
 
 
-             echo $form->input('descuento_id',array(
+        echo $this->Form->input('descuento_id',array(
                 'div'=>array('id' => 'div-descuento'),
                 'empty'=>'Sin Descuento',
-                'after'=>'<br>El descuento solo es válido cuando se quiere imprimir un remito'));
-        
+        ));
+
         ?>
-        
-        <div id="datosParaRemito" style="display:none;">
+
             <?
-             echo $form->input('imprime_ticket',
-                                array(
-                                    'checked'=>true,
-                                    'after'=>'Hay ocasiones en las que no es necesario imprimir un remito,
-                                        El remito, cuando es impreso sale por una comandera, ya que no es un comprobante fiscal.<br> Si desea imprimir por otra comandera debe dirigirse a la seccion "Comanderas" de la pagina de administracion.'));
 
-
-            ?>
-        </div>
-
-
-
-        <div id="datosParaFacturaA" style="display:none;">
-            <?
-            
-            echo $form->input('tipo_documento_id',
+            echo $this->Form->input('tipo_documento_id',
                                array(
+                                   'options' => $tipo_documentos,
                                    'default'=>1, // CUIT, numero hardcodeado de la base de datos
                                    'label'=>'Tipo de Identificación',
                                    'empty'=>'Seleccione'));
-            echo $form->input('nrodocumento',
+            echo $this->Form->input('nrodocumento',
                                array(
                                    'label'=>'Número',
-                                   'after'=>'Ej: 3045623431   >>>>No hay que poner los "-". '
+                                   'placeholder'=>'Ej: 3045623431',                                   
                                    ));
-            
-            echo $form->input('iva_responsabilidad_id', 
+
+            echo $this->Form->input('iva_responsabilidad_id',
                                array(
                                    'label'=>'Responsabilidad ante el IVA',
-                                   'default'=>1, // Resp. Inscripto, Numero hardcodeado de la base de datos
+                                   'options' => $iva_responsabilidades,
+                                   'default'=>4, // Consumidor final
                                    'empty'=>'Seleccione'));
             ?>
-            
-        </div>
 
-        <script type="text/javascript">
-            $('ClienteTipofactura').observe('change',function(){
-                if($F('ClienteTipofactura') != 0){
-                    $('ClienteDescuentoId').setValue(""); //lo vuelvo a reinicializar al valor, por si fue modificado por error
-                    $('datosParaRemito').hide();
-                }
-                else{
-                    $('datosParaRemito').show();
-                }
+    <?php echo $this->Form->end('Submit');?>
 
-                if($F('ClienteTipofactura') == 'A'){
-                    $('datosParaFacturaA').show();
-                }
-                else{
-                    $('datosParaFacturaA').hide();
-                }
-            });
-        </script>
-
-    <?php echo $form->end('Submit');?>
     </fieldset>
 
 </div>
 <div class="actions">
     <ul>
-        <li><?php echo $html->link(__('Listar Clientes', true), array('action'=>'index'));?></li>
+        <li><?php echo $this->Html->link(__('List Clientes', true), array('action'=>'index'));?></li>
     </ul>
 </div>

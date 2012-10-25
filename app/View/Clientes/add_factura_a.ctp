@@ -5,32 +5,24 @@
     
 <div data-role="content" data-theme="f">
     <div id="form-cliente-a" class="clientes form">
-        <?php echo $form->create('Cliente', array( 
-                                    'action'=>'addFacturaA', 
-                                    'onsubmit' => 'return false;',
+        <?php echo$this->Form->create('Cliente', array( 
+                                    'action'=>'add_factura_a', 
+//                                    'onsubmit' => 'return false;',
                                     'id' =>'form-cliente-add', 
                                     'data-ajax'=>'false'));?>
         <fieldset>
             <legend><?php __('Agregar Factura "A"');?></legend>
             <?php
+            echo$this->Form->input('nombre',array('label'=>'Nombre/Denominación'));
+            echo$this->Form->hidden('iva_responsabilidad_id',array('value'=>1)); // Resp. Inscripto, Numero hardcodeado de la base de datos
+            echo$this->Form->hidden('tipo_documento_id', array('value' => 1)); // CUIT, numero hardcodeado de la base de datos
 
-            echo $form->input('nombre',array('label'=>'Nombre/Denominación'));
-
-
-            echo $form->hidden('tipofactura',array('value'=>'A'));
-
-            echo $form->hidden('iva_responsabilidad_id',array('value'=>1)); // Resp. Inscripto, Numero hardcodeado de la base de datos
-
-            echo $form->hidden('tipo_documento_id', array('value' => 1)); // CUIT, numero hardcodeado de la base de datos
-
-
-            echo $form->input('nrodocumento',
+            echo$this->Form->input('nrodocumento',
                                array(
-                                   'label'=>'Número (sin los guiones)',
+                                   'label'=>'Número de CUIT (sin los guiones)',
                                    ));
-
            ?>
         </fieldset>
-        <?php echo $form->end('guardar');?>
+        <?php echo$this->Form->end('guardar');?>
     </div>
 </div>

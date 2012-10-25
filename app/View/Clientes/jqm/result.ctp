@@ -1,6 +1,6 @@
 <div>
     
-    <div id="mesajes"><?php $session->flash(); $session->flash('auth'); ?></div>    
+    <div id="mesajes"><?php echo $this->Session->flash(); echo $this->Session->flash('auth'); ?></div>    
     
     <p>
         <a href="#mesa-view" rel="back" data-rel="reverse" data-role="button" data-theme="c">Volver</a>

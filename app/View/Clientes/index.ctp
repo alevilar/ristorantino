@@ -3,13 +3,17 @@
   //  echo $this->element('menuadmin');
     ?>
 
-    <div data-role="header">
-        <a href="#mesa-view" data-transition="reverse">Volver</a>
+    <div data-role="header">     
         <h1>Clientes</h1>
     </div>
     
     <div data-role="content" >
 
+        <div class="actions">
+                <ul>
+                        <li><?php echo $this->Html->link(__('Crear Cliente', true), array('action'=>'add')); ?></li>
+                </ul>
+        </div>
 
         <div class="clientes index">
         <p>
@@ -21,11 +25,9 @@
         <table cellpadding="0" cellspacing="0">
             
              <tr>
-                <?php echo $this->Form->create("Cliente",array("action"=>"index")); echo $this->Form->input("id") ?>
+                 <?php echo $this->Form->create("Cliente",array("action"=>"index")); echo $this->Form->input("id") ?>
                 <th><?php echo $this->Form->input('nombre',array('style'=>'width:170px;','placeholder'=>'Nombre del cliente', 'label'=>false));?></th>
-                <th></th>
-                <th></th>
-                <th></th>
+                <th><?php echo $this->Form->input('Descuento.id',array('options'=>$descuentos, 'empty' => 'Seleccionar','label'=>false));?></th>
                 <th></th>
                 <th></th>
                 <th><?php echo $this->Form->input('nrodocumento',array('style'=>'width:120px;','placeholder'=>'CUIT / CUIL / DNI','label'=>false));?></th>
@@ -36,12 +38,11 @@
                 
         <tr>
                 <th><?php echo $this->Paginator->sort('nombre');?></th>
-                <th><?php echo $this->Paginator->sort('Descuento','Descuento.name');?></th>
-                <th style="text-align: center;"><?php echo $this->Paginator->sort('IVA','IvaResponsabilidad');?></th>
-                <th><?php echo $this->Paginator->sort('Factura','tipofactura');?></th>
-                <th><?php echo $this->Paginator->sort('Ticket','imprime_ticket');?></th>
-                <th><?php echo $this->Paginator->sort('CUIT/CUIL/DNI', 'nrodocumento');?></th>
-                <th><?php echo $this->Paginator->sort('Creado','created');?></th>
+                <th><?php echo $this->Paginator->sort('Descuento.name', 'Descuento');?></th>
+                <th style="text-align: center;"><?php echo $this->Paginator->sort('IvaResponsabilidad.name', 'IVA');?></th>
+                <th><?php echo $this->Paginator->sort('TipoDocumento.name', 'Tipo Documento' );?></th>
+                <th><?php echo $this->Paginator->sort('nrodocumento', 'Número' );?></th>
+                <th><?php echo $this->Paginator->sort('created', 'Creado');?></th>
                 <th class="actions"><?php __('Acciones');?></th>
         </tr>
         <?php
@@ -64,17 +65,15 @@
                         <td>
                                 <?php echo ($cliente['IvaResponsabilidad']['name']); ?>
                         </td>
-                        <td style="text-align: center;">
-                                <?php echo ($cliente['Cliente']['tipofactura'])?'"'.$cliente['Cliente']['tipofactura'].'"':'Remito'; ?>
-                        </td>
-
-                        <td style="text-align: center;">
-                                <?php echo ($cliente['Cliente']['imprime_ticket'])?'Si':'No'; ?>
-                        </td>
-
+                        
                         <td>
                                 <?php 
-                                 echo (!empty($cliente['TipoDocumento']['name']))?$cliente['Cliente']['nrodocumento']." (".$cliente['TipoDocumento']['name'].")":''; 
+                                 echo $cliente['TipoDocumento']['name']; 
+                                 ?>
+                        </td>
+                        <td>
+                                <?php 
+                                 echo $cliente['Cliente']['nrodocumento']; 
                                  ?>
                         </td>
                         <td>
@@ -83,7 +82,7 @@
                         <td class="actions">
                                 <?php echo $this->Html->link(__('Ver', true), array('action'=>'view', $cliente['Cliente']['id'])); ?>
                                 <?php echo $this->Html->link(__('Editar', true), array('action'=>'edit', $cliente['Cliente']['id'])); ?>
-                                <?php echo $this->Html->link(__('Borrar', true), array('action'=>'delete', $cliente['Cliente']['id']), null, sprintf(__('¿Está seguro que desea borrar el cliente: %s?', true), $cliente['Cliente']['nombre'])); ?>
+                                <?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $cliente['Cliente']['id']), null, __('¿Está seguro que desea borrar el cliente: %s?', $cliente['Cliente']['nombre'])); ?>
                         </td>
                 </tr>
         <?php endforeach; 
@@ -91,7 +90,6 @@
             echo('<td>No se encontraron clientes</td>');
         }
         ?>
-
                
 
 
