@@ -13,7 +13,7 @@ class TagsController extends AppController {
  *
  * @return void
  */
-	public function index() {
+	public function admin_index() {
 		$this->Tag->recursive = 0;
 		$this->set('tags', $this->paginate());
 	}
@@ -24,7 +24,7 @@ class TagsController extends AppController {
  * @param string $id
  * @return void
  */
-	public function view($id = null) {
+	public function admin_view($id = null) {
 		$this->Tag->id = $id;
 		if (!$this->Tag->exists()) {
 			throw new NotFoundException(__('Invalid tag'));
@@ -37,7 +37,7 @@ class TagsController extends AppController {
  *
  * @return void
  */
-	public function add() {
+	public function admin_add() {
 		if ($this->request->is('post')) {
 			$this->Tag->create();
 			if ($this->Tag->save($this->request->data)) {
@@ -57,7 +57,7 @@ class TagsController extends AppController {
  * @param string $id
  * @return void
  */
-	public function edit($id = null) {
+	public function admin_edit($id = null) {
 		$this->Tag->id = $id;
 		if (!$this->Tag->exists()) {
 			throw new NotFoundException(__('Invalid tag'));
@@ -82,7 +82,7 @@ class TagsController extends AppController {
  * @param string $id
  * @return void
  */
-	public function delete($id = null) {
+	public function admin_delete($id = null) {
 		if (!$this->request->is('post')) {
 			throw new MethodNotAllowedException();
 		}

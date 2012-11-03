@@ -1,7 +1,3 @@
-    <?php    
-        echo $this->element('menuadmin');
-    ?>
-
 
 <h1>Editar Mis Datos</h1>
 <div class="users form">

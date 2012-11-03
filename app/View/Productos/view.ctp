@@ -1,7 +1,3 @@
-        <?php    
-        echo $this->element('menuadmin');
-        
-        ?>
 
 <div class="productos view">
 <h2><?php  echo $producto['Producto']['name'];?></h2>

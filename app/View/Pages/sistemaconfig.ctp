@@ -1,7 +1,3 @@
-        <?php    
-        echo $this->element('menuadmin');
-        ?>
-
 <div class="grid_6 administracion_menu push_4">
     <h1>Acciones del sistema</h1>
     <div class="grid_7 alpha omega">

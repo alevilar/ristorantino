@@ -269,7 +269,8 @@ class PrinterComponent extends Component {
 			// imprimo el array de esta primer comanda
 			try {
                             $textoAImprimir = '';
-                            include (ROOT . DS . APP_DIR . DS .'Vendor/ticket_templates/comanda_comandera.php');
+                            App::import('Vendor', 'TicketTemplates', array('file' => 'TicketTemplates' . DS . 'comanda_comandera.php'));
+                            debug($TicketTemplates);
 			} catch (Exception $e) {
                             return 'Error: '.  $e->getMessage();
 			}
@@ -545,7 +546,10 @@ class PrinterComponent extends Component {
                         // armo el temṕlate del ticket importando el archivo de templates
                         
                         try {
-                            include (ROOT . DS . APP_DIR . DS .'vendors/ticket_templates/pre_ticket_comandera.php');
+                            
+                            App::import('Vendor', 'TicketTemplates', array('file' => 'TicketTemplates' . DS . 'pre_ticket_comandera.php'));
+                            PreTicketComandera::output($textoAImprimir, $prod_a_imprimir, $porcentaje_descuento, $total, $mozo, $mesa );
+                            
 			} catch (Exception $e) {
                             return 'Error: '.  $e->getMessage();
 			}

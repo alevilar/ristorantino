@@ -29,7 +29,7 @@ class UsersController extends AppController {
  *
  * @return void
  */
-	public function index() {
+	public function admin_index() {
                 if ( $this->request->is('post') && !empty($this->data['User']['txt_buscar']) ){
                     $this->paginate['conditions'] = array('or' => array(
                         'lower(User.username) LIKE' => '%'. strtolower( $this->data['User']['txt_buscar'] ) .'%',
@@ -97,7 +97,7 @@ class UsersController extends AppController {
 	 *
 	 * @param id del usuario
 	 */
-	function cambiar_password($id){
+	function admin_cambiar_password($id){
 		if (!empty($this->request->data)) {
                     if ($this->User->save( $this->request->data )) {
                             $this->Session->setFlash(__('Se ha guardado el nuevo password correctamente', true));
@@ -132,7 +132,29 @@ class UsersController extends AppController {
 		$this->set('users', $this->paginate());
 	}
         
-        
+
+/**
+ * add method
+ *
+ * @return void
+ */
+	public function admin_add() {
+		if ($this->request->is('post') || $this->request->is('put')) {
+                        $this->User->create();
+			if ($this->User->save($this->request->data)) {
+				$this->Session->setFlash(__('The user has been saved'));
+				$this->redirect(array('action' => 'index'));
+			} else {
+				$this->Session->setFlash(__('The user could not be saved. Please, try again.'));
+			}
+		} else {
+			$this->request->data = $this->User->read(null, $id);
+		}
+		$roles = $this->User->Rol->find('list');
+                $title_for_layout = __('Add New User');
+		$this->set(compact('roles', 'title_for_layout'));
+                $this->render('admin_edit');
+	}
         
        
         
@@ -143,7 +165,7 @@ class UsersController extends AppController {
  * @param string $id
  * @return void
  */
-	public function edit($id = null) {
+	public function admin_edit($id = null) {
 		$this->User->id = $id;
 		if (!$this->User->exists()) {
 			throw new NotFoundException(__('Invalid user'));
@@ -169,7 +191,7 @@ class UsersController extends AppController {
  * @param string $id
  * @return void
  */
-	public function delete($id = null) {           
+	public function admin_delete($id = null) {           
 		if (!$this->request->is('post')) {
 			throw new MethodNotAllowedException();
 		}
@@ -192,7 +214,7 @@ class UsersController extends AppController {
  * @param string $id
  * @return void
  */
-	public function view($id = null) {
+	public function admin_view($id = null) {
 		$this->User->id = $id;
 		if (!$this->User->exists()) {
 			throw new NotFoundException(__('Invalid user'));

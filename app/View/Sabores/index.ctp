@@ -1,6 +1,3 @@
-        <?php    
-        echo $this->element('menuadmin');
-        ?>
 
 <div class="sabores index">
 <h2><?php __('Sabores');?></h2>

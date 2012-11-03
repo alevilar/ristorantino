@@ -5,7 +5,7 @@
     echo $javascript->link('ale_fieldupdates', false);
 
         $menubread=array();   
-        echo $this->element('menuadmin', array('menubread'=>$menubread));
+        echo $this->element('admin_menu', array('menubread'=>$menubread));
         ?>x
 
 

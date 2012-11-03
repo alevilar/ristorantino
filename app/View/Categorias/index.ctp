@@ -1,7 +1,3 @@
-    <?php 
-        echo $this->element('menuadmin');
-    ?>
-
 
 <div class="categorias index">
 <h2><?php __('Categorias');?></h2>

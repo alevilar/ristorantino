@@ -1,7 +1,7 @@
 
 <ul class="dashboard-buttons">
         <li>
-        <?php echo $this->Html->link('Adición','/adition',array('id'=>'bton-adicion'));?>
+        <?php echo $this->Html->link('Adición','/adition',array('id'=>'bton-adicion', 'data-ajax' =>  "false"));?>
         </li>
         
         <li>
@@ -9,7 +9,7 @@
         </li>
 
         <li>   
-        <?php echo $this->Html->link('Admin','/pages/administracion',array('id'=>'bton-admin'));?>
+        <?php echo $this->Html->link('Admin','/admin',array('id'=>'bton-admin'));?>
         </li>  
 <!--    
         <li>   
@@ -22,7 +22,4 @@
         <li>  
         <?php echo $this->Html->link('Estadisticas','/stats/mesas_total',array('id'=>'bton-estadisticas'));?>
         </li>     
-    
-           
-        
 </ul>

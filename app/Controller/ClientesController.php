@@ -4,78 +4,22 @@ class ClientesController extends AppController
 {
 
     var $name = 'Clientes';
-    var $helpers = array('Html', 'Form');
+    
+    public $components = array('Search.Prg');
+    
     public $paginate = array();
 
-    function index()
+    function admin_index()
     {
-        if (!empty($this->request->data['Cliente']['busqueda'])) {
-            $this->passedArgs['busqueda'] = strtolower($this->request->data['Cliente']['busqueda']);
-        }
-        $busqueda = $this->passedArgs['busqueda'];
-
-        $this->paginate = array('conditions'=>array(
-            'OR' => array(
-                'lower(Cliente.nombre) LIKE' => "%$busqueda%",
-                'lower(Cliente.nrodocumento) LIKE' => "%$busqueda%",
-            )),
-            'limit'=> 4,
-            'contain' => array(
-                                    'Descuento'
-                                ),
-        );
-
-
-        $this->params['PaginateConditions'] = array();
-
-        if (!empty($this->request->data)) {
-            $condiciones = array();
-            $pagCondiciones = array();
-            foreach ($this->request->data as $modelo => $campos) {
-                foreach ($campos as $key => $val) {
-                    if (!is_array($val))
-                        $condiciones[$modelo . "." . $key . " LIKE"] = '%' . $val . '%';
-                    $pagCondiciones[$modelo . "." . $key] = $val;
-                }
-            }
-            $this->Cliente->recursive = 0;
-            $this->paginate['Cliente'] = array(
-                'conditions' => $condiciones
-            );
-
-            $this->params['PaginateConditions'] = $pagCondiciones;
-            $this->set('clientes', $this->paginate('Cliente'));
-        }
-
-
-        if (!empty($this->passedArgs) && empty($this->request->data)) {
-            $condiciones = array();
-            $pagCondiciones = array();
-            foreach ($this->passedArgs as $campo => $valor) {
-                if ($campo == 'page' || $campo == 'sort' || $campo == 'direction') {
-                    continue;
-                }
-                $condiciones["$campo LIKE"] = '%' . $valor . '%';
-                $pagCondiciones[$campo] = $valor;
-                $this->request->data[$campo] = $valor;
-            }
-            $this->Cliente->recursive = 0;
-            $this->paginate['Clientes'] = array(
-                'conditions' => $condiciones
-            );
-
-            $this->params['PaginateConditions'] = $pagCondiciones;
-            $this->set('clientes', $this->paginate('Cliente'));
-        }
-
-        /* <- Esto es lo original -> */
-
-        $this->Cliente->recursive = 0;
+        $this->Prg->commonProcess();
+        $this->paginate['conditions'] = $this->Cliente->parseCriteria($this->passedArgs);
+        $this->request->data['Cliente'] = $this->passedArgs;
+        $this->set('ivaResponsabilidades', $this->Cliente->IvaResponsabilidad->find('list'));
         $this->set('descuentos', $this->Cliente->Descuento->find('list'));
         $this->set('clientes', $this->paginate());
     }
 
-    function view($id = null)
+    function admin_view($id = null)
     {
         if (!$id) {
             $this->Session->setFlash(__('Invalid Cliente.', true));
@@ -87,7 +31,7 @@ class ClientesController extends AppController
         $this->set('cliente', $this->Cliente->read(null, $id));
     }
 
-    public function add()
+    public function admin_add()
     {
         if ($this->request->is('post')) {
             $this->Cliente->create();
@@ -124,7 +68,7 @@ class ClientesController extends AppController
         $this->set(compact('iva_responsabilidades', 'tipo_documentos'));
     }
 
-    function edit($id = null)
+    function admin_edit($id = null)
     {
         if (!$id && empty($this->request->data)) {
             $this->Session->setFlash(__('Cliente incorrecto', true));
@@ -154,7 +98,7 @@ class ClientesController extends AppController
      * @param string $id
      * @return void
      */
-    public function delete($id = null)
+    public function admin_delete($id = null)
     {
         if (!$this->request->is('post')) {
             throw new MethodNotAllowedException();

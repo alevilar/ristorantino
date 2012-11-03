@@ -1,48 +1,42 @@
-<?php
-echo $html->css('protoplasm',false);
-echo $javascript->link('protoplasm/protoplasm', false);
-echo $javascript->link('mesas/index_head', false);
-?>
-
-
-<?php 
-        echo $this->element('menuadmin');
-    ?>
-
 
 <div class="comandas index">
 <h2><?php __('Comandas');?></h2>
 
-
-
+<?php
+        echo $this->Form->create('DetalleComanda', array('url' => '/detalle_comandas/index'));
+?>
 <p>
-    <?php
-        echo $form->create('DetalleComanda', array('url' => '/detalle_comandas/index'));
-        ?>
-    <div class="grid_3 alpha"> 
-    <?
-        echo $form->input('Producto.id', array('options' => $productos, 'empty' => 'Seleccionar', 'label'=>'Producto'));
+    <div> 
+        <?
+        echo $this->Form->input('ProductoTag.tag_id', array('options' => $tags, 'empty' => 'Seleccionar', 'label'=>'Tags'));
+        echo $this->Form->input('Producto.categoria_id', array('options' => $categorias, 'empty' => 'Seleccionar', 'label'=>'Categoria'));
+        echo $this->Form->input('Producto.id', array('options' => $productos, 'empty' => 'Seleccionar', 'label'=>'Producto'));
         ?>
     </div>
 
-    <div class="grid_3 push_1">
+    <div>
     <?
-        echo $form->input('desde', array( 'class' =>'datepicker') );
+        echo $this->Jqm->datepicker('desde');
     ?>
     </div>
 
-    <div class="grid_3 push_1 omega">
+    <div>
     <?
-        echo $form->input('hasta', array( 'class' =>'datepicker') );
+        echo $this->Jqm->datepicker('hasta');
     ?>
     </div>
 
-    <div class="grid_2 push_1">
+    <div>
     <?
-        echo $form->end('buscar');
+        echo $this->Form->submit('buscar');
     ?>
     </div>
 </p>
+
+<?
+        echo $this->Form->end();
+?>
+
 <table cellpadding="0" cellspacing="0">
 
     
@@ -69,6 +63,6 @@ foreach ($comandas as $comanda):
 
 <div class="actions">
 	<ul>
-		<li><?php echo $html->link(__('New Comanda', true), array('action'=>'add')); ?></li>
+		<li><?php echo $this->Html->link(__('New Comanda', true), array('action'=>'add')); ?></li>
 	</ul>
 </div>

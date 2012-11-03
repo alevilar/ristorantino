@@ -1,82 +1,88 @@
 <?php
-class TipoDePagosController extends AppController {
 
-	var $name = 'TipoDePagos';
-	var $helpers = array('Html', 'Form');
+App::uses('AppController', 'Controller');
 
-       function beforeFilter() {
-            parent::beforeFilter();
+/**
+ * TipoDePagos Controller
+ *
+ * @property TipoDePago $TipoDePago
+ */
+class TipoDePagosController extends AppController
+{
+
+    public function beforeFilter()
+    {
+        parent::beforeFilter();
+        $this->set('folder_tipo_de_pagos', $this->TipoDePago->imageFolderName);
+    }
+
+    /**
+     * admin_index method
+     *
+     * @return void
+     */
+    public function admin_index()
+    {
+        $this->TipoDePago->recursive = 0;
+        $this->set('tipoDePagos', $this->paginate());
+    }
+
+    /**
+     * admin_view method
+     *
+     * @param string $id
+     * @return void
+     */
+    public function admin_view($id = null)
+    {
+        $this->TipoDePago->id = $id;
+        $this->TipoDePago->recursive = -1;
+        if (!$this->TipoDePago->exists()) {
+            throw new NotFoundException(__('Invalid tipo de pago'));
         }
-        
-	function index() {
-		$this->TipoDePago->recursive = 0;
-		$this->set('tipoDePagos', $this->paginate());
-	}
+        $this->set('tipoDePago', $this->TipoDePago->read(null, $id));
+        $this->set('folder_tipo_de_pagos', $this->TipoDePago->imageFolderName);
+    }
 
-	function view($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid TipoDePago.', true));
-			$this->redirect(array('action'=>'index'));
-		}
-		$this->set('tipoDePago', $this->TipoDePago->read(null, $id));
-	}
+    /**
+     * admin_add method
+     *
+     * @return void
+     */
+    public function admin_add_edit($id)
+    {
+        if ($this->request->is('post') || $this->request->is('put')) {
+            if ($this->TipoDePago->save($this->request->data)) {
+                $this->Session->setFlash(__('The tipo de pago has been saved'));
+                $this->redirect(array('action' => 'index'));
+            } else {
+                $this->Session->setFlash(__('The tipo de pago could not be saved. Please, try again.'));
+            }
+        }
+        $this->request->data = $this->TipoDePago->read(null, $id);
+    }
 
-
-	function edit($id = null) {
-		
-                
-                if( !empty($this->request->data['TipoDePago']['newfile']['name'])){
-                    $path = WWW_ROOT.'img/';
-                  
-                    $cadToVec = explode('.', $this->request->data['TipoDePago']['newfile']['name']);
-                    $name = Inflector::slug( $cadToVec[0] );
-                    $ext = $cadToVec[1];
-                    $nameFile = $name.".$ext";
-                    
-                    if ( file_exists($path.$nameFile) ){
-                        $i = 1;
-                        $nameFile = $name."_$i.$ext";
-                        while ( file_exists($path.$nameFile) ) {
-                            $i ++;
-                            $nameFile = $name."_$i.$ext";
-                        }
-                    }
-                    
-                    $this->request->data['TipoDePago']['image_url'] = $name.".$ext";
-                    
-                    $this->request->data['TipoDePago']['image_url'] = $name.".$ext";
-                    debug($path.$nameFile);
-                    move_uploaded_file($this->request->data['TipoDePago']['newfile']['tmp_name'], $path.$nameFile) ;
-                    
-                }
-                
-                
-		if (!empty($this->request->data)) {
-                    if ( !empty($id)) {
-                        $this->TipoDePago->create();
-                    }
-			if ($this->TipoDePago->save($this->request->data)) {
-				$this->Session->setFlash(__('The TipoDePago has been saved', true));
-				$this->redirect(array('action'=>'index'));
-			} else {
-				$this->Session->setFlash(__('The TipoDePago could not be saved. Please, try again.', true));
-			}
-		}
-		if (empty($this->request->data)) {
-			$this->request->data = $this->TipoDePago->read(null, $id);
-		}
-	}
-
-	function delete($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for TipoDePago', true));
-			$this->redirect(array('action'=>'index'));
-		}
-		if ($this->TipoDePago->del($id)) {
-			$this->Session->setFlash(__('TipoDePago deleted', true));
-			$this->redirect(array('action'=>'index'));
-		}
-	}
+    /**
+     * admin_delete method
+     *
+     * @param string $id
+     * @return void
+     */
+    public function admin_delete($id = null)
+    {
+        if (!$this->request->is('post')) {
+            throw new MethodNotAllowedException();
+        }
+        $this->TipoDePago->id = $id;
+        if (!$this->TipoDePago->exists()) {
+            throw new NotFoundException(__('Invalid tipo de pago'));
+        }
+        if ($this->TipoDePago->delete()) {
+            $this->Session->setFlash(__('Tipo de pago deleted'));
+            $this->redirect(array('action' => 'index'));
+        }
+        $this->Session->setFlash(__('Tipo de pago was not deleted'));
+        $this->redirect(array('action' => 'index'));
+    }
 
 }
-?>

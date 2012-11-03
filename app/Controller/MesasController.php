@@ -2,156 +2,44 @@
 class MesasController extends AppController {
 
     public $helpers = array('Html', 'Form');
-    public $components = array('Printer');
+    public $components = array('Printer', 'Search.Prg');
     
-    public $estados = array(
-        1 => "Abierta",
-        2 => "Cerrada",
-        3 => "Cobrada",
-        );
-
+   
     /* @var $Printer PrinterComponent */
     public $Printer;
     
     public $paginate = array(
         'paramType' => 'querystring'
     );
-
     
-    public function index( $estado = null ) {
-        $this->paginate['Mesa'] = array(
-                'contain'	 => array('Mozo(numero)','Cliente'=>array('Descuento')),
-                'order' => array('Mesa.created' => 'asc')
-        );
+    
+    public function admin_index( $estado = null ) {
+        $this->Prg->commonProcess();
+        $this->paginate['conditions'] = $this->Mesa->parseCriteria($this->passedArgs);
+        $this->request->data['Mesa'] = $this->passedArgs;
 
-
-        $condiciones = array();
-
-        if (!empty($this->passedArgs)){
-            if ( !empty($this->passedArgs['Mesa.estado_cerrada']) ){
-                    $this->request->data['Mesa']['estado_cerrada'] = $this->passedArgs['Mesa.estado_cerrada'];
-            }
-            if (!empty($this->passedArgs['Mesa.numero'])){
-                $this->request->data['Mesa']['numero'] = $this->passedArgs['Mesa.numero'];
-            }
-            if (!empty($this->passedArgs['Mozo.numero'])){
-                $this->request->data['Mozo']['numero'] = $this->passedArgs['Mozo.numero'];
-            }
-            if (!empty($this->passedArgs['Mesa.total'])){
-                $this->request->data['Mesa']['total'] = $this->passedArgs['Mesa.total'];
-            }
-            if (!empty($this->passedArgs['Mesa.created_from'])){
-                $this->request->data['Mesa']['created_from'] = $this->passedArgs['Mesa.created_from'];
-            }
-            if (!empty($this->passedArgs['Mesa.created_to'])){
-                $this->request->data['Mesa']['created_to'] = $this->passedArgs['Mesa.created_to'];
-            }
-            if (!empty($this->passedArgs['Mesa.time_cerro_from'])){
-                $this->request->data['Mesa']['time_cerro_from'] = $this->passedArgs['Mesa.time_cerro_from'];
-            }
-            if (!empty($this->passedArgs['Mesa.time_cerro_to'])){
-                $this->request->data['Mesa']['time_cerro_to'] = $this->passedArgs['Mesa.time_cerro_to'];
-            }
-            if (!empty($this->passedArgs['Mesa.time_cobro_from'])){
-                $this->request->data['Mesa']['time_cobro_from'] = $this->passedArgs['Mesa.time_cobro_from'];
-            }
-            if (!empty($this->passedArgs['Mesa.time_cobro_to'])){
-                $this->request->data['Mesa']['time_cobro_to'] = $this->passedArgs['Mesa.time_cobro_to'];
-            }
-
-        }
-
-        
-        if ( $estado ){
+        if ( !empty($estado) ){
                 switch ( $estado ) {
                     case 'abiertas':
+                    case 'abierta':
                         $condiciones['Mesa.estado_id'] = MESA_ABIERTA;
                         break;
                     case 'cerradas':
+                    case 'cerrada':
                         $condiciones['Mesa.estado_id'] = MESA_CERRADA;
                         break;
                      case 'cobradas':
+                     case 'cobrada':
                          $condiciones['Mesa.estado_id'] = MESA_COBRADA;
                         break;
                     default:
                         break;
                 }
-        }            
-        
-        if(!empty($this->request->data)) {
-
-            // armo para que el paginator mantenga la busqueda
-            foreach($this->request->data as $modelo=>$campos) {
-                foreach($campos as $key=>$val) {
-                    if(!is_array($val))
-                        if(!empty($val)) {                    
-                            $this->passedArgs["$modelo.$key"] = $val;
-                        }
-                }
-            }
-
-
-            // seteo condiciones de busqueda
-            if (!empty($this->request->data['Mesa']['numero'])){
-                $condiciones['Mesa.numero'] = $this->request->data['Mesa']['numero'];
-            }
-            if (!empty($this->request->data['Mozo']['numero'])){
-                $condiciones['Mozo.numero'] = $this->request->data['Mozo']['numero'];
-            }
-            if (!empty($this->request->data['Mesa']['total'])){
-                $condiciones['Mesa.total'] = $this->request->data['Mesa']['total'];
-            }
-            if (!empty($this->request->data['Mesa']['created_from'])){
-                $condiciones['Mesa.created >'] = jsDate($this->request->data['Mesa']['created_from']);
-            }
-            if (!empty($this->request->data['Mesa']['created_to'])){
-                $condiciones['Mesa.created <'] = jsDate($this->request->data['Mesa']['created_to']);
-            }
-            if (!empty($this->request->data['Mesa']['time_cerro_from'])){
-                $condiciones['Mesa.time_cerro >'] = jsDate($this->request->data['Mesa']['time_cerro_from']);
-            }
-            if (!empty($this->request->data['Mesa']['time_cerro_to'])){
-                $condiciones['Mesa.time_cerro <'] = jsDate($this->request->data['Mesa']['time_cerro_to']);
-            }
-            if (!empty($this->request->data['Mesa']['time_cobro_from'])){
-                $condiciones['Mesa.time_cobro >'] = jsDate($this->request->data['Mesa']['time_cobro_from']);
-            }
-            if (!empty( $this->request->data['Mesa']['time_cobro_to'])){
-                $condiciones['Mesa.time_cobro <'] = jsDate($this->request->data['Mesa']['time_cobro_to']);
-            }
-            if (!empty( $this->request->data['Mesa']['estado_cerrada'])){
-                switch ($this->request->data['Mesa']['estado_cerrada']) {
-                    case 'abiertas':
-                        $condiciones['Mesa.estado_id'] = MESA_ABIERTA;
-                        break;
-                    case 'cerradas':
-                        $condiciones['Mesa.estado_id'] = MESA_CERRADA;
-                        break;
-                     case 'cobradas':
-                         $condiciones['Mesa.estado_id'] = MESA_COBRADA;
-                        break;
-                    default:
-                        break;
-                }
-            }
-            $this->Producto->recursive = 0;
-
         }
-        $this->paginate['Mesa'] = array(
-                    'conditions' => $condiciones,
-        );
+       
+        $this->set('mesas', $this->paginate());
+        $this->set('estados', $this->Mesa->estados);
         
-        //debug($this->paginate('Mesa'));
-        $this->Mesa->recursive = 0;
-
-
-        $tot = $this->Mesa->find('first', array(
-            'conditions' => $condiciones,
-            'fields' => array('sum(Mesa.total) as total'),
-            ));
-        $tot = empty($tot['0']['total']) ? 0 : $tot['0']['total'];
-        $this->set('mesas_suma_total', money_format('%.2n', $tot) );
-        $this->set('mesas', $this->paginate('Mesa'));
     }
 
 
@@ -166,7 +54,6 @@ class MesasController extends AppController {
         $items = $this->Mesa->listado_de_productos();
 
 
-        //$mesa = $this->Mesa->read(null, $id);
         $mesa = $this->Mesa->find('first',array(
                 'conditions'=>array('Mesa.id'=>$id),
                 'contain'=>array(
@@ -304,47 +191,26 @@ class MesasController extends AppController {
         $this->set('validationErrors', $this->Mesa->validationErrors);
     }
     
-    public function add() {
-        if (!empty($this->request->data)) {
-            $this->Mesa->create();
-            $this->request->data['Mesa']['created'] = $this->request->data['Mesa']['time_cobro'];
-            if ($this->Mesa->save($this->request->data)) {
-                $pago['Pago'] = array( 'mesa_id'=>$this->Mesa->id,
-                                       'tipo_de_pago_id'=>$this->request->data['Mesa']['tipo_de_pago'],
-                                       'valor'=>$this->request->data['Mesa']['total']
-                    );
-                if ($this->Mesa->Pago->save($pago, array('fields'=>array('mesa_id','tipo_de_pago_id')))) {
-                    debug($this->Mesa->Pago->id);
-                    $this->Session->setFlash(__('La mesa fue guardada', true));
-                   // $this->redirect(array('action'=>'index'));
+    public function admin_add() {
+        if ($this->request->is('post')) {
+                $this->Mesa->create();
+                if ($this->Mesa->save($this->request->data)) {
+                        $this->Session->setFlash(__('The mesa has been saved'));
+                        if ( $this->request->is('ajax') ) {
+                            $this->redirect(array('action' => 'index'));
+                        } else {
+                            return 1;
+                        }
+                } else {
+                        $this->Session->setFlash(__('The mesa could not be saved. Please, try again.'));
                 }
-            } else {
-                $this->Session->setFlash(__('La mesa no pudo ser guardada. Intente nuevamente.', true));
-            }
         }
-        
-        $options['joins'] = array(
-            array('table' => 'users',
-            'alias' => 'User',
-            'type' => 'inner',
-            'conditions' => array(
-            'user.role = mozo'
-                )
-            ),
-        );
-              
-$mozos = $this->Mesa->Mozo->find('list',array('fields'=>array('Mozo.id','User.nombre'),'joins'=>array(  array('table' => 'users',
-                                                                                                            'alias' => 'User',
-                                                                                                            'type' => 'inner',
-                                                                                                            'conditions' => array(
-                                                                                                            'user.id = Mozo.user_id')
-                                                                                                            )
-                                                                                                          )));
-$tipo_pagos = $this->Mesa->Pago->TipoDePago->find('list');
-
-        $this->set('tipo_pagos',$tipo_pagos);
-        //$descuentos = $this->Mesa->Descuento->find('list');
-        $this->set(compact('mozos', 'descuentos'));
+                
+        $mozos = $this->Mesa->Mozo->find('list',array('fields'=>array('id','numero_y_nombre')));
+        $tipo_pagos = $this->Mesa->Pago->TipoDePago->find('list');
+        $descuentos = $this->Mesa->Descuento->find('list');        
+        $estados = $this->Mesa->estados;
+        $this->set(compact('mozos', 'descuentos', 'tipo_pagos', 'estados'));
     }
 
 
@@ -387,73 +253,87 @@ $tipo_pagos = $this->Mesa->Pago->TipoDePago->find('list');
         }
         return $returnFlag;
     }
-
-
+    
     public function edit($id = null) {
+        $this->redirect('admin_edit');
+    }
+
+
+    public function admin_edit($id = null) {
         
-        if (!$id && empty($this->request->data)) {
-            $this->Session->setFlash(__('Invalid Mesa', true));
-            $this->redirect(array('action'=>'index'));
+        $this->Mesa->id = $id;
+        if (!$this->Mesa->exists()) {
+                throw new NotFoundException(__('Invalid mesa'));
         }
-        if (!empty($this->request->data)) {
-            if ($this->Mesa->save($this->request->data)) {
-                $this->Session->setFlash(__('La mesa fue editada correctamente', true));
-                if ( !$this->RequestHandler->isAjax() ) {
-                    $this->redirect(array('action'=>'index'));
+        if ($this->request->is('post') || $this->request->is('put')) {
+                if ($this->Mesa->save($this->request->data)) {
+                        $this->Session->setFlash(__('The mozo has been saved'));
+                        if ( !$this->request->is('ajax') ) {
+                            $this->redirect(array('action' => 'index'));
+                        }
+                } else {
+                        $this->Session->setFlash(__('The mozo could not be saved. Please, try again.'));
                 }
-            } else {
-                $this->Session->setFlash(__('La mesa no pudo ser guardada. Intente nuevamente.', true));
-            }
         }
-        if (empty($this->request->data)) {
-            $this->request->data = $this->Mesa->find('first',array(
+               
+        $mesa = $this->request->data = $this->Mesa->find('first',array(
                     'conditions'=> array(
                             'Mesa.id'=>$id),
                     'contain'=>	array(
                             'Mozo',
                             'Cliente'=>'Descuento',
-                            'Comanda'=>array('DetalleComanda'=>array('Producto','DetalleSabor'=>'Sabor')))
-            ));
-        }
+                            'Comanda'=>array(
+                                'DetalleComanda' => array(
+                                    'Producto',
+                                    'DetalleSabor'=>'Sabor'
+                                    )
+                                )
+                        )
+        ));
 
         $items = $this->request->data['Comanda'];
-        $mesa = $this->request->data;
-        
-        $mozos = $this->Mesa->Mozo->find('all',array(
-            'contain' => array('User'),
+        $mozos = $this->Mesa->Mozo->find('list',array(
+            'fields' => array('id', 'numero_y_nombre'),
             'conditions' => array('Mozo.activo' => 1),
-            ));
-        $mooo = array();
-        foreach ( $mozos as $mm) {
-            $mooo[$mm['Mozo']['id']] = $mm['Mozo']['numero'] ."- ";
-            if (!empty( $mm['User'] )) {
-                $mooo[$mm['Mozo']['id']] .= " " . $mm['User']['nombre'] . " " . $mm['User']['apellido'];
-            }
-        }
+            ));        
         
         $this->id = $id;
         $this->set('subtotal',$this->Mesa->calcular_subtotal());
         $this->set('total',$this->Mesa->calcular_total());
-        $this->set('estados', $this->estados);
-        $this->set('mozos', $mooo);
-        $this->set(compact('mesa', 'items'));
+        $this->set('estados', $this->Mesa->estados);
+        $this->set(compact('mesa', 'items', 'mozos'));
         $this->set('title_for_layout', 'Editando la Mesa '.$mesa['Mesa']['numero'] );
     }
-
-    public function delete($id = null) {
-        if (!$id) {
-            $this->Session->setFlash(__('Invalid id for Mesa', true));
-        }
-        if ($this->Mesa->del($id)) {
-            $this->Session->setFlash(__('Mesa deleted', true));     
-        } else {
-        }
-        if (!$this->RequestHandler->isAjax()){
-            $this->redirect($this->referer());
-        } else {
-            die(1);
-        }
+    
+    
+    
+/**
+ * admin_delete method
+ *
+ * @param string $id
+ * @return void
+ */
+	public function admin_delete($id = null) {
+		if (!$this->request->is('post')) {
+			throw new MethodNotAllowedException();
+		}
+		$this->Mesa->id = $id;
+		if (!$this->Mesa->exists()) {
+			throw new NotFoundException(__('Invalid mesa'));
+		}
+		if ($this->Mesa->delete()) {
+			$this->Session->setFlash(__('Mesa deleted'));
+			$this->redirect(array('action' => 'index'));
+		}
+		$this->Session->setFlash(__('Mesa was not deleted'));
+		
+                if (!$this->request->is('ajax')){
+                    $this->redirect($this->referer());
+                } else {
+                    return ;
+                }
     }
+
 
 
     public function cerradas(){
@@ -503,11 +383,13 @@ $tipo_pagos = $this->Mesa->Pago->TipoDePago->find('list');
 
 
     public function reabrir($id){
-        $this->Session->setFlash('Se reabrió la mesa', true);
-        $this->Mesa->reabrir($id);
-        if ($this->RequestHandler->isAjax()) {
-            die("reabrio la mesa ID: $id");
-        } else{
+        
+        if ( $this->Mesa->reabrir($id) ) {
+            $this->Session->setFlash('Se reabrió la mesa', true);
+        } else {
+            $this->Session->setFlash('Error al reabrir la mesa', true);
+        }
+        if (!$this->request->is('ajax')) {
             $this->redirect($this->referer());
         }
     }

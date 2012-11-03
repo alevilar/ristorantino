@@ -42,7 +42,11 @@ class ComandasController extends AppController {
 	 */
 	function imprimir($id){
 		$this->Printer->imprimirComanda($id);
-		$this->redirect('/comandas/index');
+                if ( !$this->request->is('ajax') ) {
+                    $this->redirect('/comandas/index');
+                } else {
+                    return 1;
+                }
 	}
 }
 ?>

@@ -6,7 +6,6 @@ class Categoria extends AppModel {
 	var $actsAs = array(
             'SoftDeletable', 
             'Tree', 
-            'Acl' => array('type' => 'controlled')
             );
         
 	//var $cacheQueries = true;

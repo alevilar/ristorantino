@@ -10,11 +10,17 @@ class Mozo extends AppModel {
             'nombre' => 'notempty',
             'apellido' => 'notempty',
 	);
+        
+        public $virtualFields = array(
+            'numero_y_nombre' => "CONCAT(Mozo.numero,' (', Mozo.nombre, ' ', Mozo.apellido, ')')",
+        );
 	
 
 	var $hasMany = array(
 			'Mesa'
 	);
+        
+        var $order = array('Mozo.numero');
 	
 	
 	/**

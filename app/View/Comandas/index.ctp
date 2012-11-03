@@ -1,6 +1,3 @@
-        <?php    
-            echo $this->element('menuadmin');
-        ?>
 <div class="comandas index">
 
 <h2>Listado de Comandas de mesas activas</h2>

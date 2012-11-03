@@ -41,13 +41,24 @@ class AppController extends Controller {
             'Session',
         );
     
-    public $helpers = array('Html', 'Form','Paginator', 'Session');
+    public $helpers = array('Html', 'Jqm', 'Form','Paginator', 'Session');
     
-    
+    public $Html;
+
+
+
+
     public function beforeFilter () {
+        
+        $this->Html->_tags['link'] = '<a data-role="button" href="%s"%s>%s</a>';
         
         $this->Auth->allow('*');
         $this->Auth->authorize = array('Actions');
+
+        
+        $this->Auth->loginAction = array(Configure::read('Routing.admin') => false, 'controller' => 'users', 'action' => 'login');
+        $this->Auth->logoutRedirect = array(Configure::read('Routing.admin') => false, 'controller' => 'users', 'action' => 'logout');
+
         
         $this->RequestHandler->setContent('jqm', 'xhtml');
         

@@ -1,115 +1,152 @@
 <?php
 
+class Mesa extends AppModel
+{
 
-
-class Mesa extends AppModel {
-
-	var $name = 'Mesa';
-	var $actsAs = array('Containable', 'SoftDeletable');
-
-        var $numero = 0;
-        var $mozoNumero = 0;
-	
-	var $validate = array(
-                'mozo_id' => array(
-			'notempty',
-			'numeric',
-                    ),
-		'numero' => array(
-			'notempty',
-			'numeric',	
-	));
-        
-        
-
-        /*
-         * Valor total de una mesa Objeto en particular.
-         * Es el array que devuelve la funcion calcular_total()
-         * @var $total float
-         */
-        var $total = array(
-            'Mesa' => array (
-                'subtotal' => 0,
-                'total' => 0,
-                'descuento' => 0,
+    public $name = 'Mesa';
+    
+/**
+ * Behaiviours
+ * @var array 
+ */    
+    public $actsAs = array('Containable', 'SoftDeletable', 'Search.Searchable');
+    
+    
+    public $numero = 0;
+    
+    
+    public $mozoNumero = 0;
+    
+/**
+ * Searchable Plugin
+ * @var array 
+ */    
+    public $filterArgs = array(
+        'numero' => array('type' => 'value'),
+        'mozo_id' => array('type' => 'value'),
+        'mozo_numero' => array('type' => 'value', 'field' => 'Mozo.numero'),
+        'total' => array('type' => 'value'),
+        'estado_id' => array('type' => 'value'),
+        'created_desde' => array('type' => 'value', 'field' => 'date(Mesa.created) >='),
+        'created_hasta' => array('type' => 'value', 'field' => 'date(Mesa.created) <='),
+        'time_cerro_desde' => array('type' => 'value', 'field' => 'date(Mesa.time_cerro) >='),
+        'time_cerro_hasta' => array('type' => 'value', 'field' => 'date(Mesa.time_cerro) <='),
+        'time_cobro_desde' => array('type' => 'value', 'field' => 'date(Mesa.time_cobro) >='),
+        'time_cobro_hasta' => array('type' => 'value', 'field' => 'date(Mesa.time_cobro) <='),
+    );
+    
+    public $validate = array(
+        'mozo_id' => array(
+            'notempty' => array(
+                'rule' => 'notempty',
+            ),
+            'numeric' => array(
+                'rule' => 'numeric',
+            ),
+        ),
+        'numero' => array(
+            'notempty' => array(
+                'rule' => 'notempty',
+            )
             ));
-        
-	
-	//The Associations below have been created with all possible keys, those that are not needed can be removed
-	var $belongsTo = array(
-			'Mozo',
-			'Cliente',
-                        'Descuento',
-	);
 
 
-	var $hasMany = array(   'Comanda' => array(
-                                    'order' => 'Comanda.created DESC'), 
-                                'Pago');
-	
 
-        
-        public function save($data = null, $validate = true, $fieldList = array()) {
-            // Clear modified field value before each save
-            $this->set($data);
-            if (isset($this->data[$this->alias]['modified'])) {
-                unset($this->data[$this->alias]['modified']);
-            }
-            debug($this->data);
-            return parent::save($this->data, $validate, $fieldList);
+    /*
+     * Valor total de una mesa Objeto en particular.
+     * Es el array que devuelve la funcion calcular_total()
+     * @public $total float
+     */
+    public $total = array(
+        'Mesa' => array(
+            'subtotal' => 0,
+            'total' => 0,
+            'descuento' => 0,
+            ));
+    
+    
+    //The Associations below have been created with all possible keys, those that are not needed can be removed
+    public $belongsTo = array(
+        'Mozo',
+        'Cliente',
+        'Descuento',
+    );
+    public $hasMany = array(
+        'Comanda' => array(
+                'order' => 'Comanda.created DESC'
+            ),
+        'Pago'
+    );
+    
+    public $order = array('Mesa.created' => 'desc');
+    
+    
+    public $estados = array(
+        MESA_ABIERTA => "Abierta",
+        MESA_CERRADA => "Cerrada",
+        MESA_COBRADA => "Cobrada",
+    );
+
+    public function save($data = null, $validate = true, $fieldList = array())
+    {
+        // Clear modified field value before each save
+        $this->set($data);
+        if (isset($this->data[$this->alias]['modified'])) {
+            unset($this->data[$this->alias]['modified']);
         }
-        
-        
-        function getMozoNumero($id = null){
-            if (!empty($id)) {
-                $this->id = $id;
-            }
-            if(empty($this->mozoNumero)){
-                $mozo = $this->find('first', array(
-                    'conditions' => array('Mesa.id'=>$this->id),
-                    'contain' => array('Mozo')
+        return parent::save($this->data, $validate, $fieldList);
+    }
+
+    function getMozoNumero($id = null)
+    {
+        if (!empty($id)) {
+            $this->id = $id;
+        }
+        if (empty($this->mozoNumero)) {
+            $mozo = $this->find('first', array(
+                'conditions' => array('Mesa.id' => $this->id),
+                'contain' => array('Mozo')
                     ));
-                $this->mozoNumero = $mozo['Mozo']['numero'];
-            }
-
-            return $this->mozoNumero;
+            $this->mozoNumero = $mozo['Mozo']['numero'];
         }
-	
-	
-	function cerrar_mesa($mesa_id = 0)
-	{
-		$this->id = ($mesa_id == 0)?$this->id:$mesa_id;
-                $cant = $this->find('count',array('conditions'=>array(
-                    'Mesa.id' => $this->id,
+
+        return $this->mozoNumero;
+    }
+
+    function cerrar_mesa($mesa_id = 0)
+    {
+        $this->id = ($mesa_id == 0) ? $this->id : $mesa_id;
+        $cant = $this->find('count', array('conditions' => array(
+                'Mesa.id' => $this->id,
                 )));
-                if ($cant == 0) return 0;
+        if ($cant == 0)
+            return 0;
 
-                $mesaData['Mesa'] = array(
-                    'estado_id'    => MESA_CERRADA,
-                    'total'     => $this->calcular_total(),
-                    'subtotal'  => $this->calcular_subtotal(),
-                    'time_cerro'=> date( "Y-m-d H:i:s",strtotime('now')),
-                );
+        $mesaData['Mesa'] = array(
+            'estado_id' => MESA_CERRADA,
+            'total' => $this->calcular_total(),
+            'subtotal' => $this->calcular_subtotal(),
+            'time_cerro' => date("Y-m-d H:i:s", strtotime('now')),
+        );
 
-                // si no estoy usando cajero, entonces poner como que ya esta cerrada y cobrada
-                if (!Configure::read('Adicion.usarCajero'))  {
-                    $mesaData['Mesa']['time_cobro'] = date( "Y-m-d H:i:s",strtotime('now'));
-                    $mesaData['Mesa']['estado_id']  = MESA_COBRADA;
-                } else {
-                    $mesaData['Mesa']['time_cobro'] = DATETIME_NULL;
-                }
+        // si no estoy usando cajero, entonces poner como que ya esta cerrada y cobrada
+        if (!Configure::read('Adicion.usarCajero')) {
+            $mesaData['Mesa']['time_cobro'] = date("Y-m-d H:i:s", strtotime('now'));
+            $mesaData['Mesa']['estado_id'] = MESA_COBRADA;
+        } else {
+            $mesaData['Mesa']['time_cobro'] = DATETIME_NULL;
+        }
 
-                $this->save($mesaData, false);
-                return $mesaData;
-		
-	}
+        $this->save($mesaData, false);
+        return $mesaData;
+    }
 
+    function calcular_total_productos($id = null)
+    {
+        if (!empty($id))
+            $this->id = $id;
 
-        
-        function calcular_total_productos ($id = null) {
-            if (!empty($id)) $this->id = $id;
-            
-            $total =  $this->query("
+        $total = $this->query("
                 select sumadas.mesa_id as mesa_id,sum(total) as subtotal, cant_comensales
                 from (
                         select c.mesa_id as mesa_id, sum(s.precio*(dc.cant-dc.cant_eliminada)) as total
@@ -142,14 +179,15 @@ class Mesa extends AppModel {
                         group by sumadas.mesa_id			
 
                 ");
-            return $total[0][0]['subtotal'];
-        }
-        
-        
-        function calcular_descuentos($id = null) {
-            if (!empty($id)) $this->id = $id;
-            
-            $total =  $this->query("
+        return $total[0][0]['subtotal'];
+    }
+
+    function calcular_descuentos($id = null)
+    {
+        if (!empty($id))
+            $this->id = $id;
+
+        $total = $this->query("
                 select mesa_id, IF(ISNULL(descuentos.porcentaje), 0 , descuentos.porcentaje) as descuento
 		from detalle_comandas
 		left join comandas on (comanda_id = comandas.id)
@@ -160,218 +198,214 @@ class Mesa extends AppModel {
 		mesa_id = $this->id
 		group by mesa_id        
             ");
-            return $total[0][0]['descuento'];
-            
-        }
-        
-        
-        
-        function calcular_subtotal($id = null){
-            if (!empty($id)) $this->id = $id;
+        return $total[0][0]['descuento'];
+    }
 
-            if (!empty($this->total['Mesa']['subtotal'])) {
-                return $this->total['Mesa']['subtotal'];
-            }
-            
-            if ($this->cantidadDeProductos() == 0) return 0;
-            
+    function calcular_subtotal($id = null)
+    {
+        if (!empty($id))
+            $this->id = $id;
 
-            $totalProductos = $this->calcular_total_productos();
-            $totalPorcentajeDescuento = $this->calcular_descuentos();
-            $conversionDescuento = 1-($totalPorcentajeDescuento/100);
-            
-            $this->recursive = -1;
-            $mesa = $this->read();
-            $this->total['Mesa']['cant_comensales'] = $mesa['Mesa']['cant_comensales'];
-                        
-            $precioCubierto = Configure::read('Restaurante.valorCubierto');
-            $valor_cubierto = 0;
-            if ($precioCubierto > 0) {
-                $valor_cubierto =  $precioCubierto * $this->total['Mesa']['cant_comensales'];
-            }
-            $this->total['Mesa']['subtotal'] = $totalProductos + $valor_cubierto;
-            $this->total['Mesa']['total'] = cqs_round(  $this->total['Mesa']['subtotal'] * $conversionDescuento );
-            $this->total['Mesa']['descuento'] = $totalPorcentajeDescuento;
+        if (!empty($this->total['Mesa']['subtotal'])) {
             return $this->total['Mesa']['subtotal'];
         }
-            
 
-	
-	/**
-	 * Calcula el total de la mesa cuyo id fue seteado en $this->Mesa->id 
-	 * return @total el valor
-	 */
-	function calcular_total($id = null){
-            if (!empty($id)) $this->id = $id;
+        if ($this->cantidadDeProductos() == 0)
+            return 0;
 
-            if ( empty($this->total['Mesa']['total']) ) {
-                $this->calcular_subtotal();
-            }
-            return $this->total['Mesa']['total'];
-	}
-	
-	
-	function cantidadDeProductos($id = 0){
-            if($id != 0) 	$this->id = $id;
 
-		$items = $this->Comanda->DetalleComanda->find('count',array(
-                                                    'conditions'=>array(
-                                                            'Comanda.mesa_id'=>$this->id,
-                                                            '(DetalleComanda.cant - DetalleComanda.cant_eliminada) >'=>0),
-                                                    'order'=>'Comanda.id ASC, Producto.categoria_id ASC, Producto.id ASC',
-                                                    'contain'=>array('Producto','Comanda','DetalleSabor'=>'Sabor(name,precio)')
-						));
+        $totalProductos = $this->calcular_total_productos();
+        $totalPorcentajeDescuento = $this->calcular_descuentos();
+        $conversionDescuento = 1 - ($totalPorcentajeDescuento / 100);
 
-		return $items;
+        $this->recursive = -1;
+        $mesa = $this->read();
+        $this->total['Mesa']['cant_comensales'] = $mesa['Mesa']['cant_comensales'];
+
+        $precioCubierto = Configure::read('Restaurante.valorCubierto');
+        $valor_cubierto = 0;
+        if ($precioCubierto > 0) {
+            $valor_cubierto = $precioCubierto * $this->total['Mesa']['cant_comensales'];
         }
-	
-	
-	
-	/**
-	 * Me devuelve ellistado de productos de una mesa en especial
-	 *
-	 */
-	function listado_de_productos($id = 0)
-	{
-		if($id != 0) 	$this->id = $id;	
-		
-		$items = $this->Comanda->DetalleComanda->find('all',array(
-									'conditions'=>array(
-										'Comanda.mesa_id'=>$this->id,
-										'(DetalleComanda.cant - DetalleComanda.cant_eliminada) >'=>0),
-									'order'=>'Comanda.id ASC, Producto.categoria_id ASC, Producto.id ASC',
-									'contain'=>array('Producto','Comanda','DetalleSabor'=>'Sabor(name,precio)')
-						));
-		for($i=0; $i<count($items); $i++){
-			$items[$i]['DetalleComanda']['cant_final'] = $items[$i]['DetalleComanda']['cant']-	$items[$i]['DetalleComanda']['cant_eliminada'];
-		}
-		
-		return $items;
-	}
+        $this->total['Mesa']['subtotal'] = $totalProductos + $valor_cubierto;
+        $this->total['Mesa']['total'] = cqs_round($this->total['Mesa']['subtotal'] * $conversionDescuento);
+        $this->total['Mesa']['descuento'] = $totalPorcentajeDescuento;
+        return $this->total['Mesa']['subtotal'];
+    }
 
+    /**
+     * Calcula el total de la mesa cuyo id fue seteado en $this->Mesa->id 
+     * return @total el valor
+     */
+    function calcular_total($id = null)
+    {
+        if (!empty($id))
+            $this->id = $id;
 
-        function ultimasCobradas($limit = 20){
+        if (empty($this->total['Mesa']['total'])) {
+            $this->calcular_subtotal();
+        }
+        return $this->total['Mesa']['total'];
+    }
 
-		$conditions = array("Mesa.estado_id >=" => MESA_COBRADA);
+    function cantidadDeProductos($id = 0)
+    {
+        if ($id != 0)
+            $this->id = $id;
 
-                $mesas = $this->find('all', array(
-                    'conditions'=>$conditions,
-                    'limit' => $limit,
-                    'order' =>'Mesa.time_cobro DESC',
+        $items = $this->Comanda->DetalleComanda->find('count', array(
+            'conditions' => array(
+                'Comanda.mesa_id' => $this->id,
+                '(DetalleComanda.cant - DetalleComanda.cant_eliminada) >' => 0),
+            'order' => 'Comanda.id ASC, Producto.categoria_id ASC, Producto.id ASC',
+            'contain' => array('Producto', 'Comanda', 'DetalleSabor' => 'Sabor(name,precio)')
+                ));
+
+        return $items;
+    }
+
+    /**
+     * Me devuelve ellistado de productos de una mesa en especial
+     *
+     */
+    function listado_de_productos($id = 0)
+    {
+        if ($id != 0)
+            $this->id = $id;
+
+        $items = $this->Comanda->DetalleComanda->find('all', array(
+            'conditions' => array(
+                'Comanda.mesa_id' => $this->id,
+                '(DetalleComanda.cant - DetalleComanda.cant_eliminada) >' => 0),
+            'order' => 'Comanda.id ASC, Producto.categoria_id ASC, Producto.id ASC',
+            'contain' => array('Producto', 'Comanda', 'DetalleSabor' => 'Sabor(name,precio)')
+                ));
+        for ($i = 0; $i < count($items); $i++) {
+            $items[$i]['DetalleComanda']['cant_final'] = $items[$i]['DetalleComanda']['cant'] - $items[$i]['DetalleComanda']['cant_eliminada'];
+        }
+
+        return $items;
+    }
+
+    function ultimasCobradas($limit = 20)
+    {
+
+        $conditions = array("Mesa.estado_id >=" => MESA_COBRADA);
+
+        $mesas = $this->find('all', array(
+            'conditions' => $conditions,
+            'limit' => $limit,
+            'order' => 'Mesa.time_cobro DESC',
+                ));
+
+        return $mesas;
+    }
+
+    function listado_de_abiertas($recursive = -1)
+    {
+
+        $conditions = array("Mesa.estado_id" => MESA_ABIERTA);
+
+        if ($recursive > -1) {
+            $this->recursive = $recursive;
+            $mesas = $this->find('all', array('conditions' => $conditions));
+        } else {
+            $mesas = $this->find('all', array(
+                'conditions' => $conditions,
+                'contain' => array('Mozo(numero)')
                     ));
-		
-		return $mesas;
-	}
-	
-	
-	
-	function listado_de_abiertas($recursive = -1){
-		
-		$conditions = array("Mesa.estado_id" => MESA_ABIERTA);
-		
-		if($recursive>-1){
-			$this->recursive = $recursive;			
-			$mesas = $this->find('all', array('conditions'=>$conditions));
-		}			
-		else{
-			$mesas = $this->find('all', array(
-                            'conditions'=>$conditions,
-                            'contain'=>array('Mozo(numero)')
-                            ));
-		}
-		return $mesas;
-	}
-
-
-        function listadoAbiertasYSinCobrar($recursive = -1){
-
-		$conditions = array("Mesa.estado_id <" => MESA_COBRADA);
-
-		if($recursive>-1){
-			$this->recursive = $recursive;
-			$mesas = $this->find('all', array(
-                            'conditions'=>$conditions));
-		}
-		else{
-			$mesas = $this->find('all', array(
-                            'conditions'=>$conditions,
-                            'contain'=>array('Mozo(numero, id)')));
-		}
-
-            //debug($mesas);
-		return $mesas;
-	}
-	
-	
-	/**
-	 * nos dice si el numero de mesa existe o no
-	 * 
-	 * @param integer numero demesa
-	 * @return boolean
-	 */
-	function numero_de_mesa_existente($numero_mesa = 0){
-		if($numero_mesa == 0){
-		 	if(!empty($this->data['Mesa']['numero'])){
-		 		$numero_mesa = $this->data['Mesa']['numero'];
-		 	}
-		 }		
-		 
-		$this->recursive = -1;
-		$conditions = array(
-                                    'estado_id'=>MESA_ABIERTA, 
-                                    'numero'=>$numero_mesa);
-		
-		if(!empty($this->id)){
-			if($this->id != ''){
-				$conditions = array_merge($conditions, array('Mesa.id <>'=> $this->id));
-		
-			}
-		}
-		
-		$result = $this->find('count',array('conditions'=>$conditions));
-
-		return ($result>0)?true:false;
-		
-	}
-	
-	
-	function getNumero($mesa_id = 0){
-		if($mesa_id != 0){
-			$this->id = $mesa_id;
-		}
-		$mesa = $this->read();
-		return $mesa['Mesa']['numero'];
-		
-	}
-	
-
-        /**
-         *
-         * Esta funcion sirve para los casos en que no se quiere mostrar
-         * el detalle de los productos consumidos en el ticket.
-         * En ese caso sale impresa la leyenda "X MENU". La cantidad de menues
-         * (en este caso "X") viene dado por el parametro $cantMenues.
-         * El total de la mesa hay que pasarlo para luego dividirlo por la cantMenues
-         *
-         * @param integer $cantMenues cantidad, por ejemplo
-         * @param float $total
-         */
-        function getProductosSinDescripcion($cantMenues, $descripcion = 'Menu'){
-            if ($descripcion == 'Menu' && ($descAux = Configure::read('Mesa.descripcionSinProductos'))){
-                $descripcion = $descAux;
-            }
-            $prod[0]['nombre'] = $descripcion;
-            $total = $this->calcular_subtotal();
-            $prod[0]['precio'] = number_format( $total/$cantMenues, 2);
-            $prod[0]['cantidad'] = $cantMenues;
-            return $prod;
         }
-	
-	function dameProductosParaTicket($id = 0){
-		if($id != 0) $this->id = $id;
+        return $mesas;
+    }
+
+    function listadoAbiertasYSinCobrar($recursive = -1)
+    {
+
+        $conditions = array("Mesa.estado_id <" => MESA_COBRADA);
+
+        if ($recursive > -1) {
+            $this->recursive = $recursive;
+            $mesas = $this->find('all', array(
+                'conditions' => $conditions));
+        } else {
+            $mesas = $this->find('all', array(
+                'conditions' => $conditions,
+                'contain' => array('Mozo(numero, id)')));
+        }
+
+        //debug($mesas);
+        return $mesas;
+    }
+
+    /**
+     * nos dice si el numero de mesa existe o no
+     * 
+     * @param integer numero demesa
+     * @return boolean
+     */
+    function numero_de_mesa_existente($numero_mesa = 0)
+    {
+        if ($numero_mesa == 0) {
+            if (!empty($this->data['Mesa']['numero'])) {
+                $numero_mesa = $this->data['Mesa']['numero'];
+            }
+        }
+
+        $this->recursive = -1;
+        $conditions = array(
+            'estado_id' => MESA_ABIERTA,
+            'numero' => $numero_mesa);
+
+        if (!empty($this->id)) {
+            if ($this->id != '') {
+                $conditions = array_merge($conditions, array('Mesa.id <>' => $this->id));
+            }
+        }
+
+        $result = $this->find('count', array('conditions' => $conditions));
+
+        return ($result > 0) ? true : false;
+    }
+
+    function getNumero($mesa_id = 0)
+    {
+        if ($mesa_id != 0) {
+            $this->id = $mesa_id;
+        }
+        $mesa = $this->read();
+        return $mesa['Mesa']['numero'];
+    }
+
+    /**
+     *
+     * Esta funcion sirve para los casos en que no se quiere mostrar
+     * el detalle de los productos consumidos en el ticket.
+     * En ese caso sale impresa la leyenda "X MENU". La cantidad de menues
+     * (en este caso "X") viene dado por el parametro $cantMenues.
+     * El total de la mesa hay que pasarlo para luego dividirlo por la cantMenues
+     *
+     * @param integer $cantMenues cantidad, por ejemplo
+     * @param float $total
+     */
+    function getProductosSinDescripcion($cantMenues, $descripcion = 'Menu')
+    {
+        if ($descripcion == 'Menu' && ($descAux = Configure::read('Mesa.descripcionSinProductos'))) {
+            $descripcion = $descAux;
+        }
+        $prod[0]['nombre'] = $descripcion;
+        $total = $this->calcular_subtotal();
+        $prod[0]['precio'] = number_format($total / $cantMenues, 2);
+        $prod[0]['cantidad'] = $cantMenues;
+        return $prod;
+    }
+
+    function dameProductosParaTicket($id = 0)
+    {
+        if ($id != 0)
+            $this->id = $id;
 
 
-                $items = $this->query("
+        $items = $this->query("
                     select sum(cant-cant_eliminada) as cant, name as 'name', precio as precio from (
                         select
                         dc.cant,
@@ -397,173 +431,185 @@ class Mesa extends AppModel {
                 having cant > 0
                 order by orden
                 ");
-                
-                $vItems = array();
-                $cont = 0;
-                foreach ($items as &$i) {
-                    $vItems[$cont]['nombre'] = $i['DetalleComanda']['name'];
-                    $vItems[$cont]['cantidad'] = $i[0]['cant'];
-                    $vItems[$cont]['precio'] = cqs_round($i['DetalleComanda']['precio'],2);
-                    $cont++;
-                }		
-		
-		return $vItems;
-	}
-	
-	
-	
-	/**
-	 * devuelve todaslasmesas cerradas orcdenadas por fecha de cierre ASC
-	 * @return array mesas find(all)
-	 */
-	function todasLasCerradas(){
-		$this->recursive = 0;
-		$conditions = array('estado_id' => MESA_CERRADA);
-		return $this->find('all',array('conditions'=>$conditions, 'order'=>'time_cerro'));
-	}
 
-
-
-        /**
-         * Dice si una mesa esta cerrada o no
-         * @param integer $id
-         * @return boolean
-         */
-        function estaCerrada($id = null){
-            if (!empty($id)){
-                $this->id = $id;
-            }
-            // si lo tengo en memoria primero busco por aca
-            if (!empty($this->data[$this->name]['estado_id'])){
-                return $this->data[$this->name]['estado_id'] == MESA_CERRADA;
-            }
-            // lo busco en BBDD        
-            $ret = $this->find('count', array(
-                'conditions' => array(
-                    'Mesa.estado_id' => MESA_CERRADA,
-                    'Mesa.id' => $this->id,
-
-                )
-            ));
-
-            if ($ret > 0) return false;
-            else return true;
-        }
-        
-        
-        
-        
-        /**
-         * Dice si una mesa esta abierta o no
-         * @param integer $id
-         * @return boolean
-         */
-        function estaAbierta($id = null){
-            if (!empty($id)){
-                $this->id = $id;
-            }
-            // si lo tengo en memoria primero busco por aca
-            if ( !empty($this->data[$this->name]['estado_id']) ){
-                return $this->data[$this->name]['estado_id'] == MESA_ABIERTA;
-            }
-            // lo busco en BBDD        
-            $ret = $this->find('count', array(
-                'conditions' => array(
-                    'Mesa.estado_id' => MESA_ABIERTA,
-                    'Mesa.id' => $this->id,
-
-                )
-            ));
-
-            return ($ret > 0);
+        $vItems = array();
+        $cont = 0;
+        foreach ($items as &$i) {
+            $vItems[$cont]['nombre'] = $i['DetalleComanda']['name'];
+            $vItems[$cont]['cantidad'] = $i[0]['cant'];
+            $vItems[$cont]['precio'] = cqs_round($i['DetalleComanda']['precio'], 2);
+            $cont++;
         }
 
+        return $vItems;
+    }
 
-        function reabrir($mesa_id = null){
-            if (!empty($mesa_id)) {
-                $this->id = $mesa_id;
-            }
-            $this->Pago->deleteAll(array(
-                'mesa_id' => $mesa_id
-            ), $cascada = false);
-            $result = $this->saveField('estado_id', MESA_ABIERTA);
+    /**
+     * devuelve todaslasmesas cerradas orcdenadas por fecha de cierre ASC
+     * @return array mesas find(all)
+     */
+    function todasLasCerradas()
+    {
+        $this->recursive = 0;
+        $conditions = array('estado_id' => MESA_CERRADA);
+        return $this->find('all', array('conditions' => $conditions, 'order' => 'time_cerro'));
+    }
+
+    /**
+     * Dice si una mesa esta cerrada o no
+     * @param integer $id
+     * @return boolean
+     */
+    function estaCerrada($id = null)
+    {
+        if (!empty($id)) {
+            $this->id = $id;
+        }
+        // si lo tengo en memoria primero busco por aca
+        if (!empty($this->data[$this->name]['estado_id'])) {
+            return $this->data[$this->name]['estado_id'] == MESA_CERRADA;
+        }
+        // lo busco en BBDD        
+        $ret = $this->find('count', array(
+            'conditions' => array(
+                'Mesa.estado_id' => MESA_CERRADA,
+                'Mesa.id' => $this->id,
+            )
+                ));
+
+        if ($ret > 0)
+            return false;
+        else
+            return true;
+    }
+
+    /**
+     * Dice si una mesa esta abierta o no
+     * @param integer $id
+     * @return boolean
+     */
+    function estaAbierta($id = null)
+    {
+        if (!empty($id)) {
+            $this->id = $id;
+        }
+        // si lo tengo en memoria primero busco por aca
+        if (!empty($this->data[$this->name]['estado_id'])) {
+            return $this->data[$this->name]['estado_id'] == MESA_ABIERTA;
+        }
+        // lo busco en BBDD        
+        $ret = $this->find('count', array(
+            'conditions' => array(
+                'Mesa.estado_id' => MESA_ABIERTA,
+                'Mesa.id' => $this->id,
+            )
+                ));
+
+        return ($ret > 0);
+    }
+
+    
+/**
+ * Elimina los pagos que tiene esa mesa asociada (si es que los tiene)
+ * Pone el estado de la mesa en "Abierta"
+ * 
+ * @param type $mesa_id
+ * @return boolean true if success
+ */    
+    function reabrir($mesa_id = null)
+    {
+        if (!empty($mesa_id)) {
+            $this->id = $mesa_id;
         }
         
+        // eliminar todos los pagos
+        if ( !$this->Pago->deleteAll(array(
+            'mesa_id' => $this->id
+                ), $cascada = false)) {
+            return false;
+        }
         
-        
-        
-        /**
-         * Me devuelve un listado agrupado por dia de mesas. Util para estadistica y contabilidad
-         * @param type $fechaDesde string formato de fecha debe ser del tip AÑO-mes-dia Y-m-d
-         * @param type $fechaHasta string formato de fecha debe ser del tip AÑO-mes-dia Y-m-d
-         * @param type $conds array de condiciones extra
-         */
-        function totalesDeMesasEntre($fechaDesde = '', $fechaHasta = '', $conds = array()){
-            $horarioCorte = Configure::read('Horario.corte_del_dia');
-            $limit = empty($conds['limit']) ? '' : $conds['limit'];
-            $desde = empty($fechaDesde) ? date('Y-m-d', strtotime('now')) : $fechaDesde;
-            $hasta = empty($fechaHasta) ? date('Y-m-d', strtotime('now')) : $fechaHasta;
-            
-            $fieldConds = empty($conds['fields']) ? array() : $conds['fields'];
-            $fields = array_merge( array( 'count(*) as "cant_mesas"'), $fieldConds );
-            
-            $groups = empty($conds['fields']) ? array() : $conds['group'];
-            
-            $fieldsText = '';
+        if (!$this->saveField('estado_id', MESA_ABIERTA)){
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Me devuelve un listado agrupado por dia de mesas. Util para estadistica y contabilidad
+     * @param type $fechaDesde string formato de fecha debe ser del tip AÑO-mes-dia Y-m-d
+     * @param type $fechaHasta string formato de fecha debe ser del tip AÑO-mes-dia Y-m-d
+     * @param type $conds array de condiciones extra
+     */
+    function totalesDeMesasEntre($fechaDesde = '', $fechaHasta = '', $conds = array())
+    {
+        $horarioCorte = Configure::read('Horario.corte_del_dia');
+        $limit = empty($conds['limit']) ? '' : $conds['limit'];
+        $desde = empty($fechaDesde) ? date('Y-m-d', strtotime('now')) : $fechaDesde;
+        $hasta = empty($fechaHasta) ? date('Y-m-d', strtotime('now')) : $fechaHasta;
+
+        $fieldConds = empty($conds['fields']) ? array() : $conds['fields'];
+        $fields = array_merge(array('count(*) as "cant_mesas"'), $fieldConds);
+
+        $groups = empty($conds['fields']) ? array() : $conds['group'];
+
+        $fieldsText = '';
+        $i = 0;
+        foreach ($fields as $f) {
+            if ($i > 0) {
+                $fieldsText .= ', ';
+            }
+            $fieldsText .= $f;
+            $i++;
+        }
+
+        $groupByText = '';
+        if (!empty($groups)) {
+            $groupByText = 'GROUP BY ';
             $i = 0;
-            foreach ($fields as $f){
+            foreach ($groups as $g) {
                 if ($i > 0) {
-                    $fieldsText .= ', ';
+                    $groupByText .= ', ';
                 }
-                $fieldsText .= $f;
+                $groupByText .= $g;
                 $i++;
             }
-            
-            $groupByText = '';
-            if (!empty($groups)) {
-                $groupByText = 'GROUP BY ';
-                $i = 0;
-                foreach ($groups as $g){
-                    if ($i > 0) {
-                        $groupByText .= ', ';
-                    }
-                    $groupByText .= $g;
-                    $i++;
+        }
+
+        $orderByText = 'ORDER BY m.created DESC ';
+        $order = empty($conds['order']) ? array() : $conds['order'];
+        if (!empty($order)) {
+            $orderByText = 'ORDER BY ';
+            $i = 0;
+            foreach ($order as $o) {
+                if ($i > 0) {
+                    $orderByText .= ', ';
                 }
+                $orderByText .= $o;
+                $i++;
             }
-            
-            $orderByText = 'ORDER BY m.created DESC ';
-            $order = empty($conds['order']) ? array() : $conds['order'];
-            if (!empty($order)) {
-                $orderByText = 'ORDER BY ';
-                $i = 0;
-                foreach ($order as $o){
-                    if ($i > 0) {
-                        $orderByText .= ', ';
-                    }
-                    $orderByText .= $o;
-                    $i++;
-                }
-            }
-            
-            $query = '    SELECT 
-                    '.$fieldsText.'
+        }
+
+        $query = '    SELECT 
+                    ' . $fieldsText . '
 FROM (
     SELECT m.id, m.numero, m.mozo_id, m.total,m.subtotal, m.cant_comensales, 
     m.cliente_id, m.menu, ADDDATE(m.created,-1) as created, m.modified, m.time_cerro, m.time_cobro 
     FROM mesas m
-    WHERE m.deleted = 0 AND DATE(m.created) BETWEEN DATE(ADDDATE("'.$desde.'",+1)) AND DATE(ADDDATE("'.$hasta.'",+1)) 
-          AND HOUR(m.created) BETWEEN 0 AND '. $horarioCorte.'
+    WHERE m.deleted = 0 AND DATE(m.created) BETWEEN DATE(ADDDATE("' . $desde . '",+1)) AND DATE(ADDDATE("' . $hasta . '",+1)) 
+          AND HOUR(m.created) BETWEEN 0 AND ' . $horarioCorte . '
 UNION
     SELECT id,numero,mozo_id,total, m.total, cant_comensales, cliente_id,menu, created, modified, time_cerro, time_cobro 
     FROM mesas m
-    WHERE m.deleted = 0 AND DATE(m.created) BETWEEN "'.$desde.'" AND "'.$hasta.'" AND HOUR(m.created) BETWEEN '.$horarioCorte.' AND 24) as m    
+    WHERE m.deleted = 0 AND DATE(m.created) BETWEEN "' . $desde . '" AND "' . $hasta . '" AND HOUR(m.created) BETWEEN ' . $horarioCorte . ' AND 24) as m    
               
 LEFT JOIN mozos z ON z.id = m.mozo_id              
-'. $groupByText .'
-'. $orderByText. '    
-'. $limit;
-            return $this->query($query);
-        }
+' . $groupByText . '
+' . $orderByText . '    
+' . $limit;
+        return $this->query($query);
+    }
+
 }
+
 ?>

@@ -1,0 +1,148 @@
+
+nav{
+    float: left;
+    width: 20%;
+}
+
+nav > ul.ui-listview{
+    margin: 0 !important;
+}
+
+
+#maincontent{
+    width: 77%;
+    float: right;
+    padding-left: 3%;
+}
+
+table{
+    width: 100%;
+    
+}
+
+table td{
+    padding: 5px 0;
+}
+
+table tr:hover{
+    background: #fff;
+}
+
+
+
+/**
+ * Basic
+ */
+
+
+.info, .success, .warning, .error, .validation, .message {
+    padding: 1em;
+    border: 1px solid;
+    margin: 10px 0px;
+    padding:15px 10px 15px 50px;
+    background-repeat: no-repeat;
+    background-position: 10px center;
+}
+.info {
+    color: #00529B;
+    background-color: #BDE5F8;
+    background-image: url('img/glyphish/glyphicons_195_circle_info.png');
+}
+.success {
+    color: #4F8A10;
+    background-color: #DFF2BF;
+    background-image: url('img/glyphish/glyphicons_344_thumbs_up.png');
+}
+.warning, .message {
+    color: #9F6000;
+    background-color: #FEEFB3;
+    background-image: url('img/glyphish/glyphicons_196_circle_exclamation_mark.png');
+}
+.error {
+    color: #D8000C;
+    background-color: #FFBABA;
+    background-image: url('img/glyphish/glyphicons_345_hand_right.png');
+}
+
+
+
+
+/** HOME BUTTONS **/
+ul.dashboard-buttons{
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0;
+    width: 600px;
+}
+
+.dashboard-buttons li{
+    float: left;
+}
+
+.dashboard-buttons a{
+    display: block;
+    height: 150px;
+    width: 150px;    
+    overflow: hidden;
+    text-align: center;
+}
+
+.dashboard-buttons a:hover{
+    opacity: 0.8;
+}
+
+#bton-estadisticas{
+	background-image: url("../img/stats.png");
+}
+
+#bton-adicion{
+	background-image: url("../img/adicion.png");
+}
+
+#bton-caja{
+	background-image: url("../img/caja.png");
+}
+
+#bton-admin{
+	background-image: url("../img/admin.png");
+}
+
+#bton-contabilidad{
+	background-image: url("../img/contabilidad.png");
+        background-position: center top;
+	background-repeat: no-repeat;
+        padding-bottom: 0px;
+        padding-left: 50px;
+        padding-right: 50px;
+        padding-top: 150px;
+}
+
+#bton-inven {
+	background-image: url("../img/inventario.png");
+}
+
+
+.mozo-puntito {
+    font-size: 26px; 
+    margin-top: -5px;
+    color: grey;
+    text-align: center;
+}
+
+.mozo_activo{
+     color: #0f0;
+}
+
+
+.clientes .ui-field-contain .ui-controlgroup-controls{
+    width: 100%;
+}
+
+
+.tipoDePagos form img{
+    max-height: 100px;
+}
+
+img.tipodepago{
+    max-height: 80px;
+}

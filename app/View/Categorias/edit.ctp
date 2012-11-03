@@ -1,5 +1,4 @@
         <?php    
-        echo $this->element('menuadmin');
         
         debug($this->data['Categoria']['image_url']);
         

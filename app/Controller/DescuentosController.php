@@ -1,85 +1,112 @@
 <?php
+App::uses('AppController', 'Controller');
+/**
+ * Descuentos Controller
+ *
+ * @property Descuento $Descuento
+ */
 class DescuentosController extends AppController {
+    
+    public $paginate = array(
+        'limit' => 100
+    );
 
-	public $helpers = array('Html', 'Form');
-        public $components = array('Session');
-        
-
-       function beforeFilter() {
-            parent::beforeFilter();
-        }
-        
-	function index() {
+/**
+ * admin_index method
+ *
+ * @return void
+ */
+	public function admin_index() {
 		$this->Descuento->recursive = 0;
-		$this->set('descuentos', $this->paginate());
-	}
-        
-	function all_descuentos() {
-		$this->Descuento->recursive = 0;
-                $conds = array();
                 
-                if ( $this->Session->read('Auth.User.role') == 'mozo' ) {
+                if ( strtolower( $this->Session->read('Auth.User.rol') ) == 'mozo' ) {
                     $descMax = Configure::read('Mozo.descuento_maximo');
                     if ( isset($descMax) ) {
-                        $conds['Descuento.porcentaje <='] = $descMax;
+                        $paginate['conditions']['Descuento.porcentaje <='] = $descMax;
                     }
                 }
                 
-                $descs = $this->Descuento->find('all', array(
-                    'conditions' => $conds
-                ));
-		$this->set('descuentos', $descs);
+		$this->set('descuentos', $this->paginate());
 	}
-        
 
-	function view($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid Descuento.', true));
-			$this->redirect(array('action'=>'index'));
+/**
+ * admin_view method
+ *
+ * @param string $id
+ * @return void
+ */
+	public function admin_view($id = null) {
+		$this->Descuento->id = $id;
+		if (!$this->Descuento->exists()) {
+			throw new NotFoundException(__('Invalid descuento'));
 		}
+                $this->Descuento->contain( array(
+                    'Cliente',
+                ));
+                
 		$this->set('descuento', $this->Descuento->read(null, $id));
 	}
 
-	function add() {
-		if (!empty($this->request->data)) {
+/**
+ * admin_add method
+ *
+ * @return void
+ */
+	public function admin_add() {
+		if ($this->request->is('post')) {
 			$this->Descuento->create();
 			if ($this->Descuento->save($this->request->data)) {
-				$this->Session->setFlash(__('The Descuento has been saved', true));
-				$this->redirect(array('action'=>'index'));
+				$this->Session->setFlash(__('The descuento has been saved'));
+				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The Descuento could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('The descuento could not be saved. Please, try again.'));
 			}
 		}
 	}
 
-	function edit($id = null) {
-		if (!$id && empty($this->request->data)) {
-			$this->Session->setFlash(__('Invalid Descuento', true));
-			$this->redirect(array('action'=>'index'));
+/**
+ * admin_edit method
+ *
+ * @param string $id
+ * @return void
+ */
+	public function admin_edit($id = null) {
+		$this->Descuento->id = $id;
+		if (!$this->Descuento->exists()) {
+			throw new NotFoundException(__('Invalid descuento'));
 		}
-		if (!empty($this->request->data)) {
+		if ($this->request->is('post') || $this->request->is('put')) {
 			if ($this->Descuento->save($this->request->data)) {
-				$this->Session->setFlash(__('The Descuento has been saved', true));
-				$this->redirect(array('action'=>'index'));
+				$this->Session->setFlash(__('The descuento has been saved'));
+				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The Descuento could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('The descuento could not be saved. Please, try again.'));
 			}
-		}
-		if (empty($this->request->data)) {
+		} else {
 			$this->request->data = $this->Descuento->read(null, $id);
 		}
 	}
 
-	function delete($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for Descuento', true));
-			$this->redirect(array('action'=>'index'));
+/**
+ * admin_delete method
+ *
+ * @param string $id
+ * @return void
+ */
+	public function admin_delete($id = null) {
+		if (!$this->request->is('post')) {
+			throw new MethodNotAllowedException();
 		}
-		if ($this->Descuento->del($id)) {
-			$this->Session->setFlash(__('Descuento deleted', true));
-			$this->redirect(array('action'=>'index'));
+		$this->Descuento->id = $id;
+		if (!$this->Descuento->exists()) {
+			throw new NotFoundException(__('Invalid descuento'));
 		}
+		if ($this->Descuento->delete()) {
+			$this->Session->setFlash(__('Descuento deleted'));
+			$this->redirect(array('action' => 'index'));
+		}
+		$this->Session->setFlash(__('Descuento was not deleted'));
+		$this->redirect(array('action' => 'index'));
 	}
-
+        
 }
-?>

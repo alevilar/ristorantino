@@ -6,15 +6,44 @@ class DetalleComandasController extends AppController {
 	var $components = array( 'Printer');
 
 	function index() {
-		$this->DetalleComanda->recursive = 0;
+		$this->DetalleComanda->recursive = -1;
                 $conditions['order'] = array('Producto.name');
+
                 $conditions['group'] = array('Producto.id', 'Producto.name');
-                $conditions['fields'] = array('Producto.name', 'sum(DetalleComanda.cant-DetalleComanda.cant_eliminada) as "cant"');
+                $conditions['joins'] = array(
+                            array(
+                                'table' => 'productos',
+                                'alias' => 'Producto',
+                                'type' => 'LEFT',
+                                'conditions' => array(
+                                    'Producto.id = DetalleComanda.producto_id',
+                                )
+                            ),
+                            array('table' => 'productos_tags',
+                                'alias' => 'ProductoTag',
+                                'type' => 'INNER',
+                                'conditions' => array(
+                                    'Producto.id = ProductoTag.producto_id',
+                                )
+                            )
+                        );
+
+
+                $conditions['fields'] = array(
+                                            'Producto.name', 
+                                            'sum(DetalleComanda.cant-DetalleComanda.cant_eliminada) as "cant"'
+                    );
                 
                 // procesar buscador
                 if (!empty($this->request->data)) {
                     if (!empty( $this->request->data['Producto']['id'] )) {
                         $conditions['conditions']['Producto.id'] = $this->request->data['Producto']['id'];
+                    }
+                    if (!empty( $this->request->data['Producto']['categoria_id'] )) {
+                        $conditions['conditions']['Producto.categoria_id'] = $this->request->data['Producto']['categoria_id'];
+                    }
+                    if (!empty( $this->request->data['ProductoTag']['tag_id'] )) {
+                        $conditions['conditions']['ProductoTag.tag_id'] = $this->request->data['ProductoTag']['tag_id'];
                     }
                     if (!empty($this->request->data['DetalleComanda']['desde'])){
                         $conditions['conditions']['DetalleComanda.created >='] = jsDate( $this->request->data['DetalleComanda']['desde'] );
@@ -26,11 +55,11 @@ class DetalleComandasController extends AppController {
                 }
                 $this->set('productos', $this->DetalleComanda->Producto->find('list', array('order' => 'name')));
 		$this->set('comandas', $this->DetalleComanda->find('all', $conditions));
+                $this->set('tags', $this->DetalleComanda->Producto->Tag->find('list'));
+                $this->set('categorias', $this->DetalleComanda->Producto->Categoria->find('list'));
 	}
 	
-	function prueba(){
-		debug($this->DetalleComanda->find('all'));die();
-	}
+        
 
 	function view($id = null) {
 		if (!$id) {

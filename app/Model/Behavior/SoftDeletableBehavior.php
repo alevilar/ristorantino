@@ -276,7 +276,7 @@ class SoftDeletableBehavior extends ModelBehavior
 				}
 				else
 				{
-					$queryData['conditions'][$Model->alias . '.' . $this->__settings[$Model->alias]['field']] = '!= 1';
+					$queryData['conditions'][$Model->alias . '.' . $this->__settings[$Model->alias]['field'].' <>'] = 1;
 				}
 			}
 		}

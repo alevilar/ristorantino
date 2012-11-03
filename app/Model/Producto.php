@@ -39,7 +39,7 @@ class Producto extends AppModel {
 								'exclusive' => '',
 								'finderQuery' => '',
 								'counterQuery' => ''
-			)
+			),
 	);
         
         

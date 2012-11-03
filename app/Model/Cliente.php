@@ -15,6 +15,17 @@ class Cliente extends AppModel {
 
 	var $name = 'Cliente';
         
+        public $actsAs = array('Search.Searchable');
+        
+        public $filterArgs = array(
+			'nombre' => array('type' => 'like'),
+			'nrodocumento' => array('type' => 'like'),
+			'codigo' => array('type' => 'value'),
+                        'iva_responsabilidad_id' => array('type' => 'value'),
+                        'descuento_id' => array('type' => 'value'),
+			'telefono' => array('type' => 'like'),
+		);
+        
 /**
  * Display field
  *
@@ -42,11 +53,14 @@ class Cliente extends AppModel {
 		'imprime_ticket' => array('boolean'),
 	
 		'nombre' => array(
-                            'notempty' => 'notempty',                            
+                            'notempty' => 'notempty',
+                            'required' => true
 		),
 		
                 'mail' => array(
-                    'email' => 'email',
+                        'rule' => 'email',
+                        'message' => 'Formato de mail incorrecto',
+                        'allowEmpty' => true,
                 ),
             
 		'nrodocumento' => array(
