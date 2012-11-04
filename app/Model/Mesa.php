@@ -54,15 +54,10 @@ class Mesa extends AppModel
 
     /*
      * Valor total de una mesa Objeto en particular.
-     * Es el array que devuelve la funcion calcular_total()
+     * Es el array que devuelve la funcion getTotal()
      * @public $total float
      */
-    public $total = array(
-        'Mesa' => array(
-            'subtotal' => 0,
-            'total' => 0,
-            'descuento' => 0,
-            ));
+    public $total = array();
     
     
     //The Associations below have been created with all possible keys, those that are not needed can be removed
@@ -86,6 +81,7 @@ class Mesa extends AppModel
         MESA_CERRADA => "Cerrada",
         MESA_COBRADA => "Cobrada",
     );
+       
 
     public function save($data = null, $validate = true, $fieldList = array())
     {
@@ -102,6 +98,11 @@ class Mesa extends AppModel
         if (!empty($id)) {
             $this->id = $id;
         }
+        
+        if (!empty($this->data['Mozo']['numero'])) {
+            $this->mozoNumero = $this->data['Mozo']['numero'];
+        }
+        
         if (empty($this->mozoNumero)) {
             $mozo = $this->find('first', array(
                 'conditions' => array('Mesa.id' => $this->id),
@@ -124,8 +125,8 @@ class Mesa extends AppModel
 
         $mesaData['Mesa'] = array(
             'estado_id' => MESA_CERRADA,
-            'total' => $this->calcular_total(),
-            'subtotal' => $this->calcular_subtotal(),
+            'total' => $this->getTotal(),
+            'subtotal' => $this->getSubtotal(),
             'time_cerro' => date("Y-m-d H:i:s", strtotime('now')),
         );
 
@@ -188,31 +189,31 @@ class Mesa extends AppModel
             $this->id = $id;
 
         $total = $this->query("
-                select mesa_id, IF(ISNULL(descuentos.porcentaje), 0 , descuentos.porcentaje) as descuento
-		from detalle_comandas
-		left join comandas on (comanda_id = comandas.id)
-		left join mesas on (mesa_id = mesas.id)
-		left join clientes on (clientes.id = mesas.cliente_id )
-		left join descuentos on (clientes.descuento_id = descuentos.id)
-		where 
-		mesa_id = $this->id
-		group by mesa_id        
+                select m.mesa_id, IF(ISNULL(desc.porcentaje), 0 , desc.porcentaje) as descuento, IF(ISNULL(clidesc.porcentaje), 0 , clidesc.porcentaje) as descuentocli
+		FROM detalle_comandas dc
+		LEFT JOIN comandas c on (dc.comanda_id = c.id)
+		LEFT JOIN mesas m on (c.mesa_id = ..id)
+		LEFT JOIN clientes cli on (cli.id = m.cliente_id )                
+		LEFT JOIN descuentos clidesc on (cli.descuento_id = clidesc.id)
+                LEFT JOIN descuentos desc on (desc.id = m.descuento_id)
+		WHERE 
+		dc.mesa_id = $this->id
+		GROUP BY dc.mesa_id        
             ");
-        return $total[0][0]['descuento'];
+        $descuentoTotal = $total[0][0]['descuento']+$total[0][0]['descuentocli'];
+        
+        return $descuentoTotal;
     }
 
-    function calcular_subtotal($id = null)
-    {
-        if (!empty($id))
+    
+    public function calcular_totales($id = null) {
+        if (!empty($id)) {
             $this->id = $id;
-
-        if (!empty($this->total['Mesa']['subtotal'])) {
-            return $this->total['Mesa']['subtotal'];
         }
-
-        if ($this->cantidadDeProductos() == 0)
+  
+        if ( !$this->DetalleComanda->tieneProductosLaMesa( $this->id ) ) {
             return 0;
-
+        }
 
         $totalProductos = $this->calcular_total_productos();
         $totalPorcentajeDescuento = $this->calcular_descuentos();
@@ -230,6 +231,47 @@ class Mesa extends AppModel
         $this->total['Mesa']['subtotal'] = $totalProductos + $valor_cubierto;
         $this->total['Mesa']['total'] = cqs_round($this->total['Mesa']['subtotal'] * $conversionDescuento);
         $this->total['Mesa']['descuento'] = $totalPorcentajeDescuento;
+        $this->total['Mesa']['importe_descuento'] = $this->total['Mesa']['subtotal'] - $this->total['Mesa']['total'];
+        
+        return $this->total;
+    }
+    
+    function getImporteDescuento($id = null)
+    {
+        if (empty($id)) {
+            $id = $this->id;
+        }
+        
+        if (empty($this->total)) {
+            $this->calcular_totales($id);
+        }
+        
+        return $this->total['Mesa']['importe_descuento'];
+    }
+    
+    function getPorcentaeDescuento($id = null)
+    {
+        if (empty($id)) {
+            $id = $this->id;
+        }
+        
+        if (empty($this->total)) {
+            $this->calcular_totales($id);
+        }
+        
+        return $this->total['Mesa']['descuento'];
+    }
+    
+    function getSubtotal($id = null)
+    {
+        if (empty($id)) {
+            $id = $this->id;
+        }
+        
+        if (empty($this->total)) {
+            $this->calcular_totales($id);
+        }
+        
         return $this->total['Mesa']['subtotal'];
     }
 
@@ -237,32 +279,19 @@ class Mesa extends AppModel
      * Calcula el total de la mesa cuyo id fue seteado en $this->Mesa->id 
      * return @total el valor
      */
-    function calcular_total($id = null)
+    function getTotal($id = null)
     {
-        if (!empty($id))
-            $this->id = $id;
-
-        if (empty($this->total['Mesa']['total'])) {
-            $this->calcular_subtotal();
+        if (empty($id)) {
+            $id = $this->id;
         }
+        
+        if (empty($this->total)) {
+            $this->calcular_totales($id);
+        }
+
         return $this->total['Mesa']['total'];
     }
 
-    function cantidadDeProductos($id = 0)
-    {
-        if ($id != 0)
-            $this->id = $id;
-
-        $items = $this->Comanda->DetalleComanda->find('count', array(
-            'conditions' => array(
-                'Comanda.mesa_id' => $this->id,
-                '(DetalleComanda.cant - DetalleComanda.cant_eliminada) >' => 0),
-            'order' => 'Comanda.id ASC, Producto.categoria_id ASC, Producto.id ASC',
-            'contain' => array('Producto', 'Comanda', 'DetalleSabor' => 'Sabor(name,precio)')
-                ));
-
-        return $items;
-    }
 
     /**
      * Me devuelve ellistado de productos de una mesa en especial
@@ -393,7 +422,7 @@ class Mesa extends AppModel
             $descripcion = $descAux;
         }
         $prod[0]['nombre'] = $descripcion;
-        $total = $this->calcular_subtotal();
+        $total = $this->getSubtotal();
         $prod[0]['precio'] = number_format($total / $cantMenues, 2);
         $prod[0]['cantidad'] = $cantMenues;
         return $prod;
@@ -610,6 +639,54 @@ LEFT JOIN mozos z ON z.id = m.mozo_id
         return $this->query($query);
     }
 
+
+    
+/**
+ * Trae todos los datos necesarios para que se pueda imprimir un ticket 
+ * 
+ * @param integer $mesa_id 
+ * @return array
+ */    
+    public function getDataParaFiscal($mesa_id = null) {
+        // el array que serpa devuelto
+        $mesaData = array();
+        
+        if (empty($mesa_id)) {
+            $mesa_id = $this->id;
+        }
+        
+        $mesa = $this->Mesa = $this->Model->Mesa->find('first',array(
+            'contain'=>array(
+                'Mozo',
+                'Cliente'=>array(
+                    'Descuento',
+                    'IvaResponsabilidad',
+                    'TipoDocumento',
+                    )
+                ),
+            'condition' => array(
+                'Mesa.id' => $mesa_id
+            )
+        ));
+        
+        $prod = array();
+        if ( $mesa['Mesa']['menu'] > 0 ) {
+            $prod = $this->Mesa->getProductosSinDescripcion($mesa['Mesa']['menu']);
+        } else {
+            $prod = $this->Mesa->dameProductosParaTicket();
+        }
+        
+        $mesaData = $mesa['Mesa'];
+        $mesaData['Mesa']['mozo_numero'] = $mesa['Mozo']['numero'];
+        
+        $mesaData['Items'] = $prod;
+        
+        $totales = $this->calcular_totales();
+        $mesaData['Totales'] = $totales['Mesa'];
+        
+        return $mesaData;
+        
+    }
 }
 
 ?>

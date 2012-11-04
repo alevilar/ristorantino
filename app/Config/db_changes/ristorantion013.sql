@@ -50,7 +50,6 @@ ALTER TABLE `clientes` DROP `user_id`;
 ALTER TABLE  `clientes` CHANGE  `codigo`  `codigo` VARCHAR( 64 ) NULL DEFAULT NULL;
 
 ALTER TABLE `clientes` DROP `imprime_ticket`;
-ALTER TABLE `clientes` DROP `tipofactura`;
 ALTER TABLE `clientes` DROP `tipodocumento`;
 
 

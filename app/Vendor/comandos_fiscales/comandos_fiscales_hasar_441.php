@@ -26,6 +26,11 @@ class ComandosImpresora extends ComandosFiscales
 	 * 							"T": abre un ticket
 	 * 							"A": abre ticket factura 'A'
 	 * 							"B": abre ticket factura 'B' o 'C'
+         *                                                      "a": abre recibo 'A'
+         *                                                      "b": abre recibo 'B'
+         *                                                      "D": Nota de Débito 'A'
+         *                                                      "E": Nota de Débito B/C
+         * 
 	 */
 	public function openFiscalReceipt($tipo_ticket){
 		$tipo_ticket = strtoupper($tipo_ticket);
@@ -82,9 +87,9 @@ class ComandosImpresora extends ComandosFiscales
 	 * @param string $texto Ejemplo: "Pago en efectivo"
 	 * @param number $monto_pagado integer o float dependiendo de la impresora
 	 * @param $operacion las piopsibilidades son:
-	 * 											'C': Cancela el ticket
-	 * 											'T': pago parcial o total 
-	 * 											'R': devolucion de pago
+	 *          'C': Cancela el ticket
+	 *          'T': pago parcial o total 
+	 *          'R': devolucion de pago
 	 * @param $display	 para las impresoras que tengan display
 	 */
 	public function totalTender($texto, $monto_pagado, $operacion = "T", $display = 0){
@@ -104,12 +109,12 @@ class ComandosImpresora extends ComandosFiscales
 	}
 
         /**
-            Responde:
-            a. Imprimiendo una línea donde se muestra: descripción del descuento (o recargo), impuestos y monto del
-                descuento (o recargo) -con posterioridad a la impresión de la línea con la leyenda “Descuento (o Recargo)
-                   general”-;
-            b. Restando
-
+         * Responde:
+         *            a. Imprimiendo una línea donde se muestra: descripción del descuento (o recargo), impuestos y monto del
+         *                descuento (o recargo) -con posterioridad a la impresión de la línea con la leyenda “Descuento (o Recargo)
+         *                   general”-;
+         *            b. Restando
+         *
          * @param float $importe_descuento
          * @return string comando
          */
@@ -185,11 +190,12 @@ class ComandosImpresora extends ComandosFiscales
 	 * Setea el encabezado y el pie de pagina
 	 * 
 	 * @param integer $numero_de_linea
-	 * 						ENCABEZADO: linea 1  - 10
-	 * 						COLA: 		linea 11 - 20
-	 * 						BORRA ENCABEZADO Y COLA: linea =  0
-	 * 						BORRA ENCABEZADO: numero linea = -1
-	 * 						BORRA COLA: 	  numero linea = -2 
+	 * 		ENCABEZADO: linea 1  - 10
+	 * 		COLA: 		linea 11 - 20
+	 * 		BORRA ENCABEZADO Y COLA: linea =  0
+	 * 		BORRA ENCABEZADO: numero linea = -1
+	 * 		BORRA COLA: 	  numero linea = -2 
+         * 
 	 * @param $texto 45 caracteres maximo
 	 */
 	public function setHeaderTrailer($numero_de_linea,$texto = "-",$doble_ancho = false){
@@ -307,6 +313,9 @@ class ComandosImpresora extends ComandosFiscales
 	 * 					'4' Cedula de Identidad
          *                                      ' ' Sin clasificar (espacio en blanco)
 	 * @param string $domicilio
+         * 
+         * @todo Hacer que los tipos de responsabilidad IVA y los tipos de documentos sean arrays pasados como parametros
+         *       Con eso podremos utilizar una funcion mas simple y mas extensible como is_in_array(tipos_docs, "C")
 	 */
 	public function setCustomerData($nombre_cliente = " ",$documento = " ",$respo_iva = 'C', $tipo_documento = " ", $domicilio = '-'){
 		$nombre_cliente = substr($nombre_cliente,0,45);
@@ -323,10 +332,12 @@ class ComandosImpresora extends ComandosFiscales
 				}
 			}
 			else{ 	
-				return -1; //fallo tipo_documento
+                            throw new InternalErrorException('Error, no existe el tipo de documento pasado: '.$tipo_documento);
+                            return -1;
 			}	
 		}
 		else{
+                        throw new InternalErrorException('Error, no existe el tipo responsabilidad IVA: '.$respo_iva);
 			return -2; // fallo respo_iva
 		} 
 		return $comando;

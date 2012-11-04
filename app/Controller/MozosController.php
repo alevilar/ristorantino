@@ -18,12 +18,12 @@ class MozosController extends AppController {
             parent::beforeFilter();
         }
         
-	public function admin_index() {
+	public function index() {
 		$this->Mozo->recursive = 0;
 		$this->set('mozos', $this->paginate());
 	}
 
-	public function admin_view($id = null) {
+	public function view($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid Mozo.', true));
 			$this->redirect(array('action'=>'index'));
@@ -32,7 +32,7 @@ class MozosController extends AppController {
 		/*$this->layout='frames';*/
 	}
 
-	public function admin_add() {
+	public function add() {
 		if (!empty($this->request->data)) {
 			//$this->Mozo->create();
 
@@ -50,7 +50,7 @@ class MozosController extends AppController {
         
         
                 
-	public function admin_edit($id = null) {
+	public function edit($id = null) {
 		$this->Mozo->id = $id;
 		if (!$this->Mozo->exists()) {
 			throw new NotFoundException(__('Invalid mozo'));
@@ -68,7 +68,7 @@ class MozosController extends AppController {
 		
 	}
 
-	public function admin_delete($id = null) {
+	public function delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for Mozo', true));
 			$this->redirect(array('action'=>'index'));

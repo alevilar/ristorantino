@@ -226,7 +226,7 @@ class ViewTaskTest extends CakeTestCase {
 			array($out, $out, $in)
 		);
 		$this->Task->Template = new TemplateTask($out, $out, $in);
-		$this->Task->Controller = $this->getMock('ControllerTask', array(), array($out, $out, $in));
+		$this->Task->Model = $this->getMock('ControllerTask', array(), array($out, $out, $in));
 		$this->Task->Project = $this->getMock('ProjectTask', array(), array($out, $out, $in));
 		$this->Task->DbConfig = $this->getMock('DbConfigTask', array(), array($out, $out, $in));
 
@@ -455,7 +455,7 @@ class ViewTaskTest extends CakeTestCase {
 	public function testExecuteIntoAll() {
 		$this->Task->args[0] = 'all';
 
-		$this->Task->Controller->expects($this->once())->method('listAll')
+		$this->Task->Model->expects($this->once())->method('listAll')
 			->will($this->returnValue(array('view_task_comments')));
 
 		$this->Task->expects($this->at(0))->method('createFile')
@@ -481,7 +481,7 @@ class ViewTaskTest extends CakeTestCase {
 	public function testExecuteIntoAllWithActionName() {
 		$this->Task->args = array('all', 'index');
 
-		$this->Task->Controller->expects($this->once())->method('listAll')
+		$this->Task->Model->expects($this->once())->method('listAll')
 			->will($this->returnValue(array('view_task_comments')));
 
 		$this->Task->expects($this->once())->method('createFile')
@@ -603,7 +603,7 @@ class ViewTaskTest extends CakeTestCase {
 		$this->Task->args = array();
 		$this->Task->params = array();
 
-		$this->Task->Controller->expects($this->once())->method('getName')
+		$this->Task->Model->expects($this->once())->method('getName')
 			->will($this->returnValue('ViewTaskComments'));
 
 		$this->Task->expects($this->any())->method('in')
@@ -665,7 +665,7 @@ class ViewTaskTest extends CakeTestCase {
 		$this->Task->connection = 'test';
 		$this->Task->args = array();
 
-		$this->Task->Controller->expects($this->once())->method('getName')
+		$this->Task->Model->expects($this->once())->method('getName')
 			->will($this->returnValue('ViewTaskComments'));
 
 		$this->Task->Project->expects($this->once())->method('getPrefix')

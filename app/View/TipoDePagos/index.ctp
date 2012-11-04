@@ -14,9 +14,9 @@
 		<td><?php echo h($tipoDePago['TipoDePago']['name']); ?>&nbsp;</td>
 		<td><?php echo $this->Html->image($tipoDePago['TipoDePago']['image_url'], array('class' => 'tipodepago')); echo h($tipoDePago['TipoDePago']['image_url']); ?>&nbsp;</td>
 		<td class="actions">
-			<?php echo $this->Html->link(__('View'), array('action' => 'admin_view', $tipoDePago['TipoDePago']['id'])); ?>
-			<?php echo $this->Html->link(__('Edit'), array('action' => 'admin_add_edit', $tipoDePago['TipoDePago']['id'])); ?>
-			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'admin_delete', $tipoDePago['TipoDePago']['id']), null, __('Are you sure you want to delete # %s?', $tipoDePago['TipoDePago']['id'])); ?>
+			<?php echo $this->Html->link(__('View'), array('action' => 'view', $tipoDePago['TipoDePago']['id'])); ?>
+			<?php echo $this->Html->link(__('Edit'), array('action' => 'add_edit', $tipoDePago['TipoDePago']['id'])); ?>
+			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $tipoDePago['TipoDePago']['id']), null, __('Are you sure you want to delete # %s?', $tipoDePago['TipoDePago']['id'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>

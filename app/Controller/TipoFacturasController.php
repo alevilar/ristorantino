@@ -61,12 +61,12 @@ class TipoFacturasController extends AppController {
 	}
 
 
-	function admin_index() {
+	function index() {
 		$this->TipoFactura->recursive = 0;
 		$this->set('tipoFacturas', $this->paginate());
 	}
 
-	function admin_view($id = null) {
+	function view($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid TipoFactura', true));
 			$this->redirect(array('action' => 'index'));
@@ -74,7 +74,7 @@ class TipoFacturasController extends AppController {
 		$this->set('tipoFactura', $this->TipoFactura->read(null, $id));
 	}
 
-	function admin_add() {
+	function add() {
 		if (!empty($this->request->data)) {
 			$this->TipoFactura->create();
 			if ($this->TipoFactura->save($this->request->data)) {
@@ -86,7 +86,7 @@ class TipoFacturasController extends AppController {
 		}
 	}
 
-	function admin_edit($id = null) {
+	function edit($id = null) {
 		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__('Invalid TipoFactura', true));
 			$this->redirect(array('action' => 'index'));
@@ -104,7 +104,7 @@ class TipoFacturasController extends AppController {
 		}
 	}
 
-	function admin_delete($id = null) {
+	function delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for TipoFactura', true));
 			$this->redirect(array('action' => 'index'));

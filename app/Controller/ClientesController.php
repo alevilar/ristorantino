@@ -9,7 +9,7 @@ class ClientesController extends AppController
     
     public $paginate = array();
 
-    function admin_index()
+    function index()
     {
         $this->Prg->commonProcess();
         $this->paginate['conditions'] = $this->Cliente->parseCriteria($this->passedArgs);
@@ -19,7 +19,7 @@ class ClientesController extends AppController
         $this->set('clientes', $this->paginate());
     }
 
-    function admin_view($id = null)
+    function view($id = null)
     {
         if (!$id) {
             $this->Session->setFlash(__('Invalid Cliente.', true));
@@ -31,7 +31,7 @@ class ClientesController extends AppController
         $this->set('cliente', $this->Cliente->read(null, $id));
     }
 
-    public function admin_add()
+    public function add()
     {
         if ($this->request->is('post')) {
             $this->Cliente->create();
@@ -68,7 +68,7 @@ class ClientesController extends AppController
         $this->set(compact('iva_responsabilidades', 'tipo_documentos'));
     }
 
-    function admin_edit($id = null)
+    function edit($id = null)
     {
         if (!$id && empty($this->request->data)) {
             $this->Session->setFlash(__('Cliente incorrecto', true));
@@ -98,7 +98,7 @@ class ClientesController extends AppController
      * @param string $id
      * @return void
      */
-    public function admin_delete($id = null)
+    public function delete($id = null)
     {
         if (!$this->request->is('post')) {
             throw new MethodNotAllowedException();

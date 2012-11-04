@@ -8,6 +8,7 @@ echo $paginator->counter(array(
 ?></p>
 <table cellpadding="0" cellspacing="0">
 <tr>
+	<th><?php echo $paginator->sort('id');?></th>
 	<th><?php echo $paginator->sort('name');?></th>
 	<th><?php echo $paginator->sort('created');?></th>
 	<th><?php echo $paginator->sort('modified');?></th>
@@ -22,6 +23,9 @@ foreach ($tipoFacturas as $tipoFactura):
 	}
 ?>
 	<tr<?php echo $class;?>>
+		<td>
+			<?php echo $tipoFactura['TipoFactura']['id']; ?>
+		</td>
 		<td>
 			<?php echo $tipoFactura['TipoFactura']['name']; ?>
 		</td>

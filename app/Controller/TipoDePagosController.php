@@ -17,23 +17,23 @@ class TipoDePagosController extends AppController
     }
 
     /**
-     * admin_index method
+     * index method
      *
      * @return void
      */
-    public function admin_index()
+    public function index()
     {
         $this->TipoDePago->recursive = 0;
         $this->set('tipoDePagos', $this->paginate());
     }
 
     /**
-     * admin_view method
+     * view method
      *
      * @param string $id
      * @return void
      */
-    public function admin_view($id = null)
+    public function view($id = null)
     {
         $this->TipoDePago->id = $id;
         $this->TipoDePago->recursive = -1;
@@ -45,11 +45,11 @@ class TipoDePagosController extends AppController
     }
 
     /**
-     * admin_add method
+     * add method
      *
      * @return void
      */
-    public function admin_add_edit($id)
+    public function add_edit($id)
     {
         if ($this->request->is('post') || $this->request->is('put')) {
             if ($this->TipoDePago->save($this->request->data)) {
@@ -63,12 +63,12 @@ class TipoDePagosController extends AppController
     }
 
     /**
-     * admin_delete method
+     * delete method
      *
      * @param string $id
      * @return void
      */
-    public function admin_delete($id = null)
+    public function delete($id = null)
     {
         if (!$this->request->is('post')) {
             throw new MethodNotAllowedException();

@@ -12,11 +12,11 @@ class DescuentosController extends AppController {
     );
 
 /**
- * admin_index method
+ * index method
  *
  * @return void
  */
-	public function admin_index() {
+	public function index() {
 		$this->Descuento->recursive = 0;
                 
                 if ( strtolower( $this->Session->read('Auth.User.rol') ) == 'mozo' ) {
@@ -30,12 +30,12 @@ class DescuentosController extends AppController {
 	}
 
 /**
- * admin_view method
+ * view method
  *
  * @param string $id
  * @return void
  */
-	public function admin_view($id = null) {
+	public function view($id = null) {
 		$this->Descuento->id = $id;
 		if (!$this->Descuento->exists()) {
 			throw new NotFoundException(__('Invalid descuento'));
@@ -48,11 +48,11 @@ class DescuentosController extends AppController {
 	}
 
 /**
- * admin_add method
+ * add method
  *
  * @return void
  */
-	public function admin_add() {
+	public function add() {
 		if ($this->request->is('post')) {
 			$this->Descuento->create();
 			if ($this->Descuento->save($this->request->data)) {
@@ -65,12 +65,12 @@ class DescuentosController extends AppController {
 	}
 
 /**
- * admin_edit method
+ * edit method
  *
  * @param string $id
  * @return void
  */
-	public function admin_edit($id = null) {
+	public function edit($id = null) {
 		$this->Descuento->id = $id;
 		if (!$this->Descuento->exists()) {
 			throw new NotFoundException(__('Invalid descuento'));
@@ -88,12 +88,12 @@ class DescuentosController extends AppController {
 	}
 
 /**
- * admin_delete method
+ * delete method
  *
  * @param string $id
  * @return void
  */
-	public function admin_delete($id = null) {
+	public function delete($id = null) {
 		if (!$this->request->is('post')) {
 			throw new MethodNotAllowedException();
 		}

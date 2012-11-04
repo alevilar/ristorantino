@@ -2,8 +2,7 @@
 class DetalleComandasController extends AppController {
 
 	var $name = 'DetalleComandas';
-	var $helpers = array('Html', 'Form');
-	var $components = array( 'Printer');
+	
 
 	function index() {
 		$this->DetalleComanda->recursive = -1;
@@ -14,14 +13,14 @@ class DetalleComandasController extends AppController {
                             array(
                                 'table' => 'productos',
                                 'alias' => 'Producto',
-                                'type' => 'LEFT',
+                                'type' => 'INNER',
                                 'conditions' => array(
                                     'Producto.id = DetalleComanda.producto_id',
                                 )
                             ),
                             array('table' => 'productos_tags',
                                 'alias' => 'ProductoTag',
-                                'type' => 'INNER',
+                                'type' => 'LEFT',
                                 'conditions' => array(
                                     'Producto.id = ProductoTag.producto_id',
                                 )

@@ -13,7 +13,7 @@ class MesasController extends AppController {
     );
     
     
-    public function admin_index( $estado = null ) {
+    public function index( $estado = null ) {
         $this->Prg->commonProcess();
         $this->paginate['conditions'] = $this->Mesa->parseCriteria($this->passedArgs);
         $this->request->data['Mesa'] = $this->passedArgs;
@@ -80,7 +80,7 @@ class MesasController extends AppController {
         endforeach;
 
         $this->pageTitle = 'Mesa N° '.$mesa['Mesa']['numero'];
-        $this->set('mesa_total', $this->Mesa->calcular_total());
+        $this->set('mesa_total', $this->Mesa->getTotal());
 
         $this->set(compact('mesa', 'items'));
         $this->set('mozo_json', json_encode($this->Mesa->Mozo->read(null, $mesa['Mozo']['id'])));
@@ -112,7 +112,7 @@ class MesasController extends AppController {
         
         $mesa['Producto'] = $items;
 
-        $this->set('mesa_total', $this->Mesa->calcular_total());
+        $this->set('mesa_total', $this->Mesa->getTotal());
 
         $this->set(compact('mesa', 'items'));
         $this->set('mozo_json', json_encode($this->Mesa->Mozo->read(null, $mesa['Mozo']['id'])));
@@ -121,13 +121,6 @@ class MesasController extends AppController {
 
 
     
-    /**
-     * Imprime un ticket fiscal
-     * @param type $mesa_id 
-     */
-    private function __imprimir($mesa_id) {
-        $this->Printer->doPrint($mesa_id);
-    }
 
 
     /**
@@ -161,17 +154,40 @@ class MesasController extends AppController {
 
 
     public function imprimirTicket($mesa_id) {
-        $this->Printer->doPrint($mesa_id);
+        
+        $fiscalData = $this->Mesa->getDataParaFiscal($mesa_id);
+        
+        
+            // imprimir pre-ticket al cerrar la mesa. 
+            // Solo si esta configurado asi y la mesa esta cerrada por primera vez (o que aun este abierta)
+            if (Configure::read('Mesa.imprimePrimeroRemito') && $this->Model->Mesa->estaAbierta()){
+                    return $this->imprimirTicketConComandera($prod, $mozo_nro, $mesa_nro,$this->porcentaje_descuento);
+            } else{
+                if ( isset ( $this->Mesa['Cliente']['imprime_ticket']) && $this->Mesa['Cliente']['imprime_ticket'] != 0) {
+                    switch($this->Mesa['Cliente']['tipofactura']){
+                        case 'A':
+                            $ivaresp = $this->Model->Mesa->Cliente->getResponsabilidadIva($this->Mesa['Cliente']['id']);
+                            $this->Mesa['Cliente']['responsabilidad_iva'] = $ivaresp['IvaResponsabilidad']['codigo_fiscal'];
+
+                            $tipodoc = $this->Model->Mesa->Cliente->getTipoDocumento($this->Mesa['Cliente']['id']);
+                            $this->Mesa['Cliente']['tipodocumento'] = $tipodoc['TipoDocumento']['codigo_fiscal'];
+
+                             $this->imprimirTicketFacturaA($prod, $this->Mesa['Cliente'], $mozo_nro, $mesa_nro, $this->importe_descuento);
+                        default:
+                            $this->imprimirTicket($prod, $mozo_nro, $mesa_nro, $this->importe_descuento);
+                            break;
+                    };   
+                }
+            }            
+            
+        
         if($this->RequestHandler->isAjax()){
             $this->autoRender = false;
             $this->layout = 'ajax';
             return 1;
         } else {
-            if(Configure::read('debug') == 0){
-                $this->redirect($this->referer());
-            } else {
                 $this->flash('Se imprimio comanda de mesa ID: '.$mesa_id.' (click para reimprimir)', $this->action.'/'.$mesa_id);
-            }
+                $this->redirect($this->referer());
         }
     }
 
@@ -191,7 +207,7 @@ class MesasController extends AppController {
         $this->set('validationErrors', $this->Mesa->validationErrors);
     }
     
-    public function admin_add() {
+    public function add() {
         if ($this->request->is('post')) {
                 $this->Mesa->create();
                 if ($this->Mesa->save($this->request->data)) {
@@ -253,13 +269,10 @@ class MesasController extends AppController {
         }
         return $returnFlag;
     }
-    
+  
+
+
     public function edit($id = null) {
-        $this->redirect('admin_edit');
-    }
-
-
-    public function admin_edit($id = null) {
         
         $this->Mesa->id = $id;
         if (!$this->Mesa->exists()) {
@@ -298,8 +311,8 @@ class MesasController extends AppController {
             ));        
         
         $this->id = $id;
-        $this->set('subtotal',$this->Mesa->calcular_subtotal());
-        $this->set('total',$this->Mesa->calcular_total());
+        $this->set('subtotal',$this->Mesa->getSubtotal());
+        $this->set('total',$this->Mesa->getTotal());
         $this->set('estados', $this->Mesa->estados);
         $this->set(compact('mesa', 'items', 'mozos'));
         $this->set('title_for_layout', 'Editando la Mesa '.$mesa['Mesa']['numero'] );
@@ -308,12 +321,12 @@ class MesasController extends AppController {
     
     
 /**
- * admin_delete method
+ * delete method
  *
  * @param string $id
  * @return void
  */
-	public function admin_delete($id = null) {
+	public function delete($id = null) {
 		if (!$this->request->is('post')) {
 			throw new MethodNotAllowedException();
 		}

@@ -27,7 +27,7 @@ class PagosController extends AppController {
                     
                     if ( !empty( $this->request->data['Pago'] ) && count($this->request->data['Pago']) == 1 && empty($this->request->data['Pago'][0]['valor']) ) {
                         if (!empty($this->request->data['Mesa'])) {
-                            $total_pagado = $this->Pago->Mesa->calcular_total($this->request->data['Mesa']['id']);
+                            $total_pagado = $this->Pago->Mesa->getTotal($this->request->data['Mesa']['id']);
                             $this->request->data['Pago'][0]['valor'] = $total_pagado;
                         }                    
                         

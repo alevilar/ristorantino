@@ -9,7 +9,7 @@ class DetalleComanda extends AppModel {
 	);
 
 	
-	var $actsAs = array('Containable');
+	var $actsAs = array('Containable', 'Printable');
 	
 	
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
@@ -55,6 +55,21 @@ class DetalleComanda extends AppModel {
 		unset($this->id);
 		return $this;
 	}
+        
+        
+        function tieneProductosLaMesa($mesa_id) {
+            
+            $items = $this->DetalleComanda->find('count', array(
+                'conditions' => array(
+                    'Comanda.mesa_id' => $mesa_id,
+                    '(DetalleComanda.cant - DetalleComanda.cant_eliminada) >' => 0),
+                'order' => 'Comanda.id ASC, Producto.categoria_id ASC, Producto.id ASC',
+                'contain' => array('Producto', 'Comanda', 'DetalleSabor' => 'Sabor(name,precio)')
+                )
+                    );
+            
+            return $items > 0;
+        }
 
 }
 ?>

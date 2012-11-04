@@ -1,7 +1,3 @@
-<?php
-if ($this->request->url == 'admin' || (!empty($this->request->params['admin']) && $this->request->params['admin'] )) {
-
-    ?>
     <?php
     echo $this->Jqm->listview(array(
         array('Home', '/'),
@@ -16,9 +12,9 @@ if ($this->request->url == 'admin' || (!empty($this->request->params['admin']) &
             <h2>Usuarios</h2>
             <?php
             echo $this->Jqm->listview(array(
-                array('Roles', '/admin/roles/index'),
-                array('Usuarios', '/admin/users/index'),
-                array('Mozos', '/admin/mozos/index'),
+                array('Roles', '/roles/index'),
+                array('Usuarios', '/users/index'),
+                array('Mozos', '/mozos/index'),
             ));
             ?>
         </div> 
@@ -27,9 +23,9 @@ if ($this->request->url == 'admin' || (!empty($this->request->params['admin']) &
             <h2>Clientes</h2>
             <?php
             echo $this->Jqm->listview(array(
-                array('Clientes', '/admin/clientes'),
-                array('Descuentos', '/admin/descuentos'),
-                array('Tipo de Pagos', '/admin/TipoDePagos'),
+                array('Clientes', '/clientes'),
+                array('Descuentos', '/descuentos'),
+                array('Tipo de Pagos', '/TipoDePagos'),
             ));
             ?> 
         </div> 
@@ -38,9 +34,9 @@ if ($this->request->url == 'admin' || (!empty($this->request->params['admin']) &
             <h2>Mesas</h2>
             <?php
             echo $this->Jqm->listview(array(
-                array('Listado de Mesas', '/admin/Mesas'),
-                array('Nueva Mesa', '/admin/Mesas/add'),
-                array('Productos Pedidos', '/admin/detalle_comandas/'),
+                array('Listado de Mesas', '/Mesas'),
+                array('Nueva Mesa', '/Mesas/add'),
+                array('Productos Pedidos', '/detalle_comandas/'),
             ));
             ?> 
         </div>  
@@ -60,13 +56,13 @@ if ($this->request->url == 'admin' || (!empty($this->request->params['admin']) &
             <h2>Productos</h2>
             <?php
             echo $this->Jqm->listview(array(
-                array('Categorias', '/admin/categorias'),
-                array('Tags', '/admin/tags'),
-                array('Productos', '/admin/productos'),
-                array('Observaciones de Productos', '/admin/observaciones'),
-                array('Observaciones de Comandas', '/admin/observacion_comandas'),
-                array('Gustos y Sabores', '/admin/sabores'),
-                array('Precios Futuros', '/admin/productos_precios_futuros'),
+                array('Categorias', '/categorias'),
+                array('Tags', '/tags'),
+                array('Productos', '/productos'),
+                array('Observaciones de Productos', '/observaciones'),
+                array('Observaciones de Comandas', '/observacion_comandas'),
+                array('Gustos y Sabores', '/sabores'),
+                array('Precios Futuros', '/productos_precios_futuros'),
             ));
             ?> 
         </div> 
@@ -91,9 +87,9 @@ if ($this->request->url == 'admin' || (!empty($this->request->params['admin']) &
             <h2>Sistema</h2>
             <?php
             echo $this->Jqm->listview(array(
-                array('Parametros de configuracion', '/admin/configs'),
-                array('Configuraciones del sistema', '/admin/configavanzadas'),
-                array('Acciones del sistema', '/admin/sistemaconfig'),
+                array('Parametros de configuracion', '/configs'),
+                array('Configuraciones del sistema', '/configavanzadas'),
+                array('Acciones del sistema', '/sistemaconfig'),
             ));
             ?> 
         </div> 
@@ -102,13 +98,11 @@ if ($this->request->url == 'admin' || (!empty($this->request->params['admin']) &
             <h2>Servidor</h2>
             <?php
             echo $this->Jqm->listview(array(
-                array('Enviar informe estadístico', '/admin/cashier/enviar_informe'),
-                array('Reiniciar servidor', '/admin/cashier/reiniciar', null, 'Esta accion reinicia el servidor, y no se puede operar el sistema hasta que se vuelva a iniciar.\n¿Desea hacerlo?'),
-                array('Apagar servidor', '/admin/cashier/apagar', null, '¿Desea apagar el servidor?.\n'),
+                array('Enviar informe estadístico', '/cashier/enviar_informe'),
+                array('Reiniciar servidor', '/cashier/reiniciar', null, 'Esta accion reinicia el servidor, y no se puede operar el sistema hasta que se vuelva a iniciar.\n¿Desea hacerlo?'),
+                array('Apagar servidor', '/cashier/apagar', null, '¿Desea apagar el servidor?.\n'),
             ));
             ?> 
         </div> 
     </div>
-    <?php
-}
-?>
+  
