@@ -1,7 +1,7 @@
 nbproject
 .DS_Store
 *~
-
+/app/Config/database.php
 /app/tmp/
 /vendors/birthday/alejandro/.mc/
 /vendors/birthday/alejandro/.ssh/
