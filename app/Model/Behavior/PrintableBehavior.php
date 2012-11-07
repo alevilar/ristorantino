@@ -44,6 +44,7 @@ class PrintableBehavior extends ModelBehavior
         
         public function setup(&$model){
             $this->Model =& $model;
+            $this->Comanda =& ClassRegistry::init('Comanda');
         }
 
 

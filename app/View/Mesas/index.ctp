@@ -6,7 +6,7 @@ echo $this->Html->link('mesas/index_head', false);
 <div id="mesas-index">
     <?php echo $this->Form->create("Mesa"); ?>
     <div class="ui-grid-d">
-        <h2><?php __('Buscador de Mesas'); ?></h2>
+        <h2><?php echo __('Buscador de Mesas'); ?></h2>
 
         <div class="ui-block-a">
             <strong>Mesa y Mozo</strong>
@@ -84,13 +84,13 @@ echo $this->Html->link('mesas/index_head', false);
     ?>
 </div>
 <div class="paging">
-    <?php echo $this->Paginator->prev('<< ' . __('anterior', true), array(), null, array('class' => 'disabled')); ?>
+    <?php echo $this->Paginator->prev('<< ' . __('anterior'), array(), null, array('class' => 'disabled')); ?>
     | 	<?php echo $this->Paginator->numbers(); ?>
-    <?php echo $this->Paginator->next(__('próximo', true) . ' >>', array(), null, array('class' => 'disabled')); ?>
+    <?php echo $this->Paginator->next(__('próximo') . ' >>', array(), null, array('class' => 'disabled')); ?>
 </div>
 <div class="actions">
     <ul>
-        <li><?php echo $this->Html->link(__('Crear Mesa', true), array('action' => 'add')); ?></li>
+        <li><?php echo $this->Html->link(__('Crear Mesa'), array('action' => 'add')); ?></li>
     </ul>
 </div>
 

@@ -84,6 +84,11 @@
  *	));
  */
 Cache::config('default', array('engine' => 'File'));
+App::uses('IniReader', 'Configure');
+
+Configure::config('ini', new IniReader(ROOT."/".APP_DIR.'/Config/'));
+Configure::load('coqus_config', 'ini');
+
 
 /**
  * The settings below can be used to set additional paths to models, views and controllers.
@@ -110,6 +115,11 @@ Cache::config('default', array('engine' => 'File'));
  * ));
  *
  */
+
+App::build(array(
+     'Printer/FiscalPrinter/Driver' => array('/Lib/Printer/FiscalPrinter/Driver'),
+));
+
 
 /**
  * Custom Inflector rules, can be set to correctly pluralize or singularize table, model, controller names or whatever other
@@ -142,8 +152,11 @@ CakePlugin::loadAll( array(
  
 Inflector::rules('singular', array(
     'rules' => array('/([r|d|j|n|l|m|y|z])es$/i' => '\1', '/as$/i' => 'a', '/([ti])a$/i' => '\1a'),
-    'irregular' => array(),
-    'uninflected' => array('user' => 'users')
+    'irregular' => array(
+        'fiscal_printers'=>'fiscal_printer',
+        'printers' => 'printer',
+        'config_categories'=>'config_category',
+    ),
     )
 );
  
@@ -154,6 +167,8 @@ Inflector::rules('plural', array(
         'group'=>'groups', 
         'adicion'=>'adicion', 
         'cajero'=>'cajero', 
+        'fiscal_printer'=>'fiscal_printers',
+        'printer' => 'printers',
         'query'=>'queries',
         'action'=>'actions',
         'inventory' => 'inventories',

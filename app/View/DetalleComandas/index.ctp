@@ -1,6 +1,6 @@
 
 <div class="comandas index">
-<h2><?php __('Comandas');?></h2>
+<h2><?php echo __('Comandas');?></h2>
 
 <?php
         echo $this->Form->create('DetalleComanda', array('url' => '/detalle_comandas/index'));
@@ -63,6 +63,6 @@ foreach ($comandas as $comanda):
 
 <div class="actions">
 	<ul>
-		<li><?php echo $this->Html->link(__('New Comanda', true), array('action'=>'add')); ?></li>
+		<li><?php echo $this->Html->link(__('New Comanda'), array('action'=>'add')); ?></li>
 	</ul>
 </div>

@@ -1,62 +1,96 @@
 <?php
+App::uses('AppController', 'Controller');
+/**
+ * Comanderas Controller
+ *
+ * @property Comandera $Comandera
+ */
 class ComanderasController extends AppController {
 
-	var $name = 'Comanderas';
-	var $helpers = array('Html', 'Form');
 
-	function index() {
+/**
+ * index method
+ *
+ * @return void
+ */
+	public function index() {
 		$this->Comandera->recursive = 0;
 		$this->set('comanderas', $this->paginate());
 	}
 
-	function view($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid Comandera.', true));
-			$this->redirect(array('action'=>'index'));
+/**
+ * view method
+ *
+ * @param string $id
+ * @return void
+ */
+	public function view($id = null) {
+		$this->Comandera->id = $id;
+		if (!$this->Comandera->exists()) {
+			throw new NotFoundException(__('Invalid comandera'));
 		}
 		$this->set('comandera', $this->Comandera->read(null, $id));
 	}
 
-	function add() {
-		if (!empty($this->request->data)) {
+/**
+ * add method
+ *
+ * @return void
+ */
+	public function add() {
+		if ($this->request->is('post')) {
 			$this->Comandera->create();
 			if ($this->Comandera->save($this->request->data)) {
-				$this->Session->setFlash(__('The Comandera has been saved', true));
-				$this->redirect(array('action'=>'index'));
+				$this->Session->setFlash(__('The comandera has been saved'));
+				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The Comandera could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('The comandera could not be saved. Please, try again.'));
 			}
 		}
 	}
 
-	function edit($id = null) {
-		if (!$id && empty($this->request->data)) {
-			$this->Session->setFlash(__('Invalid Comandera', true));
-			$this->redirect(array('action'=>'index'));
+/**
+ * edit method
+ *
+ * @param string $id
+ * @return void
+ */
+	public function edit($id = null) {
+		$this->Comandera->id = $id;
+		if (!$this->Comandera->exists()) {
+			throw new NotFoundException(__('Invalid comandera'));
 		}
-		if (!empty($this->request->data)) {
+		if ($this->request->is('post') || $this->request->is('put')) {
 			if ($this->Comandera->save($this->request->data)) {
-				$this->Session->setFlash(__('The Comandera has been saved', true));
-				$this->redirect(array('action'=>'index'));
+				$this->Session->setFlash(__('The comandera has been saved'));
+				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The Comandera could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('The comandera could not be saved. Please, try again.'));
 			}
-		}
-		if (empty($this->request->data)) {
+		} else {
 			$this->request->data = $this->Comandera->read(null, $id);
 		}
 	}
 
-	function delete($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for Comandera', true));
-			$this->redirect(array('action'=>'index'));
+/**
+ * delete method
+ *
+ * @param string $id
+ * @return void
+ */
+	public function delete($id = null) {
+		if (!$this->request->is('post')) {
+			throw new MethodNotAllowedException();
 		}
-		if ($this->Comandera->del($id)) {
-			$this->Session->setFlash(__('Comandera deleted', true));
-			$this->redirect(array('action'=>'index'));
+		$this->Comandera->id = $id;
+		if (!$this->Comandera->exists()) {
+			throw new NotFoundException(__('Invalid comandera'));
 		}
+		if ($this->Comandera->delete()) {
+			$this->Session->setFlash(__('Comandera deleted'));
+			$this->redirect(array('action' => 'index'));
+		}
+		$this->Session->setFlash(__('Comandera was not deleted'));
+		$this->redirect(array('action' => 'index'));
 	}
-
 }
-?>

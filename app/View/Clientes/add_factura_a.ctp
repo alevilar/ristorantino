@@ -11,7 +11,7 @@
                                     'id' =>'form-cliente-add', 
                                     'data-ajax'=>'false'));?>
         <fieldset>
-            <legend><?php __('Agregar Factura "A"');?></legend>
+            <legend><?php echo __('Agregar Factura "A"');?></legend>
             <?php
             echo$this->Form->input('nombre',array('label'=>'Nombre/Denominación'));
             echo$this->Form->hidden('iva_responsabilidad_id',array('value'=>1)); // Resp. Inscripto, Numero hardcodeado de la base de datos

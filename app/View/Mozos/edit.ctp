@@ -3,7 +3,7 @@
 <div class="mozos form">
 <?php echo $this->Form->create('Mozo');?>
 	<fieldset>
- 		<legend><?php __('Editar Mozo');?></legend>
+ 		<legend><?php echo __('Editar Mozo');?></legend>
 	<?php
 		echo $this->Form->input('id');
 		echo $this->Form->input('numero');
@@ -17,10 +17,10 @@
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $this->Html->link(__('Borrar', true), array('action'=>'delete', $this->Form->value('Mozo.id')), null, sprintf(__('Are you sure you want to delete # %s?', true), $this->Form->value('Mozo.id'))); ?></li>
-		<li><?php echo $this->Html->link(__('Listar Mozos', true), array('action'=>'index'));?></li>
-		<li><?php echo $this->Html->link(__('Listar Usuarios', true), array('controller'=> 'users', 'action'=>'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('Listar Mesas', true), array('controller'=> 'mesas', 'action'=>'index')); ?> </li>
-                <li><?php echo $this->Html->link(__('Nuevo usuario', true), array('controller'=> 'users', 'action'=>'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('Borrar'), array('action'=>'delete', $this->Form->value('Mozo.id')), null, sprintf(__('Are you sure you want to delete # %s?'), $this->Form->value('Mozo.id'))); ?></li>
+		<li><?php echo $this->Html->link(__('Listar Mozos'), array('action'=>'index'));?></li>
+		<li><?php echo $this->Html->link(__('Listar Usuarios'), array('controller'=> 'users', 'action'=>'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('Listar Mesas'), array('controller'=> 'mesas', 'action'=>'index')); ?> </li>
+                <li><?php echo $this->Html->link(__('Nuevo usuario'), array('controller'=> 'users', 'action'=>'add')); ?> </li>
 	</ul>
 </div>

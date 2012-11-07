@@ -62,7 +62,7 @@ class DetalleComandasController extends AppController {
 
 	function view($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid Comanda.', true));
+			$this->Session->setFlash(__('Invalid Comanda.'));
 			$this->redirect(array('action'=>'index'));
 		}
 		$this->set('comanda', $this->DetalleComanda->read(null, $id));
@@ -165,7 +165,7 @@ class DetalleComandasController extends AppController {
             }
                         
             if (!$id && empty($this->request->data)) {
-                    $this->Session->setFlash(__('Invalid Comanda', true));
+                    $this->Session->setFlash(__('Invalid Comanda'));
                     $this->redirect(array('action'=>'index'));
             }
             if (!empty($this->request->data)) {
@@ -179,13 +179,13 @@ class DetalleComandasController extends AppController {
                             $this->DetalleComanda->Comanda->Mesa->saveField('modified', $dMesa['DetalleComanda']['modified'], false);
                             return 1;
                         }
-                        $this->Session->setFlash(__('The Comanda has been saved', true));
+                        $this->Session->setFlash(__('The Comanda has been saved'));
                             $this->redirect(array('action'=>'index'));
                     } else {
                         if($this->RequestHandler->isAjax()){
                             return "edit failed";
                         }
-                        $this->Session->setFlash(__('The Comanda could not be saved. Please, try again.', true));
+                        $this->Session->setFlash(__('The Comanda could not be saved. Please, try again.'));
                     }
             }
             
@@ -205,11 +205,11 @@ class DetalleComandasController extends AppController {
 
 	function delete($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for Comanda', true));
+			$this->Session->setFlash(__('Invalid id for Comanda'));
 			$this->redirect(array('action'=>'index'));
 		}
 		if ($this->DetalleComanda->del($id)) {
-			$this->Session->setFlash(__('Comanda deleted', true));
+			$this->Session->setFlash(__('Comanda deleted'));
 			$this->redirect(array('action'=>'index'));
 		}
 	}

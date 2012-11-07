@@ -2,7 +2,7 @@
 
 class PreTicketComandera {
     
-    public function output($textoAImprimir = '', $prod_a_imprimir = array(), $porcentaje_descuento = 0, $total = 0, $mozo = 0, $mesa = 0){
+    public function output($textoAImprimir = '', $header = '', $prod_a_imprimir = array(), $porcentaje_descuento = 0, $total = 0, $mozo = 0, $mesa = 0){
         
         // pongo el ESC para comenzar ESC/P
         $textoAImprimir .= ESC.'@';

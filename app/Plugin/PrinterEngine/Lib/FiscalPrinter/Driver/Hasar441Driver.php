@@ -1,6 +1,6 @@
 <?php 
 
-require dirname(__FILE__).'/comandos_fiscales.php';
+App::uses('FiscalPrinterDriver', 'PrinterEngine.FiscalPrinter');
 
 
 define("FS_HASAR441", chr(28));
@@ -8,7 +8,7 @@ define("ESC_HASAR441", chr(27));
 define("DOBLE_ANCHO_HASAR441", chr(244));
 define("DEL_HASAR441", chr(127));
 
-class ComandosImpresora extends ComandosFiscales
+class Hasar441Driver extends FiscalPrinterDriver
 {
 	
 	const FS = FS_HASAR441;
@@ -26,13 +26,15 @@ class ComandosImpresora extends ComandosFiscales
 	 * 							"T": abre un ticket
 	 * 							"A": abre ticket factura 'A'
 	 * 							"B": abre ticket factura 'B' o 'C'
+         *                                                      "a": abre recibo 'A'
+         *                                                      "b": abre recibo 'B'
+         *                                                      "D": Nota de Débito 'A'
+         *                                                      "E": Nota de Débito B/C
+         * 
 	 */
 	public function openFiscalReceipt($tipo_ticket){
 		$tipo_ticket = strtoupper($tipo_ticket);
-                if ($tipo_ticket == 'T') {
-                    $tipo_ticket = 'B';
-                }
-		if($tipo_ticket == 'A' || $tipo_ticket == 'B' || $tipo_ticket == 'D' || $tipo_ticket == 'E'){
+		if($tipo_ticket == 'T' || $tipo_ticket == 'A' || $tipo_ticket == 'B' || $tipo_ticket == 'D' || $tipo_ticket == 'E'){
 			return "@".self::FS.$tipo_ticket.self::FS."T";
 		}
 		else{
@@ -77,29 +79,6 @@ class ComandosImpresora extends ComandosFiscales
 		$comando = "B".$fs.$descripcion_articulo.$fs.$cantidad.$fs.$monto.$fs.$porcentaje_iva.$fs.$suma_monto.$fs.$impuesto_interno.$fs.$display.$fs.$precio_total; 
 		return $comando;
 	}
-
-
-        /**
-            Responde:
-            a. Imprimiendo una línea donde se muestra: descripción del descuento (o recargo), impuestos y monto del
-                descuento (o recargo) -con posterioridad a la impresión de la línea con la leyenda “Descuento (o Recargo)
-                   general”-;
-            b. Restando
-
-            EJEMPLO: T∟Pago Efectivo...∟5.0∟m∟0∟T
-
-         * @param float $porcentaje_descuento
-         * @return string comando
-         */
-        public function generalDiscount($porcentaje_descuento = 0){
-            $comando =  "T".self::FS.
-                        'Descuento'.self::FS.
-                        $porcentaje_descuento.self::FS.
-                        'm'.self::FS.
-                        '0'.self::FS.
-                        'T';
-            return $comando;
-        }
 	
 	
 	/**
@@ -108,9 +87,9 @@ class ComandosImpresora extends ComandosFiscales
 	 * @param string $texto Ejemplo: "Pago en efectivo"
 	 * @param number $monto_pagado integer o float dependiendo de la impresora
 	 * @param $operacion las piopsibilidades son:
-	 * 											'C': Cancela el ticket
-	 * 											'T': pago parcial o total 
-	 * 											'R': devolucion de pago
+	 *          'C': Cancela el ticket
+	 *          'T': pago parcial o total 
+	 *          'R': devolucion de pago
 	 * @param $display	 para las impresoras que tengan display
 	 */
 	public function totalTender($texto, $monto_pagado, $operacion = "T", $display = 0){
@@ -128,6 +107,26 @@ class ComandosImpresora extends ComandosFiscales
 		
 		return $comando;
 	}
+
+        /**
+         * Responde:
+         *            a. Imprimiendo una línea donde se muestra: descripción del descuento (o recargo), impuestos y monto del
+         *                descuento (o recargo) -con posterioridad a la impresión de la línea con la leyenda “Descuento (o Recargo)
+         *                   general”-;
+         *            b. Restando
+         *
+         * @param float $importe_descuento
+         * @return string comando
+         */
+        public function generalDiscount($importe_descuento = 0){
+            $comando =  "T".self::FS.
+                        'Descuento'.self::FS.
+                        $importe_descuento.self::FS.
+                        'm'.self::FS.
+                        '0'.self::FS.
+                        'T';
+            return $comando;
+        }
 	
 	
 	/**
@@ -191,11 +190,12 @@ class ComandosImpresora extends ComandosFiscales
 	 * Setea el encabezado y el pie de pagina
 	 * 
 	 * @param integer $numero_de_linea
-	 * 						ENCABEZADO: linea 1  - 10
-	 * 						COLA: 		linea 11 - 20
-	 * 						BORRA ENCABEZADO Y COLA: linea =  0
-	 * 						BORRA ENCABEZADO: numero linea = -1
-	 * 						BORRA COLA: 	  numero linea = -2 
+	 * 		ENCABEZADO: linea 1  - 10
+	 * 		COLA: 		linea 11 - 20
+	 * 		BORRA ENCABEZADO Y COLA: linea =  0
+	 * 		BORRA ENCABEZADO: numero linea = -1
+	 * 		BORRA COLA: 	  numero linea = -2 
+         * 
 	 * @param $texto 45 caracteres maximo
 	 */
 	public function setHeaderTrailer($numero_de_linea,$texto = "-",$doble_ancho = false){
@@ -311,16 +311,20 @@ class ComandosImpresora extends ComandosFiscales
 	 * 					'2' DNI
 	 * 					'3' Pasaporte
 	 * 					'4' Cedula de Identidad
+         *                                      ' ' Sin clasificar (espacio en blanco)
 	 * @param string $domicilio
+         * 
+         * @todo Hacer que los tipos de responsabilidad IVA y los tipos de documentos sean arrays pasados como parametros
+         *       Con eso podremos utilizar una funcion mas simple y mas extensible como is_in_array(tipos_docs, "C")
 	 */
-	public function setCustomerData($nombre_cliente,$documento,$respo_iva, $tipo_documento, $domicilio = ''){
+	public function setCustomerData($nombre_cliente = " ",$documento = " ",$respo_iva = 'C', $tipo_documento = " ", $domicilio = '-'){
 		$nombre_cliente = substr($nombre_cliente,0,45);
 		$respo_iva = strtoupper($respo_iva);
 		$tipo_documento = strtoupper($tipo_documento);
 		
 		
 		if($respo_iva == 'I' || $respo_iva == 'E' || $respo_iva == 'A' || $respo_iva == 'C' || $respo_iva == 'T'){
-			if( $tipo_documento == 'C' || $tipo_documento == 'L' || $tipo_documento == '0' || $tipo_documento == '1' || $tipo_documento == '2' || $tipo_documento == '3' || $tipo_documento == '4')
+			if( $tipo_documento == 'C' || $tipo_documento == 'L' || $tipo_documento == '0' || $tipo_documento == '1' || $tipo_documento == '2' || $tipo_documento == '3' || $tipo_documento == '4' || $tipo_documento == ' ')
 			{	
 				$comando = "b".self::FS.$nombre_cliente.self::FS.$documento.self::FS.$respo_iva.self::FS.$tipo_documento;
 				if($domicilio){
@@ -328,15 +332,16 @@ class ComandosImpresora extends ComandosFiscales
 				}
 			}
 			else{ 	
-				return -1; //fallo tipo_documento
+                            throw new InternalErrorException('Error, no existe el tipo de documento pasado: '.$tipo_documento);
+                            return -1;
 			}	
 		}
 		else{
+                        throw new InternalErrorException('Error, no existe el tipo responsabilidad IVA: '.$respo_iva);
 			return -2; // fallo respo_iva
 		} 
 		return $comando;
 	}
-
 
 
         /**
@@ -352,10 +357,9 @@ class ComandosImpresora extends ComandosFiscales
             Ejemplo: ô∟1∟00000118
 
          */
-        public function setEmbarkNumber( $numeroTicket, $nlinea = 1){
-            return chr(147).self::FS.$nlinea.self::FS.$numeroTicket;
+        public function setEmbarkNumber($numeroTicket, $nlinea = 1){
+            return chr(147).self::FS . $nlinea . self::FS . $numeroTicket;
         }
-
 
 
 
@@ -382,14 +386,13 @@ class ComandosImpresora extends ComandosFiscales
             Ejemplo: Ç∟R∟T∟1211241
 
          */
-        public function openDNFH($tipoDocumento, $identificacion = ''){
-            return  "Ç"             . self::FS .
-                    $tipoDocumento  . self::FS .
-                    "T"             . self::FS .
-                    $identificacion
-                    ;
+        public function openDNFH($tipoDocumento, $identificacion = 0){
+            $comando = chr(128). self::FS .$tipoDocumento  . self::FS ."T";
+            if (!empty ($identificacion)){
+                $comando .= self::FS .$identificacion;
+            }
+            return  $comando;
         }
-
 
 
         /**
@@ -402,6 +405,9 @@ class ComandosImpresora extends ComandosFiscales
         public function closeDNFH($numCopias = 0){
             return chr(129) . self::FS . $numCopias;
         }
+
+
+
         
 }
 

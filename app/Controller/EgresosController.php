@@ -19,10 +19,10 @@ class EgresosController extends AppController {
             if (!empty($this->request->data)) {
                     $this->Egreso->create();
                     if ($this->Egreso->save($this->request->data)) {
-                            $this->Session->setFlash(__('The Egreso has been saved', true));
+                            $this->Session->setFlash(__('The Egreso has been saved'));
                             
                     } else {
-                            $this->Session->setFlash(__('The Egreso could not be saved. Please, try again.', true));
+                            $this->Session->setFlash(__('The Egreso could not be saved. Please, try again.'));
                             debug($this->Egreso->validationErrors);
 
                             $tx = "¡No se pudo guardar! Alguno de los campos ingresados es incorrecto";
@@ -34,7 +34,7 @@ class EgresosController extends AppController {
 
 	function view($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid Egreso', true));
+			$this->Session->setFlash(__('Invalid Egreso'));
 			$this->redirect(array('action' => 'index'));
 		}
 		$this->set('egreso', $this->Egreso->read(null, $id));
@@ -44,7 +44,7 @@ class EgresosController extends AppController {
 		if (!empty($this->request->data)) {
 			$this->Egreso->create();
 			if ($this->Egreso->save($this->request->data)) {
-				$this->Session->setFlash(__('The Egreso has been saved', true));
+				$this->Session->setFlash(__('The Egreso has been saved'));
 				//die("lo mate");
                                 $this->redirect('/egresos/index');
                                 /*
@@ -55,10 +55,10 @@ class EgresosController extends AppController {
                                 }
                                  */
 			} else {
-				$this->Session->setFlash(__('The Egreso could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('The Egreso could not be saved. Please, try again.'));
 
                                 if ($this->RequestHandler->isAjax()) {
-                                    $this->Session->setFlash(__('Los valores ingresados son incorrectos.', true));
+                                    $this->Session->setFlash(__('Los valores ingresados son incorrectos.'));
                                     $this->Egreso->recursive = 0;
                                     $this->set('egresos', $this->paginate());
                                     $this->render('ajax/add');
@@ -72,15 +72,15 @@ class EgresosController extends AppController {
 
 	function edit($id = null) {
 		if (!$id && empty($this->request->data)) {
-			$this->Session->setFlash(__('Invalid Egreso', true));
+			$this->Session->setFlash(__('Invalid Egreso'));
 			$this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->request->data)) {
 			if ($this->Egreso->save($this->request->data)) {
-				$this->Session->setFlash(__('The Egreso has been saved', true));
+				$this->Session->setFlash(__('The Egreso has been saved'));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The Egreso could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('The Egreso could not be saved. Please, try again.'));
 			}
 		}
 		if (empty($this->request->data)) {
@@ -90,14 +90,14 @@ class EgresosController extends AppController {
 
 	function delete($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for Egreso', true));
+			$this->Session->setFlash(__('Invalid id for Egreso'));
 			$this->redirect(array('action' => 'index'));
 		}
 		if ($this->Egreso->del($id)) {
-			$this->Session->setFlash(__('Egreso deleted', true));
+			$this->Session->setFlash(__('Egreso deleted'));
 			$this->redirect(array('action' => 'index'));
 		}
-		$this->Session->setFlash(__('The Egreso could not be deleted. Please, try again.', true));
+		$this->Session->setFlash(__('The Egreso could not be deleted. Please, try again.'));
 		$this->redirect(array('action' => 'index'));
 	}
 

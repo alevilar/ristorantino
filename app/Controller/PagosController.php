@@ -11,7 +11,7 @@ class PagosController extends AppController {
 
 	function view($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid Pago.', true));
+			$this->Session->setFlash(__('Invalid Pago.'));
 			$this->redirect(array('action'=>'index'));
 		}
 		$this->set('pago', $this->Pago->read(null, $id));
@@ -32,9 +32,9 @@ class PagosController extends AppController {
                         }                    
                         
                         if ($this->Pago->saveAll($this->request->data['Pago'])) {				
-                            $this->Session->setFlash(__('The Pago has been saved', true));
+                            $this->Session->setFlash(__('The Pago has been saved'));
                         } else {
-                            $this->Session->setFlash(__('The Pago could not be saved. Please, try again.', true));
+                            $this->Session->setFlash(__('The Pago could not be saved. Please, try again.'));
                         }
                     }
                     
@@ -49,15 +49,15 @@ class PagosController extends AppController {
 
 	function edit($id = null) {
 		if (!$id && empty($this->request->data)) {
-			$this->Session->setFlash(__('Invalid Pago', true));
+			$this->Session->setFlash(__('Invalid Pago'));
 			$this->redirect(array('action'=>'index'));
 		}
 		if (!empty($this->request->data)) {
 			if ($this->Pago->save($this->request->data)) {
-				$this->Session->setFlash(__('The Pago has been saved', true));
+				$this->Session->setFlash(__('The Pago has been saved'));
 				$this->redirect(array('action'=>'index'));
 			} else {
-				$this->Session->setFlash(__('The Pago could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('The Pago could not be saved. Please, try again.'));
 			}
 		}
 		if (empty($this->request->data)) {
@@ -70,11 +70,11 @@ class PagosController extends AppController {
 
 	function delete($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for Pago', true));
+			$this->Session->setFlash(__('Invalid id for Pago'));
 			$this->redirect(array('action'=>'index'));
 		}
 		if ($this->Pago->del($id)) {
-			$this->Session->setFlash(__('Pago deleted', true));
+			$this->Session->setFlash(__('Pago deleted'));
 			$this->redirect(array('action'=>'index'));
 		}
 	}

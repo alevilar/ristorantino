@@ -22,7 +22,7 @@ class ClientesController extends AppController
     function view($id = null)
     {
         if (!$id) {
-            $this->Session->setFlash(__('Invalid Cliente.', true));
+            $this->Session->setFlash(__('Invalid Cliente.'));
             $this->redirect(array('action' => 'index'));
         }
         $this->Cliente->contain(array(
@@ -53,12 +53,12 @@ class ClientesController extends AppController
         if (!empty($this->request->data)) {
             $this->Cliente->create();
             if ($this->Cliente->save($this->request->data)) {
-                $this->Session->setFlash(__('Se agregó un nuevo cliente', true));
+                $this->Session->setFlash(__('Se agregó un nuevo cliente'));
                 if ($this->RequestHandler->is('jqm')) {
                     $this->render('result');
                 }
             } else {
-                $this->Session->setFlash(__('El Cliente no pudo ser gardado, intente nuevamente.', true));
+                $this->Session->setFlash(__('El Cliente no pudo ser gardado, intente nuevamente.'));
             }
             $this->set('cliente_id', $this->Cliente->id);
         }
@@ -71,15 +71,15 @@ class ClientesController extends AppController
     function edit($id = null)
     {
         if (!$id && empty($this->request->data)) {
-            $this->Session->setFlash(__('Cliente incorrecto', true));
+            $this->Session->setFlash(__('Cliente incorrecto'));
             $this->redirect(array('action' => 'index'));
         }
         if (!empty($this->request->data)) {
             if ($this->Cliente->saveAll($this->request->data)) {
-                $this->Session->setFlash(__('El Cliente fue guardado', true));
+                $this->Session->setFlash(__('El Cliente fue guardado'));
                 $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('El Cliente no pudo ser guardado.intente nuevamente.', true));
+                $this->Session->setFlash(__('El Cliente no pudo ser guardado.intente nuevamente.'));
             }
         }
         if (empty($this->request->data)) {

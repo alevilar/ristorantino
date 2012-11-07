@@ -4,9 +4,9 @@
     
     <div data-role="navbar">
         <ul>
-            <li><? echo $html->link('factura "A"','/clientes/ajax_clientes_factura_a', array( 'class'=> 'ui-btn-active')); ?></li>
-            <li><? echo $html->link('con descuento','/clientes/ajax_clientes_con_descuento', array()); ?></li>
-            <li><? echo $html->link('buscador','/clientes/ajax_buscador', array()); ?></li>
+            <li><? echo $this->Html->link('factura "A"','/clientes/ajax_clientes_factura_a', array( 'class'=> 'ui-btn-active')); ?></li>
+            <li><? echo $this->Html->link('con descuento','/clientes/ajax_clientes_con_descuento', array()); ?></li>
+            <li><? echo $this->Html->link('buscador','/clientes/ajax_buscador', array()); ?></li>
         </ul>
     </div>
 </div>

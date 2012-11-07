@@ -1,17 +1,17 @@
 <div class="sabores form">
-<?php echo $form->create('Sabor');?>
+<?php echo $this->Form->create('Sabor');?>
 	<fieldset>
- 		<legend><?php __('Crear Sabor');?></legend>
+ 		<legend><?php echo __('Crear Sabor');?></legend>
 	<?php
-		echo $form->input('name');
-		echo $form->input('categoria_id');
-		echo $form->input('precio');
+		echo $this->Form->input('name');
+		echo $this->Form->input('categoria_id');
+		echo $this->Form->input('precio');
 	?>
-<?php echo $form->end('Submit');?>
+<?php echo $this->Form->end('Submit');?>
 </fieldset>
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $html->link(__('List Sabores', true), array('action'=>'index'));?></li>
+		<li><?php echo $this->Html->link(__('List Sabores'), array('action'=>'index'));?></li>
 	</ul>
 </div>

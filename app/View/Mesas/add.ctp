@@ -11,7 +11,7 @@
 <div class="mesas form">
 <?php echo $this->Form->create('Mesa');?>
 	<fieldset>
- 		<legend><?php __('Agregar Mesa');?></legend>
+ 		<legend><?php echo __('Agregar Mesa');?></legend>
 	<?php
         //debug($mozos);
 		echo $this->Form->input('numero', array('label'=>'Numero de Mesa', 'after'=>'<br>Este dato modifica el valor estadistico acumulado por mesa. Lo ideal es poner el numero de mesa verdadero, caso contrario poner un numero alto.'));
@@ -31,6 +31,6 @@
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $this->Html->link(__('Listar Mesas', true), array('action'=>'index'));?></li>
+		<li><?php echo $this->Html->link(__('Listar Mesas'), array('action'=>'index'));?></li>
 	</ul>
 </div>

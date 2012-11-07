@@ -25,7 +25,7 @@ class MozosController extends AppController {
 
 	public function view($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid Mozo.', true));
+			$this->Session->setFlash(__('Invalid Mozo.'));
 			$this->redirect(array('action'=>'index'));
 		}
 		$this->set('mozo', $this->Mozo->read(null, $id));
@@ -38,10 +38,10 @@ class MozosController extends AppController {
 
                         
 			if ($this->Mozo->saveAll($this->request->data)) {
-				$this->Session->setFlash(__('The Mozo has been saved', true));
+				$this->Session->setFlash(__('The Mozo has been saved'));
 				$this->redirect(array('action'=>'index'));
 			} else {
-				$this->Session->setFlash(__('The Mozo could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('The Mozo could not be saved. Please, try again.'));
 			}
 		}
 		
@@ -70,11 +70,11 @@ class MozosController extends AppController {
 
 	public function delete($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for Mozo', true));
+			$this->Session->setFlash(__('Invalid id for Mozo'));
 			$this->redirect(array('action'=>'index'));
 		}
 		if ($this->Mozo->del($id)) {
-			$this->Session->setFlash(__('Mozo deleted', true));
+			$this->Session->setFlash(__('Mozo deleted'));
 			$this->redirect(array('action'=>'index'));
 		}
 	}

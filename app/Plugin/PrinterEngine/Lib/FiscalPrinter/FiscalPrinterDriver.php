@@ -1,15 +1,37 @@
 <?php 
 
 
-abstract class ComandosFiscales
+abstract class FiscalPrinterDriver
 {
 	/* Llenar para cada tipo y modelo de impresora estos 3 variables estaticas  */
 	const FS = "";
 	const ESC = "";
 	const DOBLE_ANCHO = "";
-	
-	
-	
+
+        /**
+         *  Name of the printer. generally must be the CUPS name or something with
+         *  undrescores and no white spaces
+         *  EJ: "fiscal_printer1" or "hasar441" or "epson_stylus_printer"
+         * 
+         * @var string 
+         */
+        public $name;
+        
+        /**
+         * The Model is useed to load the drivers, so it has to be 
+         * with no spaces
+         * Ej: Hasar441
+         * 
+         * @var string 
+         */        
+        public $model;
+        
+        
+        function __construct($nombreImpresoraFiscal, $modeloImpresoraFiscal){
+            $this->name = $nombreImpresoraFiscal;
+            $this->model = $modeloImpresoraFiscal;
+        }
+        
 	
 	/**
 	 * Me abre un documento fiscal

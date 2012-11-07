@@ -11,7 +11,7 @@ class IvaResponsabilidadesController extends AppController {
 
 	function view($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid IvaResponsabilidad.', true));
+			$this->Session->setFlash(__('Invalid IvaResponsabilidad.'));
 			$this->redirect(array('action'=>'index'));
 		}
 		$this->set('ivaResponsabilidad', $this->IvaResponsabilidad->read(null, $id));
@@ -21,25 +21,25 @@ class IvaResponsabilidadesController extends AppController {
 		if (!empty($this->request->data)) {
 			$this->IvaResponsabilidad->create();
 			if ($this->IvaResponsabilidad->save($this->request->data)) {
-				$this->Session->setFlash(__('The IvaResponsabilidad has been saved', true));
+				$this->Session->setFlash(__('The IvaResponsabilidad has been saved'));
 				$this->redirect(array('action'=>'index'));
 			} else {
-				$this->Session->setFlash(__('The IvaResponsabilidad could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('The IvaResponsabilidad could not be saved. Please, try again.'));
 			}
 		}
 	}
 
 	function edit($id = null) {
 		if (!$id && empty($this->request->data)) {
-			$this->Session->setFlash(__('Invalid IvaResponsabilidad', true));
+			$this->Session->setFlash(__('Invalid IvaResponsabilidad'));
 			$this->redirect(array('action'=>'index'));
 		}
 		if (!empty($this->request->data)) {
 			if ($this->IvaResponsabilidad->save($this->request->data)) {
-				$this->Session->setFlash(__('The IvaResponsabilidad has been saved', true));
+				$this->Session->setFlash(__('The IvaResponsabilidad has been saved'));
 				$this->redirect(array('action'=>'index'));
 			} else {
-				$this->Session->setFlash(__('The IvaResponsabilidad could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('The IvaResponsabilidad could not be saved. Please, try again.'));
 			}
 		}
 		if (empty($this->request->data)) {
@@ -49,11 +49,11 @@ class IvaResponsabilidadesController extends AppController {
 
 	function delete($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for IvaResponsabilidad', true));
+			$this->Session->setFlash(__('Invalid id for IvaResponsabilidad'));
 			$this->redirect(array('action'=>'index'));
 		}
 		if ($this->IvaResponsabilidad->del($id)) {
-			$this->Session->setFlash(__('IvaResponsabilidad deleted', true));
+			$this->Session->setFlash(__('IvaResponsabilidad deleted'));
 			$this->redirect(array('action'=>'index'));
 		}
 	}

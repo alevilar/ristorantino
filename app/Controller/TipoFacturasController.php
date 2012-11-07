@@ -11,7 +11,7 @@ class TipoFacturasController extends AppController {
 
 	function view($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid TipoFactura', true));
+			$this->Session->setFlash(__('Invalid TipoFactura'));
 			$this->redirect(array('action' => 'index'));
 		}
 		$this->set('tipoFactura', $this->TipoFactura->read(null, $id));
@@ -21,25 +21,25 @@ class TipoFacturasController extends AppController {
 		if (!empty($this->request->data)) {
 			$this->TipoFactura->create();
 			if ($this->TipoFactura->save($this->request->data)) {
-				$this->Session->setFlash(__('The TipoFactura has been saved', true));
+				$this->Session->setFlash(__('The TipoFactura has been saved'));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The TipoFactura could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('The TipoFactura could not be saved. Please, try again.'));
 			}
 		}
 	}
 
 	function edit($id = null) {
 		if (!$id && empty($this->request->data)) {
-			$this->Session->setFlash(__('Invalid TipoFactura', true));
+			$this->Session->setFlash(__('Invalid TipoFactura'));
 			$this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->request->data)) {
 			if ($this->TipoFactura->save($this->request->data)) {
-				$this->Session->setFlash(__('The TipoFactura has been saved', true));
+				$this->Session->setFlash(__('The TipoFactura has been saved'));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The TipoFactura could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('The TipoFactura could not be saved. Please, try again.'));
 			}
 		}
 		if (empty($this->request->data)) {
@@ -49,14 +49,14 @@ class TipoFacturasController extends AppController {
 
 	function delete($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for TipoFactura', true));
+			$this->Session->setFlash(__('Invalid id for TipoFactura'));
 			$this->redirect(array('action' => 'index'));
 		}
 		if ($this->TipoFactura->del($id)) {
-			$this->Session->setFlash(__('TipoFactura deleted', true));
+			$this->Session->setFlash(__('TipoFactura deleted'));
 			$this->redirect(array('action' => 'index'));
 		}
-		$this->Session->setFlash(__('The TipoFactura could not be deleted. Please, try again.', true));
+		$this->Session->setFlash(__('The TipoFactura could not be deleted. Please, try again.'));
 		$this->redirect(array('action' => 'index'));
 	}
 
@@ -68,7 +68,7 @@ class TipoFacturasController extends AppController {
 
 	function view($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid TipoFactura', true));
+			$this->Session->setFlash(__('Invalid TipoFactura'));
 			$this->redirect(array('action' => 'index'));
 		}
 		$this->set('tipoFactura', $this->TipoFactura->read(null, $id));
@@ -78,25 +78,25 @@ class TipoFacturasController extends AppController {
 		if (!empty($this->request->data)) {
 			$this->TipoFactura->create();
 			if ($this->TipoFactura->save($this->request->data)) {
-				$this->Session->setFlash(__('The TipoFactura has been saved', true));
+				$this->Session->setFlash(__('The TipoFactura has been saved'));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The TipoFactura could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('The TipoFactura could not be saved. Please, try again.'));
 			}
 		}
 	}
 
 	function edit($id = null) {
 		if (!$id && empty($this->request->data)) {
-			$this->Session->setFlash(__('Invalid TipoFactura', true));
+			$this->Session->setFlash(__('Invalid TipoFactura'));
 			$this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->request->data)) {
 			if ($this->TipoFactura->save($this->request->data)) {
-				$this->Session->setFlash(__('The TipoFactura has been saved', true));
+				$this->Session->setFlash(__('The TipoFactura has been saved'));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The TipoFactura could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('The TipoFactura could not be saved. Please, try again.'));
 			}
 		}
 		if (empty($this->request->data)) {
@@ -106,14 +106,14 @@ class TipoFacturasController extends AppController {
 
 	function delete($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for TipoFactura', true));
+			$this->Session->setFlash(__('Invalid id for TipoFactura'));
 			$this->redirect(array('action' => 'index'));
 		}
 		if ($this->TipoFactura->del($id)) {
-			$this->Session->setFlash(__('TipoFactura deleted', true));
+			$this->Session->setFlash(__('TipoFactura deleted'));
 			$this->redirect(array('action' => 'index'));
 		}
-		$this->Session->setFlash(__('The TipoFactura could not be deleted. Please, try again.', true));
+		$this->Session->setFlash(__('The TipoFactura could not be deleted. Please, try again.'));
 		$this->redirect(array('action' => 'index'));
 	}
 

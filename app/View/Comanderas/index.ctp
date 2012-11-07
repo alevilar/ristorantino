@@ -1,60 +1,52 @@
 <div class="comanderas index">
-<h2><?php __('Comanderas');?></h2>
-<p>
-<?php
-echo $paginator->counter(array(
-'format' => __('Pagina %page% de %pages%, mostrando %current% elementos de %count%', true)
-));
-?></p>
-<table cellpadding="0" cellspacing="0">
-<tr>
-	<th><?php echo $paginator->sort('id');?></th>
-	<th><?php echo $paginator->sort('name');?></th>
-	<th><?php echo $paginator->sort('description');?></th>
-	<th><?php echo $paginator->sort('path');?></th>
-	<th><?php echo $paginator->sort('imprime_ticket');?></th>
-	<th class="actions"><?php __('Acciones');?></th>
-</tr>
-<?php
-$i = 0;
-foreach ($comanderas as $comandera):
-	$class = null;
-	if ($i++ % 2 == 0) {
-		$class = ' class="altrow"';
-	}
-?>
-	<tr<?php echo $class;?>>
-		<td>
-			<?php echo $comandera['Comandera']['id']; ?>
-		</td>
-		<td>
-			<?php echo $comandera['Comandera']['name']; ?>
-		</td>
-		<td>
-			<?php echo $comandera['Comandera']['description']; ?>
-		</td>
-		<td>
-			<?php echo $comandera['Comandera']['path']; ?>
-		</td>
-		<td>
-			<?php echo $comandera['Comandera']['imprime_ticket']; ?>
-		</td>
+	<h2><?php echo __('Comanderas');?></h2>
+	<table cellpadding="0" cellspacing="0">
+	<tr>
+			<th><?php echo $this->Paginator->sort('id');?></th>
+			<th><?php echo $this->Paginator->sort('name');?></th>
+			<th><?php echo $this->Paginator->sort('description');?></th>
+			<th><?php echo $this->Paginator->sort('driver_name');?></th>
+			<th><?php echo $this->Paginator->sort('path');?></th>
+			<th><?php echo $this->Paginator->sort('imprime_ticket');?></th>
+			<th class="actions"><?php echo __('Actions');?></th>
+	</tr>
+	<?php
+	foreach ($comanderas as $comandera): ?>
+	<tr>
+		<td><?php echo h($comandera['Comandera']['id']); ?>&nbsp;</td>
+		<td><?php echo h($comandera['Comandera']['name']); ?>&nbsp;</td>
+		<td><?php echo h($comandera['Comandera']['description']); ?>&nbsp;</td>
+		<td><?php echo h($comandera['Comandera']['driver_name']); ?>&nbsp;</td>
+		<td><?php echo h($comandera['Comandera']['path']); ?>&nbsp;</td>
+		<td><?php echo h($comandera['Comandera']['imprime_ticket']); ?>&nbsp;</td>
 		<td class="actions">
-			<?php echo $html->link(__('Ver', true), array('action'=>'view', $comandera['Comandera']['id'])); ?>
-			<?php echo $html->link(__('Editar', true), array('action'=>'edit', $comandera['Comandera']['id'])); ?>
-			<?php echo $html->link(__('Borrar', true), array('action'=>'delete', $comandera['Comandera']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $comandera['Comandera']['id'])); ?>
+			<?php echo $this->Html->link(__('View'), array('action' => 'view', $comandera['Comandera']['id'])); ?>
+			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $comandera['Comandera']['id'])); ?>
+			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $comandera['Comandera']['id']), null, __('Are you sure you want to delete # %s?', $comandera['Comandera']['id'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>
-</table>
-</div>
-<div class="paging">
-	<?php echo $paginator->prev('<< '.__('anterior', true), array(), null, array('class'=>'disabled'));?>
- | 	<?php echo $paginator->numbers();?>
-	<?php echo $paginator->next(__('próximo', true).' >>', array(), null, array('class'=>'disabled'));?>
+	</table>
+	<p>
+	<?php
+	echo $this->Paginator->counter(array(
+	'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}')
+	));
+	?>	</p>
+
+	<div class="paging">
+	<?php
+		echo $this->Paginator->prev('< ' . __('previous'), array(), null, array('class' => 'prev disabled'));
+		echo $this->Paginator->numbers(array('separator' => ''));
+		echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
+	?>
+	</div>
 </div>
 <div class="actions">
+	<h3><?php echo __('Actions'); ?></h3>
 	<ul>
-		<li><?php echo $html->link(__('Nueva Comandera', true), array('action'=>'add')); ?></li>
+		<li><?php echo $this->Html->link(__('New Comandera'), array('action' => 'add')); ?></li>
+		<li><?php echo $this->Html->link(__('List Productos'), array('controller' => 'productos', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Producto'), array('controller' => 'productos', 'action' => 'add')); ?> </li>
 	</ul>
 </div>

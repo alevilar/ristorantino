@@ -10,7 +10,7 @@ if(!empty($comandas)){
 	<dt>#Número</dt><dd><?php echo $c['Comanda']['id']?></dd>
 	<dt>Mesa</dt><dd><?php echo $c['Mesa']['numero']?></dd>
 	<dt>Hora impresión</dt><dd><?php echo date('H:i:s',strtotime($c['Comanda']['created']))?></dd>
-	<?php echo $html->link(' Reimprimir comanda',array('action'=>'imprimir',$c['Comanda']['id']), array('style'=>'color:red;font-weight:bold')  ); ?>
+	<?php echo $this->Html->link(' Reimprimir comanda',array('action'=>'imprimir',$c['Comanda']['id']), array('style'=>'color:red;font-weight:bold')  ); ?>
         
         <hr />
 <?php endforeach;

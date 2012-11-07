@@ -1,22 +1,22 @@
 <div class="tipoFacturas view">
-<h2><?php  __('TipoFactura');?></h2>
+<h2><?php echo __('TipoFactura');?></h2>
 	<dl><?php $i = 0; $class = ' class="altrow"';?>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Id'); ?></dt>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php echo __('Id'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 			<?php echo $tipoFactura['TipoFactura']['id']; ?>
 			&nbsp;
 		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Name'); ?></dt>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php echo __('Name'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 			<?php echo $tipoFactura['TipoFactura']['name']; ?>
 			&nbsp;
 		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Created'); ?></dt>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php echo __('Created'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 			<?php echo $tipoFactura['TipoFactura']['created']; ?>
 			&nbsp;
 		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Modified'); ?></dt>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php echo __('Modified'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 			<?php echo $tipoFactura['TipoFactura']['modified']; ?>
 			&nbsp;
@@ -25,29 +25,29 @@
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $html->link(__('Edit TipoFactura', true), array('action' => 'edit', $tipoFactura['TipoFactura']['id'])); ?> </li>
-		<li><?php echo $html->link(__('Delete TipoFactura', true), array('action' => 'delete', $tipoFactura['TipoFactura']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $tipoFactura['TipoFactura']['id'])); ?> </li>
-		<li><?php echo $html->link(__('List TipoFacturas', true), array('action' => 'index')); ?> </li>
-		<li><?php echo $html->link(__('New TipoFactura', true), array('action' => 'add')); ?> </li>
-		<li><?php echo $html->link(__('List Egresos', true), array('controller' => 'egresos', 'action' => 'index')); ?> </li>
-		<li><?php echo $html->link(__('New Egreso', true), array('controller' => 'egresos', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('Edit TipoFactura'), array('action' => 'edit', $tipoFactura['TipoFactura']['id'])); ?> </li>
+		<li><?php echo $this->Html->link(__('Delete TipoFactura'), array('action' => 'delete', $tipoFactura['TipoFactura']['id']), null, sprintf(__('Are you sure you want to delete # %s?'), $tipoFactura['TipoFactura']['id'])); ?> </li>
+		<li><?php echo $this->Html->link(__('List TipoFacturas'), array('action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New TipoFactura'), array('action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Egresos'), array('controller' => 'egresos', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Egreso'), array('controller' => 'egresos', 'action' => 'add')); ?> </li>
 	</ul>
 </div>
 <div class="related">
-	<h3><?php __('Related Egresos');?></h3>
+	<h3><?php echo __('Related Egresos');?></h3>
 	<?php if (!empty($tipoFactura['Egreso'])):?>
 	<table cellpadding = "0" cellspacing = "0">
 	<tr>
-		<th><?php __('Id'); ?></th>
-		<th><?php __('Name'); ?></th>
-		<th><?php __('Tipo Factura Id'); ?></th>
-		<th><?php __('Iva'); ?></th>
-		<th><?php __('Iibb'); ?></th>
-		<th><?php __('Otros'); ?></th>
-		<th><?php __('Total'); ?></th>
-		<th><?php __('Created'); ?></th>
-		<th><?php __('Modified'); ?></th>
-		<th class="actions"><?php __('Actions');?></th>
+		<th><?php echo __('Id'); ?></th>
+		<th><?php echo __('Name'); ?></th>
+		<th><?php echo __('Tipo Factura Id'); ?></th>
+		<th><?php echo __('Iva'); ?></th>
+		<th><?php echo __('Iibb'); ?></th>
+		<th><?php echo __('Otros'); ?></th>
+		<th><?php echo __('Total'); ?></th>
+		<th><?php echo __('Created'); ?></th>
+		<th><?php echo __('Modified'); ?></th>
+		<th class="actions"><?php echo __('Actions');?></th>
 	</tr>
 	<?php
 		$i = 0;
@@ -68,9 +68,9 @@
 			<td><?php echo $egreso['created'];?></td>
 			<td><?php echo $egreso['modified'];?></td>
 			<td class="actions">
-				<?php echo $html->link(__('View', true), array('controller' => 'egresos', 'action' => 'view', $egreso['id'])); ?>
-				<?php echo $html->link(__('Edit', true), array('controller' => 'egresos', 'action' => 'edit', $egreso['id'])); ?>
-				<?php echo $html->link(__('Delete', true), array('controller' => 'egresos', 'action' => 'delete', $egreso['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $egreso['id'])); ?>
+				<?php echo $this->Html->link(__('View'), array('controller' => 'egresos', 'action' => 'view', $egreso['id'])); ?>
+				<?php echo $this->Html->link(__('Edit'), array('controller' => 'egresos', 'action' => 'edit', $egreso['id'])); ?>
+				<?php echo $this->Html->link(__('Delete'), array('controller' => 'egresos', 'action' => 'delete', $egreso['id']), null, sprintf(__('Are you sure you want to delete # %s?'), $egreso['id'])); ?>
 			</td>
 		</tr>
 	<?php endforeach; ?>
@@ -79,7 +79,7 @@
 
 	<div class="actions">
 		<ul>
-			<li><?php echo $html->link(__('New Egreso', true), array('controller' => 'egresos', 'action' => 'add'));?> </li>
+			<li><?php echo $this->Html->link(__('New Egreso'), array('controller' => 'egresos', 'action' => 'add'));?> </li>
 		</ul>
 	</div>
 </div>

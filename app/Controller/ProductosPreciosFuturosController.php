@@ -7,7 +7,7 @@ class ProductosPreciosFuturosController extends AppController {
         }
 
     function index() {
-		$this->params['PaginateConditions'] = array();
+		$this->request->params['PaginateConditions'] = array();
 		if(!empty($this->request->data)){
 			$condiciones = array();
 			$pagCondiciones = array();

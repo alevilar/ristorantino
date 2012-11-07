@@ -3,9 +3,9 @@
     
     <div data-role="navbar">
         <ul>
-            <li><? echo $html->link('factura "A"','/clientes/ajax_clientes_factura_a', array('data-rel'=>'dialog')); ?></li>
-            <li><? echo $html->link('con descuento','/clientes/ajax_clientes_con_descuento', array('data-rel'=>'dialog', 'class'=> 'ui-btn-active')); ?></li>
-            <li><? echo $html->link('buscador','/clientes/ajax_buscador', array('data-rel'=>'dialog')); ?></li>
+            <li><? echo $this->Html->link('factura "A"','/clientes/ajax_clientes_factura_a', array('data-rel'=>'dialog')); ?></li>
+            <li><? echo $this->Html->link('con descuento','/clientes/ajax_clientes_con_descuento', array('data-rel'=>'dialog', 'class'=> 'ui-btn-active')); ?></li>
+            <li><? echo $this->Html->link('buscador','/clientes/ajax_buscador', array('data-rel'=>'dialog')); ?></li>
         </ul>
     </div>
 </div>
@@ -14,14 +14,14 @@
    
         
         
-    <?php $paginator->options()?>
+    <?php $this->Paginator->options()?>
 
     <div id="contenedor-listado-clientes">
         <div id="listado-clientes-ajax">
             <table>
                 <tr class="listado">
-                    <th><?php echo $paginator->sort('Nombre', 'Cliente.nombre'); ?></th>
-                    <th><?php echo $paginator->sort('Descuento', 'Descuento.porcentaje'); ?></th>
+                    <th><?php echo $this->Paginator->sort('Nombre', 'Cliente.nombre'); ?></th>
+                    <th><?php echo $this->Paginator->sort('Descuento', 'Descuento.porcentaje'); ?></th>
                     <th>+</th>
                 </tr>
                 <?php foreach($clientes as $c): ?>
@@ -37,16 +37,16 @@
             <div id="listado-clientes-paginador"  class="menu-horizontal">
                 <ul>
                     <!-- Muestra los enlaces para Anterior -->
-                    <li><?php echo $paginator->prev('« - ', array('class' => 'boton'), null, array('class' => 'disabled boton'));?></li>
+                    <li><?php echo $this->Paginator->prev('« - ', array('class' => 'boton'), null, array('class' => 'disabled boton'));?></li>
 
                     <!-- Muestra los números de página -->
-                    <?php echo $paginator->numbers(array('tag'=>'li','class'=>'boton')); ?>
+                    <?php echo $this->Paginator->numbers(array('tag'=>'li','class'=>'boton')); ?>
 
                     <!-- Muestra los enlaces para Siguiente -->
-                    <li><?php echo $paginator->next(' + »', array('class' => 'boton'), null, array('class' => 'disabled boton'));?></li>
+                    <li><?php echo $this->Paginator->next(' + »', array('class' => 'boton'), null, array('class' => 'disabled boton'));?></li>
 
                     <!-- Muestra X de Y, donde X es la página actual e Y el total del páginas -->
-                    <?php // echo $paginator->counter(); ?>
+                    <?php // echo $this->Paginator->counter(); ?>
                 </ul>
             </div>
         </div>

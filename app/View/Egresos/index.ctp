@@ -1,6 +1,6 @@
 <?php
 
-$paginator->options(
+$this->Paginator->options(
         array('update'=>'lugarPaginado',
         'url'=>array('controller'=>'Egresos', 'action'=>'index'),
         'indicator' => 'LoadingDiv',
@@ -10,7 +10,7 @@ $paginator->options(
 
 
 <div class="egresos index">
-    <h2><?php __('Egresos');?></h2>
+    <h2><?php echo __('Egresos');?></h2>
 
 
 
@@ -28,21 +28,21 @@ $paginator->options(
     ?>
     <table>
         <tr>
-            <td><? echo $form->input('Egreso.user_id', array('label'=> 'A quien esta dirigido', 'empty'=>'Seleccione'));?></td>
-            <td><? echo $form->input('Egreso.tipo_factura_id', array('label'=> 'Comprobante','empty'=>'Seleccione'));?></td>
-            <td><? echo $form->input('Egreso.total', array('size'=> 4));?></td>
+            <td><? echo $this->Form->input('Egreso.user_id', array('label'=> 'A quien esta dirigido', 'empty'=>'Seleccione'));?></td>
+            <td><? echo $this->Form->input('Egreso.tipo_factura_id', array('label'=> 'Comprobante','empty'=>'Seleccione'));?></td>
+            <td><? echo $this->Form->input('Egreso.total', array('size'=> 4));?></td>
         </tr>
         <tr id="masDataParaFactA" style="display: none">
-            <td><? echo $form->input('Egreso.iva', array('label'=> 'IVA'));?></td>
-            <td><? echo $form->input('Egreso.iibb', array('label'=> 'Ing. Brutos'));?></td>
-            <td><? echo $form->input('Egreso.otros', array('label'=> 'Otros'));?></td>
+            <td><? echo $this->Form->input('Egreso.iva', array('label'=> 'IVA'));?></td>
+            <td><? echo $this->Form->input('Egreso.iibb', array('label'=> 'Ing. Brutos'));?></td>
+            <td><? echo $this->Form->input('Egreso.otros', array('label'=> 'Otros'));?></td>
         </tr>
         <tr  id="masDataParaFactA">
-            <td colspan="3"><? echo $form->input('Egreso.name', array('label'=>'Concepto'));?></td>
+            <td colspan="3"><? echo $this->Form->input('Egreso.name', array('label'=>'Concepto'));?></td>
         </tr>
         <tr>
-            <td colspan="1"><? echo $form->button('Reset', array('type'=>'reset'));?></td>
-            <td colspan="2"><? echo $form->end('Guardar');?></td>
+            <td colspan="1"><? echo $this->Form->button('Reset', array('type'=>'reset'));?></td>
+            <td colspan="2"><? echo $this->Form->end('Guardar');?></td>
         </tr>
         
     </table>
@@ -94,19 +94,19 @@ $paginator->options(
 
     <p>
         <?php
-        echo $paginator->counter(array(
-        'format' => __('Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%', true)
+        echo $this->Paginator->counter(array(
+        'format' => __('Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%')
         ));
         ?></p>
 
 
      
-     <?php echo $paginator->sort('total');?>
-     <?php echo $paginator->sort('Concepto','name');?>
-     <?php echo $paginator->sort('Fecha','created');?>
-    <?php echo $paginator->sort('Nombre','User.nombre');?>
-    <?php echo $paginator->sort('Apellido','User.apellido');?>
-    <?php echo $paginator->sort('Comprobante','TipoFactura.name');?>
+     <?php echo $this->Paginator->sort('total');?>
+     <?php echo $this->Paginator->sort('Concepto','name');?>
+     <?php echo $this->Paginator->sort('Fecha','created');?>
+    <?php echo $this->Paginator->sort('Nombre','User.nombre');?>
+    <?php echo $this->Paginator->sort('Apellido','User.apellido');?>
+    <?php echo $this->Paginator->sort('Comprobante','TipoFactura.name');?>
 
     
     <div id="lugarPaginado">
@@ -114,12 +114,12 @@ $paginator->options(
     </div>
 </div>
 <div class="paging">
-    <?php echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
-    | 	<?php echo $paginator->numbers();?>
-    <?php echo $paginator->next(__('next', true).' >>', array(), null, array('class' => 'disabled'));?>
+    <?php echo $this->Paginator->prev('<< '.__('previous'), array(), null, array('class'=>'disabled'));?>
+    | 	<?php echo $this->Paginator->numbers();?>
+    <?php echo $this->Paginator->next(__('next').' >>', array(), null, array('class' => 'disabled'));?>
 </div>
 <div class="actions">
     <ul>
-        <li><?php echo $html->link(__('New Egreso', true), array('action' => 'add')); ?></li>
+        <li><?php echo $this->Html->link(__('New Egreso'), array('action' => 'add')); ?></li>
     </ul>
 </div>

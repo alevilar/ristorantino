@@ -24,18 +24,18 @@ class AditionController extends AditionAppController {
             if(!$existe) {
                 $this->Mesa->create();
                 if ($this->Mesa->save($this->request->data,$validate = false)) {
-                    $this->Session->setFlash(__('Se abrió la mesa n° '.$this->request->data['Mesa']['numero'], true));
+                    $this->Session->setFlash(__('Se abrió la mesa n° '.$this->request->data['Mesa']['numero']));
                     //debug($this->request->data);
                     //	$this->Mesa->Mozo->id = $this->request->data['Mesa']['mozo_id'];
                     //	$this->request->data = $this->Mesa->Mozo->read();
 
                 } else {
-                    $this->Session->setFlash(__('La mesa no pudo ser abierta. Intente nuevamente.', true));
+                    $this->Session->setFlash(__('La mesa no pudo ser abierta. Intente nuevamente.'));
                 }
 
             }
             else { // si se encontro una mesa abierta con se numero
-                $this->Session->setFlash(__('Ese número de mesa ya existe. No puede crear 2 mesas con el mismo número', true));
+                $this->Session->setFlash(__('Ese número de mesa ya existe. No puede crear 2 mesas con el mismo número'));
 
             }
         }

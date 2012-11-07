@@ -1,21 +1,21 @@
 
 
 <div class="sabores form">
-<?php echo $form->create('Sabor');?>
+<?php echo $this->Form->create('Sabor');?>
 <fieldset>
- 		<legend><?php __('Editar Sabor');?></legend>
+ 		<legend><?php echo __('Editar Sabor');?></legend>
 	<?php
-		echo $form->input('id');
-		echo $form->input('name');
-		echo $form->input('categoria_id');
-		echo $form->input('precio');
+		echo $this->Form->input('id');
+		echo $this->Form->input('name');
+		echo $this->Form->input('categoria_id');
+		echo $this->Form->input('precio');
 	?>
-<?php echo $form->end('Submit');?>
+<?php echo $this->Form->end('Submit');?>
 </fieldset>
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $html->link(__('Borrar', true), array('action'=>'delete', $form->value('Sabor.id')), null, sprintf(__('¿Esta seguro que desea borrar el sabor: %s?', true), $form->value('Sabor.name'))); ?></li>
-		<li><?php echo $html->link(__('Listar Sabores', true), array('action'=>'index'));?></li>
+		<li><?php echo $this->Html->link(__('Borrar'), array('action'=>'delete', $this->Form->value('Sabor.id')), null, sprintf(__('¿Esta seguro que desea borrar el sabor: %s?'), $this->Form->value('Sabor.name'))); ?></li>
+		<li><?php echo $this->Html->link(__('Listar Sabores'), array('action'=>'index'));?></li>
 	</ul>
 </div>

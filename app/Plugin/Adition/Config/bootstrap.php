@@ -4,7 +4,7 @@
  * Don't use for isset() conditions, or wrap your variable with @ operator:
  * Example:
  *
- * `ife(isset($variable), @$variable, 'default');`
+ * `!empty(isset($variable)) ? @$variable : 'default';`
  *
  * @param mixed $condition Conditional expression
  * @param mixed $val1 Value to return in case condition matches
@@ -12,7 +12,7 @@
  * @return mixed $val1 or $val2, depending on whether $condition evaluates to a non-empty expression.
  * @link http://book.cakephp.org/view/704/ife
  */
-	function ife($condition, $val1 = null, $val2 = null) {
+	function !empty($condition) ? $val1 = null : $val2 = null {
 		if (!empty($condition)) {
 			return $val1;
 		}

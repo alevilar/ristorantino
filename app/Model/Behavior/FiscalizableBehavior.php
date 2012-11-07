@@ -95,6 +95,29 @@ class PrinterComponent extends Component {
             $imprimio = false;
             
             
+            // imprimir pre-ticket al cerrar la mesa. 
+            // Solo si esta configurado asi y la mesa esta cerrada por primera vez (o que aun este abierta)
+            if (Configure::read('Mesa.imprimePrimeroRemito') && $this->Model->Mesa->estaAbierta()){
+                    return $this->imprimirTicketConComandera($prod, $mozo_nro, $mesa_nro,$this->porcentaje_descuento);
+            } else{
+                if ( isset ( $this->Mesa['Cliente']['imprime_ticket']) && $this->Mesa['Cliente']['imprime_ticket'] != 0) {
+                    switch($this->Mesa['Cliente']['tipofactura']){
+                        case 'A':
+                            $ivaresp = $this->Model->Mesa->Cliente->getResponsabilidadIva($this->Mesa['Cliente']['id']);
+                            $this->Mesa['Cliente']['responsabilidad_iva'] = $ivaresp['IvaResponsabilidad']['codigo_fiscal'];
+
+                            $tipodoc = $this->Model->Mesa->Cliente->getTipoDocumento($this->Mesa['Cliente']['id']);
+                            $this->Mesa['Cliente']['tipodocumento'] = $tipodoc['TipoDocumento']['codigo_fiscal'];
+
+                            return $this->imprimirTicketFacturaA($prod, $this->Mesa['Cliente'], $mozo_nro, $mesa_nro, $this->importe_descuento);
+                        default:
+                            return $this->imprimirTicket($prod, $mozo_nro, $mesa_nro, $this->importe_descuento);
+                            break;
+                    };   
+                }
+            }
+            // por default imprimir un  pre-ticket, en caso de no pasar ningun parametro
+            return $this->imprimirTicketConComandera($prod, $mozo_nro, $mesa_nro,$this->porcentaje_descuento);
         }
 
 

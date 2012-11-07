@@ -1,16 +1,16 @@
 <div class="egresos form">
-<?php echo $form->create('Egreso');?>
+<?php echo $this->Form->create('Egreso');?>
 	<fieldset>
- 		<legend><?php __('Add Egreso');?></legend>
+ 		<legend><?php echo __('Add Egreso');?></legend>
 	<?php
-		echo $form->input('name');
-		echo $form->input('total');
+		echo $this->Form->input('name');
+		echo $this->Form->input('total');
 	?>
 	</fieldset>
-<?php echo $form->end('Submit');?>
+<?php echo $this->Form->end('Submit');?>
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $html->link(__('List Egresos', true), array('action' => 'index'));?></li>
+		<li><?php echo $this->Html->link(__('List Egresos'), array('action' => 'index'));?></li>
 	</ul>
 </div>

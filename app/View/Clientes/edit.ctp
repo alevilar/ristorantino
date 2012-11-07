@@ -2,7 +2,7 @@
 <div class="clientes form">
     <?php echo $this->Form->create('Cliente');?>
     <fieldset>
-        <legend><?php __('Editar Cliente');?></legend>
+        <legend><?php echo __('Editar Cliente');?></legend>
         <?php
         echo $this->Form->hidden('id');
 
@@ -53,6 +53,6 @@
 </div>
 <div class="actions">
     <ul>
-        <li><?php echo $this->Html->link(__('List Clientes', true), array('action'=>'index'));?></li>
+        <li><?php echo $this->Html->link(__('List Clientes'), array('action'=>'index'));?></li>
     </ul>
 </div>

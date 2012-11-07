@@ -3,7 +3,7 @@
     <?php echo $this->Form->create('Cliente');?>
     <fieldset class="ui-grid-a">
         <div class="ui-block-a">
-        <legend><?php __('Add Cliente');?></legend>
+        <legend><?php echo __('Add Cliente');?></legend>
         <?php
        
         echo $this->Form->input('nombre',
@@ -57,6 +57,6 @@
 </div>
 <div class="actions">
     <ul>
-        <li><?php echo $this->Html->link(__('List Clientes', true), array('action'=>'index'));?></li>
+        <li><?php echo $this->Html->link(__('List Clientes'), array('action'=>'index'));?></li>
     </ul>
 </div>

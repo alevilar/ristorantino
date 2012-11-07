@@ -15,7 +15,7 @@ class QueriesController extends StatsAppController {
 
 	function view($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid Query.', true));
+			$this->Session->setFlash(__('Invalid Query.'));
 			$this->redirect(array('action'=>'index'));
 		}
 		$this->set('query', $this->Query->read(null, $id));
@@ -25,25 +25,25 @@ class QueriesController extends StatsAppController {
 		if (!empty($this->data)) {
 			$this->Query->create();
 			if ($this->Query->save($this->data)) {
-				$this->Session->setFlash(__('The Query has been saved', true));
+				$this->Session->setFlash(__('The Query has been saved'));
 				$this->redirect(array('action'=>'index'));
 			} else {
-				$this->Session->setFlash(__('The Query could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('The Query could not be saved. Please, try again.'));
 			}
 		}
 	}
 
 	function edit($id = null) {
 		if (!$id && empty($this->data)) {
-			$this->Session->setFlash(__('Invalid Query', true));
+			$this->Session->setFlash(__('Invalid Query'));
 			$this->redirect(array('action'=>'index'));
 		}
 		if (!empty($this->data)) {
 			if ($this->Query->save($this->data)) {
-				$this->Session->setFlash(__('The Query has been saved', true));
+				$this->Session->setFlash(__('The Query has been saved'));
 				$this->redirect(array('action'=>'index'));
 			} else {
-				$this->Session->setFlash(__('The Query could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('The Query could not be saved. Please, try again.'));
 			}
 		}
 		if (empty($this->data)) {
@@ -53,11 +53,11 @@ class QueriesController extends StatsAppController {
 
 	function delete($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for Query', true));
+			$this->Session->setFlash(__('Invalid id for Query'));
 			$this->redirect(array('action'=>'index'));
 		}
 		if ($this->Query->del($id)) {
-			$this->Session->setFlash(__('Query deleted', true));
+			$this->Session->setFlash(__('Query deleted'));
 			$this->redirect(array('action'=>'index'));
 		}
 	}
@@ -148,7 +148,7 @@ class QueriesController extends StatsAppController {
             }
 
             if (!$id) {
-                $this->Session->setFlash(__('Invalid id for Query', true));
+                $this->Session->setFlash(__('Invalid id for Query'));
                 $this->redirect(array('action'=>'index'));
             }
 

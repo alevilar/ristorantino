@@ -1,33 +1,33 @@
 
 <div class="sabores index">
-<h2><?php __('Sabores');?></h2>
+<h2><?php echo __('Sabores');?></h2>
 <p>
 <?php
-echo $paginator->counter(array(
-'format' => __('Pagina %page% de %pages%, mostrando %current% elementos de %count%', true)
+echo $this->Paginator->counter(array(
+'format' => __('Pagina %page% de %pages%, mostrando %current% elementos de %count%')
 ));
 ?></p>
 <table cellpadding="0" cellspacing="0">
 
     <tr>
-	<?php echo $form->create('Sabor',array('action'=>'index'));?>
-	<th><?php echo $form->input('Sabor.name',array('style'=>'width:170px;','placeholder'=>'Sabor', 'label'=>false));?></th>
-	<th><?php echo $form->input('Categoria.name',array('style'=>'width:120px;','placeholder'=>'Categoría', 'label'=>false));?></th>
-	<th><?php echo $form->input('Sabor.precio',array('style'=>'width:40px;','placeholder'=>'Precio', 'label'=>false));?></th>
+	<?php echo $this->Form->create('Sabor',array('action'=>'index'));?>
+	<th><?php echo $this->Form->input('Sabor.name',array('style'=>'width:170px;','placeholder'=>'Sabor', 'label'=>false));?></th>
+	<th><?php echo $this->Form->input('Categoria.name',array('style'=>'width:120px;','placeholder'=>'Categoría', 'label'=>false));?></th>
+	<th><?php echo $this->Form->input('Sabor.precio',array('style'=>'width:40px;','placeholder'=>'Precio', 'label'=>false));?></th>
 	<th>&nbsp; </th>
-	<th><?php echo $form->end('Buscar');?></th>
+	<th><?php echo $this->Form->end('Buscar');?></th>
     </tr>
     
 <tr>
 	
-	<th><?php echo $paginator->sort('Nombre','name');?></th>
-	<th><?php echo $paginator->sort('Categoria','Categoria.name');?></th>
-	<th><?php echo $paginator->sort('Precio','precio');?></th>
-	<th><?php echo $paginator->sort('Creado','created');?></th>
-	<th class="actions"><?php __('Acciones');?></th>
+	<th><?php echo $this->Paginator->sort('Nombre','name');?></th>
+	<th><?php echo $this->Paginator->sort('Categoria','Categoria.name');?></th>
+	<th><?php echo $this->Paginator->sort('Precio','precio');?></th>
+	<th><?php echo $this->Paginator->sort('Creado','created');?></th>
+	<th class="actions"><?php echo __('Acciones');?></th>
 </tr>
 <?php
-if ($paginator->params['paging']['Sabor']['count']!=0) {
+if ($this->Paginator->params['paging']['Sabor']['count']!=0) {
 $i = 0;
 foreach ($sabores as $sabor):
 	$class = null;
@@ -55,8 +55,8 @@ foreach ($sabores as $sabor):
 			<?php echo date('d-m-y H:i:s',strtotime($sabor['Sabor']['created'])); ?>
 		</td>
 		<td class="actions">
-			<?php echo $html->link(__('Editar', true), array('action'=>'edit', $sabor['Sabor']['id'])); ?>
-			<?php echo $html->link(__('Borrar', true), array('action'=>'delete', $sabor['Sabor']['id']), null, sprintf(__('¿Esta seguro que desea borrar el sabor: %s?', true), $sabor['Sabor']['name'])); ?>
+			<?php echo $this->Html->link(__('Editar'), array('action'=>'edit', $sabor['Sabor']['id'])); ?>
+			<?php echo $this->Html->link(__('Borrar'), array('action'=>'delete', $sabor['Sabor']['id']), null, sprintf(__('¿Esta seguro que desea borrar el sabor: %s?'), $sabor['Sabor']['name'])); ?>
 		</td>
 	</tr>
 <?php endforeach; 
@@ -70,12 +70,12 @@ foreach ($sabores as $sabor):
 </table>
 </div>
 <div class="paging">
-	<?php echo $paginator->prev('<< '.__('anterior', true), array(), null, array('class'=>'disabled'));?>
- | 	<?php echo $paginator->numbers();?>
-	<?php echo $paginator->next(__('próximo', true).' >>', array(), null, array('class'=>'disabled'));?>
+	<?php echo $this->Paginator->prev('<< '.__('anterior'), array(), null, array('class'=>'disabled'));?>
+ | 	<?php echo $this->Paginator->numbers();?>
+	<?php echo $this->Paginator->next(__('próximo').' >>', array(), null, array('class'=>'disabled'));?>
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $html->link(__('Crear Sabor', true), array('action'=>'add')); ?></li>
+		<li><?php echo $this->Html->link(__('Crear Sabor'), array('action'=>'add')); ?></li>
 	</ul>
 </div>

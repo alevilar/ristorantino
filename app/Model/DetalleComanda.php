@@ -9,7 +9,7 @@ class DetalleComanda extends AppModel {
 	);
 
 	
-	var $actsAs = array('Containable', 'Printable');
+	var $actsAs = array('Containable');
 	
 	
 	//The Associations below have been created with all possible keys, those that are not needed can be removed

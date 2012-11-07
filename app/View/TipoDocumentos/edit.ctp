@@ -1,18 +1,18 @@
 <div class="tipoDocumentos form">
-<?php echo $form->create('TipoDocumento');?>
+<?php echo $this->Form->create('TipoDocumento');?>
 	<fieldset>
- 		<legend><?php __('Editar tipo de documento');?></legend>
+ 		<legend><?php echo __('Editar tipo de documento');?></legend>
 	<?php
-		echo $form->input('id');
-		echo $form->input('codigo_fiscal');
-		echo $form->input('name');
+		echo $this->Form->input('id');
+		echo $this->Form->input('codigo_fiscal');
+		echo $this->Form->input('name');
 	?>
-<?php echo $form->end('Submit');?>
+<?php echo $this->Form->end('Submit');?>
 	</fieldset>
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $html->link(__('Delete', true), array('action' => 'delete', $form->value('TipoDocumento.id')), null, sprintf(__('Are you sure you want to delete # %s?', true), $form->value('TipoDocumento.id'))); ?></li>
-		<li><?php echo $html->link(__('List TipoDocumentos', true), array('action' => 'index'));?></li>
+		<li><?php echo $this->Html->link(__('Delete'), array('action' => 'delete', $this->Form->value('TipoDocumento.id')), null, sprintf(__('Are you sure you want to delete # %s?'), $this->Form->value('TipoDocumento.id'))); ?></li>
+		<li><?php echo $this->Html->link(__('List TipoDocumentos'), array('action' => 'index'));?></li>
 	</ul>
 </div>

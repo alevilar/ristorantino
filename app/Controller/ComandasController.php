@@ -18,7 +18,7 @@ class ComandasController extends AppController {
                     $this->autoRender = false;
                     $this->Session->setFlash( __("Comanda Enviada") );
                 } else {
-                    $this->Session->setFlash(__('The Comanda could not be saved. Please, try again.', true));
+                    $this->Session->setFlash(__('The Comanda could not be saved. Please, try again.'));
                 }
             endif;
             $this->set('mesa_id', $mesa_id);

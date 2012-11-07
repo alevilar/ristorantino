@@ -142,6 +142,34 @@ class Comanda extends AppModel {
 		return $v_retorno;
 	}
 	
+        
+        function imprimir($comanda_id) {
+            
+		$productos_x_comanda = array();
+		// se supone que en una comanda yo no voy a tener productos que se impriman en comanderas distitas
+		// (esto es separado desde el mismo controlador y se manda aimprimir a comandas diferentes)
+		// pero , por las dudas que ésto suceda, cuando yo listo los productos de una comanda, me los separa para ser impreso en Comanderas distintas
+		// Entonces, por lo genral (SIEMPRE) se imprimiria x 1 sola Comandera en este método del Componente
+
+		//comanderas_involucradas es un array de IDś dlas comaderas involucradas en esta comanda
+		$comanderas_involucradas =  $this->comanderas_involucradas($comanda_id);
+
+		$entradas = $this->listado_de_productos_con_sabores($comanda_id, DETALLE_COMANDA_TRAER_ENTRADAS);
+		
+		$platos_principales = $this->listado_de_productos_con_sabores($comanda_id, DETALLE_COMANDA_TRAER_PLATOS_PRINCIPALES);
+
+		
+		$productos = array_merge($entradas, $platos_principales);
+                
+                // genero el array lindo paraimprimir por cada comanda
+		// o sea, genero un renglón de la comanda
+		// por ejmeplo me queraria algo asi:
+		// "1) Milanesa de pollo\n"
+		foreach($comanderas_involucradas as $comandera_id) {
+                    
+                }
+                
+        }
 
 }
 ?>

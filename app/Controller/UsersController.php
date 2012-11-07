@@ -30,11 +30,11 @@ class UsersController extends AppController {
  * @return void
  */
 	public function index() {
-                if ( $this->request->is('post') && !empty($this->data['User']['txt_buscar']) ){
+                if ( $this->request->is('post') && !empty($this->request->data['User']['txt_buscar']) ){
                     $this->paginate['conditions'] = array('or' => array(
-                        'lower(User.username) LIKE' => '%'. strtolower( $this->data['User']['txt_buscar'] ) .'%',
-                        'lower(User.nombre) LIKE'   => '%'. strtolower( $this->data['User']['txt_buscar'] ) .'%',
-                        'lower(User.apellido) LIKE' => '%'. strtolower( $this->data['User']['txt_buscar'] ) .'%',
+                        'lower(User.username) LIKE' => '%'. strtolower( $this->request->data['User']['txt_buscar'] ) .'%',
+                        'lower(User.nombre) LIKE'   => '%'. strtolower( $this->request->data['User']['txt_buscar'] ) .'%',
+                        'lower(User.apellido) LIKE' => '%'. strtolower( $this->request->data['User']['txt_buscar'] ) .'%',
                     ));
                 }
                 
@@ -75,15 +75,15 @@ class UsersController extends AppController {
 	function self_user_edit($id){
             $this->User->id = $id;
             if (!$id && empty($this->request->data) || $id != $this->Auth->user('id')) {
-                    $this->Session->setFlash(__('Usuario Incorrecto', true));
+                    $this->Session->setFlash(__('Usuario Incorrecto'));
                     $this->redirect('/pages/home');
             }
             if (!empty($this->request->data)) {
                     if ($this->User->save($this->request->data)) {
-                            $this->Session->setFlash(__('Se ha guardado la información correctamente', true));
+                            $this->Session->setFlash(__('Se ha guardado la información correctamente'));
                             $this->request->data = $this->User->read(null, $id);
                     } else {
-                            $this->Session->setFlash(__('El usuario no pudo ser guardado. Por favor, intente nuevamente.', true));
+                            $this->Session->setFlash(__('El usuario no pudo ser guardado. Por favor, intente nuevamente.'));
                     }
             }
             if (empty($this->request->data)) {
@@ -100,10 +100,10 @@ class UsersController extends AppController {
 	function cambiar_password($id){
 		if (!empty($this->request->data)) {
                     if ($this->User->save( $this->request->data )) {
-                            $this->Session->setFlash(__('Se ha guardado el nuevo password correctamente', true));
+                            $this->Session->setFlash(__('Se ha guardado el nuevo password correctamente'));
                             $this->redirect('/');
                     } else {
-                            $this->Session->setFlash(__('La contraseña no pudo ser guardada. Por favor, intente nuevamente.', true));
+                            $this->Session->setFlash(__('La contraseña no pudo ser guardada. Por favor, intente nuevamente.'));
                     }
 		}
 		if (empty($this->request->data)) {

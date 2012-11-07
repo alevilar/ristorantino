@@ -19,7 +19,7 @@
         <th><?php echo $this->Paginator->sort('Cliente.nombre', 'Cliente'); ?></th>
 
 
-        <th class="actions"><?php __('Acciones'); ?></th>
+        <th class="actions"><?php echo __('Acciones'); ?></th>
     </tr>
     <?php
     $i = 0;
@@ -100,16 +100,16 @@
                                     <td class="actions">
                                         <?php
                                         if ($mozo['Mesa']['estado_id'] != MESA_ABIERTA) {
-                                            echo $this->Html->link(__('Reabrir', true), array('action' => 'reabrir', $mozo['Mesa']['id'], 'admin' => ''));
+                                            echo $this->Html->link(__('Reabrir'), array('action' => 'reabrir', $mozo['Mesa']['id'], 'admin' => ''));
                                             echo ('</br>');
                                         }
                                         ?>
 
-                                        <?php echo $this->Html->link(__('Editar', true), array('action' => 'edit', $mozo['Mesa']['id'])); ?>
+                                        <?php echo $this->Html->link(__('Editar'), array('action' => 'edit', $mozo['Mesa']['id'])); ?>
                                         </br>
-                                    <?php echo $this->Html->link(__('Borrar', true), array('action' => 'delete', $mozo['Mesa']['id']), null, sprintf(__('¿Esta seguro que quiere borrar la mesa nº %s?\nSi se elimina se perderán los pedidos y no sera computada en las estadísticas.', true), $mozo['Mesa']['numero'])); ?>
+                                    <?php echo $this->Html->link(__('Borrar'), array('action' => 'delete', $mozo['Mesa']['id']), null, sprintf(__('¿Esta seguro que quiere borrar la mesa nº %s?\nSi se elimina se perderán los pedidos y no sera computada en las estadísticas.'), $mozo['Mesa']['numero'])); ?>
                                         </br>
-    <?php echo $this->Html->link(__('Imprimir Ticket', true), array('action' => 'imprimirTicket', $mozo['Mesa']['id'], 'admin' => false), null, sprintf(__('¿Desea imprimir el ticket de la mesa nº %s?', true), $mozo['Mesa']['numero'])); ?>
+    <?php echo $this->Html->link(__('Imprimir Ticket'), array('action' => 'imprimirTicket', $mozo['Mesa']['id'], 'admin' => false), null, sprintf(__('¿Desea imprimir el ticket de la mesa nº %s?'), $mozo['Mesa']['numero'])); ?>
                                     </td>
                                     </tr>
 <?php endforeach; ?>      

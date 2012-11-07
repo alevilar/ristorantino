@@ -1,17 +1,17 @@
 <div class="comandas form">
-<?php echo $form->create('DetalleComanda');?>
+<?php echo $this->Form->create('DetalleComanda');?>
 	<fieldset>
- 		<legend><?php __('Add Comanda');?></legend>
+ 		<legend><?php echo __('Add Comanda');?></legend>
 	<?php
-		echo $form->input('producto_id');
-		echo $form->input('cant');
-		echo $form->input('mesa_id');
+		echo $this->Form->input('producto_id');
+		echo $this->Form->input('cant');
+		echo $this->Form->input('mesa_id');
 	?>
 	</fieldset>
-<?php echo $form->end('Submit');?>
+<?php echo $this->Form->end('Submit');?>
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $html->link(__('List Comandas', true), array('action'=>'index'));?></li>
+		<li><?php echo $this->Html->link(__('List Comandas'), array('action'=>'index'));?></li>
 	</ul>
 </div>

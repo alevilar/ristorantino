@@ -46,7 +46,7 @@ class MesasController extends AppController {
     public function view($id = null) {
 
         if (!$id) {
-            $this->Session->setFlash(__('Invalid Mesa.', true));
+            $this->Session->setFlash(__('Invalid Mesa.'));
             $this->redirect(array('action'=>'index'));
         }
 
@@ -91,7 +91,7 @@ class MesasController extends AppController {
     public function ticket_view($id = null) {
 
         if (!$id) {
-            $this->Session->setFlash(__('Invalid Mesa.', true));
+            $this->Session->setFlash(__('Invalid Mesa.'));
             $this->redirect(array('action'=>'index'));
         }
 
@@ -151,42 +151,16 @@ class MesasController extends AppController {
     }
 
 
-
-
     public function imprimirTicket($mesa_id) {
         
-        $fiscalData = $this->Mesa->getDataParaFiscal($mesa_id);
-        
-        
-            // imprimir pre-ticket al cerrar la mesa. 
-            // Solo si esta configurado asi y la mesa esta cerrada por primera vez (o que aun este abierta)
-            if (Configure::read('Mesa.imprimePrimeroRemito') && $this->Model->Mesa->estaAbierta()){
-                    return $this->imprimirTicketConComandera($prod, $mozo_nro, $mesa_nro,$this->porcentaje_descuento);
-            } else{
-                if ( isset ( $this->Mesa['Cliente']['imprime_ticket']) && $this->Mesa['Cliente']['imprime_ticket'] != 0) {
-                    switch($this->Mesa['Cliente']['tipofactura']){
-                        case 'A':
-                            $ivaresp = $this->Model->Mesa->Cliente->getResponsabilidadIva($this->Mesa['Cliente']['id']);
-                            $this->Mesa['Cliente']['responsabilidad_iva'] = $ivaresp['IvaResponsabilidad']['codigo_fiscal'];
-
-                            $tipodoc = $this->Model->Mesa->Cliente->getTipoDocumento($this->Mesa['Cliente']['id']);
-                            $this->Mesa['Cliente']['tipodocumento'] = $tipodoc['TipoDocumento']['codigo_fiscal'];
-
-                             $this->imprimirTicketFacturaA($prod, $this->Mesa['Cliente'], $mozo_nro, $mesa_nro, $this->importe_descuento);
-                        default:
-                            $this->imprimirTicket($prod, $mozo_nro, $mesa_nro, $this->importe_descuento);
-                            break;
-                    };   
-                }
-            }            
-            
+        $this->Mesa->imprimirTicket($mesa_id);
         
         if($this->RequestHandler->isAjax()){
             $this->autoRender = false;
             $this->layout = 'ajax';
             return 1;
         } else {
-                $this->flash('Se imprimio comanda de mesa ID: '.$mesa_id.' (click para reimprimir)', $this->action.'/'.$mesa_id);
+                $this->flash('Se imprimio comanda de mesa ID: '.$mesa_id.' (click para reimprimir)', $this->request->action.'/'.$mesa_id);
                 $this->redirect($this->referer());
         }
     }

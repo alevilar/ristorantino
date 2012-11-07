@@ -1,8 +1,8 @@
 
 <div class="categorias index">
-<h2><?php __('Categorias');?></h2>
+<h2><?php echo __('Categorias');?></h2>
 
-<?php echo $html->link('Reordenar Alfabeticamente',array('action'=>'reordenar'));?>
+<?php echo $this->Html->link('Reordenar Alfabeticamente',array('action'=>'reordenar'));?>
 
 <table class="categorias-table" cellpadding="0" cellspacing="0">
 
@@ -20,14 +20,14 @@ foreach($categorias as $catId => $catName){
         <?php  
        
         if( !empty($imagenes[$catId])) {
-                echo $html->image('menu/'.$imagenes[$catId],array('height'=>'22px;')); 
+                echo $this->Html->image('menu/'.$imagenes[$catId],array('height'=>'22px;')); 
         }
         echo "($catId) $catName";
         ?></span>
 		</td>
 		<td class="actions" align="left">
-			<?php echo $html->link(__('Editar', true), array('action'=>'edit', $catId)); ?>
-			<?php echo $html->link(__('Borrar', true), array('action'=>'delete', $catId), null, sprintf(__('Seguro que querés borrar la categoria # %s?', true), $catName)); ?>
+			<?php echo $this->Html->link(__('Editar'), array('action'=>'edit', $catId)); ?>
+			<?php echo $this->Html->link(__('Borrar'), array('action'=>'delete', $catId), null, sprintf(__('Seguro que querés borrar la categoria # %s?'), $catName)); ?>
 		</td>
 	</tr>
 <?php } ?>
@@ -37,8 +37,8 @@ foreach($categorias as $catId => $catName){
 
 <div class="actions">
 	<ul>
-		<li><?php echo $html->link(__('Nueva Categoria', true), array('action'=>'edit')); ?></li>
-		<li><?php echo $html->link(__('Listar Productos', true), array('controller'=> 'productos', 'action'=>'index')); ?> </li>
-		<li><?php echo $html->link(__('Agregar un Nuevo Producto', true), array('controller'=> 'productos', 'action'=>'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('Nueva Categoria'), array('action'=>'edit')); ?></li>
+		<li><?php echo $this->Html->link(__('Listar Productos'), array('controller'=> 'productos', 'action'=>'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('Agregar un Nuevo Producto'), array('controller'=> 'productos', 'action'=>'add')); ?> </li>
 	</ul>
 </div>

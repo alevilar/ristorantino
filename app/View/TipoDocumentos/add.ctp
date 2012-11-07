@@ -1,17 +1,17 @@
 <div class="tipoDocumentos form">
-<?php echo $form->create('TipoDocumento');?>
+<?php echo $this->Form->create('TipoDocumento');?>
 	<fieldset>
- 		<legend><?php __('Crear Tipo de documento');?></legend>
+ 		<legend><?php echo __('Crear Tipo de documento');?></legend>
 	<?php
-		echo $form->input('codigo_fiscal');
-		echo $form->input('name');
+		echo $this->Form->input('codigo_fiscal');
+		echo $this->Form->input('name');
 	?>
-<?php echo $form->end('Submit');?>
+<?php echo $this->Form->end('Submit');?>
 </fieldset>
 
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $html->link(__('Listar Tipo de Documentos', true), array('action' => 'index'));?></li>
+		<li><?php echo $this->Html->link(__('Listar Tipo de Documentos'), array('action' => 'index'));?></li>
 	</ul>
 </div>

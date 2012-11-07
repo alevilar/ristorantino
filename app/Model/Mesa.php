@@ -9,7 +9,11 @@ class Mesa extends AppModel
  * Behaiviours
  * @var array 
  */    
-    public $actsAs = array('Containable', 'SoftDeletable', 'Search.Searchable');
+    public $actsAs = array(
+        'Containable', 
+        'SoftDeletable', 
+        'Search.Searchable',
+        );
     
     
     public $numero = 0;
@@ -511,6 +515,36 @@ class Mesa extends AppModel
         else
             return true;
     }
+    
+    
+    /**
+     * Dice si una mesa esta abierta y nunca fue cerrada ni cobrada
+     * o sea, que nunca fue re-abierta.     
+     * 
+     * @param integer $id
+     * @return boolean
+     */
+    function estaAbiertaPeroNoEsReabierta($id = null)
+    {
+        if (!empty($id)) {
+            $this->id = $id;
+        }
+        // si lo tengo en memoria primero busco por aca
+        if (!empty($this->data[$this->name]['estado_id'])) {
+            return $this->data[$this->name]['estado_id'] == MESA_ABIERTA;
+        }
+        // lo busco en BBDD        
+        $ret = $this->find('count', array(
+            'conditions' => array(
+                'Mesa.estado_id' => MESA_ABIERTA,
+                'Mesa.id' => $this->id,
+                'Mesa.time_cerro' => '0000-00-00 00:00:00',
+                'Mesa.time_cobro' => '0000-00-00 00:00:00',
+            )
+                ));
+
+        return ($ret > 0);
+    }
 
     /**
      * Dice si una mesa esta abierta o no
@@ -685,6 +719,16 @@ LEFT JOIN mozos z ON z.id = m.mozo_id
         $mesaData['Totales'] = $totales['Mesa'];
         
         return $mesaData;
+        
+    }
+    
+    
+    public function imprimirTicket( $id = null ){
+        if (empty($id)) {
+            $id = $this->id;
+        }
+        
+        $fiscalData = $this->getDataParaFiscal($mesa_id);
         
     }
 }

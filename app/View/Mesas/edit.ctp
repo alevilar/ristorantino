@@ -2,7 +2,7 @@
 <div class="mesas form ui-grid-a">
     <?php echo $this->Form->create('Mesa', array('data-direction' => "reverse")); ?>
     <fieldset class="ui-block-a">
-        <legend><?php __('Datos Generales'); ?></legend>
+        <legend><?php echo __('Datos Generales'); ?></legend>
         <?php
         echo $this->Form->input('id');
         echo $this->Form->input('estado_id');
@@ -12,7 +12,7 @@
     </fieldset>
 
     <fieldset class="ui-block-b">
-        <legend><?php __('Totales de Mesa'); ?></legend>
+        <legend><?php echo __('Totales de Mesa'); ?></legend>
         <?php
         echo $this->Form->input('cant_comensales', array('after' => '</br>Aquí puede cambiar la cantidad de cubiertos de la mesa'));
         echo $this->Form->input('total', array('after' => '</br>Aquí puede cambiar el total de la mesa.'));
@@ -114,7 +114,7 @@ endforeach;
 
 <div class="actions">
     <ul>
-        <li><?php echo $this->Html->link(__('Borrar', true), array('action' => 'delete', $this->Form->value('Mesa.id')), null, sprintf('Seguro que querés borrar la mesa Número # %s?', $this->Form->value('Mesa.numero'))); ?></li>
-        <li><?php echo $this->Html->link(__('Listar Mesas', true), array('action' => 'index')); ?></li>
+        <li><?php echo $this->Html->link(__('Borrar'), array('action' => 'delete', $this->Form->value('Mesa.id')), null, sprintf('Seguro que querés borrar la mesa Número # %s?', $this->Form->value('Mesa.numero'))); ?></li>
+        <li><?php echo $this->Html->link(__('Listar Mesas'), array('action' => 'index')); ?></li>
     </ul>
 </div>

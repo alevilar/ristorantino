@@ -1,17 +1,17 @@
 <div class="ivaResponsabilidades form">
-<?php echo $form->create('IvaResponsabilidad');?>
+<?php echo $this->Form->create('IvaResponsabilidad');?>
 	<fieldset>
- 		<legend><?php __('Add IvaResponsabilidad');?></legend>
+ 		<legend><?php echo __('Add IvaResponsabilidad');?></legend>
 	<?php
-		echo $form->input('codigo_fiscal');
-		echo $form->input('name');
+		echo $this->Form->input('codigo_fiscal');
+		echo $this->Form->input('name');
 	?>
-<?php echo $form->end('Submit');?>
+<?php echo $this->Form->end('Submit');?>
 	</fieldset>
 
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $html->link(__('Listar IVA responsabilidad', true), array('action' => 'index'));?></li>
+		<li><?php echo $this->Html->link(__('Listar IVA responsabilidad'), array('action' => 'index'));?></li>
 	</ul>
 </div>

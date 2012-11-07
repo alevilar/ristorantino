@@ -33,7 +33,7 @@ class SaboresController extends AppController {
 
 	function view($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid Sabor.', true));
+			$this->Session->setFlash(__('Invalid Sabor.'));
 			$this->redirect(array('action'=>'index'));
 		}
 		$this->set('sabor', $this->Sabor->read(null, $id));
@@ -43,10 +43,10 @@ class SaboresController extends AppController {
 		if (!empty($this->request->data)) {
 			$this->Sabor->create();
 			if ($this->Sabor->save($this->request->data)) {
-				$this->Session->setFlash(__('The Sabor has been saved', true));
+				$this->Session->setFlash(__('The Sabor has been saved'));
 				$this->redirect(array('action'=>'index'));
 			} else {
-				$this->Session->setFlash(__('The Sabor could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('The Sabor could not be saved. Please, try again.'));
 			}
 		}
 		$categorias = $this->Sabor->Categoria->generatetreelist(null, null, null, '___');
@@ -55,15 +55,15 @@ class SaboresController extends AppController {
 
 	function edit($id = null) {
 		if (!$id && empty($this->request->data)) {
-			$this->Session->setFlash(__('Invalid Sabor', true));
+			$this->Session->setFlash(__('Invalid Sabor'));
 			$this->redirect(array('action'=>'index'));
 		}
 		if (!empty($this->request->data)) {
 			if ($this->Sabor->save($this->request->data)) {
-				$this->Session->setFlash(__('The Sabor has been saved', true));
+				$this->Session->setFlash(__('The Sabor has been saved'));
 				$this->redirect(array('action'=>'index'));
 			} else {
-				$this->Session->setFlash(__('The Sabor could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('The Sabor could not be saved. Please, try again.'));
 			}
 		}
 		if (empty($this->request->data)) {
@@ -75,10 +75,10 @@ class SaboresController extends AppController {
 
 	function delete($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for Sabor', true));
+			$this->Session->setFlash(__('Invalid id for Sabor'));
 		}
 		if ($this->Sabor->del($id)) {
-			$this->Session->setFlash(__('Sabor deleted', true));
+			$this->Session->setFlash(__('Sabor deleted'));
 		}
                 $this->redirect(array('action'=>'index'));
 	}

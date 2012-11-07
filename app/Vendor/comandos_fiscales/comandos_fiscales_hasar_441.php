@@ -332,7 +332,7 @@ class ComandosImpresora extends ComandosFiscales
 				}
 			}
 			else{ 	
-                            throw new InternalErrorException('Error, no existe el tipo de documento pasado: '.$tipo_documento);
+                            throw new InternalErrorException('Erro en el tipo de documento pasado: '.$tipo_documento);
                             return -1;
 			}	
 		}

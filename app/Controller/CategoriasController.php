@@ -34,7 +34,7 @@ class CategoriasController extends AppController {
 
 	function view($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid Categoria.', true));
+			$this->Session->setFlash(__('Invalid Categoria.'));
 			$this->redirect(array('action'=>'index'));
 		}
 		$this->set('categoria', $this->Categoria->read(null, $id));
@@ -82,10 +82,10 @@ class CategoriasController extends AppController {
 			$this->Categoria->create();
                     }
 			if ($this->Categoria->save($this->request->data)) {
-				$this->Session->setFlash(__('The Categoria has been saved', true));
+				$this->Session->setFlash(__('The Categoria has been saved'));
 //				$this->redirect(array('action'=>'index'));
 			} else {
-				$this->Session->setFlash(__('The Categoria could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('The Categoria could not be saved. Please, try again.'));
 			}
                         
                         if ( empty($id) ) {
@@ -102,10 +102,10 @@ class CategoriasController extends AppController {
 	function delete($id = null) {
 		Cache::delete('categorias');
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for Categoria', true));
+			$this->Session->setFlash(__('Invalid id for Categoria'));
 		}
 		if ($this->Categoria->del($id)) {
-			$this->Session->setFlash(__('Categoria deleted', true));
+			$this->Session->setFlash(__('Categoria deleted'));
 		}
                 $this->redirect(array('action'=>'index'));
 	}

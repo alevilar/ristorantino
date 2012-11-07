@@ -16,9 +16,9 @@
 
 <div class="actions">
 	<ul>
-		<li><?php echo $this->Html->link(__('Listar Mozos', true), array('action'=>'index'));?></li>
-		<li><?php echo $this->Html->link(__('Listar Usuarios', true), array('controller'=> 'users', 'action'=>'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('Nuevo usuario', true), array('controller'=> 'users', 'action'=>'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('Listar Mesas', true), array('controller'=> 'mesas', 'action'=>'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('Listar Mozos'), array('action'=>'index'));?></li>
+		<li><?php echo $this->Html->link(__('Listar Usuarios'), array('controller'=> 'users', 'action'=>'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('Nuevo usuario'), array('controller'=> 'users', 'action'=>'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('Listar Mesas'), array('controller'=> 'mesas', 'action'=>'index')); ?> </li>
 	</ul>
 </div>

@@ -3,9 +3,9 @@
     
     <div data-role="navbar">
         <ul>
-            <li><? echo $html->link('factura "A"','/clientes/ajax_clientes_factura_a', array('data-rel'=>'dialog')); ?></li>
-            <li><? echo $html->link('con descuento','/clientes/ajax_clientes_con_descuento', array('data-rel'=>'dialog')); ?></li>
-            <li><? echo $html->link('buscador','/clientes/ajax_buscador', array('data-rel'=>'dialog', 'class'=> 'ui-btn-active')); ?></li>
+            <li><? echo $this->Html->link('factura "A"','/clientes/ajax_clientes_factura_a', array('data-rel'=>'dialog')); ?></li>
+            <li><? echo $this->Html->link('con descuento','/clientes/ajax_clientes_con_descuento', array('data-rel'=>'dialog')); ?></li>
+            <li><? echo $this->Html->link('buscador','/clientes/ajax_buscador', array('data-rel'=>'dialog', 'class'=> 'ui-btn-active')); ?></li>
         </ul>
     </div>
     
@@ -17,7 +17,7 @@
 
     <?php if (!empty($clientes)){ ?>
 
-    <?php $paginator->options()?>
+    <?php $this->Paginator->options()?>
 
 
 
@@ -28,10 +28,10 @@
 
                 <tr class="listado">
 
-                    <th><?php echo $paginator->sort('Cuit', 'nrodocumento'); ?></th>
+                    <th><?php echo $this->Paginator->sort('Cuit', 'nrodocumento'); ?></th>
 
-                    <th><?php echo $paginator->sort('Denominación', 'nombre'); ?></th>
-                    <th><?php echo $paginator->sort('Descuento', 'Descuento.porcentaje'); ?></th>
+                    <th><?php echo $this->Paginator->sort('Denominación', 'nombre'); ?></th>
+                    <th><?php echo $this->Paginator->sort('Descuento', 'Descuento.porcentaje'); ?></th>
 
                     <th>+</th>
 
@@ -51,16 +51,16 @@
             <div id="listado-clientes-factura-a-paginador" class="menu-horizontal">
                 <ul>
                     <!-- Muestra los enlaces para Anterior -->
-                    <li><?php echo $paginator->prev('« - ', array('class' => 'boton'), null, array('class' => 'disabled boton'));?></li>
+                    <li><?php echo $this->Paginator->prev('« - ', array('class' => 'boton'), null, array('class' => 'disabled boton'));?></li>
 
                     <!-- Muestra los números de página -->
-                    <?php echo $paginator->numbers(array('tag'=>'li','class'=>'boton', 'modulus'=>'5')); ?>
+                    <?php echo $this->Paginator->numbers(array('tag'=>'li','class'=>'boton', 'modulus'=>'5')); ?>
 
                     <!-- Muestra los enlaces para Siguiente -->
-                    <li><?php echo $paginator->next(' + »', array('class' => 'boton'), null, array('class' => 'disabled boton'));?></li>
+                    <li><?php echo $this->Paginator->next(' + »', array('class' => 'boton'), null, array('class' => 'disabled boton'));?></li>
 
                     <!-- Muestra X de Y, donde X es la página actual e Y el total del páginas -->
-                    <?php // echo $paginator->counter(); ?>
+                    <?php // echo $this->Paginator->counter(); ?>
                 </ul>
             </div>
 
@@ -70,9 +70,9 @@
 
     <?php } else {?>
 
-    <?php echo $form->create('Cliente', array('url'=>'/clientes/ajax_buscador')) ?>
-    <?php echo $form->input('busqueda') ?>
-    <?php echo $form->end('Buscar', array('update'=>'clientes-listado')) ?>
+    <?php echo $this->Form->create('Cliente', array('url'=>'/clientes/ajax_buscador')) ?>
+    <?php echo $this->Form->input('busqueda') ?>
+    <?php echo $this->Form->end('Buscar', array('update'=>'clientes-listado')) ?>
 
     <?php } ?>
 

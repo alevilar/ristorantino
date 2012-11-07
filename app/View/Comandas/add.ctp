@@ -64,7 +64,7 @@
                    <a  href="#" data-bind="click: seleccionar" data-theme="b" data-inline="true" data-role="button" class="ui-btn ui-btn-inline ui-btn-corner-all ui-shadow ui-btn-up-b">
                        <span class="ui-btn-inner ui-btn-corner-all">
                            <span class="ui-btn-text">
-                               <?php echo $html->image('ico_mozo.png', array('height'=>'40px'));?>
+                               <?php echo $this->Html->image('ico_mozo.png', array('height'=>'40px'));?>
                                <span data-bind="text: name">Bebidas con Alcohol</span>                         
                            </span>
                        </span>

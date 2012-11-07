@@ -45,12 +45,12 @@ echo $javascript->link('jquery.jeditable.mini', false);
             $paginator->options(array('url' => $url_conditions));
         }
 //echo $paginator->counter(array(
-//'format' => __('Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%', true)
+//'format' => __('Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%')
 //));
 
         if (isset($paginator)) {
             echo $paginator->counter(array(
-            'format' => __('Pagina %page% de %pages% Mostrando %current% registros de %count% encontrados', true)
+            'format' => __('Pagina %page% de %pages% Mostrando %current% registros de %count% encontrados')
             ));
         }
 //debug($url_conditions);

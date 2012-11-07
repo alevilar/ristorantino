@@ -32,37 +32,4 @@ App::uses('Controller', 'Controller');
  * @link http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
 class AppController extends Controller {
-//    public $helpers = array('Html', 'Form');
-    public $components = array(
-//        'Acl',     
-        'Auth', 
-            'Configurator', 
-            'RequestHandler', 
-            'Session',
-        );
-    
-    public $helpers = array('Html', 'Jqm', 'Form','Paginator', 'Session');
-    
-    public $Html;
-
-
-
-
-    public function beforeFilter () {
-        
-        $this->Html->_tags['link'] = '<a data-role="button" href="%s"%s>%s</a>';
-        
-        $this->Auth->allow('*');
-        $this->Auth->authorize = array('Actions');
-
-        
-        $this->Auth->loginAction = array(Configure::read('Routing.admin') => false, 'controller' => 'users', 'action' => 'login');
-        $this->Auth->logoutRedirect = array(Configure::read('Routing.admin') => false, 'controller' => 'users', 'action' => 'logout');
-
-        
-        $this->RequestHandler->setContent('jqm', 'xhtml');
-        
-        return parent::beforeFilter();
-    }
-    
 }

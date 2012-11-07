@@ -10,7 +10,7 @@ class ProductosController extends AppController {
         
         
 	function index() {
-		$this->params['PaginateConditions'] = array();
+		$this->request->params['PaginateConditions'] = array();
 		
 		if(!empty($this->request->data)){
 			$condiciones = array();
@@ -27,7 +27,7 @@ class ProductosController extends AppController {
 				'conditions' => $condiciones
 			);
 			
-			$this->params['PaginateConditions'] = $pagCondiciones;
+			$this->request->params['PaginateConditions'] = $pagCondiciones;
 			$this->set('productos', $this->paginate('Producto'));
 		}
 		
@@ -48,7 +48,7 @@ class ProductosController extends AppController {
 			$this->paginate['Producto'] = array(
 				'conditions' => $condiciones
 			);
-			$this->params['PaginateConditions'] = $pagCondiciones;
+			$this->request->params['PaginateConditions'] = $pagCondiciones;
 			$this->set('productos', $this->paginate('Producto'));
 		 }   
 		 
@@ -62,7 +62,7 @@ class ProductosController extends AppController {
 
 	function view($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid Producto.', true));
+			$this->Session->setFlash(__('Invalid Producto.'));
 			$this->redirect(array('action'=>'index'));
 		}
                 $fields = array(
@@ -102,10 +102,10 @@ class ProductosController extends AppController {
 		if (!empty($this->request->data)) {
 			$this->Producto->create();
 			if ($this->Producto->save($this->request->data)) {
-				$this->Session->setFlash(__('The Producto has been saved', true));
+				$this->Session->setFlash(__('The Producto has been saved'));
 				$this->redirect(array('action'=>'index'));
 			} else {
-				$this->Session->setFlash(__('The Producto could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('The Producto could not be saved. Please, try again.'));
 			}
 		}
 		$comanderas = $this->Producto->Comandera->find('list',array('fields'=>array('id','description')));
@@ -115,7 +115,7 @@ class ProductosController extends AppController {
 
 	function edit($id = null) {
 		if (!$id && empty($this->request->data)) {
-			$this->Session->setFlash(__('Invalid Producto', true));
+			$this->Session->setFlash(__('Invalid Producto'));
 			$this->redirect(array('action'=>'index'));
 		}
 		if (!empty($this->request->data)) {
@@ -125,18 +125,18 @@ class ProductosController extends AppController {
                                 $this->request->data['ProductosPreciosFuturo']['producto_id'] = $this->request->data['Producto']['id'];
                                 //debug($this->Producto->ProductosPreciosFuturo);die;
                                 if (!$this->Producto->ProductosPreciosFuturo->save($this->request->data['ProductosPreciosFuturo'])){
-                                    $this->Session->setFlash(__('No se pudo guardar el precio futuro', true));
+                                    $this->Session->setFlash(__('No se pudo guardar el precio futuro'));
                                 }
                                 
                             // reseteo los precios futuros
                             } elseif(!empty($this->request->data['ProductosPreciosFuturo']['producto_id'])){
                                 if (!$this->Producto->ProductosPreciosFuturo->del($this->request->data['ProductosPreciosFuturo']['producto_id'], false)){
-                                    $this->Session->setFlash(__('No se pudo eliminar el precio futuro', true));
+                                    $this->Session->setFlash(__('No se pudo eliminar el precio futuro'));
                                 }
                             }
                             $this->redirect(array('action'=>'index'));
 			} else {
-				$this->Session->setFlash(__('The Producto could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('The Producto could not be saved. Please, try again.'));
 			}
 		}
                 
@@ -148,11 +148,11 @@ class ProductosController extends AppController {
 
 	function delete($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for Producto', true));
+			$this->Session->setFlash(__('Invalid id for Producto'));
 			
 		}
 		if ($this->Producto->del($id)) {
-			$this->Session->setFlash(__('Producto deleted', true));
+			$this->Session->setFlash(__('Producto deleted'));
 		}
                 $this->redirect(array('action'=>'index'));
 	}
@@ -255,13 +255,13 @@ class ProductosController extends AppController {
         
         function update()
         {
-            $this->Producto->id = $this->params['form']['product_id'];
+            $this->Producto->id = $this->request->params['form']['product_id'];
             
             $pf = 'precio_futuro';
             
             
-            if ($this->Producto->saveField($this->params['form']['field'], $this->params['form']['value'], false)) {
-                $txtShow = (!empty($this->params['form']['text'])) ? $this->params['form']['text'] : $this->params['form']['value'];
+            if ($this->Producto->saveField($this->request->params['form']['field'], $this->request->params['form']['value'], false)) {
+                $txtShow = (!empty($this->request->params['form']['text'])) ? $this->request->params['form']['text'] : $this->request->params['form']['value'];
                 echo $txtShow;
             } else {
                 echo "error al guardar";

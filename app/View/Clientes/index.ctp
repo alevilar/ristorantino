@@ -4,7 +4,7 @@
 
 <div class="actions">
     <ul>
-        <li><?php echo $this->Html->link(__('Crear Cliente', true), array('action' => 'add')); ?></li>
+        <li><?php echo $this->Html->link(__('Crear Cliente'), array('action' => 'add')); ?></li>
     </ul>
 </div>
 
@@ -48,7 +48,7 @@
             <th><?php echo $this->Paginator->sort('TipoDocumento.name', 'Tipo Documento'); ?></th>
             <th><?php echo $this->Paginator->sort('nrodocumento', 'Número'); ?></th>
             <th><?php echo $this->Paginator->sort('created', 'Creado'); ?></th>
-            <th class="actions"><?php __('Acciones'); ?></th>
+            <th class="actions"><?php echo __('Acciones'); ?></th>
         </tr>
         <?php
         if ($this->Paginator->params['paging']['Cliente']['count'] != 0) {
@@ -84,8 +84,8 @@
                         <?php echo date('d/m/Y H:i', strtotime($cliente['Cliente']['created'])); ?>
                     </td>
                     <td class="actions">
-                        <?php echo $this->Html->link(__('Ver', true), array('action' => 'view', $cliente['Cliente']['id'])); ?>
-                        <?php echo $this->Html->link(__('Editar', true), array('action' => 'edit', $cliente['Cliente']['id'])); ?>
+                        <?php echo $this->Html->link(__('Ver'), array('action' => 'view', $cliente['Cliente']['id'])); ?>
+                        <?php echo $this->Html->link(__('Editar'), array('action' => 'edit', $cliente['Cliente']['id'])); ?>
                         <?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $cliente['Cliente']['id']), null, __('¿Está seguro que desea borrar el cliente: %s?', $cliente['Cliente']['nombre'])); ?>
                     </td>
                 </tr>
@@ -102,12 +102,12 @@
 
 </div>
 <div class="paging">
-    <?php echo $this->Paginator->prev('<< ' . __('anterior', true), array(), null, array('class' => 'disabled')); ?>
+    <?php echo $this->Paginator->prev('<< ' . __('anterior'), array(), null, array('class' => 'disabled')); ?>
     | 	<?php echo $this->Paginator->numbers(); ?>
-    <?php echo $this->Paginator->next(__('próximo', true) . ' >>', array(), null, array('class' => 'disabled')); ?>
+    <?php echo $this->Paginator->next(__('próximo') . ' >>', array(), null, array('class' => 'disabled')); ?>
 </div>
 <div class="actions">
     <ul>
-        <li><?php echo $this->Html->link(__('Crear Cliente', true), array('action' => 'add')); ?></li>
+        <li><?php echo $this->Html->link(__('Crear Cliente'), array('action' => 'add')); ?></li>
     </ul>
 </div>
