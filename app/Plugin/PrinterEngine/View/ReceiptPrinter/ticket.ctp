@@ -1,6 +1,5 @@
 <?php 
-define('ESC', '');
-        echo ESC.'@'; // pongo el ESC para comenzar ESC/P 
+        echo $this->PE->cm('ESC').'@'; // pongo el ESC para comenzar ESC/P 
         
         
         /*****
@@ -85,4 +84,4 @@ define('ESC', '');
 
 
         // probando corte completo ESC/P
-        echo ESC.'i';
+        echo $this->PE->cm('ESC').'i';

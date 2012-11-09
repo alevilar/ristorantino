@@ -84,11 +84,15 @@
  *	));
  */
 Cache::config('default', array('engine' => 'File'));
-App::uses('IniReader', 'Configure');
 
+
+// Read configuration file from ini file
+App::uses('IniReader', 'Configure');
 Configure::config('ini', new IniReader(ROOT."/".APP_DIR.'/Config/'));
 Configure::load('coqus_config', 'ini');
 
+
+App::uses('ReceiptPrinterHelperSkel', 'PrinterEngine.Lib');
 
 /**
  * The settings below can be used to set additional paths to models, views and controllers.

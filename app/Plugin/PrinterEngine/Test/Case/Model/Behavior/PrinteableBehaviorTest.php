@@ -23,6 +23,14 @@ class PrinteableBehaviorTestCase extends CakeTestCase {
  * @var array
  */
 	public $fixtures = array('app.comandera');
+        
+        
+/**
+ * Default testing printer output
+ * 
+ * @var array default is File, but can be CUPS, for example
+ */        
+        public $printerOutput = 'file';
     
     
 /**
@@ -33,10 +41,6 @@ class PrinteableBehaviorTestCase extends CakeTestCase {
 	public function setUp() {
                 Configure::write('ImpresoraFiscal.nombre', 'fiscalfile');
                 Configure::write('ImpresoraFiscal.modelo', 'Hasar441');
-                
-                
-            debug(Configure::read(''));
-            debug(Configure::read('ini'));
                         
 		parent::setUp();
 		$this->Printeable = new PrinteableBehavior();
@@ -60,8 +64,9 @@ class PrinteableBehaviorTestCase extends CakeTestCase {
  * @return void
  */
 	public function testGetPrinterFileEngine() {
-            $this->Printeable->_loadPrinterOutput('file');
-            $this->assertEqual('file', strtolower( $this->Printeable->getEngineName() ) );
+            $this->printerOutput = 'file';
+            $this->Printeable->_loadPrinterOutput($this->printerOutput);
+            $this->assertEqual($this->printerOutput, strtolower( $this->Printeable->getEngineName() ) );
 	}
         
         
@@ -71,8 +76,9 @@ class PrinteableBehaviorTestCase extends CakeTestCase {
  * @return void
  */
 	public function testGetPrinterCUPSEngine() {
-            $this->Printeable->_loadPrinterOutput('cups');
-            $this->assertEqual('cups', strtolower( $this->Printeable->getEngineName() ) );
+            $this->printerOutput = 'cups';
+            $this->Printeable->_loadPrinterOutput($this->printerOutput);
+            $this->assertEqual($this->printerOutput, strtolower( $this->Printeable->getEngineName() ) );
 	}
         
         
@@ -89,7 +95,42 @@ class PrinteableBehaviorTestCase extends CakeTestCase {
 	}        
         
         
-        public function testImprimirTicketConComandera() {
+        public function testPrintReceipt() {
+            $data = array(
+                    'entradas' => array(),
+                    'platos_principales' => 1,
+                    'productos' => array(
+                        array(
+                        'DetalleComanda' => array(
+                            'cant' => 1,
+                            'observacion' => 'muy frio',
+                            ),
+                        'Producto' => array(
+                            'name' => 'Productino Nombre',
+                        ),
+                        'DetalleSabor' => array(
+                            array(
+                                'Sabor' => array(
+                                    'name' => 'tomate',
+                                ),
+                            ),
+                            array(
+                                'Sabor' => array(
+                                    'name' => 'lechuga',
+                                ),
+                            )
+                        )
+                        ))
+            );
+            $result = $this->Printeable->PrintReceipt($data, 'barra');
+                        
+            $this->assertEqual($result, true);
+        }
+        
+        
+        
+        
+        public function testPrintReceiptTicket() {
             $data = array(
                 'items' => array(),
                 'porcentaje_descuento' => 10,
@@ -97,7 +138,10 @@ class PrinteableBehaviorTestCase extends CakeTestCase {
                 'mozo' => 4,
                 'mesa' => 20,
             );
-            $this->Printeable->imprimirTicket($data, 'impresorita');
-            
+            $result = $this->Printeable->PrintReceiptTicket($data, 'barra');
+                        
+            $this->assertEqual($result, true);
         }
+        
+        
 }

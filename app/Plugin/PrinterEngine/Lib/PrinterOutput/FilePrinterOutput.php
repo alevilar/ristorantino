@@ -41,7 +41,6 @@ class FilePrinterOutput extends PrinterOutput
         public  function send( $texto, $nombreImpresoraFiscal, $hostname = '' ) {
             $nombreImpresoraFiscal = Inflector::slug($nombreImpresoraFiscal);
             
-            debug($nombreImpresoraFiscal );
             // crear carpeta
             $printerFolderPath = "/tmp/$nombreImpresoraFiscal";
             $folder = new Folder();

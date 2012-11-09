@@ -4,7 +4,9 @@ App::uses('ModelBehavior', 'Model');
 App::uses('Comandera', 'Model');
 App::uses('FiscalPrinter', 'PrinterEngine.FiscalPrinter');
 
-App::uses('ReceiptPrinter', 'PrinterEngine.ReceiptPrinter');
+App::uses('Helper', 'View');
+
+//App::uses('ReceiptPrinter', 'PrinterEngine.ReceiptPrinter');
 
 
 
@@ -114,6 +116,47 @@ class PrinteableBehavior extends ModelBehavior
         $this->PrinterOutput->send( $texto, $printer, $hostname );
     }
         
+    
+    
+/**
+ *
+ * @param type $data
+ * @param array $printer
+ *          It should be
+ *          $printer = array(
+ *              'name' => 'a_pretty_cups_name',
+ *              'model' => 'bematech' // or escp
+ *          )
+ */    
+    public function PrintReceiptTicket( $data, $printerName) {
+        $templateName = Configure::read('Printers.ticket_template');
+        $driverName = $this->ReceiptPrinters[$printerName]['driver_name']; // from Printer Helper
+        $textToPrint = $this->_getReceiptView($data, $driverName, $templateName);
+        return $this->PrinterOutput->send($textToPrint, $printerName);
+    }
+    
+ 
+/**
+ * Logic for creating the view rendered.
+ * 
+ * @param array $data all vars that will be accesible into the view
+ * @param string $driverName Builds the Helper. Is the driver or model name of the printer
+ * @param string $templateName name of the view
+ */    
+    private function _getReceiptView($data, $driverName, $templateName) {
+        $viewName = 'PrinterEngine.ReceiptPrinter/' . $templateName ;
+        $View = new View();
+        $View->set($data);               
+        
+        $View->helpers = array(
+            'PE' => array(
+                   'className' => 'PrinterEngine.'. $driverName
+            )
+        );
+        
+        return $View->render($viewName, false);
+    }
+    
 
     
 /**
@@ -126,29 +169,22 @@ class PrinteableBehavior extends ModelBehavior
     }
     
     
-    
-    public function imprimirTicket( $data, $impresoraName) {
-        $name = Configure::read('Printers.ticket_template');
-        $viewName = 'PrinterEngine.ReceiptPrinter/' .$name  ;
-        $View = new View();
-        $View->set($data);            
+/**
+ *
+ * @param type $data
+ * @param array $printer
+ *          It should be
+ *          $printer = array(
+ *              'name' => 'a_pretty_cups_name',
+ *              'model' => 'bematech' // or escp
+ *          )
+ */    
+    public function PrintReceipt( $data, $printerName) {
+        $templateName = Configure::read('Printers.receipt_template');
+        $driverName = $this->ReceiptPrinters[$printerName]['driver_name']; // from Printer Helper
+        $textToPrint = $this->_getReceiptView($data, $driverName, $templateName);
         
-        $textToPrint = $View->render($viewName, false);
-        
-        $this->PrinterOutput->send($textToPrint, $impresoraName);
-    }
-    
-    
-    
-    public function PrintReceipt( $data, $impresoraName) {
-        $name = Configure::read('Printers.receipt_template');
-        $viewName = 'PrinterEngine.ReceiptPrinter/' .$name  ;
-        $View = new View();
-        $View->set($data);            
-        
-        $textToPrint = $View->render($viewName, false);
-        
-        $this->PrinterOutput->send($textToPrint, $impresoraName);
+        return $this->PrinterOutput->send($textToPrint, $printerName);
     }
     
  
@@ -163,9 +199,9 @@ class PrinteableBehavior extends ModelBehavior
         $comanderas =  $ComanderaModel->find('all');
         foreach ($comanderas as $c ) {
             $key = $c['Comandera']['name'];
-            $value = new ReceiptPrinter( $c['Comandera'] );
+            
             // puts into array with name as KEY
-            $this->ReceiptPrinters[ $key ] = $value;
+            $this->ReceiptPrinters[ $key ] = $c['Comandera'];
         }
         return $this->ReceiptPrinters;
     }
