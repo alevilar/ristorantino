@@ -92,7 +92,9 @@ Configure::config('ini', new IniReader(ROOT."/".APP_DIR.'/Config/'));
 Configure::load('coqus_config', 'ini');
 
 
-App::uses('ReceiptPrinterHelperSkel', 'PrinterEngine.Lib');
+App::uses('PrinterHelperSkel', 'PrinterEngine.Lib');
+App::uses('FiscalPrinterHelper', 'PrinterEngine.Lib');
+
 
 /**
  * The settings below can be used to set additional paths to models, views and controllers.

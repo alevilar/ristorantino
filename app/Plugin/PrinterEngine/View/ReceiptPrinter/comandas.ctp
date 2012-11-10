@@ -1,5 +1,6 @@
 <?php
 
+debug($this->PE);
 echo $this->PE->cm('ESC');
 
 $cant_entradas = count($entradas);

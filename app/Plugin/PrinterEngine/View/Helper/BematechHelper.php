@@ -1,7 +1,7 @@
 <?php
 
 
-class BematechHelper extends ReceiptPrinterHelperSkel
+class BematechHelper extends PrinterHelperSkel
 {
     
     protected $_cmd = array(

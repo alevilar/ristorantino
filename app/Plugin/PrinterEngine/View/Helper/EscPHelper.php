@@ -1,7 +1,7 @@
 <?php
 
 
-class EscPDriver extends ReceiptPrinterHelperSkel
+class EscPDriver extends PrinterHelperSkel
 {    
     
      protected $_cmd = array(

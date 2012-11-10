@@ -43,7 +43,7 @@ class PrinterOutput
  * var string $textToPrint
  *      The text is going to be printed
  */    
-    public  function send($printerName, $textToPrint, $hostname = ''){}
+    public function send($printerName, $textToPrint, $hostname = ''){}
 }
 
 ?>
