@@ -2,22 +2,22 @@
 
 class AditionController extends AditionAppController {
     
-	var $helpers = array('Html', 'Form');
-	var $uses = array('Mozo','Mesa');
-	var $current_mozo_id;
-	var $current_mesa_id;
-	var $current_mesa_numero;
-	var $layout = 'adicion';
+	public$helpers = array('Html', 'Form');
+	public$uses = array('Mozo','Mesa');
+	public$current_mozo_id;
+	public$current_mesa_id;
+	public$current_mesa_numero;
+	public$layout = 'adicion';
 
 
-	function home()
+	public function home()
         {
             $this->set('mozos',$this->Mozo->dameActivos());
 	}
 
 
 
-        function abrirMesa() {
+        public function abrirMesa() {
         if (!empty($this->request->data)) {
             // si ese numero de mesa no esta abierta continuo
             $existe = $this->Mesa->numero_de_mesa_existente($this->request->data['Mesa']['numero']);
@@ -66,17 +66,16 @@ class AditionController extends AditionAppController {
 	 * la diferencia aca es que se van amostrar todas las mesas abiertas independientemente del mozo
 	 * @return unknown_type
 	 */
-	function adicionar()
+	public function adicionar()
         {
-            $this->set('tipo_de_pagos', $this->Mozo->Mesa->Pago->TipoDePago->find('all'));
+            $this->set('tipo_de_pagos', $this->Mozo->Mesa->Pago->TipoDePago->find('all', array('recursive' => -1)));
             $this->set('mozos', $this->Mozo->dameActivos());
             $this->set('observaciones', ClassRegistry::init('Observacion')->find('list', array('order' => 'Observacion.name')));
-            debug( ClassRegistry::init('ObservacionComanda')->find('list') );die;
             $this->set('observacionesComanda', ClassRegistry::init('ObservacionComanda')->find('list', array('order' => 'ObservacionComanda.name')));
 	}
 	
 	
-	function cambiarMozo($mozo_id = 0)
+	public function cambiarMozo($mozo_id = 0)
         {
             $this->current_mozo_id = $mozo_id;
             $this->current_mesa_id = isset($this->request->data['Mesa'][0]['id'])?$this->request->data['Mesa'][0]['id']:0;

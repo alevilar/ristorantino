@@ -3,11 +3,11 @@
     echo $html->css('/stats/css/stats', false);
 
     
-    echo $javascript->link('/stats/js/jqplot/jquery.jqplot.js', false); //plugin estadisticas
-    echo $javascript->link('/stats/js/jqplot/plugins/jqplot.dateAxisRenderer.js', false);
-    echo $javascript->link('/stats/js/jqplot/plugins/jqplot.highlighter.js', false);
+    echo $this->Html->script('/stats/js/jqplot/jquery.jqplot.js', false); //plugin estadisticas
+    echo $this->Html->script('/stats/js/jqplot/plugins/jqplot.dateAxisRenderer.js', false);
+    echo $this->Html->script('/stats/js/jqplot/plugins/jqplot.highlighter.js', false);
     
-    echo $javascript->link('/stats/js/mesas_total', false); //plugin estadisticas
+    echo $this->Html->script('/stats/js/mesas_total', false); //plugin estadisticas
     
     
 ?>

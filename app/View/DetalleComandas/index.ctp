@@ -45,8 +45,12 @@ $i = 0;
 foreach ($comandas as $comanda):
 	$class = null;
 	if ($i++ % 2 == 0) {
-		$class = ' class="altrow"';
+		$class = ' class="altrow';
 	}
+        if ($comanda['Producto']['deleted']){
+            $class .= ' producto_borrado';
+        }
+        $class .= '"';
 ?>
 	<tr<?php echo $class;?>>
 		<td>

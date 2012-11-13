@@ -23,10 +23,6 @@ class ComandasController extends AppController {
             endif;
             $this->set('mesa_id', $mesa_id);
             
-             
-//            $categorias = $this->Comanda->DetalleComanda->Producto->Categoria->array_listado();
-//            $categoria_tree = $this->Comanda->DetalleComanda->Producto->Categoria->generatetreelist(null, null, null, '&nbsp;&nbsp;&nbsp;');
-            
             $this->set(compact('categorias', 'categorias_tree' ) );
 	}
 	

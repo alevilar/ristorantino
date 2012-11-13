@@ -3,7 +3,7 @@ App::uses('AppModel', 'Model');
 /**
  * Comandera Model
  *
- * @property Producto $Producto
+ * @property Comandera $Comandera
  */
 class Comandera extends AppModel {
 /**
@@ -82,5 +82,21 @@ class Comandera extends AppModel {
 			'counterQuery' => ''
 		)
 	);
+        
+/**
+ * Perform find(list) returning ID and Description
+ * 
+ * Ex: return array(
+ *                      1 => 'Printer from upstrairs',
+ *                      2 => 'barman Printer'
+ *              )
+ * 
+ * @return array find('list')
+ */        
+        public function listWithDescription(){
+            return $this->find('list',array(
+                    'fields'=>array('id','description'))
+            );
+        }
 
 }

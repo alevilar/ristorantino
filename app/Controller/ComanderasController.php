@@ -3,7 +3,7 @@ App::uses('AppController', 'Controller');
 /**
  * Comanderas Controller
  *
- * @property Comandera $Comandera
+ * @property ComanderasController $Comandera
  */
 class ComanderasController extends AppController {
 

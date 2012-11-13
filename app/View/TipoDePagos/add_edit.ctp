@@ -9,9 +9,9 @@
 		echo $this->Form->input('description');
                 echo $this->Form->hidden('image_url');                
                 if (!empty($this->request->data['TipoDePago']['image_url'])) {
-                    echo "Imagen actual: ".$this->Html->image($this->request->data['TipoDePago']['image_url']);
+                    echo "Imagen actual: ".$this->FileUpload->image($this->request->data['TipoDePago']['image_url']);
                 }
-                echo $this->Form->input('image_file', array('type' => 'file'));     
+                echo $this->Form->input('file', array('type' => 'file'));     
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit'));?>

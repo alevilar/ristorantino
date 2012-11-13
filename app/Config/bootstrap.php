@@ -122,10 +122,6 @@ App::uses('FiscalPrinterHelper', 'PrinterEngine.Lib');
  *
  */
 
-App::build(array(
-     'Printer/FiscalPrinter/Driver' => array('/Lib/Printer/FiscalPrinter/Driver'),
-));
-
 
 /**
  * Custom Inflector rules, can be set to correctly pluralize or singularize table, model, controller names or whatever other
@@ -148,11 +144,13 @@ App::build(array(
 
 CakePlugin::load('Acl', array('bootstrap' => true));
 
+
 CakePlugin::loadAll( array(
     'Adition',
     'Stats',
 )); // Loads all plugins at once
 
+CakePlugin::load('DebugKit');
 
 //reglas en español
  

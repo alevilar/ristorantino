@@ -84,14 +84,13 @@ class MozosController extends AppController {
          * @param boolean $microtime microtime desde donde yo quiero tomar omo referencia a la hora de traer las mesas
          */
         public function mesas_abiertas( $microtime = 0 ) {
-            $mesas = array();
             
             $lastAccess = null;
             if ( $microtime != 0 ) {
                 $lastAccess = $this->Session->read('lastAccess');
             }
             $mesas = $this->Mozo->mesasAbiertas(null, $lastAccess); 
-                      
+                     
             $mozosMesa = array();
             foreach ( $mesas as $key=>$abmMesas ) {
                 $i = 0;
@@ -124,6 +123,7 @@ class MozosController extends AppController {
             $this->set('mesasLastUpdatedTime', 1 );
             $this->set('modified', $lastAccess );
             $this->set('mesas', $mozosMesa);
+            
         }
 
 }

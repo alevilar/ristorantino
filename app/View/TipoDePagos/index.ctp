@@ -12,7 +12,7 @@
 	<tr>
 		<td><?php echo h($tipoDePago['TipoDePago']['id']); ?>&nbsp;</td>
 		<td><?php echo h($tipoDePago['TipoDePago']['name']); ?>&nbsp;</td>
-		<td><?php echo $this->Html->image($tipoDePago['TipoDePago']['image_url'], array('class' => 'tipodepago')); echo h($tipoDePago['TipoDePago']['image_url']); ?>&nbsp;</td>
+		<td><?php echo $this->FileUpload->image($tipoDePago['TipoDePago']['image_url'], array('class' => 'tipodepago')); echo h($tipoDePago['TipoDePago']['image_url']); ?>&nbsp;</td>
 		<td class="actions">
 			<?php echo $this->Html->link(__('View'), array('action' => 'view', $tipoDePago['TipoDePago']['id'])); ?>
 			<?php echo $this->Html->link(__('Edit'), array('action' => 'add_edit', $tipoDePago['TipoDePago']['id'])); ?>

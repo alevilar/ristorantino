@@ -9,7 +9,7 @@
         </li>
 
         <li>   
-        <?php echo $this->Html->link('Admin','/admin',array('id'=>'bton-admin'));?>
+        <?php echo $this->Html->link('Admin','/pages/admin_home',array('id'=>'bton-admin'));?>
         </li>  
 <!--    
         <li>   

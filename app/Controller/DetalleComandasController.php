@@ -30,6 +30,7 @@ class DetalleComandasController extends AppController {
 
                 $conditions['fields'] = array(
                                             'Producto.name', 
+                                            'Producto.deleted',
                                             'sum(DetalleComanda.cant-DetalleComanda.cant_eliminada) as "cant"'
                     );
                 
@@ -41,6 +42,7 @@ class DetalleComandasController extends AppController {
                     if (!empty( $this->request->data['Producto']['categoria_id'] )) {
                         $conditions['conditions']['Producto.categoria_id'] = $this->request->data['Producto']['categoria_id'];
                     }
+                    
                     if (!empty( $this->request->data['ProductoTag']['tag_id'] )) {
                         $conditions['conditions']['ProductoTag.tag_id'] = $this->request->data['ProductoTag']['tag_id'];
                     }

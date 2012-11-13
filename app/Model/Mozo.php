@@ -1,11 +1,11 @@
 <?php
 class Mozo extends AppModel {
 
-	var $name = 'Mozo';
-
-//        var $actsAs = array('Containable');
+	public $name = 'Mozo';
         
-	var $validate = array(
+        public $actsAs = array('Containable');
+
+	public $validate = array(
             'numero' => 'notempty',
             'nombre' => 'notempty',
             'apellido' => 'notempty',
@@ -16,11 +16,11 @@ class Mozo extends AppModel {
         );
 	
 
-	var $hasMany = array(
+	public $hasMany = array(
 			'Mesa'
 	);
         
-        var $order = array('Mozo.numero');
+        public $order = array('Mozo.numero');
 	
 	
 	/**
@@ -33,11 +33,13 @@ class Mozo extends AppModel {
 	{
 		$this->recursive = $recursive;
 		return $this->find('all',array(
-                    'contain' => array(
-                        'Mesa' => array('conditions'=> array(
-                            "Mesa.time_cobro" => "0000-00-00 00:00:00",
-                         ))
-                    ),
+//                    'contain' => array(
+//                        'Mesa' => array('conditions'=> array(
+//                            "Mesa.time_cobro" => "0000-00-00 00:00:00",
+//                         )
+//                            )
+//                    ),
+                    'recursive' => -1,
                     'conditions'=>array('Mozo.activo'=>1),
                     'order'=>'Mozo.numero ASC'));
 	}
@@ -93,7 +95,9 @@ class Mozo extends AppModel {
                         'Cliente' => 'Descuento',
                         'Comanda' => array(
                             'DetalleComanda' => array(
-                                'Producto','DetalleSabor.Sabor'),
+                                'Producto',
+                                'Sabor'
+                                ),
                         ),
                         'conditions' => $conditionsMesa,
                         'order' => 'Mesa.numero DESC',
@@ -125,7 +129,6 @@ class Mozo extends AppModel {
                 // traigo a todas como que son creadas, si no fue pasado un lastAccess
                 $mesasABM['created'] = $this->find('all', $optionsCreated);
             }
-
             return $mesasABM;
         }
 

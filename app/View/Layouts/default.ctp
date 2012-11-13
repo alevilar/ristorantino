@@ -51,9 +51,12 @@
                 <h1><?php echo $title_for_layout; ?></h1>
             </div> 
             <div data-role="content">
+                <?php if ($this->fetch('menu')): ?>
                 <nav>
-                    <?php echo $this->element('admin_menu'); ?>
+                    <?php echo $this->fetch('menu'); ?>
                 </nav>
+                <?php endif; ?>
+                
 
                 <div id="maincontent">
                     <?php echo $this->Session->flash(); ?>
@@ -62,8 +65,6 @@
                     <?php echo $this->fetch('content'); ?>
 
                 </div>
-
-                <?php echo $this->element('sql_dump'); ?>
             </div>
         </div> 
 

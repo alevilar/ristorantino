@@ -2,7 +2,8 @@
 
 class AditionAppController extends AppController
 {
-    public $components = array('Configurator');
+    public $components = array('Configurator', 'Auth');
+    
 
     function beforeFilter()
     {

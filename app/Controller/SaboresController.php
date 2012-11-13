@@ -1,87 +1,107 @@
 <?php
+App::uses('AppController', 'Controller');
+/**
+ * Sabores Controller
+ *
+ * @property Sabor $Sabor
+ */
 class SaboresController extends AppController {
 
-	var $name = 'Sabores';
-	var $helpers = array('Html', 'Form');
-        
-        function beforeFilter() {
-            parent::beforeFilter();
-        }
-        
-	function index() {
-		if(!empty($this->request->data)){
-			$condiciones = array();
-			foreach($this->request->data as $modelo=>$campos){
-				foreach($campos as $key=>$val){
-					if(!is_array($val))
-						$condiciones[] = array($modelo.".".$key." LIKE"=>'%'.$val.'%');
-				}
-			}
-			$this->Producto->recursive = 0;
-			foreach($this->modelNames as $modelo){
-				$this->paginate[$modelo] = array(
-					'conditions' => $condiciones
-				);
-			}
-		}
+    public $components = array('Search.Prg');
+    
+    public $paginate;
+    
+    public $presetVars = true; // using the model configuration
+    
+/**
+ * index method
+ *
+ * @return void
+ */
+	public function index() {
 		$this->Sabor->recursive = 0;
-		
-		$sabores = $this->paginate('Sabor');
-		
-		$this->set('sabores',$sabores);
+                $this->Prg->commonProcess();
+                $this->paginate['conditions'] = $this->Sabor->parseCriteria($this->passedArgs);
+		$this->set('sabores', $this->paginate());
 	}
 
-	function view($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid Sabor.'));
-			$this->redirect(array('action'=>'index'));
+/**
+ * view method
+ *
+ * @param string $id
+ * @return void
+ */
+	public function view($id = null) {
+		$this->Sabor->id = $id;
+		if (!$this->Sabor->exists()) {
+			throw new NotFoundException(__('Invalid sabor'));
 		}
 		$this->set('sabor', $this->Sabor->read(null, $id));
 	}
 
-	function add() {
-		if (!empty($this->request->data)) {
+/**
+ * add method
+ *
+ * @return void
+ */
+	public function add() {
+		if ($this->request->is('post')) {
 			$this->Sabor->create();
 			if ($this->Sabor->save($this->request->data)) {
-				$this->Session->setFlash(__('The Sabor has been saved'));
-				$this->redirect(array('action'=>'index'));
+				$this->Session->setFlash(__('The sabor has been saved'));
+				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The Sabor could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The sabor could not be saved. Please, try again.'));
 			}
 		}
-		$categorias = $this->Sabor->Categoria->generatetreelist(null, null, null, '___');
+		$categorias = $this->Sabor->Categoria->find('list');
 		$this->set(compact('categorias'));
 	}
 
-	function edit($id = null) {
-		if (!$id && empty($this->request->data)) {
-			$this->Session->setFlash(__('Invalid Sabor'));
-			$this->redirect(array('action'=>'index'));
+/**
+ * edit method
+ *
+ * @param string $id
+ * @return void
+ */
+	public function edit($id = null) {
+		$this->Sabor->id = $id;
+		if (!$this->Sabor->exists()) {
+			throw new NotFoundException(__('Invalid sabor'));
 		}
-		if (!empty($this->request->data)) {
+		if ($this->request->is('post') || $this->request->is('put')) {
 			if ($this->Sabor->save($this->request->data)) {
-				$this->Session->setFlash(__('The Sabor has been saved'));
-				$this->redirect(array('action'=>'index'));
+				$this->Session->setFlash(__('The sabor has been saved'));
+				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The Sabor could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The sabor could not be saved. Please, try again.'));
 			}
-		}
-		if (empty($this->request->data)) {
+		} else {
 			$this->request->data = $this->Sabor->read(null, $id);
 		}
-		$categorias = $this->Sabor->Categoria->generatetreelist(null, null, null, '___');
+		$categorias = $this->Sabor->Categoria->find('list');
 		$this->set(compact('categorias'));
 	}
 
-	function delete($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for Sabor'));
+/**
+ * delete method
+ *
+ * @param string $id
+ * @return void
+ */
+	public function delete($id = null) {
+		if (!$this->request->is('post')) {
+			throw new MethodNotAllowedException();
 		}
-		if ($this->Sabor->del($id)) {
+		$this->Sabor->id = $id;
+		if (!$this->Sabor->exists()) {
+			throw new NotFoundException(__('Invalid sabor'));
+		}
+		if ($this->Sabor->delete()) {
 			$this->Session->setFlash(__('Sabor deleted'));
+			$this->redirect(array('action' => 'index'));
 		}
-                $this->redirect(array('action'=>'index'));
+		$this->Session->setFlash(__('Sabor was not deleted'));
+		$this->redirect(array('action' => 'index'));
 	}
-
 }
-?>

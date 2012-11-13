@@ -1,12 +1,12 @@
 <?php
-                echo $javascript->link('/pquery/js/jquery.min.js'); 
-		echo $javascript->link('/pquery/js/jquery.jqplot.js');
-		echo $javascript->link('/pquery/js/plugins/jqplot.barRenderer.js');
+                echo $this->Html->script('/pquery/js/jquery.min.js'); 
+		echo $this->Html->script('/pquery/js/jquery.jqplot.js');
+		echo $this->Html->script('/pquery/js/plugins/jqplot.barRenderer.js');
                 
                 
-                echo $javascript->link('/pquery/js/plugins/jqplot.categoryAxisRenderer.js');
-                echo $javascript->link('/pquery/js/plugins/jqplot.highlighter.js');
-                echo $javascript->link('/pquery/js/plugins/jqplot.pointLabels.js');
+                echo $this->Html->script('/pquery/js/plugins/jqplot.categoryAxisRenderer.js');
+                echo $this->Html->script('/pquery/js/plugins/jqplot.highlighter.js');
+                echo $this->Html->script('/pquery/js/plugins/jqplot.pointLabels.js');
                 
                 echo $html->css('/pquery/css/examples.css');
                 echo $html->css('cake.css');         

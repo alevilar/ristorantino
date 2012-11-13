@@ -10,6 +10,11 @@ App::uses('AppController', 'Controller');
 class TipoDePagosController extends AppController
 {
 
+    public $helpers = array(
+        'FileUpload.FileUpload',
+    );
+    
+
     public function beforeFilter()
     {
         parent::beforeFilter();
@@ -59,6 +64,7 @@ class TipoDePagosController extends AppController
                 $this->Session->setFlash(__('The tipo de pago could not be saved. Please, try again.'));
             }
         }
+        $this->TipoDePago->recursive = -1;
         $this->request->data = $this->TipoDePago->read(null, $id);
     }
 

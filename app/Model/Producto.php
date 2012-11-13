@@ -1,10 +1,30 @@
 <?php
+/**
+ * Producto Model
+ * 
+ * @property Producto $Producto
+ */
 class Producto extends AppModel {
 
-	var $name = 'Producto';
-        var $order = 'Producto.name';
+	public $name = 'Producto';
+        public $order = 'Producto.name';
         
-        var $actsAs = array('SoftDeletable');
+        public $actsAs = array(
+            'SoftDeletable', 
+            'Containable', 
+            'Search.Searchable',
+            );
+        
+        public $filterArgs = array(
+			'name' => array('type' => 'like'),
+			'abrev' => array('type' => 'like'),
+			'categoria' => array('type' => 'like', 'field' => 'Categoria.name'),
+                        'categoria_id' => array('type' => 'value', 'field' => 'Producto.categoria_id'),
+                        'precio' => array('type' => 'value'),
+                        'comandera' => array('type' => 'value', 'field' => array('Comandera.name', 'Comandera.description')),
+                        'comandera_id' => array('type' => 'value', 'field' => 'Producto.comandera_id'),
+			'tag' => array('type' => 'subquery', 'field' => 'Producto.id',  'method' => 'findByTags'),
+		);
 
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
@@ -27,19 +47,8 @@ class Producto extends AppModel {
         
 
 	var $hasMany = array(
-            'HistoricoPrecio',
-			'DetalleComanda' => array('className' => 'DetalleComanda',
-								'foreignKey' => 'producto_id',
-								'dependent' => false,
-								'conditions' => '',
-								'fields' => '',
-								'order' => '',
-								'limit' => '',
-								'offset' => '',
-								'exclusive' => '',
-								'finderQuery' => '',
-								'counterQuery' => ''
-			),
+            'HistoricoPrecio', 
+            'DetalleComanda',
 	);
         
         
@@ -108,7 +117,27 @@ class Producto extends AppModel {
        
     }
 	
-	
+    
+    public function findByTags($data = array()) {
+			$this->Tag->Behaviors->attach('Search.Searchable');
+			$query = $this->Tag->getQuery('all', array(
+				'conditions' => array(
+                                    'Tag.name LIKE'  => "%{$data['tag']}%",
+                                    ),
+				'fields' => array('PT.producto_id'),
+                                'joins' => array(
+                                    array(
+                                        'table' => 'productos_tags',
+                                        'alias' => 'PT',
+                                        'type' => 'LEFT',
+                                        'conditions' => array(
+                                            'PT.tag_id = Tag.id',
+                                            )
+                                        )  
+                                ),
+			));
+			return $query;
+    }
 
 }
 ?>
