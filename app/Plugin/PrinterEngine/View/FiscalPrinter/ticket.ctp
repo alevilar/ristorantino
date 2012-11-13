@@ -5,7 +5,7 @@
 echo $this->PE->setTrailer(0, "-  -  -  -  -  -  -  -");
 
 if ($mozoTitle = Configure::read('Mesa.tituloMozo')) {
-    echo $this->PE->setTrailer(1, "$mozoTitle $mozo ", true);
+    echo $this->PE->setTrailer(1, "$mozoTitle $mesa ", true);
 } else { // no escribir nada
     echo $this->PE->setTrailer(1, " ", true);
 }

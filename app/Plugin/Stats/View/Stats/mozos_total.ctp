@@ -66,7 +66,7 @@
 <div class="div2">
 <?php
 $first = true;
-foreach ($fechas as $fecha=>$mozo) {
+foreach ($fechas as $fecha=>$mesa) {
 ?>
     <div style="float: left; margin-left: 10px;">
 <h2 class="centrado <?= $first ? 'data-activo':'';?>"><?php echo date('d-m-Y',strtotime($fecha))?></h2>
@@ -80,7 +80,7 @@ foreach ($fechas as $fecha=>$mozo) {
         
         <tbody>
 <?php
-        foreach($mozo as $m){
+        foreach($mesa as $m){
             ?>
             <tr>
                 <td><?php echo $m['Mozo']['numero']; ?></td>

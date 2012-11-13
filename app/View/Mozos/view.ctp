@@ -3,12 +3,12 @@
 	<dl><?php $i = 0; $class = ' class="altrow"';?>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php echo __('User'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $this->Html->link($mozo['User']['nombre']." ".$mozo['User']['apellido'], array('controller'=> 'users', 'action'=>'view', $mozo['User']['id'])); ?>
+			<?php echo $this->Html->link($mesa['User']['nombre']." ".$mesa['User']['apellido'], array('controller'=> 'users', 'action'=>'view', $mesa['User']['id'])); ?>
 			&nbsp;
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php echo __('Numero'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $mozo['Mozo']['numero']; ?>
+			<?php echo $mesa['Mozo']['numero']; ?>
 			&nbsp;
 		</dd>
 	</dl>

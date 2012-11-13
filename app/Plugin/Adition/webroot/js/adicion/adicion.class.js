@@ -240,7 +240,7 @@ Risto.Adition.adicionar = {
     abrirNuevaMesa: function( mesaJSON ){
         var mesa = this.crearNuevaMesa(mesaJSON);
         
-        $cakeSaver.send({url:urlDomain+'mesas/abrirMesa.json', obj: mesa});
+        $cakeSaver.send({url:urlDomain+'mesas/add.json', obj: mesa});
         return mesa;
     },
     

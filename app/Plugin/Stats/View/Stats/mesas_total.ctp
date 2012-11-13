@@ -50,8 +50,8 @@
     
 
     <?php
-    foreach($mesas as $i=>$mozo) {
-            if(!empty ($mozo['desde']))
+    foreach($mesas as $i=>$mesa) {
+            if(!empty ($mesa['desde']))
     ?>
     <div class="tabla-info grid_6">
         <table cellspacing="0" cellpadding="0" style="text-align: center; width: 100%">
@@ -67,9 +67,9 @@
             <tbody>
 
         <?php     
-            if(!empty($mozo)){
+            if(!empty($mesa)){
 
-                    foreach($mozo as $m){
+                    foreach($mesa as $m){
                         echo('<tr>');
                         echo('<td>');
                         echo(date('D d, M', strtotime($m['Mesa']['fecha'])));

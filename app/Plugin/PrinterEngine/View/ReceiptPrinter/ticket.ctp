@@ -61,7 +61,7 @@
 
         echo "\n\n";
 
-        $tail  = " \n - MOZO: ".$mozo;
+        $tail  = " \n - MOZO: ".$mesa;
         $tail .= " \n - MESA: ".$mesa."\n";
         echo $tail;
 

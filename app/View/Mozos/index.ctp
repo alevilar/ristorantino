@@ -20,7 +20,7 @@ echo $this->Paginator->counter(array(
 </tr>
 <?php
 $i = 0;
-foreach ($mozos as $mozo):
+foreach ($mozos as $mesa):
 	$class = null;
 	if ($i++ % 2 == 0) {
 		$class = ' class="altrow"';
@@ -28,17 +28,17 @@ foreach ($mozos as $mozo):
 ?>
 	<tr<?php echo $class;?>>		
 		<td>
-                    <span class="mozo-puntito <?php echo $mozo['Mozo']['activo'] ? 'mozo_activo' : 'mozo_inactivo' ?>">•</span> <?php echo $mozo['Mozo']['nombre']." ".$mozo['Mozo']['apellido']; ?>
+                    <span class="mozo-puntito <?php echo $mesa['Mozo']['activo'] ? 'mozo_activo' : 'mozo_inactivo' ?>">•</span> <?php echo $mesa['Mozo']['nombre']." ".$mesa['Mozo']['apellido']; ?>
 		</td>
 		<td>
-			<?php echo $mozo['Mozo']['numero']; ?>
+			<?php echo $mesa['Mozo']['numero']; ?>
 		</td>
 		<td class="actions">
 			<?php // echo $this->Html->link(__('View'), array('action'=>'view', $mozo['Mozo']['id'])); ?>
-			<?php echo $this->Html->link(__('Editar'), array('action'=>'edit', $mozo['Mozo']['id'])); ?>
+			<?php echo $this->Html->link(__('Editar'), array('action'=>'edit', $mesa['Mozo']['id'])); ?>
 			<?php
                         if ($this->Session->read('Auth.User.role') == 'superuser') {
-                            echo $this->Html->link(__('Delete'), array('action'=>'delete', $mozo['Mozo']['id']), null, sprintf(__('¿Desea borrar el mozo nº # %s?. Si borra el mozo desaparecerá de las estadísticas.'), $mozo['Mozo']['numero']));
+                            echo $this->Html->link(__('Delete'), array('action'=>'delete', $mesa['Mozo']['id']), null, sprintf(__('¿Desea borrar el mozo nº # %s?. Si borra el mozo desaparecerá de las estadísticas.'), $mesa['Mozo']['numero']));
                         }
                         ?>
 		</td>

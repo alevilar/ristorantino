@@ -144,18 +144,18 @@
 	</tr>
 	<?php
 		$i = 0;
-		foreach ($user['Mozo'] as $mozo): ?>
+		foreach ($user['Mozo'] as $mesa): ?>
 		<tr>
-			<td><?php echo $mozo['id'];?></td>
-			<td><?php echo $mozo['user_id'];?></td>
-			<td><?php echo $mozo['numero'];?></td>
-			<td><?php echo $mozo['activo'];?></td>
-			<td><?php echo $mozo['deleted_date'];?></td>
-			<td><?php echo $mozo['deleted'];?></td>
+			<td><?php echo $mesa['id'];?></td>
+			<td><?php echo $mesa['user_id'];?></td>
+			<td><?php echo $mesa['numero'];?></td>
+			<td><?php echo $mesa['activo'];?></td>
+			<td><?php echo $mesa['deleted_date'];?></td>
+			<td><?php echo $mesa['deleted'];?></td>
 			<td class="actions">
-				<?php echo $this->Html->link(__('View'), array('controller' => 'mozos', 'action' => 'view', $mozo['id'])); ?>
-				<?php echo $this->Html->link(__('Edit'), array('controller' => 'mozos', 'action' => 'edit', $mozo['id'])); ?>
-				<?php echo $this->Form->postLink(__('Delete'), array('controller' => 'mozos', 'action' => 'delete', $mozo['id']), null, __('Are you sure you want to delete # %s?', $mozo['id'])); ?>
+				<?php echo $this->Html->link(__('View'), array('controller' => 'mozos', 'action' => 'view', $mesa['id'])); ?>
+				<?php echo $this->Html->link(__('Edit'), array('controller' => 'mozos', 'action' => 'edit', $mesa['id'])); ?>
+				<?php echo $this->Form->postLink(__('Delete'), array('controller' => 'mozos', 'action' => 'delete', $mesa['id']), null, __('Are you sure you want to delete # %s?', $mesa['id'])); ?>
 			</td>
 		</tr>
 	<?php endforeach; ?>

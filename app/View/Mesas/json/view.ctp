@@ -1,6 +1,6 @@
 <?php
-$mozo['total'] = $mesa_total;
-$mozo['items'] = array();
+$mesa['total'] = $mesa_total;
+$mesa['items'] = array();
 
 $comanda_ant = '';
 $prod_borrados = array();
@@ -21,11 +21,11 @@ foreach ($items as $i){
                     $item['producto']['sabor'][] = $sabor['Sabor']['name'];
             endforeach;
         }
-        $mozo['items'][] = $item;
+        $mesa['items'][] = $item;
 }
 
-$mozo['Mozo'] = $mozo;
+$mesa['Mozo'] = $mesa;
 
-echo json_encode($mozo)
+echo json_encode($mesa)
 ?>
 

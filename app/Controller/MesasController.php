@@ -166,41 +166,29 @@ class MesasController extends AppController {
     }
 
 
-    public function abrirMesa(){
-        
-        $insertedId = 0;
-        if (!empty($this->request->data['Mesa'])) {
-            $this->request->data['Mesa']['estado_id'] = MESA_ABIERTA;
-//            unset( $this->request->data['Mesa']['created'] );
-            if ( $this->Mesa->save($this->request->data) ){
-                $insertedId = $this->Mesa->getLastInsertId();
-            }
-        }
-        $this->set('insertedId', $insertedId);
-        $this->set('mesa', $this->Mesa->read(null) );
-        $this->set('validationErrors', $this->Mesa->validationErrors);
-    }
-    
     public function add() {
         if ($this->request->is('post')) {
                 $this->Mesa->create();
                 if ($this->Mesa->save($this->request->data)) {
                         $this->Session->setFlash(__('The mesa has been saved'));
-                        if ( $this->request->is('ajax') ) {
+                        if ( !$this->request->is('ajax') ) {
                             $this->redirect(array('action' => 'index'));
-                        } else {
-                            return 1;
                         }
+                        
+                        $this->set('insertedId', $this->Mesa->getLastInsertId() );
+                        $this->set('validationErrors', $this->Mesa->validationErrors);
+                        
                 } else {
                         $this->Session->setFlash(__('The mesa could not be saved. Please, try again.'));
                 }
+        } else {
+
+            $mozos = $this->Mesa->Mozo->find('list',array('fields'=>array('id','numero_y_nombre')));
+            $tipo_pagos = $this->Mesa->Pago->TipoDePago->find('list');
+            $descuentos = $this->Mesa->Descuento->find('list');        
+            $estados = $this->Mesa->estados;
+            $this->set(compact('mozos', 'descuentos', 'tipo_pagos', 'estados'));
         }
-                
-        $mozos = $this->Mesa->Mozo->find('list',array('fields'=>array('id','numero_y_nombre')));
-        $tipo_pagos = $this->Mesa->Pago->TipoDePago->find('list');
-        $descuentos = $this->Mesa->Descuento->find('list');        
-        $estados = $this->Mesa->estados;
-        $this->set(compact('mozos', 'descuentos', 'tipo_pagos', 'estados'));
     }
 
 
