@@ -20,10 +20,7 @@ Risto.Adition.comandaFabrica.prototype = {
     productoSaborTmp: {}, //producto temporal (que esta esperando la seleccion de sabores)
     saboresSeleccionados: [], // listado de sabores seleccionados para el productoSaborTmp
    
-    
-//    productosSeleccionados: ko.observableArray([]),
-//    detallesComandas: ko.observableArray([]),
-    
+   
     
     initialize: function(mesa){
         this.productoSaborTmp = {};
@@ -237,10 +234,9 @@ Risto.Adition.comandaFabrica.prototype = {
      * Agrega un producto al listado de productos (DetalleComanda) seleccionados
      */
     agregarProducto: function(prod){
-        if ( prod.Categoria.Sabor.length > 0 ) {
+        if ( prod.Categoria && prod.Categoria.Sabor && prod.Categoria.Sabor.length > 0 ) {
             this.productoSaborTmp = prod;
             this.currentSabores( prod.Categoria.Sabor );
-//             $('#page-sabores').dialog();             
         } else {
             this.__doAdd(prod);
         }

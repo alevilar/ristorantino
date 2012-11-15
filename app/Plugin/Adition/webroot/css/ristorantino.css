@@ -1,6 +1,11 @@
 body{
 }
 
+.wow{
+    color: #fcf0b5;
+}
+
+
 .mesa-actions a[estado='comanda-add-menu_mesa-cerrada'],
 .mesa-actions a[estado='mesa-cliente_mesa-cerrada'],
 .mesa-actions a[estado='mesa-cerrar_mesa-cerrada'],
@@ -386,7 +391,7 @@ ul.tipo_de_pagos ,.tipo_de_pagos ul{
     background: none;
 }
 
-#ul-productos-seleccionados .producto-seleccionado-acciones{
+.ul-productos-seleccionados .producto-seleccionado-acciones{
     width: 100%;
     float: left;
 }
@@ -411,23 +416,23 @@ ul.tipo_de_pagos ,.tipo_de_pagos ul{
 }
 
 
-#ul-categorias{
+.ul-categorias{
     display: block;
 }
 
 
-#ul-categorias a.sin-imagen{
+.ul-categorias a.sin-imagen{
     width: 130px;
     height: 50px
 }
 
-#ul-categorias a.con-imagen{
+.ul-categorias a.con-imagen{
     width: 70px;
     height: 85px;
     font-size: 12px;
 }
 
-#ul-categorias a{
+.ul-categorias a{
     overflow: hidden;
     color: white;
     padding: 5px;
@@ -440,18 +445,57 @@ ul.tipo_de_pagos ,.tipo_de_pagos ul{
     text-decoration: none;
 }
 
+.ul-categorias a span{
+    color: white;
+}
 
-#ul-productos a.active{
+
+.ul-productos a.active{
     border: 1px solid  orangered/*{e-bup-border}*/;
     background: #fad38e;
 }
 
-#ul-productos a.producto-con-sabor{
+.ul-productos a.producto-con-sabor{
     border: 1px solid #F7C942 /*{e-bup-border}*/;
     background: pink;
 }
 
-#ul-productos a{
+.ul-productos .producto {
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    white-space: nowrap;    
+    position: relative;
+    width: 17em;
+}
+
+.ul-sabores{
+    width: 70%;
+    
+}
+
+.ul-sabores .sabor{
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    white-space: nowrap;    
+    position: relative;
+    width: 12em;
+}
+
+.ul-productos .producto .cantidad:empty{
+    display: none;
+}
+
+.ul-productos .producto .cantidad{    
+    position: absolute;
+    left: 8px;
+    top: 8px;
+    font-size: 1.4em;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+
+.ul-productos a{
     overflow: hidden;
     color: white;
     padding: 13px 5px;
@@ -466,10 +510,10 @@ ul.tipo_de_pagos ,.tipo_de_pagos ul{
     text-shadow: 0 /*{e-bup-shadow-x}*/ 
 }
 
-
-#ul-productos .ui-btn-inner, #ul-categorias .ui-btn-inner{
-    padding: .9em 5px !important;
-    width: 92px;
+.ul-productos a span{
+    font-weight: bold;
+    color: rgb(51, 51, 51) /*{e-bup-color}*/;
+    text-shadow: 0 /*{e-bup-shadow-x}*/ 1px /*{e-bup-shadow-y}*/ 0 /*{e-bup-shadow-radius}*/ white /*{e-bup-shadow-color}*/;
 }
 
 
@@ -519,29 +563,29 @@ h1.cubiertos , h2.cubiertos , h3.cubiertos{
     }
     
     
-    #ul-productos-seleccionados a.ui-btn-icon-notext {
+    .ul-productos-seleccionados a.ui-btn-icon-notext {
         width: 47px; height: 40px;
     }
         
     
-    #ul-productos-seleccionados .ui-li-count{
+    .ul-productos-seleccionados .ui-li-count{
         font-size: 19px;
         padding-left: 5px;
         padding-right: 5px;
     }
     
-    #ul-productos-seleccionados li.es-entrada{
+    .ul-productos-seleccionados li.es-entrada{
         background: #437FBE;
         color: white;
         text-shadow: none;
         
     }
     
-    #ul-productos-seleccionados .listado-productos-seleccionados{
+    .ul-productos-seleccionados .listado-productos-seleccionados{
         padding-right: 30px;
     }
     
-    #ul-productos-seleccionados li.tiene-observacion{
+    .ul-productos-seleccionados li.tiene-observacion{
         
     }
     

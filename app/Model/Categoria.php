@@ -20,10 +20,10 @@ class Categoria extends AppModel
     //The Associations below have been created with all possible keys, those that are not needed can be removed
     var $hasMany = array('Producto' => array(
             'order' => array('Producto.order', 'Producto.name'),
-            'conditions' => array('Producto.deleted <>' => 1)),
+            'conditions' => array('Producto.deleted' => 0)),
         'Sabor' => array(
             'order' => 'Sabor.name',
-            'conditions' => array('Sabor.deleted <>' => 1)
+            'conditions' => array('Sabor.deleted' => 0)
             ));
 
     /**
@@ -38,12 +38,16 @@ class Categoria extends AppModel
         $array_final = array();
 
         $this->recursive = 1;
-        $this->id = $categoria_id;
-                $this->contain(array(
-                    'Producto', 
-                    'Sabor',
-                ));
-        $array_categoria = $this->read();
+        $this->contain(array(
+            'Producto', 
+            'Sabor',
+        ));
+        $array_categoria = $this->find('first', array(
+            'conditions' => array(
+                'Categoria.id' => $categoria_id,
+                'Categoria.deleted' => 0,
+            )
+        ));
 //                debug($array_categoria );die;
         $array_final = $array_categoria['Categoria'];
         $array_final['Producto'] = $array_categoria['Producto'];

@@ -11,7 +11,7 @@ Risto.Adition.comanda = function(jsonData){
 
 Risto.Adition.comanda.prototype = {
     // Array de DetalleComanda, cada detalleComanda es 1 producto
-    DetalleComanda  : function( ) {return []},
+    DetalleComanda  : [],
     created         : function( ) { },
     model           : 'Comanda',
     imprimir        : function( ) {return true},

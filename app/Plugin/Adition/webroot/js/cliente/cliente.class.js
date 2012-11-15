@@ -56,7 +56,7 @@ Risto.Adition.cliente.prototype = {
      */
     esTipoFactura: function( val ){        
         var ret = false
-        if ( this.tipofactura().toLowerCase() == val.toLowerCase() ) {
+        if ( this.tipofactura() && (this.tipofactura().toLowerCase() == val.toLowerCase()) ) {
             ret = true;
         }
         return ret;

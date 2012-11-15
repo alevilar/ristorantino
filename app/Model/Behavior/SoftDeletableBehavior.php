@@ -1,333 +1,336 @@
-<?php
-/* SVN FILE: $Id: soft_deletable.php 38 2007-11-26 19:36:27Z mgiglesias $ */
-
+<?php 
 /**
- * SoftDeletable Behavior class file.
+ * Copyright 2007-2010, Cake Development Corporation (http://cakedc.com)
  *
- * @filesource
- * @author Mariano Iglesias
- * @link http://cake-syrup.sourceforge.net/ingredients/soft-deletable-behavior/
- * @version	$Revision: 38 $
- * @license	http://www.opensource.org/licenses/mit-license.php The MIT License
- * @package app
- * @subpackage app.models.behaviors
+ * Licensed under The MIT License
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright Copyright 2007-2010, Cake Development Corporation (http://cakedc.com)
+ * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
 /**
- * Model behavior to support soft deleting records.
+ * Utils Plugin
  *
- * @package app
- * @subpackage app.models.behaviors
+ * Utils Soft Delete Behavior
+ *
+ * @package utils
+ * @subpackage utils.models.behaviors
  */
-class SoftDeletableBehavior extends ModelBehavior
-{
-	/**
-	 * Contain settings indexed by model name.
-	 *
-	 * @var array
-	 * @access private
-	 */
-	var $__settings = array();
+class SoftDeletableBehavior extends ModelBehavior {
 
-	/**
-	 * Initiate behaviour for the model using settings.
-	 *
-	 * @param object $Model Model using the behaviour
-	 * @param array $settings Settings to override for model.
-	 * @access public
-	 */
-	function setup(&$Model, $settings = array())
-	{
-		$default = array('field' => 'deleted', 'field_date' => 'deleted_date', 'delete' => true, 'find' => true);
+/**
+ * Default settings
+ *
+ * @var array $default
+ */
+	public $default = array('deleted' => 'deleted_date');
 
-		if (!isset($this->__settings[$Model->alias]))
-		{
-			$this->__settings[$Model->alias] = $default;
+/**
+ * Holds activity flags for models
+ *
+ * @var array $runtime
+ */
+	public $runtime = array();
+
+/**
+ * Setup callback
+ *
+ * @param object $model
+ * @param array $settings
+ */
+    public function setup($model, $settings = array()) {
+        if (empty($settings)) {
+            $settings = $this->default;
+        } elseif (!is_array($settings)) {
+            $settings = array($settings);
+        }
+
+        $error = 'SoftDeleteBehavior::setup(): model ' . $model->alias . ' has no field ';
+        $fields = $this->_normalizeFields($model, $settings);
+        foreach ($fields as $flag => $date) {
+            if ($model->hasField($flag)) {
+                if ($date && !$model->hasField($date)) {
+                    trigger_error($error . $date, E_USER_NOTICE);
+                    return;
+                }
+                continue;
+            }
+            trigger_error($error . $flag, E_USER_NOTICE);
+            return;
+        }
+
+        $this->settings[$model->alias] = $fields;
+        $this->softDelete($model, true);
+    }
+
+/**
+ * Before find callback
+ *
+ * @param object $model
+ * @param array $query
+ * @return array
+ */
+    public function beforeFind($model, $query) {
+        $runtime = $this->runtime[$model->alias];
+        if ($runtime) {
+			if (!is_array($query['conditions'])) {
+				$query['conditions'] = array();
+			}
+            $conditions = array_filter(array_keys($query['conditions']));
+
+            $fields = $this->_normalizeFields($model);
+
+            foreach ($fields as $flag => $date) {
+                if (true === $runtime || $flag === $runtime) {
+                    if (!in_array($flag, $conditions) && !in_array($model->name . '.' . $flag, $conditions)) {
+                        $query['conditions'][$model->alias . '.' . $flag] = false;
+                    }
+
+                    if ($flag === $runtime) {
+                        break;
+                    }
+                }
+            }
+            return $query;
+        }
+    }
+
+/**
+ * Before delete callback
+ *
+ * @param object $model
+ * @param array $query
+ * @return boolean
+ */
+    public function beforeDelete($model) {
+        $runtime = $this->runtime[$model->alias];
+        if ($runtime) {
+        	$res = $this->delete($model, $model->id);
+            return false;
+        } else {
+			return true;
+        }
+    }
+
+/**
+ * Mark record as deleted
+ *
+ * @param object $model
+ * @param integer $id
+ * @return boolean
+ */
+	public function delete($model, $id) {
+		$runtime = $this->runtime[$model->alias];
+
+		$data = array();
+		$fields = $this->_normalizeFields($model);
+		foreach ($fields as $flag => $date) {
+			if (true === $runtime || $flag === $runtime) {
+				$data[$flag] = true;
+				if ($date) {
+					$data[$date] = date('Y-m-d H:i:s');
+				}
+				if ($flag === $runtime) {
+					break;
+				}
+			}
 		}
 
-		$this->__settings[$Model->alias] = am($this->__settings[$Model->alias], (is_array($settings) ? $settings: array() ) );
+		$model->create();
+		$model->set($model->primaryKey, $id);
+		return $model->save(array($model->alias => $data), false, array_keys($data));
 	}
 
-	/**
-	 * Run before a model is deleted, used to do a soft delete when needed.
-	 *
-	 * @param object $Model Model about to be deleted
-	 * @param boolean $cascade If true records that depend on this record will also be deleted
-	 * @return boolean Set to true to continue with delete, false otherwise
-	 * @access public
-	 */
-	function beforeDelete(&$Model, $cascade = true)
-	{
-		if ($this->__settings[$Model->alias]['delete'] && $Model->hasField($this->__settings[$Model->alias]['field']))
-		{
-			$attributes = $this->__settings[$Model->alias];
-			$id = $Model->id;
+/**
+ * Mark record as not deleted
+ *
+ * @param object $model
+ * @param integer $id
+ * @return boolean
+ */
+	public function undelete($model, $id) {
+		$runtime = $this->runtime[$model->alias];
+		$this->softDelete($model, false);
 
-			$data = array($Model->alias => array(
-				$attributes['field'] => 1
-			));
-
-			if (isset($attributes['field_date']) && $Model->hasField($attributes['field_date']))
-			{
-				$data[$Model->alias][$attributes['field_date']] = date('Y-m-d H:i:s');
+		$data = array();
+		$fields = $this->_normalizeFields($model);
+		foreach ($fields as $flag => $date) {
+			if (true === $runtime || $flag === $runtime) {
+				$data[$flag] = false;
+				if ($date) {
+					$data[$date] = null;
+				}
+				if ($flag === $runtime) {
+					break;
+				}
 			}
-
-			foreach(am(array_keys($data[$Model->alias]), array('field', 'field_date', 'find', 'delete')) as $field)
-			{
-				unset($attributes[$field]);
-			}
-
-			if (!empty($attributes))
-			{
-				$data[$Model->alias] = am($data[$Model->alias], $attributes);
-			}
-
-			$Model->id = $id;
-			$deleted = $Model->save($data, false, array_keys($data[$Model->alias]));
-
-			if ($deleted && $cascade)
-			{
-				$Model->_deleteDependent($id, $cascade);
-				$Model->_deleteLinks($id);
-			}
-
-			return false;
 		}
 
-		return true;
+		$model->create();
+		$model->set($model->primaryKey, $id);
+		$result = $model->save(array($model->alias => $data), false, array_keys($data));
+		$this->softDelete($model, $runtime);
+		return $result;
 	}
 
-	/**
-	 * Permanently deletes a record.
-	 *
-	 * @param object $Model Model from where the method is being executed.
-	 * @param mixed $id ID of the soft-deleted record.
-	 * @param boolean $cascade Also delete dependent records
-	 * @return boolean Result of the operation.
-	 * @access public
-	 */
-	function hardDelete(&$Model, $id, $cascade = true)
-	{
-		$onFind = $this->__settings[$Model->alias]['find'];
-		$onDelete = $this->__settings[$Model->alias]['delete'];
-		$this->enableSoftDeletable($Model, false);
+/**
+ * Enable/disable SoftDelete functionality
+ *
+ * Usage from model:
+ * $this->softDelete(false); deactivate this behavior for model
+ * $this->softDelete('field_two'); enabled only for this flag field
+ * $this->softDelete(true); enable again for all flag fields
+ * $config = $this->softDelete(null); for obtaining current setting
+ *
+ * @param object $model
+ * @param mixed $active
+ * @return mixed if $active is null, then current setting/null, or boolean if runtime setting for model was changed
+ */
+	public function softDelete($model, $active) {
+		if (is_null($active)) {
+			return isset($this->runtime[$model->alias]) ? @$this->runtime[$model->alias] : null;
+		}
 
-		$deleted = $Model->del($id, $cascade);
 
-		$this->enableSoftDeletable($Model, 'delete', $onDelete);
-		$this->enableSoftDeletable($Model, 'find', $onFind);
-
-		return $deleted;
+		$result = !isset($this->runtime[$model->alias]) || $this->runtime[$model->alias] !== $active;
+		$this->runtime[$model->alias] = $active;
+		$this->_softDeleteAssociations($model, $active);
+		return $result;
 	}
 
-	/**
-	 * Permanently deletes all records that were soft deleted.
-	 *
-	 * @param object $Model Model from where the method is being executed.
-	 * @param boolean $cascade Also delete dependent records
-	 * @return boolean Result of the operation.
-	 * @access public
-	 */
-	function purge(&$Model, $cascade = true)
-	{
-		$purged = false;
+/**
+ * Returns number of outdated softdeleted records prepared for purge
+ *
+ * @param object $model
+ * @param mixed $expiration anything parseable by strtotime(), by default '-90 days'
+ * @return integer
+ */
+    public function purgeDeletedCount($model, $expiration = '-90 days') {
+        $this->softDelete($model, false);
+        return $model->find('count', array(
+			'conditions' => $this->_purgeDeletedConditions($model, $expiration), 
+			'recursive' => -1));
+    }
 
-		if ($Model->hasField($this->__settings[$Model->alias]['field']))
-		{
-			$onFind = $this->__settings[$Model->alias]['find'];
-			$onDelete = $this->__settings[$Model->alias]['delete'];
-			$this->enableSoftDeletable($Model, false);
+/**
+ * Purge table
+ *
+ * @param object $model
+ * @param mixed $expiration anything parseable by strtotime(), by default '-90 days'
+ * @return boolean if there were some outdated records
+ */
+    public function purgeDeleted($model, $expiration = '-90 days') {
+        $this->softDelete($model, false);
+        $records = $model->find('all', array(
+			'conditions' => $this->_purgeDeletedConditions($model, $expiration), 
+			'fields' => array($model->primaryKey), 
+			'recursive' => -1));
+        if ($records) {
+            foreach ($records as $record) {
+                $model->delete($record[$model->alias][$model->primaryKey]);
+            }
+            return true;
+        }
+        return false;
+    }
 
-			$purged = $Model->deleteAll(array($this->__settings[$Model->alias]['field'] => '1'), $cascade);
+/**
+ * Returns conditions for finding outdated records
+ *
+ * @param object $model
+ * @param mixed $expiration anything parseable by strtotime(), by default '-90 days'
+ * @return array
+ */
+    protected function _purgeDeletedConditions($model, $expiration = '-90 days') {
+        $purgeDate = date('Y-m-d H:i:s', strtotime($expiration));
+        $conditions = array();
+        foreach ($this->settings[$model->alias] as $flag => $date) {
+            $conditions[$model->alias . '.' . $flag] = true;
+            if ($date) {
+                $conditions[$model->alias . '.' . $date . ' <'] =  $purgeDate;
+            }
+        }
+        return $conditions;
+    }
 
-			$this->enableSoftDeletable($Model, 'delete', $onDelete);
-			$this->enableSoftDeletable($Model, 'find', $onFind);
+/**
+ * Return normalized field array
+ *
+ * @param object $model
+ * @param array $settings
+ * @return array
+ */
+    protected function _normalizeFields($model, $settings = array()) {
+		if (empty($settings)) {
+			$settings = $this->settings[$model->alias];
 		}
+        $result = array();
+        foreach ($settings as $flag => $date) {
+            if (is_numeric($flag)) {
+                $flag = $date;
+                $date = false;
+            }
+            $result[$flag] = $date;
+        }
+        return $result;
+    }
 
-		return $purged;
-	}
-
-	/**
-	 * Restores a soft deleted record, and optionally change other fields.
-	 *
-	 * @param object $Model Model from where the method is being executed.
-	 * @param mixed $id ID of the soft-deleted record.
-	 * @param $attributes Other fields to change (in the form of field => value)
-	 * @return boolean Result of the operation.
-	 * @access public
-	 */
-	function undelete(&$Model, $id = null, $attributes = array())
-	{
-		if ($Model->hasField($this->__settings[$Model->alias]['field']))
-		{
-			if (empty($id))
-			{
-				$id = $Model->id;
-			}
-
-			$data = array($Model->alias => array(
-				$Model->primaryKey => $id,
-				$this->__settings[$Model->alias]['field'] => '0'
-			));
-
-			if (isset($this->__settings[$Model->alias]['field_date']) && $Model->hasField($this->__settings[$Model->alias]['field_date']))
-			{
-				$data[$Model->alias][$this->__settings[$Model->alias]['field_date']] = null;
-			}
-
-			if (!empty($attributes))
-			{
-				$data[$Model->alias] = am($data[$Model->alias], $attributes);
-			}
-
-			$onFind = $this->__settings[$Model->alias]['find'];
-			$onDelete = $this->__settings[$Model->alias]['delete'];
-			$this->enableSoftDeletable($Model, false);
-
-			$Model->id = $id;
-			$result = $Model->save($data, false, array_keys($data[$Model->alias]));
-
-			$this->enableSoftDeletable($Model, 'find', $onFind);
-			$this->enableSoftDeletable($Model, 'delete', $onDelete);
-
-			return ($result !== false);
+/**
+ * Modifies conditions of hasOne and hasMany associations
+ *
+ * If multiple delete flags are configured for model, then $active=true doesn't
+ * do anything - you have to alter conditions in association definition
+ *
+ * @param object $model
+ * @param mixed $active
+ */
+    protected function _softDeleteAssociations($model, $active) {
+        if (empty($model->belongsTo)) {
+			return;
 		}
+		$fields = array_keys($this->_normalizeFields($model));
+		$parentModels = array_keys($model->belongsTo);
 
-		return false;
-	}
+		foreach ($parentModels as $parentModel) {
+			foreach (array('hasOne', 'hasMany') as $assocType) {
+				if (empty($model->{$parentModel}->{$assocType})) {
+					continue;
+				}
 
-	/**
-	 * Set if the beforeFind() or beforeDelete() should be overriden for specific model.
-	 *
-	 * @param object $Model Model about to be deleted.
-	 * @param mixed $methods If string, method (find / delete) to enable on, if array array of method names, if boolean, enable it for find method
-	 * @param boolean $enable If specified method should be overriden.
-	 * @access public
-	 */
-	function enableSoftDeletable(&$Model, $methods, $enable = true)
-	{
-		if (is_bool($methods))
-		{
-			$enable = $methods;
-			$methods = array('find', 'delete');
-		}
+				foreach ($model->{$parentModel}->{$assocType} as $assoc => $assocConfig) {
+					$modelName = empty($assocConfig['className']) ? $assoc : @$assocConfig['className'];
+					if ($model->alias != $modelName) {
+						continue;
+					}
 
-		if (!is_array($methods))
-		{
-			$methods = array($methods);
-		}
+					$conditions =& $model->{$parentModel}->{$assocType}[$assoc]['conditions'];
+					if (!is_array($conditions)) {
+						$model->{$parentModel}->{$assocType}[$assoc]['conditions'] = array();
+					}
 
-		foreach($methods as $method)
-		{
-			$this->__settings[$Model->alias][$method] = $enable;
-		}
-	}
-
-	/**
-	 * Run before a model is about to be find, used only fetch for non-deleted records.
-	 *
-	 * @param object $Model Model about to be deleted.
-	 * @param array $queryData Data used to execute this query, i.e. conditions, order, etc.
-	 * @return mixed Set to false to abort find operation, or return an array with data used to execute query
-	 * @access public
-	 */
-	function beforeFind(&$Model, $queryData)
-	{
-		if ($this->__settings[$Model->alias]['find'] && $Model->hasField($this->__settings[$Model->alias]['field']))
-		{
-			$Db =& ConnectionManager::getDataSource($Model->useDbConfig);
-			$include = false;
-
-			if (!empty($queryData['conditions']) && is_string($queryData['conditions']))
-			{
-				$include = true;
-
-				$fields = array(
-					$Db->name($Model->alias) . '.' . $Db->name($this->__settings[$Model->alias]['field']),
-					$Db->name($this->__settings[$Model->alias]['field']),
-					$Model->alias . '.' . $this->__settings[$Model->alias]['field'],
-					$this->__settings[$Model->alias]['field']
-				);
-
-				foreach($fields as $field)
-				{
-					if (preg_match('/^' . preg_quote($field) . '[\s=!]+/i', $queryData['conditions']) || preg_match('/\\x20+' . preg_quote($field) . '[\s=!]+/i', $queryData['conditions']))
-					{
-						$include = false;
-						break;
+					$multiFields = 1 < count($fields);
+					foreach ($fields as $field) {
+						if ($active) {
+							if (!isset($conditions[$field]) && !isset($conditions[$assoc . '.' . $field])) {
+								if (is_string($active)) {
+									if ($field == $active) {
+										$conditions[$assoc . '.' . $field] = false;
+									}
+									elseif (isset($conditions[$assoc . '.' . $field])) {
+										unset($conditions[$assoc . '.' . $field]);
+									}
+								}
+								elseif (!$multiFields) {
+									$conditions[$assoc . '.' . $field] = false;
+								}
+							}
+						} elseif (isset($conditions[$assoc . '.' . $field])) {
+							unset($conditions[$assoc . '.' . $field]);
+						}
 					}
 				}
 			}
-			else if (empty($queryData['conditions']) || (!in_array($this->__settings[$Model->alias]['field'], array_keys($queryData['conditions'])) && !in_array($Model->alias . '.' . $this->__settings[$Model->alias]['field'], array_keys($queryData['conditions']))))
-			{
-				$include = true;
-			}
-
-			if ($include)
-			{
-				if (empty($queryData['conditions']))
-				{
-					$queryData['conditions'] = array();
-				}
-
-				if (is_string($queryData['conditions']))
-				{
-					$queryData['conditions'] = $Db->name($Model->alias) . '.' . $Db->name($this->__settings[$Model->alias]['field']) . '!= 1 AND ' . $queryData['conditions'];
-				}
-				else
-				{
-					$queryData['conditions'][$Model->alias . '.' . $this->__settings[$Model->alias]['field'].' <>'] = 1;
-				}
-			}
 		}
-
-		return $queryData;
-	}
-
-	/**
-	 * Run before a model is saved, used to disable beforeFind() override.
-	 *
-	 * @param object $Model Model about to be saved.
-	 * @return boolean True if the operation should continue, false if it should abort
-	 * @access public
-	 */
-	function beforeSave(&$Model)
-	{
-		if ($this->__settings[$Model->alias]['find'])
-		{
-			if (!isset($this->__backAttributes))
-			{
-				$this->__backAttributes = array($Model->alias => array());
-			}
-			else if (!isset($this->__backAttributes[$Model->alias]))
-			{
-				$this->__backAttributes[$Model->alias] = array();
-			}
-
-			$this->__backAttributes[$Model->alias]['find'] = $this->__settings[$Model->alias]['find'];
-			$this->__backAttributes[$Model->alias]['delete'] = $this->__settings[$Model->alias]['delete'];
-			$this->enableSoftDeletable($Model, false);
-		}
-
-		return true;
-	}
-
-	/**
-	 * Run after a model has been saved, used to enable beforeFind() override.
-	 *
-	 * @param object $Model Model just saved.
-	 * @param boolean $created True if this save created a new record
-	 * @access public
-	 */
-	function afterSave(&$Model, $created)
-	{
-		if (isset($this->__backAttributes[$Model->alias]['find']))
-		{
-			$this->enableSoftDeletable($Model, 'find', $this->__backAttributes[$Model->alias]['find']);
-			$this->enableSoftDeletable($Model, 'delete', $this->__backAttributes[$Model->alias]['delete']);
-			unset($this->__backAttributes[$Model->alias]['find']);
-			unset($this->__backAttributes[$Model->alias]['delete']);
-		}
-	}
+    }
 }
-?>

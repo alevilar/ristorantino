@@ -9,7 +9,7 @@
 <div data-role="page" id="listado-mesas">
 
 	<div  data-role="header">
-            <h1><span style="color: #fcf0b5" data-bind="text: adn().mesas().length">0</span> <?php echo Inflector::pluralize( Configure::read('Mesa.tituloMesa') )?></h1>
+            <h1><span class="wow" data-bind="text: adn().mesas().length">0</span> <?php echo Inflector::pluralize( Configure::read('Mesa.tituloMesa') )?></h1>
 
             <a href='#adicion-opciones' data-icon="gear" data-rel="dialog" class="ui-btn-right">Opciones</a>
             
@@ -19,13 +19,13 @@
                     $anchoCalculadoPorcentual = floor( 100/ (count($mozos) + 1 ));
                     $anchoCalculadoPorcentualPrimero = 100 - ($anchoCalculadoPorcentual*count($mozos) );
                     ?>
-                    <li  style="width: <?php echo $anchoCalculadoPorcentualPrimero?>%"><a href="#" class="ui-btn-active">Todos</a></li>
+                    <li  style="width: <?php echo $anchoCalculadoPorcentualPrimero.'%'?>"><a href="#" class="ui-btn-active">Todos</a></li>
                     <?php
                         foreach ($mozos as $m) {
                             $k = $m['Mozo']['id'];
                             $n = $m['Mozo']['numero'];
                             ?>
-                    <li  style="width: <?php echo $anchoCalculadoPorcentual?>%">
+                    <li  style="width: <?php echo $anchoCalculadoPorcentual.'%'?>">
                                 <a href="#" data-mozo-id="<?php echo $k?>"><?php echo $n?></a>
                             </li>
                         <?
@@ -40,9 +40,9 @@
 
                 <!-- aca va el listado de mesas que se carga dinamicamente en un script de abajo -->
                 <a href="#mesa-add" id="mesa-abrir-mesa-btn" data-rel="dialog"  class="abrir-mesa" data-role="button" data-theme="a">Abrir<br><?php echo Configure::read('Mesa.tituloMesa')?></a>  
-                <ul id="mesas_container" class="listado-adicion" data-bind='template: { name: "listaMesas", foreach: adn().mesas }'>
-                        
-                </ul>
+
+                <!-- @template listaMesas -->
+                <ul id="mesas_container" class="listado-adicion" data-bind='template: { name: "listaMesas", foreach: adn().mesas }'></ul>
         </div><!-- /navbar -->
 
 </div>
@@ -135,10 +135,10 @@
 
                     
         <div  data-role="content" class="content_mesas">
-                <!-- aca va el listado de mesas que se carga dinamicamente en un script de abajo -->
-                <ul id="ul-mesas-cajero" class="listado-adicion" data-bind='template: { name: "listaMesasCajero", foreach: adn().mesasCerradas }'>
-                       
-                </ul>
+                
+                <!-- @template listaMesasCajero -->
+                <ul id="ul-mesas-cajero" class="listado-adicion" data-bind='template: { name: "listaMesasCajero", foreach: adn().mesasCerradas }'></ul>
+                
         </div><!-- /navbar -->
             
 </div>
@@ -368,9 +368,9 @@
             </div>
 
             <div class="mesa-view">
-                <h3 class="titulo-comanda">Productos Comandados</h3>
+                <h3 class="titulo-comanda">Listado de Comandas</h3>
 
-                <!-- template -->
+                <!-- @template listaComandas -->
                 <div id="comanda-detalle-collapsible" data-role="collapsible-set"
                      data-bind="template: {name: 'listaComandas', foreach: adn().currentMesa().Comanda}"></div>
             </div>
@@ -455,15 +455,7 @@
         <div style="width: 70%; display: inline; float: right;">
             <div id="path" data-bind="template: {name: 'boton', foreach: menu().path()}"></div> 
             
-            <!--           SELECCION DE CATEGORIAS                           -->
-           <div id="ul-categorias" 
-                data-bind="template: {name: 'listaCategoriasTree', foreach: menu().currentSubCategorias()} ">
-           </div>
-           
-            <!--           SELECCION DE PRODUCTOS                            -->
-           <div id="ul-productos" style="clear: both" 
-                data-bind="template: {name: 'categorias-productos', foreach: menu().currentProductos()} ">
-           </div>
+            <?php echo $this->element('categorias_y_productos', array('categorias_sub' => $categorias)); ?>
         </div>
     </div>
         

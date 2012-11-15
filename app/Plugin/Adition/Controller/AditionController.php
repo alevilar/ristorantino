@@ -54,25 +54,12 @@ class AditionController extends AditionAppController {
     public function index() {
         $this->set('tipo_de_pagos', $this->Mozo->Mesa->Pago->TipoDePago->find('all'));
         $this->set('mozos', $this->Mozo->dameActivos());
+        $this->set('categorias', ClassRegistry::init('Categoria')->array_listado());
         $this->set('observaciones', ClassRegistry::init('Observacion')->find('list', array('order' => 'Observacion.name')));
        $this->set('observacionesComanda', ClassRegistry::init('ObservacionComanda')->find('list', array('order' => 'ObservacionComanda.name')));
         $this->render('adicionar');
     }
 	
-	
-	/**
-	 * 
-	 * esta es la accion para que adicione la adicion
-	 * la diferencia aca es que se van amostrar todas las mesas abiertas independientemente del mozo
-	 * @return unknown_type
-	 */
-	public function adicionar()
-        {
-            $this->set('tipo_de_pagos', $this->Mozo->Mesa->Pago->TipoDePago->find('all', array('recursive' => -1)));
-            $this->set('mozos', $this->Mozo->dameActivos());
-            $this->set('observaciones', ClassRegistry::init('Observacion')->find('list', array('order' => 'Observacion.name')));
-            $this->set('observacionesComanda', ClassRegistry::init('ObservacionComanda')->find('list', array('order' => 'ObservacionComanda.name')));
-	}
 	
 	
 	public function cambiarMozo($mozo_id = 0)

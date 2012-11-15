@@ -74,60 +74,41 @@ $(document).bind("mobileinit", function(){
             }
         });
         
-        //creacion de comandas
-        // producto seleccionado
-        $(document).bind(  MENU_ESTADOS_POSIBLES.productoSeleccionado.event , productoSeleccionado);
-
+        // show or hide hirschary
+        $('.active', '#comanda-add-menu').hide();
+        $('.root').show().addClass('active');
         
+        $('#comanda-add-menu').delegate(
+                '.categoria',
+                'click', function() {
+                    $('.active', '#comanda-add-menu').hide().removeClass('active');
+                    $($(this).attr('href')).show().addClass('active');
+                }
+            );
         
         var abierto = false;
-        $('#ul-productos-seleccionados').delegate(
-                '.listado-productos-seleccionados',
-                'mouseleave',
-                function(){
-                    $(this).children('.ui-options').hide();
-                    $(this).children('.ui-options-btn').removeClass('ui-options-btn-open');
-                    abierto = false;
-                }
-        );                
-        
-        $('#ul-productos-seleccionados').delegate(
-                '.ui-options-btn',
-                'mouseover',
-                function(){
-                    var $ops = $(this).parent().find('.ui-options'),
-                        $opsBtn = $(this).parent().find('.ui-options-btn');
-                        
-                    if ( abierto ) {
-                        $ops.hide();
-                        $opsBtn.removeClass('ui-options-btn-open');
-                    } else {
-                        $ops.show();
-                        $opsBtn.addClass('ui-options-btn-open');
+        $('#comanda-add-menu').delegate(
+                '.producto',
+                'click', function() {
+                    var prod = {
+                        name: $(this).attr('data-producto-name'),
+                        id  : $(this).attr('data-producto-id')
                     }
-                    abierto = !abierto;
+                    
+                    Risto.Adition.adicionar.currentMesa().currentComanda().agregarProducto(prod);
+                    if (!this.cantidad){
+                        this.cantidad = 0;
+                    }
+                    $('.cantidad', this).text(this.cantidad++);
                 }
-        );            
-
+            );           
+        
         $('#comanda-add-guardar').bind('click', function(){
             Risto.Adition.adicionar.currentMesa().currentComanda().save();
-            Risto.Adition.menu.reset();
         });
 
-        function seleccionar(){
-            //retrieve the context
-            var context = ko.contextFor(this);
-            $(this).addClass('active');
-            if (context) {
-                // $data es es el objeto producto
-                context.$data.seleccionar();
-            }
-        }
 
-        $('#ul-categorias').delegate("a", "click", seleccionar);
-        $('#ul-productos').delegate("a", "click", seleccionar);
-        
-            
+           
         // Eventos para la observacion General de la Comanda ADD
         (function(){
             var $domObs = $('#comanda-add-observacion');
@@ -152,20 +133,16 @@ $(document).bind("mobileinit", function(){
     $('#comanda-add-menu').live('pagebeforehide', function(){
         $(document).unbind(  MENU_ESTADOS_POSIBLES.productoSeleccionado.event);
         
-        $('a.active','#ul-productos').removeClass('active');
-        
         $('#comanda-add-observacion').hide();
         
-        $('#ul-categorias').undelegate("a", "click");
-        $('#ul-productos').undelegate("a", "click");
-        
+        $('#comanda-add-menu').undelegate("a", "click");
         
         $('#ul-productos-seleccionados').undelegate(
                 '.listado-productos-seleccionados',
                 'mouseleave'
         );                
         
-        $('#ul-productos-seleccionados').undelegate(
+        $('.ul-productos-seleccionados').undelegate(
                 '.ui-options-btn',
                 'mouseover'
         ); 

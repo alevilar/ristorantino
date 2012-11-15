@@ -1,6 +1,6 @@
 <!-- Template: listado de comandas con sus productos-->
 <script id="listaComandas" type="text/x-jquery-tmpl">
-   <div data-role="collapsible" data-content-theme="b">
+   <div data-role="collapsible" data-content-theme="c">
        <h3>
            <span class="id-comanda">#<span data-bind="text: id()"></span></span>  <span class="hora-comanda"  data-bind="text: timeCreated()"></span>&nbsp;&nbsp;&nbsp;
            <span class="comanda-listado-productos-string" data-bind="text: productsStringListing()"></span>
@@ -10,12 +10,32 @@
            </a>
        </h3>
 
+       <!-- @template li-productos-detallecomanda -->
         <ul class="comanda-items" data-role="listview"
            data-bind="template: {name: 'li-productos-detallecomanda', foreach: DetalleComanda}"
            style="margin: 0px;">
 
         </ul>                                                                           
    </div>
+</script>
+
+
+
+
+<!-- Template: Listado de productos del detalle Comanda -->
+<script id="li-productos-detallecomanda" type="text/x-jquery-tmpl">
+ <li class="ui-li ui-li-static ui-btn-up-c ui-li-last">
+     <div data-type="horizontal"  data-mini="true" data-role="controlgroup" style="float: left">
+        <a id="mesa-action-detalle-comanda-sacar-item" data-bind="click: deseleccionarYEnviar" data-role="button" data-icon="minus" data-iconpos="notext" href="#" title="-" data-theme="c">-</a>
+        <a data-bind="css: { es_entrada: esEntrada()}" data-role="button" data-iconpos="notext" data-icon="entrada" href="#" title="Entrada" data-theme="c">
+            Entrada
+        </a>
+     </div>
+
+     <span class="producto-cant" data-bind="text: realCant()" style="padding-left: 20px;"></span>
+     <span class="producto-nombre" data-bind="text: nameConSabores() + ' ' +observacion(), css: {tachada: realCant()==0}" style="padding-left: 20px;"></span>
+     <span class="producto-precio">p/u: {{= '$'}}<span data-bind="text: precio()"></span></span>
+ </li>
 </script>
 
 
@@ -59,11 +79,7 @@
          
         <span data-bind="text: nameConSabores() + ' ' +observacion()"></span>
         
-        <span class="ui-options-btn">
-            
-            Opciones
-        
-        </span>
+        <span class="ui-options-btn">Opciones</span>
      </li>
  </script>
  
@@ -85,29 +101,6 @@
 </script>
 
 
-
-
-<!-- Template: Caomanda add: listado de categorias                                  -->
-<script id="listaCategoriasTree" type="text/x-jquery-tmpl">
-   <a  href="#" data-theme="b" data-inline="true" 
-       data-bind="css: {'sin-imagen': !image_url, 'con-imagen': image_url}"
-       class="">
-           <image class="menu-img" data-bind="visible: image_url, attr: {src: urlDomain+'img/menu/'+image_url}"/>           
-           <span data-bind="text: name"></span>
-   </a>
-</script>
-
-
-<!-- Template: Caomanda add: listado de productos -->
-<script id="categorias-productos" type="text/x-jquery-tmpl">
-     <a data-bind="attr: { href: tieneSabores() ? '#page-sabores' : '#'}, css: {'producto-con-sabor': tieneSabores()}" 
-        data-rel="dialog"
-        data-icon="none"
-        class="">
-             <span class="ui-btn-text" data-bind="text: name" ></span>
-     </a>
- </script>
- 
  
  
  <!-- Template: Comanda Add, Listado de sabores de categorias       -->
@@ -129,26 +122,6 @@
          <label>Ingresar Valor $: </label>
          <input name="valor" data-bind="value: valor, valueUpdate: 'keyup'" placeholder="Ej: 100.4"/>
      </li>
-</script>
-
-
-
-
-
-<!-- Template: Listado de productos del detalle Comanda -->
-<script id="li-productos-detallecomanda" type="text/x-jquery-tmpl">
- <li>
-     <div data-type="horizontal"  data-mini="true" data-role="controlgroup" style="float: left">
-        <a id="mesa-action-detalle-comanda-sacar-item" data-bind="click: deseleccionarYEnviar" data-role="button" data-icon="minus" data-iconpos="notext" href="#" title="-" data-theme="c">-</a>
-        <a data-bind="css: { es_entrada: esEntrada()}" data-role="button" data-iconpos="notext" data-icon="entrada" href="#" title="Entrada" data-theme="c">
-            Entrada
-        </a>
-     </div>
-
-     <span class="producto-cant" data-bind="text: realCant()" style="padding-left: 20px;"></span>
-     <span class="producto-nombre" data-bind="text: nameConSabores() + ' ' +observacion(), css: {tachada: realCant()==0}" style="padding-left: 20px;"></span>
-     <span class="producto-precio">p/u: {{= '$'}}<span data-bind="text: precio()"></span></span>
- </li>
 </script>
 
 
