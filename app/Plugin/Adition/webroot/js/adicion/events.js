@@ -86,20 +86,63 @@ $(document).bind("mobileinit", function(){
                 }
             );
         
-        var abierto = false;
         $('#comanda-add-menu').delegate(
                 '.producto',
                 'click', function() {
-                    var prod = {
-                        name: $(this).attr('data-producto-name'),
-                        id  : $(this).attr('data-producto-id')
+                    var prod = JSON.parse( $(this).attr('data-producto-json') );
+                    
+                    if ( $(this).hasClass('producto-con-sabor') ) {
+                        // Evento para los sabores
+
+                        var $closeIcon = $('#page-sabores').find( 'a[data-icon="delete"]' );
+                        $closeIcon.bind('click',function(){
+                                    Risto.Adition.adicionar.currentMesa().currentComanda().limpiarSabores();
+                                    $closeIcon.unbind('click');
+                        });
+
+                        function unloadSabores() {
+                               $('.content', $('.ul-sabores', '#comanda-add-menu')).undelegate("a", "click");
+                               $('.ul-sabores', '#comanda-add-menu').undelegate("a.cancel", 'click');
+                               $('.ul-sabores', '#comanda-add-menu').undelegate("a.save", 'click');
+                               $('.ui-btn-active', $('.ul-sabores', '#comanda-add-menu')).removeClass('ui-btn-active');
+                        }
+                        
+                        $('.content', $('.ul-sabores', '#comanda-add-menu')).delegate("a", "click", function(){
+                            $(this).toggleClass('ui-btn-active');
+                        });
+
+                        // Al salir de la ventana de sabores
+                        $('.ul-sabores', '#comanda-add-menu').delegate("a.cancel", 'click', function (){
+                             unloadSabores();
+                        });
+                        
+                        // Al guardar los sabores seleccionados
+                        $('.ul-sabores', '#comanda-add-menu').delegate("a.save", 'click', function (){
+                             var $losActivos = $('.ui-btn-active', $('.ul-sabores', '#comanda-add-menu'));
+                             var sabores = [];
+                            $losActivos.each(function(i, e){
+                                sabores.push(JSON.parse($(e).attr('data-sabor-json')));
+                            });
+                            prod.Sabor = sabores;
+                            $losActivos.removeClass('ui-btn-active');
+                            crearDetalleComanda(prod);
+                            
+                            unloadSabores();
+                        });
+                    } else {
+                        crearDetalleComanda(prod, this );
                     }
                     
-                    Risto.Adition.adicionar.currentMesa().currentComanda().agregarProducto(prod);
-                    if (!this.cantidad){
-                        this.cantidad = 0;
+                    function crearDetalleComanda( prod, elementProducto ) {
+                        var detalleComanda = Risto.Adition.adicionar.currentMesa().currentComanda().agregarProducto(prod);
+                        if (elementProducto && !elementProducto.isKoBinded) {
+                            $(elementProducto).prepend(  '<span class="cantidad ui-li-count ui-btn-up-c ui-btn-corner-all" data-bind="text: cant"></span>' );
+                            ko.applyBindings(detalleComanda, elementProducto);
+                            elementProducto.isKoBinded = true;
+                        }
+                        return detalleComanda;
                     }
-                    $('.cantidad', this).text(this.cantidad++);
+                        
                 }
             );           
         
@@ -107,20 +150,14 @@ $(document).bind("mobileinit", function(){
             Risto.Adition.adicionar.currentMesa().currentComanda().save();
         });
 
-
            
         // Eventos para la observacion General de la Comanda ADD
         (function(){
-            var $domObs = $('#comanda-add-observacion');
+            
             $("#mesa-comanda-add-obs-gen-cancel").bind('click', function(){
-                $domObs.toggle('slow'); 
                 Risto.Adition.adicionar.currentMesa().currentComanda().comanda.borrarObservacionGeneral();
             });
-
-            $("#mesa-comanda-add-obs-gen-aceptar").bind('click', function(){
-                $domObs.toggle('slow');
-            });
-
+            
             var domObsList = $('.observaciones-list button', '#comanda-add-menu');
             domObsList.bind('click' , function(e){
                 if ( this.value ) {
@@ -128,12 +165,21 @@ $(document).bind("mobileinit", function(){
                 }
             });
         })();
+        
     });
+       
 
     $('#comanda-add-menu').live('pagebeforehide', function(){
-        $(document).unbind(  MENU_ESTADOS_POSIBLES.productoSeleccionado.event);
         
         $('#comanda-add-observacion').hide();
+        
+        $('#comanda-add-menu').undelegate(
+                '.categoria',
+                'click');
+        
+        $('#comanda-add-menu').undelegate(
+                '.producto',
+                'click');
         
         $('#comanda-add-menu').undelegate("a", "click");
         
@@ -627,42 +673,6 @@ $(document).bind("mobileinit", function(){
 
     $('#mesa-cobrar').live('pagebeforehide', function(){
         $('#mesa-pagos-procesar').unbind('click');
-    });
-
-
-
-
-
-    /**
-     *
-     *
-     *          Page SABORES
-     *
-     */
-
-    $('#page-sabores').live('pageshow', function(){
-        var $closeIcon = $('#page-sabores').find( 'a[data-icon="delete"]' );
-        $closeIcon.bind('click',function(){
-                    Risto.Adition.adicionar.currentMesa().currentComanda().limpiarSabores();
-                    $closeIcon.unbind('click');
-                });
-                
-        function seleccionar(e){
-            
-            //retrieve the context
-            var context = ko.contextFor(this);
-            $(this).addClass('active');
-            if (context) {
-                // $data es es el objeto producto
-                context.$data.seleccionar(e);
-            }
-        }
-
-        $('#ul-sabores').delegate("a", "click", seleccionar);
-    });
-    
-    $('#page-sabores').live('pagehide', function(){
-        $('#ul-sabores').undelegate("a", "click");
     });
 
 

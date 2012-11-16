@@ -66,10 +66,8 @@ $isRoot = (empty($path))?'root':'';
             <a id="producto-id-<?php echo $prod['id'];?>" 
                href="<?php echo $prod_href; ?>" 
                <?php echo empty($categorias_sub['Sabor'])?'':'data-rel="popup"'; ?>
-               data-producto-name="<?php echo $prod['name'];?>"
-               data-producto-id="<?php echo $prod['id'];?>"
-               class="producto <?php echo $prod_class; ?> ui-btn-inner ui-btn-corner-all">
-                <span class="cantidad ui-li-count ui-btn-up-c ui-btn-corner-all"></span>
+               data-producto-json='<?php echo json_encode( $prod );?>'
+               class="producto <?php echo $prod_class; ?> ui-btn-inner ui-btn-corner-all">                
                 <span class="ui-btn-text"><?php echo $prod['name']; ?></span>
             </a>
     <?php endforeach; ?>
@@ -81,18 +79,22 @@ $isRoot = (empty($path))?'root':'';
     <?php if (!empty($categorias_sub['Sabor'])): ?>
     <div data-role="popup" data-position-to="window"  data-theme="e" data-overlay-theme="a" id="<?php echo $saborDivId?>" 
          class="ui-content ul-sabores" style="clear: both">
+        <div class="content">
     <?php foreach ($categorias_sub['Sabor'] as $sabor): ?>
         
             <a data-role="button" id="sabor-id-<?php echo $sabor['id'];?>" 
                href="#" 
                data-inline="true" 
-               data-producto-name="<?php echo $sabor['name'];?>"
-               data-producto-id="<?php echo $sabor['id'];?>"
-               class="sabor">
-                <span class="cantidad ui-li-count ui-btn-up-c ui-btn-corner-all"></span>
+               data-sabor-json='<?php echo json_encode( $sabor );?>'
+               class="sabor">                
                 <span class="ui-btn-text"><?php echo $sabor['name']; ?></span>
             </a>
     <?php endforeach; ?>
+        </div>
+        <div style="text-align: center" class="action">
+            <a class="cancel" href="#" data-role="button" data-rel="back" data-inline="true" data-theme="a">Cancelar</a>
+            <a class="save" href="#" data-role="button" data-rel="back" data-inline="true" data-theme="e">Guardar Sabores</a>
+        </div>
     </div>
     <?php endif; ?>
 

@@ -122,6 +122,9 @@ Risto.Adition.comandaFabrica.prototype = {
     __findDetalleComandaPorSabor: function(buscarAca, sabores) {
         var dcIx;
         var encontrados = 0;
+        if (sabores === null){
+            sabores = [];
+        }
         
         // Si no tienen el mismo tamaño, directamente devolver false y ahorra los foreach
         if ( sabores.length != buscarAca.DetalleSabor().length ) {
@@ -164,11 +167,7 @@ Risto.Adition.comandaFabrica.prototype = {
             prodIndex = dcIx.Producto();
             
             if ( prodIndex.id == prod.id ) {
-                if ( dcIx.tieneSabores() ) {
-                    if ( this.__findDetalleComandaPorSabor(dcIx, sabores) ) {
-                        return sdc;
-                    }
-                } else {
+                if ( this.__findDetalleComandaPorSabor(dcIx, sabores) ) {
                     return sdc;
                 }
             }
@@ -222,11 +221,11 @@ Risto.Adition.comandaFabrica.prototype = {
             }
             
             this.comanda.DetalleComanda.unshift(dc);
-            return true;
+            return dc;
         } else {
             // el producto ya estaba agregado, asique simplemente lo sumo
             this.comanda.DetalleComanda()[dcIndex].seleccionar();
-            return false;
+            return this.comanda.DetalleComanda();
         }
     },
     
@@ -234,12 +233,16 @@ Risto.Adition.comandaFabrica.prototype = {
      * Agrega un producto al listado de productos (DetalleComanda) seleccionados
      */
     agregarProducto: function(prod){
-        if ( prod.Categoria && prod.Categoria.Sabor && prod.Categoria.Sabor.length > 0 ) {
-            this.productoSaborTmp = prod;
-            this.currentSabores( prod.Categoria.Sabor );
-        } else {
-            this.__doAdd(prod);
+        var sabor = [];
+        
+        if (prod.Sabor && prod.Sabor.length > 0){
+            sabor = prod.Sabor;
         }
+        
+        if ( prod.Categoria && prod.Categoria.Sabor && prod.Categoria.Sabor.length > 0){
+            sabor = prod.Sabor;
+        }
+        return this.__doAdd(prod, sabor);
         
     }
     
