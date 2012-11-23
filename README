@@ -1,28 +1,16 @@
-CakePHP is a rapid development framework for PHP which uses commonly known design patterns like Active Record, Association Data Mapping, Front Controller and MVC. Our primary goal is to provide a structured framework that enables PHP users at all levels to rapidly develop robust web applications, without any loss to flexibility.
+Ristorantino Mágico es una aplicación Web para bares y restaurantes
 
-The Cake Software Foundation - promoting development related to CakePHP
-http://cakefoundation.org/
+La idea es que sea utilizada en la intranet, pero tambien se puede hostear y trabajar desde internet.
+No es recomendable utilizar esta arquitectura si el bar o restaurante trabaja mucho.
 
-CakePHP - the rapid development PHP framework
-http://www.cakephp.org
+envia comandas a la cocina e imprime tickets fiscales (por ahora solo impresora marca Hasar, aunque es fácilmente extensible)
 
-Cookbook - user documentation for learning about CakePHP
-http://book.cakephp.org
+Conocimientos técnicos
+* CakePHP 2
+* jQueryMobile como frontend
+* CUPS para hacer imprimir las comandas y el ticket fiscal
 
-API - quick reference to CakePHP
-http://api.cakephp.org
+Pueden ver una demo funcionando en http://cq.alevilar.com.ar
 
-The Bakery - everything CakePHP
-http://bakery.cakephp.org
 
-The Show - live and archived podcasts about CakePHP and more
-http://live.cakephp.org
 
-CakePHP TV - screen casts from events and video tutorials
-http://tv.cakephp.org
-
-CakePHP Google Group - community mailing list and forum
-http://groups.google.com/group/cake-php
-
-#cakephp on irc.freenode.net - chat with CakePHP developers
-irc://irc.freenode.net/cakephp
