@@ -15,7 +15,7 @@ Risto.Adition.sabor.prototype = {
      name: '',
      Categoria: [],
      precio: 0,
-     model: 'DetalleSabor',
+     model: 'Sabor',
      cant: 0,
      
      cantSeleccionada: function(val){

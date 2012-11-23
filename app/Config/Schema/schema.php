@@ -1,4 +1,4 @@
-<?php  
+<?php 
 class AppSchema extends CakeSchema {
 
 	public function before($event = array()) {
@@ -91,7 +91,7 @@ class AppSchema extends CakeSchema {
 		'driver_name' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 32, 'collate' => 'utf8_spanish_ci', 'charset' => 'utf8'),
 		'path' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 64, 'collate' => 'utf8_spanish_ci', 'charset' => 'utf8'),
 		'imprime_ticket' => array('type' => 'boolean', 'null' => false, 'default' => '0', 'comment' => 'me dice si imprime o no tickets factura'),
-                'es_impresora' => array('type' => 'boolean', 'null' => false, 'default' => '0', 'comment' => 'me dice si se utiliza como impresora comun, para imprimir informes, remitos, encuestas, etc'),
+		'es_impresora' => array('type' => 'boolean', 'null' => false, 'default' => '0', 'comment' => 'me dice si se utiliza como impresora comun, para imprimir informes, remitos, encuestas, etc'),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_spanish_ci', 'engine' => 'MyISAM')
 	);

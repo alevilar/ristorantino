@@ -6,8 +6,42 @@
 
 
 Risto.Adition.detalleComanda = function(jsonData) {
-    this.initialize(jsonData);
+
+    this.imprimir       = ko.observable( true );
+    this.cant           = ko.observable( 0 );
+    this.cant_eliminada = ko.observable( 0 );
+    this.es_entrada     = ko.observable( 0 );
+    this.observacion    = ko.observable( '' );
+    this.modificada     = ko.observable( false );
+    this.Producto       = ko.observable( new Risto.Adition.producto() );
+    this.Sabor          = ko.observableArray( [] );
     
+    if ( jsonData ) {
+        this.Producto =  ko.observable ( new Risto.Adition.producto( jsonData.Producto ) );        
+        
+        
+        if ( jsonData.Sabor && jsonData.Sabor.length){
+            var s = 0;
+            for (s in jsonData.Sabor) {
+                if ( jsonData.Sabor[s].Sabor ) {
+                    this.Sabor.push( new Risto.Adition.sabor( jsonData.Sabor[s].Sabor) );
+                } else {
+                    this.Sabor.push( new Risto.Adition.sabor( jsonData.Sabor[s]) );
+                }
+                
+            }
+            delete jsonData.Sabor;
+        }
+
+        delete jsonData.Producto;
+
+        jsonData.es_entrada = parseInt( jsonData.es_entrada );
+    } else {
+        jsonData = {}
+    }
+
+
+    ko.mapping.fromJS( jsonData, {} , this );
     
     // Observables Dependientes
     this.producto_id = ko.dependentObservable( function(){
@@ -33,7 +67,7 @@ Risto.Adition.detalleComanda = function(jsonData) {
 
 Risto.Adition.detalleComanda.prototype = {
     Producto    : function( ) {},
-    DetalleSabor: function( ) {return []}, // array de Sabores
+    Sabor: function( ) {return []}, // array de Sabores
 
     // cant de este producto seleccionado
     cant        : function( ) {return 0},
@@ -44,42 +78,13 @@ Risto.Adition.detalleComanda.prototype = {
     model       : 'DetalleComanda',
     
     
-    initialize: function(jsonData){
-        this.DetalleSabor   = ko.observableArray( [] );
-        this.imprimir       = ko.observable( true );
-        this.cant           = ko.observable( 0 );
-        this.cant_eliminada = ko.observable( 0 );
-        this.es_entrada     = ko.observable( 0 );
-        this.observacion    = ko.observable( '' );
-        this.modificada     = ko.observable( false );
-
-        this.Producto = ko.observable( new Risto.Adition.producto() );
-        if ( jsonData ) {
-            this.Producto =  ko.observable ( new Risto.Adition.producto( jsonData.Producto ) );
-            if ( jsonData.DetalleSabor && jsonData.DetalleSabor.length){
-                for(var s in jsonData.DetalleSabor){
-                    this.DetalleSabor.push( new Risto.Adition.sabor( jsonData.DetalleSabor[s].Sabor) );
-                }
-                delete jsonData.DetalleSabor;
-            }
-            delete jsonData.Producto;
-            
-            jsonData.es_entrada = parseInt( jsonData.es_entrada );
-        } else {
-            jsonData = {}
-        }
-        
-        ko.mapping.fromJS( jsonData, {} , this );
-        return this;
-    },
-    
     /**
      *Es el valor del producto sumandole los sabores
      */
     precio: function(){
         var total = parseFloat( this.Producto().precio );
-        for (var s in this.DetalleSabor() ){
-            total += parseFloat( this.DetalleSabor()[s].precio );
+        for (var s in this.Sabor() ){
+            total += parseFloat( this.Sabor()[s].precio );
         }
         return total;
     },
@@ -110,17 +115,17 @@ Risto.Adition.detalleComanda.prototype = {
                 nom += this.Producto().name;
             }
             
-            if ( this.DetalleSabor().length > 0 ){
+            if ( this.Sabor().length > 0 ){
                 var dsname = '';
-                for (var ds in this.DetalleSabor()) {
+                for (var ds in this.Sabor()) {
                     if ( ds > 0 ) {
                         // no es el primero
                         dsname += ', ';
                     }
-                    if (typeof this.DetalleSabor()[ds].name == 'function') {
-                        dsname += this.DetalleSabor()[ds].name();
+                    if (typeof this.Sabor()[ds].name == 'function') {
+                        dsname += this.Sabor()[ds].name();
                     } else {
-                        dsname += this.DetalleSabor()[ds].name;
+                        dsname += this.Sabor()[ds].name;
                     }
                 }
                 
@@ -218,7 +223,7 @@ Risto.Adition.detalleComanda.prototype = {
      * @return Boolean
      */
     tieneSabores: function(){
-        if ( this.DetalleSabor().length > 0) {
+        if ( this.Sabor().length > 0) {
             return true;
         }
         return false;

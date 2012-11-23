@@ -8,22 +8,34 @@ class ComandasController extends AppController {
             parent::beforeFilter();
         }
     
-	function add($mesa_id = null){
-
-            //Configure::write('debug',0);
-            if (isset($this->request->data)):
-                $this->Comanda->create();
-                if ($this->Comanda->save($this->request->data)) {
-                    $j = 1;
-                    $this->autoRender = false;
-                    $this->Session->setFlash( __("Comanda Enviada") );
-                } else {
-                    $this->Session->setFlash(__('The Comanda could not be saved. Please, try again.'));
+        
+        function add(){
+		$ok = false;
+                debug($this->request->data);die;
+		$imprimir = $this->request->data['Comanda']['imprimir'] ? true : false;
+		unset($this->request->data['Comanda']['imprimir']);		
+		
+		$comanda = $this->request->data['Comanda'];
+		unset($this->request->data['Comanda']);		
+		
+		//cuento la cantidad de comanderas involucradas en este pedido para genrar la cantidad de comandas correspondientes
+		$v_comanderas = array();
+		foreach($this->request->data['DetalleComanda'] as &$find_data):
+                        $find_data['cant'] = $find_data['cant'] - $find_data['cant_eliminada'];
+                        $find_data['cant_eliminada'] = 0;
+			$v_comanderas[$find_data['comandera_id']] = $find_data['comandera_id'];
+		endforeach;
+		
+                    
+                if ($this->Comanda->saveAssociated($dataToSave)){
+                    
                 }
-            endif;
-            $this->set('mesa_id', $mesa_id);
-            
-            $this->set(compact('categorias', 'categorias_tree' ) );
+                
+
+		$this->set('imprimir', $imprimir);
+		$this->set('okval', $ok);
+                $this->Comanda->contain(array('DetalleComanda' => array('DetalleSabor.Sabor')));
+		$this->set('comanda', $this->Comanda->read());
 	}
 	
 	

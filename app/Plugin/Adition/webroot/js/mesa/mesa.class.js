@@ -7,7 +7,7 @@
  * tambien se le puede pasar un jsonData para ser mappeado con knockout
  */
 var Mesa = function(mozo, jsonData) {
-        this.id             = ko.observable();
+        this.id             = ko.observable( 0 );
         this.created        = ko.observable();
         this.total          = ko.observable( 0 );
         this.numero         = ko.observable( 0 );
@@ -15,7 +15,7 @@ var Mesa = function(mozo, jsonData) {
         this.descuento_id   = ko.observable( 0 );
         this.Descuento      = ko.observable( new Risto.Adition.descuento({porcentaje: undefined}) );
         this.mozo           = ko.observable( new Mozo() );
-        this.currentComanda = ko.observable( new Risto.Adition.comandaFabrica() );
+        this.currentComanda = ko.observable( new Risto.Adition.comandaFabrica( this ) );
         this.Comanda        = ko.observableArray( [] );
         this.mozo_id        = this.mozo().id;
         this.Cliente        = ko.observable( null );

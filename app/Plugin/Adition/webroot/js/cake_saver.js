@@ -49,13 +49,14 @@ var $cakeSaver = {
      *  @param fn funcion callback a ejecutar onSuccess
      */
     send: function( sendObj , fn){
-        var i = 0;
-        var obj = sendObj['obj'];
         
-        var url = sendObj['url'];
-        var errorHandler = sendObj.error || function(){};
-        var method = sendObj['method'] || this.method;       
-        var obAplanado = this.__processObj(obj, obj.model); // objeto aplanado
+        var i = 0,
+            obj = sendObj['obj'],
+            url = sendObj['url'],
+            errorHandler = sendObj.error || function(){},
+            method = sendObj['method'] || this.method,            
+            obAplanado = this.__processObj(obj, obj.model); // objeto aplanado
+            console.debug(obAplanado);
         this.__doSend(url, obAplanado, method, errorHandler, fn, obj);
        
     },
@@ -93,7 +94,6 @@ var $cakeSaver = {
             model = auxObj.model,
             arrayKey,
             siEsArrayKey;
-        
         for (var i in auxObj ) {
             if ( typeof auxObj[i] != 'object' && typeof auxObj[i] != 'function' && auxObj[i] != undefined && auxObj[i] != null) {
                 arrayKey = key || 'data['+model+']'; 
@@ -120,8 +120,13 @@ var $cakeSaver = {
     },
     
     __processObj: function(obj, model){
-        var auxObj = ko.toJS(obj);
+        console.info("antes de jhacer eso");
+        var papa = ko.observable( obj );
+        var auxObj = ko.toJSON(papa);        
+        console.debug(auxObj);
+        console.info("PASSOO");
         var aa = this.__aplanarObj(auxObj);
+        console.debug(aa);
         return $.param( aa );
     }
     

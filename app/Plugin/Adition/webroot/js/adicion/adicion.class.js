@@ -269,8 +269,8 @@ Risto.Adition.adicionar = {
      * @return Array
      */
     productosSeleccionados : function () {
-        if ( this.currentMesa() && this.currentMesa().currentComanda() && this.currentMesa().currentComanda().comanda && this.currentMesa().currentComanda().comanda.DetalleComanda()) {
-            return this.currentMesa().currentComanda().comanda.DetalleComanda();    
+        if ( this.currentMesa() && this.currentMesa().currentComanda() && this.currentMesa().currentComanda().productosSeleccionados ) {
+            return this.currentMesa().currentComanda().productosSeleccionados();    
         } else {
             return [];
         }

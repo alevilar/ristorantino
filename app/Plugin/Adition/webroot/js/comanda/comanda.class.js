@@ -14,7 +14,7 @@ Risto.Adition.comanda.prototype = {
     DetalleComanda  : [],
     created         : function( ) { },
     model           : 'Comanda',
-    imprimir        : function( ) {return true},
+    imprimir        : function( ) { return true },
     id              : ko.observable(),
     observacion     : function( ) { return '' },
     
@@ -90,6 +90,27 @@ Risto.Adition.comanda.prototype = {
         txt += textToAdd;
         this.observacion( txt );
         return txt;
+    },
+    
+    /**
+     * Agrega producto y si listado de sabores como un DetalleComanda
+     * 
+     * @param producto Producto json
+     * @param sabores Array Sabores Json list
+     * @return DetalleComanda
+     * 
+     */
+    agregarProducto: function(producto, sabores) {
+        var saboresList = sabores || [];
+        
+        var dc = {
+            Producto: producto,            
+            Sabor: saboresList
+        }
+        var dcObj = new Risto.Adition.detalleComanda(dc);
+        dcObj.seleccionar();
+        this.DetalleComanda().push( dcObj );
+        return dcObj;
     }
     
 }

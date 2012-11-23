@@ -42,9 +42,8 @@
                         'jquery/jquery-1.8.1',
                         'jquery/jquery.tmpl.min',
 
-                        'knockout-2.1.0.min',
-//                        'knockout-1.2.1.debug',
-                        'knockout.mapping-2.0.debug',
+                        'knockout-2.2.0.debug',
+                        'knockout.mapping',
 
                         '/adition/js/cake_saver',
                         '/adition/js/risto',

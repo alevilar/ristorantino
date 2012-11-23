@@ -1,4 +1,4 @@
-/*--------------------------------------------------------------------------------------------------- Adition EVENTS
+/*-----------------------------------------   Adition EVENTS
  *
  *
  * Adition Events
@@ -89,16 +89,13 @@ $(document).bind("mobileinit", function(){
         $('#comanda-add-menu').delegate(
                 '.producto',
                 'click', function() {
-                    var prod = JSON.parse( $(this).attr('data-producto-json') );
+                    var prod = JSON.parse( $(this).attr('data-producto-json') ),
+                        comanda = Risto.Adition.adicionar.currentMesa().currentComanda();
                     
                     if ( $(this).hasClass('producto-con-sabor') ) {
-                        // Evento para los sabores
+                        // Evento para los productos con sabores
 
-                        var $closeIcon = $('#page-sabores').find( 'a[data-icon="delete"]' );
-                        $closeIcon.bind('click',function(){
-                                    Risto.Adition.adicionar.currentMesa().currentComanda().limpiarSabores();
-                                    $closeIcon.unbind('click');
-                        });
+                        var productoElement = this;
 
                         function unloadSabores() {
                                $('.content', $('.ul-sabores', '#comanda-add-menu')).undelegate("a", "click");
@@ -107,42 +104,42 @@ $(document).bind("mobileinit", function(){
                                $('.ui-btn-active', $('.ul-sabores', '#comanda-add-menu')).removeClass('ui-btn-active');
                         }
                         
+                        // Seleccionar sabores añadiendo una clase si esta activo o no
                         $('.content', $('.ul-sabores', '#comanda-add-menu')).delegate("a", "click", function(){
                             $(this).toggleClass('ui-btn-active');
                         });
 
                         // Al salir de la ventana de sabores
-                        $('.ul-sabores', '#comanda-add-menu').delegate("a.cancel", 'click', function (){
-                             unloadSabores();
-                        });
+                        $('.ul-sabores', '#comanda-add-menu').delegate("a.cancel", 'click', unloadSabores);
                         
                         // Al guardar los sabores seleccionados
                         $('.ul-sabores', '#comanda-add-menu').delegate("a.save", 'click', function (){
-                             var $losActivos = $('.ui-btn-active', $('.ul-sabores', '#comanda-add-menu'));
-                             var sabores = [];
+                             var $losActivos = $('.ui-btn-active', $('.ul-sabores', '#comanda-add-menu')),
+                                sabores = [];
+                                
                             $losActivos.each(function(i, e){
                                 sabores.push(JSON.parse($(e).attr('data-sabor-json')));
                             });
                             prod.Sabor = sabores;
                             $losActivos.removeClass('ui-btn-active');
-                            crearDetalleComanda(prod);
                             
+                            var ProductoSeleccionado = comanda.agregarProducto(prod);
+                            if (!productoElement.isKoBinded) {
+                                $(productoElement).prepend(  '<span class="cantidad ui-li-count ui-btn-up-c ui-btn-corner-all" data-bind="text: cant"></span>' );
+                                ko.applyBindings(ProductoSeleccionado, productoElement);
+                                productoElement.isKoBinded = true;
+                            }
                             unloadSabores();
                         });
                     } else {
-                        crearDetalleComanda(prod, this );
-                    }
-                    
-                    function crearDetalleComanda( prod, elementProducto ) {
-                        var detalleComanda = Risto.Adition.adicionar.currentMesa().currentComanda().agregarProducto(prod);
-                        if (elementProducto && !elementProducto.isKoBinded) {
-                            $(elementProducto).prepend(  '<span class="cantidad ui-li-count ui-btn-up-c ui-btn-corner-all" data-bind="text: cant"></span>' );
-                            ko.applyBindings(detalleComanda, elementProducto);
-                            elementProducto.isKoBinded = true;
+                        var ProductoSeleccionado = comanda.agregarProducto(prod);
+                        if (!this.isKoBinded) {
+                            $(this).prepend(  '<span class="cantidad ui-li-count ui-btn-up-c ui-btn-corner-all" data-bind="text: cant"></span>' );
+                            ko.applyBindings(ProductoSeleccionado, this);
+                            this.isKoBinded = true;
                         }
-                        return detalleComanda;
+                        return ProductoSeleccionado;
                     }
-                        
                 }
             );           
         

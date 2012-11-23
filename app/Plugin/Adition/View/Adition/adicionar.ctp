@@ -411,8 +411,8 @@
         </h1>
             
         <div data-role="controlgroup" data-type="horizontal" class="header-right-positioned">
-            <a style="min-width: 160px" href="#" data-role="button" title="Haga click para desactivar la impresión de comanda" data-bind="click: function(){adn().currentMesa().currentComanda().comanda.imprimir( 0 )}, visible: adn().currentMesa().currentComanda().comanda.imprimir()"><?php echo $this->Html->image('print48.png', array('class'=> 'btn-comanda-icon'))?>Si Imprime</a>
-            <a style="min-width: 160px" href="#" data-role="button" title="Haga click para activar impresión de comanda" data-bind="click: function(){adn().currentMesa().currentComanda().comanda.imprimir( 1 )}, visible: !adn().currentMesa().currentComanda().comanda.imprimir()" ><?php echo $this->Html->image('dontprint48.png', array('class'=> 'btn-comanda-icon'))?>No Imprime</a>
+            <a style="min-width: 160px" href="#" data-role="button" title="Haga click para desactivar la impresión de comanda" data-bind="click: function(){adn().currentMesa().currentComanda().comandaSettings.imprimir( 0 )}, visible: adn().currentMesa().currentComanda().comandaSettings.imprimir()"><?php echo $this->Html->image('print48.png', array('class'=> 'btn-comanda-icon'))?>Si Imprime</a>
+            <a style="min-width: 160px" href="#" data-role="button" title="Haga click para activar impresión de comanda" data-bind="click: function(){adn().currentMesa().currentComanda().comandaSettings.imprimir( 1 )}, visible: !adn().currentMesa().currentComanda().comandaSettings.imprimir()" ><?php echo $this->Html->image('dontprint48.png', array('class'=> 'btn-comanda-icon'))?>No Imprime</a>
             <a style="min-width: 160px" href="#comanda-add-observacion" data-role="button" data-rel="popup" title="Agregar Observación"  onclick="if ( $('#comanda-add-observacion').is(':visible') ) { $('#comanda-add-observacion textarea').focusout();}; if ( $('#comanda-add-observacion').is(':hidden') ) { $('#comanda-add-observacion textarea').focus();}; $('#comanda-add-observacion').toggle('slow');"><?php echo $this->Html->image('pencil_48.png', array('class'=> 'btn-comanda-icon'))?>Observación</a>
             <a href="#mesa-view" data-role="button" id="comanda-add-guardar"  data-icon="check" data-theme="b">Enviar Comanda</a>
         </div>
@@ -431,7 +431,7 @@
         
         <div data-role="popup" id="comanda-add-observacion" class="ui-corner-bottom ui-overlay-shadow ui-content">
             <h4 style="color: #fff">Agregar observación general para la comanda</h4>
-            <textarea id="obscomandatext" style="width: 97%" data-bind="value: adn().currentMesa().currentComanda().comanda.observacion, valueUpdate: 'keyup'" name="obs" class="obstext ui-input-text ui-body-null ui-corner-all ui-shadow-inset ui-body-a"></textarea>
+            <textarea id="obscomandatext" style="width: 97%" data-bind="value: adn().currentMesa().currentComanda().comandaSettings.observacion, valueUpdate: 'keyup'" name="obs" class="obstext ui-input-text ui-body-null ui-corner-all ui-shadow-inset ui-body-a"></textarea>
             
             <div class="ui-grid-a">
                 <div class="ui-block-a"><a href="#" onclick="" id="mesa-comanda-add-obs-gen-cancel" data-role="button">Cancelar</a></div>
@@ -462,27 +462,6 @@
 </div>  
 
 
-
-
-
-<!--
-                        SABORES-ADD
-
--->
-<div data-role="page" id="page-sabores" data-theme="b" class="dialog-ancho dialog-arriba">
-    <div data-role="header">
-        <h1>Seleccionar sabores</h1>
-               
-	<a href="#" data-icon="check" data-theme="b" data-rel="back" data-bind="click: function(){adn().currentMesa().currentComanda().saveSabores()}">Guardar</a>        
-    </div>
-
-    <div data-role="content">                  
-           <div id="ul-sabores" 
-                data-bind="template: {name: 'listaSabores', foreach: adn().currentSabores()} ">
-           </div>
-    </div>
-            
-</div>  
 
 
 

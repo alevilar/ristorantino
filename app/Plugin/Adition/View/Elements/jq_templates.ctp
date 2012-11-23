@@ -102,18 +102,6 @@
 
 
  
- 
- <!-- Template: Comanda Add, Listado de sabores de categorias       -->
-<script id="listaSabores" type="text/x-jquery-tmpl">
-   <a href="#" data-theme="c" data-inline="true" data-role="button" class="ui-btn ui-btn-inline ui-btn-corner-all ui-shadow ui-btn-up-c">
-       <span class="ui-btn-inner ui-btn-corner-all">
-           <span class="ui-btn-text">
-               <span data-bind="text: name"></span>                         
-           </span>
-       </span>
-   </a>
-</script>
-
 
 <!-- listado de pagos seleccionados -->
 <script id="li-pagos-creados" type="text/x-jquery-tmpl">
