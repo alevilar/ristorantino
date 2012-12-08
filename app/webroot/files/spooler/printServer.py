@@ -11,14 +11,14 @@ socket://uri:port?waiteof=false
 
 (el puerto debe coincidir con alguno de la configuracion de puerto-archivo que esta mas abajo)
 
-""" 
+la carpeta, en este caso /tmp/fuente, es la que el spooler estara leyendo
+"""
 import os, socket, select, daemon, shutil
 from tempfile import NamedTemporaryFile
 
 #CONFIGURACION DE PUERTOS-ARCHIVOS
-opts = [
-	{"port":12000, "suffix":".txt", "prefix":"comanda_", "dir":"/tmp/comandas/"},
-	{"port":12001, "suffix":".txt", "prefix":"fiscal_", "dir":"/tmp/fiscal/"}
+opts = [	
+	{"port":12001, "suffix":".txt", "prefix":"fiscal_", "dir":"/tmp/fuente/"}
 ]
 sockets = {}
 

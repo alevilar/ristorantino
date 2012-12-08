@@ -1,6 +1,6 @@
 ** Como instalar el spooler como servicio **
 
-tenems 3 archivos ajecutables en juego:
+tenems 4 archivos ajecutables en juego:
 1) el spooler (ejecutable de hasar)
 	este lo baje dela pagina de hasar
 
@@ -9,9 +9,9 @@ tenems 3 archivos ajecutables en juego:
 
 3) hasar_spooler.sh (bash script)
 	es el script que ejecuta de forma infinita el spooler
-
-
-el 3 y el 2 los hice yo
+4) printServer.py (python)
+        es el que abre un puerto para que CUPS envie los comandos alli, entonces 
+        este script genera un archivo que luego va a leer el spooler
 
 
 
@@ -20,13 +20,16 @@ los pasos a sseguir son los siguientes:
 1) 
 copiar el spooler dentro de /users/bin/
 
+
 2)
-para que funcione lo que hay que hacer es copiar con permisos deejecucion 777 al spooler_srv dentro de la carpeta /etc/init.d/
+para que funcione lo que hay que hacer es copiar con permisos deejecucion 777 
+al spooler_srv y printServer.py dentro de la carpeta /etc/init.d/
 
 3)
 luego hay que linkearlo como servicio escribiendo este comando:
 (bash script)
 update-rc.d spooler_srv defaults
+update-rc.d printServer.py defaults
 
 4)
 si posteriormente lo quiero borrar tengo que ejecutar:

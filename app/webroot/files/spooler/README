@@ -8,6 +8,9 @@ el spooler_srv es un bash que hice yo para que se ejecute como un servicio mas. 
 a su vez lo puedo invocar (start restart y stop como cualquier servicio si voy a /etyc/init.d/spooler_srv [startstoprestart]
 
 
+para que CUPS imprima rapido via sockets hay que settear lo siguiente (waiteof=false):
+socket://uri:port?waiteof=false
+
 
 
 
@@ -16,11 +19,14 @@ Para instalar el servicio del spooler tengo que hacer lo siguiente:
 
 1) tener los archivitos en
 sudo chmod 755 /etc/init.d/spooler_srv
+sudo chmod 755 /etc/init.d/printServer
 sudo chmod 755 /usr/bin/spooler
 sudo chmod 755 /usr/bin/spooler_srv
 
+
 2) settearlo como servicio
 sudo /usr/sbin/update-rc.d -f spooler_srv defaults
+sudo /usr/sbin/update-rc.d -f printServer defaults
 
 
 
