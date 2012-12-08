@@ -1,4 +1,0 @@
-Hi ${name}!
-How are you?
-Here is the link you wanted:
-http://www.python.org
