@@ -1,0 +1,3 @@
+2012-12-08 11:21:08 Notice: Notice (8): Undefined variable: javascript in [APP/views/layouts/default.ctp, line 50]
+2012-12-08 11:36:11 Notice: Notice (8): Trying to get property of non-object in [CORE/cake/libs/model/datasources/dbo_source.php, line 644]
+2012-12-08 11:36:13 Notice: Notice (8): Trying to get property of non-object in [CORE/cake/libs/model/datasources/dbo_source.php, line 644]
