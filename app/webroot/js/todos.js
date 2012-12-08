@@ -203,8 +203,15 @@ var $cakeSaver = {
                     if (typeof fn == 'function'){
                         fn.call(data);
                     } else {
-                        if ( typeof obj.handleAjaxSuccess == 'function' ) {
-                            obj.handleAjaxSuccess(data, url, method);
+                        try { 
+                            if ( typeof obj.handleAjaxSuccess == 'function' ) {
+                                obj.handleAjaxSuccess(data, url, method);
+                            } else {
+                                throw "$cakeSaver:: EL objeto '"+obj.model+"' pasado para enviar vía ajax no tiene una función llamada 'handleAjaxSuccess'. La misma es indispensable para tratar la respuesta.";
+                            }
+                        }
+                        catch(er) {
+                            jQuery.error(er);
                         }
                     }
                 }
@@ -355,25 +362,7 @@ $(document).ready(function(){
     $mesasContainer = $('#mesas_container');
     $mesasDom = $mesasContainer.find('li');
     $listMozosContainer = $('#listado-mozos-para-mesas');
-});/*--------------------------------------------------------------------------------------------------- Risto.Adicion.descuento
- *
- *
- * Clase Descuento
- */
-
-Risto.Adition.descuento = function(jsonData){
-    this.descuento = ko.observable( 0 );
-    return this.initialize(jsonData);
-}
-
-
-Risto.Adition.descuento.prototype = {
-    initialize: function(jsonData){
-        return ko.mapping.fromJS(jsonData, {}, this);       
-    }
-}
-
-/*--------------------------------------------------------------------------------------------------- Risto.Adicion.mozo
+});/*--------------------------------------------------------------------------------------------------- Risto.Adicion.mozo
  *
  *
  * Clase Mozo, depende de Productos
@@ -513,120 +502,6 @@ Mozo.prototype = {
         return null;
     }
 };/**
- *
- *  Este objeto maneja las mesas recibidas mediante el llamado 
- *  al json mozos/mesas_abiertas.json
- *  
- *  Cada uno de los keys, son las claves recibidas en el json que viene de esas mesas recibidas
- *
- */
-Risto.Adition.handleMesasRecibidas = {
-         /**
-         * 
-         * Recibiendo un json con el listado de mozos, que a su vez 
-         * cada uno tiene el listado de mesas abiertas de c/u, actualiza 
-         * el listado de mesas de la adicion
-         * 
-         */
-        created: function ( data ) {
-            if (!data.mozos) return -1;
-
-            if ( this.mesas().length ) {
-                // si ya hay mesas entonces meto las mesas nuevas de forma indidual
-                var mozo;
-                
-                for ( var z in data.mozos ) {
-                    mozo = this.findMozoById(  data.mozos[z].id );
-                    for ( var m in data.mozos[z].mesas ) {
-                        // si no esta en el listado de mesas, la agrego
-                        if ( !this.findMesaById( data.mozos[z].mesas[m].id ) ) {
-                            new Mesa(mozo, data.mozos[z].mesas[m] );
-                        }
-                    }
-                }
-            } else {
-                // si no habia mesas, entonces debo hacer todo el proceso de creacion con el mapping
-                var mapOps = {
-                    'mozos': {
-                        create: function(ops) {
-                            return new Mozo(ops.data);
-                        },
-                        key: function(data) {
-                            return ko.utils.unwrapObservable(data.id);
-                        }
-                    }
-                }
-            
-                ko.mapping.fromJS( data, mapOps, Risto.Adition.adicionar );
-            }
-
-            Risto.Adition.EventHandler.adicionMesasActualizadas();
-        },
-        
-        
-        /**
-         * 
-         * Recibiendo un json con el listado de mozos, que a su vez 
-         * cada uno tiene el listado de mesas abiertas de c/u, actualiza 
-         * el listado de mesas de la adicion
-         * 
-         */
-        modified: function ( data ) {
-            if (!data.mozos) return -1;
-            var mesaEncontrada, 
-                mozo;
-            for(var z in data.mozos){
-                mozo = Risto.Adition.adicionar.findMozoById( data.mozos[z].id );
-                for( var m in data.mozos[z].mesas ) {
-                    mesaEncontrada = Risto.Adition.adicionar.findMesaById( data.mozos[z].mesas[m].id );
-                    if ( mesaEncontrada ) {
-                        mesaEncontrada.update( mozo, data.mozos[z].mesas[m] );
-                    }
-                }
-            }
-            Risto.Adition.EventHandler.adicionMesasActualizadas();
-            return 1;
-        },
-        
-        
-        /**
-         * 
-         * Recibiendo las mesas cobradas las manejo 
-         * 
-         */
-        cobradas: function ( data ) {
-            if (!data.mozos) return -1;
-            var mesaEncontrada, 
-                z; // contador index de mozos
-                       
-            for (z in data.mozos) {
-                for( var m in data.mozos[z].mesas ) {
-                    mesaEncontrada = Risto.Adition.adicionar.findMesaById( data.mozos[z].mesas[m].id );
-                    
-                    if ( mesaEncontrada ) {  
-//                        ko.mapping.fromJS( data.mozos[z].mesas[m], {}, mesaEncontrada );
-                        mesaEncontrada.mozo().sacarMesa( mesaEncontrada );
-                    }
-                }
-            }
-            // reinicializar vistas
-            $rae.adicionMesasActualizadas();
-            return 1;
-        },
-        
-        
-        /**
-         * 
-         * Manejo de las mesas eliminadas
-         * 
-         */
-        deleted: function(){
-            return Risto.Adition.handleMesasRecibidas.cobradas();
-        }
-        
-}
-    
-    /**
  * 
  * @scope Risto.Adition
  * 
@@ -776,19 +651,27 @@ $raeh = Risto.Adition.EventHandler = {
     },
 
     cambiarNumeroMesa: function() {
-        var numeroMesa = $(this).find('[name="numero"]').val(),
-            selfMesa = Risto.Adition.adicionar.currentMesa(),
-            numAnt = selfMesa.numero( ),
-            onSuccess = function(){},
-            onError = function(){
-                selfMesa.numero( numAnt );
-                alert("debido a un error en el servidor, el numero de mesa no fue modificado");
-            }        
-        selfMesa.numero( numeroMesa );
+        
+        var numeroMesa = $(this).find('[name="numero"]').val();
+        var numAnt = Risto.Adition.adicionar.currentMesa().numero( );
+        
+        Risto.Adition.adicionar.currentMesa().numero( numeroMesa );
         $('.ui-dialog').dialog('close');
 
-        selfMesa.saveField('numero', numeroMesa, onSuccess, onError);
-            
+        var sendOb = {
+            obj: {
+                id: Risto.Adition.adicionar.currentMesa().id(),
+                numero: numeroMesa,
+                model: 'Mesa',
+                handleAjaxSuccess: function(){}
+            },
+            url: Risto.Adition.adicionar.currentMesa().urlEdit(),
+            error: function(){
+                Risto.Adition.adicionar.currentMesa().numero( numAnt );
+                alert("debido a un error en el servidor, el numero de mesa no fue modificado");
+            }
+        }
+        $cakeSaver.send(sendOb);
         return false;
     },
     
@@ -898,8 +781,6 @@ var Mesa = function(mozo, jsonData) {
         this.total          = ko.observable( 0 );
         this.numero         = ko.observable( 0 );
         this.menu           = ko.observable( 0 );
-        this.descuento_id   = ko.observable( 0 );
-        this.Descuento      = ko.observable( new Risto.Adition.descuento({porcentaje: undefined}) );
         this.mozo           = ko.observable( new Mozo() );
         this.currentComanda = ko.observable( new Risto.Adition.comandaFabrica() );
         this.Comanda        = ko.observableArray( [] );
@@ -1046,14 +927,14 @@ Mesa.prototype = {
     
     
     /* listado de URLS de accion con la mesa */
-    urlGetData: function() {return urlDomain+'mesas/ticket_view/'+this.id()},
-    urlView: function() {return urlDomain+'mesas/view/'+this.id()},
-    urlEdit: function() {return urlDomain+'mesas/ajax_edit/'+this.id()},
-    urlDelete: function() {return urlDomain+'mesas/delete/'+this.id()},
-    urlComandaAdd: function() {return urlDomain+'comandas/add/'+this.id()},
-    urlReimprimirTicket: function() {return urlDomain+'mesas/imprimirTicket/'+this.id()},
-    urlCerrarMesa: function() {return urlDomain+'mesas/cerrarMesa/'+this.id()},
-    urlReabrir: function() {return urlDomain+'mesas/reabrir/'+this.id()},
+    urlGetData: function() { return urlDomain+'mesas/ticket_view/'+this.id() },
+    urlView: function() { return urlDomain+'mesas/view/'+this.id() },
+    urlEdit: function() { return urlDomain+'mesas/ajax_edit/'+this.id() },
+    urlDelete: function() { return urlDomain+'mesas/delete/'+this.id() },
+    urlComandaAdd: function() { return urlDomain+'comandas/add/'+this.id() },
+    urlReimprimirTicket: function() { return urlDomain+'mesas/imprimirTicket/'+this.id() },
+    urlCerrarMesa: function() { return urlDomain+'mesas/cerrarMesa/'+this.id() },
+    urlReabrir: function() { return urlDomain+'mesas/reabrir/'+this.id() },
     urlAddCliente: function( clienteId ){
         var url = urlDomain+'mesas/addClienteToMesa/'+this.id();
         if (clienteId){
@@ -1351,35 +1232,12 @@ Mesa.prototype = {
      *                      Ej: data['data[Mesa][cant_comensales]'] o data['data[Mesa][cliente_id]']
      *                      
      */
-    editar: function (data, callback) {
+    editar: function(data) {
         if (!data['data[Mesa][id]']) {
             data['data[Mesa][id]'] = this.id();
         }
-        $.post( window.urlDomain +'mesas/ajax_edit', data, callback);
+        $.post( window.urlDomain +'mesas/ajax_edit', data);
         return this;
-    },
-    
-    /**
-     *  Es para realizar ediciones rapida de un valor de la mesa en BBDD
-     *  dado un campo, se actualiza el valor que se haya pasado
-     *  @param field String campo de la BBDD a actualizar
-     *  @param value String es el valor a insertar en la BBDD
-     *
-     */
-    saveField: function ( field, value, cbkSuccess, cbkError) {
-        var data = {
-            id: this.id(),
-            model: 'Mesa',
-            handleAjaxSuccess : cbkSuccess
-        }
-        data[field] = value;
-        
-        var sendOb = {
-            obj: data,
-            url: this.urlEdit(),
-            error: cbkError
-        }
-        $cakeSaver.send(sendOb);
     },
     
     
@@ -1391,30 +1249,6 @@ Mesa.prototype = {
         if (data[this.model]) {
             ko.mapping.fromJS( data[this.model], {}, this );
         }
-    },
-    
-    setDescuento: function( objDescuento ) {
-        var descuento_id;
-        
-        if ( objDescuento ) {
-            descuento_id = objDescuento.id;
-        }
-
-        this.descuento_id( descuento_id );
-        this.Descuento( new Risto.Adition.descuento(objDescuento) );
-        this.saveField('descuento_id', descuento_id);
-    },
-    
-    
-    /**
-     *
-     * ELimina el descuento que tenia aplicado reseteando los valores 
-     * de descuento_id y el objeto Descuento de la mesa
-     */
-    eliminarDescuento: function() {
-        this.setDescuento({
-             id : 0
-        });
     },
     
     
@@ -1429,16 +1263,13 @@ Mesa.prototype = {
         if ( objCliente ) {
             clienteId = objCliente.id;
         }
-        
-        var toDoAfterSave = function(data) {
+        $.get( this.urlAddCliente( clienteId ), function(data) {
             if ( data.Cliente ){
                 ctx.Cliente( new Risto.Adition.cliente(data.Cliente) );
             } else{
                 ctx.Cliente(null);
             }
-        };
-        
-        this.saveField('cliente_id', clienteId, toDoAfterSave);
+        });
         
         return this;
     },
@@ -1486,9 +1317,6 @@ Mesa.prototype = {
          *
          *  Depende del cliente.
          *  es un atajo al porcentaje de descuento que tiene el cliente
-         *  si ademas de tener descuento el cliente, la mesa tiene otro descuento aplicado
-         *  los suma
-         *  @return Float
          */
        porcentajeDescuento : function(){
             var porcentaje = 0;
@@ -1497,46 +1325,8 @@ Mesa.prototype = {
                     porcentaje = this.Cliente().Descuento().porcentaje();
                 }
             }
-            
-            if (this.Descuento() && this.Descuento().hasOwnProperty('porcentaje')){
-                if ( typeof this.Descuento().porcentaje == 'function') {
-                    porcentaje += this.Descuento().porcentaje();
-                }
-            }
-            
             return parseFloat( porcentaje );
         },
-        
-        
-        
-        /**
-         *  Depende del cliente y el descuento de la mesa
-         *  Me dice si la mesa tiene o no un descuento aplicado ya sea
-         *  por el cliente o por el descuento de la mesa
-         *  @return Boolean
-         */
-       tieneDescuento : function(){
-            var tiene = false;
-            if (this.Cliente() && !this.Cliente().hasOwnProperty('length') &&  this.Cliente().Descuento()){
-                if ( typeof this.Cliente().Descuento().porcentaje == 'function') {
-                    if ( this.Cliente().Descuento().porcentaje() > 0 ) {
-                        tiene = true;
-                    }
-                }
-            }
-            
-            if (this.Descuento() && this.Descuento().hasOwnProperty('porcentaje')){
-                if ( typeof this.Descuento().porcentaje == 'function') {
-                    if ( this.Descuento().porcentaje() > 0 ) {
-                        tiene = true;
-                    }
-                }
-            }
-            
-            return tiene;
-        },
-        
-        
         
         /**
          *Devuelve el total aplicandole los descuentos
@@ -1560,32 +1350,25 @@ Mesa.prototype = {
         
         
         /**
-         *Devuelve el total mostrando un texto con el tipo de factura y, en caso de tenerlo, 
-         *muestra el detalle del descuento que se le aplica
-         *
+         *Devuelve el total mostrando un texto
          *@return String
          */
-        textoTotalCalculado : function () {
-            var totalNeto = this.totalCalculadoNeto(), 
+        textoTotalCalculado : function(){
+            var total = this.totalCalculadoNeto(), 
                 dto = 0, 
-                totalNetoText = '$'+totalNeto ;
+                totalText = '$'+total ;
             
-            if ( this.Cliente() && !this.Cliente().hasOwnProperty('length') ) {
-                if (  this.Cliente().esTipoFactura('A') ) {               
-                    totalNetoText = 'Factura "A" '+totalNetoText;
-                } else if ( this.Cliente().esTipoFactura('B')) {
-                    totalNetoText = 'Factura "B" '+totalNetoText;
-                } else if ( this.Cliente().esTipoFactura('R')) {
-                    totalNetoText = 'Remito '+totalNetoText;
-                }
+            
+            if (this.Cliente() && !this.Cliente().hasOwnProperty('length') && this.Cliente().tipofactura().toLowerCase() == 'a'){               
+                totalText = 'Factura "A" '+totalText;
             }
 
             if ( this.porcentajeDescuento() ) {
-                dto = Math.round( Math.floor( totalNeto * this.porcentajeDescuento()  / 100 ) *100 ) /100;
-                totalNetoText = totalNetoText+' - $'+dto+' (Dto '+this.porcentajeDescuento()+'%) = $'+ this.totalCalculado();
+                dto = Math.round( Math.floor( total * this.porcentajeDescuento()  / 100 ) *100 ) /100;
+                totalText = totalText+' - [Dto '+this.porcentajeDescuento()+'%] $'+dto+' = $'+ this.totalCalculado();
             }
             
-            return totalNetoText;
+            return totalText;
         },
         
         
@@ -1612,15 +1395,10 @@ Mesa.prototype = {
         },
         
         
-        /**
-         * EN caso de que la mesa tenga un descuento apicado me devuelve el valor 
-         * en formato texto
-         * @return String
-         */
         clienteDescuentoText: function(){
             var texto = '';
-            if ( this.tieneDescuento() ) {
-                texto = this.porcentajeDescuento()+"%";
+            if ( this.Cliente() &&  this.Cliente().tieneDescuento && this.Cliente().tieneDescuento() != undefined ) {
+                texto = this.Cliente().getDescuentoText();
             }
             return texto;
         },
@@ -2019,7 +1797,119 @@ Risto.Adition.comandaFabrica.prototype = {
     
 }
 
-   
+/**
+ *
+ *  Este objeto maneja las mesas recibidas con el json mozos/mesas_abiertas.json
+ *  
+ *  Cada uno de los keys, son las claves recibidas en el json que viene de esas mesas recibidas
+ *
+ */
+Risto.Adition.handleMesasRecibidas = {
+         /**
+         * 
+         * Recibiendo un json con el listado de mozos, que a su vez 
+         * cada uno tiene el listado de mesas abiertas de c/u, actualiza 
+         * el listado de mesas de la adicion
+         * 
+         */
+        created: function ( data ) {
+            if (!data.mozos) return -1;
+
+            if ( this.mesas().length ) {
+                // si ya hay mesas entonces meto las mesas nuevas de forma indidual
+                var mozo;
+                
+                for ( var z in data.mozos ) {
+                    mozo = this.findMozoById(  data.mozos[z].id );
+                    for ( var m in data.mozos[z].mesas ) {
+                        // si no esta en el listado de mesas, la agrego
+                        if ( !this.findMesaById( data.mozos[z].mesas[m].id ) ) {
+                            new Mesa(mozo, data.mozos[z].mesas[m] );
+                        }
+                    }
+                }
+            } else {
+                // si no habia mesas, entonces debo hacer todo el proceso de creacion con el mapping
+                var mapOps = {
+                    'mozos': {
+                        create: function(ops) {
+                            return new Mozo(ops.data);
+                        },
+                        key: function(data) {
+                            return ko.utils.unwrapObservable(data.id);
+                        }
+                    }
+                }
+            
+                ko.mapping.fromJS( data, mapOps, Risto.Adition.adicionar );
+            }
+
+            Risto.Adition.EventHandler.adicionMesasActualizadas();
+        },
+        
+        
+        /**
+         * 
+         * Recibiendo un json con el listado de mozos, que a su vez 
+         * cada uno tiene el listado de mesas abiertas de c/u, actualiza 
+         * el listado de mesas de la adicion
+         * 
+         */
+        modified: function ( data ) {
+            if (!data.mozos) return -1;
+            var mesaEncontrada, 
+                mozo;
+            for(var z in data.mozos){
+                mozo = Risto.Adition.adicionar.findMozoById( data.mozos[z].id );
+                for( var m in data.mozos[z].mesas ) {
+                    mesaEncontrada = Risto.Adition.adicionar.findMesaById( data.mozos[z].mesas[m].id );
+                    if ( mesaEncontrada ) {
+                        mesaEncontrada.update( mozo, data.mozos[z].mesas[m] );
+                    }
+                }
+            }
+            Risto.Adition.EventHandler.adicionMesasActualizadas();
+            return 1;
+        },
+        
+        
+        /**
+         * 
+         * Recibiendo las mesas cobradas las manejo 
+         * 
+         */
+        cobradas: function ( data ) {
+            if (!data.mozos) return -1;
+            var mesaEncontrada, 
+                z; // contador index de mozos
+                       
+            for (z in data.mozos) {
+                for( var m in data.mozos[z].mesas ) {
+                    mesaEncontrada = Risto.Adition.adicionar.findMesaById( data.mozos[z].mesas[m].id );
+                    
+                    if ( mesaEncontrada ) {  
+//                        ko.mapping.fromJS( data.mozos[z].mesas[m], {}, mesaEncontrada );
+                        mesaEncontrada.mozo().sacarMesa( mesaEncontrada );
+                    }
+                }
+            }
+            // reinicializar vistas
+            $rae.adicionMesasActualizadas();
+            return 1;
+        },
+        
+        
+        /**
+         * 
+         * Manejo de las mesas eliminadas
+         * 
+         */
+        deleted: Risto.Adition.handleMesasRecibidas
+        
+    },
+    
+    
+    
 
 /*-------------------------------------------------------- Risto.Adicion.adicion
  *
@@ -2081,7 +1971,7 @@ Risto.Adition.adicionar = {
         if ( Worker ) {  
             
             // Crea el Web Worker
-            worker = new Worker(urlDomain + "adition/js/adicion/model.js");
+            worker = new Worker(urlDomain + "adition/js/adicion.model.js");
                 
             worker.onmessage = function (evt) {
                 // si tiene mesas las proceso
@@ -2573,10 +2463,6 @@ Risto.Adition.cliente.prototype = {
     porcentaje: ko.observable( undefined ),
     
     
-    /**
-     * @return Boolean
-     * Devuelve true o false dependiendo si el cliente tiene o no un descuento aplicado
-     */
     tieneDescuento: function() {
         var porcentaje = undefined;
         if (this.descuento_id() && this.Descuento() && this.Descuento().porcentaje && this.Descuento().porcentaje()) {
@@ -2586,11 +2472,6 @@ Risto.Adition.cliente.prototype = {
     },
     
     
-    /**
-     * @return String
-     * Devuelve el porcentaje que tiene el cliente con el "%" Concatenado.
-     * Ej: "10%"
-     */
     getDescuentoText : function(){
         var porcentaje = 0;
         if (this.Descuento() && this.Descuento().porcentaje()) {
@@ -2605,20 +2486,6 @@ Risto.Adition.cliente.prototype = {
             tipo = this.tipofactura();
         }
         return tipo;
-    },
-    
-    /**
-     * @param Char val por ejemplo puede ser "A" o "B", tambien se pueden ingresar en minusculas y da igual
-     * 
-     * Es para determinar si el tipo de factura de este cliente es la consultada
-     * 
-     */
-    esTipoFactura: function( val ){        
-        var ret = false
-        if ( this.tipofactura().toLowerCase() == val.toLowerCase() ) {
-            ret = true;
-        }
-        return ret;
     },
     
     initialize: function( jsonMap ){
@@ -2640,7 +2507,24 @@ Risto.Adition.cliente.prototype = {
         ko.mapping.fromJS(jsonMap, {}, this);
         return this;
     }
-}/*--------------------------------------------------------------------------------------------------- Risto.Adicion.pago
+}/*--------------------------------------------------------------------------------------------------- Risto.Adicion.descuento
+ *
+ *
+ * Clase Descuento
+ */
+
+Risto.Adition.descuento = function(jsonData){
+    return this.initialize(jsonData);
+}
+
+
+Risto.Adition.descuento.prototype = {
+    initialize: function(jsonData){
+        return ko.mapping.fromJS(jsonData, {}, this);       
+    }
+}
+
+/*--------------------------------------------------------------------------------------------------- Risto.Adicion.pago
  *
  *
  * Clase Pago
@@ -3108,6 +2992,8 @@ $(document).bind("mobileinit", function(){
                 '.ui-options-btn',
                 'mouseover'
         ); 
+            
+            
 
         $("#mesa-comanda-add-obs-gen-cancel").unbind('click');
         $("#mesa-comanda-add-obs-gen-aceptar").unbind('click');
@@ -3128,30 +3014,24 @@ $(document).bind("mobileinit", function(){
      *
      *
      */
-    (function(){
-        var $formulario = $('#form-cambiar-numero'),
-            $paginaJQM = $('#mesa-cambiar-numero');
-        
-        // enrquiqueecr con JQM el listado ed comandas de la mesa en msa-view
-        $paginaJQM.live('pageshow',function(event, ui){ 
 
-            $('input:first', $formulario).focus().val('');
-            // Form SUBMITS
-            $formulario.bind( 'submit', function(){
-                console.debug("mirando");
-//                $raeh.trigger('cambiarNumeroMesa', null, this);
-                return false;
-            });
+    // enrquiqueecr con JQM el listado ed comandas de la mesa en msa-view
+    $('#mesa-cambiar-numero').live('pageshow',function(event, ui){ 
+
+        $('input:first', '#form-cambiar-numero').focus().val('');
+        // Form SUBMITS
+        $('#form-cambiar-numero').bind( 'submit', function(){
+            $raeh.trigger('cambiarNumeroMesa', null, this);
+            return false;
         });
+    });
 
-        // enrquiqueecr con JQM el listado ed comandas de la mesa en msa-view
-        $paginaJQM.live('pagebeforehide',function(event, ui){ 
-            // Form SUBMITS
-             $formulario.unbind( 'submit');
-        });
+    // enrquiqueecr con JQM el listado ed comandas de la mesa en msa-view
+    $('#mesa-cambiar-numero').live('pagebeforehide',function(event, ui){ 
+        // Form SUBMITS
+         $('#form-cambiar-numero').unbind( 'submit');
+    });
 
-    })();
-    
 
     /**
      *
@@ -3446,26 +3326,6 @@ $(document).bind("mobileinit", function(){
         $('#mesa-eliminar-cliente').unbind('click');
         $('input', '#contenedor-listado-clientes-factura-a').unbind('keypress');
     });
-    
-    
-    /**
-     *
-     *          DESCUENTOS LISTADO
-     *
-     */
-    $('#descuentos-jqm_descuentos').live('pageshow',function(event, ui){
-
-        $('#mesa-eliminar-descuento').bind('click',function(){
-            Risto.Adition.adicionar.currentMesa().eliminarDescuento( );
-            return true;
-        });
-
-    });
-
-    $('#mesa-eliminar-descuento').live('pagebeforehide',function(event, ui){
-        $('#mesa-eliminar-cliente').unbind('click');
-    });
-    
 
 
 

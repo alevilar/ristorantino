@@ -195,22 +195,12 @@ class ClientesController extends AppController {
                      break;
                  case 'd':
                  case 'descuento':
-                     if ( $this->Session->read('Auth.User.role') == 'mozo' ) {
-                         $clientes = $this->Cliente->todosLosDeDescuentos('all', $filtrarHastaTopeMaxDeDescuento = true);
-                     } else {
-                         $clientes = $this->Cliente->todosLosDeDescuentos('all', false);
-                     }
+                     $clientes = $this->Cliente->todosLosDeDescuentos();
                      $tipo = 'd';
                      break;
                  default:
                      $tipo = 't';
-                     
-                     if ( $this->Session->read('Auth.User.role') == 'mozo' ) {
-                         $clientes = $this->Cliente->todos('all', $filtrarHastaTopeMaxDeDescuento = true);
-                     } else {
-                         $clientes = $this->Cliente->todos('all', false);
-                     }
-                     
+                         $clientes = $this->Cliente->todos();
                      break;
              }
             $this->layout = 'jqm' ;

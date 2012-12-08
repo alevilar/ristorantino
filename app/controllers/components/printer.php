@@ -82,6 +82,9 @@ class PrinterComponent extends Object {
                 return -1;
             }
 
+
+
+
             $this->generadorComando = new ComandosImpresora();
         }
 
@@ -549,8 +552,9 @@ class PrinterComponent extends Object {
 			}
 				
 			//si paso todo bien la creacion del archivo la mando a imprimir
-			$comandera_name = $this->comanderas[$comandera_id]['Comandera']['name'];                        
-                        return $this->cupsPrint($comandera_name, $textoAImprimir);
+			$comandera_name = $this->comanderas[$comandera_id]['Comandera']['name'];
+                        $serverImpresoraFiscal = Configure::read('ImpresoraFiscal.server');
+                        return $this->cupsPrint($serverImpresoraFiscal, $comandera_name, $textoAImprimir);
 		}
 		else return false;
 	}
@@ -612,7 +616,8 @@ class PrinterComponent extends Object {
 	 */
 	function printHasarFiscal()
 	{
-		//primero valida los comandos... si estan todos bien, entonces sigue adelante	
+		//primero valida los comandos... si estan todos bien, entonces sigue adelante
+		$serverImpresoraFiscal = Configure::read('ImpresoraFiscal.server');
 		$nombreImpresoraFiscal = Configure::read('ImpresoraFiscal.nombre');
 		if(!$this->__validarComandos()){
 			return false;
@@ -625,8 +630,7 @@ class PrinterComponent extends Object {
                 foreach ($this->vcomandos as $c){
                     $texto .= $c . $CR . $LF;
                 }
-                
-                $this->cupsPrint( $nombreImpresoraFiscal, $texto );
+                $this->cupsPrint( $serverImpresoraFiscal, $nombreImpresoraFiscal, $texto );
 
 		return false;
 	}
@@ -635,18 +639,19 @@ class PrinterComponent extends Object {
         /**
          *  Comando cups de impresion
          * 
+         * @param type $serverImpresoraFiscal es el nombre del host o IP
          * @param type $nombreImpresoraFiscal nombre CUPS de la impresora 
          * @param type $texto es el texto a imprimir
          * @return type boolean true si salio todo bien false caso contrario
          */
-        function cupsPrint( $nombreImpresoraFiscal, $texto ) {
-            $serverImpresoraFiscal = Configure::read('ImpresoraFiscal.server');
+        function cupsPrint( $serverImpresoraFiscal, $nombreImpresoraFiscal, $texto ) {
             
             // cambiar el encoding del texto si esta configurado
             $encoding = Configure::read('ImpresoraFiscal.encoding');
             if (!empty( $encoding )) {
                 $texto = mb_convert_encoding($texto, $encoding, mb_detect_encoding($texto));
             }
+                    
                     
             $descriptorspec = array(
                0 => array("pipe", "r"), //esto lo uso para mandarle comandos

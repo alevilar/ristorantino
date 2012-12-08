@@ -108,7 +108,6 @@ class Mozo extends AppModel {
             $optionsEliminada = $optionsCobrada = $optionsUpdated = $optionsCreated = array(
                 'contain' => array(
                     'Mesa' => array(
-                        'Descuento',
                         'Cliente' => 'Descuento',
                         'Comanda' => array(
                             'DetalleComanda' => array(

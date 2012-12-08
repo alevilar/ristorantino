@@ -22,6 +22,12 @@ a[href="/works/ristorantino/pquery/queries/list_view/5"]{
 #mesa-action-cobrar,
 #mesa-action-reimprimir,
 #mesa-action-borrar,
+#mesa-action-edit,
 #mesa-action-detalle-comanda-sacar-item{
+    display: none;
+}
+
+
+#comanda-detalle-collapsible .btn-comanda-icon{
     display: none;
 }

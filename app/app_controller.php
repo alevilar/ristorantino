@@ -57,12 +57,13 @@ class AppController extends Controller {
             $this->Auth->loginError ='Usuario o Contraseña Incorrectos';
             $this->Auth->authError = 'Usted no tiene permisos para acceder a esta página.';
 
+//$this->Auth->allow('*');
             $this->Auth->authorize = 'actions';
             //$this->Auth->loginAction = array('controller' => 'users', 'action' => 'login');
             $this->Auth->logoutRedirect='/users/login';
             //$this->Auth->autoRedirect = false;
 
-            $this->Auth->allow(array('*'));return true;
+            //$this->Auth->allow(array('*'));return true;
 
             // si es Ajax y no tengo permisos que me tire un error HTTP
             // asi lo puedo capturar desde jQuery

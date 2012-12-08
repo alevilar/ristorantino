@@ -1,0 +1,35 @@
+#set -x
+#!/bin/bash
+
+export LD_PRELOAD=/usr/lib/libv4l/v4l1compat.so;
+
+RETVAL=0
+case "$1" in
+    start)
+	webcam-server &
+	RETVAL=$?
+    ;;
+    stop)
+      PROC_ID=`ps -fea | grep webcamserver | awk '{print $2}'`
+      kill -9 $PROC_ID
+
+      PROC_ID=`ps -fea | grep webcam-server | awk '{print $2}'`
+      kill -9 $PROC_ID
+      echo "Se cerro el web server"
+      RETVAL=$?
+    ;;
+    restart)
+      #stop
+      #start
+	  cd /etc/init.d
+	  ./webcamserver stop
+	  cd /etc/init.d
+	  ./webcamserver start
+	  RETVAL=$?
+    ;;
+    *)
+      echo "Servidor de la webcam: webcamserver {startstoprestart}"
+      exit 1
+
+esac
+exit $RETVAL

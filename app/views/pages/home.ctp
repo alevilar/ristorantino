@@ -11,18 +11,18 @@
         <li>   
         <?php echo $html->link('Admin','/pages/administracion',array('id'=>'bton-admin'));?>
         </li>  
-<!--    
+    
         <li>   
         <?php echo $html->link('Inventario','/inventory',array('id'=>'bton-inven'));?>
         </li>  
-    <li>  
-        <?php echo $html->link('Contabilidad','/account',array('id'=>'bton-contabilidad'));?>
-        </li>    
-        -->
+    
+        
         <li>  
         <?php echo $html->link('Estadisticas','/stats/mesas_total',array('id'=>'bton-estadisticas'));?>
         </li>     
     
-           
+        <li>  
+        <?php echo $html->link('Contabilidad','/account',array('id'=>'bton-contabilidad'));?>
+        </li>       
         
 </ul>

@@ -31,7 +31,7 @@ class Cliente extends AppModel {
 								'order' => ''
 			),
 			'IvaResponsabilidad',
-			'TipoDocumento',
+			'TipoDocumento'
 	);
 
 	var $hasMany = array(
@@ -229,23 +229,14 @@ class Cliente extends AppModel {
         
         
         
-        function todos($type = 'all', $limitarDescuento = false){
-                $conds = array();
-                if ($limitarDescuento) {
-                    $descMax = Configure::read('Mozo.descuento_maximo');
-                    if ( isset($descMax) ) {
-                        $conds['Descuento.porcentaje <='] = $descMax;
-                    }
-                }
+        function todos($type = 'all'){
                 $clientes = $this->find($type, array(
                     'order'      => 'Cliente.nombre',
 //                    'limit' => 10,
-                    'conditions' => $conds,
                     'contain' => array(
                         'Descuento'
                     ),
                 ));
-                
                 return $clientes;
         }
         

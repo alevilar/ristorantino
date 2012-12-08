@@ -164,7 +164,7 @@ setlocale(LC_ALL, 'es_AR.utf8');
 /**
  * A random string used in security hashing methods.
  */
-	Configure::write('Security.salt', '87b5177cffaf201e43e71f905e8be002afdaeee7');
+	Configure::write('Security.salt', 'asju72AJS82sdp2oIKhAS2029Jgbas223H');
 /**
  * Compress CSS output by removing comments, whitespace, repeating tags, etc.
  * This requires a/var/cache directory to be writable by the web server for caching.

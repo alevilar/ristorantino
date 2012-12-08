@@ -1,0 +1,66 @@
+#set -x
+#! /bin/sh
+### BEGIN INIT INFO
+# Provides:          skeleton
+# Required-Start:    $all
+# Required-Stop:     $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Spooler de impresion fiscal
+# Description:       Este archivo inicia el servicio de impresión fiscal de Hasar
+### END INIT INFO
+
+SCRIPT=hasar_spooler.sh
+DIA=`date +%d-%m-%y`
+SCRIPTKEEPALIVE=/var/www/ristorantino/app/vendors/spooler/hasar_spooler_keep_alive.sh
+
+CARPETA_FUENTE=/tmp/fuente
+CARPETA_DESTINO=/tmp/dest
+
+
+RETVAL=0
+case "$1" in
+    start)
+	#si no se paso el nombre del dispositivo como 2do parametro
+	if [ -z "$2" ];	then
+		$SCRIPT &
+	else
+		$SCRIPT $2 &
+	fi
+	#sh $SCRIPTKEEPALIVE &
+	echo "se iniciaron los servicios del spooler correctamente";
+	RETVAL=$?
+    ;;
+    startonlyspooler)
+	$SCRIPT &
+	echo "se inicio solo el spooler correctamente";
+	RETVAL=$?
+    ;;
+    stop)
+      PROC_ID=`ps -fea | grep hasar_spooler | grep -v grep | awk '{print $2}'`
+      kill -9 $PROC_ID
+	  echo $PROC_ID
+      echo "Se cerro el hasar_spooler.sh - Proceso $PROC_ID"
+
+
+	  PROC_ID3=`ps -fea | grep spooler | grep -v grep | awk '{print $2}'`
+      kill -9 $PROC_ID3
+	  echo $PROC_ID3
+      echo "Se cerro el executable spooler - Proceso $PROC_ID3"
+      RETVAL=$?
+    ;;
+    restart)
+      #stop
+      #start
+	  cd /etc/init.d
+	  ./spooler_srv stop
+	  cd /etc/init.d
+	  ./spooler_srv start
+	  RETVAL=$?
+    ;;
+    *)
+      echo "Este es el servidor del spooler de Hasar: spoler_srv {start-startonlyspooler-stop-restart}"
+      exit 1
+  
+esac      
+exit $RETVAL
