@@ -38,7 +38,7 @@ def daemon_main():
 			conn.close()
 			f.close()
 
-			shutil.copy(name, sockets[s]["dir"])
+			shutil.move(name, sockets[s]["dir"])
 
 def main():
 	for opt in opts:

@@ -1,5 +1,11 @@
 ** Como instalar el spooler como servicio **
 
+ deberas correr install.sh como root
+
+
+
+Excplicacion de lo que hace el install:
+
 tenems 4 archivos ajecutables en juego:
 1) el spooler (ejecutable de hasar)
 	este lo baje dela pagina de hasar

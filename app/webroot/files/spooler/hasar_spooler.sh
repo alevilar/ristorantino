@@ -29,21 +29,20 @@ encontrar_ultimo_dispositivo_creado(){
 
 
 arrancar_spooler(){
-	if [ -d "$CARPETA_FUENTE" ]; then
-		echo "leyendo $DEVICE_NAME"
-		if [ -c /dev/$DEVICE_NAME ]; then
-			cd $CARPETA_FUENTE	
-			echo "arranco el spooler en $DEVICE_NAME"
-			spooler -p$DEVICE_NAME -s $CARPETA_FUENTE -a $CARPETA_DESTINO -l -d $LOG_FILE -b $CARPETA_TEMP
-			echo "se corto el spooler"
-		else
-			echo "el dispositivo $DEVICE_NAME no existe"
-			exit
-		fi
-	else
-		mkdir $CARPETA_FUENTE
-		chmod 777 $CARPETA_FUENTE
-	fi
+        mkdir -p --mode=777 $CARPETA_FUENTE
+        mkdir -p --mode=777 $CARPETA_DESTINO
+        mkdir -p --mode=777 $CARPETA_TEMP
+        echo "Se crearon las carpetas $CARPETA_FUENTE, $CARPETA_DESTINO y $CARPETA_TEMP"
+	
+        if [ -c /dev/$DEVICE_NAME ]; then
+                echo "leyendo $DEVICE_NAME"
+                cd $CARPETA_FUENTE	                
+                spooler -p$DEVICE_NAME -s $CARPETA_FUENTE -a $CARPETA_DESTINO -l -d $LOG_FILE -b $CARPETA_TEMP
+                echo "se corto el spooler"
+        else
+                echo "el dispositivo $DEVICE_NAME no existe o no esta encendido"
+                exit
+        fi
 }
 
 

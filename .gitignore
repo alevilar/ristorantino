@@ -5,6 +5,8 @@ app/config/database.php
 *~
 /*~
 
+#Ignore big files folder
+/app/webroot/bigfiles/*
 
 # Test URI
 # Ignore netbeans folder
