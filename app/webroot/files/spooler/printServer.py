@@ -1,4 +1,13 @@
 #!/usr/bin/env python 
+### BEGIN INIT INFO
+# Provides:          Ristorantino
+# Required-Start:    $all
+# Required-Stop:     $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Spooler de impresion fiscal intercomunicados con CUPS y generacion de archivos
+# Description:       Este archivo inicia el puerto donde se recibira la informacion para generar el archivo
+### END INIT INFO
 """ 
 Servidor de impresion a archivos
 Necesita tener instalado el paquete python-daemon

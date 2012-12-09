@@ -13,12 +13,17 @@ if [ -z "$MY_PATH" ] ; then
   exit 1  # fail
 fi
 
+chmod 555 spooler
+chmod 555 hasar_spooler.sh
+chmod 555 spooler_srv
+chmod 555 printServer.py
+
 cp spooler /usr/bin
 cp hasar_spooler.sh /usr/bin
 cp spooler_srv /etc/init.d
 cp printServer.py /etc/init.d
-update-rc spooler_srv defaults
-update-rc printServer.py defaults
+update-rc.d spooler_srv defaults
+update-rc.d printServer.py defaults
 
 
 echo "LISTO! deberás reiniciar para que funcione"

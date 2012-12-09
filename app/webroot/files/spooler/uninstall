@@ -1,0 +1,9 @@
+rm /usr/bin/spooler
+rm /usr/bin/hasar_spooler.sh
+rm /etc/init.d/spooler_srv
+rm /etc/init.d/printServer.py
+update-rc.d -f spooler_srv remove
+update-rc.d -f printServer.py remove
+
+
+echo "LISTO, todo removido!"
