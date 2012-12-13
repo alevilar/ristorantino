@@ -1,0 +1,570 @@
+body{
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.ui-dialog .ui-header{
+    margin: 2% auto 15px auto;
+}
+
+ul.listado-adicion{
+    list-style: none;
+    padding: 0px;
+    -webkit-margin-before: 0 !important;
+    margin: 0 !important;
+}
+
+
+ul.listado-adicion li {
+    height: auto;
+    margin: 0.5%;
+}
+ul.listado-adicion li a {
+    margin: 0;
+    width: 100%;
+}
+.mesa-span {
+    padding-left: 25px !important;
+    padding-right: 33px !important;
+    padding-top: 0.9em !important;
+    padding-bottom: 0.9em !important;
+    text-overflow: clip !important;
+}
+
+.mesa-icon {
+    left: 7% !important;
+    padding: 0 !important;
+}
+
+.mesa-created{
+    color: #ffffff;
+    font-size: small;
+}
+
+.listado-adicion li{
+    display: inline-block;
+    width: 10%;
+}
+
+
+
+ul.listado-adicion .mesa-cobrada A{
+    border: 1px solid 		#721E1E;
+    background: 			#B05D5D;
+    color: 					#fff;
+    font-weight: bold;
+    text-shadow: none !important;
+    
+}
+
+ul.listado-adicion .mesa-cerrada A{
+    border: 1px solid 		#996F45;
+    background: 			#B0875D;
+    color: 					#fff;
+    font-weight: bold;
+    text-shadow: none !important;
+   
+}
+
+ul.listado-adicion .mesa-cerrada A:focus, ul.listado-adicion .mesa-cerrada A:active {
+    background:#FF9C56;
+    text-shadow: none !important;
+}
+
+ul.listado-adicion .mesa-abierta A:focus, ul.listado-adicion .mesa-abierta A:active{
+    color:#fff !important;
+    background:#4596ce;
+    font-weight:bold;
+    cursor:pointer;
+    text-shadow: none !important;
+    text-decoration:none;
+    outline:0
+}
+
+.mesa-numero, .mozo-numero{
+    font-size: 138%;
+}
+
+#ul-mesas-cajero  .mesa-numero{
+    padding: 10px 0px 7px 0px;
+    width: 39px;
+    text-align: right;
+    position: absolute;
+    right: 20px;
+    top: -10px;
+    text-shadow: none !important;
+    font-weight:bold;
+}
+
+
+.mozos li a {
+    color: #1C6F9A;
+}
+
+.mesa-mozo:focus, .mozo-cant-mesas:focus {
+    color: #666666 !important;
+}
+
+ul.listado-adicion .mesa-mozo,ul.listado-adicion .mozo-cant-mesas {
+    padding: 10px 0px 7px 0px;
+    width: 15px;
+    text-align: center;
+    font-size: small;
+    position: absolute;
+    right: 3px;
+    top: -3px;
+    text-shadow: none !important;
+    font-weight:bold;
+    background-image: url(../../css/jquery-mobile/images/mozomonio.png);
+    background-repeat: no-repeat;
+}
+
+.mesa-tipofactura{
+    padding: 10px 0px 7px 0px;
+    width: 15px;
+    text-align: center;
+    font-size: small;
+    position: absolute;
+    left: 3px;
+    top: -10px;
+    text-shadow: none !important;
+    font-weight:bold;
+}
+
+.mesa-descuento{
+    padding: 10px 0px 7px 0px;
+    width: 15px;
+    text-align: center;
+    font-size: small;
+    position: absolute;
+    left: 28px;
+    top: -10px;
+    text-shadow: none !important;
+    font-weight:bold;
+}
+
+.mesa {
+    text-decoration: none;
+}
+
+.titulo-comanda {
+    color: rgba(0, 0, 0, 0.4);
+    margin: 0;
+}
+
+.id-comanda {
+    color: rgba(0, 0, 0, 0.4);
+}
+.hora-comanda {
+    color: #666666;
+}
+
+.ui-listview li div div a img {
+    top: 12%;
+    left: 5%;
+}
+
+.content_mesas, .content_mozos {
+    background: none !important;
+}
+
+#listado-mozos, #listado-mesas  {
+     background:#BBBBBB;
+}
+
+.abrir-mesa {
+    margin: 0.5%;
+    font-size: 96%;
+    width: 10%;
+    float: left;
+    height: 72px;
+}
+.abrir-mesa span {
+    overflow: visible !important;   
+}
+
+
+.mesa-total {
+    color: #FFF1A8;
+    font-size: 152%;
+}
+.hora-abrio {
+    position: absolute;
+    right: 20px;
+}
+
+.sep {
+    color: #666666;
+    font-weight: normal;
+    font-size: 90%;
+}
+
+.comanda-listado-productos-string {
+    font-size: 85%;
+    color: #666666;
+    font-weight: normal;
+}
+
+.comanda-items li{
+    padding: .3em 10px!important;
+    border-left-color: #B3B3B3;
+    border-left-width: 1px;
+    border-left-style: solid;
+    border-right-color: #B3B3B3;
+    border-right-width: 1px;
+    border-right-style: solid;
+
+}
+
+.mesa-actions{
+    width: 29%; 
+    float: left;
+}
+
+.mesa-actions UL{
+    width: 100%; 
+}
+
+.mesa-view{
+    width: 70%; 
+    float:right; 
+    margin-top: -7px;
+}
+
+.mesa-actions ul li {
+    border-right-color: #B3B3B3;
+    border-right-width: 1px;
+    border-right-style: solid;
+}
+
+.mesa-actions ul li A {
+    padding-left: 30% !important;
+    font-size: 92% !important;
+    overflow: visible !important;
+    padding-right: 0 !important;
+    text-overflow: visible !important;
+}
+
+.mesa-actions ul li[estado='comanda-add-menu_mesa-cerrada'],
+.mesa-actions ul li[estado='mesa-cliente_mesa-cerrada'],
+.mesa-actions ul li[estado='mesa-cerrar_mesa-cerrada'],
+.mesa-actions ul li[estado='mesa-reabrir_mesa-abierta'],
+.mesa-actions ul li[estado='mesa-re-print_mesa-abierta'],
+.mesa-actions ul li[estado='mesa-cobrar_mesa-abierta'],
+
+.mesa-actions ul li[estado='comanda-add-menu_mesa-cobrada'],
+.mesa-actions ul li[estado='mesa-cliente_mesa-cobrada'],
+.mesa-actions ul li[estado='mesa-cerrar_mesa-cobrada'],
+.mesa-actions ul li[estado='mesa-cobrar_mesa-cobrada']
+{
+    display: none;
+}
+
+
+
+ul#listado-mozos-para-mesas{
+    padding: 0px;
+    margin: 0px;
+    background-color: #E7E7E7;
+}
+
+#listado-mozos-para-mesas li{
+    display: inline-block;
+    min-width: 40px;
+    min-height: 30px;
+    text-align: center;
+    padding: 0px;
+    margin: 0px;
+    float: left;
+}
+
+#listado-mozos-para-mesas li a{
+    text-decoration: none;
+}
+
+
+.menu-img{
+
+}
+
+
+
+ul.tipo_de_pagos ,.tipo_de_pagos ul{
+    margin: 0px;
+    padding: 0px;
+        
+}
+
+.tipo_de_pagos li{
+    text-align: center;
+    display: inline-block;
+    margin: 8px;
+}
+
+.tipo_de_pagos li a{
+       text-decoration: none;
+}
+
+.tipo_de_pagos li img{
+    width: 80px;
+}
+
+
+
+.pagos_creados{}
+
+.pagos_creados li{
+    display: inline-block;
+    width: 33%;
+}
+
+.pagos_creados li img{
+    width: 60px;
+}
+
+.es_entrada{
+    background: #437FBE;
+}
+
+.tachada{
+    text-decoration: line-through;
+    color: #333;
+    font-weight: normal;
+}
+
+.mesa-time{
+    font-size: xx-small;
+    margin-left: -17px;
+    position: relative;
+    margin-left: 2px;
+}
+
+.cant_comensales{
+    float: left;
+}
+
+
+.producto-precio{
+    float: right;
+    margin-top: 11px;
+}
+
+
+#comanda-opciones{
+  position: absolute;
+  top: 40%;
+  left: 40%;
+  z-index: 99;
+}
+
+
+#comanda-add-observacion{
+    position: absolute;
+    right: 170px;
+    width: 60%;
+    z-index: 99;
+    background-color: #4F4F4F;
+}
+
+#comanda-add-observacion TEXTAREA{
+    width: 100%;
+}
+
+
+
+.btn-comanda-icon{
+    background: url("img/print48.png") no-repeat;
+    background-size: 22px;
+    width: 45px;
+    height: 22px;
+    text-indent: -9999px;
+}
+
+.btn-comanda-icon:hover{
+    background-size: 28px;
+    text-indent: -66px;
+}
+
+#comanda-add-menu .btn-comanda-icon{
+    width: 15px;
+    position: relative;
+    left: -15px;
+    background: none;
+}
+
+
+
+.dialog-arriba .ui-header{margin-top: 10px;}
+.dialog-ancho .ui-header, .dialog-ancho .ui-content, .dialog-ancho .ui-footer { max-width: 100% !important;}
+.dialog-reancho .ui-header, .dialog-reancho .ui-content, .dialog-reancho .ui-footer { max-width: 100% !important; width: 94% !important; margin-left: 2% !important;}
+
+
+.btn-comandas{
+    max-width: 18%;
+    font-size: small;
+}
+
+.btn-categoria{
+   
+}
+
+.btn-comandas .ui-btn-inner{
+   white-space: normal !important;
+}
+
+
+#ul-categorias{
+    display: block;
+}
+
+
+#ul-categorias a.sin-imagen{
+    width: 130px;
+    height: 50px
+}
+
+#ul-categorias a.con-imagen{
+    width: 70px;
+    height: 85px;
+    font-size: 12px;
+}
+
+#ul-categorias a{
+    overflow: hidden;
+    color: white;
+    padding: 5px;
+    margin: 5px;
+    background: #4596ce /*{global-active-background-color}*/;
+    border: 1px solid #155678;
+    float: left;
+    text-align: center;
+    text-shadow: none;
+    text-decoration: none;
+}
+
+
+#ul-productos a.active{
+    border: 1px solid  orangered/*{e-bup-border}*/;
+    background: #fad38e;
+}
+
+#ul-productos a.producto-con-sabor{
+    border: 1px solid #F7C942 /*{e-bup-border}*/;
+    background: pink;
+}
+
+#ul-productos a{
+    overflow: hidden;
+    color: white;
+    padding: 13px 5px;
+    margin: 5px;
+    border: 1px solid #F7C942 /*{e-bup-border}*/;
+    background: #fadb4e;
+    float: left;
+    text-align: center;
+    text-shadow: none;
+    text-decoration: none;
+    color: #333 /*{e-bup-color}*/;
+    text-shadow: 0 /*{e-bup-shadow-x}*/ 
+}
+
+
+#ul-productos .ui-btn-inner, #ul-categorias .ui-btn-inner{
+    padding: .9em 5px !important;
+    width: 92px;
+}
+
+
+
+
+h1.numero-mesa , h2.numero-mesa , h3.numero-mesa{
+    padding-left: 50px;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    background: url('img/azul2.png') no-repeat 0% 50%;
+}
+h1.numero-mozo , h2.numero-mozo , h3.numero-mozo{
+    padding-left: 50px;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    background: url('img/rojo1.png') no-repeat 0% 50%;
+}
+h1.cubiertos , h2.cubiertos , h3.cubiertos{
+    padding-left: 50px;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    background: url('img/verde3.png') no-repeat 0% 50%;
+}
+
+ .header-cliente{
+        text-align: center;
+        height: 80px;
+    }
+    
+    .header-cliente h4{
+        display: inline-block;
+        width: 200px;
+        top: -12px;
+        position: relative;
+    }
+    
+    
+        
+    #add-mesa-paso3 input{
+        background-color: #0a0;
+        color: white;
+    }
+    
+    #add-mesa-paso2 input{
+        background-color: #155678;
+        color: white;
+    }
+    
+    
+    #ul-productos-seleccionados a.ui-btn-icon-notext {
+        width: 47px; height: 40px;
+    }
+    
+    #ul-productos-seleccionados .ui-btn-icon-notext .ui-icon {
+        width: 30px; height: 30px;
+    }
+    
+    #ul-productos-seleccionados .ui-icon-plus {
+        background-position: -0.8%;
+    }
+    
+    #ul-productos-seleccionados .ui-icon-minus, .comanda-items .ui-icon-minus {
+        background-position: -24px 50%;
+    }
+    
+    #ul-productos-seleccionados .ui-icon-grid {
+        background-position: -426px 50%;
+    }
+    
+    #ul-productos-seleccionados .ui-li-count{
+        font-size: 19px;
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+    
+    #ul-productos-seleccionados li.es-entrada{
+        background: #437FBE;
+    }
+    
+    #ul-productos-seleccionados li.tiene-observacion{
+        
+    }
+    
+    .ui-options-btn{
+        float: right;
+        text-indent: -1999px;
+        background-color: #F7C942;
+        width: 20px;
+    }
+    
+    .ui-options-btn-open{
+        height: 91px;
+        margin-top: -66px;
+    }

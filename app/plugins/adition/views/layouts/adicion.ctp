@@ -14,7 +14,9 @@
 		<?php echo $title_for_layout; ?>
 	</title>
         
-        <meta name="viewport" content="width=device-width, initial-scale=1"> 
+        <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; minimum-scale=1.0; user-scalable=no;"> 
+       
+
     
         <base href="<?= $html->url('/')?>" />
             <?php
@@ -30,8 +32,6 @@
                     'jquery-mobile/jquery.mobile.actionsheet',
                     '/adition/css/ristorantino',
                     'jquery-mobile/jquery.mobile-custom',
-                    'keyboard',
-                    'alekeyboard',
                     ));
 
                 $cssUserRole = "acl-".$session->read('Auth.User.role');
@@ -56,29 +56,26 @@
     //                    'knockout.updateData',
 
                         // OJO !! EL ORDEN IMPORTA !!
-                        
-                        '/adition/js/adicion/adition.package',
-                        '/adition/js/cliente/descuento.class',
-                        '/adition/js/mozo/mozo.class',
-                        '/adition/js/adicion/handle_mesas_recibidas',
-                        '/adition/js/adicion/event_handler',
-                        '/adition/js/mesa/estados.class',                        
-                        '/adition/js/mesa/mesa.class',
-                        '/adition/js/comanda/comanda.class',
-                        '/adition/js/comanda/fabrica.class',
-                        '/adition/js/adicion/adicion.class', // depende de Mozo, Mesa y Comanda
-                        '/adition/js/menu/producto',
-                        '/adition/js/menu/categoria',
-                        '/adition/js/menu/sabor.class',
-                        '/adition/js/cliente/cliente.class',                        
-                        '/adition/js/mesa/pago.class',
-                        '/adition/js/comanda/detalle_comanda.class',
+                        '/adition/js/adition.package',
+                        '/adition/js/mozo.class',
+                        '/adition/js/adicion.event_handler',
+                        '/adition/js/mesa.estados.class',
+                        '/adition/js/mesa.class',
+                        '/adition/js/comanda.class',
+                        '/adition/js/comanda_fabrica.class',
+                        '/adition/js/adicion.class', // depende de Mozo, Mesa y Comanda
+                        '/adition/js/producto',
+                        '/adition/js/categoria',
+                        '/adition/js/sabor.class',
+                        '/adition/js/cliente.class',
+                        '/adition/js/descuento.class',
+                        '/adition/js/pago.class',
+                        '/adition/js/detalle_comanda.class',
                         '/adition/js/ko_adicion_model',
-                        '/adition/js/adicion/events',
-                        '/adition/js/menu/menu',
+                        '/adition/js/adition.events',
+                        '/adition/js/menu',
     //                    'http://code.jquery.com/mobile/latest/jquery.mobile.min.js',
                         'jquery/jquery.mobile-1.0',
-                       'alekeyboard',
                         ));
                 } else {
                     echo $javascript->link('todos.min');

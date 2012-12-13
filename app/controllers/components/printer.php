@@ -278,8 +278,7 @@ class PrinterComponent extends Object {
                         
                         //si paso todo bien la creacion del archivo la mando a imprimir
 			$comandera_name = $this->comanderas[$comandera_id]['Comandera']['name'];
-                        $serverImpresoraFiscal = Configure::read('ImpresoraFiscal.server');
-                        return $this->cupsPrint($serverImpresoraFiscal, $comandera_name, $textoAImprimir);
+                        return $this->cupsPrint($comandera_name, $textoAImprimir);
 				
 			return $retorno;
 		endforeach;
@@ -553,8 +552,7 @@ class PrinterComponent extends Object {
 				
 			//si paso todo bien la creacion del archivo la mando a imprimir
 			$comandera_name = $this->comanderas[$comandera_id]['Comandera']['name'];
-                        $serverImpresoraFiscal = Configure::read('ImpresoraFiscal.server');
-                        return $this->cupsPrint($serverImpresoraFiscal, $comandera_name, $textoAImprimir);
+                        return $this->cupsPrint($comandera_name, $textoAImprimir);
 		}
 		else return false;
 	}
@@ -617,7 +615,6 @@ class PrinterComponent extends Object {
 	function printHasarFiscal()
 	{
 		//primero valida los comandos... si estan todos bien, entonces sigue adelante
-		$serverImpresoraFiscal = Configure::read('ImpresoraFiscal.server');
 		$nombreImpresoraFiscal = Configure::read('ImpresoraFiscal.nombre');
 		if(!$this->__validarComandos()){
 			return false;
@@ -644,7 +641,13 @@ class PrinterComponent extends Object {
          * @param type $texto es el texto a imprimir
          * @return type boolean true si salio todo bien false caso contrario
          */
-        function cupsPrint( $serverImpresoraFiscal, $nombreImpresoraFiscal, $texto ) {
+        function cupsPrint( $nombreImpresoraFiscal, $texto ) {
+            $serverImpresoraFiscal = Configure::read('ImpresoraFiscal.server');
+            
+            if ( $serverImpresoraFiscal == 'auto' ) {
+                $serverImpresoraFiscal = $_SERVER['REMOTE_ADDR'];
+            }
+            $this->log("imprimiendo a con la impresora $nombreImpresoraFiscal al server: s".$serverImpresoraFiscal);
             
             // cambiar el encoding del texto si esta configurado
             $encoding = Configure::read('ImpresoraFiscal.encoding');

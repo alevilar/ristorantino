@@ -59,6 +59,7 @@
                 <tr>
                     <th <?php if($i==0){echo('class="coloruno"'); }else{echo('class="colordos"');}?>>Fecha</th>
                     <th <?php if($i==0){echo('class="coloruno"'); }else{echo('class="colordos"');}?>>Total</th>
+<th <?php if($i==0){echo('class="coloruno"'); }else{echo('class="colordos"');}?>>Sub-Total</th>
                     <th <?php if($i==0){echo('class="coloruno"'); }else{echo('class="colordos"');}?>>Mesas</th>
                     <th <?php if($i==0){echo('class="coloruno"'); }else{echo('class="colortres"');}?>>Cubiertos</th>
                     <th <?php if($i==0){echo('class="coloruno"'); }else{echo('class="colortres"');}?>>Promedio<br />x Cubierto</th>
@@ -80,6 +81,15 @@
                         echo($m['Mesa']['total']);
 
                         echo('</td>');
+
+echo('<td>');
+
+                        echo('$');
+                        echo($m['Mesa']['subtotal']);
+
+                        echo('</td>');
+
+
                         echo('<td>');
                         echo($m['Mesa']['cant_mesas']);
                         echo('</td>');
