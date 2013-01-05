@@ -2,7 +2,7 @@
 class ClientesController extends AppController {
 
 	var $name = 'Clientes';
-	var $helpers = array('Html', 'Form', 'Ajax');
+	var $helpers = array('Html', 'Form', 'Ajax', 'Jqm');
         
         
         function beforeFilter() {
@@ -90,8 +90,9 @@ class ClientesController extends AppController {
 		
 		$tipo_documentos = $this->Cliente->TipoDocumento->find('list');		
 		$iva_responsabilidades = $this->Cliente->IvaResponsabilidad->find('list');
-		
-		$this->set(compact('users', 'descuentos', 'iva_responsabilidades', 'tipo_documentos'));
+                $this->set('tipo_documentos', $tipo_documentos);
+                $this->set('iva_responsabilidades', $iva_responsabilidades);
+		$this->set(compact('users', 'descuentos'));
 	}
 
         function addFacturaA() {
@@ -133,10 +134,13 @@ class ClientesController extends AppController {
 		}
 		$users = $this->Cliente->User->find('list',array('fields'=>array('User.nombre')));
 		$descuentos = $this->Cliente->Descuento->find('list');
-		$tipo_documentos = $this->Cliente->TipoDocumento->find('list');		
-		$iva_responsabilidades = $this->Cliente->IvaResponsabilidad->find('list');
 		
-		$this->set(compact('users', 'descuentos', 'iva_responsabilidades', 'tipo_documentos'));
+                $tipo_documentos = $this->Cliente->TipoDocumento->find('list');		
+		$iva_responsabilidades = $this->Cliente->IvaResponsabilidad->find('list');
+                $this->set('tipo_documentos', $tipo_documentos);
+                $this->set('iva_responsabilidades', $iva_responsabilidades);
+                
+		$this->set(compact('users', 'descuentos'));
 	}
 
 	function delete($id = null) {

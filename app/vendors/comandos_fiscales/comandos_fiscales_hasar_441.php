@@ -192,10 +192,10 @@ class ComandosImpresora extends ComandosFiscales
 	 * 						BORRA COLA: 	  numero linea = -2 
 	 * @param $texto 45 caracteres maximo
 	 */
-	public function setHeaderTrailer($numero_de_linea,$texto = "-",$doble_ancho = false){
+	public function setHeaderTrailer($numero_de_linea,$texto = " ",$doble_ancho = false){
 		$texto = substr($texto,0,45);
-		if ($numero_de_linea > -3 && $numero_de_linea <= 0){
-			$comando = "]".self::FS.$numero_de_linea;
+		if ($numero_de_linea <= 0){
+			$comando = "]".self::FS.$numero_de_linea.self::FS.self::DEL;
 		}
 		if ($numero_de_linea > 0 && $numero_de_linea < 21){
 			if($doble_ancho){
@@ -203,9 +203,7 @@ class ComandosImpresora extends ComandosFiscales
 			}
 			$comando = "]".self::FS.$numero_de_linea.self::FS.$texto;
 		}
-		else{
-			$comando = false;
-		}
+                $comando = '';
 		return $comando;
 	}
 	
@@ -235,7 +233,7 @@ class ComandosImpresora extends ComandosFiscales
 	 * @return string $comando
 	 */
 	public function delTrailer(){
-		$comando = "]".self::FS."-2/".self::FS.self::DEL;
+		$comando = "]".self::FS."-2".self::FS.self::DEL;
 		return $comando;
 	}
 	

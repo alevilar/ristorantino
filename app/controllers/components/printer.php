@@ -627,7 +627,7 @@ class PrinterComponent extends Object {
                 foreach ($this->vcomandos as $c){
                     $texto .= $c . $CR . $LF;
                 }
-                $this->cupsPrint( $serverImpresoraFiscal, $nombreImpresoraFiscal, $texto );
+                $this->cupsPrint( $nombreImpresoraFiscal, $texto );
 
 		return false;
 	}
@@ -654,7 +654,6 @@ class PrinterComponent extends Object {
             if (!empty( $encoding )) {
                 $texto = mb_convert_encoding($texto, $encoding, mb_detect_encoding($texto));
             }
-                    
                     
             $descriptorspec = array(
                0 => array("pipe", "r"), //esto lo uso para mandarle comandos

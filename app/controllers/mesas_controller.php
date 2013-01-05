@@ -502,6 +502,23 @@ $tipo_pagos = $this->Mesa->Pago->TipoDePago->find('list');
             $this->Session->setFlash('Se agregó un cliente a la mesa', true);
         }
     }
+    
+    
+    function cobradas(){
+        $mesas = $this->Mesa->ultimasCobradas();
+        $this->set('title_for_layout', 'Últimas Mesas Cobradas');
+        
+        $newMes = array();
+        $cont = 0;
+        foreach ( $mesas as $m ) {
+            $newMes[$cont] = $m['Mesa'];
+            $newMes[$cont]['Mozo'] = $m['Mozo'];
+            $newMes[$cont]['Comanda'] = $m['Comanda'];
+            $newMes[$cont]['Descuento'] = $m['Descuento'];
+            $cont++;
+        }
+        $this->set('mesas', $newMes);
+    }
 
 }
 ?>

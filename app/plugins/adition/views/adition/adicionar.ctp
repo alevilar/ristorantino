@@ -15,13 +15,14 @@
             
             <div data-role="navbar">
                 <ul id="listado-mozos-para-mesas">
-                    <li  style="width: <?php echo floor( 100/ (count($mozos) +1) )?>%"><a href="#" class="ui-btn-active">Todos</a></li>
+                    <?php $anchoTabMozo =  floor( 100/ (count($mozos) +1) );?>
+                    <li  style="width: <?php echo 100 - ($anchoTabMozo*(count($mozos)))?>%"><a href="#" class="ui-btn-active">Todos</a></li>
                     <?php
                         foreach ($mozos as $m) {
                             $k = $m['Mozo']['id'];
                             $n = $m['Mozo']['numero'];
                             ?>
-                    <li  style="width: <?php echo floor( 100/ (count($mozos) +1) )?>%">
+                    <li  style="width: <?php echo $anchoTabMozo?>%">
                                 <a href="#" data-mozo-id="<?php echo $k?>"><?php echo $n?></a>
                             </li>
                         <?
@@ -98,7 +99,11 @@
         
             <a href="#listado-mesas-cerradas" data-role="button">Modo Cajero</a>
             
-            <a href="<?php echo $html->url('adition/adicionar')?>" rel="external" data-role="button" data-icon="refresh">Refrescar Adición</a>
+            
+            
+            <a href="<?php echo $html->url('adition/adicionar')?>" data-ajax="false" data-role="button" data-icon="refresh">Refrescar Adición</a>
+            
+            <a href="<?php echo $html->url('/mesas/cobradas');?>" data-role="button" data-rel="dialog">Mesas Cobradas</a>
             
             <a href="#" data-role="button" title="Actualizar Menú" onclick="Risto.Adition.menu.update()"><?php echo $html->image('refresh.png', array('class'=> 'btn-comanda-icon'))?> Actualizar Menú</a>
             
@@ -365,7 +370,7 @@
                 <a style="min-width: 160px" href="#" data-role="button" title="Haga click para desactivar la impresión de comanda" data-bind="click: function(){adn().currentMesa().currentComanda().comanda.imprimir( 0 )}, visible: adn().currentMesa().currentComanda().comanda.imprimir()"><?php echo $html->image('print48.png', array('class'=> 'btn-comanda-icon'))?>Si Imprime</a>
                 <a style="min-width: 160px" href="#" data-role="button" title="Haga click para activar impresión de comanda" data-bind="click: function(){adn().currentMesa().currentComanda().comanda.imprimir( 1 )}, visible: !adn().currentMesa().currentComanda().comanda.imprimir()" ><?php echo $html->image('dontprint48.png', array('class'=> 'btn-comanda-icon'))?>No Imprime</a>
 
-                <a style="min-width: 160px" href="#" data-role="button" title="Agregar Observación"  onclick="$('#comanda-add-observacion').toggle('slow').focus();"><?php echo $html->image('pencil_48.png', array('class'=> 'btn-comanda-icon'))?>Observación</a>
+                <a style="min-width: 160px" href="#" id="comanda-obervacion-a" data-role="button" title="Agregar Observación"><?php echo $html->image('pencil_48.png', array('class'=> 'btn-comanda-icon'))?>Observación</a>
                 <a href="#mesa-view" data-role="button" id="comanda-add-guardar"  data-icon="check" data-theme="b">Enviar Comanda</a>
 
             </div>

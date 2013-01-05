@@ -3,9 +3,16 @@
 
                     <div class="header-cliente">
 
-                        <a href="#mesa-view" data-direction="reverse" data-role="button" data-inline="true">Volver</a>                       
+                        <a href="#mesa-view" data-direction="reverse" data-role="button" data-inline="true">Volver</a>
+                        
+                        <?php echo $html->link('Crear Cliente', '/clientes/addFacturaA', array(
+                            'data-role' => 'button',
+                            'data-inline' => 'true',
+                            'data-theme' => 'b',
+                             'data-rel' => 'dialog',
+                        )) ?>
 
-                        <a href="#mesa-view" data-role="button" id="mesa-eliminar-cliente" data-inline="true" href="#mesa-view" data-theme="b" data-direction="reverse" data-bind="visible: adn().currentMesa().Cliente()}">
+                        <a href="#mesa-view" data-role="button" id="mesa-eliminar-cliente" data-inline="true" data-theme="" data-direction="reverse" data-bind="visible: adn().currentMesa().Cliente()}">
                                 Borrar</span>
                         </a>
 
@@ -15,7 +22,7 @@
 
                         <ul data-role="listview"  data-filter="true" id="listado-clientes-factura-a-ajax">
                             <li style="display: none" class="factura-a-cliente-add" data-theme="b">
-                                <a href="<?php echo $html->url('/clientes/addFacturaA') ?>" data-rel="dialog">Agregar Nuevo Cliente</a>
+                                <a href="<?php echo $html->url('/clientes/addFacturaA') ?>">Agregar Nuevo Cliente</a>
                             </li>
                                 <?php foreach($clientes as $c): 
                                     $porcentaje  = !empty($c['Descuento']['porcentaje']) ? $c['Descuento']['porcentaje'] : 0;

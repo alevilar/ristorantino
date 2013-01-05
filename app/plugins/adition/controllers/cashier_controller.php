@@ -29,6 +29,7 @@ class CashierController extends AditionAppController {
                     $this->Session->setFlash("Se imprimió un Cierre Z");
                     $this->redirect($this->referer());
                 }
+                return 1;
             }
 	
 	
@@ -37,8 +38,9 @@ class CashierController extends AditionAppController {
 		
                 if (! $this->RequestHandler->isAjax()) {
                     $this->Session->setFlash("Se imprimió un reporte X");
-                    $this->redirect($this->referer());
+                   // $this->redirect($this->referer());
                 }
+//                return 1;
 	}
 
         function nota_credito(){

@@ -131,7 +131,9 @@ class CashierController extends CashierAppController {
 
 		$this->Session->setFlash("Se imprimió un Cierre Z");
 
-
+		if ( $this->RequestHandles->isAjax() ) {
+                    return 1;
+                }
 		$this->redirect($this->referer());
             }
 	
@@ -141,6 +143,9 @@ class CashierController extends CashierAppController {
 		
 		$this->Session->setFlash("Se imprimió un reporte X");
 		
+                if ( $this->RequestHandles->isAjax() ) {
+                    return 1;
+                }
 		$this->redirect($this->referer());
 	}
 

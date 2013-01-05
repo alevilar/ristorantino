@@ -40,6 +40,7 @@
             echo $html->css('jquery-ui/pepper-grinder/jquery-ui-1.8.16.custom');
             
             $cssUserRole = "acl-".$session->read('Auth.User.role');
+            debug($session->read('Auth.User.role'));
             if (is_file(APP.WEBROOT_DIR.DS."css".DS.$cssUserRole.".css")) {
                 echo $html->css($cssUserRole,'stylesheet', array('media'=>'screen'));
             }

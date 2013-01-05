@@ -107,7 +107,11 @@ class UsersController extends AppController {
          * 
          */
         function login(){
-                
+            if(empty($this->data) == false) 
+            {                
+                $user = $this->Auth->user();
+                $this->Session->write('User', $user);                
+            } 
         }
         
         

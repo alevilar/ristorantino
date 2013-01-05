@@ -28,6 +28,3 @@ sudo chmod 755 /usr/bin/spooler_srv
 sudo /usr/sbin/update-rc.d -f spooler_srv defaults
 sudo /usr/sbin/update-rc.d -f printServer defaults
 
-
-
-

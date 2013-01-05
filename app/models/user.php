@@ -139,6 +139,11 @@ class User extends AppModel {
                 }
         }
         
+        function beforeSave(){
+            $this->data['User']['role'] = strtolower( $this->groupName() );
+            return true;
+        }
+        
 
 }
 ?>

@@ -561,7 +561,8 @@ h1.cubiertos , h2.cubiertos , h3.cubiertos{
         float: right;
         text-indent: -1999px;
         background-color: #F7C942;
-        width: 20px;
+        width: 35px;
+        height: 33px;
     }
     
     .ui-options-btn-open{

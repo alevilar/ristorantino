@@ -95,7 +95,7 @@ Risto.Adition.handleMesasRecibidas = {
                 }
             }
             // reinicializar vistas
-            $rae.adicionMesasActualizadas();
+            $raeh.adicionMesasActualizadas();
             return 1;
         },
         
@@ -281,7 +281,7 @@ Risto.Adition.adicionar = {
      *
      */
     agregarMenu: function(){
-        var menu = prompt('Nuevo Número de Mesa', this.currentMesa().menu());
+        var menu = prompt('Ingrese Cantidad que aparecerá en el detalle del ticket', this.currentMesa().menu());
         var ops = {
                 'data[Mesa][menu]': menu
             };
