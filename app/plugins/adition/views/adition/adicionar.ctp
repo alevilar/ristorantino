@@ -101,7 +101,7 @@
             
             
             
-            <a href="<?php echo $html->url('adition/adicionar')?>" data-ajax="false" data-role="button" data-icon="refresh">Refrescar Adición</a>
+            <a href="#" onclick="window.location.reload(true);" data-ajax="false" data-role="button" data-icon="refresh">Refrescar Adición</a>
             
             <a href="<?php echo $html->url('/mesas/cobradas');?>" data-role="button" data-rel="dialog">Mesas Cobradas</a>
             

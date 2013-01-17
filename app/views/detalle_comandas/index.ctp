@@ -19,25 +19,29 @@ echo $javascript->link('mesas/index_head', false);
     <?php
         echo $form->create('DetalleComanda', array('url' => '/detalle_comandas/index'));
         ?>
-    <div class="grid_3 alpha"> 
+    <div class="grid_2 alpha"> 
     <?
         echo $form->input('Producto.id', array('options' => $productos, 'empty' => 'Seleccionar', 'label'=>'Producto'));
+      ?>  
+    </div>
+    <div class="grid_2">
+        <?php
+        echo $form->input('Producto.categoria_id', array('options' => $categorias, 'empty' => 'Seleccionar', 'label'=>'Categoria'));
         ?>
     </div>
-
-    <div class="grid_3 push_1">
+    <div class="grid_2">
     <?
         echo $form->input('desde', array( 'class' =>'datepicker') );
     ?>
     </div>
 
-    <div class="grid_3 push_1 omega">
+    <div class="grid_2">
     <?
         echo $form->input('hasta', array( 'class' =>'datepicker') );
     ?>
     </div>
 
-    <div class="grid_2 push_1">
+    <div class="grid_2 push_1 omega">
     <?
         echo $form->end('buscar');
     ?>
@@ -48,11 +52,13 @@ echo $javascript->link('mesas/index_head', false);
     
 <?php
 $i = 0;
+$cantTotal = 0;
 foreach ($comandas as $comanda):
 	$class = null;
 	if ($i++ % 2 == 0) {
 		$class = ' class="altrow"';
 	}
+        $cantTotal += $comanda[0]['cant'];
 ?>
 	<tr<?php echo $class;?>>
 		<td>
@@ -68,6 +74,7 @@ foreach ($comandas as $comanda):
 </div>
 
 <div class="actions">
+        <?php echo "Cantidad TOTAL (suma de totales) = $cantTotal"; ?>
 	<ul>
 		<li><?php echo $html->link(__('New Comanda', true), array('action'=>'add')); ?></li>
 	</ul>

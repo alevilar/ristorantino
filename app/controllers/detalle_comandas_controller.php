@@ -6,15 +6,39 @@ class DetalleComandasController extends AppController {
 	var $components = array( 'Printer');
 
 	function index() {
-		$this->DetalleComanda->recursive = 0;
+		$this->DetalleComanda->Producto->recursive = -1;
                 $conditions['order'] = array('Producto.name');
                 $conditions['group'] = array('Producto.id', 'Producto.name');
+                $conditions['conditions']['Mesa.deleted'] = 0;
+                $conditions['joins'] = array(
+                    array(
+                        'table' => 'detalle_comandas',
+                        'alias' => 'DetalleComanda',
+                        'type' => 'left',
+                        'conditions' => 'Producto.id = DetalleComanda.producto_id',
+                    ),
+                    array(
+                        'table' => 'comandas',
+                        'alias' => 'Comanda',
+                        'type' => 'left',
+                        'conditions' => 'Comanda.id = DetalleComanda.comanda_id',
+                    ),
+                    array(
+                        'table' => 'mesas',
+                        'alias' => 'Mesa',
+                        'type' => 'left',
+                        'conditions' => 'Mesa.id = Comanda.mesa_id',
+                    ), 
+                );
                 $conditions['fields'] = array('Producto.name', 'sum(DetalleComanda.cant-DetalleComanda.cant_eliminada) as "cant"');
                 
                 // procesar buscador
                 if (!empty($this->data)) {
                     if (!empty( $this->data['Producto']['id'] )) {
                         $conditions['conditions']['Producto.id'] = $this->data['Producto']['id'];
+                    }
+                    if (!empty( $this->data['Producto']['categoria_id'] )) {
+                        $conditions['conditions']['Producto.categoria_id'] = $this->data['Producto']['categoria_id'];
                     }
                     if (!empty($this->data['DetalleComanda']['desde'])){
                         $conditions['conditions']['DetalleComanda.created >='] = jsDate( $this->data['DetalleComanda']['desde'] );
@@ -24,8 +48,10 @@ class DetalleComandasController extends AppController {
                         $conditions['conditions']['DetalleComanda.created <='] = jsDate( $this->data['DetalleComanda']['hasta'] );
                     }
                 }
+                
+                $this->set('categorias', $this->DetalleComanda->Producto->Categoria->generatetreelist());
                 $this->set('productos', $this->DetalleComanda->Producto->find('list', array('order' => 'name')));
-		$this->set('comandas', $this->DetalleComanda->find('all', $conditions));
+		$this->set('comandas', $this->DetalleComanda->Producto->find('all', $conditions));
 	}
 	
 	function prueba(){

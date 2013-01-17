@@ -12,7 +12,7 @@ Risto.Adition.cliente = function(jsonMap){
 Risto.Adition.cliente.prototype = {
     Descuento: ko.observable(null),
     porcentaje: ko.observable( undefined ),
-    
+    tipofactura: ko.observable(null),
     
     tieneDescuento: function() {
         var porcentaje = undefined;

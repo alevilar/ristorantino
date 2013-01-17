@@ -1,6 +1,8 @@
-        <?php    
-        echo $this->element('menuadmin');
-        ?>
+<?php    
+    echo $this->element('menuadmin');
+        
+    $paginator->options(array('url' => $this->passedArgs));
+?>
 
 <div class="sabores index">
 <h2><?php __('Sabores');?></h2>
@@ -10,6 +12,8 @@ echo $paginator->counter(array(
 'format' => __('Pagina %page% de %pages%, mostrando %current% elementos de %count%', true)
 ));
 ?></p>
+
+
 <table cellpadding="0" cellspacing="0">
 
     <tr>

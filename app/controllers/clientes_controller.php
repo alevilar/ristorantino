@@ -13,9 +13,17 @@ class ClientesController extends AppController {
 	function index() {
            
             $this->params['PaginateConditions'] = array();
-		
+            $condiciones = array();
+            $descuentoMaximo = Configure::read('Mozo.descuento_maximo');
+            $currentRole = $this->Session->read('Auth.User.role');
+            if ( strtolower($currentRole) == 'mozo' && is_numeric( $descuentoMaximo ) ) {                
+                $condiciones['OR'] = array(
+                        "Descuento.porcentaje <= $descuentoMaximo",
+                        'Descuento.porcentaje IS NULL'
+                    );
+            }
 		if(!empty($this->data)){
-			$condiciones = array();
+			
 			$pagCondiciones = array();
 			foreach($this->data as $modelo=>$campos){
 				foreach($campos as $key=>$val){
@@ -25,17 +33,11 @@ class ClientesController extends AppController {
 				}
 			}
 			$this->Cliente->recursive = 0;
-			$this->paginate['Cliente'] = array(
-				'conditions' => $condiciones
-			);
-			
 			$this->params['PaginateConditions'] = $pagCondiciones;
-			$this->set('clientes', $this->paginate('Cliente'));
 		}
 		
 		
 		if(!empty($this->passedArgs) && empty($this->data)){ 
-		 	$condiciones = array();
 			$pagCondiciones = array();
 			foreach($this->passedArgs as $campo=>$valor){
 				if($campo == 'page' || $campo == 'sort' || $campo == 'direction'){ 
@@ -47,16 +49,13 @@ class ClientesController extends AppController {
 				
 			}
 			$this->Cliente->recursive = 0;
-			$this->paginate['Clientes'] = array(
-				'conditions' => $condiciones
-			);
                         
 			$this->params['PaginateConditions'] = $pagCondiciones;
-			$this->set('clientes', $this->paginate('Cliente'));
 		 }   
+                 $this->paginate['conditions'] = $condiciones;
  
                 /* <- Esto es lo original -> */
-                
+                debug($this->paginate);
 		$this->Cliente->recursive = 0;
 		$this->set('clientes', $this->paginate());
                 

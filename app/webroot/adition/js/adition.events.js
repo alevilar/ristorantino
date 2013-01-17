@@ -68,8 +68,7 @@ $(document).bind("mobileinit", function(){
     $('#comanda-add-menu').live('pageshow', function(){
         //creacion de comandas
         // producto seleccionado
-        $(document).bind(  MENU_ESTADOS_POSIBLES.productoSeleccionado.event , productoSeleccionado);
-
+        $(document).bind(  MENU_ESTADOS_POSIBLES.productoSeleccionado.event , productoSeleccionado);        
 
         // boton para mostrar el formulario de observacion
         $('#comanda-obervacion-a').bind('click', function(){
@@ -85,14 +84,13 @@ $(document).bind("mobileinit", function(){
                     var $ops = $(this).parent().find('.ui-options'),
                         $opsBtn = $(this).parent().find('.ui-options-btn');
                         
-                    if ( abierto ) {
+                    if ( $opsBtn.hasClass('ui-options-btn-open') ) {
                         $ops.hide();
                         $opsBtn.removeClass('ui-options-btn-open');
                     } else {
                         $ops.show();
                         $opsBtn.addClass('ui-options-btn-open');
                     }
-                    abierto = !abierto;
                 }
         );            
 

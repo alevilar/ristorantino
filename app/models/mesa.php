@@ -48,6 +48,7 @@ class Mesa extends AppModel {
 
 
 	var $hasMany = array(   'Comanda' => array(
+                                    'dependent' => true,
                                     'order' => 'Comanda.created DESC'), 
                                 'Pago');
 	

@@ -315,7 +315,7 @@ class ComandosImpresora extends ComandosFiscales
 	 */
 
 	public function setCustomerData($nombre_cliente = " ",$documento = " ",$respo_iva = 'C', $tipo_documento = " ", $domicilio = '-'){
-		$nombre_cliente = substr($nombre_cliente,0,45);
+		$nombre_cliente = substr($nombre_cliente,0,46);
 		$respo_iva = strtoupper($respo_iva);
 		$tipo_documento = strtoupper($tipo_documento);
 		
@@ -323,7 +323,7 @@ class ComandosImpresora extends ComandosFiscales
 		if($respo_iva == 'I' || $respo_iva == 'E' || $respo_iva == 'A' || $respo_iva == 'C' || $respo_iva == 'T'){
 			if( $tipo_documento == 'C' || $tipo_documento == 'L' || $tipo_documento == '0' || $tipo_documento == '1' || $tipo_documento == '2' || $tipo_documento == '3' || $tipo_documento == '4')
 			{	
-				$comando = "b".self::FS.$nombre_cliente.self::FS.$documento.self::FS.$respo_iva.self::FS.$tipo_documento;
+				$comando = chr(98).self::FS.$nombre_cliente.self::FS.$documento.self::FS.$respo_iva.self::FS.$tipo_documento;
 				if($domicilio){
 					$comando .= self::FS.$domicilio;
 				}

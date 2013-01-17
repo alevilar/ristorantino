@@ -591,7 +591,7 @@ Mesa.prototype = {
                 totalText = '$'+total ;
             
             
-            if (this.Cliente() && !this.Cliente().hasOwnProperty('length') && this.Cliente().tipofactura().toLowerCase() == 'a'){               
+            if (this.Cliente() && !this.Cliente().hasOwnProperty('length') && this.Cliente().tipofactura() && this.Cliente().tipofactura().toLowerCase() == 'a'){               
                 totalText = 'Factura "A" '+totalText;
             }
 

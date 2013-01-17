@@ -1359,7 +1359,7 @@ Mesa.prototype = {
                 totalText = '$'+total ;
             
             
-            if (this.Cliente() && !this.Cliente().hasOwnProperty('length') && this.Cliente().tipofactura().toLowerCase() == 'a'){               
+            if (this.Cliente() && !this.Cliente().hasOwnProperty('length') && this.Cliente().tipofactura() && this.Cliente().tipofactura().toLowerCase() == 'a'){               
                 totalText = 'Factura "A" '+totalText;
             }
 
@@ -1894,7 +1894,7 @@ Risto.Adition.handleMesasRecibidas = {
                 }
             }
             // reinicializar vistas
-            $rae.adicionMesasActualizadas();
+            $raeh.adicionMesasActualizadas();
             return 1;
         },
         
@@ -2461,7 +2461,7 @@ Risto.Adition.cliente = function(jsonMap){
 Risto.Adition.cliente.prototype = {
     Descuento: ko.observable(null),
     porcentaje: ko.observable( undefined ),
-    
+    tipofactura: ko.observable(null),
     
     tieneDescuento: function() {
         var porcentaje = undefined;
@@ -2853,16 +2853,6 @@ Risto.Adition.koAdicionModel = {
       
 $(document).bind("mobileinit", function(){    
     
-    
-    $('#comanda-add-product-obss').live('pageshow',function(event, ui){    
-        $('input, textarea', '#comanda-add-product-obss').bind('focus');
-    });
-    $('#comanda-add-product-obss').live('pagehide',function(event, ui){    
-        $('input, textarea', '#comanda-add-product-obss').unbind('focus');
-    });
-
-
-
     /**
      *
      *
@@ -2886,6 +2876,15 @@ $(document).bind("mobileinit", function(){
         // Form SUBMITS
         $('#form-cambiar-mozo').unbind('submit');
     });
+    
+    
+    
+    /**
+     *  Observacion de los productos
+     */
+    $('#comanda-add-product-obss').live('pageshow',function(event, ui){    
+        $('#obstext').focus();
+    });
 
 
 
@@ -2901,21 +2900,15 @@ $(document).bind("mobileinit", function(){
     $('#comanda-add-menu').live('pageshow', function(){
         //creacion de comandas
         // producto seleccionado
-        $(document).bind(  MENU_ESTADOS_POSIBLES.productoSeleccionado.event , productoSeleccionado);
+        $(document).bind(  MENU_ESTADOS_POSIBLES.productoSeleccionado.event , productoSeleccionado);        
 
+        // boton para mostrar el formulario de observacion
+        $('#comanda-obervacion-a').bind('click', function(){
+            $('#comanda-add-observacion').toggle('slow');
+            $('textarea','#comanda-add-observacion').focus();
+        });
         
-        
-        var abierto = false;
-        $('#ul-productos-seleccionados').delegate(
-                '.listado-productos-seleccionados',
-                'mouseleave',
-                function(){
-                    $(this).children('.ui-options').hide();
-                    $(this).children('.ui-options-btn').removeClass('ui-options-btn-open');
-                    abierto = false;
-                }
-        );                
-        
+     
         $('#ul-productos-seleccionados').delegate(
                 '.ui-options-btn',
                 'click',
@@ -2923,14 +2916,13 @@ $(document).bind("mobileinit", function(){
                     var $ops = $(this).parent().find('.ui-options'),
                         $opsBtn = $(this).parent().find('.ui-options-btn');
                         
-                    if ( abierto ) {
+                    if ( $opsBtn.hasClass('ui-options-btn-open') ) {
                         $ops.hide();
                         $opsBtn.removeClass('ui-options-btn-open');
                     } else {
                         $ops.show();
                         $opsBtn.addClass('ui-options-btn-open');
                     }
-                    abierto = !abierto;
                 }
         );            
 
@@ -2976,6 +2968,8 @@ $(document).bind("mobileinit", function(){
 
     $('#comanda-add-menu').live('pagebeforehide', function(){
         $(document).unbind(  MENU_ESTADOS_POSIBLES.productoSeleccionado.event);
+        
+        $('#comanda-obervacion-a').unbind('click');
         
         $('a.active','#ul-productos').removeClass('active');
         
@@ -3132,7 +3126,7 @@ $(document).bind("mobileinit", function(){
         // al hacer click n un mozo del menu bar
         // se muestran solo lasmesas de ese mozo
 
-        $listadoMozos.delegate('a', '', function(e) {
+        $listadoMozos.delegate('a', 'click', function(e) {
             $raeh.trigger('mostrarMesasDeMozo', e.currentTarget);
             return false;        
         });
@@ -3141,15 +3135,7 @@ $(document).bind("mobileinit", function(){
 
 
     $('#listado-mesas').live('pagebeforehide',function(event, ui){
-        $('#mesa-abrir-mesa-btn').unbind('');
-        $('#listado-mozos-para-mesas').unbind('');
-        
-        // al hacer  n un mozo del menu bar
-        // se muestran solo lasmesas de ese mozo
-        var $listadoMozos = $('#listado-mozos-para-mesas');
-        $listadoMozos.undelegate('a', '');
-        
-        
+        $('#listado-mozos-para-mesas').undelegate('a','click');
     });
     
     
@@ -3267,10 +3253,6 @@ $(document).bind("mobileinit", function(){
             unbindALl();
             document.getElementById('form-mesa-add').reset();
         });
-
-
-        
-        
     })();
      
     
