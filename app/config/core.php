@@ -29,7 +29,7 @@
  */
 
 
-setlocale(LC_ALL, 'es_AR.utf8');
+//setlocale(LC_ALL, 'es_AR.utf8');
 
 
 //Configure::write('Email.port', );

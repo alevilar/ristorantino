@@ -3,7 +3,7 @@
 <div id="cierre-efectivo-tarjeta" style="width: 600px; height: 400px;">
 	<div id="cierre-title"></div>
         <?php if (!empty($tipo_de_pagos) && count($tipo_de_pagos)){ ?>
-	<h2 style="clear: both;">Tipo de Pago / Cierre</h2>
+	<h2 style="clear: both;">Tipo de Egreso / Cierre</h2>
 	<div id="cierre-listado-tipos-de-pago">
 	<?php while(list($tipo_de_id,$v) = each($tipo_de_pagos)): ?>
 		<a class="boton-tipo-de-pago boton-tipo-de-pago-<?= $tipo_de_id ?>" href="#Cierre" onclick="cajero.guardarCobroDeUna(<?= $tipo_de_id?>)"><?= $v?></a>

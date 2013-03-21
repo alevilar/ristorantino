@@ -7,7 +7,7 @@
 
 <div class="tipoDePagos form">
     
-<?php echo $form->create('TipoDePago', array('type' => 'file'));?>
+<?php echo $form->create('TipoDePago', array('type' => 'file', 'action'=>'edit'));?>
 	<fieldset>
  		<legend><?php __('Edit TipoDePago');?></legend>
 	<?php

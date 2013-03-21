@@ -1,41 +1,55 @@
-<?php 
-    echo $javascript->link('jquery/jquery-ui-1.8.14.custom.min'); 
-    echo $html->css('jquery-ui/jquery-ui-1.8.14.custom');
-?>
-<script type="text/javascript">
-    jQuery(function() {
-        jQuery( "#facturaFecha" ).datepicker({ dateFormat: 'dd/mm/yy' });
-    });
-</script>
+    
 <div class="gastos form">
 <?php echo $form->create('Gasto');?>
 	<fieldset>
- 		<legend><?php __('Nuevo Gasto');?></legend>
 	<?php 
-		echo $form->input('proveedor_id', array('empty'=>'- Seleccione -'));
-		echo $form->input('clasificacion');
-		echo $form->input('tipo_factura_id');
-		echo $form->input('factura_nro');
-                echo $form->input('factura_fecha', array('id'=>'facturaFecha', 'type'=>'text'));
-		//echo $form->input('importe_neto');
-                echo $form->input('importe_total');
+		echo $jqm->input('proveedor_id', array('empty'=>'- Seleccione -'));
+		echo $jqm->input('clasificacion_id', array('empty'=>'- Seleccione -'));
+                echo $jqm->input('observacion');
+		echo $jqm->input('tipo_factura_id');
+		echo $jqm->input('factura_nro');
+                echo $jqm->date('fecha');
+		echo $jqm->input('importe_neto');                
+                
+                //echo $form->input('importe_total');
                 ?>
                 <div id="impuestos">
                 <?php
-                echo $form->input('TipoImpuesto.TipoImpuesto', array('multiple' => 'checkbox', 
-                                                        'label' => 'Impuestos aplicados: ',
-                                                        'type' => 'select',
-                                                        'options' => $tipo_impuestos));
+                foreach ($tipo_impuestos as $ti){
+                    echo $jqm->input('Gasto.Impuesto.'.$ti['TipoImpuesto']['id'], array(
+                        'type' => 'text',
+                        'label' => $ti['TipoImpuesto']['name'],
+                        'data-porcent'=> $ti['TipoImpuesto']['porcentaje'],
+                        'class' => 'impuesto',
+                    ));
+                }
                 ?>
                 </div>
-                <?php
-		echo $form->input('otros', array('label' => 'Otros cargos', 'size' => '7'));
-	?>
+                <?php echo $form->hidden('pagar', array('value'=>false)); ?>
 	</fieldset>
-<?php echo $form->end('Guardar');?>
+    <?php echo $form->button('Guardar y Pagar', array('data-theme'=>'e', 'onclick'=>"$(this.form.elements['data[Gasto][pagar]']).val(1);this.form.submit();", 'name'=>'manolo')); ?>
+    <?php echo $form->submit('Guardar', array('data-theme'=>'b')); ?>
+    <?php echo $form->end(); ?>
 </div>
 <div class="actions">
 	<ul>
 		<li><?php echo $html->link(__('List Gastos', true), array('action' => 'index'));?></li>
 	</ul>
+</div>
+
+<div>
+<script>
+    jQuery("#GastoAddForm input.impuesto").click(function(e){
+        papap = this;
+        lala = e;
+        var porcent = jQuery(this).attr('data-porcent');
+        var valor;
+        if (porcent){
+            valor = jQuery( this.form.elements['data[Gasto][importe_neto]'] ).val() * porcent / 100;
+            if (valor) {
+                jQuery(this).val(valor);
+            }
+        }
+    });
+</script>
 </div>

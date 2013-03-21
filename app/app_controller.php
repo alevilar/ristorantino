@@ -57,7 +57,7 @@ class AppController extends Controller {
             $this->Auth->loginError ='Usuario o Contraseña Incorrectos';
             $this->Auth->authError = 'Usted no tiene permisos para acceder a esta página.';
 
-//$this->Auth->allow('*');
+$this->Auth->allow('*');return true;
             $this->Auth->authorize = 'actions';
             //$this->Auth->loginAction = array('controller' => 'users', 'action' => 'login');
             $this->Auth->logoutRedirect='/users/login';

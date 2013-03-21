@@ -3,7 +3,7 @@
 class AccountController extends AccountAppController {
 
 	var $helpers = array('Html', 'Form');
-        var $uses = array('Mesa', 'Account.Vale', 'Account.Gasto');
+        var $uses = array('Mesa', 'Account.Gasto');
 	
         function beforeFilter() {
             parent::beforeFilter();
@@ -48,7 +48,7 @@ class AccountController extends AccountAppController {
             $gasto = $this->Gasto->find('first', array(
                                             'fields' => array('SUM(Gasto.importe_total) as total'),
                                             'conditions' => array(
-                                                'DATEDIFF(Gasto.factura_fecha, "'.$fecha.'")' => 0,    
+                                                'DATEDIFF(Gasto.fecha, "'.$fecha.'")' => 0,    
                                              )
                 ));
             if (!empty($gasto[0]['total'])) {
@@ -59,12 +59,12 @@ class AccountController extends AccountAppController {
             $ventas = $this->Mesa->query('
              select sum(total) as totales from (
                 select Mesa.total as total from mesas Mesa 
-                    inner join pagos Pago on Pago.mesa_id = Mesa.id
+                    inner join egresos Egreso on Egreso.mesa_id = Mesa.id
                  where 
                  (DATEDIFF(Mesa.created, "'.$fecha.'") = 0 AND HOUR(Mesa.created) BETWEEN '.$horarioCorte.' AND 24)
                  OR
                  (DATEDIFF(Mesa.created, "'.$fecha.'") = 1 AND HOUR(Mesa.created) BETWEEN 0 AND '.$horarioCorte.')
-                 and Pago.tipo_de_pago_id = 1
+                 and Egreso.tipo_de_pago_id = 1
                  group by Mesa.id) as totalestable
             ');
             if (!empty($ventas[0][0]['totales'])) {

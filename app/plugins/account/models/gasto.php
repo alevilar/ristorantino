@@ -4,12 +4,23 @@ class Gasto extends AccountAppModel {
 	var $name = 'Gasto';
         var $order = array('Gasto.created' => 'DESC');
         
+        var $displayField = 'importe_total';
+
+        var $actAs = array('Containable');
+        
         var $validate = array(
 //		'proveedor_id' => array(
 //			'rule1' => array(
 //				'rule' => 'numeric',
 //				'required' => true,
 //				'message' => 'Debe especificar un proveedor'
+//			)
+//		),
+//                'fecha' => array(
+//			'rule1' => array(
+//				'rule' => VALID_NOT_EMPTY,
+//				'required' => true,
+//				'message' => 'Debe especificar una fecha'
 //			)
 //		),
                 'tipo_factura_id' => array(
@@ -45,14 +56,35 @@ class Gasto extends AccountAppModel {
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 	var $belongsTo = array(
 		'Account.Proveedor',
-		'TipoFactura'
+                'Account.Clasificacion',
+		'TipoFactura',
 	);
         
+        var $hasMany = array(
+		'Account.Impuesto',
+            );
+        
         //The Associations below have been created with all possible keys, those that are not needed can be removed
-	var $hasAndBelongsToMany = array(
-		'TipoImpuesto' => array(
+	var $hasAndBelongsToMany = array(                
+            'Egreso' => array(
+                        'className' => 'Account.Egreso',
+			'joinTable' => 'account_egresos_gastos',
+			'foreignKey' => 'gasto_id',
+			'associationForeignKey' => 'egreso_id',
+			'unique' => true,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'finderQuery' => '',
+			'deleteQuery' => '',
+			'insertQuery' => ''
+                    
+                    ),
+            'TipoImpuesto' => array(
 			'className' => 'Account.TipoImpuesto',
-			'joinTable' => 'account_gastos_tipo_impuestos',
+			'joinTable' => 'account_impuestos',
 			'foreignKey' => 'gasto_id',
 			'associationForeignKey' => 'tipo_impuesto_id',
 			'unique' => true,
@@ -64,60 +96,67 @@ class Gasto extends AccountAppModel {
 			'finderQuery' => '',
 			'deleteQuery' => '',
 			'insertQuery' => ''
-		)
+		),
 	);
+           
         
         
-        function getTotalConImpuestos($gasto) {
-            $total = 0;
-            if (!empty($gasto['Gasto']['importe_neto'])) {
-                $total = $gasto['Gasto']['importe_neto'];
-            }
-
-            if (!empty($gasto['TipoImpuesto'])) {
-                foreach($gasto['TipoImpuesto'] as $tipoImpuesto) {
-                    $total += $gasto['Gasto']['importe_neto'] * $tipoImpuesto['porcentaje'] / 100;
+        public function beforeSave($options = array())
+        {
+            parent::beforeSave($options);
+            
+            if (!empty($this->data['Gasto']['importe_neto'])) {
+                // calcular total sumando los impuestos
+                $sumaImpuestos = 0;
+                if (!empty($this->data['Gasto']['Impuesto'])) {
+                    foreach ($this->data['Gasto']['Impuesto'] as $imp){
+                        $sumaImpuestos += $imp;
+                    }
                 }
-            }
-            
-            if (!empty($gasto['Gasto']['otros'])) {
-                $total += $gasto['Gasto']['otros'];
-            }
-            
-            return $total;
-        }
-        
-        /**
-  	 * Callback que se ejecuta luego de cada find()
-         * Anade el total bruto, o sea, con el recargo de los impuestos
-  	 *
-  	 * @param array $results
-  	 * @return array $results
-  	 */
-        function afterFind($results) {
-            if (empty($results)) {
-                return null;
-            }
-            
-            foreach ($results as &$result) {
-                if (!empty($result['Gasto'])) {
-                    $result_aux = &$result;
-                    
-                    if (empty($result['Gasto']['importe_total'])) {
-                        if (!empty($result['TipoImpuesto'])) {
-                            $result['Gasto']['importe_total'] = $this->getTotalConImpuestos($result);
-                        }
-                        else {
-                            $result['Gasto']['importe_total'] = $result['Gasto']['importe_neto'];
-                        }
 
-                        unset($result_aux);
+                $this->data['Gasto']['importe_total'] = $sumaImpuestos + $this->data['Gasto']['importe_neto'];     
+            }
+            return true;
+        }
+       
+        
+        public function afterSave($created)
+        {
+            parent::afterSave($created);
+            
+            if (!empty($this->data['Gasto']['Impuesto'])) {
+                if (!$created){
+                        $this->Impuesto->deleteAll(array('Impuesto.gasto_id'=>$this->id ));
+                }
+    //                debug($this->data);die;
+                // guardar los impuestos
+                foreach ($this->data['Gasto']['Impuesto'] as $impId=>$imp){
+                    if (!empty($imp)) {
+                        $this->Impuesto->create();
+                        $nuevoImp = array(
+                            'gasto_id' => $this->id,
+                            'tipo_impuesto_id' => $impId,
+                            'importe' => $imp,
+                        );
+                        if (!$this->Impuesto->save($nuevoImp)){
+                            return false;
+                        }
                     }
                 }
             }
-
-            return $results;
+            
+            return true;
         }
 
+        
+        
+        public function find($conditions = null, $fields = array(), $order = null, $recursive = null)
+        {
+            if ($conditions == 'clasificacion') {
+                
+            }
+            
+            return parent::find($conditions, $fields, $order, $recursive);
+        }
 }
 ?>

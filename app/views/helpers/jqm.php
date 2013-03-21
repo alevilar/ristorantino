@@ -75,15 +75,55 @@ class JqmHelper extends AppHelper {
     
     
     public function datepicker($field, $ops = array() ){
-        $ops['data-role'] = 'datebox';
+        $ops['data-role'] = 'calbox';
         
         if (empty($ops['class'])) {
             $ops['class'] = '';
         }
         $ops['class'] .= 'datepicker';
         
-        return $this->Form->input($field, $ops);
+        return $this->input($field, $ops);
     }
         
+    public function date($field, $ops = array() ){
+        if (empty($ops['class'])) {
+            $ops['class'] = '';
+        }
+        $ops['type'] = 'date';
+        
+        $input = $this->Form->label($field).$this->Form->text($field, $ops);
+        $div = $this->Html->div('', $input,  array('data-role'=>"fieldcontain"));
+        return $div;
+    }
+    
+    
+    public function input($field, $ops = array() ){        
+        $input = $this->Form->input($field, $ops);
+        $div = $this->Html->div(null, $input,  array('data-role'=>"fieldcontain"));
+        return $div;
+    }
+    
+    
+    public function month($field, $ops = array() ){
+        $ops['options'] = array(
+            1 => 'Enero',
+            2 => 'Febrero',
+            3 => 'Marzo',
+            4 => 'Abril',
+            5 => 'Mayo',
+            6 => 'Junio',
+            7 => 'Julio',
+            8 => 'Agosto',
+            9 => 'Septiembre',
+            10 => 'Octubre',
+            11 => 'Noviembre',
+            12 => 'Diciembre',
+        );
+        
+        $input = $this->Form->input($field, $ops);
+        $div = $this->Html->div('', $input,  array('data-role'=>"fieldcontain"));
+        
+        return $div;
+    }
         
 }

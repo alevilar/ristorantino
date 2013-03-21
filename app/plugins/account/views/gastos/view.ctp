@@ -1,97 +1,46 @@
-     <?php  
-        echo $this->element('menuadmin');
-     ?>
+<?php $class = ($gasto['Gasto']['importe_pagado'] > $gasto['Gasto']['importe_total'])?'deuda':'pagado';?>
+<div class="imagen-pagado <?php echo $class ?>">
+<?php echo $html->image('pagado.png') ?>
+</div>
 
-<div class="gastos view">
-<h2><?php  __('Gasto');?></h2>
-	<dl><?php $i = 0; $class = '';?>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Id'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $gasto['Gasto']['id']; ?>
-			&nbsp;
-		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Cliente Id'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $gasto['Gasto']['cliente_id']; ?>
-			&nbsp;
-		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Clasificacion'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $gasto['Gasto']['clasificacion']; ?>
-			&nbsp;
-		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Tipo Factura Id'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $gasto['Gasto']['tipo_factura_id']; ?>
-			&nbsp;
-		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Factura Nro'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $gasto['Gasto']['factura_nro']; ?>
-			&nbsp;
-		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Factura Fecha'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $gasto['Gasto']['factura_fecha']; ?>
-			&nbsp;
-		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Importe Neto'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $gasto['Gasto']['importe_neto']; ?>
-			&nbsp;
-		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Iva A'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $gasto['Gasto']['iva_a']; ?>
-			&nbsp;
-		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Iva B'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $gasto['Gasto']['iva_b']; ?>
-			&nbsp;
-		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Iibb'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $gasto['Gasto']['iibb']; ?>
-			&nbsp;
-		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Imp Int'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $gasto['Gasto']['imp_int']; ?>
-			&nbsp;
-		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Percep Iva'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $gasto['Gasto']['percep_iva']; ?>
-			&nbsp;
-		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('No Grabado'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $gasto['Gasto']['no_gravado']; ?>
-			&nbsp;
-		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Otros'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $gasto['Gasto']['otros']; ?>
-			&nbsp;
-		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Creado'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $gasto['Gasto']['created']; ?>
-			&nbsp;
-		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Modificado'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $gasto['Gasto']['modified']; ?>
-			&nbsp;
-		</dd>
-	</dl>
-</div>
-<div class="actions">
-	<ul>
-		<li><?php echo $html->link(__('Edit Gasto', true), array('action' => 'edit', $gasto['Gasto']['id'])); ?> </li>
-		<li><?php echo $html->link(__('Delete Gasto', true), array('action' => 'delete', $gasto['Gasto']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $gasto['Gasto']['id'])); ?> </li>
-		<li><?php echo $html->link(__('List Gastos', true), array('action' => 'index')); ?> </li>
-		<li><?php echo $html->link(__('New Gasto', true), array('action' => 'add')); ?> </li>
-	</ul>
-</div>
+<h1>Gasto #<?php echo $gasto['Gasto']['id']?></h1>
+
+<h3><?php echo $gasto['TipoFactura']['name']; ?></h3>
+
+<p>Importe Neto: <?php echo $number->currency($gasto['Gasto']['importe_neto']) ?><br>
+<?php foreach ($gasto['Impuesto'] as $imp) { ?>
+    <?php echo $imp['TipoImpuesto']['name'] ?>: 
+    <?php echo $number->currency($imp['importe']) ?><br>
+    
+<?php } ?>
+</p>
+
+<p>Importe Total: <?php echo $number->currency($gasto['Gasto']['importe_total']) ?></p>
+<p>Importe Pagado: <?php echo $number->currency($gasto['Gasto']['importe_pagado']) ?></p>
+
+<p>
+    <?php if (!empty($gasto['Proveedor']['name'])){ ?>
+    Proveedor: <?php echo $gasto['Proveedor']['name']; ?><br>
+    <?php } ?>
+    Clasificación: <?php echo $gasto['Clasificacion']['name']; ?><br>
+</p>
+
+<?php echo $html->link('Editar', array('action'=>'edit', $gasto['Gasto']['id']))?>
+
+<?php if (!empty($gasto['Egreso'])) { ?>
+<h3>Pagos realizados sobre este Gasto</h3>
+<ul>
+<?php foreach ($gasto['Egreso'] as $pags){ ?>
+    <li>
+        <span class="tipo_de_pago"><?php echo $html->image($pags['TipoDePago']['image_url'], array('alt'=>$pags['TipoDePago']['name'], 'title'=>$pags['TipoDePago']['name'])); ?></span>
+        Fecha: <?php echo date('d-m-y', strtotime($pags['fecha']))?>
+        Importe: <?php echo $number->currency($pags['total'])?>
+        <?php echo $html->link('ir al egreso', array('controller'=>'egresos', 'action'=>'view', $pags['id'])) ?>
+    </li>
+<?php } ?>
+</ul>
+<?php } else {?>
+    <p class="alert">No hay ningún Egreso realizado para este gasto</p>
+<?php } ?>
+    
+    
