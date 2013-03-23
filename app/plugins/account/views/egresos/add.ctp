@@ -1,11 +1,12 @@
 <h3>Total adeudado que suman los gastos seleccionados: $<?php echo $suma_gastos?></h3>
     <?php    
-echo $form->create('Egreso', array('action'=>'save'));
+echo $form->create('Egreso', array('action'=>'save',  'data-ajax' => "false"));
 
-echo $jqm->input('tipo_de_pago_id', array('options'=>$tipo_de_pagos));
-echo $jqm->input('observacion');
-echo $jqm->date('fecha', array('default'=>date('Y-m-d', strtotime('now'))));
-echo $jqm->input('total', array('default'=>$suma_gastos));
+echo $form->input('tipo_de_pago_id', array('options'=>$tipo_de_pagos));
+echo $form->input('observacion');
+$date = date('Y-m-d', strtotime('now'));
+echo $form->input('fecha', array('default' => $date, 'type'=>'date' ));
+echo $form->input('total', array('default'=>$suma_gastos));
 
 
 

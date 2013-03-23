@@ -30,11 +30,11 @@
 <?php if (!empty($gasto['Egreso'])) { ?>
 <h3>Pagos realizados sobre este Gasto</h3>
 <ul>
-<?php foreach ($gasto['Egreso'] as $pags){ ?>
+<?php foreach ($gasto['Egreso'] as $pags){ ?>    
     <li>
         <span class="tipo_de_pago"><?php echo $html->image($pags['TipoDePago']['image_url'], array('alt'=>$pags['TipoDePago']['name'], 'title'=>$pags['TipoDePago']['name'])); ?></span>
         Fecha: <?php echo date('d-m-y', strtotime($pags['fecha']))?>
-        Importe: <?php echo $number->currency($pags['total'])?>
+        Importe: <?php echo $number->currency($pags['AccountEgresosGasto']['importe'])?>
         <?php echo $html->link('ir al egreso', array('controller'=>'egresos', 'action'=>'view', $pags['id'])) ?>
     </li>
 <?php } ?>

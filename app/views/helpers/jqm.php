@@ -83,26 +83,7 @@ class JqmHelper extends AppHelper {
         $ops['class'] .= 'datepicker';
         
         return $this->input($field, $ops);
-    }
-        
-    public function date($field, $ops = array() ){
-        if (empty($ops['class'])) {
-            $ops['class'] = '';
-        }
-        $ops['type'] = 'date';
-        
-        $input = $this->Form->label($field).$this->Form->text($field, $ops);
-        $div = $this->Html->div('', $input,  array('data-role'=>"fieldcontain"));
-        return $div;
-    }
-    
-    
-    public function input($field, $ops = array() ){        
-        $input = $this->Form->input($field, $ops);
-        $div = $this->Html->div(null, $input,  array('data-role'=>"fieldcontain"));
-        return $div;
-    }
-    
+    }        
     
     public function month($field, $ops = array() ){
         $ops['options'] = array(
@@ -120,10 +101,7 @@ class JqmHelper extends AppHelper {
             12 => 'Diciembre',
         );
         
-        $input = $this->Form->input($field, $ops);
-        $div = $this->Html->div('', $input,  array('data-role'=>"fieldcontain"));
-        
-        return $div;
+        return $this->Form->input($field, $ops);
     }
         
 }

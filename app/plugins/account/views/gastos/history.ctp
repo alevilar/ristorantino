@@ -21,7 +21,7 @@ function mostrarImpuestoDe($tipoImpuestoId, $vec)
 <div>
    <?php
     echo $jqm->month('mes', array('onchange' => 'this.form.submit()'));
-    echo $jqm->input('anio', array(
+    echo $form->input('anio', array(
         'label' => 'Año',
         'onchange' => 'this.form.submit()', 'default'=> date('Y', strtotime('now'))));
     ?>
@@ -37,12 +37,12 @@ function mostrarImpuestoDe($tipoImpuestoId, $vec)
             
             <div class="ui-block-a">
                 <?php
-                echo $jqm->input('clasificacion_id', array('empty' => 'Seleccionar', 'onchange' => 'this.form.submit()'));
+                echo $form->input('clasificacion_id', array('empty' => 'Seleccionar', 'onchange' => 'this.form.submit()'));
                 ?>
             </div>
             <div class="ui-block-b">
                 <?php
-                echo $jqm->input('proveedor_id', array('empty' => 'Seleccionar', 'onchange' => 'this.form.submit()'));
+                echo $form->input('proveedor_id', array('empty' => 'Seleccionar', 'onchange' => 'this.form.submit()'));
                 ?>
             </div>
             <div class="ui-block-c">
@@ -66,7 +66,6 @@ function mostrarImpuestoDe($tipoImpuestoId, $vec)
                 echo '<ul style="display: none">';
 	
                 foreach ($vec as $rr){
-//                    debug($rr);
                     if ($rr['Gasto']['total']) {
                         echo '<li>';
                         if (!empty($rr['Children'])){
@@ -75,7 +74,7 @@ function mostrarImpuestoDe($tipoImpuestoId, $vec)
                         echo " [".$rr['Gasto']['cantidad']." gastos] ";
                         echo $rr['Clasificacion']['name'];
                         echo " ::> Total: $".$rr['Gasto']['total'];
-                        echo " ::> Pagado: $".$rr['Gasto']['pagado'];
+                        echo " ::> Pagado: $".$rr['Gasto']['importe_pagado'];
                         if (!empty($rr['Children'])) {
                             mostralo($rr['Children']);
                         }
@@ -131,11 +130,19 @@ function mostrarImpuestoDe($tipoImpuestoId, $vec)
                         ?>
                         <tr class="<?php echo $classpagado; ?>">
                             <?php
-                            echo "<td>" . $g['Clasificacion']['name'] . "</td>";
+                            if (!empty($g['Clasificacion'])) {
+                                echo "<td>" . $g['Clasificacion']['name'] . "</td>";
+                            }
                             echo "<td>" . date('d-m-y', strtotime($g['Gasto']['fecha'])) . "</td>";
-                            echo "<td>" . $g['Proveedor']['name'] . "</td>";
-                            echo "<td>" . $g['Proveedor']['cuit'] . "</td>";
-                            echo "<td>" . $g['TipoFactura']['name'] . "</td>";
+                            if (!empty($g['Clasificacion'])) {
+                                echo "<td>" . $g['Proveedor']['name'] . "</td>";
+                            }
+                            if (!empty($g['Proveedor'])) {
+                                echo "<td>" . $g['Proveedor']['cuit'] . "</td>";
+                            }
+                            if (!empty($g['TipoFactura'])) {
+                                echo "<td>" . $g['TipoFactura']['name'] . "</td>";
+                            }
                             echo "<td>" . $g['Gasto']['factura_nro'] . "</td>";
                             echo "<td>" . $number->currency($g['Gasto']['importe_neto']) . "</td>";
                             ?>
@@ -145,7 +152,9 @@ function mostrarImpuestoDe($tipoImpuestoId, $vec)
                                 ?>
                                 <td>
                                     <?php
-                                    echo $number->currency(mostrarImpuestoDe($tid, $g['Impuesto']));
+                                    if (!empty($g['Impuesto'])) {
+                                        echo $number->currency(mostrarImpuestoDe($tid, $g['Impuesto']));
+                                    }
                                     ?>
                                 </td>
                                 <?php

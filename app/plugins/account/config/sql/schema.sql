@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS `account_tipo_impuestos`;
 CREATE TABLE IF NOT EXISTS `account_tipo_impuestos` (
 `id` int(11) NOT NULL AUTO_INCREMENT,
 `name` VARCHAR( 50 ) NOT NULL ,
-`porcentaje` FLOAT NOT NULL ,
+`porcentaje` DECIMAL( 2, 2 )  NOT NULL ,
 PRIMARY KEY (`id`)
 );
 
@@ -21,7 +21,7 @@ CREATE TABLE account_clasificaciones (
 DROP TABLE IF EXISTS `account_egresos`;
 CREATE TABLE IF NOT EXISTS `account_egresos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `total` FLOAT NOT NULL DEFAULT 0,
+  `total` DECIMAL( 6, 2 )  NOT NULL DEFAULT 0.00,
   `observacion` TEXT NULL,
   `tipo_de_pago_id` INTEGER(10) NOT NULL,
   `fecha` date NOT NULL,
@@ -33,8 +33,11 @@ PRIMARY KEY (`id`)
 DROP TABLE IF EXISTS `account_egresos_gastos`;
 CREATE TABLE IF NOT EXISTS `account_egresos_gastos` (
 `id` int(11) NOT NULL AUTO_INCREMENT,
-`gasto_id` INT DEFAULT NULL,
-`egreso_id` INT DEFAULT NULL,
+`gasto_id` INT NOT NULL,
+`egreso_id` INT NOT NULL,
+`importe` DECIMAL( 6, 2 )  NOT NULL ,
+`created` TIMESTAMP NULL ,
+`modified` TIMESTAMP NULL,
 PRIMARY KEY (`id`)
 );
 
@@ -46,9 +49,8 @@ CREATE TABLE `account_gastos` (
   `tipo_factura_id` int(11) DEFAULT NULL,
   `factura_nro` varchar(50) DEFAULT NULL,
   `fecha` date NOT NULL,
-  `importe_neto` float NOT NULL DEFAULT 0,
-  `importe_total` FLOAT NOT NULL DEFAULT 0,
-  `importe_pagado` float NOT NULL DEFAULT 0,
+  `importe_neto` DECIMAL( 6, 2 )  NOT NULL DEFAULT 0.00,
+  `importe_total` DECIMAL( 6, 2 )  NOT NULL DEFAULT 0.00,
   `observacion` TEXT NULL,
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
@@ -60,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `account_impuestos` (
 `id` int(11) NOT NULL AUTO_INCREMENT,
 `gasto_id` INT NOT NULL ,
 `tipo_impuesto_id` INT NOT NULL ,
-`importe` FLOAT NOT NULL DEFAULT  '0',
+`importe` DECIMAL( 6, 4 )  NOT NULL DEFAULT  0.0000,
 PRIMARY KEY ( `id` )
 );
 

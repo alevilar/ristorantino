@@ -10,6 +10,13 @@ class Clasificacion extends AccountAppModel {
         //The Associations below have been created with all possible keys, those that are not needed can be removed
 	var $hasMany = array('Gasto');
 
+        var $specialFieldImportePagado = '
+                        IFNULL((
+                        SELECT SUM( `aeg`.`importe` ) 
+                        FROM `account_egresos_gastos` AS `aeg` 
+                        LEFT JOIN `account_gastos` AS `g2`  on `g2`.id = `aeg`.`gasto_id` 
+                        WHERE `g2`.`clasificacion_id` = `Gasto`.`clasificacion_id`
+                        ),0) as importe_pagado';
         
         function __armar_hijos($padre = null, $vec = array()){            
             $vec['Children'] = $this->children($padre, true);
@@ -38,11 +45,17 @@ class Clasificacion extends AccountAppModel {
                 $gasto = $this->Gasto->find('all',array(
                    'fields' => array(
                        'count(1) as cantidad',
-                       'sum(Gasto.importe_total) as total', 
-                       'sum(Gasto.importe_pagado) as pagado'
+                       'sum(Gasto.importe_total) as total',
+                       ' IFNULL((
+                        SELECT SUM( `aeg`.`importe` ) 
+                        FROM `account_egresos_gastos` AS `aeg` 
+                        LEFT JOIN `account_gastos` AS `g2`  on `g2`.id = `aeg`.`gasto_id` 
+                        WHERE `g2`.`clasificacion_id` IS NULL
+                        ),0) as importe_pagado',
                        ),
                    'conditions' => $baseConditions,
                    'recursive' => -1,
+                   'group by' => 'Gasto.clasificacion_id'
                 ));
                 $vec['Gasto'] = $gasto[0][0];
                 $vec['Clasificacion'] = array(
@@ -76,8 +89,13 @@ class Clasificacion extends AccountAppModel {
                 $gasto = $this->Gasto->find('all',array(
                    'fields' => array(
                        'count(1) as cantidad',
-                       'sum(Gasto.importe_total) as total', 
-                       'sum(Gasto.importe_pagado) as pagado'
+                       'sum(Gasto.importe_total) as total',
+                       ' IFNULL((
+                        SELECT SUM( `aeg`.`importe` ) 
+                        FROM `account_egresos_gastos` AS `aeg` 
+                        LEFT JOIN `account_gastos` AS `g2`  on `g2`.id = `aeg`.`gasto_id` 
+                        WHERE `g2`.`clasificacion_id` IN ('. implode(",", $conds) .') 
+                        ),0) as importe_pagado',
                        ),
                    'conditions' => $conditions,
                    'recursive' => -1,

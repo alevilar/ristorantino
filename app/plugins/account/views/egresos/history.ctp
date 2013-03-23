@@ -2,7 +2,7 @@
     <?php
     echo $form->create('Egreso', array('action' => 'history', 'type' => 'get', 'name' => 'gasto_x_mes'));
     echo $jqm->month('mes', array('onchange' => 'this.form.submit()'));
-    echo $jqm->input('anio', array(
+    echo $form->input('anio', array(
         'label' => 'Año',
         'onchange' => 'this.form.submit()', 'default'=> date('Y', strtotime('now'))));
     ?>
@@ -45,13 +45,14 @@ foreach ($egresos as $g){
                 <ul data-role="listview">
                     <li data-role="list-divider">Listado de Gastos involucrados en este egreso</li>
                     <?php 
-                    
                     foreach ($g['Gasto'] as $ga){ ?>
                     <li>
                         
                         <?php 
-                        echo $html->link(
-                                $number->currency($ga['importe_total'])." (".date('d-m-Y',strtotime($ga['fecha'])).")", 
+                        echo $html->link(                                
+                                "Pagado: ".$number->currency($ga['AccountEgresosGasto']['importe'])." Total: ".
+                                $number->currency($ga['importe_total'])." (".date('d-m-Y',strtotime($ga['fecha'])).")"
+                                , 
                                 array(
                                     'controller'=>'gastos', 
                                     'action'=>'view', 
@@ -63,7 +64,6 @@ foreach ($egresos as $g){
                         ?>
                         <p>
                             <?php 
-                            echo $ga['observacion']
                             ?>
                         </p>
                         <?php } ?>

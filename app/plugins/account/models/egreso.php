@@ -8,7 +8,8 @@ class Egreso extends AccountAppModel {
                 'total' => array(
 			'numeric' => array(
 				'rule' => 'numeric',
-				'required' => true,
+				'allowEmpty' => false,
+                                'required' => true,
 				'message' => 'Debe ingresar un numero'
 			),
                         'gastos_pagos' => array(
@@ -17,16 +18,18 @@ class Egreso extends AccountAppModel {
                         ),
 		),
                 'fecha' => array(
-			'notEmpty' => array(
-				'rule' => VALID_NOT_EMPTY,
+			'date' => array(
+				'rule' => 'date',
+                                'message' => 'Ingrese una fecha válida',
+                                'allowEmpty' => false,
 				'required' => true,
-				'message' => 'Debe ingresar una fecha de egreso'
-			),
+			)
                     ),
 	);
         
 	var $belongsTo = array('TipoDePago');
 
+//        var $hasMany = array('Account.EgresoGasto');
         
         //The Associations below have been created with all possible keys, those that are not needed can be removed
 	var $hasAndBelongsToMany = array(
@@ -59,34 +62,55 @@ class Egreso extends AccountAppModel {
             }
         }
         
-        function beforeSave($options = array())
-        {
-            parent::beforeSave($options);
+        
+        function afterSave($created) {
+            // convierte el HABTM en HasMany
+            $join = 'AccountEgresosGasto';
+            $this->bindModel( array('hasMany' => array($join)) );
+            
+            $thisId = $this->id;
             
             // Cuando se realiza un egreso se van procesando cada
             // salida para verificar quel dicho egreso cubra el gasto
             // a medida que va cubriendo, el gasto es marcado como "pagado"
-            $gastos = $this->Gasto->find('all', array(
+            $gastos = $this->Gasto->find('list', array(
+                'fields' => array('Gasto.id', 'Gasto.importe_total'),
                 'recursive' => -1,
                 'conditions' => array(
                     'Gasto.id' => $this->data['Gasto']['Gasto'],
                 )
             ));
             $total = $this->data['Egreso']['total'];
-            foreach ($gastos as $g) {
-               $deuda = $g['Gasto']['importe_total']-$g['Gasto']['importe_pagado'];
-               $total -= $deuda;
-               
-               if ($total >= 0) {
-                   $importe_pagado =  $g['Gasto']['importe_total'];
-               } else {
-                   $restaPagar = $deuda+$total;
-                   $importe_pagado =  $restaPagar+$g['Gasto']['importe_pagado'];
+            $pagado = 0;
+            foreach ($gastos as $gastoId=>$gastoImporteTotal) {
+               $paraPagar = $gastoImporteTotal - $this->Gasto->importePagado( $gastoId ) ;
+               $loQueHabriaQuePagar = $total-$pagado;
+               if ($loQueHabriaQuePagar > 0) {
+                   if ($paraPagar  > $loQueHabriaQuePagar) {
+                       $paraPagar = $loQueHabriaQuePagar;
+                   }
+                   $pagado += $paraPagar;
+                   
+                   $this->{$join}->create(array(
+                        'gasto_id' => $gastoId,
+                        'egreso_id'  => $thisId,
+                        'importe'  => $paraPagar,
+                       ));         
+                    $this->{$join}->save();
                }
-               $this->Gasto->id = $g['Gasto']['id'];
-               $this->Gasto->saveField('importe_pagado', $importe_pagado);
-               return true;
+               
             }
+            return true;
+	}
+        
+        
+        function beforeSave($options = array())
+        {
+            parent::beforeSave($options);
+           
+            list($join) = $this->joinModel($this->hasAndBelongsToMany['Gasto']['with']);
+            $this->unbindModel( array('hasAndBelongsToMany' => array('Gasto')) );
+//            $this->bindModel( array('hasMany' => array($join)) );
             
             return true;
             
@@ -98,13 +122,16 @@ class Egreso extends AccountAppModel {
          * @return boolean
          */
         function gastos_pagos(){
-            $cant = $this->Gasto->find('count', array(
-                'conditions' => array(
-                    'Gasto.id' => $this->data['Gasto']['Gasto'],
-                    'Gasto.importe_pagado >= Gasto.importe_total',
-                )
-            ));
-            return ($cant == 0);
+            $gastosDeuda = $this->Gasto->enDeuda();
+            
+            $gastosSeleccionados = $this->data['Gasto']['Gasto'];
+
+            foreach ($gastosSeleccionados as $gs){
+                if (in_array($gs, $gastosDeuda)){
+                    return false;
+                }
+            }
+            return true;
         }
 }
 ?>

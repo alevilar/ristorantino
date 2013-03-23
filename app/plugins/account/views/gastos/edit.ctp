@@ -1,29 +1,37 @@
     
 <div class="gastos form">
-<?php echo $form->create('Gasto');?>
+<?php echo $form->create('Gasto', array( 'data-ajax' => "false"));?>
 	<fieldset>
 	<?php 
-		echo $jqm->input('proveedor_id', array('empty'=>'- Seleccione -'));
-		echo $jqm->input('clasificacion_id', array('empty'=>'- Seleccione -'));
-                echo $jqm->input('observacion');
-		echo $jqm->input('tipo_factura_id');
-		echo $jqm->input('factura_nro');
-                echo $jqm->date('fecha');
-		echo $jqm->input('importe_neto', array('disabled'=>true));                
+		echo $form->input('proveedor_id', array('empty'=>'- Seleccione -'));
+		echo $form->input('clasificacion_id', array('empty'=>'- Seleccione -'));
+                echo $form->input('observacion');
+		echo $form->input('tipo_factura_id');
+		echo $form->input('factura_nro');
+                echo $form->input('fecha', array('type'=>'date'));
+		echo $form->input('importe_neto', array('disabled'=>true));                
                 
                 //echo $form->input('importe_total');
                 ?>
                 <div id="impuestos">
                 <?php
+                function ponerImpuestoDe($form, $data, $tipoImpuesto) {
+                    $ti = $tipoImpuesto;
+                    foreach ( $data['Impuesto'] as $imps) {
+                        if ($imps['tipo_impuesto_id'] == $ti['TipoImpuesto']['id'] ){
+                            echo $form->input('Gasto.Impuesto.'.$ti['TipoImpuesto']['id'], array(
+                                'type' => 'text',
+                                'label' => $ti['TipoImpuesto']['name'],
+                                'data-porcent'=> $ti['TipoImpuesto']['porcentaje'],
+                                'class' => 'impuesto',
+                                'disabled'=>true,
+                                'value' => $imps['importe'],
+                            ));
+                        }
+                    }
+                }
                 foreach ($tipo_impuestos as $ti){
-                    
-                    echo $jqm->input('Gasto.Impuesto.'.$ti['TipoImpuesto']['id'], array(
-                        'type' => 'text',
-                        'label' => $ti['TipoImpuesto']['name'],
-                        'data-porcent'=> $ti['TipoImpuesto']['porcentaje'],
-                        'class' => 'impuesto',
-                        'disabled'=>true,
-                    ));
+                    ponerImpuestoDe($form, $this->data, $ti);
                 }
                 ?>
                 </div>

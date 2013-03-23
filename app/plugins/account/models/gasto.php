@@ -16,36 +16,38 @@ class Gasto extends AccountAppModel {
 //				'message' => 'Debe especificar un proveedor'
 //			)
 //		),
-//                'fecha' => array(
-//			'rule1' => array(
-//				'rule' => VALID_NOT_EMPTY,
-//				'required' => true,
-//				'message' => 'Debe especificar una fecha'
-//			)
-//		),
-                'tipo_factura_id' => array(
-			'rule1' => array(
-				'rule' => 'numeric',
+                'fecha' => array(
+			'date' => array(
+				'rule' => 'date',
+                                'message' => 'Ingrese una fecha válida',
+                                'allowEmpty' => false,
 				'required' => true,
+			)
+		),
+                'tipo_factura_id' => array(
+			'numeric' => array(
+				'rule' => 'numeric',
+				'required' => false,
 				'message' => 'Debe especificar un tipo de factura'
 			)
 		),
                 'importe_neto' => array(
-			'rule1' => array(
+			'numeric' => array(
 				'rule' => 'numeric',
-				'allowEmpty' => true,
+				'allowEmpty' => false,
+                                'required' => true,
 				'message' => 'Debe especificar un importe neto numerico'
 			)
 		),
                 'importe_total' => array(
-			'rule1' => array(
+			'numeric' => array(
 				'rule' => 'numeric',
 				'allowEmpty' => true,
 				'message' => 'Debe especificar un importe total numerico'
 			)
 		),
                 'otros' => array(
-			'rule1' => array(
+			'numeric' => array(
 				'rule' => 'numeric',
 				'allowEmpty' => true,
 				'message' => 'Los otros importes deben ser numericos'
@@ -128,8 +130,7 @@ class Gasto extends AccountAppModel {
                 if (!$created){
                         $this->Impuesto->deleteAll(array('Impuesto.gasto_id'=>$this->id ));
                 }
-    //                debug($this->data);die;
-                // guardar los impuestos
+                
                 foreach ($this->data['Gasto']['Impuesto'] as $impId=>$imp){
                     if (!empty($imp)) {
                         $this->Impuesto->create();
@@ -147,16 +148,75 @@ class Gasto extends AccountAppModel {
             
             return true;
         }
+        
+        
+        /**
+         * Devuelve todos los gastos que adeudan pagos
+         * o sea, cuyo importe_total no llega a ser cubierto con los pagos realizados
+         * @return array de Gastos
+         */
+        public  function enDeuda(){
+            $fieldContain['recursive'] = -1;
+            $fieldContain['fields'] = array('Gasto.id','Gasto.id');
+            $fieldContain['conditions'] = array(
+                'IFNULL((SELECT SUM(  `aeg`.`importe` ) 
+                        FROM account_egresos_gastos AS aeg
+                        WHERE gasto_id = `Gasto`.`id`
+                        GROUP BY gasto_id) 
+                        , 0) < `Gasto`.`importe_total`',
+            );
+            $ret = parent::find('list', $fieldContain);
+
+            return $this->find('all', array('conditions'=>array('Gasto.id'=>$ret)));
+        }
 
         
+
+        /**
+         * Indica la sumatoria de todos los pagos realizados para ese gasto
+         * @param integer $id gasto_id
+         * @return $ importe pagado
+         */
+        public function importePagado($id = null){
+            $importePagado = 0;
+            
+            if (empty($id)) {
+                $id = $this->id;
+            }
+            
+            $fieldContain['contain'] = 'Egreso';  
+            $fieldContain['conditions'] = array('Gasto.id'=>$id);
+            $coso = parent::find('first', $fieldContain);
+
+            if (!empty($coso['Egreso'])) {
+                foreach ($coso['Egreso'] as $eg){
+                     $importePagado += $eg['AccountEgresosGasto']['importe'];
+                }
+            }
+            
+            return $importePagado;
+        }
         
         public function find($conditions = null, $fields = array(), $order = null, $recursive = null)
         {
-            if ($conditions == 'clasificacion') {
+            $ret = parent::find($conditions, $fields, $order, $recursive);
+                       
+            if (is_array($ret) && ($conditions == 'all' || $conditions == 'first') ) {
+                if ($conditions == 'first') {
+                    $ret = array($ret);
+                }
                 
+                foreach ($ret as &$g){
+                    if (!empty($g['Gasto'])) {
+                        $g['Gasto']['importe_pagado'] = $this->importePagado($g['Gasto']['id']);                    
+                    }
+                }
+
+                if ($conditions == 'first') {
+                    $ret = $ret[0];
+                }
             }
-            
-            return parent::find($conditions, $fields, $order, $recursive);
+            return $ret;
         }
 }
 ?>

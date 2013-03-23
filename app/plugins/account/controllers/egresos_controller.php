@@ -44,10 +44,6 @@ class EgresosController extends AccountAppController {
 
         
         
-        function beforeFilter() {
-            parent::beforeFilter();
-            $this->rutaUrl_for_layout[] =array('name'=> 'Contabilidad','link'=>'/account' );
-        }
         
         function add($gasto_id = null){
             $gastos = array();
@@ -60,7 +56,7 @@ class EgresosController extends AccountAppController {
             
             
             if (!empty($this->data['Gasto'])){
-                // re armo el array de gastos limpiando los que no van
+                // re armo el array de gastos limpiando los que no fueron seleccionados para pagar
                 foreach ($this->data['Gasto'] as $g){
                     if ($g['gasto_seleccionado']) {
                         $gastos[] = $g['gasto_seleccionado'];
@@ -69,7 +65,7 @@ class EgresosController extends AccountAppController {
             }
             
             if (!empty($gastos)){
-                // calculo la suma total del los gastos $$
+                // calculo la suma total del los gastos $$ seleccionados
                 $gastosAll = $this->Egreso->Gasto->find('all', array(
                     'conditions' => array(
                         'Gasto.id' => $gastos,
@@ -104,10 +100,10 @@ class EgresosController extends AccountAppController {
             if (!empty($this->data)){
                 $this->Egreso->create();
                 if ($this->Egreso->save($this->data)){
-                    $this->flash('El Egreso fue guardado correctamente', array('controller'=>'gastos', 'action'=>'index'));
+                    $this->Session->setFlash('El Egreso fue guardado correctamente');
                     $this->redirect(array('controller'=>'gastos', 'action'=>'index'));
                 } else {
-                    $this->flash('Error al guardar el egreso', array('controller'=>'gastos', 'action'=>'index'));
+                    $this->Session->setFlash('Error al guardar el egreso');
                 }
             }
         }
