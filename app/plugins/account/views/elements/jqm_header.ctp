@@ -5,7 +5,6 @@
                     <li><?php echo $html->link(__('Gastos Pendientes de Egreso', true), array('controller'=>'gastos', 'action' => 'index')); ?></li>
                     <li><?php echo $html->link(__('Historico de Gastos', true), array('controller'=>'gastos', 'action' => 'history')); ?></li>
                     <li><?php echo $html->link(__('Historico de Pagos (Salidas)', true), array('controller'=>'egresos','action' => 'history')); ?></li>
-                    <li><?php echo $html->link('FRUTA', array('controller'=>'gastos','action' => 'sala')); ?></li>
                 </ul>
 	</div><!-- /navbar -->
 </div><!-- /footer -->
