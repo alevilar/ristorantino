@@ -1,6 +1,6 @@
     
 
-    <?php echo $html->link(__('Crear Nuevo gasto', true), array('controller' => 'gastos', 'action' => 'add'), array('data-role' => 'button', 'data-icon' => 'plus', 'data-inline' => 'true', 'data-theme' => 'b')); ?>
+    <?php echo $html->link(__('Crear Nuevo gasto / factura', true), array('controller' => 'gastos', 'action' => 'add'), array('data-role' => 'button', 'data-icon' => 'plus', 'data-inline' => 'true', 'data-theme' => 'b')); ?>
 
 
     <br><br>
@@ -64,7 +64,8 @@
 
         <div style="clear: both"></div>
         <?php
-        echo $form->end('Nuevo egreso');
+        echo $form->submit('Nuevo egreso', array('disabled'=> (count($gastos) == 0) ));
+        echo $form->end();
         ?>
         
     </div>

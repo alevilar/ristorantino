@@ -10,57 +10,18 @@ function mostrarImpuestoDe($tipoImpuestoId, $vec)
     return 0;
 }
 
-//debug($gastos);
+echo $this->element('form_mini_year_month_search');
 ?>
-
-
- <?php
-    echo $form->create('Gasto', array('action' => 'history', 'type' => 'get', 'name' => 'gasto_x_mes'));
-    ?>
-
-<div>
-   <?php
-    echo $jqm->month('mes', array('onchange' => 'this.form.submit()'));
-    echo $form->input('anio', array(
-        'label' => 'Año',
-        'onchange' => 'this.form.submit()', 'default'=> date('Y', strtotime('now'))));
-    ?>
-</div>
-
 <div data-role="collapsible-set">
 
 
-
-    <div data-role="collapsible" data-theme="c" data-content-theme="c">
-        <h3>Búsqueda Avanzada</h3>
-        <div  data-theme="a"  class="ui-grid-b">
-            
-            <div class="ui-block-a">
-                <?php
-                echo $form->input('clasificacion_id', array('empty' => 'Seleccionar', 'onchange' => 'this.form.submit()'));
-                ?>
-            </div>
-            <div class="ui-block-b">
-                <?php
-                echo $form->input('proveedor_id', array('empty' => 'Seleccionar', 'onchange' => 'this.form.submit()'));
-                ?>
-            </div>
-            <div class="ui-block-c">
-                <?php
-                echo $html->link('Resetear formulario', array('action'=>'history'), array('data-role' => 'button', 'data-theme' => 'e'));
-                ?>
-            </div>
-        </div>
-    </div>
-    
      <?php
     echo $form->end();
     ?>
 
-    <div data-role="collapsible" data-theme="e" id="listado-gastos-clasif" data-content-theme="e"  >
+    <div data-role="collapsible" data-collapsed="false" data-theme="e" id="listado-gastos-clasif" data-content-theme="e"  >
         <h3>Resumen por Clasificación del Gasto</h3>
-        
-            <?php
+            <?php            
             function mostralo($vec){
                 echo '<div>';
                 echo '<ul style="display: none">';

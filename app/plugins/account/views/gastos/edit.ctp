@@ -3,6 +3,7 @@
 <?php echo $form->create('Gasto', array( 'data-ajax' => "false"));?>
 	<fieldset>
 	<?php 
+                echo $form->input('id');
 		echo $form->input('proveedor_id', array('empty'=>'- Seleccione -'));
 		echo $form->input('clasificacion_id', array('empty'=>'- Seleccione -'));
                 echo $form->input('observacion');

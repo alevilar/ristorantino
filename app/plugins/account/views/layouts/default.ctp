@@ -80,5 +80,21 @@
 <?php echo $this->element('jqm_footer'); ?>
             
         </div>
+                
+        
+        <div data-role="page" id="option-list">
+            <div data-role="header" data-theme="d">
+                    <h1>Opciones</h1>
+            </div>
+            
+            <div data-role="content" data-theme="c">
+                <ul data-role="listview">
+                    <li><?php echo $html->link('Volver a Página Principal', '/', array('data-ajax'=>'false'))?></li>
+                    <li><?php echo $html->link('Proveedores', array('controller'=>'proveedores'), array())?></li>
+                    <li><?php echo $html->link('Impuestos', array('controller'=>'tipo_impuestos'), array())?></li>
+                    <li><?php echo $html->link('Clasificaciones', array('controller'=>'clasificaciones'), array())?></li>
+                </ul>
+            </div>
+        </div>
     </body>
 </html>

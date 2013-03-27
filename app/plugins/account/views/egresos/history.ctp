@@ -1,12 +1,6 @@
-<div>
-    <?php
-    echo $form->create('Egreso', array('action' => 'history', 'type' => 'get', 'name' => 'gasto_x_mes'));
-    echo $jqm->month('mes', array('onchange' => 'this.form.submit()'));
-    echo $form->input('anio', array(
-        'label' => 'Año',
-        'onchange' => 'this.form.submit()', 'default'=> date('Y', strtotime('now'))));
-    ?>
-</div>
+<?php
+echo $this->element('form_mini_year_month_search');
+?>
 
 
 <ul class="pagos-list">
@@ -27,11 +21,15 @@ foreach ($egresos as $g){
     ?>
     <li>
         <div data-role="collapsible" data-theme="c" data-content-theme="c">
-        <h3><?php
+        
+        <h3>
+            <?php echo $html->image($g['TipoDePago']['image_url'], array('class' => 'tipo_de_pago')); ?>
+            <?php
+        
         echo "<span class='fecha'>(".date('d-m-y', strtotime($g['Egreso']['fecha'])).")</span>";
         echo "<span class='total'> ".$number->currency($g['Egreso']['total'])."</span>";
         
-        echo "<span class='tipo_de_pago'> " . $html->image($g['TipoDePago']['image_url']) . "</span>";
+        
 
 
         if (!empty($g['Egreso']['observacion'])) {
@@ -43,7 +41,7 @@ foreach ($egresos as $g){
             </p>
             <div>
                 <ul data-role="listview">
-                    <li data-role="list-divider">Listado de Gastos involucrados en este egreso</li>
+                    <li data-role="list-divider">Listado de Gastos involucrados en este Pago</li>
                     <?php 
                     foreach ($g['Gasto'] as $ga){ ?>
                     <li>
@@ -64,6 +62,7 @@ foreach ($egresos as $g){
                         ?>
                         <p>
                             <?php 
+                            echo $ga['observacion'];
                             ?>
                         </p>
                         <?php } ?>

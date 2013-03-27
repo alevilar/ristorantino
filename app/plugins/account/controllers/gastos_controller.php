@@ -101,7 +101,6 @@ class GastosController extends AccountAppController
 
     function add()
     {
-        debug($this->layout);
         $this->pageTitle = 'Nuevo Gasto';
         if (!empty($this->data)) {
 
@@ -120,13 +119,12 @@ class GastosController extends AccountAppController
         }
 
         $tipo_facturas = $this->Gasto->TipoFactura->find('list');
-        $tipo_impuestos = $this->Gasto->TipoImpuesto->find('all', array('recursive' => -1));
+         $this->set('tipo_impuestos', $this->Gasto->TipoImpuesto->find('all', array('recursive' => -1)));
         $impuestos = $this->Gasto->Impuesto->find('all');
         $clasificaciones = $this->Gasto->Clasificacion->generatetreelist();
         $proveedores = $this->Gasto->Proveedor->find('list', array(
             'order' => array('Proveedor.name')
                 ));
-        $this->set('tipo_impuestos', $tipo_impuestos);
         $this->set(compact('proveedores', 'tipo_facturas', 'clasificaciones'));
     }
 
@@ -138,9 +136,15 @@ class GastosController extends AccountAppController
         }
 
         if (!empty($this->data)) {
-
-            $this->Gasto->create();
-            if ($this->Gasto->save($this->data)) {
+            $fields = array(
+                        'proveedor_id', 
+                        'clasificacion_id', 
+                        'observacion',
+                        'tipo_factura_id',
+                        'factura_nro',
+                        'fecha',
+                    );
+            if ($this->Gasto->save($this->data, null, $fields)) {
                 $this->Session->setFlash(__('The Gasto has been saved', true));
 
                 if (!empty($this->data['Gasto']['pagar'])) {

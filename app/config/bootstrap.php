@@ -1,4 +1,5 @@
 <?php
+
 /* SVN FILE: $Id$ */
 /**
  * Short description for file.
@@ -45,36 +46,35 @@
 
 define('DATETIME_NULL', '0000-00-00 00:00:00');
 
-define('MESA_ABIERTA' , 1);
-define('MESA_CERRADA' , 2);
-define('MESA_COBRADA' , 3);
+define('MESA_ABIERTA', 1);
+define('MESA_CERRADA', 2);
+define('MESA_COBRADA', 3);
 
 
 define('MENU_FOLDER', 'menu');
-define('IMG_MENU', WWW_ROOT.'img/'.MENU_FOLDER.'/');
+define('IMG_MENU', WWW_ROOT . 'img/' . MENU_FOLDER . '/');
 
 
 $estadosMesaMsg = array(
-            MESA_ABIERTA => 'Abierta', 
-            MESA_CERRADA => 'Cerrada', 
-            MESA_COBRADA => 'Cobrada',
+    MESA_ABIERTA => 'Abierta',
+    MESA_CERRADA => 'Cerrada',
+    MESA_COBRADA => 'Cobrada',
 );
 
+function comandosDeReinicializacionServidorImpresion($devName = null)
+{
 
-function comandosDeReinicializacionServidorImpresion($devName = null) {
-    
-    debug( exec("sh /etc/init.d/spooler_srv stop") );
-    $devName = empty($devName) ? $devName : ' '.$devName;
+    debug(exec("sh /etc/init.d/spooler_srv stop"));
+    $devName = empty($devName) ? $devName : ' ' . $devName;
     debug($devName);
-    debug( exec("sh /etc/init.d/spooler_srv start$devName") );
-    exec("cd /");	
+    debug(exec("sh /etc/init.d/spooler_srv start$devName"));
+    exec("cd /");
 }
 
-
-function jsDate($date){
-    return date( 'Y-m-d H:i:s', strtotime($date));
+function jsDate($date)
+{
+    return date('Y-m-d H:i:s', strtotime($date));
 }
-
 
 /**
  * Mejora segun politicas del negocio para la funcion de redondeo
@@ -83,16 +83,67 @@ function jsDate($date){
  * @param integer $precision
  * @param const $extra flags de la funcion round() de PHP ver: http://php.net/manual/es/function.round.php
  */
-function cqs_round($number, $precision = 0){
-    if($precision == 0){
-        $num =  ceil($number);
+function cqs_round($number, $precision = 0)
+{
+    if ($precision == 0) {
+        $num = ceil($number);
     } else {
-        $num =  round($number, $precision);
+        $num = round($number, $precision);
     }
     return $num;
 }
 
+function validate_cuit_cuil($cuit)
+{
 
+    $coeficiente[0] = 5;
+    $coeficiente[1] = 4;
+    $coeficiente[2] = 3;
+    $coeficiente[3] = 2;
+    $coeficiente[4] = 7;
+    $coeficiente[5] = 6;
+    $coeficiente[6] = 5;
+    $coeficiente[7] = 4;
+    $coeficiente[8] = 3;
+    $coeficiente[9] = 2;
+
+    $ok = true;
+    $resultado = 1;
+    $cuit_rearmado = "";
+
+    for ($i = 0; $i < strlen($cuit); $i = $i + 1) {    //separo cualquier caracter que no tenga que ver con numeros
+        if ((Ord(substr($cuit, $i, 1)) >= 48) && (Ord(substr($cuit, $i, 1)) <= 57)) {
+            $cuit_rearmado = $cuit_rearmado . substr($cuit, $i, 1);
+        }
+    }
+
+    if (strlen($cuit_rearmado) <> 11) {  // si no estan todos los digitos
+        $ok = false;
+    } else {
+        $sumador = 0;
+        $verificador = substr($cuit_rearmado, 10, 1); //tomo el digito verificador
+
+        for ($i = 0; $i <= 9; $i = $i + 1) {
+            $sumador = $sumador + (substr($cuit_rearmado, $i, 1)) * $coeficiente[$i]; //separo cada digito y lo multiplico por el coeficiente
+        }
+
+        $resultado = $sumador % 11;
+        if ($resultado != 0) {
+            $resultado = 11 - $resultado;  //saco el digito verificador
+        }
+
+        $veri_nro = intval($verificador);
+
+        if ($veri_nro == $resultado) {
+            $ok = true;
+            $cuit_rearmado = substr($cuit_rearmado, 0, 2) . "-" . substr($cuit_rearmado, 2, 8) . "-" . substr($cuit_rearmado, 10, 1);
+        } else {
+            $ok = false;
+        }
+    }
+
+    return $ok;
+}
 
 //
 //function jqmGrid_getBlockNumber($grid, $currentNumber) {

@@ -3,6 +3,8 @@
 class AccountAppController extends AppController
 {
 
+    var $helpers = array('Html', 'Form','Javascript', 'Jqm');
+    
     function beforeFilter()
     {
         parent::beforeFilter();

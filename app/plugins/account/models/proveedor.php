@@ -11,7 +11,13 @@ class Proveedor extends AccountAppModel {
 				'required' => true,
 				'message' => 'Debe especificar un nombre'
 			)
-		)
+		),
+                'cuit' => array(
+                    'cuit' => array(
+                            'rule' => 'validate_cuit',
+                            'message' => 'CUIT inválido',
+                    )
+                ),
 	);
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
@@ -30,6 +36,13 @@ class Proveedor extends AccountAppModel {
 			'counterQuery' => ''
 		)
 	);
+        
+        function validate_cuit(){
+            if (!empty($this->data['Proveedor']['cuit'])) {
+                 return validate_cuit_cuil($this->data['Proveedor']['cuit']);
+            }
+            return true;
+        }
 
 }
 ?>

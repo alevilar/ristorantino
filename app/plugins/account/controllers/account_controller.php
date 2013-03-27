@@ -11,7 +11,7 @@ class AccountController extends AccountAppController {
         }
         
 	function index(){
-
+            $this->redirect(array('controller'=>'gastos', 'action'=>'index'));
 	}
         
         function arqueo($fecha = null) {            

@@ -24,12 +24,11 @@ class ProveedoresController extends AppController {
 	}
 
 	function add() {
-           $this->rutaUrl_for_layout[] =array('name'=> 'Proveedores','link'=>'/account/proveedores' );
 		if (!empty($this->data)) {
 			$this->Proveedor->create();
 			if ($this->Proveedor->save($this->data)) {
 				$this->Session->setFlash(__('The Proveedor has been saved', true));
-				$this->redirect(array('action' => 'index'));
+                                unset($this->data);
 			} else {
 				$this->Session->setFlash(__('The Proveedor could not be saved. Please, try again.', true));
 			}

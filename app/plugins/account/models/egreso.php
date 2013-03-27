@@ -2,7 +2,7 @@
 class Egreso extends AccountAppModel {
 
 	var $name = 'Egreso';
-        var $order = array('Egreso.created' => 'DESC');
+        var $order = array('Egreso.fecha' => 'DESC', 'Egreso.modified' => 'DESC');
         
         var $validate = array(
                 'total' => array(
@@ -60,6 +60,34 @@ class Egreso extends AccountAppModel {
             if(!empty($this->data['Gasto']['seleccionados'])){
                 
             }
+        }
+        
+        function pagosDelDia($dateDesde, $dateHasta = null){
+            if (empty($dateHasta)){
+                $dateHasta = $dateDesde;
+                
+            }
+            $egreso = $this->find('all', array(
+              'fields'  => array(
+                  'DATE(Egreso.fecha) as fecha',
+                  'sum(Egreso.total) as importe'
+              ),
+              'conditions' => array(
+                  'DATE(Egreso.fecha) >=' => $dateDesde,
+                  'DATE(Egreso.fecha) <=' => $dateHasta,
+              ),
+              'group' => array('DATE(Egreso.fecha)'),
+            ));
+            $salida = array();
+            foreach ($egreso as $e){
+                $salida[] = array(
+                    'Egreso' => array(
+                        'importe' => $e[0]['importe'],
+                        'fecha' => $e[0]['fecha'],
+                    )
+                );
+            }
+            return $salida;
         }
         
         

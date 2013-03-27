@@ -11,6 +11,7 @@ class EgresosController extends AccountAppController {
         
         
         function history() {
+                $this->pageTitle = "Pagos Realizados";
 		$this->Egreso->recursive = 1;    
                 $conditions = array();
 

@@ -20,6 +20,19 @@
                     return lineas; 
 
             } 
+            
+            egresos.getCoordenadas = function(){
+                    var lineas = [];
+                    $.each(egresos,function(l){  
+                       var coordxLinea = [];
+                        $.each(egresos[l],function(i){
+                            var coordMesa = [egresos[l][i].Egreso.fecha, parseFloat(egresos[l][i].Egreso.importe)];
+                            coordxLinea.push(coordMesa);  
+                        })
+                        lineas.push(coordxLinea);
+                    });
+                    return lineas; 
+            } 
       
             dates = $( ".datepicker" ).datepicker({
                     defaultDate: "+1w",
@@ -41,12 +54,17 @@
  
             $.jqplot.config.enablePlugins = true;    
             
-   
+                 
      
     //s1 = [['2011-03',220],['2011-04',290],['2011-05',330],['2011-06',330]];
-   
-               plot1 = $.jqplot('chart1', mesas.getCoordenadas() ,{
-                   title: 'Ventas',
+    var cords1 = mesas.getCoordenadas();
+    
+    var cords2 = egresos.getCoordenadas();
+    
+    var cords = [cords1[0], cords2[0]];
+    
+               plot1 = $.jqplot('chart1',  cords,{
+                   title: 'Ventas y Pagos',
                    axes: {
                        xaxis: {
                            renderer: $.jqplot.DateAxisRenderer,
@@ -65,6 +83,10 @@
                        tooltipAxes: 'both'
                    }
                });
+               
+               
+               
+               
 
         });
 

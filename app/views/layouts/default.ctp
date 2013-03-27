@@ -86,7 +86,7 @@
                 <div class="clear"></div>
                         
             
-                <div id="content" class="grid_12">
+                <div id="content">
                     <?php echo $content_for_layout; ?>
                 </div>
                 <div class="clear"></div>

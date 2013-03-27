@@ -2,9 +2,9 @@
 
 class StatsController extends StatsAppController {
 
-    var $helpers = array('Html', 'Form', 'Ajax');
+    var $helpers = array('Html', 'Form', 'Ajax', 'Number');
     var $components = array('Auth', 'RequestHandler');
-    var $uses = array('Mesa');
+    var $uses = array('Mesa', 'Account.Egreso');
 
     function year() {
         //SELECT SUM(total),YEAR(mesas.created) FROM `mesas` GROUP BY YEAR(mesas.created) ORDER BY YEAR(mesas.created) asc
@@ -31,6 +31,7 @@ class StatsController extends StatsAppController {
      * 
      */
     function mesas_total($groupByRange = 'day') {
+        $egresos = array();
         $horarioCorte = Configure::read('Horario.corte_del_dia');
         $desdeHasta = '1 = 1';
         $limit = '';
@@ -42,18 +43,32 @@ class StatsController extends StatsAppController {
             $this->data['Linea'][0]['desde'] = date('d/m/Y',strtotime('-1 month'));
         }
         
+        
+         
+        
         $mesasLineas = array();
         if ( !empty($this->data['Linea'] )) {
             $lineas = array();
             foreach ($this->data['Linea'] as $linea) {
                 if(!empty($linea['desde']) && !empty($linea['hasta']))
                     {
+                    
                     list($dia, $mes, $anio) = explode("/", $linea['desde']);
                     $desde = $anio."-".$mes."-".$dia;
 
                     list($dia, $mes, $anio) = explode("/", $linea['hasta']);
                     $hasta = $anio."-".$mes."-".$dia;
                     
+                    
+                    // primero buscar los egresos del intervalo seleccionado
+                    $egresos = $this->Egreso->pagosDelDia($desde, $hasta);
+                    foreach ($egresos as &$e){
+                        $e['Egreso']['fecha'] = date('d-M-y',strtotime($e['Egreso']['fecha']));
+                    }
+                    $egresos = array($egresos);
+                    
+                    
+                    // luego, lo mas largo: buscar las mesas
                     $fields = array(
                          'sum(m.cant_comensales) as "cant_cubiertos"' ,
                          'sum(m.subtotal) as "subtotal"', 
@@ -94,6 +109,7 @@ class StatsController extends StatsAppController {
                         'group' => $group,
                     ));
                     
+                    
                     $resumenCuadro = array(
                         'total' => 0,
                         'cubiertos' => 0,
@@ -115,7 +131,8 @@ class StatsController extends StatsAppController {
                 }
             }
         }
-
+        
+        $this->set('egresos', $egresos);
         $this->set('mesas', $mesasLineas);
         $this->set('resumenCuadro', $resumenCuadro);
     }

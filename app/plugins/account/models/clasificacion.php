@@ -10,13 +10,6 @@ class Clasificacion extends AccountAppModel {
         //The Associations below have been created with all possible keys, those that are not needed can be removed
 	var $hasMany = array('Gasto');
 
-        var $specialFieldImportePagado = '
-                        IFNULL((
-                        SELECT SUM( `aeg`.`importe` ) 
-                        FROM `account_egresos_gastos` AS `aeg` 
-                        LEFT JOIN `account_gastos` AS `g2`  on `g2`.id = `aeg`.`gasto_id` 
-                        WHERE `g2`.`clasificacion_id` = `Gasto`.`clasificacion_id`
-                        ),0) as importe_pagado';
         
         function __armar_hijos($padre = null, $vec = array()){            
             $vec['Children'] = $this->children($padre, true);
@@ -31,27 +24,44 @@ class Clasificacion extends AccountAppModel {
                 }
 
                 foreach ($vec['Children'] as $cId=>$c){
-                    $this->__armar_hijos($c['Clasificacion']['id'], &$vec['Children'][$cId]);
+                    $vec['Children'][$cId] = $this->__armar_hijos($c['Clasificacion']['id'], $vec['Children'][$cId]);
                 }
             }
             return $vec;
         }
         
         
-        function __gastos_sin_clasificar($baseConditions){
-                
-                $baseConditions[] = 'Gasto.clasificacion_id IS NULL ';
+        function __subQueryDeEgresosGastos($conditions){
+             $dbo = $this->getDataSource();  
+             $gastosList = $this->Gasto->find('list', array(
+                 'conditions'=>$conditions, 
+                 'fields'=> array('id','id')
+                 ));
+             
+             $subQuery = $dbo->buildStatement(
+                array(
+                    'fields' => array('sum(`Aeg`.`importe`)'),
+                    'table' => 'account_egresos_gastos',
+                    'alias' => 'Aeg',
+                    'limit' => null,
+                    'offset' => null,
+                    'joins' => array(),
+                    'conditions' => array('Aeg.gasto_id' => $gastosList),
+                    'order' => null,
+                    'group' => null
+                ), $this
+            );      
+            return $subQuery;
+        }
+        
+        function __gastos_sin_clasificar($baseConditions = array()){
+            $baseConditions[] = 'Gasto.clasificacion_id IS NULL ';
                  
                 $gasto = $this->Gasto->find('all',array(
                    'fields' => array(
                        'count(1) as cantidad',
                        'sum(Gasto.importe_total) as total',
-                       ' IFNULL((
-                        SELECT SUM( `aeg`.`importe` ) 
-                        FROM `account_egresos_gastos` AS `aeg` 
-                        LEFT JOIN `account_gastos` AS `g2`  on `g2`.id = `aeg`.`gasto_id` 
-                        WHERE `g2`.`clasificacion_id` IS NULL
-                        ),0) as importe_pagado',
+                       "(".$this->__subQueryDeEgresosGastos($baseConditions).") as importe_pagado",
                        ),
                    'conditions' => $baseConditions,
                    'recursive' => -1,
@@ -76,7 +86,7 @@ class Clasificacion extends AccountAppModel {
                 
                 
                  if (!empty($c['Children'])){
-                    $this->__gastos_recursivos(&$c['Children']);
+                    $c['Children'] = $this->__gastos_recursivos($c['Children']);
                  }
                  
                  if (!empty($c['Todos'])){
@@ -90,12 +100,7 @@ class Clasificacion extends AccountAppModel {
                    'fields' => array(
                        'count(1) as cantidad',
                        'sum(Gasto.importe_total) as total',
-                       ' IFNULL((
-                        SELECT SUM( `aeg`.`importe` ) 
-                        FROM `account_egresos_gastos` AS `aeg` 
-                        LEFT JOIN `account_gastos` AS `g2`  on `g2`.id = `aeg`.`gasto_id` 
-                        WHERE `g2`.`clasificacion_id` IN ('. implode(",", $conds) .') 
-                        ),0) as importe_pagado',
+                       "(".$this->__subQueryDeEgresosGastos($baseConditions).") as importe_pagado",
                        ),
                    'conditions' => $conditions,
                    'recursive' => -1,
@@ -103,7 +108,7 @@ class Clasificacion extends AccountAppModel {
                 $c['Gasto'] = $gasto[0][0];
                 
             }
-            
+            return $clasificaciones;
         }
  
         
@@ -122,7 +127,7 @@ class Clasificacion extends AccountAppModel {
             
             $this->recursive = -1;
             $clasificaciones = $this->__armar_hijos();            
-            $this->__gastos_recursivos(&$clasificaciones['Children'], $cond);  
+            $clasificaciones['Children'] = $this->__gastos_recursivos($clasificaciones['Children'], $cond);  
             
             $clasificaciones['Children'][] = $this->__gastos_sin_clasificar($cond);  
             

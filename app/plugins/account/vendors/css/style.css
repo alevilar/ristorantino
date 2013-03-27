@@ -6,7 +6,7 @@
     font-size: 8pt;
 }
 
-.tipo_de_pago img{
+img.tipo_de_pago, .tipo_de_pago img{
     width: 48px;
     height: 30px;
 }

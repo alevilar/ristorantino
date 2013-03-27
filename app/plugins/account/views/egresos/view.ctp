@@ -1,5 +1,5 @@
 
-<h1>Egreso #<?php echo $egreso['Egreso']['id']?></h1>
+<h1>Pago #<?php echo $egreso['Egreso']['id']?></h1>
 
 <div class="pagos-list">
     <p><?php
@@ -17,20 +17,32 @@ if (!empty($egreso['Egreso']['observacion'])) {
     <div>
         <ul data-role="listview">
             <li data-role="list-divider">Listado de Gastos involucrados en este egreso</li>
-            <?php foreach ($egreso['Gasto'] as $g) { ?>
-                <li>
-
-    <?php
-    echo $html->link(
-            $number->currency($g['importe_total']) . " (" . date('d-m-Y', strtotime($g['fecha'])) . ")", array(
-        'controller' => 'gastos',
-        'action' => 'view',
-        $g['id']
-            )
-    );
-    ?>
-                </li>
-                <?php } ?>
+            <?php
+            foreach ($egreso['Gasto'] as $ga){ ?>
+                    <li>
+                        
+                        <?php 
+                        echo $html->link(                                
+                                "Pagado: ".$number->currency($ga['AccountEgresosGasto']['importe'])." Total: ".
+                                $number->currency($ga['importe_total'])." (".date('d-m-Y',strtotime($ga['fecha'])).")"
+                                , 
+                                array(
+                                    'controller'=>'gastos', 
+                                    'action'=>'view', 
+                                    $ga['id']
+                                )
+                                );
+                        
+                        if (!empty($ga['observacion'])) {
+                        ?>
+                        <p>
+                            <?php 
+                            echo $ga['observacion'];
+                            ?>
+                        </p>
+                        <?php } ?>
+                    </li>
+                    <?php } ?>
         </ul>
     </div>
 

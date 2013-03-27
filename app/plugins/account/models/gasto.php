@@ -2,7 +2,7 @@
 class Gasto extends AccountAppModel {
 
 	var $name = 'Gasto';
-        var $order = array('Gasto.created' => 'DESC');
+        var $order = array('Gasto.fecha' => 'DESC', 'Gasto.modified' => 'DESC');
         
         var $displayField = 'importe_total';
 
