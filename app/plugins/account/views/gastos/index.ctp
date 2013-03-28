@@ -2,8 +2,13 @@
 
     <?php echo $html->link(__('Crear Nuevo gasto / factura', true), array('controller' => 'gastos', 'action' => 'add'), array('data-role' => 'button', 'data-icon' => 'plus', 'data-inline' => 'true', 'data-theme' => 'b')); ?>
 
+<div style="float: right; width: 500px;">
+    <?php echo $form->create('Gasto', array('action'=>'index')); ?>
+    <?php echo $form->input('proveedor_id', array('onchange' => 'this.form.submit();', 'empty'=>'Filtrar por Proveedor', 'label'=>false)) ?>
+    <?php echo $form->end() ?>
+</div>
 
-    <br><br>
+    <br><br><br><br>
     <?php
     echo $javascript->link(array(
         'account/gastos_index',
@@ -12,7 +17,7 @@
 
     <div class="gastos index">
 
-        <?php echo $form->create('Egreso'); ?>
+        <?php echo $form->create('Egreso', array('controller'=>'egresos','action'=>'add')); ?>
         
         <ul data-role="listview"  class="listado-gastos">
             <?php

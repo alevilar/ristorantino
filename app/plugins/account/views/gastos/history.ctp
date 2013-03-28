@@ -22,11 +22,13 @@ echo $this->element('form_mini_year_month_search');
     <div data-role="collapsible" data-collapsed="false" data-theme="e" id="listado-gastos-clasif" data-content-theme="e"  >
         <h3>Resumen por Clasificación del Gasto</h3>
             <?php            
+            
             function mostralo($vec){
                 echo '<div>';
                 echo '<ul style="display: none">';
 	
                 foreach ($vec as $rr){
+//                    debug($rr);
                     if ($rr['Gasto']['total']) {
                         echo '<li>';
                         if (!empty($rr['Children'])){
@@ -44,8 +46,7 @@ echo $this->element('form_mini_year_month_search');
                 }
                 echo "</ul>";
                 echo "</div>";
-            }
-            
+            }            
             mostralo($resumen_x_clasificacion['Children']);
             ?>
         
@@ -83,7 +84,7 @@ echo $this->element('form_mini_year_month_search');
 
                 <tbody>
                     <?php
-                    foreach ($gastos as $g) {
+                    foreach ($gastos as $g) {                        
                         $classpagado = 'pagado';
                         if ($g['Gasto']['importe_pagado'] < $g['Gasto']['importe_total']) {
                             $classpagado = 'no-pagado';

@@ -14,10 +14,16 @@ class GastosController extends AccountAppController
 
     function index()
     {
+        $conds = array();
+        if (!empty($this->data['Gasto']['proveedor_id'])){
+            $conds['Gasto.proveedor_id'] = $this->data['Gasto']['proveedor_id'];
+        }
         $this->pageTitle = 'Gastos Pendientes de Pago';
         $this->Gasto->recursive = 1;
         $this->Gasto->order = array('Gasto.created ASC');
-        $gastos = $this->Gasto->enDeuda();
+        $gastos = $this->Gasto->enDeuda($conds);
+        $proveedores = $this->Gasto->Proveedor->find('list');
+        $this->set('proveedores', $proveedores);
         $this->set('gastos', $gastos );
     }
 

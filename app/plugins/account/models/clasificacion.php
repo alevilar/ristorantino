@@ -11,6 +11,15 @@ class Clasificacion extends AccountAppModel {
 	var $hasMany = array('Gasto');
 
         
+        /**
+         * 
+         * @param integer $padre ID de la Clasificacion padre
+         * @param array $vec Array recursivo para ir completando con los hijos
+         * @return array armado con los subindices 
+         *                  ['Clasificacion'] array del Model Clasificacion
+         *                  ['Children'] find('all') con todos las Clasificaciones Hijos
+         *                  ['Todos'] find(''list) con los Id´s de todos los Hijos
+         */
         function __armar_hijos($padre = null, $vec = array()){            
             $vec['Children'] = $this->children($padre, true);
             
@@ -78,37 +87,48 @@ class Clasificacion extends AccountAppModel {
         }
         
         
-        function __gastos_recursivos($clasificaciones = array(), $baseConditions = array()){   
-            
-            foreach ($clasificaciones as &$c){
-                $conds = array();
-                $conditions = $baseConditions;
-                
-                
-                 if (!empty($c['Children'])){
-                    $c['Children'] = $this->__gastos_recursivos($c['Children']);
-                 }
-                 
-                 if (!empty($c['Todos'])){
-                     $conds = array_keys($c['Todos']);                     
-                 }
-                 
-                 $conds[] = $c['Clasificacion']['id'];
-                $conditions[] = 'Gasto.clasificacion_id IN ('. implode(",", $conds) .') ';
-                 
-                $gasto = $this->Gasto->find('all',array(
-                   'fields' => array(
-                       'count(1) as cantidad',
-                       'sum(Gasto.importe_total) as total',
-                       "(".$this->__subQueryDeEgresosGastos($baseConditions).") as importe_pagado",
-                       ),
-                   'conditions' => $conditions,
-                   'recursive' => -1,
-                ));
-                $c['Gasto'] = $gasto[0][0];
-                
+        function __gastos_recursivos($baseConditions = array(), $arbolClasificaciones = array()){  
+            if( empty($arbolClasificaciones) ){
+                $arbolClasificaciones = $this->__armar_hijos();
+                $vinoSinArbol = true;
+            } else {
+                $vinoSinArbol = false;
             }
-            return $clasificaciones;
+            if ( !empty( $arbolClasificaciones['Children'] ) ) {
+                foreach ($arbolClasificaciones['Children'] as $aKey=>&$c){
+                    $conditions = $baseConditions;
+                    // escalo recursivamente hacia los hijos
+                     if ( !empty($c['Children']) ){
+                        $arbolClasificaciones['Children'][$aKey] = $this->__gastos_recursivos($baseConditions, $c);
+                     }
+                     
+                     // le busco los gastos
+                     $conds = array();
+                     if ( !empty($c['Todos']) ){
+                         $conds = array_keys($c['Todos']);                     
+                     }
+                    $conds[] = $c['Clasificacion']['id'];
+                    $conditions[] = 'Gasto.clasificacion_id IN ('. implode(",", $conds) .') ';
+    //                $baseConditions = array_merge($conditions, $baseConditions);
+                    $gasto = $this->Gasto->find('all',array(
+                       'fields' => array(
+                           'count(*) as cantidad',
+                           'sum(Gasto.importe_total) as total',
+                           "(".$this->__subQueryDeEgresosGastos($conditions).") as importe_pagado",
+                           ),
+                       'conditions' => $conditions,
+                       'recursive' => -1,
+                    ));
+                    $arbolClasificaciones['Children'][$aKey]['Gasto'] = $gasto[0][0];
+//                    debug($arbolClasificaciones['Children'][$aKey]);
+                }
+            }
+            
+            if ( $vinoSinArbol ){
+                 $arbolClasificaciones['Children'][] = $this->__gastos_sin_clasificar();
+            }
+            
+            return $arbolClasificaciones;
         }
  
         
@@ -124,13 +144,9 @@ class Clasificacion extends AccountAppModel {
          * 
          */
         function gastos($cond = array()) {
-            
-            $this->recursive = -1;
-            $clasificaciones = $this->__armar_hijos();            
-            $clasificaciones['Children'] = $this->__gastos_recursivos($clasificaciones['Children'], $cond);  
-            
-            $clasificaciones['Children'][] = $this->__gastos_sin_clasificar($cond);  
-            
+            $this->recursive = -1;            
+            $clasificaciones = $this->__gastos_recursivos($cond);
+//            die;
             return $clasificaciones;
         }
 }
