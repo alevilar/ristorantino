@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS `account_tipo_impuestos`;
 CREATE TABLE IF NOT EXISTS `account_tipo_impuestos` (
 `id` int(11) NOT NULL AUTO_INCREMENT,
 `name` VARCHAR( 50 ) NOT NULL ,
-`porcentaje` DECIMAL( 2, 2 )  NOT NULL ,
+`porcentaje` DECIMAL( 6, 2 )  NOT NULL ,
 PRIMARY KEY (`id`)
 );
 
@@ -44,13 +44,14 @@ PRIMARY KEY (`id`)
 DROP TABLE IF EXISTS `account_gastos`;
 CREATE TABLE `account_gastos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `closed` TINYINT NOT NULL DEFAULT  '0',
   `proveedor_id` int(11) DEFAULT NULL,
   `clasificacion_id` INT DEFAULT NULL,
   `tipo_factura_id` int(11) DEFAULT NULL,
   `factura_nro` varchar(50) DEFAULT NULL,
   `fecha` date NOT NULL,
   `importe_neto` DECIMAL( 6, 2 )  NOT NULL DEFAULT 0.00,
-  `importe_total` DECIMAL( 6, 2 )  NOT NULL DEFAULT 0.00,
+  `importe_total` DECIMAL( 6, 2 )  NOT NULL DEFAULT 0.00, 
   `observacion` TEXT NULL,
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
@@ -62,7 +63,8 @@ CREATE TABLE IF NOT EXISTS `account_impuestos` (
 `id` int(11) NOT NULL AUTO_INCREMENT,
 `gasto_id` INT NOT NULL ,
 `tipo_impuesto_id` INT NOT NULL ,
-`importe` DECIMAL( 6, 4 )  NOT NULL DEFAULT  0.0000,
+`neto` DECIMAL( 6, 2 ) NULL DEFAULT  0,
+`importe` DECIMAL( 6, 4 )  NULL DEFAULT  0,
 PRIMARY KEY ( `id` )
 );
 
@@ -85,11 +87,11 @@ INSERT INTO  `account_tipo_impuestos` (
 `porcentaje`
 )
 VALUES (
-'IVA 21%',  '21'
+'IVA 21%',  21
 ), (
-'IVA 10,5%',  '10.5'
+'IVA 10,5%',  10.5
 ), (
-'IVA 27%',  '27'
+'IVA 27%',  27
 ), (
 'Neto No Gravado',  NULL
 ), (

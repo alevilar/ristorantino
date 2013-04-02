@@ -59,7 +59,11 @@
                             'label' => 'Seleccionar Gasto'
                         ));
                         ?>
-                         <?php echo $html->link(__('Edit', true), array('action' => 'edit', $gasto['Gasto']['id'])); ?>
+                         <?php echo $html->link(__('Edit', true), array(
+                             'action' => 'edit', $gasto['Gasto']['id']),
+                                 array(
+                                     'data-ajax' => 'false',
+                                 )); ?>
                           
                     </p>
                     </div>

@@ -8,26 +8,30 @@ class Clasificacion extends AccountAppModel {
         var $actsAs = array('Tree');
         
         //The Associations below have been created with all possible keys, those that are not needed can be removed
-	var $hasMany = array('Gasto');
+	var $hasMany = array('Account.Gasto');
 
         
         /**
          * 
-         * @param integer $padre ID de la Clasificacion padre
+         * @param integer $padreId ID de la Clasificacion padre
          * @param array $vec Array recursivo para ir completando con los hijos
          * @return array armado con los subindices 
          *                  ['Clasificacion'] array del Model Clasificacion
          *                  ['Children'] find('all') con todos las Clasificaciones Hijos
          *                  ['Todos'] find(''list) con los Id´s de todos los Hijos
          */
-        function __armar_hijos($padre = null, $vec = array()){            
-            $vec['Children'] = $this->children($padre, true);
-            
+        function __armar_hijos($padreId = null, $vec = array()){
+            $this->id = $padreId;
+            $this->recursive = -1;
+            $vecAux = $this->read();
+            $vec['Clasificacion'] = $vecAux['Clasificacion'];
+            $vec['Children'] = $this->children($padreId, true);
+            $vec['Todos'][$vec['Clasificacion']['id']] = $vec['Clasificacion']['name'];
+
             if (empty($vec['Children'])) {
                 unset($vec['Children']);
-                
             } else {
-                 $todos = $this->children($padre);
+                $todos = $this->children($padreId);
                 foreach ($todos as $t){
                     $vec['Todos'][$t['Clasificacion']['id']] = $t['Clasificacion']['name'];
                 }
@@ -37,7 +41,7 @@ class Clasificacion extends AccountAppModel {
                 }
             }
             return $vec;
-        }
+        }        
         
         
         function __subQueryDeEgresosGastos($conditions){
@@ -66,7 +70,7 @@ class Clasificacion extends AccountAppModel {
         function __gastos_sin_clasificar($baseConditions = array()){
             $baseConditions[] = 'Gasto.clasificacion_id IS NULL ';
                  
-                $gasto = $this->Gasto->find('all',array(
+                $gasto = $this->Gasto->find('first',array(
                    'fields' => array(
                        'count(1) as cantidad',
                        'sum(Gasto.importe_total) as total',
@@ -76,7 +80,7 @@ class Clasificacion extends AccountAppModel {
                    'recursive' => -1,
                    'group by' => 'Gasto.clasificacion_id'
                 ));
-                $vec['Gasto'] = $gasto[0][0];
+                $vec['Gasto'] = $gasto[0];
                 $vec['Clasificacion'] = array(
                   'name'  => 'sin clasificar',
                   'id'    => null,
@@ -87,50 +91,48 @@ class Clasificacion extends AccountAppModel {
         }
         
         
-        function __gastos_recursivos($baseConditions = array(), $arbolClasificaciones = array()){  
-            if( empty($arbolClasificaciones) ){
-                $arbolClasificaciones = $this->__armar_hijos();
-                $vinoSinArbol = true;
-            } else {
-                $vinoSinArbol = false;
-            }
-            if ( !empty( $arbolClasificaciones['Children'] ) ) {
-                foreach ($arbolClasificaciones['Children'] as $aKey=>&$c){
-                    $conditions = $baseConditions;
+        function __gastos_recursivos($padreId = null, $baseConditions = array()){  
+            $arbolClasificaciones = $this->children($padreId, true);
+            $vec = array();
+            if ( !empty( $arbolClasificaciones ) ) {
+                foreach ($arbolClasificaciones as $c){
                     // escalo recursivamente hacia los hijos
-                     if ( !empty($c['Children']) ){
-                        $arbolClasificaciones['Children'][$aKey] = $this->__gastos_recursivos($baseConditions, $c);
-                     }
-                     
-                     // le busco los gastos
-                     $conds = array();
-                     if ( !empty($c['Todos']) ){
-                         $conds = array_keys($c['Todos']);                     
-                     }
-                    $conds[] = $c['Clasificacion']['id'];
-                    $conditions[] = 'Gasto.clasificacion_id IN ('. implode(",", $conds) .') ';
-    //                $baseConditions = array_merge($conditions, $baseConditions);
-                    $gasto = $this->Gasto->find('all',array(
-                       'fields' => array(
-                           'count(*) as cantidad',
-                           'sum(Gasto.importe_total) as total',
-                           "(".$this->__subQueryDeEgresosGastos($conditions).") as importe_pagado",
-                           ),
-                       'conditions' => $conditions,
-                       'recursive' => -1,
-                    ));
-                    $arbolClasificaciones['Children'][$aKey]['Gasto'] = $gasto[0][0];
-//                    debug($arbolClasificaciones['Children'][$aKey]);
+                    
+                    $hijos = $this->__gastos_recursivos($c['Clasificacion']['id'], $baseConditions);
+                    
+                    $vec[$c['Clasificacion']['id']] = $this->gastosDeClasificacion($c['Clasificacion']['id'], $baseConditions);
+                    
+                    if (!empty($hijos )) {
+                        $vec[$c['Clasificacion']['id']]['Children'] = $hijos;
+                    }
                 }
             }
             
-            if ( $vinoSinArbol ){
-                 $arbolClasificaciones['Children'][] = $this->__gastos_sin_clasificar();
+            if ( empty($padreId) ){
+                 $vec[0] = $this->__gastos_sin_clasificar($baseConditions);
             }
             
-            return $arbolClasificaciones;
+            return $vec;
         }
  
+        
+        function gastosDeClasificacion($id = null, $gastosConditions = array()){
+            $vClas = $this->__armar_hijos($id);
+            if (empty($vClas['Todos'])) return array();
+            $gastosConditions['Gasto.clasificacion_id'] = array_keys( $vClas['Todos'] ); 
+            $gasto = $this->Gasto->find('first',array(
+                       'fields' => array(
+                           'count(*) as cantidad',
+                           'sum(Gasto.importe_neto) as neto',
+                           'sum(Gasto.importe_total) as total',
+                           "(".$this->__subQueryDeEgresosGastos($gastosConditions).") as importe_pagado",
+                           ),
+                       'conditions' => $gastosConditions,
+                       'recursive' => -1,
+                    ));
+            $vClas['Gasto'] = $gasto[0];            
+            return $vClas;
+        }
         
         
         /**
@@ -145,8 +147,7 @@ class Clasificacion extends AccountAppModel {
          */
         function gastos($cond = array()) {
             $this->recursive = -1;            
-            $clasificaciones = $this->__gastos_recursivos($cond);
-//            die;
+            $clasificaciones = $this->__gastos_recursivos(null, $cond);      
             return $clasificaciones;
         }
 }

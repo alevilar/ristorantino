@@ -36,6 +36,10 @@ class GastosController extends AccountAppController
         unset($url['ext']);
         unset($url['url']);
 
+         if (!empty($url['closed'])) {
+            $conditions['Gasto.closed'] = $url['closed']-1;
+            $this->data['Gasto']['closed'] = $url['closed'];
+        }
 
         if (!empty($url['mes'])) {
             $conditions['MONTH(Gasto.fecha)'] = $url['mes'];
@@ -50,6 +54,7 @@ class GastosController extends AccountAppController
 
         if (empty($url)) {
             $this->data['Gasto']['mes'] = date('m', strtotime('now'));
+            $this->data['Gasto']['anio'] = date('Y', strtotime('now'));
             $conditions['MONTH(Gasto.fecha)'] = $this->data['Gasto']['mes'];
             $conditions['YEAR(Gasto.fecha)'] = date('Y', strtotime('now'));
         }
@@ -71,8 +76,6 @@ class GastosController extends AccountAppController
             $this->data['Gasto']['tipo_factura_id'] = $url['tipo_factura_id'];
         }
 
-        $this->set('resumen_x_clasificacion', $this->Gasto->Clasificacion->gastos($conditions));
-        $this->set('clasificaciones', $this->Gasto->Clasificacion->find('list'));
         $this->set('tipo_facturas', $this->Gasto->TipoFactura->find('list'));
         $this->set('proveedores', $this->Gasto->Proveedor->find('list'));
         $this->set('tipo_impuestos', $this->Gasto->TipoImpuesto->find('list'));
@@ -142,15 +145,7 @@ class GastosController extends AccountAppController
         }
 
         if (!empty($this->data)) {
-            $fields = array(
-                        'proveedor_id', 
-                        'clasificacion_id', 
-                        'observacion',
-                        'tipo_factura_id',
-                        'factura_nro',
-                        'fecha',
-                    );
-            if ($this->Gasto->save($this->data, null, $fields)) {
+            if ($this->Gasto->save($this->data)) {
                 $this->Session->setFlash(__('The Gasto has been saved', true));
 
                 if (!empty($this->data['Gasto']['pagar'])) {
@@ -165,8 +160,19 @@ class GastosController extends AccountAppController
 
         if (empty($this->data)) {
             $this->data = $this->Gasto->read(null, $id);
+            if ($this->data['Gasto']['closed']) {
+                $this->Session->setFlash('El gasto ya está "Cerrado", no puede ser modificado');
+                $this->redirect(array('action'=>'view', $id));
+            }
         }
 
+        if (!empty($this->data['Impuesto'])){
+            $imps = $this->data['Impuesto'];
+            $this->data['Impuesto'] = array();
+            foreach ($imps as $i) {
+                $this->data['Impuesto'][$i['tipo_impuesto_id']] = $i;
+            }
+        }
         $this->pageTitle = 'Editar Gasto #' . $id;
 
         $tipo_facturas = $this->Gasto->TipoFactura->find('list');

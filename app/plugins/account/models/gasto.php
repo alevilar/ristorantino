@@ -31,14 +31,6 @@ class Gasto extends AccountAppModel {
 				'message' => 'Debe especificar un tipo de factura'
 			)
 		),
-                'importe_neto' => array(
-			'numeric' => array(
-				'rule' => 'numeric',
-				'allowEmpty' => false,
-                                'required' => true,
-				'message' => 'Debe especificar un importe neto numerico'
-			)
-		),
                 'importe_total' => array(
 			'numeric' => array(
 				'rule' => 'numeric',
@@ -95,21 +87,23 @@ class Gasto extends AccountAppModel {
 	);
            
         
-        
+       
         public function beforeSave($options = array())
         {
             parent::beforeSave($options);
-            
-            if (!empty($this->data['Gasto']['importe_neto'])) {
+        
+            if (!empty($this->data['Gasto']['Impuesto'])) {
                 // calcular total sumando los impuestos
-                $sumaImpuestos = 0;
+                $this->data['Gasto']['importe_neto']  = 0;
                 if (!empty($this->data['Gasto']['Impuesto'])) {
                     foreach ($this->data['Gasto']['Impuesto'] as $imp){
-                        $sumaImpuestos += $imp;
+                        $this->data['Gasto']['importe_neto'] += $imp['neto'];
                     }
                 }
 
-                $this->data['Gasto']['importe_total'] = $sumaImpuestos + $this->data['Gasto']['importe_neto'];     
+                $this->data['Gasto']['importe_neto'] = $sumaImpuestos + $this->data['Gasto']['importe_neto'];     
+            } else {
+                $this->data['Gasto']['importe_neto'] = $this->data['Gasto']['importe_total'];
             }
             return true;
         }
@@ -125,15 +119,18 @@ class Gasto extends AccountAppModel {
                 }
                 
                 foreach ($this->data['Gasto']['Impuesto'] as $impId=>$imp){
-                    if (!empty($imp)) {
-                        $this->Impuesto->create();
-                        $nuevoImp = array(
-                            'gasto_id' => $this->id,
-                            'tipo_impuesto_id' => $impId,
-                            'importe' => $imp,
-                        );
-                        if (!$this->Impuesto->save($nuevoImp)){
-                            return false;
+                    if (!empty($imp)) {                       
+                        if (!empty($imp['checked']) && (!empty($imp['importe']) || !empty($imp['neto'])) ) {
+                            $nuevoImp = array(
+                                'gasto_id' => $this->id,
+                                'tipo_impuesto_id' => $impId,
+                                'importe' => $imp['importe'],
+                                'neto' => $imp['neto'],
+                            );
+                            $this->Impuesto->create($nuevoImp);
+                            if (!$this->Impuesto->save()){
+                                return false;
+                            }
                         }
                     }
                 }
