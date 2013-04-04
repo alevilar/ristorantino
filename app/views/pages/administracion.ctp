@@ -44,7 +44,7 @@
     echo $html->link('Categorias','/categorias');
     echo $html->link('Productos','/productos');
     echo $html->link('Observaciones de Productos','/observaciones');
-    echo $html->link('Observaciones de Comandas','/observacion_comandas');
+    echo $html->link('Observaciones de Comandas','/observacision_comandas');
     echo $html->link('Gustos y Sabores','/sabores');
     echo $html->link('Precios Futuros','/productos_precios_futuros');
     ?>
@@ -80,8 +80,7 @@
     <h2>Sistema</h2>
     <?php
     echo $html->link('Parametros de configuracion','/configs').'<br>';
-    echo $html->link('Configuraciones del sistema','configavanzadas');
-    echo $html->link('Acciones del sistema','sistemaconfig');
+    echo $html->link('Configuraciones del sistema','configavanzadas');    
     ?>
     </p>
     

@@ -7,8 +7,7 @@ PRIMARY KEY (`id`)
 );
 
 
-DROP TABLE IF EXISTS `account_clasificaciones`;
-CREATE TABLE account_clasificaciones (
+CREATE TABLE  IF NOT EXISTS account_clasificaciones (
     id INTEGER(10) UNSIGNED NOT NULL AUTO_INCREMENT,
     parent_id INTEGER(10) DEFAULT NULL,
     lft INTEGER(10) DEFAULT NULL,
@@ -68,7 +67,7 @@ CREATE TABLE IF NOT EXISTS `account_impuestos` (
 PRIMARY KEY ( `id` )
 );
 
-DROP TABLE IF EXISTS `account_proveedores`;
+
 CREATE TABLE IF NOT EXISTS`account_proveedores` (
 `id` INT NOT NULL AUTO_INCREMENT,
 `name` VARCHAR( 100 ) NOT NULL ,
@@ -97,13 +96,43 @@ VALUES (
 ), (
 'Conceptos Excluidos', NULL
 ), (
-'I.G.-I.V.A.-I.B.', NULL
+'I.G.', NULL
+), (
+'I.V.A.', NULL
+), (
+'I.B.', NULL
 )
 ;
 
 
 
 
-INSERT INTO `account_clasificaciones` (`id`, `parent_id`, `lft`, `rght`, `name`) VALUES
-(1, NULL, 1, 2, 'Fijo'),
-(2, NULL, 3, 4, 'Variable');
+INSERT INTO `account_clasificaciones` (`parent_id`, `lft`, `rght`, `name`) VALUES
+( NULL, 9, 28, 'otros costos'),
+( NULL, 29, 52, 'mercaderia'),
+( 2, 30, 31, 'helados'),
+( 1, 10, 11, 'gas'),
+( 1, 12, 13, 'calp'),
+( 1, 14, 15, 'expensas'),
+( 1, 16, 17, 'alquiler'),
+( 1, 18, 19, 'telpin'),
+( 1, 20, 21, 'seguros'),
+( 1, 22, 23, 'bancos'),
+( 1, 24, 25, 'contador'),
+( 1, 26, 27, 'Sueldos'),
+( 2, 32, 33, 'Pescados'),
+( 2, 34, 35, 'Carniceria'),
+( 2, 36, 37, 'Verduleria'),
+( 2, 38, 39, 'Bebidas'),
+( 2, 40, 41, 'vinos'),
+( 2, 42, 43, 'Pan y Grisines'),
+( 2, 44, 45, 'Almacen'),
+( 2, 46, 47, 'Pollos'),
+( 2, 48, 49, 'Cafeteria'),
+( 2, 50, 51, 'Mercaderias menores'),
+( NULL, NULL, NULL, 'otros gastos'),
+( 27, NULL, 9, 'limpieza'),
+(28, 1, 2, 'viaticos'),
+( 28, 3, 4, 'mantenimiento'),
+( 28, 5, 6, 'bazar'),
+( 28, 7, 8, 'lipieza');
