@@ -191,10 +191,12 @@ class Gasto extends AccountAppModel {
             $fieldContain['contain'] = 'Egreso';  
             $fieldContain['conditions'] = array('Gasto.id'=>$id);
             $coso = parent::find('first', $fieldContain);
-
+            debug($coso);
             if (!empty($coso['Egreso'])) {
                 foreach ($coso['Egreso'] as $eg){
-                     $importePagado += $eg['AccountEgresosGasto']['importe'];
+                    if ($eg['AccountEgresosGasto']['gasto_id'] == $id ) {
+                        $importePagado += $eg['AccountEgresosGasto']['importe'];
+                    }
                 }
             }
             

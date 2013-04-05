@@ -60,6 +60,7 @@ echo $this->element('form_mini_year_month_search');
         <tbody>
             <?php
             foreach ($gastos as $g) {
+                debug($g['Gasto']);
                 $classpagado = 'pagado';
                 if ($g['Gasto']['importe_pagado'] < $g['Gasto']['importe_total']) {
                     $classpagado = 'no-pagado';
