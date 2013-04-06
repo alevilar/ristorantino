@@ -105,7 +105,7 @@ class CategoriasController extends AppController
         if (!$id) {
             $this->Session->setFlash(__('Invalid id for Categoria'));
         }
-        if ($this->Categoria->del($id)) {
+        if ($this->Categoria->delete($id)) {
             $this->Session->setFlash(__('Categoria deleted'));
         }
         $this->redirect(array('action' => 'index'));

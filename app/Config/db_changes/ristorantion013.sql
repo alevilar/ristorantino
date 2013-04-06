@@ -9,7 +9,8 @@ ALTER TABLE `mozos`  ADD `apellido` VARCHAR(64) NOT NULL AFTER `id`;
 ALTER TABLE  `mozos` ADD  `nombre` VARCHAR( 64 ) NOT NULL AFTER  `id`;
 
 
-/** colocar los nombres de usuarios al mozo **/
+/* colocar los nombres de usuarios al mozo */
+
 update mozos, users
 set
 mozos.nombre = users.nombre,
@@ -62,3 +63,27 @@ ALTER TABLE `tipo_de_pagos` DROP `description`;
 ALTER TABLE  `comanderas` ADD  `driver_name` VARCHAR( 32 ) NULL AFTER  `description`;
 
 
+ALTER TABLE  `users` ADD  `rol_id` INT NOT NULL AFTER  `username`;
+
+
+INSERT INTO `configs` 
+(`config_category_id`, `key`, `value`,`created`, `modified`) 
+VALUES ('4', 'cobrada_hide_ms', '0', NOW(), NOW());
+
+
+
+CREATE TABLE IF NOT EXISTS `productos_tags` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `producto_id` int(11) NOT NULL,
+  `tag_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
+
+CREATE TABLE IF NOT EXISTS `tags` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(64) NOT NULL,
+  `created` timestamp NULL DEFAULT NULL,
+  `modified` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);

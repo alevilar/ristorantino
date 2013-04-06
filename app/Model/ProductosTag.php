@@ -1,0 +1,3 @@
+class ProductosTag extends AppModel {
+
+}

@@ -51,14 +51,16 @@
                 <h1><?php echo $title_for_layout; ?></h1>
             </div> 
             <div data-role="content">
+                <?php $withmenuclassname = 'with-menu'; ?>
                 <?php if ($this->fetch('menu')): ?>
+                <?php $withmenuclassname = 'without-menu'; ?>
                 <nav>
                     <?php echo $this->fetch('menu'); ?>
                 </nav>
                 <?php endif; ?>
                 
 
-                <div id="maincontent">
+                <div id="maincontent" class="<?php echo $withmenuclassname ?>">
                     <?php echo $this->Session->flash(); ?>
                     <?php echo $this->Session->flash('Auth'); ?>
 

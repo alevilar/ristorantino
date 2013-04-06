@@ -52,7 +52,7 @@ class IvaResponsabilidadesController extends AppController {
 			$this->Session->setFlash(__('Invalid id for IvaResponsabilidad'));
 			$this->redirect(array('action'=>'index'));
 		}
-		if ($this->IvaResponsabilidad->del($id)) {
+		if ($this->IvaResponsabilidad->delete($id)) {
 			$this->Session->setFlash(__('IvaResponsabilidad deleted'));
 			$this->redirect(array('action'=>'index'));
 		}

@@ -134,7 +134,7 @@ class DetalleComandasController extends AppController {
 			$this->Session->setFlash(__('Invalid id for Comanda'));
 			$this->redirect(array('action'=>'index'));
 		}
-		if ($this->DetalleComanda->del($id)) {
+		if ($this->DetalleComanda->delete($id)) {
 			$this->Session->setFlash(__('Comanda deleted'));
 			$this->redirect(array('action'=>'index'));
 		}

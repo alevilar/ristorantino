@@ -52,7 +52,7 @@ class TipoFacturasController extends AppController {
 			$this->Session->setFlash(__('Invalid id for TipoFactura'));
 			$this->redirect(array('action' => 'index'));
 		}
-		if ($this->TipoFactura->del($id)) {
+		if ($this->TipoFactura->delete($id)) {
 			$this->Session->setFlash(__('TipoFactura deleted'));
 			$this->redirect(array('action' => 'index'));
 		}
@@ -109,7 +109,7 @@ class TipoFacturasController extends AppController {
 			$this->Session->setFlash(__('Invalid id for TipoFactura'));
 			$this->redirect(array('action' => 'index'));
 		}
-		if ($this->TipoFactura->del($id)) {
+		if ($this->TipoFactura->delete($id)) {
 			$this->Session->setFlash(__('TipoFactura deleted'));
 			$this->redirect(array('action' => 'index'));
 		}

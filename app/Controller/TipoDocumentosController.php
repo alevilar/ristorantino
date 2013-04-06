@@ -52,7 +52,7 @@ class TipoDocumentosController extends AppController {
 			$this->Session->setFlash(__('Invalid id for TipoDocumento'));
 			$this->redirect(array('action'=>'index'));
 		}
-		if ($this->TipoDocumento->del($id)) {
+		if ($this->TipoDocumento->delete($id)) {
 			$this->Session->setFlash(__('TipoDocumento deleted'));
 			$this->redirect(array('action'=>'index'));
 		}

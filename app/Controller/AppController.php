@@ -56,7 +56,7 @@ class AppController extends Controller
     {
 
         $this->Auth->allow('*');
-//        $this->Auth->authorize = array('Actions');
+        $this->Auth->authorize = array('Actions');
 
 
         $this->Auth->loginAction = array(Configure::read('Routing.admin') => false, 'controller' => 'users', 'action' => 'login');

@@ -52,7 +52,7 @@ class RestaurantesController extends AppController {
 			$this->Session->setFlash(__('Invalid id for Restaurante'));
 			$this->redirect(array('action'=>'index'));
 		}
-		if ($this->Restaurante->del($id)) {
+		if ($this->Restaurante->delete($id)) {
 			$this->Session->setFlash(__('Restaurante deleted'));
 			$this->redirect(array('action'=>'index'));
 		}

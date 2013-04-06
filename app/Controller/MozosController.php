@@ -73,7 +73,7 @@ class MozosController extends AppController {
 			$this->Session->setFlash(__('Invalid id for Mozo'));
 			$this->redirect(array('action'=>'index'));
 		}
-		if ($this->Mozo->del($id)) {
+		if ($this->Mozo->delete($id)) {
 			$this->Session->setFlash(__('Mozo deleted'));
 			$this->redirect(array('action'=>'index'));
 		}

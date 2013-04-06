@@ -1,8 +1,8 @@
-        <?php    
-        $menubread=array();
-        echo $this->element('admin_menu', array('menubread'=>$menubread));
-        ?>
-
+<?php
+$this->start('menu');
+    echo $this->element('admin_menu');
+$this->end();
+?>
 <div class="productos index">
 <h2><?php echo __('Productos con precios futuros');?></h2>
 <p>

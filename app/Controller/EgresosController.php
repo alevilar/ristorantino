@@ -93,7 +93,7 @@ class EgresosController extends AppController {
 			$this->Session->setFlash(__('Invalid id for Egreso'));
 			$this->redirect(array('action' => 'index'));
 		}
-		if ($this->Egreso->del($id)) {
+		if ($this->Egreso->delete($id)) {
 			$this->Session->setFlash(__('Egreso deleted'));
 			$this->redirect(array('action' => 'index'));
 		}

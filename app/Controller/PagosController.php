@@ -73,7 +73,7 @@ class PagosController extends AppController {
 			$this->Session->setFlash(__('Invalid id for Pago'));
 			$this->redirect(array('action'=>'index'));
 		}
-		if ($this->Pago->del($id)) {
+		if ($this->Pago->delete($id)) {
 			$this->Session->setFlash(__('Pago deleted'));
 			$this->redirect(array('action'=>'index'));
 		}
