@@ -287,11 +287,32 @@ class AppSchema extends CakeSchema {
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'MyISAM')
 	);
+        
+        public $grupo_sabores = array(
+		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
+		'seleccion_de_sabor_obligatorio' => array('type' => 'boolean', 'null' => false, 'default' => NULL),
+                'tipo_de_seleccion' => array('type' => 'integer', 'null' => false, 'default' => NULL),
+                'name' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 64, 'collate' => 'utf8_spanish_ci', 'charset' => 'utf8'),
+		'created' => array('type' => 'timestamp', 'null' => true, 'default' => NULL),
+		'modified' => array('type' => 'timestamp', 'null' => true, 'default' => NULL),
+		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
+		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_spanish_ci', 'engine' => 'MyISAM')
+	);        
+        
+        public $grupo_sabores_productos = array(
+		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
+                'producto_id' => array('type' => 'integer', 'null' => false, 'default' => NULL),
+                'grupo_sabor_id' => array('type' => 'integer', 'null' => false, 'default' => NULL),
+		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
+		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_spanish_ci', 'engine' => 'MyISAM')
+	); 
+        
 	public $sabores = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
 		'name' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 64, 'collate' => 'utf8_spanish_ci', 'charset' => 'utf8'),
 		'categoria_id' => array('type' => 'integer', 'null' => false, 'default' => NULL),
-		'precio' => array('type' => 'float', 'null' => false, 'default' => NULL),
+                'grupo_sabor_id'=> array('type' => 'integer', 'null' => false, 'default' => NULL),
+		'precio' => array('type' => 'float', 'null' => false, 'default' => NULL),            
 		'created' => array('type' => 'timestamp', 'null' => true, 'default' => NULL),
 		'modified' => array('type' => 'timestamp', 'null' => true, 'default' => NULL),
 		'deleted_date' => array('type' => 'timestamp', 'null' => true, 'default' => NULL),

@@ -57,7 +57,7 @@ class Producto extends AppModel {
      *
      * @var array
      */
-	public $hasAndBelongsToMany = array('Tag');
+	public $hasAndBelongsToMany = array('Tag','GrupoSabor');
 	
 	
 	
@@ -137,6 +137,17 @@ class Producto extends AppModel {
                                 ),
 			));
 			return $query;
+    }
+    
+    
+    function listadoCompleto(){
+        $conditions = array(
+            'contain' => array(
+                'GrupoSabor.Sabor',
+                'Categoria',
+            ),
+        );
+        return $this->find('all',$conditions);
     }
 
 }

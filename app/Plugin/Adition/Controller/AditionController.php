@@ -2,12 +2,12 @@
 
 class AditionController extends AditionAppController {
     
-	public$helpers = array('Html', 'Form');
-	public$uses = array('Mozo','Mesa');
-	public$current_mozo_id;
-	public$current_mesa_id;
-	public$current_mesa_numero;
-	public$layout = 'adicion';
+	public $helpers = array('Html', 'Form');
+	public $uses = array('Mozo','Mesa');
+	public $current_mozo_id;
+	public $current_mesa_id;
+	public $current_mesa_numero;
+	public $layout = 'adicion';
 
 
 	public function home()
@@ -55,8 +55,9 @@ class AditionController extends AditionAppController {
         $this->set('tipo_de_pagos', $this->Mozo->Mesa->Pago->TipoDePago->find('all'));
         $this->set('mozos', $this->Mozo->dameActivos());
         $this->set('categorias', ClassRegistry::init('Categoria')->array_listado());
+        $this->set('productos', ClassRegistry::init('Producto')->listadoCompleto());
         $this->set('observaciones', ClassRegistry::init('Observacion')->find('list', array('order' => 'Observacion.name')));
-       $this->set('observacionesComanda', ClassRegistry::init('ObservacionComanda')->find('list', array('order' => 'ObservacionComanda.name')));
+        $this->set('observacionesComanda', ClassRegistry::init('ObservacionComanda')->find('list', array('order' => 'ObservacionComanda.name')));
         $this->render('adicionar');
     }
 	

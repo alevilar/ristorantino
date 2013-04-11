@@ -18,7 +18,8 @@ class Categoria extends AppModel
         'name' => array('notempty')
     );
     //The Associations below have been created with all possible keys, those that are not needed can be removed
-    var $hasMany = array('Producto' => array(
+    var $hasMany = array(
+        'Producto' => array(
             'order' => array('Producto.order', 'Producto.name'),
             'conditions' => array('Producto.deleted' => 0)),
         'Sabor' => array(
