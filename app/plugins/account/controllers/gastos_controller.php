@@ -14,7 +14,9 @@ class GastosController extends AccountAppController
 
     function index()
     {
-        $conds = array();
+        $conds = array(
+            'Gasto.closed' => 0,
+        );
         if (!empty($this->data['Gasto']['proveedor_id'])){
             $conds['Gasto.proveedor_id'] = $this->data['Gasto']['proveedor_id'];
         }

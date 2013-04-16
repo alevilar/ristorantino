@@ -1,14 +1,14 @@
 #!/bin/bash
 ### MySQL Server Login Info ###
-MUSER="root"
-MPASS="8a4a23rv3R"
+MUSER="user"
+MPASS="supersecret"
 MHOST="localhost"
 MYSQL="$(which mysql)"
 MYSQLDUMP="$(which mysqldump)"
 BAK="/backups/db"
 GZIP="$(which gzip)"
 NOMBREDDBB="ristorantino"
-EMAIL="paxapoga@gmail.com"
+EMAIL="mail@gmail.com"
 
 
  FILE=$BAK/$NOMBREDDBB_$(date +%Y-%m-%d-%T).gz
