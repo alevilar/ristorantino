@@ -20,7 +20,7 @@ CREATE TABLE  IF NOT EXISTS account_clasificaciones (
 DROP TABLE IF EXISTS `account_egresos`;
 CREATE TABLE IF NOT EXISTS `account_egresos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `total` DECIMAL( 6, 2 )  NOT NULL DEFAULT 0.00,
+  `total` DECIMAL( 10, 2 )  NOT NULL DEFAULT 0.00,
   `observacion` TEXT NULL,
   `tipo_de_pago_id` INTEGER(10) NOT NULL,
   `fecha` date NOT NULL,
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `account_egresos_gastos` (
 `id` int(11) NOT NULL AUTO_INCREMENT,
 `gasto_id` INT NOT NULL,
 `egreso_id` INT NOT NULL,
-`importe` DECIMAL( 6, 2 )  NOT NULL ,
+`importe` DECIMAL( 10, 2 )  NOT NULL ,
 `created` TIMESTAMP NULL ,
 `modified` TIMESTAMP NULL,
 PRIMARY KEY (`id`)
@@ -49,8 +49,8 @@ CREATE TABLE `account_gastos` (
   `tipo_factura_id` int(11) DEFAULT NULL,
   `factura_nro` varchar(50) DEFAULT NULL,
   `fecha` date NOT NULL,
-  `importe_neto` DECIMAL( 6, 2 )  NOT NULL DEFAULT 0.00,
-  `importe_total` DECIMAL( 6, 2 )  NOT NULL DEFAULT 0.00, 
+  `importe_neto` DECIMAL( 10, 2 )  NOT NULL DEFAULT 0.00,
+  `importe_total` DECIMAL( 10, 2 )  NOT NULL DEFAULT 0.00, 
   `observacion` TEXT NULL,
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
@@ -62,8 +62,8 @@ CREATE TABLE IF NOT EXISTS `account_impuestos` (
 `id` int(11) NOT NULL AUTO_INCREMENT,
 `gasto_id` INT NOT NULL ,
 `tipo_impuesto_id` INT NOT NULL ,
-`neto` DECIMAL( 6, 2 ) NULL DEFAULT  0,
-`importe` DECIMAL( 6, 4 )  NULL DEFAULT  0,
+`neto` DECIMAL( 10, 2 ) NULL DEFAULT  0,
+`importe` DECIMAL( 10, 2 )  NULL DEFAULT  0,
 PRIMARY KEY ( `id` )
 );
 
