@@ -130,9 +130,8 @@ $raeh = Risto.Adition.EventHandler = {
                 $('#comanda-detalle-collapsible').trigger('create');
             }
         }
-        
         // llamar a la funcion correspondiente segun la pagina en la que estoy
-        if ( $.mobile.activePage[0].id && onMesasActualizadasHandlerByPage.hasOwnProperty( $.mobile.activePage[0].id) ) {
+        if ( $.mobile.activePage && $.mobile.activePage[0] && $.mobile.activePage[0].id && onMesasActualizadasHandlerByPage.hasOwnProperty( $.mobile.activePage[0].id) ) {
             onMesasActualizadasHandlerByPage[$.mobile.activePage[0].id].call();
         }
     },

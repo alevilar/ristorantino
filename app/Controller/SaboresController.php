@@ -54,8 +54,9 @@ class SaboresController extends AppController {
 				$this->Session->setFlash(__('The sabor could not be saved. Please, try again.'));
 			}
 		}
+                $grupoSabores = $this->Sabor->GrupoSabor->find('list');
 		$categorias = $this->Sabor->Categoria->find('list');
-		$this->set(compact('categorias'));
+		$this->set(compact('categorias','grupoSabores'));
 	}
 
 /**
@@ -79,8 +80,9 @@ class SaboresController extends AppController {
 		} else {
 			$this->request->data = $this->Sabor->read(null, $id);
 		}
+                $grupoSabores = $this->Sabor->GrupoSabor->find('list');
 		$categorias = $this->Sabor->Categoria->find('list');
-		$this->set(compact('categorias'));
+		$this->set(compact('categorias','grupoSabores'));
 	}
 
 /**

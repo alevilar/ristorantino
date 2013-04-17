@@ -60,7 +60,7 @@ class GrupoSabor extends AppModel {
 	public $hasAndBelongsToMany = array(
 		'Producto' => array(
 			'className' => 'Producto',
-			'joinTable' => 'productos_grupo_sabores',
+			'joinTable' => 'grupo_sabores_productos',
 			'foreignKey' => 'grupo_sabor_id',
 			'associationForeignKey' => 'producto_id',
 			'unique' => 'keepExisting',

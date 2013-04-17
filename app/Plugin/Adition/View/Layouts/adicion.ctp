@@ -13,7 +13,10 @@
 		<?php echo $title_for_layout; ?>
 	</title>
     
-        <meta name="viewport" content="width=device-width, initial-scale=1"> 
+                
+        <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; minimum-scale=1.0; user-scalable=no;"> 
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        
     
         <base href="<?= $this->Html->url('/')?>" />
             <?php
@@ -26,8 +29,8 @@
 //                    'jquery-mobile/jquery.mobile.actionsheet',
                     '/adition/css/ristorantino',
                     '/adition/css/jquery-mobile-custom/jquery.mobile-custom',
-                    'keyboard',
-                    'alekeyboard',
+//                    'keyboard',
+//                    'alekeyboard',
                     ));
 
                 $cssUserRole = "acl-".$this->Session->read('Auth.User.role');

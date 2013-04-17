@@ -53,7 +53,7 @@ class AditionController extends AditionAppController {
 
     public function index() {
         $this->set('tipo_de_pagos', $this->Mozo->Mesa->Pago->TipoDePago->find('all'));
-        $this->set('mozos', $this->Mozo->dameActivos());
+        $this->set('mozos', $this->Mozo->dameActivos());        
         $this->set('categorias', ClassRegistry::init('Categoria')->array_listado());
         $this->set('productos', ClassRegistry::init('Producto')->listadoCompleto());
         $this->set('observaciones', ClassRegistry::init('Observacion')->find('list', array('order' => 'Observacion.name')));

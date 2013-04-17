@@ -6,6 +6,7 @@
 		echo $this->Form->input('id');
 		echo $this->Form->input('name');
 		echo $this->Form->input('categoria_id');
+                echo $this->Form->input('grupo_sabor_id');
 		echo $this->Form->input('precio');
 	?>
 	</fieldset>

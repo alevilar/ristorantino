@@ -143,7 +143,7 @@ class Producto extends AppModel {
     function listadoCompleto(){
         $conditions = array(
             'contain' => array(
-                'GrupoSabor.Sabor',
+                'GrupoSabor' => array('Sabor'),
                 'Categoria',
             ),
         );

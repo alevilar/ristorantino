@@ -1,21 +1,18 @@
 #!/bin/bash
 ### MySQL Server Login Info ###
-MUSER="xxxx"
-MPASS="xxxxxx"
+MUSER="user"
+MPASS="supersecret"
 MHOST="localhost"
 MYSQL="$(which mysql)"
 MYSQLDUMP="$(which mysqldump)"
-BAK="/backups/db"
+BAK="/tmp"
 GZIP="$(which gzip)"
-NOMBREDDBB="nombreDDBB"
+NOMBREDDBB="ristorantino"
 EMAIL="mail@mail.com"
 
 
  FILE=$BAK/$NOMBREDDBB_$(date +%Y-%m-%d-%T).gz
  $MYSQLDUMP -u $MUSER -h $MHOST -p$MPASS $NOMBREDDBB | $GZIP -9 > $FILE
 
- echo | mutt -a $FILE -s "backup $NOMBREDDBB" $EMAIL
-
- FILE=$BAK/drupal.$NOW-$(date +%Y-%m-%d-%T).gz
- $MYSQLDUMP -u $MUSER -h $MHOST -p$MPASS drupal | $GZIP -9 > $FILE
+ echo | mutt -s "backup $NOMBREDDBB" -a $FILE -- $EMAIL
 

@@ -312,7 +312,7 @@ class AppSchema extends CakeSchema {
 		'name' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 64, 'collate' => 'utf8_spanish_ci', 'charset' => 'utf8'),
 		'categoria_id' => array('type' => 'integer', 'null' => false, 'default' => NULL),
                 'grupo_sabor_id'=> array('type' => 'integer', 'null' => false, 'default' => NULL),
-		'precio' => array('type' => 'float', 'null' => false, 'default' => NULL),            
+		'precio' => array('type' => 'float', 'null' => true, 'default' => NULL),
 		'created' => array('type' => 'timestamp', 'null' => true, 'default' => NULL),
 		'modified' => array('type' => 'timestamp', 'null' => true, 'default' => NULL),
 		'deleted_date' => array('type' => 'timestamp', 'null' => true, 'default' => NULL),
