@@ -1,0 +1,27 @@
+#listado_productos{
+    width: 36%; 
+    display: inline; 
+    float: left;
+}
+
+#listado_categorias{
+    width: 26%; 
+    display: inline; 
+    float: left;
+}
+
+#listado_categorias ul ul{
+    display: none;
+}
+
+#detalle_productos{
+    width: 30%; 
+    margin-right: 2%; 
+    display: inline; 
+    float: right;
+}
+
+.bck-btn, .bck-btn a{
+    background-color: #000;
+    color: white;
+}
