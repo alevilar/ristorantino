@@ -1,16 +1,17 @@
-<div data-role="page" id="mesa-cambiar-numero" data-theme="e">
+<?php echo $this->Html->script('/adition/js/adicion/elements/mesa_menu'); ?>
+<div data-role="page" id="mesa-menu" data-theme="e">
     <div data-role="header">
-        <h1>Cambiar número de la <?php echo Configure::read('Mesa.tituloMesa') ?> <span data-bind="text: adn().currentMesa().numero"></span></h1>
+        <h1>Seleccionar cantidad de Menú</h1>
     </div>
 
     <div data-role="content">    
         <p>
-        El número actual es <span data-bind="text: adn().currentMesa().numero"></span>
+        La cantidad de menú actual es <span data-bind="text: adn().currentMesa().menu"></span>
         </p>
-        <form name="cambiar-mozo" id="form-cambiar-numero" action="#mesa-view" data-ajax="false"  data-transition="reverse">
+        <form name="cambiar-menu" action="#mesa-view" data-ajax="false"  data-transition="reverse">
             <fieldset data-role="controlgroup" data-type="horizontal">
                 <label for="numeroacambiar">Ingresar nuevo número</label>
-                <input type="number" name="numero" id="numeroacambiar" />
+                <input type="number" name="menu" id="menuacambiar" />
             </fieldset>
             
             <fieldset class="ui-grid-a">
@@ -20,4 +21,5 @@
             
         </form>
     </div>
+            
 </div>  

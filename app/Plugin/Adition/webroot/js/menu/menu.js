@@ -62,17 +62,16 @@ Risto.Adition.menu = {
             cantMiliseconds = 86400000; // 86400000 equivalen a 1 dia
         
         // si no paso mas de 1 día, no volver a traer el menu
-        if ( localStorage.categoriasTree && localStorage.categoriasTreeDate && (localStorage.categoriasTreeDate - newDay.valueOf() ) < cantMiliseconds) {
-            this.__iniciarCategoriasTreeLocalStorage();
-        } else {
+        if ( !localStorage.categoriasTree || !localStorage.categoriasTreeDate || (localStorage.categoriasTreeDate - newDay.valueOf() ) > cantMiliseconds) {
             this.__getRemoteMenu();
         }
+        this.__iniciarCategoriasTreeLocalStorage();
     },
     
     
     __iniciarCategoriasTreeLocalStorage: function(){
          var cats = JSON.parse(localStorage.categoriasTree);
-         this.categoriasTree( new Risto.Adition.categoria( cats ) );
+         this.categoriasTree( new Risto.Adition.categoria( cats.categorias ) );
          
           // pongo la primer categoria como current
          this.currentCategoria( this.categoriasTree() );

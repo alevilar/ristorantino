@@ -1,5 +1,5 @@
-<!DOCTYPE html> 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" >
 <head>
         <script type="text/javascript">
         <!--
@@ -39,8 +39,6 @@
                 }
                 
                
-                $debug = Configure::read('debug');
-                if ( $debug > 0 ) {
                     echo $this->Html->script( array(
                         'jquery/jquery-1.8.1',
                         'jquery/jquery.tmpl.min',
@@ -73,25 +71,22 @@
                         '/adition/js/comanda/detalle_comanda.class',
                         '/adition/js/ko_adicion_model',
                         '/adition/js/adicion/events',
-                        '/adition/js/menu/menu',
+                       '/adition/js/menu/menu',
     //                    'http://code.jquery.com/mobile/latest/jquery.mobile.min.js',
                         'jquery/jquery.mobile-1.2.0',
                        'alekeyboard',
                         ));
-                } else {
-                    echo $this->Html->script('todos.min');
-                }
             ?>
 <?php
     //scripts de Cake
-    echo $scripts_for_layout;
-    
+    echo $this->fetch('script');
     echo $this->element('js_init');
 ?>
 
 </head>
 
 <body>
-	<?php echo $content_for_layout; ?>
+    
+	<?php echo $this->fetch('content');?>
 </body>
 </html>

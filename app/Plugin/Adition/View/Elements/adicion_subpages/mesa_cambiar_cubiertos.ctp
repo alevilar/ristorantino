@@ -1,3 +1,4 @@
+<?php echo $this->Html->script('/adition/js/adicion/elements/mesa_cambiar_cubiertos'); ?>
 <div data-role="page" id="mesa-cambiar-cubiertos" data-theme="e">
     <div data-role="header">
         <h1>Cambiar cubiertos de la <?php echo Configure::read('Mesa.tituloMesa') ?> <span data-bind="text: adn().currentMesa().cant_comensales"></span></h1>

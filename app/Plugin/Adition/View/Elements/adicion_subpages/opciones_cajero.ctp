@@ -1,4 +1,4 @@
-<!-- Opciones del cajero-->
+<?php echo $this->Html->script('/adition/js/adicion/elements/cajero_opciones'); ?>
 <div data-role="page" id="cajero-opciones" class="dialog-arriba">
     <div data-role="header">
         <h1>Opciones de Cajero</h1>

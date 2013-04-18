@@ -1,7 +1,4 @@
-<!--
-                        MESA-ADD
-
--->
+<?php echo $this->Html->script('/adition/js/adicion/elements/mesa_add'); ?>
 <div  data-role="page"  id="mesa-add" data-theme="e" class="dialog-ancho dialog-arriba">
         <div  data-role="header"  data-position="inline">
             <h1>Abrir <?php echo Configure::read('Mesa.tituloMesa') ?></h1>

@@ -40,50 +40,6 @@
 
 
 
-
-<!--  TEmplate: Productos seleccionados en el menu. comandas add -->
-<script id="categorias-productos-seleccionados" type="text/x-jquery-tmpl">
-    <li data-bind="visible: cant(), css:{'es-entrada': esEntrada(), 'tiene-observacion': observacion()}"  class="ui-li ui-li-static ui-body-c listado-productos-seleccionados" >
-        
-        <div style="display: none" data-type="horizontal" data-role="controlgroup" class="producto-seleccionado-acciones ui-corner-all ui-controlgroup ui-controlgroup-horizontal ui-options">
-            <a data-bind="click: seleccionar" data-role="button" data-icon="plus" data-iconpos="notext" href="#" title="+" data-theme="c" class="ui-btn ui-btn-icon-notext ui-corner-left ui-btn-up-c"><span class="ui-btn-inner ui-corner-left"><span class="ui-btn-text" >+</span><span class="ui-icon ui-icon-plus ui-icon-shadow"></span></span></a>
-            <a data-bind="click: deseleccionar" data-role="button" data-icon="minus" data-iconpos="notext" href="#" title="-" data-theme="c" class="ui-btn ui-btn-icon-notext ui-btn-up-c"><span class="ui-btn-inner"><span class="ui-btn-text">-</span><span class="ui-icon ui-icon-minus ui-icon-shadow"></span></span></a>
-            <a data-bind="click: addObservacion, style: { background: observacion() ? '#437FBE' : ''}" 
-               data-rel="dialog"  
-               data-role="button"
-               data-iconpos="notext" 
-               data-icon="grid" 
-               href="#comanda-add-product-obss" 
-               title="Observación" 
-               data-theme="c" class="ui-btn ui-btn-icon-notext ui-btn-up-c">
-                <span class="ui-btn-inner">
-                    <span class="ui-btn-text">Observación
-                    </span>
-                    <span class="ui-icon ui-icon-grid ui-icon-shadow"></span>
-                </span>
-            </a>
-            <a data-role="button" data-iconpos="notext" data-icon="entrada" 
-               href="#" title="Entrada" data-theme="c" 
-               class="ui-btn ui-btn-icon-notext ui-corner-right ui-controlgroup-last ui-btn-up-c"
-               data-bind="click: toggleEsEntrada, css: { es_entrada: esEntrada()}"
-               >
-                <span class="ui-btn-inner ui-corner-right ui-controlgroup-last">
-                    <span class="ui-btn-text">Entrada</span>
-                    <span class="ui-icon ui-icon-entrada ui-icon-shadow"></span>
-                </span>
-            </a>
-         </div>
-        
-        
-        <span data-bind="text: realCant()" class="ui-li-count ui-btn-up-c ui-btn-corner-all"></span>
-         
-        <span data-bind="text: nameConSabores() + ' ' +observacion()"></span>
-        
-        <span class="ui-options-btn">Opciones</span>
-     </li>
- </script>
- 
- 
  
  <!-- Template: Comanda Add menu path-->
  <script id="boton" type="text/x-jquery-tmpl">
@@ -176,3 +132,19 @@ es igual al de las mesas de la adicion salvo que al hacer click tienen otro comp
         </a>
     </li>
 </script>
+
+
+
+
+<!-- Template: Comanda Add, Listado de sabores de categorias       -->
+<script id="listaSabores" type="text/x-jquery-tmpl">
+   <a href="#" data-theme="c" data-inline="true" data-role="button" class="ui-btn ui-btn-inline ui-btn-corner-all ui-shadow ui-btn-up-c">
+       <span class="ui-btn-inner ui-btn-corner-all">
+           <span class="ui-btn-text">
+               <span data-bind="text: name"></span>                         
+           </span>
+       </span>
+   </a>
+</script>
+
+

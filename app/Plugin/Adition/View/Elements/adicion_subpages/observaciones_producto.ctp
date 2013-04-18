@@ -1,4 +1,4 @@
-<div  data-role="page"  id="comanda-add-product-obss">
+<div  data-role="page"  id="observaciones_producto">
     <div  data-role="header"  data-position="inline">
         <h1>Observacion</h1>
         <a href="#"  data-rel="back"  onclick="$('#form-comanda-producto-observacion').submit();" data-theme="b">Guardar Observación</a>

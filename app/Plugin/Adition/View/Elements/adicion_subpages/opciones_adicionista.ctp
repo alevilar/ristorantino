@@ -1,7 +1,3 @@
-
-<!-- 
-            Opciones ADICIONISTA
--->
 <div data-role="page" id="adicion-opciones">
     <div data-role="header">
         <h1>Opciones</h1>

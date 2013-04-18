@@ -1369,7 +1369,7 @@ ko.exportSymbol('isComputed', ko.isComputed);
         visitedObjects = visitedObjects || new objectLookup();
         
         rootObject = mapInputCallback(rootObject);
-        console.debug(rootObject);
+//        console.debug(rootObject);
         var canHaveProperties = (typeof rootObject == "object") && (rootObject !== null) && (rootObject !== undefined) && (!(rootObject instanceof Date));
         if (!canHaveProperties)
             return rootObject;

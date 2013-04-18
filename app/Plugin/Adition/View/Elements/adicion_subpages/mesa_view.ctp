@@ -1,7 +1,4 @@
-<!--
-                        MESA_VIEW - MESA VIEW
-
--->
+<?php echo $this->Html->script('/adition/js/adicion/elements/mesa_view'); ?>
 <div data-role="page" id="mesa-view">
 	<div  data-role="header" data-bind="css: {'ui-bar-f': adn().currentMesa().estaCerrada()}">
             <a href="#listado-mesas" data-direction="reverse">Volver</a>

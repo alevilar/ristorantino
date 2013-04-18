@@ -1,7 +1,3 @@
-<!--
-                        LISTADO MESAS CERRADAS:::: MODO CAJERO
-
--->
 <!-- Pagina 1, Home Page por default segun JQM: Listado de Mesas -->
 <div data-role="page" id="listado-mesas-cerradas">
 

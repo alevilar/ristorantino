@@ -1,4 +1,4 @@
-<!-- Pagina 1, Home Page por default segun JQM: Listado de Mesas -->
+<?php echo $this->Html->script('/adition/js/adicion/elements/listado_mesas'); ?>
 <div data-role="page" id="listado-mesas">
 
 	<div  data-role="header">

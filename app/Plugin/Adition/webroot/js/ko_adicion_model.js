@@ -31,6 +31,11 @@ Risto.Adition.koAdicionModel = {
     },
     
     refreshBinding: function(){
-        ko.applyBindings( Risto.Adition.koAdicionModel );
+        try{
+            ko.applyBindings( Risto.Adition.koAdicionModel );
+        } catch(e) {
+            console.log(e);
+        }
+        
     }
 }

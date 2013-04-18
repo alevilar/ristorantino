@@ -23,10 +23,11 @@ Risto.Adition.producto.prototype = {
     },
     
         
-    seleccionar: function(){
+    seleccionar: function(e){       
         var event =  $.Event(MENU_ESTADOS_POSIBLES.productoSeleccionado.event);
         event.producto = this; 
-        $(document).trigger(event);
+        var container = e?e:document;
+        $(container).trigger(event);
     },
     
     tieneSabores: function(){

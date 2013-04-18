@@ -6,6 +6,9 @@
 
 Risto.Adition.comandaFabrica = function(mesa){
     this.mesa = mesa;
+    this.currentSabores = ko.observableArray([]);
+    this.comanda = new Risto.Adition.comanda();
+    
     return this;
 }
 

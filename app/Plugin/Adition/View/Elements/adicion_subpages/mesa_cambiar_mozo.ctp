@@ -1,7 +1,4 @@
-<!--
-                    MESA CAMBIAR MOZO
-
--->
+<?php echo $this->Html->script('/adition/js/adicion/elements/mesa_cambiar_mozo'); ?>
 <div data-role="page" id="mesa-cambiar-mozo" data-theme="e" class="dialog-ancho">
     <div data-role="header">
         <h1>Seleccionar nuevo <?php echo Configure::read('Mesa.tituloMozo')?> para la <?php echo Configure::read('Mesa.tituloMesa')?> <span data-bind="text: adn().currentMesa().numero()"></span></h1>
