@@ -42,8 +42,8 @@
             );            
 
         $('#comanda-add-guardar').on('click', function(){
-            Risto.Adition.adicionar.currentMesa().currentComanda().save();
-            Risto.Adition.menu.reset();
+            Risto.koModel.mesa.currentMesa().currentComanda().save();
+            Risto.menu.reset();
         });
         
         
@@ -55,7 +55,7 @@
          * este debe ser agregado al listado de productos de la currentMesa()
          */
         function productoSeleccionado(e) {
-            Risto.Adition.adicionar.currentMesa().agregarProducto(e.producto);
+            Risto.koModel.mesa.currentMesa().agregarProducto(e.producto);
         }
 
         //creacion de comandas
@@ -79,7 +79,7 @@
         // reinicializo a cero los valores si es swipeado quiere decir que lo borro de la lista
         $('#ul-productos-seleccionados').on('swipeleft','li',function(e){
             $(this).hide('slow', function(){
-                    ko.contextFor(this).$data.cant(0); 
+                    ko.contextFor(this).$data.cant(0);
             });
         });
         
@@ -90,7 +90,7 @@
             var $domObs = $('#comanda-add-observacion');
             $("#mesa-comanda-add-obs-gen-cancel").on('click', function(){
                 $domObs.toggle('slow'); 
-                Risto.Adition.adicionar.currentMesa().currentComanda().comanda.borrarObservacionGeneral();
+                Risto.koModel.mesa.currentMesa().currentComanda().comanda.borrarObservacionGeneral();
             });
 
             $("#mesa-comanda-add-obs-gen-aceptar").on('click', function(){
@@ -100,7 +100,7 @@
             var domObsList = $('.observaciones-list button', '#comanda-add-menu');
             domObsList.on('click' , function(e){
                 if ( this.value ) {
-                    Risto.Adition.adicionar.currentMesa().currentComanda().comanda.agregarTextoAObservacionGeneral( this.value );
+                    Risto.koModel.mesa.currentMesa().currentComanda().comanda.agregarTextoAObservacionGeneral( this.value );
                 }
             });
         })();

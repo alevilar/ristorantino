@@ -13,7 +13,7 @@
         $('form input:first', '#mesa-menu').focus().val('');
         // Form SUBMITS
         $('form','#mesa-menu').bind( 'submit', function(){
-            $raeh.trigger('cambiarMenuMesa', null, this);
+            Risto.EventHandler.trigger('cambiarMenuMesa', null, this);
             return false;
         });
     });

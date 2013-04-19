@@ -12,7 +12,7 @@
         // Form SUBMITS
         $('#form-cambiar-mozo').bind('submit', function(e){
             e.preventDefault();
-            $raeh.trigger('cambiarMozo', e, this);
+            Risto.EventHandler.trigger('cambiarMozo', e, this);
             return false;
         });
     });

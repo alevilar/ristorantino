@@ -12,7 +12,7 @@
         $('input:first', '#form-cambiar-numero').focus().val('');
         // Form SUBMITS
         $('#form-cambiar-numero').bind( 'submit', function(){
-            $raeh.trigger('cambiarNumeroMesa', null, this);
+            Risto.EventHandler.trigger('cambiarNumeroMesa', null, this);
             return false;
         });
     });

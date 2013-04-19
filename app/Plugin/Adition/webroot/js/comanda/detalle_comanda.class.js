@@ -5,7 +5,7 @@
  */
 
 
-Risto.Adition.detalleComanda = function(jsonData) {
+Risto.comanda.detalleComanda = function(jsonData) {
 
     this.imprimir       = ko.observable( true );
     this.cant           = ko.observable( 0 );
@@ -13,20 +13,20 @@ Risto.Adition.detalleComanda = function(jsonData) {
     this.es_entrada     = ko.observable( 0 );
     this.observacion    = ko.observable( '' );
     this.modificada     = ko.observable( false );
-    this.Producto       = ko.observable( new Risto.Adition.producto() );
+    this.Producto       = ko.observable( new Risto.menu.producto() );
     this.Sabor          = ko.observableArray( [] );
     
-    if ( jsonData ) {
-        this.Producto =  ko.observable ( new Risto.Adition.producto( jsonData.Producto ) );        
+    if ( jsonData ) {Risto.menu.pro
+        this.Producto =  ko.observable ( new Risto.menu.producto( jsonData.Producto ) );        
         
         
         if ( jsonData.Sabor && jsonData.Sabor.length){
             var s = 0;
             for (s in jsonData.Sabor) {
                 if ( jsonData.Sabor[s].Sabor ) {
-                    this.Sabor.push( new Risto.Adition.sabor( jsonData.Sabor[s].Sabor) );
+                    this.Sabor.push( new Risto.menu.sabor( jsonData.Sabor[s].Sabor) );
                 } else {
-                    this.Sabor.push( new Risto.Adition.sabor( jsonData.Sabor[s]) );
+                    this.Sabor.push( new Risto.menu.sabor( jsonData.Sabor[s]) );
                 }
                 
             }
@@ -65,7 +65,7 @@ Risto.Adition.detalleComanda = function(jsonData) {
 }
 
 
-Risto.Adition.detalleComanda.prototype = {
+Risto.comanda.detalleComanda.prototype = {
     Producto    : function( ) {},
     Sabor: function( ) {return []}, // array de Sabores
 
@@ -167,7 +167,7 @@ Risto.Adition.detalleComanda.prototype = {
             this.modificada(true);
         }
         var dc = this;
-        $cakeSaver.send({
+        Risto.cakeSaver.send({
            url: urlDomain + '/detalle_comandas/edit/' + dc.id(),
            obj: dc
         }, function() {

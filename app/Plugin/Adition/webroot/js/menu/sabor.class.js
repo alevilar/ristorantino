@@ -3,7 +3,7 @@
  *
  * Clase Sabor, depende de Productos
  */
-Risto.Adition.sabor = function(jsonData){
+Risto.menu.sabor = function(jsonData){
     
     this.initialize(jsonData);
    
@@ -11,7 +11,7 @@ Risto.Adition.sabor = function(jsonData){
     return this;
 }
 
-Risto.Adition.sabor.prototype = {
+Risto.menu.sabor.prototype = {
      name: '',
      Categoria: [],
      precio: 0,
@@ -48,13 +48,13 @@ Risto.Adition.sabor.prototype = {
         e.preventDefault();
 //        $(e.currentTarget).addClass('ui-btn-active');
         if ( this.cantSeleccionada() > 0 ){
-            Risto.Adition.adicionar.currentMesa().currentComanda().sacarSabor( this ); 
+            Risto.koModel.mesa.currentMesa().currentComanda().sacarSabor( this ); 
             this.cantSeleccionada('init');
              $(e.currentTarget).removeClass('ui-btn-active');
             return false;
         } else {
              $(e.currentTarget).addClass('ui-btn-active');
-            Risto.Adition.adicionar.currentMesa().currentComanda().agregarSabor( this ); 
+            Risto.koModel.mesa.currentMesa().currentComanda().agregarSabor( this ); 
             this.cantSeleccionada('sum');
             return true;
         }

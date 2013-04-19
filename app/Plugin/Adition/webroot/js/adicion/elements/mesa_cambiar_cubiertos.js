@@ -12,7 +12,7 @@
         $('input:first', '#form-cambiar-cubiertos').focus().val('');
         // Form SUBMITS
         $('#form-cambiar-cubiertos').bind( 'submit', function(){
-            $raeh.trigger('cambiarCantComensales', null, this);
+            Risto.EventHandler.trigger('cambiarCantComensales', null, this);
             return false;
         });
     });

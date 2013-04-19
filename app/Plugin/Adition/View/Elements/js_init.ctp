@@ -1,4 +1,3 @@
-        
 <script type="text/javascript">
     <!--
           $.extend(  $.mobile , {
@@ -37,11 +36,6 @@
         Risto.IMPRIME_REMITO_PRIMERO = <?php echo Configure::read('Mesa.imprimePrimeroRemito')?1:0?>;
 
         //Parametros de configuracion
-        Risto.Adition.cubiertosObligatorios   = <?php echo Configure::read('Adicion.cantidadCubiertosObligatorio')?'true':'false'?>;
-
-
-        // instancio el objeto adicion que sera el kernel de la app
-        Risto.Adition.adicionar.initialize();
-        
+        Risto.cubiertosObligatorios   = <?php echo Configure::read('Adicion.cantidadCubiertosObligatorio')?'true':'false'?>;
     -->
     </script>

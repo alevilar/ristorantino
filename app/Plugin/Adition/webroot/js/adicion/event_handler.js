@@ -9,17 +9,17 @@
  * 
  */
 
-$raeh = Risto.Adition.EventHandler = {
+Risto.EventHandler = {
     
     trigger: function( eventName, extra, context ) {  
-        if ( Risto.Adition.EventHandler.hasOwnProperty(eventName ) && typeof Risto.Adition.EventHandler[eventName] == 'function') {
+        if ( Risto.EventHandler.hasOwnProperty(eventName ) && typeof Risto.EventHandler[eventName] == 'function') {
                 if ( context ) {
                     setTimeout(function(){
-                        Risto.Adition.EventHandler[eventName].call(context, extra);
+                        Risto.EventHandler[eventName].call(context, extra);
                     }, 1);
                 } else {
                     setTimeout(function(){
-                        return Risto.Adition.EventHandler[eventName].call(this, extra);
+                        return Risto.EventHandler[eventName].call(this, extra);
                     }, 1);
                 }
         }
@@ -84,7 +84,7 @@ $raeh = Risto.Adition.EventHandler = {
         };
         
         // guardo los pagos
-        $cakeSaver.send({
+        Risto.cakeSaver.send({
             url: urlDomain+'pagos/add',
             obj: mes
         }, function(d){
@@ -100,7 +100,7 @@ $raeh = Risto.Adition.EventHandler = {
     },
     
     mesaSeleccionada: function(e){
-        Risto.Adition.adicionar.setCurrentMesa(e.mesa);
+        Risto.koModel.mesa.setCurrentMesa(e.mesa);
     },
     
     
@@ -124,7 +124,7 @@ $raeh = Risto.Adition.EventHandler = {
                 if ( btnMozo[0] ) {
                     mozoId = $(btnMozo[0]).attr('data-mozo-id');
                 }
-                $raeh.mostrarMesasDeMozo(mozoId);
+                Risto.EventHandler.mostrarMesasDeMozo(mozoId);
             },
             'mesa-view': function() {
                 $('#comanda-detalle-collapsible').trigger('create');
@@ -144,7 +144,7 @@ $raeh = Risto.Adition.EventHandler = {
     
     cambiarMenuMesa: function(e){
         var menuMesa = $(this).find('[name="menu"]').val(),
-            selfMesa = Risto.Adition.adicionar.currentMesa(),
+            selfMesa = Risto.koModel.mesa.currentMesa(),
             menuAnt = selfMesa.menu( ),
             onSuccess = function(){},
             onError = function(){
@@ -163,34 +163,34 @@ $raeh = Risto.Adition.EventHandler = {
 
     cambiarMozo: function(e){    
         var mozoId = $(this).find('[name="mozo_id"]:checked').val();
-        var mozo = Risto.Adition.adicionar.findMozoById(mozoId);
-        var mozoAnterior = Risto.Adition.adicionar.currentMesa().mozo();
-        Risto.Adition.adicionar.currentMesa().setMozo( mozo );
+        var mozo = Risto.koModel.listado_mesas.findMozoById(mozoId);
+        var mozoAnterior = Risto.koModel.mesa.currentMesa().mozo();
+        Risto.koModel.mesa.currentMesa().setMozo( mozo );
 
         $('.ui-dialog').dialog('close');
 
         var sendOb = {
             obj: {
-                id: Risto.Adition.adicionar.currentMesa().id(),
+                id: Risto.koModel.mesa.currentMesa().id(),
                 mozo_id: mozoId,
                 model: 'Mesa',
                 handleAjaxSuccess: function(){}
             },
-            url: Risto.Adition.adicionar.currentMesa().urlEdit(),
+            url: Risto.koModel.mesa.currentMesa().urlEdit(),
             error: function(){
-                Risto.Adition.adicionar.currentMesa().setMozo( mozoAnterior );
+                Risto.koModel.mesa.currentMesa().setMozo( mozoAnterior );
                 alert("debido a un error en el servidor, el mozo no fue modificado");
             }
         }
 
-        $cakeSaver.send(sendOb);
+        Risto.cakeSaver.send(sendOb);
 
         return false;
     },
 
     cambiarNumeroMesa: function() {
         var numeroMesa = $(this).find('[name="numero"]').val(),
-            selfMesa = Risto.Adition.adicionar.currentMesa(),
+            selfMesa = Risto.koModel.mesa.currentMesa(),
             numAnt = selfMesa.numero( ),
             onSuccess = function(){},
             onError = function(){
@@ -208,7 +208,7 @@ $raeh = Risto.Adition.EventHandler = {
     
     cambiarCantComensales: function() {
         var cubiertos = $(this).find('[name="numero"]').val(),
-            selfMesa = Risto.Adition.adicionar.currentMesa(),
+            selfMesa = Risto.koModel.mesa.currentMesa(),
             cantAnterior = selfMesa.cant_comensales( ),
             onSuccess = function(){
             },
@@ -235,6 +235,8 @@ $raeh = Risto.Adition.EventHandler = {
         if ( domObj == undefined ) {
             domObj = 0;
         }
+        var $listMozosContainer = $('#listado-mozos-para-mesas');
+        var $mesasContainer = $('#mesas_container');
         
         var mozoId;
         if ( typeof domObj == 'number') {
@@ -242,6 +244,7 @@ $raeh = Risto.Adition.EventHandler = {
         } else {
             mozoId = domObj.getAttribute('data-mozo-id');   
         }
+        var $mesasDom = $mesasContainer.find('li');
         
         $mesasDom.show();
         $('a.ui-btn-active', $listMozosContainer).removeClass('ui-btn-active');

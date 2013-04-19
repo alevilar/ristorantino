@@ -18,7 +18,7 @@ var MENU_ESTADOS_POSIBLES =  {
     }
 };
 
-Risto.Adition.menu = {
+Risto.menu = {
     // listado de categorias anidadas
     categoriasTree: ko.observable(), 
     
@@ -31,7 +31,7 @@ Risto.Adition.menu = {
     
     initialize: function(){
         this.__armarMenu();
-        Risto.Adition.koAdicionModel.menu(this);
+        Risto.menu(this);
         return this;
     },
     
@@ -71,7 +71,7 @@ Risto.Adition.menu = {
     
     __iniciarCategoriasTreeLocalStorage: function(){
          var cats = JSON.parse(localStorage.categoriasTree);
-         this.categoriasTree( new Risto.Adition.categoria( cats.categorias ) );
+         this.categoriasTree( new Risto.comanda.categoria( cats.categorias ) );
          
           // pongo la primer categoria como current
          this.currentCategoria( this.categoriasTree() );
@@ -151,4 +151,4 @@ Risto.Adition.menu = {
 
 
 
-Risto.Adition.menu.initialize();
+Risto.menu.initialize();

@@ -3,13 +3,13 @@
  *
  * Clase Pago
  */
-Risto.Adition.pago = function(jsonOb){
+Risto.mesa.pago = function(jsonOb){
     
     return this.initialize(jsonOb);
 }
 
 
-Risto.Adition.pago.prototype = {
+Risto.mesa.pago.prototype = {
     model       : 'Pago',
     TipoDePago  : function( ) {},
     valor       : function( ) {},
@@ -19,7 +19,7 @@ Risto.Adition.pago.prototype = {
     initialize: function(jsonOb){
         
         this.valor = ko.observable();
-        this.mesa_id = Risto.Adition.adicionar.currentMesa().id();
+        this.mesa_id = Risto.koModel.mesa.currentMesa().id();
         
         this.TipoDePago = ko.observable(null);
         if (jsonOb) {
@@ -28,7 +28,7 @@ Risto.Adition.pago.prototype = {
             this.tipo_de_pago_id = this.TipoDePago().id;
         }
         
-        Risto.Adition.adicionar.pagos.push(this);
+        Risto.KoModel.mesa.pagos.push(this);
         
         // hacer auto focus al ultimo ingresado
         var inputs = $('.pagos_creados').find('[name="valor"]');

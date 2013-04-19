@@ -3,12 +3,12 @@
  *
  * Clase Producto
  */
-Risto.Adition.producto = function(data, categoria) {    
+Risto.menu.producto = function(data, categoria) {    
     return this.initialize(data, categoria);
 }
 
 
-Risto.Adition.producto.prototype = {
+Risto.menu.producto.prototype = {
     Categoria: {},
     
     initialize: function(jsonData, categoria){

@@ -3,14 +3,17 @@
  *
  * Clase Descuento
  */
+if (!Risto.mesa){
+    Risto.mesa = {}
+}
 
-Risto.Adition.descuento = function(jsonData){
+Risto.mesa.descuento = function(jsonData){
     this.descuento = ko.observable( 0 );
     return this.initialize(jsonData);
 }
 
 
-Risto.Adition.descuento.prototype = {
+Risto.mesa.descuento.prototype = {
     initialize: function(jsonData){
         return ko.mapping.fromJS(jsonData, {}, this);       
     }

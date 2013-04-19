@@ -4,12 +4,12 @@
  * Clase Cliente
  */
 
-Risto.Adition.cliente = function(jsonMap){   
+Risto.cliente = function(jsonMap){   
     
     return this.initialize(jsonMap);
 }
 
-Risto.Adition.cliente.prototype = {
+Risto.cliente.prototype = {
     Descuento: ko.observable(null),
     porcentaje: ko.observable( undefined ),
     
@@ -74,7 +74,7 @@ Risto.Adition.cliente.prototype = {
         this.porcentaje = ko.observable( undefined );
         
         if (jsonMap.Descuento && jsonMap.Descuento.id) {
-            this.Descuento( new Risto.Adition.descuento(jsonMap.Descuento) );
+            this.Descuento( new Risto.mesa.descuento(jsonMap.Descuento) );
         }
         delete jsonMap.Descuento;
         

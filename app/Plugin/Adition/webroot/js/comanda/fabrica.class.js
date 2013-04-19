@@ -1,18 +1,18 @@
 /*-------------------------------------------- Risto.Adicion.comandaFabrica
  *
- *
  * Clase ComandaFabrica
+ * 
  */
 
-Risto.Adition.comandaFabrica = function(mesa){
+Risto.comanda.fabrica = function(mesa){
     this.mesa = mesa;
     this.currentSabores = ko.observableArray([]);
-    this.comanda = new Risto.Adition.comanda();
+    this.comanda = new Risto.comanda();
     
     return this;
 }
 
-Risto.Adition.comandaFabrica.prototype = {
+Risto.comanda.fabrica.prototype = {
     id: 0,
     comandaSettings: {
         imprimir: ko.observable( true ),
@@ -35,7 +35,7 @@ Risto.Adition.comandaFabrica.prototype = {
         var comanderaName = "comandera_"+producto().comandera_id;
 
         if ( !this.comandaComanderas.hasOwnProperty()) {
-            this.comandaComanderas[comanderaName] = new Risto.Adition.comanda( this.comandaSettings );
+            this.comandaComanderas[comanderaName] = new Risto.comanda( this.comandaSettings );
             this.comandaComanderas[comanderaName].mesa_id = this.mesa.id();
         }
         
@@ -58,13 +58,15 @@ Risto.Adition.comandaFabrica.prototype = {
      * @param comanderas Array listado de comandas
      */
     __enviarComandas: function( ){
+        console.info("envio comanda");
         var comanderaComanda;
          // creo una nueva comanda para cada comandera
         for (var i in this.comandaComanderas ) {            
             this.mesa.Comanda.unshift( this.comandaComanderas[i] );
             comanderaComanda = this.comandaComanderas[i];
+            console.debug(comanderaComanda);
             //  para cada comandera
-            $cakeSaver.send({
+            Risto.cakeSaver.send({
                 url: urlDomain + 'comandas/add.json', 
                 obj: comanderaComanda
             });
@@ -74,6 +76,7 @@ Risto.Adition.comandaFabrica.prototype = {
     
     
     save: function() {
+        console.info("guardolin");
         if ( !this.mesa){
                 jQuery.error("no hay una mesa setteada. No se puede guardar una comanda de ninguna mesa");
                 return null;
@@ -83,6 +86,7 @@ Risto.Adition.comandaFabrica.prototype = {
         // a llamar a este metodo pero dentro de un rato
         var cantRepeticiones = 0;
         if ( !this.mesa.id() ) {
+            throw "No se puede guardar Comanda, no hay mesa seleccionada";
             var este = this;
             setTimeout( function(){
                 if (cantRepeticiones < 4) {                
@@ -138,7 +142,7 @@ Risto.Adition.comandaFabrica.prototype = {
         // si aun no estaba ese producto
         if ( !this.mapeoProductosSeleccionados.hasOwnProperty(prodIdName) ) {            
             // armo el objeto
-            this.mapeoProductosSeleccionados[prodIdName] = new Risto.Adition.detalleComanda({
+            this.mapeoProductosSeleccionados[prodIdName] = new Risto.comanda.detalleComanda({
                 Producto: prod,
                 Sabor: saboresUntuched,
                 productoSeleccionadoIndex: undefined

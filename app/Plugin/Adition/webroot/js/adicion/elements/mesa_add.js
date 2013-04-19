@@ -45,16 +45,16 @@
                             return false;
                         }
 
-                        if (rta[r].name == 'cant_comensales' && !rta[r].value && Risto.Adition.cubiertosObligatorios){
+                        if (rta[r].name == 'cant_comensales' && !rta[r].value && Risto.cubiertosObligatorios){
                             alert("Debe indicar la cantidad de cubiertos");
                             return false;
                         }
                         miniMesa[rta[r].name] = rta[r].value;
                     }
 
-                    mesa = Risto.Adition.adicionar.abrirNuevaMesa( miniMesa );
-                    Risto.Adition.EventHandler.mesaSeleccionada( {"mesa": mesa} );
-                    Risto.Adition.adicionar.setCurrentMesa( mesa );
+                    mesa = Risto.koModel.listado_mesas.abrirNuevaMesa( miniMesa );
+                    Risto.EventHandler.mesaSeleccionada( {"mesa": mesa} );
+                    Risto.koModel.mesa.setCurrentMesa( mesa );
                     $.mobile.changePage('#mesa-view');
                     document.getElementById('form-mesa-add').reset(); // limpio el formulario
 

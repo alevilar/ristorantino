@@ -4,15 +4,15 @@
  * Clase Comanda
  */
 
-Risto.Adition.comanda = function(jsonData){
+Risto.comanda = function(jsonData){
     return this.initialize( jsonData );
 }
 
 
-Risto.Adition.comanda.prototype = {
+Risto.comanda.prototype = {
     // Array de DetalleComanda, cada detalleComanda es 1 producto
-    DetalleComanda  : [],
-    created         : function( ) { },
+    DetalleComanda  : ko.observableArray( [] ),
+    created         : ko.observable(),
     model           : 'Comanda',
     imprimir        : function( ) { return true },
     id              : ko.observable(),
@@ -30,7 +30,7 @@ Risto.Adition.comanda.prototype = {
             var mapOps = {
                 'DetalleComanda': {
                     create: function(ops) {
-                        return new Risto.Adition.detalleComanda(ops.data);
+                        return new Risto.comanda.detalleComanda(ops.data);
                     }
                 }
             }
@@ -93,7 +93,7 @@ Risto.Adition.comanda.prototype = {
     },
     
     /**
-     * Agrega producto y si listado de sabores como un DetalleComanda
+     * Agrega producto y su listado de sabores como un DetalleComanda
      * 
      * @param producto Producto json
      * @param sabores Array Sabores Json list
@@ -107,7 +107,7 @@ Risto.Adition.comanda.prototype = {
             Producto: producto,            
             Sabor: saboresList
         }
-        var dcObj = new Risto.Adition.detalleComanda(dc);
+        var dcObj = new Risto.comanda.detalleComanda(dc);
         dcObj.seleccionar();
         this.DetalleComanda().push( dcObj );
         return dcObj;

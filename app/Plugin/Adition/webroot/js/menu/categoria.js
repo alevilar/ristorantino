@@ -1,14 +1,16 @@
 /*--------------------------------------------------------------------------------------------------- Risto.Adicion.categoria
  *
- *
  * Clase Categoria
  */
-Risto.Adition.categoria = function(data, parent){
+if (!Risto.menu){
+    Risto.menu = {}
+}
+Risto.menu.categoria = function(data, parent){
     this.initialize(data, parent);
     return this;
 }
 
-Risto.Adition.categoria.prototype = {
+Risto.menu.categoria.prototype = {
     Padre: {},
     Hijos: [],
     Producto: [],
@@ -30,14 +32,14 @@ Risto.Adition.categoria.prototype = {
             this.Sabor = [];
         }
         for (var p in jsonData.Sabor){
-            this.Sabor.push( new Risto.Adition.sabor( jsonData.Sabor[p], this) );
+            this.Sabor.push( new Risto.menu.sabor( jsonData.Sabor[p], this) );
         }
         
         if (jsonData.Producto) {
             this.Producto = [];
         }
         for (var p in jsonData.Producto){
-            this.Producto.push( new Risto.Adition.producto( jsonData.Producto[p], this) );
+            this.Producto.push( new Risto.menu.producto( jsonData.Producto[p], this) );
         }
         
         if (jsonData.Hijos) {
@@ -45,7 +47,7 @@ Risto.Adition.categoria.prototype = {
         }
         for (var h in jsonData.Hijos){
             if ( jsonData.Hijos[h].id ) {
-                this.Hijos.push( new Risto.Adition.categoria( jsonData.Hijos[h], this) );
+                this.Hijos.push( new Risto.menu.categoria( jsonData.Hijos[h], this) );
             }
         }
         
@@ -57,6 +59,6 @@ Risto.Adition.categoria.prototype = {
     },
     
     seleccionar: function() {
-        Risto.Adition.menu.seleccionarCategoria( this );
+        Risto.menu.seleccionarCategoria( this );
     }
 }

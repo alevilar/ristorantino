@@ -11,7 +11,7 @@
          });
 
         $('#mesa-eliminar-cliente').bind('click',function(){
-            Risto.Adition.adicionar.currentMesa().setCliente( null );
+            Risto.koModel.mesa.currentMesa().setCliente( null );
             return true;
         });
 

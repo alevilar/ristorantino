@@ -6,7 +6,7 @@
  *  Cada uno de los keys, son las claves recibidas en el json que viene de esas mesas recibidas
  *
  */
-Risto.Adition.handleMesasRecibidas = {
+Risto.handleMesasRecibidas = {
          /**
          * 
          * Recibiendo un json con el listado de mozos, que a su vez 
@@ -43,10 +43,10 @@ Risto.Adition.handleMesasRecibidas = {
                     }
                 }
             
-                ko.mapping.fromJS( data, mapOps, Risto.Adition.adicionar );
+                ko.mapping.fromJS( data, mapOps, Risto.koModel.mesa );
             }
 
-            Risto.Adition.EventHandler.adicionMesasActualizadas();
+            Risto.EventHandler.adicionMesasActualizadas();
         },
         
         
@@ -62,15 +62,15 @@ Risto.Adition.handleMesasRecibidas = {
             var mesaEncontrada, 
                 mozo;
             for(var z in data.mozos){
-                mozo = Risto.Adition.adicionar.findMozoById( data.mozos[z].id );
+                mozo = Risto.koModel.listado_mesas.findMozoById( data.mozos[z].id );
                 for( var m in data.mozos[z].mesas ) {
-                    mesaEncontrada = Risto.Adition.adicionar.findMesaById( data.mozos[z].mesas[m].id );
+                    mesaEncontrada = Risto.koModel.listado_mesas.findMesaById( data.mozos[z].mesas[m].id );
                     if ( mesaEncontrada ) {
                         mesaEncontrada.update( mozo, data.mozos[z].mesas[m] );
                     }
                 }
             }
-            Risto.Adition.EventHandler.adicionMesasActualizadas();
+            Risto.EventHandler.adicionMesasActualizadas();
             return 1;
         },
         
@@ -87,7 +87,7 @@ Risto.Adition.handleMesasRecibidas = {
                        
             for (z in data.mozos) {
                 for( var m in data.mozos[z].mesas ) {
-                    mesaEncontrada = Risto.Adition.adicionar.findMesaById( data.mozos[z].mesas[m].id );
+                    mesaEncontrada = Risto.koModel.listado_mesas.findMesaById( data.mozos[z].mesas[m].id );
                     
                     if ( mesaEncontrada ) {  
 //                        ko.mapping.fromJS( data.mozos[z].mesas[m], {}, mesaEncontrada );
@@ -96,7 +96,7 @@ Risto.Adition.handleMesasRecibidas = {
                 }
             }
             // reinicializar vistas
-            $raeh.adicionMesasActualizadas();
+            Risto.EventHandler.adicionMesasActualizadas();
             return 1;
         },
         
@@ -107,7 +107,7 @@ Risto.Adition.handleMesasRecibidas = {
          * 
          */
         deleted: function(){
-            return Risto.Adition.handleMesasRecibidas.cobradas();
+            return Risto.handleMesasRecibidas.cobradas();
         }
         
 }

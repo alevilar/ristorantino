@@ -106,52 +106,6 @@ class CashierController extends AditionAppController {
 	
 		$this->set('mesas_cerradas', $mesas);
 	}
-	
-	
-	function mesas_abiertas(){
-		$conditions = array("Mesa.time_cobro" => "0000-00-00 00:00:00",
-                                    "Mesa.time_cerro" => "0000-00-00 00:00:00");
-		
-		$this->paginate['Mesa'] = array(
-                        'limit' => 28,
-                        'conditions'=>$conditions,
-                        'order'=>'Mesa.created DESC',
-                        'contain'=>	array(	'Mozo',
-                        'Cliente'=>'Descuento',
-                        'Comanda')				
-		);
-		
-		 $mesas = $this->paginate('Mesa');
- 		 $this->set('mesas_abiertas',$mesas);
-	}
-
-
-
-        function ultimas_cobradas(){
-            $conditions = array("Mesa.time_cobro >" => "0000-00-00 00:00:00",
-                                    "Mesa.time_cerro >" => "0000-00-00 00:00:00");
-
-		$this->paginate['Mesa'] = array(
-                        'limit' => 28,
-                        'conditions'=>$conditions,
-                        'order'=>'Mesa.time_cobro DESC',
-                        'contain'=> array(
-                            'Mozo',
-                            'Cliente'=>'Descuento',
-                            'Comanda'),
-		);
-
-		 $mesas = $this->paginate('Mesa');
- 		 $this->set('mesas',$mesas);
-        }
-
-
-
-        function activar_webcam(){
-           echo "activando webcam...";
-            print_r(exec("sudo sh /home/alejandro/webcamserver.sh"));
-        die();
-        }
 
 	
 }

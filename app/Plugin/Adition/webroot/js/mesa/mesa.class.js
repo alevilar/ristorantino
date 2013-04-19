@@ -6,16 +6,16 @@
  * para inicializarla es necesario pasarle el objeto Mozo
  * tambien se le puede pasar un jsonData para ser mappeado con knockout
  */
-var Mesa = function(mozo, jsonData) {
+Risto.mesa = function(mozo, jsonData) {
         this.id             = ko.observable( 0 );
         this.created        = ko.observable();
         this.total          = ko.observable( 0 );
         this.numero         = ko.observable( 0 );
         this.menu           = ko.observable( 0 );
         this.descuento_id   = ko.observable( 0 );
-        this.Descuento      = ko.observable( new Risto.Adition.descuento({porcentaje: undefined}) );
+        this.Descuento      = ko.observable( new Risto.mesa.descuento({porcentaje: undefined}) );
         this.mozo           = ko.observable( new Mozo() );
-        this.currentComanda = ko.observable( new Risto.Adition.comandaFabrica( this ) );
+        this.currentComanda = ko.observable( new Risto.comanda.fabrica( this ) );
         this.Comanda        = ko.observableArray( [] );
         this.mozo_id        = this.mozo().id;
         this.Cliente        = ko.observable( null );
@@ -33,7 +33,7 @@ var Mesa = function(mozo, jsonData) {
 
 
 
-Mesa.prototype = {
+Risto.mesa.prototype = {
     model       : 'Mesa',
     
     /**
@@ -78,7 +78,7 @@ Mesa.prototype = {
         // si vino jsonData mapeo con koMapp
         if ( jsonData != {} ) {
             if (jsonData.Cliente && jsonData.Cliente.id){
-                this.Cliente( new Risto.Adition.cliente( jsonData.Cliente ) );
+                this.Cliente( new Risto.cliente( jsonData.Cliente ) );
             } else {               
                 this.Cliente( null );
             }
@@ -89,7 +89,7 @@ Mesa.prototype = {
 //                'ignore': ["Cliente"],
                 'Comanda': {
                     create: function(ops) {
-                        return new Risto.Adition.comanda(ops.data);
+                        return new Risto.comanda(ops.data);
                     },
                     key: function(data) {
                         return ko.utils.unwrapObservable( data.id );
@@ -151,7 +151,7 @@ Mesa.prototype = {
      * @constructor
      */
     nuevaComanda: function(){
-        this.currentComanda( new Risto.Adition.comandaFabrica( this ) );
+        this.currentComanda( new Risto.comanda.fabrica( this ) );
     },
     
     
@@ -231,7 +231,7 @@ Mesa.prototype = {
      * dispara un evento de mesa cobrada
      */
     setEstadoCobrada : function(){
-        this.time_cobro( jsToMySqlTimestamp() );
+        this.time_cobro( Risto.jsToMySqlTimestamp() );
         this.setEstado(MESA_ESTADOS_POSIBLES.cobrada);
         return this;
     },
@@ -241,7 +241,7 @@ Mesa.prototype = {
      * dispara un evento de mesa cerrada
      */
     setEstadoCerrada : function(){
-        this.time_cerro = jsToMySqlTimestamp();
+        this.time_cerro = Risto.jsToMySqlTimestamp();
         this.setEstado(MESA_ESTADOS_POSIBLES.cerrada);
         return this;
     },
@@ -496,13 +496,13 @@ Mesa.prototype = {
             url: this.urlEdit(),
             error: cbkError
         }
-        $cakeSaver.send(sendOb);
+        Risto.cakeSaver.send(sendOb);
     },
     
     
     /**
      * Es el callback que recibe la actualizacion de las mesas via json desde 
-     * cakeSaver
+     * Risto.cakeSaver
      */
     handleAjaxSuccess: function(data, action, method) {
         if (data[this.model]) {
@@ -518,7 +518,7 @@ Mesa.prototype = {
         }
 
         this.descuento_id( descuento_id );
-        this.Descuento( new Risto.Adition.descuento(objDescuento) );
+        this.Descuento( new Risto.mesa.descuento(objDescuento) );
         this.saveField('descuento_id', descuento_id);
     },
     
@@ -550,7 +550,7 @@ Mesa.prototype = {
         
         var toDoAfterSave = function(data) {
             if ( data.Cliente ){
-                ctx.Cliente( new Risto.Adition.cliente(data.Cliente) );
+                ctx.Cliente( new Risto.cliente(data.Cliente) );
             } else{
                 ctx.Cliente(null);
             }
@@ -779,12 +779,12 @@ Mesa.prototype = {
             if ( this.getEstado() == MESA_ESTADOS_POSIBLES.cerrada ) {
                 txt = 'Cerró a las ';
                 if (typeof this.time_cerro == 'function') {
-                    date =  mysqlTimeStampToDate(this.time_cerro());
+                    date =  Risto.mysqlTimeStampToDate(this.time_cerro());
                 }
             } else {
                 txt = 'Abrió a las ';
                 if (typeof this.created == 'function') {
-                    date = mysqlTimeStampToDate(this.created());            
+                    date = Risto.mysqlTimeStampToDate(this.created());            
                 }
             }
             if ( !date ) {

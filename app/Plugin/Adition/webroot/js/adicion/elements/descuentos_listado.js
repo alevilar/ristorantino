@@ -7,7 +7,7 @@
     $('#descuentos-jqm_descuentos').live('pageshow',function(event, ui){
 
         $('#mesa-eliminar-descuento').bind('click',function(){
-            Risto.Adition.adicionar.currentMesa().eliminarDescuento( );
+            Risto.koModel.mesa.currentMesa().eliminarDescuento( );
             return true;
         });
 
