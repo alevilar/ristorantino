@@ -67,5 +67,15 @@ echo $valorCubierto > 0 ? $valorCubierto : 0;
                                             }
                                             $('.ui-dialog').dialog('close');
                                         });  
-                                        -->
+                                        
+                                        
+                 function formToObject($form){
+                     var rta = $form.serializeArray(), 
+                        newObj = {}; // json modelo, para crear la mesa
+                    for (var r in rta ) {
+                        newObj[rta[r].name] = rta[r].value;
+                    }
+                    return newObj;
+                 }
+-->
 </script>

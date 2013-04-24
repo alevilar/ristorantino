@@ -1,4 +1,13 @@
+R$.mesasCollection.on('select', function(e,r){
+    console.info("hizo seleccion");
+    console.debug(e);
+    new R$.MesaView({model: e});
+});
 
+R$.mesasCollection.on('all', function(e,r){
+  console.info("MESA COLLECTION HIZO: "+e);  
+}
+);
 $(document).on('pageshow', '#listado-mesas',function(event, ui){    
     var $listadoMozos = $('#listado-mozos-para-mesas');
     $listadoMozos.removeClass('ui-grid-a');

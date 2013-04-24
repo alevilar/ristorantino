@@ -43,6 +43,13 @@
  * Load the CakePHP default routes. Remove this if you do not want to use
  * the built-in default routes.
  */
+         Router::mapResources('mesas');
+        Router::mapResources('comandas');
+        
+        
 	require CAKE . 'Config' . DS . 'routes.php';
+        
+       
+        Router::parseExtensions('jqm');
 
         Router::parseExtensions('json', 'jqm');

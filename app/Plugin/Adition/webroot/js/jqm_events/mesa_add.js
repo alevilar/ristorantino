@@ -11,44 +11,32 @@
         $(document).on( 'pageshow', '#mesa-add', function(){
                 $formMesaAdd = $('#form-mesa-add');
                 
+                if ( Risto.cubiertosObligatorios ) {
+                    $('#mesa-add-cant_comensales')[0].setAttribute('required', 'required');
+                }
+                
                 /**
                  *
                  * Luego de apretar el submit del formulario agregar mesa....
                  */
-                function agregarNuevaMesa(e){
+                $formMesaAdd.on('submit', function(e){
                     e.preventDefault();
 
-                    var rta = $formMesaAdd.serializeArray(), 
-                        miniMesa = {}, // json modelo, para crear la mesa
-                        mesa; // nueva mesa creada
-                    for (var r in rta ) {
-                        if (rta[r].name == 'numero' && !rta[r].value){
-                            alert("Debe completar numero de mesa");
-                            return false;
-                        }
-
-                        if (rta[r].name == 'cant_comensales' && !rta[r].value && Risto.cubiertosObligatorios){
-                            alert("Debe indicar la cantidad de cubiertos");
-                            return false;
-                        }
-                        miniMesa[rta[r].name] = rta[r].value;
-                    }
-                    R$.mesasCollection.push( miniMesa );
-                    $.mobile.changePage('#mesa-view');
+                    var miniMesa = formToObject($formMesaAdd);
+                    R$.mesasCollection.create( miniMesa );
+                    
+                    $('.ui-dialog').dialog('close');
+                    
                     document.getElementById('form-mesa-add').reset(); // limpio el formulario
                     return false;
-                }
-
-                $formMesaAdd.on('submit', agregarNuevaMesa);
+                });
 
         });
 
         $(document).on( 'pagehide', '#mesa-add', function(){
             document.getElementById('form-mesa-add').reset();
+            $('#form-mesa-add').off('submit');
         });
-
-
-        
         
     })();
      

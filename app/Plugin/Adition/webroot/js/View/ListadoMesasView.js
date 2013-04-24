@@ -15,12 +15,12 @@ R$.ListadoMesasView = Backbone.View.extend({
     },
     
     select: function(e){
-        e.preventDefault();
+      e.preventDefault();
       $.mobile.changePage(e.currentTarget.getAttribute('href'));
-      
+      this.model.trigger('select', this.model);
     },
 
-    template:Handlebars.compile( $('#listaMesas').html() ),
+    template: Handlebars.compile( $('#listaMesas').html() ),
     
     //urlRoot: 'mesas',
     add: function(e) {
@@ -30,13 +30,11 @@ R$.ListadoMesasView = Backbone.View.extend({
     },
     
     render: function(e) {
-        console.info("estoy renderizando la vista listadoDe Mesas");
         //        this.$el.html(this.template(this.model.attributes));
         this.$el.html( this.template(this.model.toJSON()) );
-        this.$el.addClass('estado_'+this.model.get('estado_id'), this.model.get('done'));
-        return this;
-      
-        //        
+        
+        var estado = this.model.get('estado_id');
+        this.$el.addClass('estado_'+estado, estado);
         
         return this;
     }

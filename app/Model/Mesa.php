@@ -424,29 +424,6 @@ class Mesa extends AppModel
     }
 
 
-    /**
-     * Me devuelve ellistado de productos de una mesa en especial
-     *
-     */
-    function listado_de_productos($id = 0)
-    {
-        if ($id != 0)
-            $this->id = $id;
-
-        $items = $this->Comanda->DetalleComanda->find('all', array(
-            'conditions' => array(
-                'Comanda.mesa_id' => $this->id,
-                '(DetalleComanda.cant - DetalleComanda.cant_eliminada) >' => 0),
-            'order' => 'Comanda.id ASC, Producto.categoria_id ASC, Producto.id ASC',
-            'contain' => array('Producto', 'Comanda', 'DetalleSabor' => 'Sabor(name,precio)')
-                ));
-        for ($i = 0; $i < count($items); $i++) {
-            $items[$i]['DetalleComanda']['cant_final'] = $items[$i]['DetalleComanda']['cant'] - $items[$i]['DetalleComanda']['cant_eliminada'];
-        }
-
-        return $items;
-    }
-
     function ultimasCobradas($limit = 20)
     {
 

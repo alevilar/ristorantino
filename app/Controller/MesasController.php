@@ -17,13 +17,12 @@ class MesasController extends AppController
     {
         $lastAccess = null;
         if ($this->request->is('ajax')) {
-            
+
             $microtime = $estado;
-            if ( $microtime != 0 ) {
+            if ($microtime != 0) {
                 $lastAccess = $this->Session->read('lastAccess');
             }
             $mesas = $this->Mesa->getAbiertas(null, $lastAccess);
-            
         } else {
             $this->Prg->commonProcess();
             $this->paginate['conditions'] = $this->Mesa->parseCriteria($this->passedArgs);
@@ -56,50 +55,7 @@ class MesasController extends AppController
 
     public function view($id = null)
     {
-
-        if (!$id) {
-            $this->Session->setFlash(__('Invalid Mesa.'));
-            $this->redirect(array('action' => 'index'));
-        }
-
-        $this->Mesa->id = $id;
-        $items = $this->Mesa->listado_de_productos();
-
-
-        $mesa = $this->Mesa->find('first', array(
-            'conditions' => array('Mesa.id' => $id),
-            'contain' => array(
-                'Mozo(id,numero)',
-                'Cliente(id,nombre,imprime_ticket,tipofactura)',
-                'Comanda(id,prioridad,observacion)')
-                ));
-
-        $cont = 0;
-        //debug($items);
-        //Mezco el array $items que contiene Producto-DetalleComanda- y todo lo que venga delacionado al array $items lo mete como si fuera Producto
-        // esto es porque en el javascript trato el ProductoCOmanda como DetalleComanda
-        foreach ($items as $d):
-            foreach ($d as $coso) {
-                foreach ($coso as $dcKey => $dvValue) {
-                    $mesa['Producto'][$cont][$dcKey] = $dvValue;
-                }
-            }
-            $mesa['Producto'][$cont]['cantidad'] = $d['DetalleComanda']['cant'];
-            $mesa['Producto'][$cont]['name'] = $d['Producto']['name'];
-            $mesa['Producto'][$cont]['id'] = $d['DetalleComanda']['id'];
-            $mesa['Producto'][$cont]['producto_id'] = $d['Producto']['id'];
-            $cont++;
-        endforeach;
-
         $this->pageTitle = 'Mesa N° ' . $mesa['Mesa']['numero'];
-        $this->set('mesa_total', $this->Mesa->getTotal());
-
-        $this->set(compact('mesa', 'items'));
-        $this->set('mozo_json', json_encode($this->Mesa->Mozo->read(null, $mesa['Mozo']['id'])));
-    }
-
-    public function ticket_view($id = null)
-    {
 
         if (!$id) {
             $this->Session->setFlash(__('Invalid Mesa.'));
@@ -107,27 +63,30 @@ class MesasController extends AppController
         }
 
         $this->Mesa->id = $id;
-        $items = $this->Mesa->dameProductosParaTicket();
 
 
-        //$mesa = $this->Mesa->read(null, $id);
         $mesa = $this->Mesa->find('first', array(
             'conditions' => array('Mesa.id' => $id),
             'contain' => array(
-                'Mozo(id,numero)',
-                'Cliente(id,nombre,imprime_ticket,tipofactura)',
-                'Comanda(id,prioridad,observacion)')
+                'Mozo',
+                'Cliente',
+                'Comanda' => array(
+                    'DetalleComanda' => array(
+                        'Producto',
+                        'DetalleSabor.Sabor'
+                    )
+            ))
                 ));
 
         $cont = 0;
 
-        $mesa['Producto'] = $items;
-
-        $this->set('mesa_total', $this->Mesa->getTotal());
-
-        $this->set(compact('mesa', 'items'));
-        $this->set('mozo_json', json_encode($this->Mesa->Mozo->read(null, $mesa['Mozo']['id'])));
+        $this->set(array(
+            'mesa_total' => $this->Mesa->getTotal(),
+            'mesa' => $mesa,
+            '_serialize' => array('mesa'),
+        ));
     }
+
 
     /**
      * Cierra la mesa, calculando el total y, si se lo indica,
@@ -181,12 +140,17 @@ class MesasController extends AppController
                 if (!$this->request->is('ajax')) {
                     $this->redirect(array('action' => 'index'));
                 }
-
-                $this->set('insertedId', $this->Mesa->getLastInsertId());
-                $this->set('validationErrors', $this->Mesa->validationErrors);
+                $mesa = $this->Mesa->read();
+                $this->set(array(
+                    'mesa'=> $mesa['Mesa'],
+                    'insertedId' => $this->Mesa->getLastInsertId(),
+                    'validationErrors' => $this->Mesa->validationErrors,
+                ));
             } else {
                 $this->Session->setFlash(__('The mesa could not be saved. Please, try again.'));
+                $this->set('mesa', 'Error');
             }
+            $this->set('_serialize', 'mesa');
         } else {
 
             $mozos = $this->Mesa->Mozo->find('list', array('fields' => array('id', 'numero_y_nombre')));
