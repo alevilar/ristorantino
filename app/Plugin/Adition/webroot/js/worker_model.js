@@ -60,7 +60,9 @@ var AditionModel = {
      * para que se active este flag y el Worker no vaya  abuscar las mesas al servidor
      * causando error de conexion.
      */
-    onLine      : true,    interval    : '',
+    onLine      : true,    
+    
+    interval    : '',
     
     
     cantMesas   : 0,
@@ -121,8 +123,7 @@ var AditionModel = {
               }
             catch(err)
               {
-                  // si hubo algun error dejo el timestamp anterior, para volver a pedir las mesas
-                  AditionModel.mesasLastUpdatedTime = AditionModel.anteriorUpdatedTime;
+                  AditionModel._processOnError( err );
               }
             
         }
@@ -135,41 +136,46 @@ var AditionModel = {
      *  Si esta todo bien, envia las mesas a la aplicacion
      */
     _processOnSuccess: function () {
-        if (this.readyState == 4 && this.responseText && this.status==200) {
-            var data = JSON.parse( this.responseText );
-            if (data.time) {
-                AditionModel.mesasLastUpdatedTime = data.time;
-            } 
-            
-            
-            if ( data.mesas ) {
-                AditionModel.cantMesas = 0;
-                
-                if ( data.mesas.created ) {
-                    for ( var m = 0 in data.mesas.created.mozos ) {
-                        AditionModel.cantMesas += data.mesas.created.mozos[m].mesas.length;
-                    }
+      
+        if (this.readyState == 4 && this.status==200) {
+            if ( this.responseText ) {
+                var data = JSON.parse( this.responseText );
+                if (data.time) {
+                    AditionModel.mesasLastUpdatedTime = data.time;
+                } 
 
-                }
-                if ( data.mesas.modified ) {
-                    for ( var m = 0 in data.mesas.modified.mozos ) {
-                        AditionModel.cantMesas += data.mesas.modified.mozos[m].mesas.length;
-                    }
 
+
+                if ( data.mesas ) {
+                    AditionModel.cantMesas = 0;
+
+                    if ( data.mesas.created ) {
+                        for ( var m = 0 in data.mesas.created.mozos ) {
+                            AditionModel.cantMesas += data.mesas.created.mozos[m].mesas.length;
+                        }
+
+                    }
+                    if ( data.mesas.modified ) {
+                        for ( var m = 0 in data.mesas.modified.mozos ) {
+                            AditionModel.cantMesas += data.mesas.modified.mozos[m].mesas.length;
+                        }
+
+                    }
                 }
+
+                // envio las mesas a la aplicacion
+                self.postMessage(data);
+
+                AditionModel.ajaxSending = false;
             }
-            
-            
-            
-            // envio las mesas a la aplicacion
-            self.postMessage(data);
-            
-            AditionModel.ajaxSending = false;
-        } else {
-            self.postMessage("error en ajax del worker");
-            // si hubo error, vuelvo el tiempo atras
-            AditionModel.mesasLastUpdatedTime = AditionModel.anteriorUpdatedTime;
-        }            
+        }     
+    },
+    
+    _processOnError: function(errorMesg){
+        throw errorMesg;
+        
+        // si hubo error, vuelvo el tiempo atras
+        AditionModel.mesasLastUpdatedTime = AditionModel.anteriorUpdatedTime;
     }
 }
 

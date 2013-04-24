@@ -24,7 +24,7 @@
 
         // para los modal window
         echo $this->Html->css(array(
-            '/jquery/jquery.mobile/1.2.1/jquery.mobile-1.2.1',
+            '/jquery/jquery.mobile/1.3.1/jquery.mobile-1.3.1',
 //                    'jquery-mobile/jquerymobile.coqus',
 //                    'jquery-mobile/jquery.mobile.actionsheet',
             '/adition/css/ristorantino',
@@ -40,40 +40,19 @@
 
 
         echo $this->Html->script(array(
-            '/jquery/jquery-1.8.3.min',
-            'jquery/jquery.tmpl.min',
-            'knockout/knockout-2.2.1.min',
-            'knockout/knockout.mapping-2.4.1',
-            
+            'json2',
+            '/jquery/jquery-2.0.0.min',
+            'handlebars',
+            'underscore',
+            'backbone',
             '/adition/js/risto',
-            '/adition/js/cake_saver',
-            //                    'knockout.updateData',
-            // OJO !! EL ORDEN IMPORTA !!
-
+//            '/adition/js/adicion/event_handler',
+            '/adition/js/Model/MesaModel',
+            '/adition/js/Collection/MesasCollection',
             
-            '/adition/js/mozo/mozo.class',
-            '/adition/js/adicion/handle_mesas_recibidas',
-            '/adition/js/adicion/event_handler',
-            '/adition/js/mesa/mesa.class',
-            '/adition/js/mesa/estados.class',
-            
-            '/adition/js/comanda/comanda.class',
-            '/adition/js/comanda/fabrica.class',
-            '/adition/js/menu/menu',
-            '/adition/js/menu/producto',
-            '/adition/js/menu/categoria',
-            '/adition/js/menu/sabor.class',
-            '/adition/js/cliente/cliente.class',
-            '/adition/js/mesa/descuento.class',
-            '/adition/js/mesa/pago.class',
-            '/adition/js/comanda/detalle_comanda.class',
-            '/adition/js/adicion/events',
-            
-            '/adition/js/adicion/key_events',
-            '/jquery/jquery.mobile/1.2.1/jquery.mobile-1.2.1',
+            '/jquery/jquery.mobile/1.3.1/jquery.mobile-1.3.1',
 //                       'alekeyboard',
         ));
-
 
         //scripts de Cake
         echo $this->fetch('script');

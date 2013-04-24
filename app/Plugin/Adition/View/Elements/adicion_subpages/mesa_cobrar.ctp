@@ -1,4 +1,19 @@
-<?php echo $this->Html->script('/adition/js/adicion/elements/mesa_cobrar'); ?>
+<?php //echo $this->Html->script('/adition/js/adicion/elements/mesa_cobrar'); ?>
+
+<?php $this->start('jquery-tmpl'); ?>
+
+
+<!-- listado de pagos seleccionados -->
+<script id="li-pagos-creados" type="text/x-jquery-tmpl">
+     <li>
+         <img src="" data-bind="attr: {src: image(), alt: TipoDePago().name, title: TipoDePago().name}"/>
+         <label>Ingresar Valor $: </label>
+         <input name="valor" data-bind="value: valor, valueUpdate: 'keyup'" placeholder="Ej: 100.4"/>
+     </li>
+</script>
+
+<?php $this->end(); ?>
+
 <div data-role="page" id="mesa-cobrar" data-theme="e">
     <div data-role="header">
         <h1><?php echo Configure::read('Mesa.tituloMesa')?> <span data-bind="text: adn().currentMesa().numero()"></span> | <span data-bind="text: adn().vueltoText()"></span></h1>

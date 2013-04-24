@@ -1,6 +1,9 @@
-<?php echo $this->Html->script('/adition/js/adicion/elements/comanda_add_menu', array('inline' => 0)); ?>
+<?php //echo $this->Html->script('/adition/js/adicion/elements/comanda_add_menu', array('inline' => 0)); ?>
 
 <?php echo $this->Html->css('/adition/css/comanda_add_menu'); ?>
+
+
+<?php $this->start('jquery-tmpl'); ?>
 
 <!-- Template: Caomanda add: listado de categorias                                  -->
 <script id="listaCategoriasTree" type="text/x-jquery-tmpl">
@@ -12,6 +15,20 @@
    </a>
 </script>
 
+ <!-- Template: Comanda Add menu path-->
+ <script id="boton" type="text/x-jquery-tmpl">
+        <a data-bind="attr: {
+                         'data-icon': esUltimoDelPath()?'':'back', 
+                         'css': {'ui-btn-active': esUltimoDelPath()}
+                         }, 
+                      click: seleccionar" 
+            class="ui-btn ui-btn-inline ui-btn-icon-left ui-btn-corner-all ui-shadow ui-btn-up-c">
+             <span class="ui-btn-inner ui-btn-corner-all">
+                 <span class="ui-btn-text" data-bind="text: name" ></span>
+                 <span class="ui-icon ui-icon-right ui-icon-shadow"></span>
+             </span>
+         </a>
+</script>
 
 
 <!-- Template: Caomanda add: listado de productos -->
@@ -25,6 +42,19 @@
  </script>
 
  
+ 
+
+<!-- Template: Comanda Add, Listado de sabores de categorias       -->
+<script id="listaSabores" type="text/x-jquery-tmpl">
+   <a href="#" data-theme="c" data-inline="true" data-role="button" class="ui-btn ui-btn-inline ui-btn-corner-all ui-shadow ui-btn-up-c">
+       <span class="ui-btn-inner ui-btn-corner-all">
+           <span class="ui-btn-text">
+               <span data-bind="text: name"></span>                         
+           </span>
+       </span>
+   </a>
+</script>
+
  
  
  
@@ -68,7 +98,7 @@
  </script>
  
  
- 
+ <?php $this->end(); ?>
  
 
 <div data-role="page" id="comanda-add-menu">

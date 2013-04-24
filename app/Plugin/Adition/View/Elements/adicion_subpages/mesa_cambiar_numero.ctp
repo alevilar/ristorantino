@@ -1,4 +1,4 @@
-<?php echo $this->Html->script('/adition/js/adicion/elements/mesa_cambiar_numero'); ?>
+<?php //echo $this->Html->script('/adition/js/adicion/elements/mesa_cambiar_numero'); ?>
 <div data-role="page" id="mesa-cambiar-numero" data-theme="e">
     <div data-role="header">
         <h1>Cambiar número de la <?php echo Configure::read('Mesa.tituloMesa') ?> <span data-bind="text: adn().currentMesa().numero"></span></h1>

@@ -104,37 +104,6 @@ Risto.EventHandler = {
     },
     
     
-    /**
-     *  Llama a una funcion dependiendo de la pagina en la que estoy
-     *  sirve para realizar las mismas acciones de inicializacion, o preparacion
-     *  de alguna pagina despues de haber realizado una determinada accion
-     *  Utiliza funciones de JQM para determinar la pagina actual
-     */
-    adicionMesasActualizadas: function () {
-        /**
-         *
-         *  definicion del objeto que manejara las distintas respuestas dependiendo de la pagina activa
-         *  Cada clave de este objeto es el ID de la page de JQM utilizada
-         *  
-         * */
-        var onMesasActualizadasHandlerByPage = {
-            'listado-mesas': function(){
-                var btnMozo = $('#listado-mozos-para-mesas .ui-btn-active'),
-                    mozoId = 0;
-                if ( btnMozo[0] ) {
-                    mozoId = $(btnMozo[0]).attr('data-mozo-id');
-                }
-                Risto.EventHandler.mostrarMesasDeMozo(mozoId);
-            },
-            'mesa-view': function() {
-                $('#comanda-detalle-collapsible').trigger('create');
-            }
-        }
-        // llamar a la funcion correspondiente segun la pagina en la que estoy
-        if ( $.mobile.activePage && $.mobile.activePage[0] && $.mobile.activePage[0].id && onMesasActualizadasHandlerByPage.hasOwnProperty( $.mobile.activePage[0].id) ) {
-            onMesasActualizadasHandlerByPage[$.mobile.activePage[0].id].call();
-        }
-    },
     
     
     adicionCambioMozo: function(){
@@ -163,7 +132,7 @@ Risto.EventHandler = {
 
     cambiarMozo: function(e){    
         var mozoId = $(this).find('[name="mozo_id"]:checked').val();
-        var mozo = Risto.koModel.listado_mesas.findMozoById(mozoId);
+        var mozo = Risto.koMesas.findMozoById(mozoId);
         var mozoAnterior = Risto.koModel.mesa.currentMesa().mozo();
         Risto.koModel.mesa.currentMesa().setMozo( mozo );
 

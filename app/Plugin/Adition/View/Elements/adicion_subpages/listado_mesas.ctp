@@ -1,39 +1,42 @@
-<?php echo $this->Html->script('/adition/js/adicion/elements/listado_mesas'); ?>
-<?php echo $this->Html->script('/adition/js/adicion/koModels/koModel.listado_mesas'); ?>
-
+<?php echo $this->Html->script('/adition/js/jqm_events/listado_mesas'); ?>
+<?php echo $this->Html->script('/adition/js/View/ListadoMesasView'); ?>
 
 <?php $this->start('jquery-tmpl'); ?>
 <!-- Template: 
 listado de mesas que será refrescado continuamente mediante 
 el ajax que verifica el estado de las mesas (si fue abierta o cerrada alguna. -->
-<script id="listaMesas" type="text/x-jquery-tmpl">
-    <li data-bind="attr: {mozo: mozo().id(), 'id': 'mesa-li-id-'+id(), 'class': estado().icon}">
-        <a  data-bind="click: seleccionar, attr: {accesskey: numero, id: 'mesa-id-'+id()}" 
+<script id="listaMesas" type="text/x-handlebars-template">
+        <a  href="#mesa-view?id={{id}}"
             data-theme="c"
             data-role="button" 
             href="#mesa-view"
             class="ui-btn ui-btn-up-c">
             <span class="mesa-span ui-btn-inner">
                 <span class="ui-btn-text">
-                    <span class="mesa-numero" data-bind="text: numero"></span>
+                    <span class="mesa-numero">{{numero}}</span>
                 </span>
             </span>
-            <span class="mesa-mozo" data-bind="text: mozo().numero"></span>
-            <span class="mesa-descuento" data-bind="visible: clienteDescuentoText(),text: clienteDescuentoText()"></span>
-            <span  class="mesa-tipofactura" data-bind="visible: clienteTipoFacturaText()">
-                "<span data-bind="text: clienteTipoFacturaText()"></span>"
+            <span class="mesa-mozo" >{{Mozo.numero}}</span>
+            <span class="mesa-descuento">{{Descuento.porcentaje}}</span>
+            <span  class="mesa-tipofactura">
+                {{#if Cliente.tipofactura}}
+                "{{Cliente.tipofactura}}"
+                {{else}}
+                "B"
+                {{/if}}
             </span>
-            <span class="mesa-time" data-bind="text: textoHora()"></span>
+            <span class="mesa-time">{{time}}</span>
         </a>
-    </li>
 </script>
+
+
 
 <?php $this->end(); ?>
 
 <div data-role="page" id="listado-mesas">
 
     <div  data-role="header">
-        <h1><span class="wow" data-bind="text: adn().mesas().length">0</span> <?php echo Inflector::pluralize(Configure::read('Mesa.tituloMesa')) ?></h1>
+        <h1><span class="wow" data-bind="text: mesas().length">0</span> <?php echo Inflector::pluralize(Configure::read('Mesa.tituloMesa')) ?></h1>
 
         <a href='#adicion-opciones' data-icon="gear" data-rel="dialog" class="ui-btn-right">Opciones</a>
 
@@ -66,7 +69,9 @@ el ajax que verifica el estado de las mesas (si fue abierta o cerrada alguna. --
         <a href="#mesa-add" id="mesa-abrir-mesa-btn" data-rel="dialog"  class="abrir-mesa" data-role="button" data-theme="a">Abrir<br><?php echo Configure::read('Mesa.tituloMesa') ?></a>
 
         <!-- @template listaMesas -->
-        <ul id="mesas_container" class="listado-adicion" data-bind='template: { name: "listaMesas", foreach: adn().mesas }'></ul>
+        <div>
+            <ul id="mesas_container" class="listado-adicion"></ul>
+        </div>
     </div><!-- /navbar -->
 
 </div>

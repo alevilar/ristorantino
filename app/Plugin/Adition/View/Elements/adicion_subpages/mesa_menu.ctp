@@ -1,4 +1,4 @@
-<?php echo $this->Html->script('/adition/js/adicion/elements/mesa_menu'); ?>
+<?php //echo $this->Html->script('/adition/js/adicion/elements/mesa_menu'); ?>
 <div data-role="page" id="mesa-menu" data-theme="e">
     <div data-role="header">
         <h1>Seleccionar cantidad de Menú</h1>

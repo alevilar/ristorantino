@@ -2,7 +2,7 @@
  *
  * Paquete Risto
  */
-var Risto = {
+R$ = Risto = {
     modelizar: function(obToModelizar){
         
         obToModelizar.timeCreated = function(){

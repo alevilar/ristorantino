@@ -1,16 +1,63 @@
-<?php echo $this->Html->script('/adition/js/adicion/elements/mesa_view'); ?>
+
+
+<?php $this->start('jquery-tmpl'); ?>
+<!-- Template: listado de comandas con sus productos-->
+<script id="listaComandas" type="text/x-jquery-tmpl">
+   <div data-role="collapsible" data-content-theme="c">
+       <h3>
+           <span class="id-comanda">#<span data-bind="text: id()"></span></span>  <span class="hora-comanda"  data-bind="text: timeCreated()"></span>&nbsp;&nbsp;&nbsp;
+           <span class="comanda-listado-productos-string" data-bind="text: productsStringListing()"></span>
+           
+           <a style="float: right;" href="#" data-bind="click: imprimirComanda" class="btn-comanda-icon">
+               imprimir
+           </a>
+       </h3>
+
+       <!-- @template li-productos-detallecomanda -->
+        <ul class="comanda-items" data-role="listview"
+           data-bind="template: {name: 'li-productos-detallecomanda', foreach: DetalleComanda}"
+           style="margin: 0px;">
+
+        </ul>                                                                           
+   </div>
+</script>
+
+
+
+
+
+<!-- Template: Listado de productos del detalle Comanda -->
+<script id="li-productos-detallecomanda" type="text/x-jquery-tmpl">
+ <li class="ui-li ui-li-static ui-btn-up-c ui-li-last">
+     <div data-type="horizontal"  data-mini="true" data-role="controlgroup" style="float: left">
+        <a id="mesa-action-detalle-comanda-sacar-item" data-bind="click: deseleccionarYEnviar" data-role="button" data-icon="minus" data-iconpos="notext" href="#" title="-" data-theme="c">-</a>
+        <a data-bind="css: { es_entrada: esEntrada()}" data-role="button" data-iconpos="notext" data-icon="entrada" href="#" title="Entrada" data-theme="c">
+            Entrada
+        </a>
+     </div>
+
+     <span class="producto-cant" data-bind="text: realCant()" style="padding-left: 20px;"></span>
+     <span class="producto-nombre" data-bind="text: nameConSabores() + ' ' +observacion(), css: {tachada: realCant()==0}" style="padding-left: 20px;"></span>
+     <span class="producto-precio">p/u: {{= '$'}}<span data-bind="text: precio()"></span></span>
+ </li>
+</script>
+
+<?php $this->end(); ?>
+
+
+
 <div data-role="page" id="mesa-view">
-	<div  data-role="header" data-bind="css: {'ui-bar-f': adn().currentMesa().estaCerrada()}">
+	<div  data-role="header" data-bind="css: {'ui-bar-f': estado_id}">
             <a href="#listado-mesas" data-direction="reverse">Volver</a>
             <h1>
-                <span data-bind="text: adn().currentMesa().numero()"></span>
+                <span data-bind="text: numero"></span>
                 <?php 
                 echo $this->Html->image('mesa-abrio.png') . " " . Configure::read('Mesa.tituloMesa') ." - " .
                 Configure::read('Mesa.tituloMozo') . " " . $this->Html->image('mozomoniob.png') 
                 ?>
-                <span data-bind="text: adn().currentMesa().mozo().numero()"></span>
+                <span data-bind="text: mozo_id"></span>
                  
-                <span class="hora-abrio">Estado: <span data-bind="text: adn().currentMesa().getEstadoName()"></span></span>
+                <span class="hora-abrio">Estado: <span data-bind="text: estado_id"></span></span>
             </h1>
         </div>
 

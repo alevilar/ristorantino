@@ -1,19 +1,37 @@
 <?php
 
+App::uses('AppModel', 'Model');
+
+/**
+ * Mesa Model
+ *
+ * @property Mozo $Mozo
+ * @property Cliente $Cliente
+ * @property Estado $Estado
+ * @property Descuento $Descuento
+ * @property Comanda $Comanda
+ * @property Pago $Pago
+ */
 class Mesa extends AppModel
 {
 
-    public $name = 'Mesa';
-    
-/**
- * Behaiviours
- * @var array 
- */    
+    /**
+     * Display field
+     *
+     * @var string
+     */
+    public $displayField = 'numero';
+
+    /**
+     * Behaiviours
+     * @var array 
+     */
     public $actsAs = array(
-        'Containable', 
-        'SoftDeletable', 
+        'Containable',
+        'SoftDeletable',
         'Search.Searchable',
-        );
+    );
+    
     
     
     public $numero = 0;
@@ -21,7 +39,9 @@ class Mesa extends AppModel
     
     public $mozoNumero = 0;
     
-/**
+    
+    
+    /**
  * Searchable Plugin
  * @var array 
  */    
@@ -39,43 +59,149 @@ class Mesa extends AppModel
         'time_cobro_hasta' => array('type' => 'value', 'field' => 'date(Mesa.time_cobro) <='),
     );
     
-    public $validate = array(
-        'mozo_id' => array(
-            'notempty' => array(
-                'rule' => 'notempty',
-            ),
-            'numeric' => array(
-                'rule' => 'numeric',
-            ),
-        ),
-        'numero' => array(
-            'notempty' => array(
-                'rule' => 'notempty',
-            )
-            ));
-
-
-
-    /*
+    
+     /*
      * Valor total de una mesa Objeto en particular.
      * Es el array que devuelve la funcion getTotal()
      * @public $total float
      */
     public $total = array();
     
-    
-    //The Associations below have been created with all possible keys, those that are not needed can be removed
-    public $belongsTo = array(
-        'Mozo',
-        'Cliente',
-        'Descuento',
+
+    /**
+     * Validation rules
+     *
+     * @var array
+     */
+    public $validate = array(
+        'numero' => array(
+            'numeric' => array(
+                'rule' => array('numeric'),
+            //'message' => 'Your custom message here',
+            //'allowEmpty' => false,
+            //'required' => false,
+            //'last' => false, // Stop validation after this rule
+            //'on' => 'create', // Limit validation to 'create' or 'update' operations
+            ),
+        ),
+        'mozo_id' => array(
+            'numeric' => array(
+                'rule' => array('numeric'),
+            //'message' => 'Your custom message here',
+            //'allowEmpty' => false,
+            //'required' => false,
+            //'last' => false, // Stop validation after this rule
+            //'on' => 'create', // Limit validation to 'create' or 'update' operations
+            ),
+        ),
+        'menu' => array(
+            'numeric' => array(
+                'rule' => array('numeric'),
+            //'message' => 'Your custom message here',
+            //'allowEmpty' => false,
+            //'required' => false,
+            //'last' => false, // Stop validation after this rule
+            //'on' => 'create', // Limit validation to 'create' or 'update' operations
+            ),
+        ),
+        'cant_comensales' => array(
+            'numeric' => array(
+                'rule' => array('numeric'),
+            //'message' => 'Your custom message here',
+            //'allowEmpty' => false,
+            //'required' => false,
+            //'last' => false, // Stop validation after this rule
+            //'on' => 'create', // Limit validation to 'create' or 'update' operations
+            ),
+        ),
+        'estado_id' => array(
+            'numeric' => array(
+                'rule' => array('numeric'),
+            //'message' => 'Your custom message here',
+            //'allowEmpty' => false,
+            //'required' => false,
+            //'last' => false, // Stop validation after this rule
+            //'on' => 'create', // Limit validation to 'create' or 'update' operations
+            ),
+        ),
+        'deleted' => array(
+            'numeric' => array(
+                'rule' => array('numeric'),
+            //'message' => 'Your custom message here',
+            //'allowEmpty' => false,
+            //'required' => false,
+            //'last' => false, // Stop validation after this rule
+            //'on' => 'create', // Limit validation to 'create' or 'update' operations
+            ),
+        ),
     );
+
+    //The Associations below have been created with all possible keys, those that are not needed can be removed
+
+    /**
+     * belongsTo associations
+     *
+     * @var array
+     */
+    public $belongsTo = array(
+        'Mozo' => array(
+            'className' => 'Mozo',
+            'foreignKey' => 'mozo_id',
+            'conditions' => '',
+            'fields' => '',
+            'order' => ''
+        ),
+        'Cliente' => array(
+            'className' => 'Cliente',
+            'foreignKey' => 'cliente_id',
+            'conditions' => '',
+            'fields' => '',
+            'order' => ''
+        ),
+        'Descuento' => array(
+            'className' => 'Descuento',
+            'foreignKey' => 'descuento_id',
+            'conditions' => '',
+            'fields' => '',
+            'order' => ''
+        )
+    );
+
+    /**
+     * hasMany associations
+     *
+     * @var array
+     */
     public $hasMany = array(
         'Comanda' => array(
-                'order' => 'Comanda.created DESC'
-            ),
-        'Pago'
+            'className' => 'Comanda',
+            'foreignKey' => 'mesa_id',
+            'dependent' => false,
+            'conditions' => '',
+            'fields' => '',
+            'order' => '',
+            'limit' => '',
+            'offset' => '',
+            'exclusive' => '',
+            'finderQuery' => '',
+            'counterQuery' => ''
+        ),
+        'Pago' => array(
+            'className' => 'Pago',
+            'foreignKey' => 'mesa_id',
+            'dependent' => false,
+            'conditions' => '',
+            'fields' => '',
+            'order' => '',
+            'limit' => '',
+            'offset' => '',
+            'exclusive' => '',
+            'finderQuery' => '',
+            'counterQuery' => ''
+        )
     );
+    
+    
     
     public $order = array('Mesa.created' => 'desc');
     
@@ -85,8 +211,9 @@ class Mesa extends AppModel
         MESA_CERRADA => "Cerrada",
         MESA_COBRADA => "Cobrada",
     );
-       
-
+    
+    
+    
     public function save($data = null, $validate = true, $fieldList = array())
     {
         // Clear modified field value before each save
@@ -731,6 +858,77 @@ LEFT JOIN mozos z ON z.id = m.mozo_id
         $fiscalData = $this->getDataParaFiscal($mesa_id);
         
     }
-}
+    
+    
+     /**
+         * Para todos los mozos activos, me trae sus mesas abiertas
+         * @param int $mozo_id id del mozo, en caso de que no le pase ninguno, me busca todos
+         * @return array Mozos con sus mesas, Comandas, detalleComanda, productos y sabores
+         */
+        public function getAbiertas($mozo_id = null, $lastAccess = null){
+            $conditions = array();
+            
+            // si vino el mozo por parametro, es porque solo quiero las mesas de ese mozo
+            if ( !empty($mozo_id) ){
+               $conditions['Mozo.id'] =  $mozo_id;
+            } else {
+                // todos los mozos activos
+                $conditions['Mozo.activo'] =  1;
+            }
+            
+            // condiciones para traer mesas abiertas y pendientes de cobro
+            $conditions = array(
+                "Mesa.estado_id <" => MESA_COBRADA,
+                'Mesa.deleted' => 0,        
+            );
+            
+            // si vino el parametro lastAccess, traer solo las mesas actualizadas luego del ultimo pedido
+            if ( !empty($lastAccess) ) {
+                $conditions['Mesa.modified >='] = $lastAccess;
+            }
+            
+            $optionsEliminada = $optionsCobrada = $optionsUpdated = $optionsCreated = array(
+                'contain' => array(
+                    'Mozo',
+                    'Cliente' => 'Descuento',
+                    'Descuento',
+                    'Comanda' => array(
+                        'DetalleComanda' => array(
+                            'Producto',
+                            'DetalleSabor.Sabor'),
+                    ),
+                ),
+                'order' => 'Mesa.numero DESC',
+                'conditions'=> $conditions,
+            );
+            
+            if ( !empty($lastAccess) ) {
+                // las que fueron creadas
+                $optionsCreated['contain']['Mesa']['conditions']['created >='] = $lastAccess;
+                $mesasABM['created'] = $this->find('all', $optionsCreated);
 
-?>
+                // las que fueron actualizadas
+                
+                $optionsUpdated['contain']['Mesa']['conditions']['created <'] = $lastAccess;
+                $mesasABM['modified'] = $this->find('all', $optionsUpdated);
+                
+                // las que fueron cobradas
+                unset( $optionsCobrada['contain']['Mesa']['conditions']["Mesa.estado_id <"] );
+                $optionsCobrada['contain']['Mesa']['conditions']['Mesa.estado_id'] = MESA_COBRADA;
+                $mesasABM['cobradas'] = $this->find('all', $optionsCobrada);
+                
+                // las que fueron borradas o eliminadas
+                $optionsEliminada['contain']['Mesa']['conditions']['Mesa.deleted_date >'] = $lastAccess;
+                $optionsEliminada['contain']['Mesa']['conditions']['Mesa.deleted'] = 1;
+                $mesasABM['deleted'] = $this->find('all', $optionsEliminada);
+            } else {
+                // traigo a todas como que son creadas, si no fue pasado un lastAccess
+                $mesasABM = $this->find('all', $optionsCreated);
+            }
+
+            return $mesasABM;
+        }
+        
+    
+
+}

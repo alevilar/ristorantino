@@ -1,4 +1,4 @@
-/*--------------------------------------------------------------------------------------------------- Risto.Adicion.menu
+/*----------------------------------------------------- Risto.Adicion.menu
  *
  *
  * Clase Menu
@@ -23,15 +23,16 @@ Risto.menu = {
     categoriasTree: ko.observable(), 
     
     // categoria actualmente activa o seleccionada
-    currentCategoria: ko.observable(), 
+    currentCategoria: ko.observable(),
+    
+    deferredMenu: (function(){ return $.Deferred(); })(),
     
     
     // path de categorias del menu en la que estoy Ej: "/ - Gaseosas - Sin Alcohol""
     path: ko.observableArray( [] ),
     
     initialize: function(){
-        this.__armarMenu();
-        Risto.menu(this);
+        this.__armarMenu();        
         return this;
     },
     
@@ -50,24 +51,38 @@ Risto.menu = {
     
     __getRemoteMenu: function(){
         var este = this;
+        
         // si no hay categorias las cargo via AJAX
-        $.getJSON( urlDomain+'categorias/listar.json', function(data){
-            este.__iniciarCategoriasTreeServer(data)
-        } );
+        $.getJSON( urlDomain+'categorias/listar.json' )
+            .done(function(data){
+                este.deferredMenu.resolve();
+                este.__iniciarCategoriasTreeServer(data);
+            })
+            .fail(function(){
+                este.deferredMenu.reject();
+            });        
+        
+        return este.deferredMenu.promise();
     },
     
     
     __armarMenu: function(){
-        var newDay          = new Date(),
+              
+        this.getMenuData().done(function(){
+            Risto.Menu.__iniciarCategoriasTreeLocalStorage();
+        });
+    },
+    
+    getMenuData: function(){
+         var newDay          = new Date(),
             cantMiliseconds = 86400000; // 86400000 equivalen a 1 dia
-        
-        // si no paso mas de 1 día, no volver a traer el menu
+
+         // si no paso mas de 1 día, no volver a traer el menu
         if ( !localStorage.categoriasTree || !localStorage.categoriasTreeDate || (localStorage.categoriasTreeDate - newDay.valueOf() ) > cantMiliseconds) {
             this.__getRemoteMenu();
         }
-        this.__iniciarCategoriasTreeLocalStorage();
+        return localStorage.categoriasTree;
     },
-    
     
     __iniciarCategoriasTreeLocalStorage: function(){
          var cats = JSON.parse(localStorage.categoriasTree);
@@ -79,7 +94,7 @@ Risto.menu = {
     
     __iniciarCategoriasTreeServer: function(cats){
         var date = new Date();
-        localStorage.setItem( 'categoriasTree', ko.toJSON(cats) );
+        localStorage.setItem( 'categoriasTree', cats );
         localStorage.setItem( 'categoriasTreeDate', date.valueOf() );
         this.__iniciarCategoriasTreeLocalStorage();
     },
