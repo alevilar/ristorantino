@@ -1,5 +1,7 @@
 <?php
 
+App::uses('Printaitor', 'PrinterEngine.Utility');
+
 class MesasController extends AppController
 {
 
@@ -87,7 +89,6 @@ class MesasController extends AppController
         ));
     }
 
-
     /**
      * Cierra la mesa, calculando el total y, si se lo indica,
      * imprime el ticket fiscal.
@@ -97,22 +98,32 @@ class MesasController extends AppController
      */
     public function cerrarMesa($mesa_id, $imprimir_ticket = true)
     {
-
-        $this->Mesa->id = $mesa_id;
-
-        if ($imprimir_ticket) {
-            $this->Printer->doPrint($mesa_id);
+        if (empty($mesa_id)) {
+            throw new InternalErrorException("Se debe pasar el ID de la mesa por cerrar");
+            return;
         }
 
-        $retData = $this->Mesa->cerrar_mesa();
+        $retData = $this->Mesa->cerrar_mesa($mesa_id);
+        if (!empty($retData)) {
+            $retData = $this->Mesa->getDataParaFiscal($mesa_id);
+            $data = array(
+                'items' => $retData['Items'],
+                'porcentaje_descuento' => $retData['Totales']['descuento'],
+                'total' => $retData['Totales']['total'],
+                'mozo' => $retData['Mesa']['mozo_numero'],
+                'mesa' => $retData['Mesa']['numero'],
+                'tipo_factura' => "A",
+            );
 
-        if ($this->RequestHandler->isAjax()) {
-            $this->autoRender = false;
-            $this->layout = 'ajax';
-            debug($retData);
-            return 1;
-        } else {
+            Printaitor::send($data, 'Fiscal', 'ticket');
+        }
+
+
+        if (!$this->RequestHandler->isAjax()) {
             $this->redirect($this->referer());
+        } else {
+            $this->autoRender = false;
+            return "Se cerró la mesa";
         }
     }
 
@@ -142,7 +153,7 @@ class MesasController extends AppController
                 }
                 $mesa = $this->Mesa->read();
                 $this->set(array(
-                    'mesa'=> $mesa['Mesa'],
+                    'mesa' => $mesa['Mesa'],
                     'insertedId' => $this->Mesa->getLastInsertId(),
                     'validationErrors' => $this->Mesa->validationErrors,
                 ));
@@ -210,21 +221,41 @@ class MesasController extends AppController
             throw new NotFoundException(__('Invalid mesa'));
         }
         if ($this->request->is('post') || $this->request->is('put')) {
+            if (isset($this->request->data['Mozo'])) {
+                unset($this->request->data['Mozo']);
+            }
+            if (isset($this->request->data['Comanda'])) {
+                unset($this->request->data['Comanda']);
+            }
+            if (isset($this->request->data['Descuento'])) {
+                unset($this->request->data['Descuento']);
+            }
+            if (isset($this->request->data['Cliente'])) {
+                unset($this->request->data['Cliente']);
+            }
             if ($this->Mesa->save($this->request->data)) {
-                $this->Session->setFlash(__('The mozo has been saved'));
+                $this->Session->setFlash(__('The mesa has been saved'));
                 if (!$this->request->is('ajax')) {
                     $this->redirect(array('action' => 'index'));
+                } else {
+                    $this->autoRender = false;
+                    echo "Ok";
                 }
             } else {
-                $this->Session->setFlash(__('The mozo could not be saved. Please, try again.'));
+                $this->Session->setFlash(__('The mesa could not be saved. Please, try again.'));
+                if ($this->request->is('ajax')) {
+                    $this->autoRender = false;
+                    echo "Error";
+                }
             }
         }
 
         $mesa = $this->request->data = $this->Mesa->find('first', array(
             'conditions' => array(
-                'Mesa.id' => $id),
+                'Mesa.id' => $this->Mesa->id),
             'contain' => array(
                 'Mozo',
+                'Descuento',
                 'Cliente' => 'Descuento',
                 'Comanda' => array(
                     'DetalleComanda' => array(
@@ -234,19 +265,17 @@ class MesasController extends AppController
                 )
             )
                 ));
-
         $items = $this->request->data['Comanda'];
         $mozos = $this->Mesa->Mozo->find('list', array(
             'fields' => array('id', 'numero_y_nombre'),
             'conditions' => array('Mozo.activo' => 1),
                 ));
 
-        $this->id = $id;
         $this->set('subtotal', $this->Mesa->getSubtotal());
         $this->set('total', $this->Mesa->getTotal());
         $this->set('estados', $this->Mesa->estados);
-        $this->set(compact('mesa', 'items', 'mozos'));
         $this->set('title_for_layout', 'Editando la Mesa ' . $mesa['Mesa']['numero']);
+        $this->set(compact('mesa', 'items', 'mozos'));
     }
 
     /**
@@ -257,7 +286,7 @@ class MesasController extends AppController
      */
     public function delete($id = null)
     {
-        
+
         $this->Mesa->id = $id;
         if (!$this->Mesa->exists()) {
             throw new NotFoundException(__('Invalid mesa'));
@@ -270,7 +299,7 @@ class MesasController extends AppController
             $this->set("mensaje", 'Mesa Borrada');
             $this->Session->setFlash(__('Mesa was not deleted'));
         }
-        
+
         if (!$this->request->is('ajax')) {
             $this->redirect($this->referer());
         }
@@ -331,6 +360,9 @@ class MesasController extends AppController
         }
         if (!$this->request->is('ajax')) {
             $this->redirect($this->referer());
+        } else {
+            $this->autoRender = false;
+            echo "Se reabrio la mesa";
         }
     }
 

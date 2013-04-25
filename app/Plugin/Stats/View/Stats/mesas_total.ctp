@@ -15,7 +15,7 @@
 
 <script language="javascript" type="text/javascript">    
         
-    var mesas= <?php echo json_encode($mesas); ?>;
+    var mesas= <?php echo json_encode($mesa); ?>;
     
 </script>
 
@@ -50,7 +50,7 @@
     
 
     <?php
-    foreach($mesas as $i=>$mesa) {
+    foreach($mesa as $i=>$mesa) {
             if(!empty ($mesa['desde']))
     ?>
     <div class="tabla-info grid_6">

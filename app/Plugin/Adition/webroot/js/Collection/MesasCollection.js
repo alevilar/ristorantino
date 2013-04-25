@@ -6,7 +6,10 @@
         
         model: R$.MesaModel,
         
-        comparator: 'numero'
+        // Filter down the list of all todo items that are finished.
+        deMozo: function(mozo_id) {
+          return this.where({mozo_id: mozo_id});
+        }
     
     });
 

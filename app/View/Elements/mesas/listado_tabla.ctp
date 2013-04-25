@@ -23,7 +23,7 @@
     </tr>
     <?php
     $i = 0;
-    foreach ($mesas as $mesa):
+    foreach ($mesa as $mesa):
         $class = null;
         if ($i++ % 2 == 0) {
             $class = ' class="altrow"';

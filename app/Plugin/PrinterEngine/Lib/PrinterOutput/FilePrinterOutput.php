@@ -39,6 +39,7 @@ class FilePrinterOutput extends PrinterOutput
  * @return type boolean true si salio todo bien false caso contrario
  */
         public  function send( $texto, $nombreImpresoraFiscal, $hostname = '' ) {
+            
             $nombreImpresoraFiscal = Inflector::slug($nombreImpresoraFiscal);
             
             // crear carpeta
@@ -52,6 +53,8 @@ class FilePrinterOutput extends PrinterOutput
             $printerNamePath = "$printerFolderPath/$randomName.txt";
             $file = new File($printerNamePath , $create = true, 0777);
             $file->write($texto);
+            debug($file->mime());
+            debug($texto);
             return $file->close();
         }
         

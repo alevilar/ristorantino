@@ -1,6 +1,6 @@
 <?php
 
-$vec['mesas'] = $mesas;
+$vec['mesas'] = $mesa;
 $vec['time'] = $mesasLastUpdatedTime; // curren Unix server time
 $vec['modified'] = $modified;
 

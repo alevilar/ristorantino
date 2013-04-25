@@ -1,25 +1,27 @@
 
-new R$.ListadoMesasView;
+(function(){
+    new R$.ListadoMesasView;
+    var mesasFetch;
+    
+    $(document).on('pageshow', '#listado-mesas',function(event, ui){    
+        clearInterval(mesasFetch);
+        
+        R$.mesasCollection.fetch();
+        
+        mesasFetch = setInterval(function(){
+            R$.mesasCollection.fetch();
+        }, Risto.MESAS_RELOAD_INTERVAL);
+    });
 
-$(document).on('pageshow', '#listado-mesas',function(event, ui){    
-    
-    R$.mesasCollection.fetch();
-    setInterval(function(){
-          R$.mesasCollection.fetch();
-    }, 5000);
-    
-    
-});
 
-
-$(document).on('pagebeforehide','#listado-mesas',function(event, ui){
-//    $('#mesa-abrir-mesa-btn').unbind('click');
-//    $('#listado-mozos-para-mesas').unbind('click');
-//        
-//    // al hacer click n un mozo del menu bar
-//    // se muestran solo lasmesas de ese mozo
-//    var $listadoMozos = $('#listado-mozos-para-mesas');
-//    $listadoMozos.undelegate('a', 'click');
-});
+    $(document).on('pagebeforehide','#listado-mesas',function(event, ui){
+        clearInterval(mesasFetch);
+        
+        mesasFetch = setInterval(function(){
+            R$.mesasCollection.fetch();
+        }, Risto.MESAS_RELOAD_INTERVAL*4); // in other pages run slowler
+    });
     
+
+})();
     

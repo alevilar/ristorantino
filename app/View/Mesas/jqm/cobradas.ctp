@@ -2,7 +2,7 @@
 <?php
 $this->title_for_layout = 'Últimas Cobradas';
 
-foreach ($mesas as $m) {
+foreach ($mesa as $m) {
     
   echo   "<li>".
           $this->Html->link(

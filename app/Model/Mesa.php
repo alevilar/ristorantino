@@ -248,16 +248,18 @@ class Mesa extends AppModel
     function cerrar_mesa($mesa_id = 0)
     {
         $this->id = ($mesa_id == 0) ? $this->id : $mesa_id;
-        $cant = $this->find('count', array('conditions' => array(
-                'Mesa.id' => $this->id,
-                )));
-        if ($cant == 0)
-            return 0;
+        if (empty($this->id)) {
+            throw new InternalErrorException("No se puede cerrar una mesa con el ID vacio");
+             return false;
+        }
+        
+        if ( !$this->hasAny() ) return false;
 
         $mesaData['Mesa'] = array(
-            'estado_id' => MESA_CERRADA,
-            'total' => $this->getTotal(),
-            'subtotal' => $this->getSubtotal(),
+            'id' => $this->id,
+            'estado_id'  => MESA_CERRADA,
+            'total'      => $this->getTotal(),
+            'subtotal'   => $this->getSubtotal(),
             'time_cerro' => date("Y-m-d H:i:s", strtotime('now')),
         );
 
@@ -269,8 +271,13 @@ class Mesa extends AppModel
             $mesaData['Mesa']['time_cobro'] = DATETIME_NULL;
         }
 
-        $this->save($mesaData, false);
-        return $mesaData;
+        if ($this->save($mesaData, false)) {
+            return $mesaData;
+        } else {
+            throw new Exception("no se pudo guardar la mesa");
+            return false;
+        }
+        
     }
 
     function calcular_total_productos($id = null)
@@ -341,9 +348,14 @@ class Mesa extends AppModel
         if (!empty($id)) {
             $this->id = $id;
         }
-  
-        if ( !$this->DetalleComanda->tieneProductosLaMesa( $this->id ) ) {
-            return 0;
+        
+        $this->total['Mesa']['subtotal'] = 0;
+        $this->total['Mesa']['total'] = 0;
+        $this->total['Mesa']['descuento'] = 0;
+        $this->total['Mesa']['importe_descuento'] = 0;
+                
+        if ( !$this->Comanda->DetalleComanda->tieneProductosLaMesa( $this->id ) ) {
+            return $this->total;
         }
 
         $totalProductos = $this->calcular_total_productos();
@@ -797,12 +809,13 @@ LEFT JOIN mozos z ON z.id = m.mozo_id
             $mesa_id = $this->id;
         }
         
-        $mesa = $this->Mesa = $this->Model->Mesa->find('first',array(
+        $mesa = $this->find('first',array(
             'contain'=>array(
                 'Mozo',
+                'Descuento',
                 'Cliente'=>array(
                     'Descuento',
-                    'IvaResponsabilidad',
+                    'IvaResponsabilidad.TipoFactura',
                     'TipoDocumento',
                     )
                 ),
@@ -813,20 +826,22 @@ LEFT JOIN mozos z ON z.id = m.mozo_id
         
         $prod = array();
         if ( $mesa['Mesa']['menu'] > 0 ) {
-            $prod = $this->Mesa->getProductosSinDescripcion($mesa['Mesa']['menu']);
+            $prod = $this->getProductosSinDescripcion($mesa['Mesa']['menu']);
         } else {
-            $prod = $this->Mesa->dameProductosParaTicket();
+            $prod = $this->dameProductosParaTicket();
+        }
+        $mesa['Items'] = $prod;
+        
+        $mesa['Mesa']['mozo_numero'] = $mesa['Mozo']['numero'];
+        
+        if ( !empty($mesa['Cliente']['IvaResponsabilidad']['TipoFactura']) ) {
+            $mesa['Mesa']['tipo_factura'] = $mesa['Cliente']['IvaResponsabilidad']['TipoFactura']['codename'];
         }
         
-        $mesaData = $mesa['Mesa'];
-        $mesaData['Mesa']['mozo_numero'] = $mesa['Mozo']['numero'];
-        
-        $mesaData['Items'] = $prod;
-        
         $totales = $this->calcular_totales();
-        $mesaData['Totales'] = $totales['Mesa'];
+        $mesa['Totales'] = $totales['Mesa'];
         
-        return $mesaData;
+        return $mesa;
         
     }
     

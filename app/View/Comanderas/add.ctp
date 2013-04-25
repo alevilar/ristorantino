@@ -5,8 +5,8 @@
 	<?php
 		echo $this->Form->input('name');
 		echo $this->Form->input('description');
-		echo $this->Form->input('driver_name');
-		echo $this->Form->input('path');
+		echo $this->Form->input('driver_name', array('after' => 'Formato en el que será la salida de la impresión'));
+		echo $this->Form->input('path', array('after' => 'Se utiliza cuando se configura para que imprima archivos (Files) en lugar de usar CUPS'));
 		echo $this->Form->input('imprime_ticket');
 	?>
 	</fieldset>

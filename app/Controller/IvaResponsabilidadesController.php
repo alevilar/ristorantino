@@ -1,62 +1,100 @@
 <?php
+App::uses('AppController', 'Controller');
+/**
+ * IvaResponsabilidades Controller
+ *
+ * @property IvaResponsabilidad $IvaResponsabilidad
+ */
 class IvaResponsabilidadesController extends AppController {
 
-	var $name = 'IvaResponsabilidades';
-	var $helpers = array('Html', 'Form');
 
-	function index() {
+/**
+ * index method
+ *
+ * @return void
+ */
+	public function index() {
 		$this->IvaResponsabilidad->recursive = 0;
 		$this->set('ivaResponsabilidades', $this->paginate());
 	}
 
-	function view($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid IvaResponsabilidad.'));
-			$this->redirect(array('action'=>'index'));
+/**
+ * view method
+ *
+ * @param string $id
+ * @return void
+ */
+	public function view($id = null) {
+		$this->IvaResponsabilidad->id = $id;
+		if (!$this->IvaResponsabilidad->exists()) {
+			throw new NotFoundException(__('Invalid iva responsabilidad'));
 		}
 		$this->set('ivaResponsabilidad', $this->IvaResponsabilidad->read(null, $id));
 	}
 
-	function add() {
-		if (!empty($this->request->data)) {
+/**
+ * add method
+ *
+ * @return void
+ */
+	public function add() {
+		if ($this->request->is('post')) {
 			$this->IvaResponsabilidad->create();
 			if ($this->IvaResponsabilidad->save($this->request->data)) {
-				$this->Session->setFlash(__('The IvaResponsabilidad has been saved'));
-				$this->redirect(array('action'=>'index'));
+				$this->Session->setFlash(__('The iva responsabilidad has been saved'));
+				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The IvaResponsabilidad could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The iva responsabilidad could not be saved. Please, try again.'));
 			}
 		}
+		$tipoFacturas = $this->IvaResponsabilidad->TipoFactura->find('list');
+		$this->set(compact('tipoFacturas'));
 	}
 
-	function edit($id = null) {
-		if (!$id && empty($this->request->data)) {
-			$this->Session->setFlash(__('Invalid IvaResponsabilidad'));
-			$this->redirect(array('action'=>'index'));
+/**
+ * edit method
+ *
+ * @param string $id
+ * @return void
+ */
+	public function edit($id = null) {
+		$this->IvaResponsabilidad->id = $id;
+		if (!$this->IvaResponsabilidad->exists()) {
+			throw new NotFoundException(__('Invalid iva responsabilidad'));
 		}
-		if (!empty($this->request->data)) {
+		if ($this->request->is('post') || $this->request->is('put')) {
 			if ($this->IvaResponsabilidad->save($this->request->data)) {
-				$this->Session->setFlash(__('The IvaResponsabilidad has been saved'));
-				$this->redirect(array('action'=>'index'));
+				$this->Session->setFlash(__('The iva responsabilidad has been saved'));
+				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The IvaResponsabilidad could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The iva responsabilidad could not be saved. Please, try again.'));
 			}
-		}
-		if (empty($this->request->data)) {
+		} else {
 			$this->request->data = $this->IvaResponsabilidad->read(null, $id);
 		}
+		$tipoFacturas = $this->IvaResponsabilidad->TipoFactura->find('list');
+		$this->set(compact('tipoFacturas'));
 	}
 
-	function delete($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for IvaResponsabilidad'));
-			$this->redirect(array('action'=>'index'));
+/**
+ * delete method
+ *
+ * @param string $id
+ * @return void
+ */
+	public function delete($id = null) {
+		if (!$this->request->is('post')) {
+			throw new MethodNotAllowedException();
 		}
-		if ($this->IvaResponsabilidad->delete($id)) {
-			$this->Session->setFlash(__('IvaResponsabilidad deleted'));
-			$this->redirect(array('action'=>'index'));
+		$this->IvaResponsabilidad->id = $id;
+		if (!$this->IvaResponsabilidad->exists()) {
+			throw new NotFoundException(__('Invalid iva responsabilidad'));
 		}
+		if ($this->IvaResponsabilidad->delete()) {
+			$this->Session->setFlash(__('Iva responsabilidad deleted'));
+			$this->redirect(array('action' => 'index'));
+		}
+		$this->Session->setFlash(__('Iva responsabilidad was not deleted'));
+		$this->redirect(array('action' => 'index'));
 	}
-
 }
-?>

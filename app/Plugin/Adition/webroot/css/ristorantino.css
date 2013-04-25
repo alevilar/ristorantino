@@ -89,7 +89,7 @@ ul.listado-adicion .mesa-cobrada A{
     
 }
 
-ul.listado-adicion .mesa-cerrada A{
+ul.listado-adicion .mesa-cerrada A, ul.listado-adicion .estado_2 A{
     border: 1px solid 		#996F45;
     background: 			#B0875D;
     color: 					#fff;

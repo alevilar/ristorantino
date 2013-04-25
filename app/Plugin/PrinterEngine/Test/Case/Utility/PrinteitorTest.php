@@ -9,7 +9,7 @@ App::uses('Config','Model');
  * PrinteableBehavior Test Case
  *
  */
-class PrintaitorTestCase extends CakeTestCase {
+class PrintaitorTest extends CakeTestCase {
     /**
      *
      * @var Printaitor 

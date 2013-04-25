@@ -9,21 +9,14 @@ R$.ListadoMesasView = Backbone.View.extend({
     },
 
     initialize: function() {
-        this.listenTo(R$.mesasCollection, 'remove', this.doRemove);
-        this.listenTo(R$.mesasCollection, 'destroy', this.doRemove);
+        this.listenTo(R$.mesasCollection, 'remove', this.render);
+        this.listenTo(R$.mesasCollection, 'destroy', this.render);
         this.listenTo(R$.mesasCollection, 'add', this.add);
-    },
-
-    doRemove: function(){
-        this.remove();
-        this.render();
-        return this;
     },
     
     
     add: function( mesa ) {
-        var view = new R$.ItemListadoMesasView( {model: mesa} );
-        $("#mesas_container").append( view.render().el );
+        new R$.ItemListadoMesasView( {model: mesa} );
         this.render();
         return this;
     },

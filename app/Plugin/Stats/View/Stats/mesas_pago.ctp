@@ -17,7 +17,7 @@
 <script language="javascript" type="text/javascript">   
     jQuery.noConflict(); 
     
-    var mesas= <?php echo json_encode($mesas); ?>;
+    var mesas= <?php echo json_encode($mesa); ?>;
     
     mesas.getCoordenadas = function(){
            
@@ -79,9 +79,9 @@
         <tbody>
 
     <?php
-        if ( !empty($mesas) ){
+        if ( !empty($mesa) ){
 
-                foreach ( $mesas as $m ){
+                foreach ( $mesa as $m ){
                     ?>
                     <tr>
                         <td>

@@ -1,8 +1,15 @@
 R$.ItemListadoMesasView = Backbone.View.extend({
 
     tagName:  "li",
+    
+    id: function(){
+      return "listado-mesa-id-"+this.model.id;  
+    },
     //    el: ,
-    className: "mesa",
+    className:  function(){
+        var estado = this.model.get('estado_id');
+        return "mesa estado_"+estado;
+    },
     
     template: Handlebars.compile( $('#listaMesas').html() ),
     
@@ -11,22 +18,37 @@ R$.ItemListadoMesasView = Backbone.View.extend({
     },
 
     initialize: function() {
-        this.listenTo(this.model, 'change', this.render);
+        $("#mesas_container").append( this.render().el );
+        this.listenTo(this.model, 'change:estado_id', this.cambiarEstado);
+        this.listenTo(this.model, 'change:mozo_id', this.cambiarMozo);
+        this.listenTo(this.model, 'change:numero', this.cambiarNumero);
+        this.listenTo(this.model, 'change:Cliente', this.render);
         this.listenTo(this.model, 'remove', this.remove);  
         this.listenTo(this.model, 'destroy', this.remove);        
     },
     
     select: function(e){
       this.model.trigger('select', this.model);
+      return this;
     },
-
+    
+    cambiarMozo: function(){
+        var mozo = this.model.get('Mozo.numero').numero;
+        this.$('.mesa-mozo').text(mozo);
+    },
+    
+    cambiarNumero: function(){
+        console.debug(this.$('.mesa-numero'));
+        this.$('.mesa-numero').text( this.model.get('numero') );
+    },
+    
+    cambiarEstado: function(){
+        var estado = this.model.get('estado_id');
+        this.el.className = 'mesa estado_'+estado;
+    },
     
     render: function(e) {
         this.$el.html( this.template(this.model.toJSON()) );
-        
-        var estado = this.model.get('estado_id');
-        this.$el.addClass('estado_'+estado, estado);
-        
         return this;
     }
 

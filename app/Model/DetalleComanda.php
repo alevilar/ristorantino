@@ -81,7 +81,7 @@ class DetalleComanda extends AppModel
     function tieneProductosLaMesa($mesa_id)
     {
 
-        $items = $this->DetalleComanda->find('count', array(
+        $items = $this->find('count', array(
             'conditions' => array(
                 'Comanda.mesa_id' => $mesa_id,
                 '(DetalleComanda.cant - DetalleComanda.cant_eliminada) >' => 0),

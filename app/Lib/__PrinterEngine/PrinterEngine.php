@@ -23,7 +23,7 @@ class PrinterEngine
                 return false;
         }
         return $reflection->newInstance($request, $response);
-
+        
         $this->Engine = new {$this->defaultEngine}();
     }
     

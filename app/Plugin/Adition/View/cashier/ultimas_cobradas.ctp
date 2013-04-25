@@ -14,7 +14,7 @@ function cobrarMesa(mesa, total){
 
 <div id="listado-mesas" class="listado-mesas">
     <ul>
-        <?php foreach($mesas as $m):?>
+        <?php foreach($mesa as $m):?>
         <li id="mesa-id-<?=  $m['Mesa']['id']?>" onclick="cobrarMesa(<?php echo $m['Mesa']['id']?>,<?php echo $m['Mesa']['total']?>)">
             <span class="mesa-numero"><?= $m['Mesa']['numero']?></span>
             <span class="mozo-numero"><?= $m['Mozo']['numero']?></span>

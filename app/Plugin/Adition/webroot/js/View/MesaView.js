@@ -12,7 +12,8 @@
             "click #mesa-reabrir"   :   "mandarAjaxYVolverAListadoDeMesas",
             "click #mesa-reimprimir":   "mandarAjaxYVolverAListadoDeMesas",
             "click #mesa-reabrir"   :   "mandarAjaxYVolverAListadoDeMesas",
-            "click #mesa-borrar"    :   "eliminarMesa"
+            "click #mesa-borrar"    :   "eliminarMesa",
+            "click #mesa-action-cambiar-numero": "cambiarNumero"
         
         },
     
@@ -28,6 +29,15 @@
 
         eliminarMesa: function(){
             this.model.destroy();
+        },
+        
+        cambiarNumero: function(){
+            console.info("asas");
+            var oldNum = this.model.get('numero');
+            var num = window.prompt("Numero de mesa", oldNum);
+            if ( num && oldNum != num) {
+                this.model.save({'numero': num});
+            }
         },
     
         mandarAjaxYVolverAListadoDeMesas: function(e){

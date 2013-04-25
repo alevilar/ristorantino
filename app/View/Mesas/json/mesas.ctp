@@ -1,2 +1,2 @@
 <?php
-echo json_encode($mesas);
+echo json_encode($mesa);

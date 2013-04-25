@@ -3,7 +3,7 @@
                 echo $html->css('/pquery/css/examples.css');
                 echo $this->Html->script('/pquery/js/jquery.min.js'); 
 		echo $this->Html->script('/pquery/js/jquery.jqplot.js');
-foreach ($mesas as $i=>$mesa){
+foreach ($mesa as $i=>$mesa){
     
     echo $mesa[0]['total'];
         echo '<br>';
@@ -33,7 +33,7 @@ function editit(str, si, pi, plot) {
 
 jQuery(document).ready(function(){
     jQuery.jqplot.config.enablePlugins = true;
-    s1 = [<?php foreach ($mesas as $i=>$mesa){
+    s1 = [<?php foreach ($mesa as $i=>$mesa){
         echo '[';
         echo '\'';
         echo $mesa[0]['year'];

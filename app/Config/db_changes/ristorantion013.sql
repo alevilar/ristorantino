@@ -87,3 +87,9 @@ CREATE TABLE IF NOT EXISTS `tags` (
   `modified` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
+
+
+
+ALTER TABLE  `iva_responsabilidades` ADD  `tipo_factura_id` INT NOT NULL;
+ALTER TABLE  `tipo_facturas` ADD  `codename` VARCHAR( 1 ) NULL AFTER  `name`
+DROP TABLE  IF EXISTS `egresos`;

@@ -62,7 +62,7 @@ class Printaitor
  /**
   *
   * @var string
-  *     Posilities are:
+  *     Posilities are in Folder PrinterOutput:
   *         "File" to print to a file where the path is configured in each Comanda
   *         "Cups" to print to a cups server printer. Where the "name" of Comanda is de name in CUPS printer
   * 
@@ -73,8 +73,11 @@ class Printaitor
     public static function setup()
     {        
         if ( !self::$isLoad ) {
+            
             // loads PrinterOutput Engine
-            self::_loadPrinterOutput( self::$defaultOutput );
+            $po = Configure::read('Printers.output');
+            $po = empty( $po ) ? self::$defaultOutput : $po;
+            self::_loadPrinterOutput( $po );
 
              // loads Fiscal Printer
             self::_loadFiscalPrinter();

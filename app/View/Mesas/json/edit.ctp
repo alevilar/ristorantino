@@ -1,6 +1,5 @@
-<?
-
-foreach($mesa['Mesa'] as $ak=>$att) {
+<?php
+    foreach($mesa['Mesa'] as $ak=>$att) {
         $mesa[$ak] = $att;
     }
     unset($mesa['Mesa']);  

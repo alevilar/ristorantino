@@ -1,121 +1,96 @@
 <?php
+App::uses('AppController', 'Controller');
+/**
+ * TipoFacturas Controller
+ *
+ * @property TipoFactura $TipoFactura
+ */
 class TipoFacturasController extends AppController {
 
-	var $name = 'TipoFacturas';
-	var $helpers = array('Html', 'Form');
 
-	function index() {
+/**
+ * index method
+ *
+ * @return void
+ */
+	public function index() {
 		$this->TipoFactura->recursive = 0;
 		$this->set('tipoFacturas', $this->paginate());
 	}
 
-	function view($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid TipoFactura'));
-			$this->redirect(array('action' => 'index'));
+/**
+ * view method
+ *
+ * @param string $id
+ * @return void
+ */
+	public function view($id = null) {
+		$this->TipoFactura->id = $id;
+		if (!$this->TipoFactura->exists()) {
+			throw new NotFoundException(__('Invalid tipo factura'));
 		}
 		$this->set('tipoFactura', $this->TipoFactura->read(null, $id));
 	}
 
-	function add() {
-		if (!empty($this->request->data)) {
+/**
+ * add method
+ *
+ * @return void
+ */
+	public function add() {
+		if ($this->request->is('post')) {
 			$this->TipoFactura->create();
 			if ($this->TipoFactura->save($this->request->data)) {
-				$this->Session->setFlash(__('The TipoFactura has been saved'));
+				$this->Session->setFlash(__('The tipo factura has been saved'));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The TipoFactura could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The tipo factura could not be saved. Please, try again.'));
 			}
 		}
 	}
 
-	function edit($id = null) {
-		if (!$id && empty($this->request->data)) {
-			$this->Session->setFlash(__('Invalid TipoFactura'));
-			$this->redirect(array('action' => 'index'));
+/**
+ * edit method
+ *
+ * @param string $id
+ * @return void
+ */
+	public function edit($id = null) {
+		$this->TipoFactura->id = $id;
+		if (!$this->TipoFactura->exists()) {
+			throw new NotFoundException(__('Invalid tipo factura'));
 		}
-		if (!empty($this->request->data)) {
+		if ($this->request->is('post') || $this->request->is('put')) {
 			if ($this->TipoFactura->save($this->request->data)) {
-				$this->Session->setFlash(__('The TipoFactura has been saved'));
+				$this->Session->setFlash(__('The tipo factura has been saved'));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The TipoFactura could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The tipo factura could not be saved. Please, try again.'));
 			}
-		}
-		if (empty($this->request->data)) {
+		} else {
 			$this->request->data = $this->TipoFactura->read(null, $id);
 		}
 	}
 
-	function delete($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for TipoFactura'));
+/**
+ * delete method
+ *
+ * @param string $id
+ * @return void
+ */
+	public function delete($id = null) {
+		if (!$this->request->is('post')) {
+			throw new MethodNotAllowedException();
+		}
+		$this->TipoFactura->id = $id;
+		if (!$this->TipoFactura->exists()) {
+			throw new NotFoundException(__('Invalid tipo factura'));
+		}
+		if ($this->TipoFactura->delete()) {
+			$this->Session->setFlash(__('Tipo factura deleted'));
 			$this->redirect(array('action' => 'index'));
 		}
-		if ($this->TipoFactura->delete($id)) {
-			$this->Session->setFlash(__('TipoFactura deleted'));
-			$this->redirect(array('action' => 'index'));
-		}
-		$this->Session->setFlash(__('The TipoFactura could not be deleted. Please, try again.'));
+		$this->Session->setFlash(__('Tipo factura was not deleted'));
 		$this->redirect(array('action' => 'index'));
 	}
-
-
-	function index() {
-		$this->TipoFactura->recursive = 0;
-		$this->set('tipoFacturas', $this->paginate());
-	}
-
-	function view($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid TipoFactura'));
-			$this->redirect(array('action' => 'index'));
-		}
-		$this->set('tipoFactura', $this->TipoFactura->read(null, $id));
-	}
-
-	function add() {
-		if (!empty($this->request->data)) {
-			$this->TipoFactura->create();
-			if ($this->TipoFactura->save($this->request->data)) {
-				$this->Session->setFlash(__('The TipoFactura has been saved'));
-				$this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The TipoFactura could not be saved. Please, try again.'));
-			}
-		}
-	}
-
-	function edit($id = null) {
-		if (!$id && empty($this->request->data)) {
-			$this->Session->setFlash(__('Invalid TipoFactura'));
-			$this->redirect(array('action' => 'index'));
-		}
-		if (!empty($this->request->data)) {
-			if ($this->TipoFactura->save($this->request->data)) {
-				$this->Session->setFlash(__('The TipoFactura has been saved'));
-				$this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The TipoFactura could not be saved. Please, try again.'));
-			}
-		}
-		if (empty($this->request->data)) {
-			$this->request->data = $this->TipoFactura->read(null, $id);
-		}
-	}
-
-	function delete($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for TipoFactura'));
-			$this->redirect(array('action' => 'index'));
-		}
-		if ($this->TipoFactura->delete($id)) {
-			$this->Session->setFlash(__('TipoFactura deleted'));
-			$this->redirect(array('action' => 'index'));
-		}
-		$this->Session->setFlash(__('The TipoFactura could not be deleted. Please, try again.'));
-		$this->redirect(array('action' => 'index'));
-	}
-
 }
-?>
