@@ -257,9 +257,7 @@ class MesasController extends AppController
      */
     public function delete($id = null)
     {
-        if (!$this->request->is('post')) {
-            throw new MethodNotAllowedException();
-        }
+        
         $this->Mesa->id = $id;
         if (!$this->Mesa->exists()) {
             throw new NotFoundException(__('Invalid mesa'));
@@ -267,14 +265,16 @@ class MesasController extends AppController
         if ($this->Mesa->delete()) {
             $this->Session->setFlash(__('Mesa deleted'));
             $this->redirect(array('action' => 'index'));
+            $this->set("mensaje", 'Mesa Borrada');
+        } else {
+            $this->set("mensaje", 'Mesa Borrada');
+            $this->Session->setFlash(__('Mesa was not deleted'));
         }
-        $this->Session->setFlash(__('Mesa was not deleted'));
-
+        
         if (!$this->request->is('ajax')) {
             $this->redirect($this->referer());
-        } else {
-            return;
         }
+        $this->set("_serialize", array('mensaje'));
     }
 
     public function cerradas()

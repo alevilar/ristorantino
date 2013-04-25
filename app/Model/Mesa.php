@@ -689,6 +689,10 @@ class Mesa extends AppModel
             $this->id = $mesa_id;
         }
         
+        if (empty($this->id)){
+            return false;
+        }
+        
         // eliminar todos los pagos
         if ( !$this->Pago->deleteAll(array(
             'mesa_id' => $this->id

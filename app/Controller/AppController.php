@@ -48,7 +48,7 @@ class AppController extends Controller
         'RequestHandler',
         'Session',
         'Cookie',
-        'DebugKit.Toolbar',
+//        'DebugKit.Toolbar',
         
     );
 

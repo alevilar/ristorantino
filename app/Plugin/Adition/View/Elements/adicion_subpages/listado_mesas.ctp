@@ -1,6 +1,3 @@
-<?php echo $this->Html->script('/adition/js/jqm_events/listado_mesas'); ?>
-<?php echo $this->Html->script('/adition/js/View/ListadoMesasView'); ?>
-
 <?php $this->start('jquery-tmpl'); ?>
 <!-- Template: 
 listado de mesas que será refrescado continuamente mediante 
@@ -29,14 +26,20 @@ el ajax que verifica el estado de las mesas (si fue abierta o cerrada alguna. --
         </a>
 </script>
 
+<script id="tmp-lista-mesas-header" type="text/x-handlebars-template">
+    <span class="wow">{{length}}</span>
+</script>
 
+<?php echo $this->Html->script('/adition/js/View/ListadoMesasView'); ?>
+<?php echo $this->Html->script('/adition/js/View/ItemListadoMesasView'); ?>
+<?php echo $this->Html->script('/adition/js/jqm_events/listado_mesas'); ?>
 
 <?php $this->end(); ?>
 
 <div data-role="page" id="listado-mesas">
 
-    <div  data-role="header">
-        <h1><span class="wow" data-bind="text: mesas().length">0</span> <?php echo Inflector::pluralize(Configure::read('Mesa.tituloMesa')) ?></h1>
+    <header  data-role="header">
+        <h1><span class="wow cant_mesas">0</span> <?php echo Inflector::pluralize(Configure::read('Mesa.tituloMesa')) ?></h1>
 
         <a href='#adicion-opciones' data-icon="gear" data-rel="dialog" class="ui-btn-right">Opciones</a>
 
@@ -60,7 +63,7 @@ el ajax que verifica el estado de las mesas (si fue abierta o cerrada alguna. --
                 ?>
             </ul>
         </div>
-    </div>
+    </header>
 
 
     <div  data-role="content" class="content_mesas">           
@@ -75,4 +78,3 @@ el ajax que verifica el estado de las mesas (si fue abierta o cerrada alguna. --
     </div><!-- /navbar -->
 
 </div>
-<!-- Fin Pagina 1 -->

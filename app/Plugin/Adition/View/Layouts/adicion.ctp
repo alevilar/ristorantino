@@ -5,6 +5,12 @@
             <!--
             // Inicializacion de variable global de url
             var urlDomain = "<?php echo $this->Html->url('/', true); ?>";
+            
+            // ir siempre a la HOME
+            if (window.location.hash && window.location.hash != '#listado-mesas') {
+                window.location.replace('<?php echo $this->Html->url('/adition'); ?>');
+            }
+
             -->
         </script>
 
@@ -49,7 +55,6 @@
 //            '/adition/js/adicion/event_handler',
             '/adition/js/Model/MesaModel',
             '/adition/js/Collection/MesasCollection',
-            
             '/jquery/jquery.mobile/1.3.1/jquery.mobile-1.3.1',
 //                       'alekeyboard',
         ));
@@ -58,9 +63,10 @@
         echo $this->fetch('script');
         echo $this->element('js_init');
         ?>
+        <?php echo $this->fetch('jquery-tmpl'); ?>
     </head>
     <body>
-        <?php echo $this->fetch('jquery-tmpl'); ?>
+        
         <?php echo $this->fetch('content'); ?>
     </body>
 </html>

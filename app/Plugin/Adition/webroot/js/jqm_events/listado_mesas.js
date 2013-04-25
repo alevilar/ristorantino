@@ -1,30 +1,14 @@
-R$.mesasCollection.on('select', function(e,r){
-    console.info("hizo seleccion");
-    console.debug(e);
-    new R$.MesaView({model: e});
-});
 
-R$.mesasCollection.on('all', function(e,r){
-  console.info("MESA COLLECTION HIZO: "+e);  
-}
-);
+new R$.ListadoMesasView;
+
 $(document).on('pageshow', '#listado-mesas',function(event, ui){    
-    var $listadoMozos = $('#listado-mozos-para-mesas');
-    $listadoMozos.removeClass('ui-grid-a');
     
-
-    // al hacer click n un mozo del menu bar
-    // se muestran solo lasmesas de ese mozo
-    $listadoMozos.delegate('a', 'click', function(e) {
-        Risto.EventHandler.trigger('mostrarMesasDeMozo', e.currentTarget);
-        return false;        
-    });
+    R$.mesasCollection.fetch();
+    setInterval(function(){
+          R$.mesasCollection.fetch();
+    }, 5000);
     
-    setTimeout(function(){
-        R$.mesasCollection.fetch();
-    }, 1000);
     
-   
 });
 
 

@@ -1,4 +1,4 @@
-<?php echo $this->Html->script('/adition/js/jqm_events/mesa_add'); ?>
+<?php echo $this->Html->script('/adition/js/jqm_events/mesa_add', array('inline' => false)); ?>
 
 <div  data-role="page"  id="mesa-add" data-theme="e" class="dialog-ancho dialog-arriba">
         <div  data-role="header"  data-position="inline">

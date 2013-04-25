@@ -1,42 +1,41 @@
 R$.ListadoMesasView = Backbone.View.extend({
 
-    tagName:  "li",
-    //    el: ,
+    el: $("#listado-mesas"),
     //    className: "mesa",
     
     events: {
-        "click a": "select"
+        "click .mesa": "select",
+        "click .mozo": "mostrarMesasDeMozo"
     },
 
     initialize: function() {
-        this.listenTo(this.model, 'change', this.render);
-        this.listenTo(this.model, 'add', this.add);
-//        this.listenTo(this.model, 'destroy', this.remove);        
-    },
-    
-    select: function(e){
-      e.preventDefault();
-      $.mobile.changePage(e.currentTarget.getAttribute('href'));
-      this.model.trigger('select', this.model);
+        this.listenTo(R$.mesasCollection, 'remove', this.doRemove);
+        this.listenTo(R$.mesasCollection, 'destroy', this.doRemove);
+        this.listenTo(R$.mesasCollection, 'add', this.add);
     },
 
-    template: Handlebars.compile( $('#listaMesas').html() ),
-    
-    //urlRoot: 'mesas',
-    add: function(e) {
-        this.render(e);
-        $('#mesas_container').append(this.$el);
+    doRemove: function(){
+        this.remove();
+        this.render();
         return this;
     },
     
-    render: function(e) {
-        //        this.$el.html(this.template(this.model.attributes));
-        this.$el.html( this.template(this.model.toJSON()) );
-        
-        var estado = this.model.get('estado_id');
-        this.$el.addClass('estado_'+estado, estado);
-        
+    
+    add: function( mesa ) {
+        var view = new R$.ItemListadoMesasView( {model: mesa} );
+        $("#mesas_container").append( view.render().el );
+        this.render();
         return this;
+    },
+    
+    
+    render: function(e) {
+        $('.cant_mesas', '#listado-mesas').text( R$.mesasCollection.length );
+        return this;
+    },
+    
+    mostrarMesasDeMozo: function(){
+        
     }
 
 });

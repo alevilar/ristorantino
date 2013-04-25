@@ -257,6 +257,12 @@ ul.listado-adicion .mesa-mozo,ul.listado-adicion .mozo-cant-mesas {
     margin-right: 15px;
 }
 
+.mesa-actions a{
+    width: 39%;
+    margin-left: 2%; 
+    margin-right: 2%; 
+    float: left;
+}
 
 .mesa-view{
     width: 68%; 
