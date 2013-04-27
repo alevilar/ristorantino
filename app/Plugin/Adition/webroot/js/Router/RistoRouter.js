@@ -1,27 +1,24 @@
 (function(){
-
+    var title = "COQUS, El Ristorantino Mágico";
+    
     R$.Router = Backbone.Router.extend({
 
         routes: {
             "": "root",
-            "listado-mesas": "listadoMesas",
-            "mesa-view": "mesaView",
-            "listado-mesas?mozo=:id":  "filtraPorMozo"
+            "listado-mesas": 'listadoMesas',
+            "mesa-view": "mesaView"
         },
         
         root: function(){
-            this.navigate("listado-mesas", {replace: true});
-            this.filtraPorMozo(0);
+            this.navigate("listado-mesas", {
+                replace: true
+            });
+            document.title = title; 
         },
-        
+     
         listadoMesas: function(){
-            this.filtraPorMozo(0);
+            document.title = title;   
         },
-        
-        filtraPorMozo: function(mozo_id){
-            $("[href='adition#listado-mesas?mozo="+mozo_id+"']", '#listado-mozos-para-mesas').addClass('ui-btn-active');
-        },
-              
 
         mesaView: function($mozo) {
         }

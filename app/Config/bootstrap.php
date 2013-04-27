@@ -314,10 +314,9 @@ function aplanar_mesa($mesa)
     if ( !empty($nm['Descuento']['porcentaje']) ) {
         $dto += $nm['Descuento']['porcentaje'];
     }
-    $nm['cliente_dto'] = $dto;
-    $nm['cliente_abr'] = "$dto%";
-    
-    $nm['cliente_abr'] = 'Cliente';
+    $dtotxt = $dto?"$dto%":"";
+    $nm['cliente_dto'] = $dtotxt;
+    $nm['cliente_abr'] = $nm['cliente_tipofactura']." ".$nm['cliente_dto'];
     $nm['time_abrio_abr'] = "Abrió: ".date('H:i', strtotime($nm['created']));
     $nm['time_cerro_abr'] = empty($nm['time_cerro'])?"":"Cerró: ".date('H:i', strtotime($nm['time_cerro']));
     $nm['time_cobro_abr'] = empty($nm['time_cobro'])?"":"Cobró: ".date('H:i', strtotime($nm['time_cobro']));

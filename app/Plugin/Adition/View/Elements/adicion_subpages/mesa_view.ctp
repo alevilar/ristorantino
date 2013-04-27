@@ -16,7 +16,11 @@
     </div>
 </script>
 
-
+<script id="mesaLoader" type="text/x-handlebars-template">
+    <span class="mesa-loader">
+        <?php echo $this->Html->image('loader.gif'); ?>
+    </span>
+</script>
 
 
 
@@ -39,17 +43,18 @@
 
 <!-- Template: Listado de productos del detalle Comanda -->
 <script id="tmp-mesa-header" type="text/x-handlebars-template">
-        <span>{{numero}}</span>
-        <?php
-        echo $this->Html->image('mesa-abrio.png') . " " . Configure::read('Mesa.tituloMesa') . " - " .
-        Configure::read('Mesa.tituloMozo') . " " . $this->Html->image('mozomoniob.png')
-        ?>
-        <span>{{Mozo.numero}}</span>
+    <span class="numero">{{numero}}</span>
+    <?php
+    echo $this->Html->image('mesa-abrio.png') . " " . Configure::read('Mesa.tituloMesa') . " - " .
+    Configure::read('Mesa.tituloMozo') . " " . $this->Html->image('mozomoniob.png')
+    ?>
+    <span>{{Mozo.numero}}</span>
 
-        <span class="hora-abrio">Estado: <span>{{estado_id}}</span></span>
+    <span class="hora-abrio">Estado: <span>{{estado_id}}</span></span>
 </script>
 
 <?php echo $this->Html->script('/adition/js/View/MesaView'); ?>
+<?php echo $this->Html->script('/adition/js/jqm_events/mesa_view'); ?>
 
 <?php $this->end(); ?>
 
@@ -134,9 +139,6 @@
         <h3>
             <span class="mesa-id" style="float: left;">
                 #<span class="mesa_id"></span>
-                <span>
-                    <?php echo $this->Html->image('loader.gif'); ?>
-                </span>
             </span>
             <span class="mesa-total"></span>
             <span class="hora-abrio">Abrió a las <span></span></span>

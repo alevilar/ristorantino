@@ -11,6 +11,7 @@
         $(document).on( 'pageshow', '#mesa-add', function(){
                 $formMesaAdd = $('#form-mesa-add');
                 
+                $('input[name="numero"]', '#form-mesa-add').focus();
                 if ( Risto.cubiertosObligatorios ) {
                     $('#mesa-add-cant_comensales')[0].setAttribute('required', 'required');
                 }
@@ -23,10 +24,9 @@
                     e.preventDefault();
 
                     var miniMesa = R$.formToObject($formMesaAdd);
-                    R$.mesasCollection.create( miniMesa );
-                    
-                    $('.ui-dialog').dialog('close');
-                    
+                    var mesa = R$.mesasCollection.create( miniMesa );
+                    mesa.trigger('select', mesa);
+                    $.mobile.changePage('#mesa-view');
                     document.getElementById('form-mesa-add').reset(); // limpio el formulario
                     return false;
                 });

@@ -251,16 +251,9 @@ class MesasController extends AppController
                 $this->Session->setFlash(__('The mesa has been saved'));
                 if (!$this->request->is('ajax')) {
                     $this->redirect(array('action' => 'index'));
-                } else {
-                    $this->autoRender = false;
-                    echo "Ok";
                 }
             } else {
                 $this->Session->setFlash(__('The mesa could not be saved. Please, try again.'));
-                if ($this->request->is('ajax')) {
-                    $this->autoRender = false;
-                    echo "Error";
-                }
             }
         }
 
@@ -290,6 +283,7 @@ class MesasController extends AppController
         $this->set('estados', $this->Mesa->estados);
         $this->set('title_for_layout', 'Editando la Mesa ' . $mesa['Mesa']['numero']);
         $this->set(compact('mesa', 'items', 'mozos'));
+        $this->set('_serialize', array('mesa'));
     }
 
     /**

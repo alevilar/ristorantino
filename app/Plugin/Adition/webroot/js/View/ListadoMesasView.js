@@ -5,7 +5,7 @@
         el: $("#listado-mesas"),
     
         events: {
-            "click .btn-mozo": "mostrarMesasDeMozo"
+            "click .btn-mozo": "abrirMesaDeMozo"
         },
     
 
@@ -31,22 +31,16 @@
             return this;
         },
     
-        mostrarMesasDeMozo: function(e){
+        abrirMesaDeMozo: function(e){
             e.preventDefault();
             var hash = e.currentTarget.hash,
                 hsi = hash.indexOf('='),
-                mozo = hash.substr(hsi+1);
-            if ( mozo > 0 ) {
-                // filtrar por mozo seleccionado
-                this.$('.mesa').hide();
-                this.$(".mozo_"+mozo).show();     
-                R$.router.navigate(hash, {trigger: true, replace: true});
-            } else {
-                // mostrar todos
-                R$.router.navigate('');
-                this.$('.mesa').show();
-            }
-            
+                mozoId = hash.substr(hsi+1),
+                mozo = _.find(R$.mozos, function(m){ return m.id == mozoId});
+                
+            $.mobile.changePage( "#mesa-add"); 
+            $('form input[name="mozo_id"]', "#mesa-add").val(mozoId);
+            $('.ui-title','#mesa-add').text("Abrir Mesa de Mozo "+mozo.numero);
         }
 
     });

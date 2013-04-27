@@ -1,24 +1,35 @@
 (function(window){
-    
-    window.R$.MesaView = Backbone.View.extend({
+    R$.MesaView = Backbone.View.extend({
 
         el: $("#mesa-view"),
     
         events: {
             "click #btn-mesa-cerrar"    :   "mandarAjaxYVolverAListadoDeMesas",
             "click #btn-mesa-reabrir"   :   "mandarAjaxYVolverAListadoDeMesas",
-            "click #btn-mesa-ticket":   "mandarAjaxYVolverAListadoDeMesas",
+            "click #btn-mesa-ticket"    :   "mandarAjaxYVolverAListadoDeMesas",
             "click #btn-mesa-borrar"    :   "eliminarMesa",
-            "click #btn-mesa-numero": "cambiarNumero"
+            "click #btn-mesa-numero"    :   "cambiarNumero"
         
         },
     
+        eventModel: {
+            'change:numero'             :   'renderHeader',
+            'change:mozo_id'            :   'renderHeader',
+            'change:id'                 :   'render'
+        },
     
         tmp_header: Handlebars.compile( $('#tmp-mesa-header').html() ),
+        tmp_loader: Handlebars.compile( $('#mesaLoader').html() ),
 
-        initialize: function(args) {
-            if (!args.model){
-                throw new Error("se debe pasar una mesa para inicializar la vista");
+        setModel: function( newModel ){
+            if (this.model) {
+                for ( var i in this.eventModel ) {
+                    this.stopListening(this.model, i, this[this.eventModel[i]]);  
+                }
+            }
+            this.model = newModel;   
+            for ( var i in this.eventModel ) {
+                this.listenTo(this.model, i, this[this.eventModel[i]]); 
             }
             this.render();
         },
@@ -31,7 +42,9 @@
             var oldNum = this.model.get('numero');
             var num = window.prompt("Numero de mesa", oldNum);
             if ( num && oldNum != num) {
-                this.model.save({'numero': num});
+                this.model.save({
+                    'numero': num
+                });
             }
         },
     
@@ -45,32 +58,31 @@
             $.mobile.changePage("#listado-mesas");
             return false;
         },
-    
-        render: function(){
-            //        $("#mesa-view").find("[data-role='header']")
+        
+        renderHeader: function(e){
             this.$("header .header").html( this.tmp_header( this.model.toJSON()) );
+            return this;
+        },
+    
+        renderId: function(){
+            if (this.model.isNew()){
+                this.$('footer .mesa_id').html( this.tmp_loader() );
+            } else {
+                this.$('footer .mesa_id').text(this.model.get('id'));
+            }
+        },
+        
+        render: function(){
+            if (!this.model){
+                throw new Error("no hay una mesa seteada como model");
+            }
+            this.renderHeader();
+            this.renderId();
             this.$el.addClass('estado_'+this.model.get('estado_id'), this.model.get('estado_id'));
             return this;
         }
-
    
     });
 
-    var currentMesaView = null;
-    R$.mesasCollection.on('select', function(mesa){
-        if ( !currentMesaView ) {
-            // si no existe creo una nueva vista de la mesa-view
-            currentMesaView = new R$.MesaView({
-                    model: mesa
-            });
-            
-        } else {
-            // si existe, y la mesa seleccionada es otra, entonces refrescar la vista-view
-            if ( currentMesaView.model != mesa ) {
-                currentMesaView.model = mesa;
-                currentMesaView.render();
-            }
-        }
-    });
 
 })(window);

@@ -13,15 +13,7 @@ el ajax que verifica el estado de las mesas (si fue abierta o cerrada alguna. --
                     <span class="mesa-numero">{{numero}}</span>
                 </span>
             </span>
-            <span class="mesa-mozo" >{{Mozo.numero}}</span>
-            <span class="mesa-descuento">{{Descuento.porcentaje}}</span>
-            <span  class="mesa-tipofactura">
-                {{#if Cliente.tipofactura}}
-                "{{Cliente.tipofactura}}"
-                {{else}}
-                "B"
-                {{/if}}
-            </span>
+            <span class="mesa-cliente">{{cliente_abr}}</span>
             
             <span class="mesa-time mesa-time-abrio">{{time_abrio_abr}}</span>
             <span class="mesa-time mesa-time-cerro">{{time_cerro_abr}}</span>
@@ -45,23 +37,25 @@ el ajax que verifica el estado de las mesas (si fue abierta o cerrada alguna. --
 
         <a href='#adicion-opciones' data-icon="gear" data-rel="dialog" class="ui-btn-right">Opciones</a>
 
-        <div data-role="navbar">
+        <div class="ui-navbar ui-mini">
             <ul id="listado-mozos-para-mesas">
                 <?php
-                $anchoCalculadoPorcentual = floor(100 / (count($mozos) + 1 ));
-                $anchoCalculadoPorcentualPrimero = 100 - ($anchoCalculadoPorcentual * count($mozos) );
+                $anchoCalculadoPorcentual = 100 / count($mozos);
                 ?>
-                <li  style="width: <?php echo $anchoCalculadoPorcentualPrimero . '%' ?>">
-                    <a href="adition#listado-mesas?mozo=0" class="ui-btn-active btn-mozo">Todos</a>
-                </li>
+
                 <?php
                 foreach ($mozos as $m) {
                     $k = $m['Mozo']['id'];
                     $n = $m['Mozo']['numero'];
                     ?>
-                    <li  style="width: <?php echo $anchoCalculadoPorcentual . '%' ?>">
-                        <a href="adition#listado-mesas?mozo=<?php echo $k ?>" class="btn-mozo"><?php echo $n ?></a>
-                    </li>
+                 <li  style="width: <?php echo $anchoCalculadoPorcentual . '%' ?>">
+                    <a href="#mesa-add?mozo=<?php echo $k ?>" id="mesa-abrir-mesa-btn" class="btn-mozo ui-btn ui-btn-inline ui-btn-up-a" data-rel="dialog">
+<!--                    <a href="#mesa-add?mozo=<?php echo $k ?>"  data-corners="false" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-theme="a" data-inline="true">-->
+                    <span class="ui-btn-inner">
+                        <span class="ui-btn-text"><?php echo $n ?></span>
+                    </span>
+                    </a>
+                </li>
                     <?
                 }
                 ?>
@@ -71,13 +65,21 @@ el ajax que verifica el estado de las mesas (si fue abierta o cerrada alguna. --
 
 
     <div  data-role="content" class="content_mesas">           
-
-        <!-- aca va el listado de mesas que se carga dinamicamente en un script de abajo -->
-        <a href="#mesa-add" id="mesa-abrir-mesa-btn" data-rel="dialog"  class="abrir-mesa" data-role="button" data-theme="a">Abrir<br><?php echo Configure::read('Mesa.tituloMesa') ?></a>
-
         <!-- @template listaMesas -->
         <div>
-            <ul id="mesas_container" class="listado-adicion"></ul>
+            <?php
+                foreach ($mozos as $m) {
+                    $k = $m['Mozo']['id'];
+                    $n = $m['Mozo']['numero'];
+                    ?>
+            <div class="mesas_mozo"  style="width: <?php echo $anchoCalculadoPorcentual . '%' ?>">
+                <ul id="mesas_container_mozo_<?php echo $k ?>">
+                </ul>
+                &nbsp;
+            </div>
+              <?
+                }
+                ?>
         </div>
     </div><!-- /navbar -->
 

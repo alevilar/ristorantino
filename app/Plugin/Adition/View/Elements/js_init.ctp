@@ -16,8 +16,14 @@ if (empty($animar)) {
 } ?>
         $.extend(  $.mobile , jqmOps);
     })();
-       
-            
+    
+    <?php 
+    $mozos_aplanados = array();
+    foreach ($mozos as $mz){
+        $mozos_aplanado[] = $mz['Mozo'];
+    }
+    ?>
+    R$.mozos = <?php echo json_encode($mozos_aplanado);?>;        
     R$.TITULO_MESA = "<?php echo Configure::read('Mesa.tituloMesa') ?>";
     R$.TITULO_MOZO = "<?php echo Configure::read('Mesa.tituloMozo') ?>";
         

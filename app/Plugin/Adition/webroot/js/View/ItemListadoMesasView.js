@@ -3,12 +3,12 @@ R$.ItemListadoMesasView = Backbone.View.extend({
     tagName:  "li",
     
     id: function(){
-      return "listado-mesa-id-"+this.model.id;  
+        return "listado-mesa-id-"+this.model.id;  
     },
     //    el: ,
     className:  function(){
         var estado = this.model.get('estado_id'),
-            mozo   = this.model.get('mozo_id')
+        mozo   = this.model.get('mozo_id')
         
         return "mesa estado_"+estado+" mozo_"+mozo;
     },
@@ -19,22 +19,26 @@ R$.ItemListadoMesasView = Backbone.View.extend({
         "click a": "select"
     },
     
+    eventsMesa:{
+        'change:estado_id'  :   'cambiarEstado',
+        'change:mozo_id'    :   'cambiarMozo',
+        'change:numero'     :   'cambiarNumero',
+        'change:time_cerro' :   'cambiarTimeCerro',
+        'change:Cliente'    :   'render',
+        'remove destroy'    :   'remove',
+        'add'               :   'sort'
+    },
 
     initialize: function() {
-        $("#mesas_container").append( this.render().el );
-        this.listenTo(this.model, 'change:estado_id', this.cambiarEstado);
-        this.listenTo(this.model, 'change:mozo_id', this.cambiarMozo);
-        this.listenTo(this.model, 'change:numero', this.cambiarNumero);
-        this.listenTo(this.model, 'change:time_cerro', this.cambiarTimeCerro);
-        this.listenTo(this.model, 'change:Cliente', this.render);
-        this.listenTo(this.model, 'remove destroy', this.remove); 
-        this.listenTo(this.model, 'add', this.sort);  
+        $("#mesas_container_mozo_"+this.model.get('mozo_id')).append( this.render().el );
+        for (var i in this.eventsMesa) {
+            this.listenTo(this.model, i, this[this.eventsMesa[i]]);              
+        }
     },
     
-    
     select: function(e){
-      this.model.trigger('select', this.model);
-      return this;
+        this.model.trigger('select', this.model);
+        return this;
     },
     
     cambiarTimeCerro: function(){
@@ -43,8 +47,7 @@ R$.ItemListadoMesasView = Backbone.View.extend({
     },
     
     cambiarMozo: function(){
-        var mozo = this.model.get('Mozo.numero').numero;
-        this.$('.mesa-mozo').text(mozo);
+        this.render();
     },
     
     cambiarNumero: function(){
