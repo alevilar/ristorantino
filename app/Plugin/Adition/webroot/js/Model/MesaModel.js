@@ -3,13 +3,15 @@
 (function(window){
 
     var MesaModel = Backbone.Model.extend({
-        defaults : {
-            estado_id: 1 // abierta
-        },
         
-        url : function() {
-            return this.id ? 'mesas/' + this.id : 'mesas'; 
-        }
+//         parse: function(a){
+//            for(i in a) {
+//                if (i != 'Mesa') {
+//                    a.Mesa = a[i]
+//                }
+//            }
+//            return a.Mesa;
+//        }
     });
 
     R$.MesaModel = MesaModel;

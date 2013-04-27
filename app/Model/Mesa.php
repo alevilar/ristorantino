@@ -846,16 +846,6 @@ LEFT JOIN mozos z ON z.id = m.mozo_id
     }
     
     
-    public function imprimirTicket( $id = null ){
-        if (empty($id)) {
-            $id = $this->id;
-        }
-        
-        $fiscalData = $this->getDataParaFiscal($mesa_id);
-        
-    }
-    
-    
      /**
          * Para todos los mozos activos, me trae sus mesas abiertas
          * @param int $mozo_id id del mozo, en caso de que no le pase ninguno, me busca todos
@@ -894,7 +884,7 @@ LEFT JOIN mozos z ON z.id = m.mozo_id
                             'DetalleSabor.Sabor'),
                     ),
                 ),
-                'order' => 'Mesa.numero DESC',
+                'order' => 'Mesa.created asc',
                 'conditions'=> $conditions,
             );
             

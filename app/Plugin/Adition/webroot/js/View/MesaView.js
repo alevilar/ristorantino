@@ -1,19 +1,15 @@
 (function(window){
     
-//alert("ortodonca4");
     window.R$.MesaView = Backbone.View.extend({
 
-        //    tagName:  "li",
-        //    el: ,
-        //    className: "mesa",
+        el: $("#mesa-view"),
     
         events: {
-            "click #mesa-cerrar"    :   "mandarAjaxYVolverAListadoDeMesas",
-            "click #mesa-reabrir"   :   "mandarAjaxYVolverAListadoDeMesas",
-            "click #mesa-reimprimir":   "mandarAjaxYVolverAListadoDeMesas",
-            "click #mesa-reabrir"   :   "mandarAjaxYVolverAListadoDeMesas",
-            "click #mesa-borrar"    :   "eliminarMesa",
-            "click #mesa-action-cambiar-numero": "cambiarNumero"
+            "click #btn-mesa-cerrar"    :   "mandarAjaxYVolverAListadoDeMesas",
+            "click #btn-mesa-reabrir"   :   "mandarAjaxYVolverAListadoDeMesas",
+            "click #btn-mesa-ticket":   "mandarAjaxYVolverAListadoDeMesas",
+            "click #btn-mesa-borrar"    :   "eliminarMesa",
+            "click #btn-mesa-numero": "cambiarNumero"
         
         },
     
@@ -32,7 +28,6 @@
         },
         
         cambiarNumero: function(){
-            console.info("asas");
             var oldNum = this.model.get('numero');
             var num = window.prompt("Numero de mesa", oldNum);
             if ( num && oldNum != num) {
@@ -45,7 +40,7 @@
             href += "/"+this.model.id;
         
             if (href) {
-                $.post( href );
+                $.getJSON( href );
             }
             $.mobile.changePage("#listado-mesas");
             return false;
@@ -66,8 +61,7 @@
         if ( !currentMesaView ) {
             // si no existe creo una nueva vista de la mesa-view
             currentMesaView = new R$.MesaView({
-                    model: mesa,
-                    el: $("#mesa-view")
+                    model: mesa
             });
             
         } else {

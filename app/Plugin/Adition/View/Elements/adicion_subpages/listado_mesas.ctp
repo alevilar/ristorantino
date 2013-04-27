@@ -22,7 +22,9 @@ el ajax que verifica el estado de las mesas (si fue abierta o cerrada alguna. --
                 "B"
                 {{/if}}
             </span>
-            <span class="mesa-time">{{time}}</span>
+            
+            <span class="mesa-time mesa-time-abrio">{{time_abrio_abr}}</span>
+            <span class="mesa-time mesa-time-cerro">{{time_cerro_abr}}</span>
         </a>
 </script>
 
@@ -49,14 +51,16 @@ el ajax que verifica el estado de las mesas (si fue abierta o cerrada alguna. --
                 $anchoCalculadoPorcentual = floor(100 / (count($mozos) + 1 ));
                 $anchoCalculadoPorcentualPrimero = 100 - ($anchoCalculadoPorcentual * count($mozos) );
                 ?>
-                <li  style="width: <?php echo $anchoCalculadoPorcentualPrimero . '%' ?>"><a href="#" class="ui-btn-active">Todos</a></li>
+                <li  style="width: <?php echo $anchoCalculadoPorcentualPrimero . '%' ?>">
+                    <a href="adition#listado-mesas?mozo=0" class="ui-btn-active btn-mozo">Todos</a>
+                </li>
                 <?php
                 foreach ($mozos as $m) {
                     $k = $m['Mozo']['id'];
                     $n = $m['Mozo']['numero'];
                     ?>
                     <li  style="width: <?php echo $anchoCalculadoPorcentual . '%' ?>">
-                        <a href="#" data-mozo-id="<?php echo $k ?>"><?php echo $n ?></a>
+                        <a href="adition#listado-mesas?mozo=<?php echo $k ?>" class="btn-mozo"><?php echo $n ?></a>
                     </li>
                     <?
                 }

@@ -53,8 +53,6 @@ class FilePrinterOutput extends PrinterOutput
             $printerNamePath = "$printerFolderPath/$randomName.txt";
             $file = new File($printerNamePath , $create = true, 0777);
             $file->write($texto);
-            debug($file->mime());
-            debug($texto);
             return $file->close();
         }
         

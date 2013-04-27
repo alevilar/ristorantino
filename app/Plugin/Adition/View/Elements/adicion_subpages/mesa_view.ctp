@@ -39,7 +39,6 @@
 
 <!-- Template: Listado de productos del detalle Comanda -->
 <script id="tmp-mesa-header" type="text/x-handlebars-template">
-    <h3>
         <span>{{numero}}</span>
         <?php
         echo $this->Html->image('mesa-abrio.png') . " " . Configure::read('Mesa.tituloMesa') . " - " .
@@ -48,7 +47,6 @@
         <span>{{Mozo.numero}}</span>
 
         <span class="hora-abrio">Estado: <span>{{estado_id}}</span></span>
-    </h3>
 </script>
 
 <?php echo $this->Html->script('/adition/js/View/MesaView'); ?>
@@ -59,79 +57,65 @@
 
 <div data-role="page" id="mesa-view">
     <header data-role="header">
-        <a href="#listado-mesas" data-direction="reverse">Volver</a>
-        <div class="header"><h3>Mesa</h3></div>
+        <a href="#" data-rel="back" data-direction="reverse">Volver</a>
+        <h1 class="header">Mesa</h1>
     </header>
 
     <div  data-role="content" class="" data-scroll="true">
 
         <div class="mesa-actions">
 
-            <a data-role="button" id="mesa-action-comanda" href="#comanda-add-menu">
-                <?= $this->Html->image('/adition/css/img/chef_64.png') ?><br>
+            <a id="btn-mesa-comanda" href="#comanda-add-menu" data-role="button">
                 Comanda
             </a>
 
-            <a data-role="button" href="mesas/cerrarMesa" id="mesa-cerrar" data-direction="reverse">
-                <?= $this->Html->image('/adition/css/img/cerrarmesa.png') ?><br>
+            <a id="btn-mesa-cerrar" href="mesas/cerrarMesa" data-direction="reverse" data-role="button">
                 Cerrar
             </a>
 
-            <a data-role="button" id="mesa-action-cobrar" href="#mesa-cobrar">
-                <?= $this->Html->image('/adition/css/img/cobrar.png') ?><br>
+            <a id="btn-mesa-cobrar" href="#mesa-cobrar" data-role="button">
                 Cobrar
             </a>
 
-            <a id="mesa-reabrir" href="mesas/reabrir" data-role="button"  data-direction="reverse">
-                <?= $this->Html->image('/adition/css/img/reabrir.png') ?><br>
+            <a id="btn-mesa-reabrir" href="mesas/reabrir" data-direction="reverse" data-role="button">
                 Re Abrir
             </a>
 
 
-            <a data-role="button"href="<?php echo $this->Html->url('/clientes/all_clientes.jqm') ?>" data-rel="dialog">
-                <?= $this->Html->image('/adition/css/img/customers.png') ?><br>
+            <a id="btn-mesa-clientes" href="<?php echo $this->Html->url('/clientes/all_clientes.jqm') ?>" data-rel="dialog" data-role="button">
                 <span>Cliente</span>
             </a>
 
-            <a data-role="button" href="mesas/imprimirTicket" class="mesa-reimprimir" data-direction="reverse">
-                <?= $this->Html->image('/adition/css/img/printer.png') ?><br>
+            <a id="btn-mesa-ticket" href="mesas/imprimirTicket" data-direction="reverse" data-role="button">
                 Imprimir Ticket
             </a>
 
-            <a data-role="button" href="#listado-mesas" id="mesa-borrar" data-direction="reverse">
-                <?= $this->Html->image('/adition/css/img/borrarmesa.png') ?><br>
+            <a id="btn-mesa-borrar" href="#listado-mesas" data-direction="reverse" data-role="button">
                 Borrar
             </a>
 
-            <a data-role="button"id="mesa-action-descuento" href="<?php echo $this->Html->url('/descuentos/all_descuentos.jqm') ?>" data-rel="dialog">
-                <?= $this->Html->image('/adition/css/img/descuento.png') ?><br>
+            <a id="btn-mesa-descuento" href="<?php echo $this->Html->url('/descuentos/all_descuentos.jqm') ?>" data-rel="dialog" data-role="button">
                 <span>Descuento</span>
             </a>
 
 
-            <a data-role="button"id="mesa-action-menu" href="#mesa-menu" data-rel="dialog">
-                <?= $this->Html->image('/adition/css/img/menu.png') ?><br>
+            <a id="btn-mesa-menu" href="#mesa-menu" data-rel="dialog" data-role="button">
                 <span style="color: red"></span> Menú
             </a>
 
-            <a data-role="button" id="mesa-action-edit" href="<? echo $this->Html->url('/mesas/edit/') ?>"  data-href="<? echo $this->Html->url('/mesas/edit/') ?>">
-                <?= $this->Html->image('/adition/css/img/editarmesa.png') ?><br>
+            <a  id="btn-mesa-edit" href="<? echo $this->Html->url('/mesas/edit/') ?>" data-role="button">
                 Editar
             </a>
 
-            <a data-role="button"id="mesa-action-cambiar-mozo" href="#mesa-cambiar-mozo" data-rel="dialog">
-                <?= $this->Html->image('/adition/css/img/cambiarmozo.png') ?><br>
+            <a id="btn-mesa-mozo" href="#mesa-cambiar-mozo" data-rel="dialog" data-role="button">
                 <?php echo Configure::read('Mesa.tituloMozo') ?>
             </a>
 
-            <a data-role="button"id="mesa-action-cambiar-numero" href="#mesa-cambiar-numero" data-rel="dialog">
-                <?= $this->Html->image('/adition/css/img/cambiarmesa.png') ?><br>
+            <a id="btn-mesa-numero" href="#mesa-cambiar-numero" data-rel="dialog" data-role="button">
                 Número
             </a>
 
-            <a data-role="button" id="mesa-action-cambiar-cubiertos" href="#mesa-cambiar-cubiertos" data-rel="dialog">
-                <span style="top: -19px;position: absolute;left: 50%;margin-left: -25%;"></span>
-                <?= $this->Html->image('/adition/css/img/cambiarcubiertos.png') ?><br>
+            <a id="btn-mesa-cubiertos" href="#mesa-cambiar-cubiertos" data-rel="dialog" data-role="button">
                 <span>Cubiertos</span>                            
             </a>
         </div>

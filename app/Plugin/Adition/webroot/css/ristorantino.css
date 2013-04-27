@@ -262,7 +262,65 @@ ul.listado-adicion .mesa-mozo,ul.listado-adicion .mozo-cant-mesas {
     margin-left: 2%; 
     margin-right: 2%; 
     float: left;
+    padding-top: 48px;
+    background-repeat: no-repeat;
+    background-position: top center;
 }
+
+#btn-mesa-comanda{
+    background-image: url(img/chef_64.png);
+}
+
+#btn-mesa-cerrar{
+    background-image: url(img/cerrarmesa.png);
+}
+
+#btn-mesa-cobrar{
+    background-image: url(img/cobrar.png);
+}
+
+#btn-mesa-reabrir{
+    background-image: url(img/reabrir.png);
+}
+
+#btn-mesa-clientes{
+    background-image: url(img/customers.png);
+}
+
+#btn-mesa-ticket{
+    background-image: url(img/printer.png);
+}
+
+#btn-mesa-borrar{
+    background-image: url(img/borrarmesa.png);
+}
+
+#btn-mesa-descuento{
+    background-image: url(img/descuento.png);
+}
+
+
+#btn-mesa-menu{
+    background-image: url(img/menu.png);
+}
+
+#btn-mesa-edit{
+    background-image: url(img/editarmesa.png);
+}
+
+#btn-mesa-mozo{
+    background-image: url(img/cambiarmozo.png);
+}
+
+#btn-mesa-numero{
+    background-image: url(img/cambiarmesa.png);
+}
+
+
+#btn-mesa-cubiertos{
+    background-image: url(img/cambiarcubiertos.png);
+}
+
 
 .mesa-view{
     width: 68%; 
@@ -346,6 +404,14 @@ ul.tipo_de_pagos ,.tipo_de_pagos ul{
     margin-left: -17px;
     position: relative;
     margin-left: 2px;
+}
+
+.estado_1 .mesa-time-cerro{
+    display: none;
+}
+
+.estado_2 .mesa-time-abrio{
+    display: none;
 }
 
 .cant_comensales{

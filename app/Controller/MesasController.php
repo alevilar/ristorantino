@@ -15,16 +15,23 @@ class MesasController extends AppController
         'paramType' => 'querystring'
     );
 
+    
+    public function beforeRender()
+    {
+        if ( !empty($this->viewVars['mesa']) ) {
+            $this->viewVars['mesa'] = aplanar_mesa($this->viewVars['mesa']);
+        }
+        if ( !empty($this->viewVars['mesas']) ) {
+            $this->viewVars['mesas'] = aplanar_mesas($this->viewVars['mesas']);
+        }
+        return parent::beforeRender();
+    }
+    
+    
     public function index($estado = null)
     {
-        $lastAccess = null;
         if ($this->request->is('ajax')) {
-
-            $microtime = $estado;
-            if ($microtime != 0) {
-                $lastAccess = $this->Session->read('lastAccess');
-            }
-            $mesas = $this->Mesa->getAbiertas(null, $lastAccess);
+            $mesas = $this->Mesa->getAbiertas(null);
         } else {
             $this->Prg->commonProcess();
             $this->paginate['conditions'] = $this->Mesa->parseCriteria($this->passedArgs);
@@ -50,9 +57,9 @@ class MesasController extends AppController
             }
             $mesas = $this->paginate();
         }
-        $this->set('modified', $lastAccess);
         $this->set('mesas', $mesas);
         $this->set('estados', $this->Mesa->estados);
+        $this->set('_serialize', array('mesas'));
     }
 
     public function view($id = null)
@@ -107,12 +114,12 @@ class MesasController extends AppController
         if (!empty($retData)) {
             $retData = $this->Mesa->getDataParaFiscal($mesa_id);
             $data = array(
-                'items' => $retData['Items'],
-                'porcentaje_descuento' => $retData['Totales']['descuento'],
-                'total' => $retData['Totales']['total'],
-                'mozo' => $retData['Mesa']['mozo_numero'],
-                'mesa' => $retData['Mesa']['numero'],
-                'tipo_factura' => "A",
+                'items'                 =>  $retData['Items'],
+                'porcentaje_descuento'  =>  $retData['Totales']['descuento'],
+                'total'                 =>  $retData['Totales']['total'],
+                'mozo'                  =>  $retData['Mesa']['mozo_numero'],
+                'mesa'                  =>  $retData['Mesa']['numero'],
+                'tipo_factura'          =>  !empty($retData['Cliente']['IvaResponsabilidad']['TipoFactura']['codename'])?$retData['Cliente']['IvaResponsabilidad']['TipoFactura']['codename']:'"B"',
             );
 
             Printaitor::send($data, 'Fiscal', 'ticket');
@@ -121,25 +128,32 @@ class MesasController extends AppController
 
         if (!$this->RequestHandler->isAjax()) {
             $this->redirect($this->referer());
-        } else {
-            $this->autoRender = false;
-            return "Se cerró la mesa";
         }
+        $this->set('mesa', $this->Mesa->read(null, $mesa_id));
+        $this->set('_serialize', array('mesa'));
     }
 
     public function imprimirTicket($mesa_id)
     {
 
-        $this->Mesa->imprimirTicket($mesa_id);
-
-        if ($this->RequestHandler->isAjax()) {
-            $this->autoRender = false;
-            $this->layout = 'ajax';
-            return 1;
-        } else {
-            $this->flash('Se imprimio comanda de mesa ID: ' . $mesa_id . ' (click para reimprimir)', $this->request->action . '/' . $mesa_id);
-            $this->redirect($this->referer());
+        if (empty($mesa_id)) {
+            throw new InternalErrorException("Se debe pasar el ID de la mesa por cerrar");
+            return;
         }
+
+        $retData = $this->Mesa->getDataParaFiscal($mesa_id);
+        
+        $data = array(
+            'items'                 =>  $retData['Items'],
+            'porcentaje_descuento'  =>  $retData['Totales']['descuento'],
+            'total'                 =>  $retData['Totales']['total'],
+            'mozo'                  =>  $retData['Mesa']['mozo_numero'],
+            'mesa'                  =>  $retData['Mesa']['numero'],
+            'tipo_factura'          =>  !empty($retData['Cliente']['IvaResponsabilidad']['TipoFactura']['codename'])?$retData['Cliente']['IvaResponsabilidad']['TipoFactura']['codename']:'"B"',
+        );
+
+        Printaitor::send($data, 'Fiscal', 'ticket');
+        
     }
 
     public function add()
@@ -153,22 +167,22 @@ class MesasController extends AppController
                 }
                 $mesa = $this->Mesa->read();
                 $this->set(array(
-                    'mesa' => $mesa['Mesa'],
-                    'insertedId' => $this->Mesa->getLastInsertId(),
+                    'mesa' => $mesa,
                     'validationErrors' => $this->Mesa->validationErrors,
                 ));
             } else {
                 $this->Session->setFlash(__('The mesa could not be saved. Please, try again.'));
-                $this->set('mesa', 'Error');
             }
-            $this->set('_serialize', 'mesa');
+            
         } else {
 
             $mozos = $this->Mesa->Mozo->find('list', array('fields' => array('id', 'numero_y_nombre')));
             $tipo_pagos = $this->Mesa->Pago->TipoDePago->find('list');
             $descuentos = $this->Mesa->Descuento->find('list');
             $estados = $this->Mesa->estados;
+            $this->set('mesa', 'Error');
             $this->set(compact('mozos', 'descuentos', 'tipo_pagos', 'estados'));
+            
         }
     }
 

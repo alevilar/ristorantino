@@ -22,7 +22,7 @@
                 $formMesaAdd.on('submit', function(e){
                     e.preventDefault();
 
-                    var miniMesa = formToObject($formMesaAdd);
+                    var miniMesa = R$.formToObject($formMesaAdd);
                     R$.mesasCollection.create( miniMesa );
                     
                     $('.ui-dialog').dialog('close');
@@ -39,5 +39,3 @@
         });
         
     })();
-     
-    

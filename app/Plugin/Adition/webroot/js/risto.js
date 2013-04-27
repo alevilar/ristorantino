@@ -3,6 +3,24 @@
  * Paquete Risto
  */
 R$ = Risto = {
+    domInit: function(){
+        $(function(){
+            $.mobile.buttonMarkup.hoverDelay = 0;
+            // Prevents all anchor click handling
+            //        $.mobile.linkBindingEnabled = false;
+
+            // Disabling this will prevent jQuery Mobile from handling hash changes
+            //        $.mobile.hashListeningEnabled = false;
+        
+            $.extend(  $.mobile , {
+                backBtnText: "Volver",
+                defaultPageTransition: 'slide',
+                defaultDialogTransition: 'pop'
+            });
+        });
+        
+    },
+    
     modelizar: function(obToModelizar){
         
         obToModelizar.timeCreated = function(){
@@ -63,6 +81,21 @@ R$ = Risto = {
         var mysqlDateTime = yyyy + '-' + mm + '-' + dd + ' ' + hh + ':' + min + ':' + ss;
 
         return mysqlDateTime;
+    },
+    
+    
+                                     
+    formToObject: function($form) {
+        var rta = $form.serializeArray(), 
+        newObj = {}; // json modelo, para crear la mesa
+        for (var r in rta ) {
+            newObj[rta[r].name] = rta[r].value;
+        }
+        return newObj;
     }
     
+    
 }
+
+
+R$.domInit();

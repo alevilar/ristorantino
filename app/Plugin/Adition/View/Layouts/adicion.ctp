@@ -45,6 +45,13 @@
         }
 
 
+        ?>
+        
+    </head>
+    <body>
+        <?php echo $this->fetch('content'); ?>
+    </body>
+<?php
         echo $this->Html->script(array(
             'json2',
             '/jquery/jquery-2.0.0.min',
@@ -58,15 +65,17 @@
             '/jquery/jquery.mobile/1.3.1/jquery.mobile-1.3.1',
 //                       'alekeyboard',
         ));
-
+        
+        echo $this->element('js_init');
+        
         //scripts de Cake
         echo $this->fetch('script');
-        echo $this->element('js_init');
-        ?>
-        <?php echo $this->fetch('jquery-tmpl'); ?>
-    </head>
-    <body>
         
-        <?php echo $this->fetch('content'); ?>
-    </body>
+         echo $this->fetch('jquery-tmpl'); 
+         
+         echo $this->Html->script(array(
+             '/adition/js/Router/RistoRouter',
+         ));
+         
+         ?>
 </html>
