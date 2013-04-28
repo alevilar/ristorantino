@@ -198,8 +198,8 @@ class AppSchema extends CakeSchema {
 		'descuento_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 		'created' => array('type' => 'timestamp', 'null' => true, 'default' => NULL),
 		'modified' => array('type' => 'timestamp', 'null' => true, 'default' => NULL),
-		'time_cerro' => array('type' => 'timestamp', 'null' => false, 'default' => '0000-00-00 00:00:00', 'key' => 'index'),
-		'time_cobro' => array('type' => 'timestamp', 'null' => false, 'default' => '0000-00-00 00:00:00', 'key' => 'index'),
+		'time_cerro' => array('type' => 'timestamp', 'null' => true, 'default' => NULL, 'key' => 'index'),
+		'time_cobro' => array('type' => 'timestamp', 'null' => true, 'default' => NULL, 'key' => 'index'),
 		'deleted_date' => array('type' => 'timestamp', 'null' => true, 'default' => NULL),
 		'deleted' => array('type' => 'integer', 'null' => false, 'default' => '0', 'length' => 4),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'time_cerro' => array('column' => array('time_cerro', 'time_cobro'), 'unique' => 0), 'mozo_id' => array('column' => 'mozo_id', 'unique' => 0), 'numero' => array('column' => 'numero', 'unique' => 0), 'time_cobro' => array('column' => 'time_cobro', 'unique' => 0), 'created' => array('column' => array('time_cerro', 'mozo_id'), 'unique' => 0)),
@@ -278,6 +278,11 @@ class AppSchema extends CakeSchema {
 		'name' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 60, 'collate' => 'utf8_spanish_ci', 'charset' => 'utf8'),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_spanish_ci', 'engine' => 'MyISAM')
+	);
+        public $estados = array(
+		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'length' => 10, 'key' => 'primary'),
+		'name' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 60),
+		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
 	);
 	public $roles = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),

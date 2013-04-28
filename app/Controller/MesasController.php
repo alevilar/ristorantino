@@ -15,14 +15,17 @@ class MesasController extends AppController
         'paramType' => 'querystring'
     );
 
+    private $aplanar = false; // aplana la mesa on BeforeRender
     
     public function beforeRender()
-    {
-        if ( !empty($this->viewVars['mesa']) ) {
-            $this->viewVars['mesa'] = aplanar_mesa($this->viewVars['mesa']);
-        }
-        if ( !empty($this->viewVars['mesas']) ) {
-            $this->viewVars['mesas'] = aplanar_mesas($this->viewVars['mesas']);
+    {       
+        if ($this->aplanar) {
+            if ( !empty($this->viewVars['mesa']) ) {
+                $this->viewVars['mesa'] = aplanar_mesa($this->viewVars['mesa']);
+            }
+            if ( !empty($this->viewVars['mesas']) ) {
+                $this->viewVars['mesas'] = aplanar_mesas($this->viewVars['mesas']);
+            }
         }
         return parent::beforeRender();
     }
@@ -32,6 +35,7 @@ class MesasController extends AppController
     {
         if ($this->request->is('ajax')) {
             $mesas = $this->Mesa->getAbiertas(null);
+            $this->aplanar = true;
         } else {
             $this->Prg->commonProcess();
             $this->paginate['conditions'] = $this->Mesa->parseCriteria($this->passedArgs);
@@ -128,6 +132,8 @@ class MesasController extends AppController
 
         if (!$this->RequestHandler->isAjax()) {
             $this->redirect($this->referer());
+        } else {
+            $this->aplanar = true;
         }
         $this->set('mesa', $this->Mesa->read(null, $mesa_id));
         $this->set('_serialize', array('mesa'));
@@ -166,6 +172,7 @@ class MesasController extends AppController
                     $this->redirect(array('action' => 'index'));
                 }
                 $mesa = $this->Mesa->read();
+                $this->aplanar = true;
                 $this->set(array(
                     'mesa' => $mesa,
                     'validationErrors' => $this->Mesa->validationErrors,
@@ -186,50 +193,9 @@ class MesasController extends AppController
         }
     }
 
-    /**
-     * Esta accion edita cualquiera de los campos de la mesa,
-     * pero hay que pasar en la variabla $this->request->data el ID de
-     * la mesa si o si para que funcione
-     *
-     * @return boolean 1 on success 0 fail
-     */
-    public function ajax_edit()
-    {
-        $this->autoRender = false;
-        $returnFlag = 1;
-
-        if (!empty($this->request->data)) {
-            if (isset($this->request->data['Mesa']['id'])) {
-                if (($this->request->data['Mesa']['id'] != '') || ($this->request->data['Mesa']['id'] != null) || ($this->request->data['Mesa']['id'] != 0)) {
-                    $this->Mesa->recursive = -1;
-                    $this->Mesa->id = $this->request->data['Mesa']['id'];
-
-                    foreach ($this->request->data['Mesa'] as $field => $valor):
-                        if ($field == 'id')
-                            continue; // el id no lo tengo que actualizar
-                        $valor = (strtolower($valor) == 'now()') ? strftime('%Y-%m-%d %H:%M:%S', time()) : $valor;
-                        if (!$this->Mesa->saveField($field, $valor, $validate = true)) {
-                            debug($this->Mesa->validationErrors);
-                            header("HTTP/1.0 500 Internal Server Error");
-                            if ($returnFlag == 1) {
-                                $returnFlag = 0;
-                            }
-                            $returnFlag--;
-                        }
-                    endforeach;
-                }
-            } else {
-                header("HTTP/1.0 500 Internal Server Error");
-            }
-        } else {
-            header("HTTP/1.0 500 Internal Server Error");
-        }
-        return $returnFlag;
-    }
 
     public function edit($id = null)
     {
-
         $this->Mesa->id = $id;
         if (!$this->Mesa->exists()) {
             throw new NotFoundException(__('Invalid mesa'));
@@ -264,6 +230,7 @@ class MesasController extends AppController
                 'Mozo',
                 'Descuento',
                 'Cliente' => 'Descuento',
+                'Estado',
                 'Comanda' => array(
                     'DetalleComanda' => array(
                         'Producto',
@@ -272,12 +239,16 @@ class MesasController extends AppController
                 )
             )
                 ));
+        $tot = $this->Mesa->calcular_totales($m['Mesa']['id']);
+        foreach($tot['Mesa'] as $k=>$v) {
+            $mesa['Mesa'][$k] = $v;
+        }
         $items = $this->request->data['Comanda'];
         $mozos = $this->Mesa->Mozo->find('list', array(
             'fields' => array('id', 'numero_y_nombre'),
             'conditions' => array('Mozo.activo' => 1),
                 ));
-
+        $this->aplanar = true;
         $this->set('subtotal', $this->Mesa->getSubtotal());
         $this->set('total', $this->Mesa->getTotal());
         $this->set('estados', $this->Mesa->estados);
@@ -323,6 +294,9 @@ class MesasController extends AppController
 
     public function cobradas()
     {
+        if ($this->request->is('ajax')) {
+            $this->layout= 'jqm';
+        }
         $mesas = $this->Mesa->ultimasCobradas();
         $this->set('title_for_layout', 'Últimas Mesas Cobradas');
 
@@ -334,7 +308,7 @@ class MesasController extends AppController
             $newMes[$cont]['Comanda'] = $m['Comanda'];
             $newMes[$cont]['Descuento'] = $m['Descuento'];
             $cont++;
-        }
+        }        
         $this->set('mesas', $newMes);
     }
 
@@ -360,7 +334,6 @@ class MesasController extends AppController
 
     public function reabrir($id)
     {
-
         if ($this->Mesa->reabrir($id)) {
             $this->Session->setFlash('Se reabrió la mesa', true);
         } else {

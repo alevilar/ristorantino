@@ -1,4 +1,4 @@
-R$.ItemListadoMesasView = Backbone.View.extend({
+R$.View.ItemListadoMesas = Backbone.View.extend({
 
     tagName:  "li",
     

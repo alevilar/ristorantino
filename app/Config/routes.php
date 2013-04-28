@@ -52,4 +52,4 @@
        
         Router::parseExtensions('jqm');
 
-        Router::parseExtensions('json', 'jqm');
+        Router::parseExtensions('json');

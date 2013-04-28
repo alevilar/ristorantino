@@ -3,6 +3,13 @@
  * Paquete Risto
  */
 R$ = Risto = {
+    View: {},
+    Collection: {},
+    Model: {},
+    Router: {},
+    History: {},
+    modo: 'adicion', // puede ser 'cajero' o 'adicionista'
+    
     domInit: function(){
         $(function(){
             $.mobile.buttonMarkup.hoverDelay = 0;
@@ -17,6 +24,19 @@ R$ = Risto = {
                 defaultPageTransition: 'slide',
                 defaultDialogTransition: 'pop'
             });
+            
+            
+            R$.mesasCollection = new R$.Collection.Mesas;
+            R$.listadoMesasView = new R$.View.ListadoMesas;
+            var currentMesaView = new R$.View.Mesa();
+            R$.mesasCollection.on('select', function( mesa ) {
+                currentMesaView.setModel(mesa);
+            });
+            
+            R$.router = new R$.Router;
+            Backbone.history.start();
+            
+            
         });
         
     },

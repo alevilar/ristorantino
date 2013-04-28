@@ -23,7 +23,7 @@ if (empty($animar)) {
         $mozos_aplanado[] = $mz['Mozo'];
     }
     ?>
-    R$.mozos = <?php echo json_encode($mozos_aplanado);?>;        
+    R$.mozos = <?php echo json_encode($mozos_aplanado);?>;      
     R$.TITULO_MESA = "<?php echo Configure::read('Mesa.tituloMesa') ?>";
     R$.TITULO_MOZO = "<?php echo Configure::read('Mesa.tituloMozo') ?>";
         

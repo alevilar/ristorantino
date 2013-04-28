@@ -185,27 +185,16 @@ Inflector::rules('plural', array(
 
 
 
-/**
- * 
- * 
- * COQUS APP Bootstrap
- */
-define('DATETIME_NULL', '0000-00-00 00:00:00');
-
+/* TIENEN QUE SER LOS MISMOS ID´s QUE EN LA TABLA !!! */
 define('MESA_ABIERTA', 1);
 define('MESA_CERRADA', 2);
 define('MESA_COBRADA', 3);
 
 
+
 define('MENU_FOLDER', 'menu');
 define('IMG_MENU', WWW_ROOT . 'img/' . MENU_FOLDER . '/');
 
-
-$estadosMesaMsg = array(
-    MESA_ABIERTA => 'Abierta',
-    MESA_CERRADA => 'Cerrada',
-    MESA_COBRADA => 'Cobrada',
-);
 
 function comandosDeReinicializacionServidorImpresion($devName = null)
 {
@@ -315,11 +304,18 @@ function aplanar_mesa($mesa)
         $dto += $nm['Descuento']['porcentaje'];
     }
     $dtotxt = $dto?"$dto%":"";
+    $nm['estado_name'] = $nm['Estado']['name'];
     $nm['cliente_dto'] = $dtotxt;
     $nm['cliente_abr'] = $nm['cliente_tipofactura']." ".$nm['cliente_dto'];
-    $nm['time_abrio_abr'] = "Abrió: ".date('H:i', strtotime($nm['created']));
-    $nm['time_cerro_abr'] = empty($nm['time_cerro'])?"":"Cerró: ".date('H:i', strtotime($nm['time_cerro']));
-    $nm['time_cobro_abr'] = empty($nm['time_cobro'])?"":"Cobró: ".date('H:i', strtotime($nm['time_cobro']));
+    $nm['time_abrio_abr'] = "Abrió ".date('H:i', strtotime($nm['created']));
+    $nm['time_cerro_abr'] = empty($nm['time_cerro'])?"":"Cerró ".date('H:i', strtotime($nm['time_cerro']));
+    $nm['time_cobro_abr'] = empty($nm['time_cobro'])?"":"Cobró ".date('H:i', strtotime($nm['time_cobro']));
+    if (!empty($nm['_importe_descuento'])) {
+        $nm['importe_abr'] = 'Total $'.$nm['subtotal'].' - $'.$nm['importe_descuento'].' ='.$nm['total'];
+    } else {
+        $nm['importe_abr'] = 'Total $'.$nm['total'];
+    }
+    
     return $nm;
 }
 

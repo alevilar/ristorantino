@@ -6,6 +6,8 @@ echo $this->element('adicion_subpages/mesa_add');
 
 echo $this->element('adicion_subpages/mesa_view');
 
+echo $this->element('adicion_subpages/adicion_opciones');
+
 //echo $this->element('adicion_subpages/comanda_add_menu');
 //
 //echo $this->element('adicion_subpages/listado_mesas_cerradas');
@@ -17,5 +19,5 @@ echo $this->element('adicion_subpages/mesa_view');
 //echo $this->element('adicion_subpages/mesa_menu');
 //
 //echo $this->element('adicion_subpages/observaciones_producto');
-//echo $this->element('adicion_subpages/opciones_adicionista');
+
 //echo $this->element('adicion_subpages/opciones_cajero');

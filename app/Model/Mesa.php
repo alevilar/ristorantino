@@ -144,27 +144,10 @@ class Mesa extends AppModel
      * @var array
      */
     public $belongsTo = array(
-        'Mozo' => array(
-            'className' => 'Mozo',
-            'foreignKey' => 'mozo_id',
-            'conditions' => '',
-            'fields' => '',
-            'order' => ''
-        ),
-        'Cliente' => array(
-            'className' => 'Cliente',
-            'foreignKey' => 'cliente_id',
-            'conditions' => '',
-            'fields' => '',
-            'order' => ''
-        ),
-        'Descuento' => array(
-            'className' => 'Descuento',
-            'foreignKey' => 'descuento_id',
-            'conditions' => '',
-            'fields' => '',
-            'order' => ''
-        )
+        'Mozo',
+        'Cliente',
+        'Descuento',
+        'Estado',
     );
 
     /**
@@ -204,13 +187,6 @@ class Mesa extends AppModel
     
     
     public $order = array('Mesa.created' => 'desc');
-    
-    
-    public $estados = array(
-        MESA_ABIERTA => "Abierta",
-        MESA_CERRADA => "Cerrada",
-        MESA_COBRADA => "Cobrada",
-    );
     
     
     
@@ -254,21 +230,19 @@ class Mesa extends AppModel
         }
         
         if ( !$this->hasAny() ) return false;
-
+        $nowtime = date("Y-m-d H:i:s", strtotime('now'));
         $mesaData['Mesa'] = array(
             'id' => $this->id,
             'estado_id'  => MESA_CERRADA,
             'total'      => $this->getTotal(),
             'subtotal'   => $this->getSubtotal(),
-            'time_cerro' => date("Y-m-d H:i:s", strtotime('now')),
+            'time_cerro' => $nowtime,
         );
 
         // si no estoy usando cajero, entonces poner como que ya esta cerrada y cobrada
         if (!Configure::read('Adicion.usarCajero')) {
-            $mesaData['Mesa']['time_cobro'] = date("Y-m-d H:i:s", strtotime('now'));
+            $mesaData['Mesa']['time_cobro'] = $nowtime;
             $mesaData['Mesa']['estado_id'] = MESA_COBRADA;
-        } else {
-            $mesaData['Mesa']['time_cobro'] = DATETIME_NULL;
         }
 
         if ($this->save($mesaData, false)) {
@@ -878,6 +852,7 @@ LEFT JOIN mozos z ON z.id = m.mozo_id
                     'Mozo',
                     'Cliente' => 'Descuento',
                     'Descuento',
+                    'Estado',
                     'Comanda' => array(
                         'DetalleComanda' => array(
                             'Producto',
@@ -910,6 +885,12 @@ LEFT JOIN mozos z ON z.id = m.mozo_id
             } else {
                 // traigo a todas como que son creadas, si no fue pasado un lastAccess
                 $mesasABM = $this->find('all', $optionsCreated);
+            }
+            
+            foreach ($mesasABM as &$m) {
+                $tot = $this->calcular_totales($m['Mesa']['id']);
+                foreach($tot['Mesa'] as $k=>$v)
+                $m['Mesa'][$k] = $v;
             }
 
             return $mesasABM;

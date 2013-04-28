@@ -50,7 +50,7 @@
     ?>
     <span>{{Mozo.numero}}</span>
 
-    <span class="hora-abrio">Estado: <span>{{estado_id}}</span></span>
+    <span class="mesa-estado">{{estado_name}}</span>
 </script>
 
 <?php echo $this->Html->script('/adition/js/View/MesaView'); ?>
@@ -141,7 +141,7 @@
                 #<span class="mesa_id"></span>
             </span>
             <span class="mesa-total"></span>
-            <span class="hora-abrio">Abrió a las <span></span></span>
+            <span class="hora-abrio"></span>
         </h3>
     </footer>
 </div>

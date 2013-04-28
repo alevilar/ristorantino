@@ -5,21 +5,20 @@ body{
     color: #fcf0b5;
 }
 
-
-.mesa-actions a[estado='comanda-add-menu_mesa-cerrada'],
-.mesa-actions a[estado='mesa-cliente_mesa-cerrada'],
-.mesa-actions a[estado='mesa-cerrar_mesa-cerrada'],
-.mesa-actions a[estado='mesa-reabrir_mesa-abierta'],
-.mesa-actions a[estado='mesa-re-print_mesa-abierta'],
-.mesa-actions a[estado='mesa-cobrar_mesa-abierta'],
-.mesa-actions a[estado='comanda-add-menu_mesa-cobrada'],
-.mesa-actions a[estado='mesa-cliente_mesa-cobrada'],
-.mesa-actions a[estado='mesa-cerrar_mesa-cobrada'],
-.mesa-actions a[estado='mesa-cobrar_mesa-cobrada']
-{
+.estado_1 #btn-mesa-cobrar,
+.estado_1 #btn-mesa-reabrir,
+.estado_1 #btn-mesa-cobrar,
+.estado_1 #btn-mesa-cobrar,
+.estado_1 #btn-mesa-cobrar,
+.estado_1 #btn-mesa-cobrar{
     display: none;
 }
 
+
+.estado_2 #btn-mesa-comanda,
+.estado_2 #btn-mesa-cerrar{
+    display: none;
+}
 
 .header-right-positioned{
     position: absolute;
@@ -214,11 +213,14 @@ body{
     color: #FFF1A8;
     font-size: 152%;
 }
-.hora-abrio {
+header .mesa-estado {
     position: absolute;
     right: 20px;
 }
-
+footer .hora-abrio{
+    position: absolute;
+    right: 20px;
+}
 .sep {
     color: #666666;
     font-weight: normal;
