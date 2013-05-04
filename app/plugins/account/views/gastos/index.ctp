@@ -34,6 +34,16 @@
                     <h1><?php echo $gasto['TipoFactura']['name'].' #'.$gasto['Gasto']['factura_nro']; ?></h1>
                     <h2><?php echo $html->link($gasto['Proveedor']['name'], array('controller' => 'proveedores', 'action' => 'view', $gasto['Proveedor']['id']), array('data-rel' => 'dialog')); ?></h2>
                     
+                    
+                    <div style="position: absolute; right: 3px;">
+                    <?php 
+                    if (!empty($gasto['Gasto']['file']) ) {
+                        $iii = $html->image($gasto['Gasto']['file'], array('width'=>48, 'alt' => 'Bajar', 'escape' => false));
+                        echo $html->link($iii, "/" .IMAGES_URL .$gasto['Gasto']['file'], array('target'=>'_blank', 'escape' => false));
+                    }
+                    ?>
+                    </div>
+                    
                     <p>
                         Obs: <?php echo $gasto['Gasto']['observacion']; ?><br>
                         Clasificacion: <?php echo $gasto['Clasificacion']['name']; ?><br>

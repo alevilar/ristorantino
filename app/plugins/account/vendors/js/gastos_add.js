@@ -3,12 +3,11 @@
     
     
     function redondeo(valor){
-        return Math.round(valor*10000)/10000
+        return Math.round(valor*100)/100
     }
+     
     
-    
-    
-    function sumaNetos(){
+    function sumaNetos() {
         var $importes = jQuery('#GastoAddForm input.calc_impuesto, #GastoAddForm input.calc_neto');
         var total = 0;
         jQuery.each($importes, function (v){
@@ -16,6 +15,13 @@
         })
         return total;
     }
+    
+    console.info("ingreso acasa");
+    $('input','#GastoAddForm').bind('change', function(){
+        console.info("cambio esto");
+        $('#importes-sumados').text( redondeo (sumaNetos()) );
+    });
+    
     
     $('#GastoAddForm').bind('submit', function(){
         if  ( sumaNetos() != $('#importe-total').val() ) {
@@ -26,7 +32,7 @@
         
 
         
-    jQuery("#GastoAddForm input.calc_impuesto").click(function(e){
+    jQuery("input.calc_impuesto", "#GastoAddForm").click(function(e){
         if (!jQuery(this).val()) {
             var porcent = jQuery(this).attr('data-porcent');
             var valor;
@@ -40,7 +46,7 @@
     });
 
 
-    jQuery("#GastoAddForm input.calc_neto").click(function(e){   
+    jQuery("input.calc_neto", '#GastoAddForm').click(function(e){   
         var porcent = jQuery(this).attr('data-porcent');
         var valor;
 
@@ -55,7 +61,7 @@
     });
 
 
-    jQuery("#GastoAddForm input.calc_neto").change(function(e){
+    jQuery("input.calc_neto", '#GastoAddForm').change(function(e){
         var porcent = jQuery(this).attr('data-porcent');
         var valor = jQuery(this).val()*porcent/100;
         jQuery(this).parents('fieldset').find('input.calc_impuesto').val(redondeo(valor));

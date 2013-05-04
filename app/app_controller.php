@@ -38,7 +38,7 @@
  */
 class AppController extends Controller {
 	var $helpers = array('Html', 'Form','Javascript','Ajax');
-        var $components = array('Configurator', 'Acl', 'Session', 'Auth', 'RequestHandler');
+        var $components = array('Auth', 'Configurator', 'Session', 'Acl','RequestHandler');
 	
         
         /**
@@ -57,23 +57,14 @@ class AppController extends Controller {
             $this->Auth->loginError ='Usuario o Contraseña Incorrectos';
             $this->Auth->authError = 'Usted no tiene permisos para acceder a esta página.';
 
-$this->Auth->allow('*');return true;
-            $this->Auth->authorize = 'actions';
+                
+            $this->Auth->allow('*');
+            $this->Auth->allow('display');
+            $this->Auth->authorize = 'controller';
             //$this->Auth->loginAction = array('controller' => 'users', 'action' => 'login');
             $this->Auth->logoutRedirect='/users/login';
             //$this->Auth->autoRedirect = false;
 
-            //$this->Auth->allow(array('*'));return true;
-
-            // si es Ajax y no tengo permisos que me tire un error HTTP
-            // asi lo puedo capturar desde jQuery
-            if( $this->RequestHandler->isAjax() ){
-//                Configure::write('debug',1);
-                
-                if (!$this->Acl->check($this->Auth->user(), $this->action)){
-                    header('HTTP/1.1 401 Unauthorized');
-                }
-            }
             
 //            $currentPlugin = $this->plugin;
 //            $this->plugin = 'pluginA';
@@ -102,7 +93,9 @@ $this->Auth->allow('*');return true;
         }
 
    
-   
+        function isAuthorized() {
+            return true;
+        }
         
 }
 ?>

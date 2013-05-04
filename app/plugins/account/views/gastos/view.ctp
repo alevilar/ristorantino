@@ -18,6 +18,11 @@
 <p>Importe Total: <?php echo $number->currency($gasto['Gasto']['importe_total']) ?></p>
 <p>Importe Pagado: <?php echo $number->currency($gasto['Gasto']['importe_pagado']) ?></p>
 
+<?php
+$iii = $html->image($gasto['Gasto']['file'], array('width'=>348, 'alt' => 'Bajar', 'escape' => false));
+echo $html->link($iii, "/" .IMAGES_URL .$gasto['Gasto']['file'], array('target'=>'_blank', 'escape' => false));
+?>
+
 <p>
     <?php if (!empty($gasto['Proveedor']['name'])){ ?>
     Proveedor: <?php echo $gasto['Proveedor']['name']; ?><br>

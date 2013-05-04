@@ -21,6 +21,8 @@ function mostrarImpuestoDe($tipoImpuestoId, $vec)
 }
 
 echo $this->element('form_mini_year_month_search');
+
+//debug($gastos);
 ?>
 
 <h3>Detalle de Gastos</h3>

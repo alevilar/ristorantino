@@ -64,8 +64,7 @@ form .required{
 
 
 #tabla-de-gastos{
-    overflow: auto;
-    max-height: 240px;
+    overflow-x: auto;
     font-size: 12px;
 }
 

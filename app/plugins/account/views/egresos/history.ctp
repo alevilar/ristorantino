@@ -37,7 +37,13 @@ foreach ($egresos as $g){
         }
     ?></h3>
             <p>
-                <?php echo $html->link('ir a este egreso',array('action' => 'view', $g['Egreso']['id']))?>
+                <?php 
+                if (!empty($g['Egreso']['file'])) {
+                    $iii = $html->image($g['Egreso']['file'], array('width'=>48, 'alt' => 'Bajar', 'escape' => false));
+                    echo $html->link($iii, "/" .IMAGES_URL .$g['Egreso']['file'], array('target'=>'_blank', 'escape' => false));
+                }
+        
+                echo $html->link('  Ver en detalle este egreso',array('action' => 'view', $g['Egreso']['id']))?>
             </p>
             <div>
                 <ul data-role="listview">

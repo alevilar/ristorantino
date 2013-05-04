@@ -11,6 +11,7 @@ class Gasto extends AccountAppModel {
         var $validate = array(
 		'factura_nro' => array(
 			'no_repetido' => array(
+                                'on' => 'create',
 				'rule' => 'factura_no_repetida',
 				'required' => true,
 				'message' => 'Este número de factura ya esta cargada para este mismo proveedor'
@@ -100,10 +101,6 @@ class Gasto extends AccountAppModel {
                         $this->data['Gasto']['importe_neto'] += $imp['neto'];
                     }
                 }
-
-                $this->data['Gasto']['importe_neto'] = $sumaImpuestos + $this->data['Gasto']['importe_neto'];     
-            } else {
-                $this->data['Gasto']['importe_neto'] = $this->data['Gasto']['importe_total'];
             }
             return true;
         }

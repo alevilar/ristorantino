@@ -112,6 +112,27 @@ class GastosController extends AccountAppController
     {
         $this->pageTitle = 'Nuevo Gasto';
         if (!empty($this->data)) {
+            
+                
+            if (is_uploaded_file($this->data['Gasto']['file']['tmp_name']))
+            {
+                
+                $filename = $this->data['Gasto']['file']['name'];
+              
+                $i = 0;
+                while ( file_exists($filename) ) {
+                    $filename = basename($filename)."_$i.".end(explode('.', $filename));
+                    $i++;
+                }
+                     
+                move_uploaded_file(
+                    $this->data['Gasto']['file']['tmp_name'],
+                    IMAGES . $filename
+                );
+
+                // store the filename in the array to be saved to the db
+                $this->data['Gasto']['file'] = $filename;
+            }
 
             $this->Gasto->create();
             if ($this->Gasto->save($this->data)) {
@@ -145,6 +166,27 @@ class GastosController extends AccountAppController
         }
 
         if (!empty($this->data)) {
+            
+            if (is_uploaded_file($this->data['Gasto']['file']['tmp_name']))
+            {
+                
+                $filename = $this->data['Gasto']['file']['name'];
+              
+                $i = 0;
+                while ( file_exists($filename) ) {
+                    $filename = basename($filename)."_$i.".end(explode('.', $filename));
+                    $i++;
+                }
+                     
+                move_uploaded_file(
+                    $this->data['Gasto']['file']['tmp_name'],
+                    IMAGES . $filename
+                );
+
+                // store the filename in the array to be saved to the db
+                $this->data['Gasto']['file'] = $filename;
+            }
+            
             if ($this->Gasto->save($this->data)) {
                 $this->Session->setFlash(__('The Gasto has been saved', true));
 

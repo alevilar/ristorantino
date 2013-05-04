@@ -7,6 +7,7 @@ echo $form->input('observacion');
 $date = date('Y-m-d', strtotime('now'));
 echo $form->input('fecha', array('default' => $date, 'type'=>'date' ));
 echo $form->input('total', array('default'=>$suma_gastos));
+echo $form->input('file', array('type'=>'file', 'accept'=> "image/*"));
 
 
 

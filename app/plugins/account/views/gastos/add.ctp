@@ -1,6 +1,6 @@
 
 <div class="gastos form">
-    <?php echo $form->create('Gasto', array( 'data-ajax' => "false")); ?>
+    <?php echo $form->create('Gasto', array( 'data-ajax' => "false", 'type' => 'file' )); ?>
     <?php echo $form->hidden('pagar', array('value' => true)); ?>
     <div class="ui-grid-a">
 
@@ -12,6 +12,7 @@
             echo $form->input('proveedor_id', array('empty' => '- Seleccione -'));
             echo $form->input('tipo_factura_id');
             echo $form->input('factura_nro');
+            echo $form->input('file', array('type'=>'file', 'accept'=> "image/*"));
             ?>
         </div>
         <div class="ui-block-b">
@@ -65,6 +66,7 @@
                 ?>
                     
             </div>
+            <div id="importes-sumados"></div>
         </div>
     </div>
     

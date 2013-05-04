@@ -103,5 +103,11 @@ class JqmHelper extends AppHelper {
         
         return $this->Form->input($field, $ops);
     }
+    
+    
+    public function image($field, $ops = array() ){
+        
+        
+    }
         
 }
