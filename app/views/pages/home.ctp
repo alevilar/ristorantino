@@ -22,7 +22,7 @@
         </li>     
     
         <li>  
-        <?php echo $html->link('Contabilidad','/account',array('id'=>'bton-contabilidad'));?>
+        <?php echo $html->link('Contabilidad', array('controller'=>'account','action'=>'index','plugin'=>'account'),array('id'=>'bton-contabilidad'));?>
         </li>       
         
 </ul>

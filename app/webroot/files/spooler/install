@@ -13,17 +13,11 @@ if [ -z "$MY_PATH" ] ; then
   exit 1  # fail
 fi
 
-chmod 555 spooler
-chmod 555 hasar_spooler.sh
-chmod 555 spooler_srv
-chmod 555 printServer.py
-
 cp spooler /usr/bin
-cp hasar_spooler.sh /usr/bin
-cp spooler_srv /etc/init.d
-cp printServer.py /etc/init.d
-update-rc.d spooler_srv defaults
-update-rc.d printServer.py defaults
+cp printServer.py /usr/bin
+cp ristorantino.config /etc/init
 
+apt-get python-daemon
+service ristorantino start
 
-echo "LISTO! deberás reiniciar para que funcione"
+echo "LISTO! ahora debe configurar printServer.py para que use la impresora requerida"

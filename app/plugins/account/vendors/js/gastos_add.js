@@ -29,8 +29,12 @@
         }
         return true;
     });
+    
+    
+    $('.calc_neto, .calc_impuesto').bind('change', function(){
+        $('#account-total-sumado').html(sumaNetos());
+    });
         
-
         
     jQuery("input.calc_impuesto", "#GastoAddForm").click(function(e){
         if (!jQuery(this).val()) {
@@ -64,7 +68,10 @@
     jQuery("input.calc_neto", '#GastoAddForm').change(function(e){
         var porcent = jQuery(this).attr('data-porcent');
         var valor = jQuery(this).val()*porcent/100;
-        jQuery(this).parents('fieldset').find('input.calc_impuesto').val(redondeo(valor));
+        var $impuesto = jQuery(this).parents('fieldset').find('input.calc_impuesto');
+        if ( !$impuesto.val() ) {
+            jQuery(this).parents('fieldset').find('input.calc_impuesto').val(redondeo(valor));
+        }
     });
 
 

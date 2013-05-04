@@ -1,30 +1,19 @@
 
-
 ¿Que es cada archivo?
 
-el spooler es el archivhito que vino con la impresora hasar (se puede descargar desde la pagina web)
+ristorantino.conf es servicio Upstart de Ubuntu para correr el printServer
 
-el spooler_srv es un bash que hice yo para que se ejecute como un servicio mas. O sea, queme levante el spooler y lo deje ejecutandose todo el tiempo
-a su vez lo puedo invocar (start restart y stop como cualquier servicio si voy a /etyc/init.d/spooler_srv [startstoprestart]
+el printServer es el demonio que abre un puerto donde recibira los comandos que luego imprimirá usando el spooler
 
+spooler es el ejecutable de Hasar que realiza la impresión
 
 para que CUPS imprima rapido via sockets hay que settear lo siguiente (waiteof=false):
 socket://uri:port?waiteof=false
 
-
-
-
-
-Para instalar el servicio del spooler tengo que hacer lo siguiente:
-
-1) tener los archivitos en
-sudo chmod 755 /etc/init.d/spooler_srv
-sudo chmod 755 /etc/init.d/printServer
-sudo chmod 755 /usr/bin/spooler
-sudo chmod 755 /usr/bin/spooler_srv
-
-
-2) settearlo como servicio
-sudo /usr/sbin/update-rc.d -f spooler_srv defaults
-sudo /usr/sbin/update-rc.d -f printServer defaults
-
+Archivito UDEV: 99-usb-seial-rules
+Se pueden utilizar las udev rules para que la impresora fiscal tenga siempre el mismo 
+nombre en lugar de ir cambiando a ttyUSB0, ttyUSB1, etc
+Para ello es necesario leer el Serial. Y para leerlo hay que hacer:
+1) conectar el dispositivo USB
+2) ver el archivo dmesg: "tail /var/log/dmesg"
+3) leer de ahi el numero Serial y copiarlo en el archivo
