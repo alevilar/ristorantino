@@ -79,7 +79,7 @@
                 ?>
 
             </div>
-            <div style="color: red; text-align: center">Importes parciales sumados: $<b id="importes-sumados">0</b><div>
+            <div style="color: brown; text-align: center">Total de "Netos" e "Importes sumados": $<b id="importes-sumados"></b></div>
         </div>
     </div>
 

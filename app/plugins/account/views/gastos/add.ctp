@@ -65,9 +65,8 @@
                 <?php
                 }
                 ?>
-                <div style="color: brown">Total de "Netos" e "Importes sumados": $<span id="account-total-sumado">0</span></div>   
             </div>
-            <div id="importes-sumados"></div>
+            <div style="color: brown; text-align: center">Total de "Netos" e "Importes sumados": $<b id="importes-sumados"></b></div>
         </div>
     </div>
     

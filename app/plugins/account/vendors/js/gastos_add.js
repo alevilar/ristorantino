@@ -1,6 +1,4 @@
 (function() {
-    var $importes = jQuery(".importe");
-    
     
     function redondeo(valor){
         return Math.round(valor*100)/100
@@ -13,14 +11,15 @@
         jQuery.each($importes, function (v){
             total += Number(jQuery($importes[v]).val());
         })
-        return total;
+        return redondeo(total);
     }
     
-    console.info("ingreso acasa");
-    $('input','#GastoAddForm').bind('change', function(){
-        console.info("cambio esto");
-        $('#importes-sumados').text( redondeo (sumaNetos()) );
-    });
+    function modificarTotalesSumados(){
+        $('#importes-sumados').text( sumaNetos() );
+    }
+    
+    
+    $('input','#GastoAddForm').bind('keyup', modificarTotalesSumados);
     
     
     $('#GastoAddForm').bind('submit', function(){
@@ -29,16 +28,12 @@
         }
         return true;
     });
-    
-    
-    $('.calc_neto, .calc_impuesto').bind('change', function(){
-        $('#account-total-sumado').html(sumaNetos());
-    });
+       
         
         
-    jQuery("input.calc_impuesto", "#GastoAddForm").click(function(e){
-        if (!jQuery(this).val()) {
-            var porcent = jQuery(this).attr('data-porcent');
+    jQuery("input.calc_impuesto", "#GastoAddForm").bind('click', function(e){
+        var porcent = Number( jQuery(this).attr('data-porcent') );
+        if (porcent && !jQuery(this).val()) {
             var valor;
             if (porcent){
                 valor = jQuery( this.form.elements['data[Gasto][importe_total]'] ).val() / ((100/porcent)+1);
@@ -46,31 +41,32 @@
                     jQuery(this).val(redondeo(valor));
                 }
             }
+            modificarTotalesSumados();
         }
     });
 
-
-    jQuery("input.calc_neto", '#GastoAddForm').click(function(e){   
-        var porcent = jQuery(this).attr('data-porcent');
+    jQuery("input.calc_neto", '#GastoAddForm').bind('click', function(e){   
+        var porcent = Number( jQuery(this).attr('data-porcent') );
         var valor;
-
-        if (!jQuery(this).val()) {
+        if (porcent && !jQuery(this).val()) {
             if (porcent){
                 valor = jQuery( this.form.elements['data[Gasto][importe_total]'] ).val() / ((porcent/100)+1);
                 if (valor) {
                     jQuery(this).val(redondeo(valor));
                 }
             }
+            modificarTotalesSumados();
         }
     });
 
 
-    jQuery("input.calc_neto", '#GastoAddForm').change(function(e){
+    jQuery("input.calc_neto", '#GastoAddForm').bind('change', function(e){
         var porcent = jQuery(this).attr('data-porcent');
         var valor = jQuery(this).val()*porcent/100;
         var $impuesto = jQuery(this).parents('fieldset').find('input.calc_impuesto');
-        if ( !$impuesto.val() ) {
+        if ( porcent && !$impuesto.val() ) {
             jQuery(this).parents('fieldset').find('input.calc_impuesto').val(redondeo(valor));
+            modificarTotalesSumados();
         }
     });
 
@@ -84,5 +80,7 @@
         $(this.form.elements['data[Gasto][pagar]']).val(1);
         return $('#GastoAddForm').submit(); 
     });
+    
+    modificarTotalesSumados();
 
 })();

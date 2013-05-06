@@ -114,16 +114,15 @@ class GastosController extends AccountAppController
     {
         $this->pageTitle = 'Nuevo Gasto';
         if (!empty($this->data)) {
-            
                 
-            if (is_uploaded_file($this->data['Gasto']['file']['tmp_name']))
+            if ( is_uploaded_file($this->data['Gasto']['file']['tmp_name']) )
             {
                 
                 $filename = $this->data['Gasto']['file']['name'];
               
                 $i = 0;
-                while ( file_exists($filename) ) {
-                    $filename = basename($filename)."_$i.".end(explode('.', $filename));
+                while ( file_exists( IMAGES . $filename ) ) {
+                    $filename = "$i.".$filename;
                     $i++;
                 }
                      
@@ -134,9 +133,12 @@ class GastosController extends AccountAppController
 
                 // store the filename in the array to be saved to the db
                 $this->data['Gasto']['file'] = $filename;
+            } else {
+                unset($this->data['Gasto']['file']);
             }
 
             $this->Gasto->create();
+            
             if ($this->Gasto->save($this->data)) {
                 $this->Session->setFlash(__('The Gasto has been saved', true));
 
@@ -175,8 +177,8 @@ class GastosController extends AccountAppController
                 $filename = $this->data['Gasto']['file']['name'];
               
                 $i = 0;
-                while ( file_exists($filename) ) {
-                    $filename = basename($filename)."_$i.".end(explode('.', $filename));
+                while ( file_exists( IMAGES . $filename ) ) {
+                    $filename = "$i.".$filename;
                     $i++;
                 }
                      
@@ -187,6 +189,8 @@ class GastosController extends AccountAppController
 
                 // store the filename in the array to be saved to the db
                 $this->data['Gasto']['file'] = $filename;
+            } else {
+                unset($this->data['Gasto']['file']);
             }
             
             if ($this->Gasto->save($this->data)) {
