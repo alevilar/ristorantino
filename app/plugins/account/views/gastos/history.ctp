@@ -22,40 +22,41 @@ function mostrarImpuestoDe($tipoImpuestoId, $vec)
 
 echo $this->element('form_mini_year_month_search');
 
-//debug($gastos);
 ?>
 
 <h3>Detalle de Gastos</h3>
 
-<div id="tabla-de-gastos">
-    <table class="main">
+
+<div id="tabla-de-gastos">   
+    <table data-role="table" data-mode="columntoggle">
         <thead>
             <tr>
-                <th colspan="2">Clasificación</th>
-                <th>Fecha Alta</th>
-                <th>Fecha Factura</th>
-                <th>Proveedor</th>
-                <th>CUIT</th>
-                <th>Tipo Factura</th>
-                <th>N° Factura</th>
-                <th>Importe Neto</th>
+                <th colspan="2" rowspan="2">Clasificación</th>
+                <th rowspan="2" data-priority="4">Fecha Alta</th>
+                <th rowspan="2">Fecha Factura</th>
+                <th colspan="2" data-priority="3">Proveedor</th>
+                
+                <th rowspan="2">Tipo Factura</th>
+                <th rowspan="2" data-priority="2">N° Factura</th>
+                <th rowspan="2" data-priority="1">Importe Neto</th>
                 <?php
                 foreach ($tipo_impuestos as $ti) {
-                    echo "<th>
-                                    <table style='width: 100%;'>
-                                        <tr>$ti</tr>
-                                        <tr>
-                                            <td>Neto</td>
-                                            <td>Imp.</td>
-                                        </tr>
-                                    </table>
-                                  </th>";
+                    echo "<th colspan='2'  data-priority='5'>$ti</th>";
                 }
                 ?>
-                <th>Total</th>
-                <th>Falta pagar</th>
-                <th>Observación</th>
-                <th>Acciones</th>
+                <th class="total" rowspan="2">Total</th>
+                <th class="faltapagar" rowspan="2" data-priority="2">Falta pagar</th>
+                <th class="obs" rowspan="2" data-priority="3">Observación</th>
+                <th class="acciones" rowspan="2">Acciones</th>
+            </tr>
+            <tr>
+                <td>Nombre</td>
+                <td>CUIT</td>
+                <?php
+                foreach ($tipo_impuestos as $ti) {
+                    echo "<td>Neto</td><td>Imp.</td>";
+                }
+                ?>
             </tr>
         </thead>
 
@@ -63,7 +64,8 @@ echo $this->element('form_mini_year_month_search');
             <?php
             foreach ($gastos as $g) {
                 $classpagado = 'pagado';
-                if ($g['Gasto']['importe_pagado'] < $g['Gasto']['importe_total']) {
+                $faltaPagar = $g['Gasto']['importe_total'] - $g['Gasto']['importe_pagado'];
+                if ( $g['Gasto']['importe_pagado'] < $g['Gasto']['importe_total']) {
                     $classpagado = 'no-pagado';
                 }
 
@@ -78,50 +80,50 @@ echo $this->element('form_mini_year_month_search');
                     } else {
                         echo "<td>Sin Clasificar</td>";
                     }
-                    echo "<td class='fecha'>" . date('d-m-y', strtotime($g['Gasto']['created'])) . "</td>";
-                    echo "<td class='fecha'>" . date('d-m-y', strtotime($g['Gasto']['fecha'])) . "</td>";
-                    if (!empty($g['Clasificacion'])) {
-                        echo "<td>" . $g['Proveedor']['name'] . "</td>";
-                    }
+                    
+                    echo "<td class='fecha'>" . date('j M', strtotime($g['Gasto']['created'])) . "</td>";
+                    echo "<td class='fecha'>" . date('j M', strtotime($g['Gasto']['fecha'])) . "</td>";
+                    
+                    
                     if (!empty($g['Proveedor'])) {
-                        echo "<td>" . $g['Proveedor']['cuit'] . "</td>";
+                        echo "<td>". $g['Proveedor']['name'] ."</td>";
+                        echo "<td>". $g['Proveedor']['cuit'] ."</td>";
+                    } else {
+                        echo "<td>&nbsp;</td>";
+                        echo "<td>&nbsp;</td>";
                     }
+                    
                     if (!empty($g['TipoFactura'])) {
                         echo "<td>" . $g['TipoFactura']['name'] . "</td>";
+                    } else {
+                        echo "<td>&nbsp;</td>";
                     }
+                    
                     echo "<td>" . $g['Gasto']['factura_nro'] . "</td>";
-                    echo "<td>" . $number->currency($g['Gasto']['importe_neto']) . "</td>";
+                    echo "<td>" . $g['Gasto']['importe_neto'] . "</td>";
                     ?>
 
                     <?php
                     foreach ($tipo_impuestos as $tid => $ti) {
-                        ?>
-                        <td>
-                            <table style="width: 100%;">
-                                <tr>
-                                    <?php
-                                    if (!empty($g['Impuesto'])) {
-                                        echo "<td>" . $number->currency(mostrarNetoDe($tid, $g['Impuesto'])) . "</td>";
-                                    }
-                                    ?>
-
-                                    <?php
-                                    if (!empty($g['Impuesto'])) {
-                                        echo "<td>" . $number->currency(mostrarImpuestoDe($tid, $g['Impuesto'])) . "</td>";
-                                    }
-                                    ?>
-                                </tr>    
-                            </table>
-                        </td>
-                        <?php
+                        if (!empty($g['Impuesto'])) {
+                            echo "<td>" . mostrarNetoDe($tid, $g['Impuesto']) . "</td>";
+                        } else {
+                            echo "<td>&nbsp;</td>";
+                        }
+                        if (!empty($g['Impuesto'])) {
+                            echo "<td>" . mostrarImpuestoDe($tid, $g['Impuesto']) . "</td>";
+                        } else {
+                            echo "<td>&nbsp;</td>";
+                        }
                     }
-                    echo "<td>" . $number->currency($g['Gasto']['importe_total']) . "</td>";
-                    echo "<td>" . $number->currency($g['Gasto']['importe_total'] - $g['Gasto']['importe_pagado']) . "</td>";
-                    echo "<td>" . $g['Gasto']['observacion'] . "</td>";
-                    echo "<td>" . $html->link('Ver', array('action'=>'view',$g['Gasto']['id'])) . "<br>" .$html->link('Editar', array('action'=>'edit',$g['Gasto']['id']), array('data-ajax'=>'false')). "</td>";
+                    
+                    echo "<td class='total'>" . $g['Gasto']['importe_total'] . "</td>";
+                    
+                    echo "<td class='faltapagar'>$faltaPagar" .  "&nbsp;</td>";
+                    echo "<td class='obs'>" . $g['Gasto']['observacion'] . "&nbsp;</td>";
+                    echo "<td class='acciones'>" . $html->link('Ver', array('action'=>'view',$g['Gasto']['id'])) . "<br>" .$html->link('Editar', array('action'=>'edit',$g['Gasto']['id']), array('data-ajax'=>'false')). "</td>";
                 }
                 ?>
-
             </tr>
 
         </tbody>
