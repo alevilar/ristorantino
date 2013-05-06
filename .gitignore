@@ -1,3 +1,4 @@
 app/tmp
 vendors
 /nbproject/private/
+!/app/plugins/account/vendors/
