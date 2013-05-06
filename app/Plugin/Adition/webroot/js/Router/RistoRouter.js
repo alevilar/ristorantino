@@ -1,10 +1,12 @@
-    
 R$.Router = Backbone.Router.extend({
-
     routes: {
         "": "root",
         "listado-mesas": 'listadoMesas',
-        "mesa-view": "mesaView"
+        "mesa-view/:mesaId": "mesaView"
+    },
+    
+    cobradas: function(){
+        alert("cobradas");
     },
         
     root: function(){
@@ -13,7 +15,8 @@ R$.Router = Backbone.Router.extend({
     listadoMesas: function(){
     },
 
-    mesaView: function($mozo) {
+    mesaView: function(mesaId) {
+        console.info("en mesa view para "+ mesaId);        
     }
 
 });

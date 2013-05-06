@@ -12,6 +12,18 @@ R$.View.ItemListadoMesas = Backbone.View.extend({
         
         return "mesa estado_"+estado+" mozo_"+mozo;
     },
+       
+    $mozoContainer: null, // init on new mesa item view create
+    
+    jqmThemeByEstado: function(estadoId){
+        if (!estadoId) {
+            estadoId = this.model.get('estado_id')
+        }
+            
+        return 'ui-btn-up-'+R$._jqmThemeMap[estadoId];
+    },
+    
+    
     
     template: Handlebars.compile( $('#listaMesas').html() ),
     
@@ -28,16 +40,22 @@ R$.View.ItemListadoMesas = Backbone.View.extend({
         'remove destroy'    :   'remove',
         'add'               :   'sort'
     },
+    
+    changeContainer: function() {
+        this.$mozoContainer = $("#mesas_container_mozo_"+this.model.get('mozo_id'));
+        this.$mozoContainer.append( this.render().el );
+    },
 
     initialize: function() {
-        $("#mesas_container_mozo_"+this.model.get('mozo_id')).append( this.render().el );
+        this.changeContainer();
         for (var i in this.eventsMesa) {
             this.listenTo(this.model, i, this[this.eventsMesa[i]]);              
         }
+                        
     },
     
     select: function(e){
-        this.model.trigger('select', this.model);
+        R$.currentMesaView.setModel( this.model );
         return this;
     },
     
@@ -47,7 +65,7 @@ R$.View.ItemListadoMesas = Backbone.View.extend({
     },
     
     cambiarMozo: function(){
-        this.render();
+        this.changeContainer();
     },
     
     cambiarNumero: function(){
@@ -55,12 +73,20 @@ R$.View.ItemListadoMesas = Backbone.View.extend({
     },
     
     cambiarEstado: function(){
-        var estado = this.model.get('estado_id');
-        this.el.className = 'mesa estado_'+estado;
+        var $a = this.$('a');
+        var pEid = this.model.previous('estado_id');
+        if (pEid) {
+            $a.removeClass(this.jqmThemeByEstado(  ));
+        }
+        
+        $a.attr('data-theme', R$._jqmThemeMap[this.model.get('estado_id')]);
+        
+        $a.addClass(this.jqmThemeByEstado());
     },
     
-    render: function(e) {
+    render: function(e) {                
         this.$el.html( this.template(this.model.toJSON()) );
+        this.cambiarEstado();
         return this;
     }
 

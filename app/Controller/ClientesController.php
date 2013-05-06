@@ -115,39 +115,19 @@ class ClientesController extends AppController
         $this->redirect(array('action' => 'index'));
     }
 
-    function all_clientes($tipo = 'todos')
+    function all_clientes()
     {
         $this->pageTitle = 'Listado de Clientes';
-        $tipo = '';
-        $clientes = array();
-        $this->Cliente->recursive = 0;
-        switch ($tipo) {
-            case 'a':
-            case 'A':
-                $clientes = $this->Cliente->todosLosTipoA();
-                $tipo = 'a';
-                break;
-            case 'd':
-            case 'descuento':
-                if ($this->Session->read('Auth.User.role') == 'mozo') {
-                    $clientes = $this->Cliente->todosLosDeDescuentos('all', $filtrarHastaTopeMaxDeDescuento = true);
-                } else {
-                    $clientes = $this->Cliente->todosLosDeDescuentos('all', false);
-                }
-                $tipo = 'd';
-                break;
-            default:
-                $tipo = 'todos';
-
-                if ($this->Session->read('Auth.User.role') == 'mozo') {
-                    $clientes = $this->Cliente->todos('all', $filtrarHastaTopeMaxDeDescuento = true);
-                } else {
-                    $clientes = $this->Cliente->todos('all', false);
-                }
-
-                break;
+        $this->layout = 'jqm';
+        $conds = array();
+        if (!empty($this->data['Cliente']['buscar'])) {
+            $buscar = "%".$this->data['Cliente']['buscar']."%";
+            $conds['CONCAT(Cliente.codigo, Cliente.nombre, Cliente.nrodocumento) LIKE'] = $buscar;
         }
-        $this->set('tipo', $tipo);
+        $this->paginate['conditions'] = $conds;
+        $clientes = $this->paginate('Cliente');
+        $this->Cliente->recursive = 0;
+        
         $this->set('clientes', $clientes);
     }
 

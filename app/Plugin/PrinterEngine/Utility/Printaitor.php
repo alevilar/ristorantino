@@ -91,6 +91,15 @@ class Printaitor
     }
     
     
+    /**
+     * Fiscal close "X" (partial) or "Z" (daily close)
+     * @param char $type 
+     */
+    public static function  close($type = 'X') {
+        $type = strtoupper($string);
+    }
+    
+    
 /**
  * Perform printing to the output creating the view and using the $PrinterOutput object
  * 
@@ -177,7 +186,7 @@ class Printaitor
     }
 
     /**
-     *  If printer is receipt return true
+     *  If printer is for sending receipts (not fiscal) return true
      * 
      * @param string $printerName
      * @return boolean 

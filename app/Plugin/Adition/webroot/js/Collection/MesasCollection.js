@@ -19,6 +19,13 @@ R$.Collection.Mesas = Backbone.Collection.extend({
         return this.where({
             mozo_id: mozo_id
         });
+    },
+    
+    
+    findMesaById: function(mesaId){
+        return this.find(function(m){
+            return m.id == mesaId;
+        })
     }
     
 });

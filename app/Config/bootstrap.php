@@ -283,7 +283,11 @@ function convertir_para_busqueda_avanzada($text)
 
 function aplanar_mesa($mesa)
 {
-    $nm = $mesa['Mesa'];
+    if (!empty($mesa['Mesa'])){
+        $nm = $mesa['Mesa'];
+    } else {
+        $nm = $mesa;
+    }
     foreach ($mesa as $k=>$att) {
         if ( $k != 'Mesa') {
             $nm[$k] = $att;
@@ -303,6 +307,8 @@ function aplanar_mesa($mesa)
     if ( !empty($nm['Descuento']['porcentaje']) ) {
         $dto += $nm['Descuento']['porcentaje'];
     }
+    
+    
     $dtotxt = $dto?"$dto%":"";
     $nm['estado_name'] = $nm['Estado']['name'];
     $nm['cliente_dto'] = $dtotxt;

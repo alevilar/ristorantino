@@ -6,7 +6,7 @@ class MesasController extends AppController
 {
 
     public $helpers = array('Html', 'Form');
-    public $components = array('Printer', 'Search.Prg', 'RequestHandler');
+    public $components = array('Search.Prg', 'RequestHandler');
 
 
     /* @var $Printer PrinterComponent */
@@ -160,6 +160,8 @@ class MesasController extends AppController
 
         Printaitor::send($data, 'Fiscal', 'ticket');
         
+        $this->autoRender = false;
+        return "Ok";
     }
 
     public function add()
@@ -239,7 +241,7 @@ class MesasController extends AppController
                 )
             )
                 ));
-        $tot = $this->Mesa->calcular_totales($m['Mesa']['id']);
+        $tot = $this->Mesa->calcular_totales($this->Mesa->id);
         foreach($tot['Mesa'] as $k=>$v) {
             $mesa['Mesa'][$k] = $v;
         }
@@ -309,6 +311,7 @@ class MesasController extends AppController
             $newMes[$cont]['Descuento'] = $m['Descuento'];
             $cont++;
         }        
+        $this->aplanar = true;
         $this->set('mesas', $newMes);
     }
 

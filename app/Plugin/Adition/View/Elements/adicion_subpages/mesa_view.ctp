@@ -41,20 +41,7 @@
 </script>
 
 
-<!-- Template: Listado de productos del detalle Comanda -->
-<script id="tmp-mesa-header" type="text/x-handlebars-template">
-    <span class="numero">{{numero}}</span>
-    <?php
-    echo $this->Html->image('mesa-abrio.png') . " " . Configure::read('Mesa.tituloMesa') . " - " .
-    Configure::read('Mesa.tituloMozo') . " " . $this->Html->image('mozomoniob.png')
-    ?>
-    <span>{{Mozo.numero}}</span>
-
-    <span class="mesa-estado">{{estado_name}}</span>
-</script>
-
 <?php echo $this->Html->script('/adition/js/View/MesaView'); ?>
-<?php echo $this->Html->script('/adition/js/jqm_events/mesa_view'); ?>
 
 <?php $this->end(); ?>
 
@@ -63,7 +50,17 @@
 <div data-role="page" id="mesa-view">
     <header data-role="header">
         <a href="#" data-rel="back" data-direction="reverse">Volver</a>
-        <h1 class="header">Mesa</h1>
+        <h1 class="header">
+            <span class="mesa-numero"></span>
+            <?php
+            echo $this->Html->image('mesa-abrio.png') . " " . Configure::read('Mesa.tituloMesa') . " - " .
+            Configure::read('Mesa.tituloMozo') . " " . $this->Html->image('mozomoniob.png')
+            ?>
+            <span class="mozo-numero"></span>
+
+            <span class="mesa-estado">Abierta</span>
+
+        </h1>
     </header>
 
     <div  data-role="content" class="" data-scroll="true">
@@ -87,9 +84,14 @@
             </a>
 
 
-            <a id="btn-mesa-clientes" href="<?php echo $this->Html->url('/clientes/all_clientes.jqm') ?>" data-rel="dialog" data-role="button">
+            <a id="btn-mesa-clientes" href="<?php echo $this->Html->url('/clientes/all_clientes') ?>" data-rel="dialog" data-role="button">
                 <span>Cliente</span>
             </a>
+
+            <a id="btn-mesa-descuento" href="<?php echo $this->Html->url('/descuentos') ?>" data-rel="dialog" data-role="button">
+                <span>Descuento</span>
+            </a>
+
 
             <a id="btn-mesa-ticket" href="mesas/imprimirTicket" data-direction="reverse" data-role="button">
                 Imprimir Ticket
@@ -99,9 +101,7 @@
                 Borrar
             </a>
 
-            <a id="btn-mesa-descuento" href="<?php echo $this->Html->url('/descuentos/all_descuentos.jqm') ?>" data-rel="dialog" data-role="button">
-                <span>Descuento</span>
-            </a>
+
 
 
             <a id="btn-mesa-menu" href="#mesa-menu" data-rel="dialog" data-role="button">
@@ -112,7 +112,7 @@
                 Editar
             </a>
 
-            <a id="btn-mesa-mozo" href="#mesa-cambiar-mozo" data-rel="dialog" data-role="button">
+            <a id="btn-mesa-mozo" href="#mesa-cambiar-mozo" data-role="button">
                 <?php echo Configure::read('Mesa.tituloMozo') ?>
             </a>
 

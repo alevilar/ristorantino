@@ -40,6 +40,23 @@ class Mesa extends AppModel
     public $mozoNumero = 0;
     
     
+    public $defaultContain = array(
+                    'Mozo',
+                    'Cliente' => array(
+                        'Descuento',
+                        'TipoDocumento',
+                        'IvaResponsabilidad.TipoFactura',
+                        ),
+                    'Descuento',
+                    'Estado',
+                    'Comanda' => array(
+                        'DetalleComanda' => array(
+                            'Producto',
+                            'DetalleSabor.Sabor'),
+                    ),
+    );
+    
+    
     
     /**
  * Searchable Plugin
@@ -416,6 +433,7 @@ class Mesa extends AppModel
         $conditions = array("Mesa.estado_id >=" => MESA_COBRADA);
 
         $mesas = $this->find('all', array(
+            'contain' => $this->defaultContain,
             'conditions' => $conditions,
             'limit' => $limit,
             'order' => 'Mesa.time_cobro DESC',
@@ -524,8 +542,7 @@ class Mesa extends AppModel
 
     function dameProductosParaTicket($id = 0)
     {
-        if ($id != 0)
-            $this->id = $id;
+        $this->id = !empty($id) ? $id : $this->id;
 
 
         $items = $this->query("
@@ -575,7 +592,10 @@ class Mesa extends AppModel
     {
         $this->recursive = 0;
         $conditions = array('estado_id' => MESA_CERRADA);
-        return $this->find('all', array('conditions' => $conditions, 'order' => 'time_cerro'));
+        return $this->find('all', array(
+            'contain' => $this->defaultContain,
+            'conditions' => $conditions, 
+            'order' => 'time_cerro'));
     }
 
     /**
@@ -779,8 +799,8 @@ LEFT JOIN mozos z ON z.id = m.mozo_id
         // el array que serpa devuelto
         $mesaData = array();
         
-        if (empty($mesa_id)) {
-            $mesa_id = $this->id;
+        if ( !empty($mesa_id)) {
+            $this->id = $mesa_id;
         }
         
         $mesa = $this->find('first',array(
@@ -794,7 +814,7 @@ LEFT JOIN mozos z ON z.id = m.mozo_id
                     )
                 ),
             'condition' => array(
-                'Mesa.id' => $mesa_id
+                'Mesa.id' => $this->id
             )
         ));
         
@@ -848,17 +868,7 @@ LEFT JOIN mozos z ON z.id = m.mozo_id
             }
             
             $optionsEliminada = $optionsCobrada = $optionsUpdated = $optionsCreated = array(
-                'contain' => array(
-                    'Mozo',
-                    'Cliente' => 'Descuento',
-                    'Descuento',
-                    'Estado',
-                    'Comanda' => array(
-                        'DetalleComanda' => array(
-                            'Producto',
-                            'DetalleSabor.Sabor'),
-                    ),
-                ),
+                'contain' => $this->defaultContain,
                 'order' => 'Mesa.created asc',
                 'conditions'=> $conditions,
             );

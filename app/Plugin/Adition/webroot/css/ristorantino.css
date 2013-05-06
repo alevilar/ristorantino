@@ -9,7 +9,6 @@ body{
 .estado_1 #btn-mesa-reabrir,
 .estado_1 #btn-mesa-cobrar,
 .estado_1 #btn-mesa-cobrar,
-.estado_1 #btn-mesa-cobrar,
 .estado_1 #btn-mesa-cobrar{
     display: none;
 }
@@ -92,41 +91,6 @@ body{
 .listado-adicion li{
     display: inline-block;
     width: 10%;
-}
-
-
-
-#listado-mesas .content_mesas .mesa-cobrada A{
-    border: 1px solid 		#721E1E;
-    background: 			#B05D5D;
-    color: 					#fff;
-    font-weight: bold;
-    text-shadow: none !important;
-
-}
-
-#listado-mesas .content_mesas .mesa-cerrada A, #listado-mesas .content_mesas .estado_2 A{
-    border: 1px solid 		#996F45;
-    background: 			#B0875D;
-    color: 					#fff;
-    font-weight: bold;
-    text-shadow: none !important;
-
-}
-
-#listado-mesas .content_mesas .mesa-cerrada A:focus, #listado-mesas .content_mesas .mesa-cerrada A:active {
-    background:#FF9C56;
-    text-shadow: none !important;
-}
-
-#listado-mesas .content_mesas .mesa-abierta A:focus, #listado-mesas .content_mesas .mesa-abierta A:active{
-    color:#fff !important;
-    background:#4596ce;
-    font-weight:bold;
-    cursor:pointer;
-    text-shadow: none !important;
-    text-decoration:none;
-    outline:0
 }
 
 .mesa-numero, .mozo-numero{

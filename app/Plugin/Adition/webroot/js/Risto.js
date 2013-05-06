@@ -8,10 +8,21 @@ R$ = Risto = {
     Model: {},
     Router: {},
     History: {},
+    
+    _jqmThemeMap: {
+      "1": 'c', // mesas abiertas
+      "2": 'g', // mesas cerradas
+      "3": 'f'  // mesas cobradas
+    },
+    
     modo: 'adicion', // puede ser 'cajero' o 'adicionista'
     
     domInit: function(){
         $(function(){
+            Backbone.history.start();
+            
+            R$.router = new R$.Router;
+            
             $.mobile.buttonMarkup.hoverDelay = 0;
             // Prevents all anchor click handling
             //        $.mobile.linkBindingEnabled = false;
@@ -28,15 +39,7 @@ R$ = Risto = {
             
             R$.mesasCollection = new R$.Collection.Mesas;
             R$.listadoMesasView = new R$.View.ListadoMesas;
-            var currentMesaView = new R$.View.Mesa();
-            R$.mesasCollection.on('select', function( mesa ) {
-                currentMesaView.setModel(mesa);
-            });
-            
-            R$.router = new R$.Router;
-            Backbone.history.start();
-            
-            
+            R$.currentMesaView = new R$.View.Mesa();
         });
         
     },

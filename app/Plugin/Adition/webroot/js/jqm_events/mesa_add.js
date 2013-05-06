@@ -25,9 +25,9 @@
 
                     var miniMesa = R$.formToObject($formMesaAdd);
                     var mesa = R$.mesasCollection.create( miniMesa );
-                    mesa.trigger('select', mesa);
-                    $.mobile.changePage('#mesa-view');
-                    document.getElementById('form-mesa-add').reset(); // limpio el formulario
+                    R$.currentMesaView.setModel(mesa);
+                    $.mobile.changePage('#mesa-view?'+mesa.id);
+                    $formMesaAdd[0].reset(); // limpio el formulario
                     return false;
                 });
 

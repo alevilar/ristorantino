@@ -5,15 +5,21 @@
 
         <a href="#mesa-view" data-direction="reverse" data-role="button" data-inline="true">Volver</a>                       
 
-        <a href="#mesa-view" data-role="button" id="mesa-eliminar-cliente" data-inline="true" href="#mesa-view" data-theme="b" data-direction="reverse" data-bind="visible: adn().currentMesa().Cliente()}">
+        <a id="mesa-eliminar-cliente" href="#mesa-view" data-role="button" data-inline="true" data-theme="b" data-direction="reverse">
             Borrar</span>
         </a>
 
     </div>
 
+    <div>
+        <?php echo $this->Form->create('Cliente') ?>
+        <?php echo $this->Form->input('buscar') ?>
+        <?php echo $this->Form->end() ?>
+    </div>
+
     <div id="contenedor-listado-clientes-factura-a">
 
-        <ul data-role="listview"  data-filter="true" id="listado-clientes-factura-a-ajax">
+        <ul data-role="listview" id="listado-clientes">
             <li style="display: none" class="factura-a-cliente-add" data-theme="b">
                 <a href="<?php echo $this->Html->url('/clientes/addFacturaA') ?>" data-rel="dialog">Agregar Nuevo Cliente</a>
             </li>
@@ -24,7 +30,7 @@
                 $clienteName = !empty($c['Cliente']['nombre']) ? $c['Cliente']['nombre'] : '';
                 ?>
                 <li>&nbsp;
-                    <a href="#mesa-view" data-direction="reverse" onclick="Risto.Adition.adicionar.currentMesa().setCliente( <? echo "{id:" . $c['Cliente']['id'] . ", nombre: '" . $clienteName . "', tipofactura: '$tipofactura', porcentaje: $porcentaje}"; ?> )">
+                    <a href="#mesa-view" data-direction="reverse" data-cliente='<?php echo json_encode($c['Cliente']) ?>'>
                         <?php
                         if ($c['Cliente']['tipofactura']) {
                             echo '<span>"' . $c['Cliente']['tipofactura'] . '"&nbsp;</span>';
@@ -38,9 +44,36 @@
                         ?>
                     </a>                   
                 </li>
-<?php endforeach; ?>
+            <?php endforeach; ?>
         </ul>
 
     </div>
 
 </div>
+
+
+<script type="text/javascript">
+    (function(){
+        function cerrarTodo() {
+            $('#listado-clientes').off('click', 'a');
+            $('#mesa-eliminar-cliente').off('click');
+        }
+        
+        
+        $('#listado-clientes').on('click', 'a', function(){
+            cerrarTodo();
+            var c = JSON.parse( this.getAttribute('data-cliente') );
+            R$.currentMesaView.model.set('cliente_id', c.id);
+            R$.currentMesaView.model.set('Cliente', c);    
+            R$.currentMesaView.model.save();
+            
+        });
+    
+        $('#mesa-eliminar-cliente').on('click', function(){
+            cerrarTodo();
+            R$.currentMesaView.model.save({'cliente_id': null, 'Cliente': {}});
+        });
+    })();
+    
+    
+</script>

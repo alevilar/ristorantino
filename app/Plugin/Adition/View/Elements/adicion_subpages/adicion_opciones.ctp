@@ -10,7 +10,7 @@
     <div data-role="content">
 
         <div>
-            
+
             <label for="modo-cajero-adicionista">Seleccionar Modo <a href="#help-cajero" data-rel="popup">ayuda?</a></label>
             <select name="modo-cajero-adicionista" id="modo-cajero-adicionista" data-role="slider">
                 <option value="adicion">Adicion</option>
@@ -19,7 +19,7 @@
         </div>
         <div data-role="popup" id="help-cajero">
             <p>El modo cajero lo que hace es crear un atajo para los pagos de la mesa.<br>
-            Cuando se clickea la mesa cerrada, se va directamente a la pantalla de pagos.
+                Cuando se clickea la mesa cerrada, se va directamente a la pantalla de pagos.
             </p>
             En cambio, si se estuviese en modo adicionista, al clickear la mesa cerrada<br>
             se va a la pantalla de la mesa.<br>
@@ -34,6 +34,27 @@
         <a href="#" data-role="button" title="Actualizar Menú" onclick="Risto.Adition.menu.update()"><?php echo $this->Html->image('refresh.png', array('class' => 'btn-comanda-icon')) ?> Actualizar Menú</a>
 
 
+        <h3>Informes Fiscales</h3>
+        <div class="ui-grid-a">
+            <div class="ui-block-a"><a href="#listado-mesas-cerradas" data-role="button" data-href="<?php echo $this->Html->url('/adition/cashier/cierre_x'); ?>" data-direction="reverse">Imprimir informe "X"</a></div>
+            <div class="ui-block-b"><a href="#listado-mesas-cerradas" data-role="button" data-href="<?php echo $this->Html->url('/adition/cashier/cierre_z'); ?>" data-direction="reverse">Imprimir informe "Z"</a></div>
+        </div>
+        <a href="<?php echo $this->Html->url('/adition/cashier/nota_credito'); ?>" data-role="button">Nota de crédito</a>
+
+
+        <hr />
+        <h3>Impresoras</h3>
+        <div data-role="fieldcontain">
+            <label for="slider">Imprime Encuesta:</label>
+            <select name="slider" id="modo-k" data-role="slider">
+
+                <option value="0" <?php echo Configure::read('Mesa.imprimePrimeroRemito') ? '' : 'selected="selected"' ?>>No</option>
+                <option value="1" <?php echo Configure::read('Mesa.imprimePrimeroRemito') ? 'selected="selected"' : '' ?>>Si</option>
+            </select> 
+        </div>
+        <a href="#listado-mesas-cerradas" data-role="button" data-href="<?php echo $this->Html->url('/adition/cashier/vaciar_cola_impresion_fiscal'); ?>" class="silent-click" >Vaciar cola de impresión</a>
+
+        <hr />
 
         <div class="ui-grid-a">
             <div class="ui-block-a"><a href="#" data-rel="back" data-role="button">Cancelar</a></div>

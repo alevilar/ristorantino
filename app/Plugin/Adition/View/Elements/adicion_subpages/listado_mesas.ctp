@@ -3,10 +3,9 @@
 listado de mesas que será refrescado continuamente mediante 
 el ajax que verifica el estado de las mesas (si fue abierta o cerrada alguna. -->
 <script id="listaMesas" type="text/x-handlebars-template">
-        <a  href="#mesa-view?id={{id}}"
+        <a  href="#mesa-view?{{id}}"
             data-theme="c"
             data-role="button" 
-            href="#mesa-view"
             class="ui-btn ui-btn-up-c">
             <span class="mesa-span ui-btn-inner">
                 <span class="ui-btn-text">
@@ -50,7 +49,6 @@ el ajax que verifica el estado de las mesas (si fue abierta o cerrada alguna. --
                     ?>
                  <li  style="width: <?php echo $anchoCalculadoPorcentual . '%' ?>">
                     <a href="#mesa-add?mozo=<?php echo $k ?>" id="mesa-abrir-mesa-btn" class="btn-mozo ui-btn ui-btn-inline ui-btn-up-a" data-rel="dialog">
-<!--                    <a href="#mesa-add?mozo=<?php echo $k ?>"  data-corners="false" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-theme="a" data-inline="true">-->
                     <span class="ui-btn-inner">
                         <span class="ui-btn-text"><?php echo $n ?></span>
                     </span>

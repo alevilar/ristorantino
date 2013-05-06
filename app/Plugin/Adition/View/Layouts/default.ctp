@@ -34,7 +34,7 @@
 //                    'jquery-mobile/jquerymobile.coqus',
 //                    'jquery-mobile/jquery.mobile.actionsheet',
             '/adition/css/ristorantino',
-//                    '/adition/css/jquery-mobile-custom/jquery.mobile-custom',
+                    '/adition/css/jquery-mobile-custom/ristorantino',
 //                    'keyboard',
 //                    'alekeyboard',
         ));
