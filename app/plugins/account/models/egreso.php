@@ -7,12 +7,14 @@ class Egreso extends AccountAppModel {
         var $validate = array(
                 'total' => array(
 			'numeric' => array(
+                                'on' => 'create',
 				'rule' => 'numeric',
 				'allowEmpty' => false,
                                 'required' => true,
 				'message' => 'Debe ingresar un numero'
 			),
                         'gastos_pagos' => array(
+                            'on' => 'create',
                             'rule' => 'gastos_pagos',
                             'message' => 'Sus gastos ya estan pagos. No puede volver a pagarlos.',
                         ),

@@ -1,6 +1,10 @@
 <h3>Total adeudado que suman los gastos seleccionados: $<?php echo $suma_gastos?></h3>
     <?php    
-echo $form->create('Egreso', array('action'=>'save',  'data-ajax' => "false"));
+echo $form->create('Egreso', array('action'=>'save',  'data-ajax' => "false", 'type'=>'file'));
+
+if (!empty($this->data['Egreso']['id'])) {
+    echo $form->input('id');
+}
 
 echo $form->input('tipo_de_pago_id', array('options'=>$tipo_de_pagos));
 echo $form->input('observacion');

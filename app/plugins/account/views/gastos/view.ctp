@@ -1,6 +1,8 @@
-<?php $class = ($gasto['Gasto']['importe_pagado'] > $gasto['Gasto']['importe_total'])?'deuda':'pagado';?>
+<?php 
+$class = ($gasto['Gasto']['importe_pagado'] < $gasto['Gasto']['importe_total'])?'deuda':'pagado';
+?>
 <div class="imagen-pagado <?php echo $class ?>">
-<?php echo $html->image('pagado.png') ?>
+<?php echo ($class=='pagado')?$html->image('pagado.png'):"" ?>
 </div>
 
 <h1>Gasto #<?php echo $gasto['Gasto']['id']?></h1>
@@ -19,8 +21,10 @@
 <p>Importe Pagado: <?php echo $number->currency($gasto['Gasto']['importe_pagado']) ?></p>
 
 <?php
-$iii = $html->image($gasto['Gasto']['file'], array('width'=>348, 'alt' => 'Bajar', 'escape' => false));
-echo $html->link($iii, "/" .IMAGES_URL .$gasto['Gasto']['file'], array('target'=>'_blank', 'escape' => false));
+if (!empty($gasto['Gasto']['file'])) {
+    $iii = $html->image($gasto['Gasto']['file'], array('width'=>348, 'alt' => 'Bajar', 'escape' => false));
+    echo $html->link($iii, "/" .IMAGES_URL .$gasto['Gasto']['file'], array('target'=>'_blank', 'escape' => false));
+}
 ?>
 
 <p>

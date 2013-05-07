@@ -43,7 +43,9 @@ foreach ($egresos as $g){
                     echo $html->link($iii, "/" .IMAGES_URL .$g['Egreso']['file'], array('target'=>'_blank', 'escape' => false));
                 }
         
-                echo $html->link('  Ver en detalle este egreso',array('action' => 'view', $g['Egreso']['id']))?>
+                echo $html->link('  Ver en detalle este egreso',array('action' => 'view', $g['Egreso']['id']));
+                echo " - ";
+                echo $html->link('  Editar egreso',array('action' => 'edit', $g['Egreso']['id']))?>
             </p>
             <div>
                 <ul data-role="listview">

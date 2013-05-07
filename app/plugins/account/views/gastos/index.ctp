@@ -9,11 +9,6 @@
 </div>
 
     <br><br><br><br>
-    <?php
-    echo $javascript->link(array(
-        'account/gastos_index',
-    ));
-    ?>
 
     <div class="gastos index">
 
@@ -69,11 +64,21 @@
                             'label' => 'Seleccionar Gasto'
                         ));
                         ?>
-                         <?php echo $html->link(__('Edit', true), array(
+                         <?php echo $html->link(__('Ver', true), array(
+                             'action' => 'view', $gasto['Gasto']['id']),
+                                 array(
+                                     'data-ajax' => 'false',
+                                 ));
+                         
+                                 echo " - ";
+                         
+                               echo $html->link(__('Editar', true), array(
                              'action' => 'edit', $gasto['Gasto']['id']),
                                  array(
                                      'data-ajax' => 'false',
-                                 )); ?>
+                                 ));
+                         
+                         ?>
                           
                     </p>
                     </div>
