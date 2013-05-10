@@ -49,6 +49,7 @@ R$.View.Mesa = Backbone.View.extend({
         }
         this.render();
     },
+    
 
     eliminarMesa: function(){
         this.model.destroy();

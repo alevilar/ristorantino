@@ -17,23 +17,28 @@ if (empty($animar)) {
         $.extend(  $.mobile , jqmOps);
     })();
     
-    <?php 
-    $mozos_aplanados = array();
-    foreach ($mozos as $mz){
-        $mozos_aplanado[] = $mz['Mozo'];
-    }
-    ?>
-    R$.mozos = <?php echo json_encode($mozos_aplanado);?>;      
-    R$.TITULO_MESA = "<?php echo Configure::read('Mesa.tituloMesa') ?>";
-    R$.TITULO_MOZO = "<?php echo Configure::read('Mesa.tituloMozo') ?>";
+<?php
+if (!empty($mozos)) {
+$mozos_aplanados = array();
+foreach ($mozos as $mz) {
+    $mozos_aplanado[] = $mz['Mozo'];
+}
+?>
+    
+
+                R$.mozos = <?php echo json_encode($mozos_aplanado); ?>;      
+<?php } ?>
+    
+        R$.TITULO_MESA = "<?php echo Configure::read('Mesa.tituloMesa') ?>";
+        R$.TITULO_MOZO = "<?php echo Configure::read('Mesa.tituloMozo') ?>";
         
         
-    // intervalo en milisegundos en el que seran renovadas las mesas
-    R$.MESAS_RELOAD_INTERVAL = <?php echo Configure::read('Adicion.reload_interval') ?>;
-    R$.MESAS_COBRADA_HIDE_MS = <?php echo Configure::read('Adicion.cobrada_hide_ms') ?>;
-    //        R$.MESA_RELOAD_TIMEOUT = <?php echo Configure::read('Adicion.reload_interval_timeout') ?>;
+        // intervalo en milisegundos en el que seran renovadas las mesas
+        R$.MESAS_RELOAD_INTERVAL = <?php echo Configure::read('Adicion.reload_interval') ?>;
+        R$.MESAS_COBRADA_HIDE_MS = <?php echo Configure::read('Adicion.cobrada_hide_ms') ?>;
+        //        R$.MESA_RELOAD_TIMEOUT = <?php echo Configure::read('Adicion.reload_interval_timeout') ?>;
         
-    R$.VALOR_POR_CUBIERTO = <?php
+        R$.VALOR_POR_CUBIERTO = <?php
 $valorCubierto = Configure::read('Restaurante.valorCubierto');
 echo $valorCubierto > 0 ? $valorCubierto : 0;
 ?>;

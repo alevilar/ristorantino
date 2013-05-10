@@ -2,19 +2,22 @@
     <div id="detalle_producto_<?php echo $p['Producto']['id'] ?>" class="producto" style="display: none">
         <h2><?php echo $p['Producto']['name']; ?></h2>
 
-        <form id="form-prod-<?php echo $p['Producto']['id'] ?>" data-ajax="false">
+        <form data-ajax="false">
             <label for="cantidad">Cantidad:</label>
-            <input type="number" value="1" name="cantidad" />
+            <input type="number" value="0" name="cantidad" />
 
+            <br>
             <label for="observacion">Observación:</label>
             <textarea name="observacion" placeholder="Ingrese una observación..."></textarea>
 
+            <br>
             <label for="es_entrada">Es Entrada:</label>
             <select name="es_entrada" data-role="slider">
                 <option value="0">No</option>
                 <option value="1">Si</option>
             </select> 
 
+            <br>
             <div>    
                 <?php
                 foreach ($p['GrupoSabor'] as $gs) {
@@ -50,7 +53,8 @@
                 ?>
             </div>
 
-            <input type="submit" value="Guardar" />
+            <input type="button" value="Cancelar Pedido" />
+            <input type="button" value="Agregar Pedido Diferente" />
 
         </form>
     </div>

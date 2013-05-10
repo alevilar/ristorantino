@@ -20,7 +20,7 @@ function mostrarProductos($cats, $productosRoot = array())
 
     foreach ($cats as $c) {
         ?>
-        <ul id="listado_productos_categoria_<?php echo $c['id'] ?>" style="display: none;">
+        <ul id="listado_productos_categoria_<?php echo $c['Categoria']['id'] ?>" style="display: none;">
             <?php
             foreach ($c['Producto'] as $p) {
                 ?>
@@ -37,4 +37,4 @@ function mostrarProductos($cats, $productosRoot = array())
     <?php
 }
 
-mostrarProductos($categorias['Hijos'], $productos);
+mostrarProductos($categorias, $productos);

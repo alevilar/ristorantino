@@ -67,7 +67,7 @@
 
         <div class="mesa-actions">
 
-            <a id="btn-mesa-comanda" href="#comanda-add-menu" data-role="button">
+            <a id="btn-mesa-comanda" href="#comanda-add" data-role="button">
                 Comanda
             </a>
 

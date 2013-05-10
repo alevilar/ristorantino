@@ -140,12 +140,13 @@ class Producto extends AppModel {
     }
     
     
-    function listadoCompleto(){
+    function listadoCompleto($limit = null){
         $conditions = array(
             'contain' => array(
                 'GrupoSabor' => array('Sabor'),
                 'Categoria',
             ),
+            'limit' => $limit,
         );
         return $this->find('all',$conditions);
     }

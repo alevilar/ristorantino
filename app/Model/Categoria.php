@@ -1,5 +1,15 @@
 <?php
 
+$GLOBALS['papa'] = 0;
+
+App::uses('AppModel', 'Model');
+
+/**
+ * Categoria Model
+ *
+ * @property Producto $Producto
+ * @property Sabor $Sabor
+ */
 class Categoria extends AppModel
 {
 
@@ -27,46 +37,36 @@ class Categoria extends AppModel
             'conditions' => array('Sabor.deleted' => 0)
             ));
 
+    
     /**
      * Me devuelve un array lindo con sub arrays para cada subarbol
      * 
-     * @param $categoria_id de donde yovoy a leer los hijos
+     * @param $parent_cat_id de donde yovoy a leer los hijos
      * @return unknown_type
      */
-    function array_listado($categoria_id = 1)
+    public function array_listado($parent_cat_id = null)
     {
-        $array_categoria = array();
-        $array_final = array();
-
-        $this->recursive = 1;
-        $this->contain(array(
-            'Producto', 
-            'Sabor',
-        ));
-        $array_categoria = $this->find('first', array(
-            'conditions' => array(
-                'Categoria.id' => $categoria_id,
-                'Categoria.deleted' => 0,
-            )
-        ));
-//                debug($array_categoria );die;
-        $array_final = $array_categoria['Categoria'];
-        $array_final['Producto'] = $array_categoria['Producto'];
-        $array_final['Sabor'] = $array_categoria['Sabor'];
-        //agarro los herederos del ROOT
-        $resultado = $this->children($categoria_id, 1);
-
-        foreach ($resultado as $r):
-            $hijos = $this->array_listado($r['Categoria']['id']);
-            if (count($hijos) > 0) {
-                $array_final['Hijos'][] = $hijos;
-            }
-        endforeach;
-
-        if ($array_final == false) {
-            $array_final = array();
+        $conditions = array( 'Categoria.deleted' => 0 );
+        if (empty($parent_cat_id)) {
+            // categorias root
+            $conditions[] = 'Categoria.parent_id IS NULL';
+        } else {
+            $conditions['Categoria.parent_id'] = $parent_cat_id;
         }
-        return $array_final;
+        
+        $categorias = $this->find('all', array(
+                'conditions' => $conditions,
+                'contain' => array(
+                    'Producto',
+                    'Sabor',
+                )
+            ));
+        foreach ($categorias as &$c) {
+            $c['Hijos'] = $this->array_listado($c['Categoria']['id']);
+        }
+        
+        
+        return $categorias;
     }
 
 }
