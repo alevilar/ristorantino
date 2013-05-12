@@ -43,7 +43,7 @@ PRIMARY KEY (`id`)
 DROP TABLE IF EXISTS `account_gastos`;
 CREATE TABLE `account_gastos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `closed` TINYINT NOT NULL DEFAULT  '0',
+  `cierre_id` INT NULL,
   `proveedor_id` int(11) DEFAULT NULL,
   `clasificacion_id` INT DEFAULT NULL,
   `tipo_factura_id` int(11) DEFAULT NULL,

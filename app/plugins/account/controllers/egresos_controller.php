@@ -23,7 +23,7 @@ class EgresosController extends AccountAppController
         unset($url['ext']);
         unset($url['url']);
 
-
+        
         if (!empty($url['mes'])) {
             $conditions['MONTH(Egreso.fecha)'] = $url['mes'];
             $this->data['Egreso']['mes'] = $url['mes'];

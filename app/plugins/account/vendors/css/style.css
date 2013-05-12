@@ -80,19 +80,15 @@ form .required{
     font-size: 10px;
 }
 
-#tabla-de-gastos td.open{
-    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAABCElEQVR4Xt2Vj8mDMBDFPXEAR3CEgg4QJ2izQUfoBuoIncRvhAygkBE6Qjewd3DScGCE8w/le/DgkRz+jHdESAKVZVlgaNAGTZn0Qjv0cxxHnygFAaRlSEwdwloNKGXIgyFraqhWBUJILiAebfHNgUwZ7QWs0Jzojs6DftQI+JupnGveS7j2pgFdZyo3/C2LeO0ZLF01IBOAnIQs7BkF6Cs5vrE9BegcZTHANE0SABoIACyDaOyrqupFPzRy+CybDcMAks7aBBGD06fRgv1kMjrBGUrRPw/yaMv2R4I6ugfJlP/Fp2tEPgx0EfnYqeMf56qyjZBWf6nq+/T7U+d25LgYyO4Ec2j7AT7xTzg/7KK7AAAAAElFTkSuQmCC);
-    background-position: center left;
-    background-repeat: no-repeat;
-    background-size:contain;
+#tabla-de-gastos td.open{    
     padding: 6px;
 }
 
 #tabla-de-gastos td.closed{
-    
-    background-position: center left;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAABCklEQVR4Xt2VgQmDMBBFjXQAR8gIBR0gnaDNBh2hG2hHcBI7QhaQZoN2hG5g7+AEOWLKSRRp4MPn7sLTSzzVMAxZaCmlgvGyLDWYGmRAmsJvkAO1fd/70L48EyyANGBeoOsIIWmKPbFGCuKQG73Jr1VjrRhEkIJBPMhCmxQKPcYYTItB1JZich4nADzGJPkT5TKqvSwBnUdDB/7hBRRr2R4xyEy848mZnJGC+JN7eY5AW+gQS04+ZiUABGtnJ0NVVQWYjvV6iRzIRlonhMQvUpdHC9Its9ll2C+IzzuSXxN0xxmHQv8XrauZXw10ZD49iP8U5bNODmlEQzXROe3/1rmEHBcD2UQwB7JfDCxRcK9cLQYAAAAASUVORK5CYII=);
+    background-position: center center;
     background-repeat: no-repeat;
-    background-size:contain;
+    background-size: 12px 12px;
     padding: 6px;
 }
 

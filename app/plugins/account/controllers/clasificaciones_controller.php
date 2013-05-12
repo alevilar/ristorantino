@@ -50,9 +50,16 @@ class ClasificacionesController extends AccountAppController
         unset($url['ext']);
         unset($url['url']);
 
-        if (!empty($url['closed'])) {
-            $conditions['Gasto.closed'] = $url['closed'] - 1;
-            $this->data['Gasto']['closed'] = $url['closed'];
+        if ( isset($url['cierre_id']) && $url['cierre_id'] != null ) {
+                if ( $url['cierre_id'] == 1) {
+                    // Abiertas
+                    $conditions[] = 'Gasto.cierre_id IS NULL';
+                    $this->data['Gasto']['cierre_id'] = $url['cierre_id'];
+                } else {               
+                    //cerradas
+                    $conditions[] = 'Gasto.cierre_id IS NOT NULL';
+                    $this->data['Gasto']['cierre_id'] = $url['cierre_id'];
+                }
         }
 
         if (!empty($url['mes'])) {

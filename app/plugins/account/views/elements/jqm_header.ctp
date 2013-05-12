@@ -8,6 +8,7 @@
                     <li><?php echo $html->link(__('Listado de Gastos', true), array('controller'=>'gastos', 'action' => 'history')); ?></li>
                     <li><?php echo $html->link(__('Clasificación de Gastos', true), array('controller'=>'clasificaciones', 'action' => 'gastos')); ?></li>
                     <li><?php echo $html->link(__('Historico de Pagos', true), array('controller'=>'egresos','action' => 'history')); ?></li>
+                    <li><?php echo $html->link(__('Cierres', true), array('controller'=>'cierres', 'action' => 'index')); ?></li>
                 </ul>
 	</div><!-- /navbar -->
         

@@ -15,7 +15,7 @@ class GastosController extends AccountAppController
     function index()
     {
         $conds = array(
-            'Gasto.closed' => 0,
+            'Gasto.cierre_id IS NULL'
         );
         if (!empty($this->data['Gasto']['proveedor_id'])){
             $conds['Gasto.proveedor_id'] = $this->data['Gasto']['proveedor_id'];
@@ -38,9 +38,16 @@ class GastosController extends AccountAppController
         unset($url['ext']);
         unset($url['url']);
 
-         if (!empty($url['closed'])) {
-            $conditions['Gasto.closed'] = $url['closed']-1;
-            $this->data['Gasto']['closed'] = $url['closed'];
+        if ( isset($url['cierre_id']) && $url['cierre_id'] != null ) {
+                if ( $url['cierre_id'] == 1) {
+                    // Abiertas
+                    $conditions[] = 'Gasto.cierre_id IS NULL';
+                    $this->data['Gasto']['cierre_id'] = $url['cierre_id'];
+                } else {               
+                    //cerradas
+                    $conditions[] = 'Gasto.cierre_id IS NOT NULL';
+                    $this->data['Gasto']['cierre_id'] = $url['cierre_id'];
+                }
         }
 
         if (!empty($url['mes'])) {
@@ -208,7 +215,7 @@ class GastosController extends AccountAppController
 
         if (empty($this->data)) {
             $this->data = $this->Gasto->read(null, $id);
-            if ($this->data['Gasto']['closed']) {
+            if ($this->data['Gasto']['cierre_id']) {
                 $this->Session->setFlash('El gasto ya está "Cerrado", no puede ser modificado');
                 $this->redirect(array('action'=>'view', $id));
             }

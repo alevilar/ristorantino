@@ -13,7 +13,7 @@ echo $form->create($modelName, array(
 <div class="ui-grid-b">
     <div class="ui-block-a">
         <?php
-        echo $form->input('closed', array(
+        echo $form->input('cierre_id', array(
             'label' => 'Estado',
             'options' => array(
                 1 => 'Abierto',

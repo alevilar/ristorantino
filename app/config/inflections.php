@@ -53,6 +53,7 @@
 //      $irregularPlural = array();
         $irregularPlural = array(//'query'=> 'queries',
         					'user' => 'users',
+                                                'cierre' => 'cierres',
         					'group'=>'groups', 
         					'adicion'=>'adicion', 
         					'cajero'=>'cajero', 
