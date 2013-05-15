@@ -3,6 +3,8 @@
         <h2><?php echo $p['Producto']['name']; ?></h2>
 
         <form data-ajax="false">
+            <input type="hidden" name="producto_id" value="<?php echo $p['Producto']['id']?>" />
+            
             <label for="cantidad">Cantidad:</label>
             <input type="number" value="0" name="cantidad" />
 
@@ -53,8 +55,8 @@
                 ?>
             </div>
 
-            <input type="button" value="Cancelar Pedido" />
-            <input type="button" value="Agregar Pedido Diferente" />
+            <input type="button" value="Cancelar Pedido" class="cancelar-pedido"/>
+            <input type="button" value="Agregar Pedido Diferente" class="duplicar-pedido"/>
 
         </form>
     </div>

@@ -15,6 +15,7 @@ echo $this->element('adicion_subpages/mesa_cambiar_mozo');
 //echo $this->requestAction('/adition/creacion_comandas/add', array('return'));
 
 echo $this->element('adicion_subpages/comanda_add');
+echo $this->element('adicion_subpages/comanda_add_confirmacion');
 
 //
 //

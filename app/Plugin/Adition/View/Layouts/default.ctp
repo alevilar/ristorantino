@@ -59,9 +59,12 @@
             'underscore',
             'backbone',
             '/adition/js/Risto',
+            '/adition/js/Model/AppModel',
             '/adition/js/Model/MesaModel',
             '/adition/js/Collection/MesasCollection',
             '/jquery/jquery.mobile/1.3.1/jquery.mobile-1.3.1',
+            
+             
 //                       'alekeyboard',
         ));
         
@@ -73,6 +76,7 @@
          echo $this->fetch('jquery-tmpl'); 
          
          echo $this->Html->script(array(
+             
              '/adition/js/Router/RistoRouter',
          ));
          

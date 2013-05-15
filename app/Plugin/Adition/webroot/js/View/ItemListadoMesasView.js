@@ -55,7 +55,7 @@ R$.View.ItemListadoMesas = Backbone.View.extend({
     },
     
     select: function(e){
-        R$.currentMesaView.setModel( this.model );
+        R$.app.set('mesa', this.model );
         return this;
     },
     

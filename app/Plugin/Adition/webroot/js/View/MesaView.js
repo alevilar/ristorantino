@@ -1,6 +1,6 @@
 R$.View.Mesa = Backbone.View.extend({
 
-    el: $("#mesa-view"),
+    el: document.getElementById("mesa-view"),
     
     
     estadoClass: 'estado_1', // por default la mesa esta abierta
@@ -33,11 +33,16 @@ R$.View.Mesa = Backbone.View.extend({
         'change:cant_comensales'    :   'renderCubiertos'
     },
     
+    
+    initialize: function(){
+        R$.app.on('change:mesa', this.setModel, this);
+    },
+    
     tmp_loader: Handlebars.compile( $('#mesaLoader').html() ),
     
   
 
-    setModel: function( newModel ){
+    setModel: function( app, newModel ){
         if (this.model) {
             for ( var i in this.eventModel ) {
                 this.stopListening(this.model, i, this[this.eventModel[i]]);  

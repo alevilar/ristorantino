@@ -11,12 +11,7 @@ R$.Router = Backbone.Router.extend({
     
     
     comandaAdd: function() {        
-        if ( !R$.comandaAddView ) {
-            // if not exist, create new instance    
-            R$.comandaAddView = new R$.View.ComandaAddView({model: R$.currentMesaView.model});
-        } else {
-            R$.comandaAddView.setModel(R$.currentMesaView.model);
-        }
+       
     },
     
         
