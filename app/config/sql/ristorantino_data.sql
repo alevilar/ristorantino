@@ -7,6 +7,12 @@
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6-1+lenny16
 
+DROP DATABASE IF EXISTS coqus;
+CREATE DATABASE coqus;
+USE coqus;
+
+
+
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 
@@ -670,8 +676,8 @@ CREATE TABLE IF NOT EXISTS `categorias` (
 --
 
 INSERT INTO `categorias` (`id`, `parent_id`, `lft`, `rght`, `name`, `description`, `image_url`, `created`, `modified`, `deleted_date`, `deleted`) VALUES
-(1, NULL, 1, 2, '/', '', '', '2012-11-28 22:57:10', '2012-11-28 22:57:10', NULL, 0);
-
+(1, NULL, 1, 4, '/', '', '', '2012-11-28 22:57:10', '2012-11-28 22:57:10', NULL, 0),
+(2, 1, 2, 3, 'Guarnicion', '', 'french_fries_icon.png', '2013-05-17 13:49:56', '2013-05-17 13:46:57', NULL, 0);
 -- --------------------------------------------------------
 
 --
@@ -698,6 +704,9 @@ CREATE TABLE IF NOT EXISTS `clientes` (
   `modified` timestamp NULL default NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=1 ;
+
+INSERT INTO `clientes` (`id`, `user_id`, `codigo`, `mail`, `telefono`, `descuento_id`, `tipofactura`, `imprime_ticket`, `nombre`, `nrodocumento`, `tipodocumento`, `tipo_documento_id`, `domicilio`, `responsabilidad_iva`, `iva_responsabilidad_id`, `created`, `modified`) VALUES
+(1, NULL, NULL, NULL, NULL, 0, 'A', 1, 'Google Arg. SRL', '33709585229', NULL, 1, NULL, NULL, 1, '2013-05-17 13:52:17', '2013-05-17 13:52:17');
 
 --
 -- Volcar la base de datos para la tabla `clientes`
@@ -804,7 +813,7 @@ INSERT INTO `configs` (`id`, `config_category_id`, `key`, `value`, `description`
 (12, 3, 'tempFuente', '/tmp/fuente', '', NULL, NULL),
 (13, 3, 'tempDest', '/tmp/dest', '', NULL, NULL),
 (14, 3, 'TempImpfiscal', '/tmp/impfiscal', '', NULL, NULL),
-(15, 5, 'debug', '1', '', NULL, '2012-11-28 22:22:06'),
+(15, 5, 'debug', '0', '', NULL, '2012-11-28 22:22:06'),
 (16, 6, 'descuento_maximo', '15', 'máximo porcentaje de descuento que puede hacer un mozo', NULL, NULL),
 (17, 7, 'corte_del_dia', '6', 'Es el horario en el que se va a tomar como corte del dia. Funcionara para el arqueo de caja, recuento de mesas. Por ejemplo, si se dice que el corte del dia es a las 6, quiere decir que, lo que vendi hasta las 6AM pertenecen al dia anterior. O sea, si es sabado y pasan las 12 am, hasta las 6 de la madrugada del domingo, se dirá que lo vendido pertenece al día sabado.', NULL, NULL),
 (18, 3, 'encoding', '', 'encoding para las impresoras, de esta forma saldrán los acentos. Lo que no funciona es la "Ñ" mayúscula', NULL, '2011-11-15 20:23:03'),
@@ -1104,6 +1113,12 @@ CREATE TABLE IF NOT EXISTS `mesas` (
   KEY `created` (`time_cerro`,`mozo_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=1 ;
 
+
+INSERT INTO `mesas` (`id`, `numero`, `mozo_id`, `subtotal`, `total`, `cliente_id`, `menu`, `cant_comensales`, `estado_id`, `created`, `modified`, `time_cerro`, `time_cobro`, `deleted_date`, `deleted`) VALUES
+(1, 23, 1, 0, 0.00, 0, 0, 4, 1, '2013-05-17 13:44:44', '2013-05-17 13:44:44', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, 0),
+(2, 1, 1, 221, 221.00, 1, 0, 2, 2, '2013-05-17 13:51:19', '2013-05-17 13:52:24', '2013-05-17 13:52:24', '0000-00-00 00:00:00', NULL, 0),
+(3, 3, 1, 0, 0.00, 0, 0, 2, 1, '2013-05-17 13:52:30', '2013-05-17 13:52:35', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, 0);
+
 --
 -- Volcar la base de datos para la tabla `mesas`
 --
@@ -1260,8 +1275,12 @@ CREATE TABLE IF NOT EXISTS `productos` (
 -- Volcar la base de datos para la tabla `productos`
 --
 
+
 INSERT INTO `productos` (`id`, `name`, `abrev`, `description`, `categoria_id`, `precio`, `comandera_id`, `order`, `created`, `modified`, `deleted_date`, `deleted`) VALUES
-(1, 'Milanesa de Ternera', 'mila', '', 1, 100.00, 0, NULL, '2012-11-28 23:11:57', '2012-11-28 23:11:57', NULL, 0);
+(1, 'Milanesa de Ternera', 'mila', '', 1, 100.00, 0, NULL, '2012-11-28 23:11:57', '2012-11-28 23:11:57', NULL, 0),
+(2, 'Pure', 'pure', '', 2, 12.00, 0, 2, '2013-05-17 13:50:34', '2013-05-17 13:50:34', NULL, 0),
+(3, 'Papas Fritas', 'papas', '', 2, 33.00, 0, NULL, '2013-05-17 13:50:46', '2013-05-17 13:50:46', NULL, 0),
+(4, 'Papa al Natural', 'papa', '', 2, 21.00, 0, 2, '2013-05-17 13:51:09', '2013-05-17 13:51:09', NULL, 0);
 
 -- --------------------------------------------------------
 
