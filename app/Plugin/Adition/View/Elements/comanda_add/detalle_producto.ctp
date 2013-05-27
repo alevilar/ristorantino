@@ -1,7 +1,8 @@
 <?php foreach ($productos as $p) { ?>
     <div id="detalle_producto_<?php echo $p['Producto']['id'] ?>" class="producto" style="display: none">
         <h2><?php echo $p['Producto']['name']; ?></h2>
-
+        <button class="duplicar-pedido">Agregar Pedido Diferente</button>
+        
         <form data-ajax="false">
             <input type="hidden" name="producto_id" value="<?php echo $p['Producto']['id']?>" />
             
@@ -56,8 +57,6 @@
             </div>
 
             <input type="button" value="Cancelar Pedido" class="cancelar-pedido"/>
-            <input type="button" value="Agregar Pedido Diferente" class="duplicar-pedido"/>
-
         </form>
     </div>
     <?php

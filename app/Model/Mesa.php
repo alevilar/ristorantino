@@ -28,7 +28,7 @@ class Mesa extends AppModel
      */
     public $actsAs = array(
         'Containable',
-        'SoftDeletable',
+        'SoftDelete',
         'Search.Searchable',
     );
     

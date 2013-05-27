@@ -16,7 +16,7 @@ class Descuento extends AppModel {
         
         
         var $actsAs = array(
-            'SoftDeletable', 
+            'SoftDelete', 
             'Search.Searchable'
             );
         

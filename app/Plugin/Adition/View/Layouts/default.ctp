@@ -50,7 +50,7 @@
     </head>
     <body>
         <?php echo $this->fetch('content'); ?>
-    </body>
+    
 <?php
         echo $this->Html->script(array(
             'json2',
@@ -59,7 +59,12 @@
             'underscore',
             'backbone',
             '/adition/js/Risto',
+            
+            '/adition/js/Model/DetalleComandaModel',
+            '/adition/js/Collection/ComandaCollection',
+            
             '/adition/js/Model/AppModel',
+            
             '/adition/js/Model/MesaModel',
             '/adition/js/Collection/MesasCollection',
             '/jquery/jquery.mobile/1.3.1/jquery.mobile-1.3.1',
@@ -77,8 +82,9 @@
          
          echo $this->Html->script(array(
              
-             '/adition/js/Router/RistoRouter',
+             '/adition/js/RistoRouter',
          ));
          
          ?>
+        </body>
 </html>

@@ -4,11 +4,15 @@
 
 <?php echo $this->Html->script('/adition/js/jqm_events/comanda_add'); ?>
 
+
+<?php echo $this->Html->script('/adition/js/View/ComandaAddDetalleComandaView'); ?>
 <?php echo $this->Html->script('/adition/js/View/ComandaAddCategoriasView'); ?>
 <?php echo $this->Html->script('/adition/js/View/ComandaAddConfirmacionView'); ?>
-<?php echo $this->Html->script('/adition/js/View/ComandaAddDetalleProductoView'); ?>
-<?php echo $this->Html->script('/adition/js/View/ComandaAddProductosView'); ?>
+<?php echo $this->Html->script('/adition/js/View/ComandaAddFabricaView'); ?>
+
 <?php echo $this->Html->script('/adition/js/View/ComandaAddView'); ?>
+<?php echo $this->Html->script('/adition/js/View/ComandaAddProductosView'); ?>
+
 <?php $this->end(); ?>
 
 <div data-role="page" id="comanda-add" class="comanda" data-enhance="false">
@@ -30,7 +34,7 @@ echo $this->Html->image('mesa-abrio.png') . " " . Configure::read('Mesa.tituloMe
 
     <div data-role="content" data-enhance="false">
         <div id="listado_categorias">
-<?php echo $this->element('comanda_add/listar_categorias'); ?>
+<?php echo $this->element('comanda_add/listar_categorias', array('categorias' => array('Hijos' => $categorias))); ?>
         </div>
 
         <div id="listado_productos">

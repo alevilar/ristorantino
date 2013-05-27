@@ -15,7 +15,7 @@ class Categoria extends AppModel
 
     var $name = 'Categoria';
     var $actsAs = array(
-        'SoftDeletable',
+        'SoftDelete',
         'Tree',
         'Containable',
         'FileUpload.FileUpload' => array(

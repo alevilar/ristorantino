@@ -51,6 +51,14 @@ R$ = Risto = {
             newObj[rta[r].name] = rta[r].value;
         }
         return newObj;
+    },
+    
+    
+    findProductoByname: function ( nombre ) {
+        var nomRegex = new RegExp(nombre, 'i'); // i = case insensitive
+        return _.filter(this.productos, function (p) {
+           return  p.name.match(nomRegex) || p.abrev.match(nomRegex);
+        });
     }
     
 }

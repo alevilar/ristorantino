@@ -5,6 +5,11 @@ R$.Collection.Comanda = Backbone.Collection.extend({
         
     url: 'comandas',
         
-    model: R$.Model.DetalleComanda
+    model: R$.Model.DetalleComanda,
     
+    mesa_id: null,
+    
+    observacion: ''
+    
+     
 });

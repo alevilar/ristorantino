@@ -2,7 +2,7 @@ R$.Router = Backbone.Router.extend({
     routes: {
         "": "root",
         "listado-mesas": 'listadoMesas',
-        "mesa-view/:mesaId": "mesaView",
+        "mesa-view?:mesaId": "mesaView",
         "comanda-add": "comandaAdd"
     },
     

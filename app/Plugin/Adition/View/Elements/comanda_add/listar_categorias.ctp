@@ -1,41 +1,47 @@
 <?php
+/*
+$parentCat = 0;
+$superParentId = 0;
+$catName = 'Inicio';
+if (!empty($categorias['Categoria'])) {
+    $parentCat = $categorias['Categoria']['id'];
+    $superParentId = (int) $categorias['Categoria']['parent_id'];
+    $catName = $categorias['Categoria']['name'];
+}
 
-function mostrarCategorias( $cats ){
-    
-    $parentCat = 0;
-    $superParentId = 0;
-    if ( !empty($cats['Categoria']) ) {
-        $parentCat = $cats['Categoria']['id'];
-        $superParentId = (int) $cats['Categoria']['parent_id'];
-    }
-    
-    $hide = '';
-    if ( $parentCat ) {
-        $hide = 'style="display:none"';
-    }
-    echo "<ul id='categoria-id-$parentCat' class='listado-categorias' $hide>";
-    
-    if ( $parentCat ) {
-        echo "<li class='bck-button'><a href='#listado_productos_categoria_$superParentId' data-categoria-id='$superParentId'>... Volver</a></li>";
-    } else {
-        echo "<li class='bck-button'><a href='#listado_productos_categoria_$superParentId' data-categoria-id='$superParentId'>INICIO</a></li>";
-    }
-    
-    foreach ( $cats['Hijos'] as $c ) {
+$hide = '';
+if ($parentCat) {
+    $hide = 'style="display:none"';
+}
+echo "<div id='categoria-id-$parentCat' $hide>";
+
+echo "<h3>$catName</h3>";
+
+if (!empty($categorias['Categoria']['image_url'])) {
+    echo "<p>" . $this->Html->image($categorias['Categoria']['image_url']) . "</p>";
+}
+
+
+echo "<ul>";
+if ($parentCat) {
+    echo "<li class='bck-button'><button data-categoria-id='$superParentId'>... Volver</button></li>";
+}
+if (!empty($categorias['Hijos'])) {
+    foreach ($categorias['Hijos'] as $c) {
         $cName = $c['Categoria']['name'];
         $cId = $c['Categoria']['id'];
-        echo "<li><a href='#listado_productos_categoria_$cId' data-categoria-id='$cId'>$cName</a></li>";
+        echo "<li><button data-categoria-id='$cId'>$cName</button></li>";
     }
-    echo "</ul>";
-    
-    foreach ( $cats['Hijos'] as $c ) {
-        if (!empty($c['Hijos'])) {
-            mostrarCategorias($c);
-        }
+}
+echo "</ul>";
+
+echo "</div>";
+
+if (!empty($categorias['Hijos'])) {
+    foreach ($categorias['Hijos'] as $c) {
+        echo $this->element('comanda_add/listar_categorias', array('categorias' => $c));
     }
 }
 
 
-
-mostrarCategorias( array('Hijos'=>$categorias) );
-
+*/

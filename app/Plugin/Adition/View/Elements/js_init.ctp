@@ -19,15 +19,50 @@ if (empty($animar)) {
     
 <?php
 if (!empty($mozos)) {
-$mozos_aplanados = array();
-foreach ($mozos as $mz) {
-    $mozos_aplanado[] = $mz['Mozo'];
+    $mozos_aplanados = array();
+    foreach ($mozos as $mz) {
+        $mozos_aplanado[] = $mz['Mozo'];
+    }
+    ?>
+        
+
+        R$.mozos = <?php echo json_encode($mozos_aplanado); ?>;      
+<?php } ?>
+    
+    
+    
+    R$.categoriasTree = {};
+<?php
+if (!empty($categoriasTree[0])) {
+        ?>
+                R$.categoriasTree = <?php echo json_encode($categoriasTree[0]); ?>;      
+        <?php
 }
 ?>
     
-
-                R$.mozos = <?php echo json_encode($mozos_aplanado); ?>;      
-<?php } ?>
+        R$.categorias = {};
+<?php
+if (!empty($categorias)) {
+    foreach ($categorias as $cas) {
+        ?>
+                R$.categorias[<?= $cas['Categoria']['id']; ?>] = <?php echo json_encode($cas); ?>;      
+        <?php
+    }
+}
+?>
+    
+    
+    
+    R$.productos = {};
+<?php
+if (!empty($productos)) {
+    foreach ($productos as $prod) {
+        ?> 
+                        R$.productos[<?= $prod['Producto']['id'] ?>] = <?= json_encode($prod['Producto']); ?>;
+        <?php
+    }
+}
+?>
     
         R$.TITULO_MESA = "<?php echo Configure::read('Mesa.tituloMesa') ?>";
         R$.TITULO_MOZO = "<?php echo Configure::read('Mesa.tituloMozo') ?>";

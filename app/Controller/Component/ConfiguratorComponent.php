@@ -3,10 +3,10 @@
 App::uses('Component', 'Controller');
 
 class ConfiguratorComponent extends Component {
-     public $Config = null;
+    public $Config;
      
-    function initialize(){
-        $this->Config = & ClassRegistry::init('Config');
+    public function initialize(Controller $controller) {
+        $this->Config = ClassRegistry::init('Config');
 
         $ccc = $this->Config->find('all');
         
@@ -19,7 +19,4 @@ class ConfiguratorComponent extends Component {
             Configure::write($keyName, $c['Config']['value']);
         }
     }
-    
 }
-
-?>

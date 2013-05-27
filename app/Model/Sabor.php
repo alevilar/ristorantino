@@ -15,7 +15,7 @@ class Sabor extends AppModel {
 	public $displayField = 'name';
         
         public $actsAs = array(
-            'SoftDeletable', 
+            'SoftDelete', 
             'Search.Searchable'
             );
       
