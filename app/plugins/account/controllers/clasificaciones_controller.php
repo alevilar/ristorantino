@@ -62,25 +62,24 @@ class ClasificacionesController extends AccountAppController
                 }
         }
 
-        if (!empty($url['mes'])) {
-            $conditions['MONTH(Gasto.fecha)'] = $url['mes'];
-            $this->data['Gasto']['mes'] = $url['mes'];
+        if (!empty($url['fecha_desde'])) {
+            $conditions['Gasto.fecha >='] = $url['fecha_desde'];
+            $this->data['Gasto']['fecha_desde'] = $url['fecha_desde'];
         }
 
-        if (!empty($url['anio'])) {
-            $conditions['YEAR(Gasto.fecha)'] = $url['anio'];
-            $this->data['Gasto']['anio'] = $url['anio'];
+        if (!empty($url['fecha_hasta'])) {
+            $conditions['Gasto.fecha <='] = $url['fecha_hasta'];
+            $this->data['Gasto']['fecha_hasta'] = $url['fecha_hasta'];
         }
         
         if (empty($url)) {
-            $this->data['Gasto']['mes'] = date('m', strtotime('now'));
-            $this->data['Gasto']['anio'] = date('Y', strtotime('now'));
-            $conditions['MONTH(Gasto.fecha)'] = $this->data['Gasto']['mes'];
-            $conditions['YEAR(Gasto.fecha)'] = date('Y', strtotime('now'));
+            $conditions['Gasto.fecha >='] = $this->data['Gasto']['fecha_desde'] = date('Y-m-d', strtotime('-1month'));
+            $conditions['Gasto.fecha <='] = $this->data['Gasto']['fecha_hasta'] = date('Y-m-d', strtotime('now'));
         }
 
         $this->set('resumen_x_clasificacion', $this->Clasificacion->gastos($conditions));
         $this->set('clasificaciones', $this->Clasificacion->find('list'));
+        $this->set('proveedores', $this->Clasificacion->Gasto->Proveedor->find('list'));
     }
 
 }

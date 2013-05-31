@@ -1,5 +1,26 @@
 <?php
 
+function mostrarNetoDe($tipoImpuestoId, $vec)
+{
+    foreach ($vec as $v) {
+        if ($v['tipo_impuesto_id'] == $tipoImpuestoId) {
+            return $v['neto'];
+        }
+    }
+    return 0;
+}
+
+function mostrarImpuestoDe($tipoImpuestoId, $vec)
+{
+    foreach ($vec as $v) {
+        if ($v['tipo_impuesto_id'] == $tipoImpuestoId) {
+            return $v['importe'];
+        }
+    }
+    return 0;
+}
+
+
 class GastosController extends AccountAppController
 {
 
@@ -50,22 +71,20 @@ class GastosController extends AccountAppController
                 }
         }
 
-        if (!empty($url['mes'])) {
-            $conditions['MONTH(Gasto.fecha)'] = $url['mes'];
-            $this->data['Gasto']['mes'] = $url['mes'];
+        if (!empty($url['fecha_desde'])) {
+            $conditions['Gasto.fecha >='] = $url['fecha_desde'];
+            $this->data['Gasto']['fecha_desde'] = $url['fecha_desde'];
         }
 
-        if (!empty($url['anio'])) {
-            $conditions['YEAR(Gasto.fecha)'] = $url['anio'];
-            $this->data['Gasto']['anio'] = $url['anio'];
+        if (!empty($url['fecha_hasta'])) {
+            $conditions['Gasto.fecha <='] = $url['fecha_hasta'];
+            $this->data['Gasto']['fecha_hasta'] = $url['fecha_hasta'];
         }
 
 
         if (empty($url)) {
-            $this->data['Gasto']['mes'] = date('m', strtotime('now'));
-            $this->data['Gasto']['anio'] = date('Y', strtotime('now'));
-            $conditions['MONTH(Gasto.fecha)'] = $this->data['Gasto']['mes'];
-            $conditions['YEAR(Gasto.fecha)'] = date('Y', strtotime('now'));
+            $conditions['Gasto.fecha >='] = $this->data['Gasto']['fecha_desde'] = date('Y-m-d', strtotime('-1month'));
+            $conditions['Gasto.fecha <='] = $this->data['Gasto']['fecha_hasta'] = date('Y-m-d', strtotime('now'));
         }
 
 
@@ -84,11 +103,18 @@ class GastosController extends AccountAppController
             $conditions['Gasto.tipo_factura_id'] = $url['tipo_factura_id'];
             $this->data['Gasto']['tipo_factura_id'] = $url['tipo_factura_id'];
         }
-
+//debug($this);die;
+           
         $this->set('tipo_facturas', $this->Gasto->TipoFactura->find('list'));
         $this->set('proveedores', $this->Gasto->Proveedor->find('list'));
+        $this->set('clasificaciones', $this->Gasto->Clasificacion->find('list'));
         $this->set('tipo_impuestos', $this->Gasto->TipoImpuesto->find('list'));
-        $this->set('gastos', $this->Gasto->find('all', array('conditions' => $conditions)));
+        $this->set('gastos', $this->Gasto->find('all', array('conditions' => $conditions)));   
+        
+        if ($this->params['url']['ext'] == 'xls' ) {
+            $this->layout = 'xls/default';
+            $this->render( 'xls/'.$this->action );
+        } 
     }
 
     function view($id = null)
@@ -121,29 +147,6 @@ class GastosController extends AccountAppController
     {
         $this->pageTitle = 'Nuevo Gasto';
         if (!empty($this->data)) {
-                
-            if ( is_uploaded_file($this->data['Gasto']['file']['tmp_name']) )
-            {
-                
-                $filename = $this->data['Gasto']['file']['name'];
-              
-                $i = 0;
-                while ( file_exists( IMAGES . $filename ) ) {
-                    $filename = "$i.".$filename;
-                    $i++;
-                }
-                     
-                move_uploaded_file(
-                    $this->data['Gasto']['file']['tmp_name'],
-                    IMAGES . $filename
-                );
-
-                // store the filename in the array to be saved to the db
-                $this->data['Gasto']['file'] = $filename;
-            } else {
-                unset($this->data['Gasto']['file']);
-            }
-
             $this->Gasto->create();
             
             if ($this->Gasto->save($this->data)) {
@@ -177,29 +180,6 @@ class GastosController extends AccountAppController
         }
 
         if (!empty($this->data)) {
-            
-            if (is_uploaded_file($this->data['Gasto']['file']['tmp_name']))
-            {
-                
-                $filename = $this->data['Gasto']['file']['name'];
-              
-                $i = 0;
-                while ( file_exists( IMAGES . $filename ) ) {
-                    $filename = "$i.".$filename;
-                    $i++;
-                }
-                     
-                move_uploaded_file(
-                    $this->data['Gasto']['file']['tmp_name'],
-                    IMAGES . $filename
-                );
-
-                // store the filename in the array to be saved to the db
-                $this->data['Gasto']['file'] = $filename;
-            } else {
-                unset($this->data['Gasto']['file']);
-            }
-            
             if ($this->Gasto->save($this->data)) {
                 $this->Session->setFlash(__('The Gasto has been saved', true));
 

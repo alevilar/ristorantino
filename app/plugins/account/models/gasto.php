@@ -92,6 +92,7 @@ class Gasto extends AccountAppModel {
         public function beforeSave($options = array())
         {
             parent::beforeSave($options);
+            
         
             if (!empty($this->data['Gasto']['Impuesto'])) {
                 // calcular total sumando los impuestos

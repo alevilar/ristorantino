@@ -38,5 +38,5 @@
 	Router::connect('/pages/*', array('controller' => 'pages', 'action' => 'display'));
 	
 	
-	Router::parseExtensions('json','xls','ajax');
+	Router::parseExtensions('json','ajax', 'xls');
 ?>

@@ -24,26 +24,22 @@ class EgresosController extends AccountAppController
         unset($url['url']);
 
         
-        if (!empty($url['mes'])) {
-            $conditions['MONTH(Egreso.fecha)'] = $url['mes'];
-            $this->data['Egreso']['mes'] = $url['mes'];
+        if (!empty($url['fecha_desde'])) {
+            $conditions['Egreso.fecha >='] = $url['fecha_desde'];
+            $this->data['Egreso']['fecha_desde'] = $url['fecha_desde'];
         }
 
-        if (!empty($url['anio'])) {
-            $conditions['YEAR(Egreso.fecha)'] = $url['anio'];
-            $this->data['Egreso']['anio'] = $url['anio'];
-        }
-
+        if (!empty($url['fecha_hasta'])) {
+            $conditions['Egreso.fecha <='] = $url['fecha_hasta'];
+            $this->data['Egreso']['fecha_hasta'] = $url['fecha_hasta'];
+        }        
 
         if (empty($url)) {
-            $this->data['Egreso']['mes'] = date('m', strtotime('now'));
-            $this->data['Egreso']['anio'] = date('Y', strtotime('now'));
-            ;
-            $conditions['MONTH(Egreso.fecha)'] = $this->data['Egreso']['mes'];
-            $conditions['YEAR(Egreso.fecha)'] = $this->data['Egreso']['anio'];
+            $conditions['Egreso.fecha >='] = $this->data['Gasto']['fecha_desde'] = date('Y-m-d', strtotime('-1month'));
+            $conditions['Egreso.fecha <='] = $this->data['Gasto']['fecha_hasta'] = date('Y-m-d', strtotime('now'));
         }
 
-
+        $this->set('egresos', $this->Egreso->Gasto->Proveedor->find('list'));
         $this->set('egresos', $this->Egreso->find('all', array('conditions' => $conditions)));
     }
 

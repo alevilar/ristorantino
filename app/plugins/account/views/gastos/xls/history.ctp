@@ -1,42 +1,9 @@
-<?php
-
-echo $this->element('form_mini_year_month_search');
-?>
-
 <h3>Detalle de Gastos</h3>
 
-<?php
-echo $form->create('Cierre');
-
-echo "<div id='place-for-inputs' style='display:none'></div>";
-
-echo "<div id='descripcion-cierre' style='display:none'><p><span class='detalle-gastos'></span> gastos seleccionados</p>";
-echo $form->input('name', array('label' => 'Descripción del cierre', 'required' => true));
-echo $form->button('Guardar', array('type' => 'submit'));
-echo "</div>";
-
-echo $form->button('Aplicar Cierre', array(
-    'type' => 'button',
-    'data-theme' => 'b',
-    'data-inline' => 'true',
-    'data-role' => 'button',
-    'id' => 'btn-gastos-apli-cierre'));
-
-echo $form->end();
-?>
-
-<?php 
-
-echo $html->link('Descargar Excel', $this->action.'.xls'.strstr($_SERVER['REQUEST_URI'], '?'), array(
-    'data-ajax'=>'false'
-    )) ?>
-
-
-<div id="tabla-de-gastos">   
     <table data-role="table" data-mode="columntoggle">
         <thead>
             <tr>
-                <th rowspan="2"><label>Seleccionar Todos</label><input type="checkbox" value="0" id="impt-gastos-select-all"/></th>
+                <th rowspan="2">Estado</th>
                 <th rowspan="2">Clasificación</th>
                 <th rowspan="2">Fecha Factura</th>
                 <th colspan="2" data-priority="3">Proveedor</th>
@@ -51,7 +18,6 @@ foreach ($tipo_impuestos as $ti) {
                 <th class="total" rowspan="2">Total</th>
                 <th class="faltapagar" rowspan="2" data-priority="2">Falta pagar</th>
                 <th class="obs" rowspan="2" data-priority="3">Observación</th>
-                <th class="acciones" rowspan="2">Acciones</th>
             </tr>
             <tr>
                 <td>Nombre</td>
@@ -75,14 +41,10 @@ foreach ($gastos as $g) {
 
     $class = !empty($g['Gasto']['cierre_id']) ? 'closed' : 'open';
     ?>
-                <tr class="<?php echo $classpagado . " " . $class; ?>">
-                <?php
-                $meterInput = "&nbsp;";
-                if (empty($g['Gasto']['cierre_id'])) {
-                    $meterInput = "<input type='checkbox' name='data[Gasto][".$g['Gasto']['id']."][id]' value='" . $g['Gasto']['id'] . "'/>";
-                }
-
-                echo "<td class='$class'>$meterInput</td>";
+                <tr class="<?php echo $classpagado . " " . $class; ?>"><?php
+                
+                 $estado = !empty($g['Gasto']['cierre_id']) ? 'cerrado' : 'abierto';
+                 echo "<td>$estado</td>";
 
                 if (!empty($g['Clasificacion'])) {
                     echo "<td>" . $g['Clasificacion']['name'] . "</td>";
@@ -90,7 +52,7 @@ foreach ($gastos as $g) {
                     echo "<td>Sin Clasificar</td>";
                 }
 
-                echo "<td class='fecha'>" . date('j M', strtotime($g['Gasto']['fecha'])) . "</td>";
+                echo "<td class='fecha'>" . date('d-m-y', strtotime($g['Gasto']['fecha'])) . "</td>";
 
 
                 if (!empty($g['Proveedor'])) {
@@ -129,58 +91,8 @@ foreach ($gastos as $g) {
 
                     echo "<td class='faltapagar'>$faltaPagar" . "&nbsp;</td>";
                     echo "<td class='obs'>" . $g['Gasto']['observacion'] . "&nbsp;</td>";
-                    echo "<td class='acciones'>" . $html->link('Ver', array('action' => 'view', $g['Gasto']['id'])) . "<br>" . $html->link('Editar', array('action' => 'edit', $g['Gasto']['id']), array('data-ajax' => 'false')) . "</td>";
                 }
                 ?>
             </tr>
-
         </tbody>
     </table>
-
-</div>
-
-<script type="text/javascript">
-    (function(){
-        
-        var $inputs = $('tbody', '#tabla-de-gastos').find('input[type=checkbox]');
- 
-        function changeInputs(){
-            var 
-            // inputs from table
-            $ck = $('tbody', '#tabla-de-gastos').find('input[type=checkbox]:checked'),
-     
-            //form input containter
-            $placeForImputs = $('#place-for-inputs').html('');    
-     
-            // clone inputs from table to form
-            $ck.clone().appendTo($placeForImputs);
-     
-            // poner cantidad de gastos
-            $('.detalle-gastos','#descripcion-cierre').text($ck.length);
-        }
- 
-        $('#impt-gastos-select-all').bind('change', function(e){
-            $inputs.each(function(k,i){
-                i.checked = e.currentTarget.checked;
-            });
-            changeInputs();
-        });
- 
- 
-        $inputs.bind('change', changeInputs);
- 
- 
-        $('#btn-gastos-apli-cierre').bind('click',function(e){
-            var $ck = $('tbody', '#tabla-de-gastos').find('input[type=checkbox]:checked');
-        
-            if ( !$ck.length ) {
-                alert('Debe seleccionar algún gasto');
-            } else {
-                $('#descripcion-cierre').show('fade');
-            }
-     
-        });
-        
-    })();
- 
-</script>

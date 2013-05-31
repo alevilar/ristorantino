@@ -11,5 +11,4 @@
                     <li><?php echo $html->link(__('Cierres', true), array('controller'=>'cierres', 'action' => 'index')); ?></li>
                 </ul>
 	</div><!-- /navbar -->
-        
 </div><!-- /footer -->

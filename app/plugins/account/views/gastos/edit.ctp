@@ -12,17 +12,7 @@
             echo $form->input('tipo_factura_id');
             echo $form->input('factura_nro');
             echo $form->input('fecha', array('type' => 'date'));
-            echo $form->input('file', array('type'=>'file', 'accept'=> "image/*"));
-            echo $form->input('cierre_id', array(
-                'type'=>'select', 
-                'data-role' => 'slider', 
-                'label' => 'Estado',
-                'options' => array(
-                    0 => 'Abierto',
-                    1 => 'Cerrado',
-                    ),
-                ));
-            
+            echo $form->input('file', array('type'=>'file', 'accept'=> "image/*"));          
             ?>
         </div>
         <div class="ui-block-b">
