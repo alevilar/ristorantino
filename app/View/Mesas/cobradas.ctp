@@ -21,7 +21,7 @@ foreach ($mesas as $m) {
 <script type="text/javascript">
     $('#listado-mesas-cobradas').on('click', 'a', function(){
         var jjj = JSON.parse(this.getAttribute('data-mesa'));
-        var mesa = new R$.Model.Mesa( jjj );
-        R$.currentMesaView.setModel( mesa );
+        var mesa = new App.Model.Mesa( jjj );
+        App.currentMesaView.setModel( mesa );
     });
 </script>

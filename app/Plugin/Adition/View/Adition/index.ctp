@@ -2,6 +2,7 @@
 
 
 echo $this->element('adicion_subpages/listado_mesas');
+/*
 echo $this->element('adicion_subpages/mesa_add');
 
 echo $this->element('adicion_subpages/mesa_view');
@@ -16,7 +17,7 @@ echo $this->element('adicion_subpages/mesa_cambiar_mozo');
 
 echo $this->element('adicion_subpages/comanda_add');
 echo $this->element('adicion_subpages/comanda_add_confirmacion');
-
+*/
 //
 //
 

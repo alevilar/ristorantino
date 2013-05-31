@@ -23,9 +23,9 @@
                 $formMesaAdd.on('submit', function(e){
                     e.preventDefault();
 
-                    var miniMesa = R$.formToObject($formMesaAdd);
-                    var mesa = R$.mesasCollection.create( miniMesa );
-                    R$.currentMesaView.setModel(mesa);
+                    var miniMesa = App.formToObject($formMesaAdd);
+                    var mesa = App.mesasCollection.create( miniMesa );
+                    App.currentMesaView.setModel(mesa);
                     $.mobile.changePage('#mesa-view?'+mesa.id);
                     $formMesaAdd[0].reset(); // limpio el formulario
                     return false;

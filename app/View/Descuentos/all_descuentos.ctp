@@ -44,16 +44,16 @@
         $('#contenedor-listado-descuentos').on('click', 'a', function(){
             cerrarTodo();
             var c = JSON.parse( this.getAttribute('data-descuento') );
-            R$.currentMesaView.model.set('descuento_id', c.id);
-            R$.currentMesaView.model.set('Descuento', c);    
-            R$.currentMesaView.model.save();
+            App.currentMesaView.model.set('descuento_id', c.id);
+            App.currentMesaView.model.set('Descuento', c);    
+            App.currentMesaView.model.save();
             
             
         });
     
         $('#mesa-eliminar-descuento').on('click', function(){
             cerrarTodo();
-            R$.currentMesaView.model.save({'descuento_id': null, 'Descuento': {}});
+            App.currentMesaView.model.save({'descuento_id': null, 'Descuento': {}});
         });
     })();
     

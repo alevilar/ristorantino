@@ -1,6 +1,6 @@
 <?php $this->start('jquery-tmpl'); ?>
 <!-- Template: listado de comandas con sus productos-->
-<script id="listaComandas" type="text/x-handlebars-template">
+<script id="listaComandas" type="text/x-template">
     <div data-role="collapsible" data-content-theme="c">
         <h3>
             <span class="id-comanda">#<span></span></span>  <span class="hora-comanda"></span>&nbsp;&nbsp;&nbsp;
@@ -16,7 +16,7 @@
     </div>
 </script>
 
-<script id="mesaLoader" type="text/x-handlebars-template">
+<script id="mesaLoader" type="text/x-template">
     <span class="mesa-loader">
         <?php echo $this->Html->image('loader.gif'); ?>
     </span>
@@ -25,7 +25,7 @@
 
 
 <!-- Template: Listado de productos del detalle Comanda -->
-<script id="li-productos-detallecomanda" type="text/x-handlebars-template">
+<script id="li-productos-detallecomanda" type="text/x-template">
     <li class="ui-li ui-li-static ui-btn-up-c ui-li-last">
         <div data-type="horizontal"  data-mini="true" data-role="controlgroup" style="float: left">
             <a id="mesa-action-detalle-comanda-sacar-item" data-role="button" data-icon="minus" data-iconpos="notext" href="#" title="-" data-theme="c">-</a>
@@ -41,7 +41,7 @@
 </script>
 
 
-<?php echo $this->Html->script('/adition/js/View/MesaView'); ?>
+<?php echo $this->Html->script('/adition/js/ListadoMesas/View/MesaView'); ?>
 
 <?php $this->end(); ?>
 

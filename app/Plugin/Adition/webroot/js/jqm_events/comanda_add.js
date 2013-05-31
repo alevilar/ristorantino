@@ -2,7 +2,7 @@ $.mobile.ignoreContentEnabled = true;
 // enrquiqueecr con JQM el listado ed comandas de la mesa en msa-view
 $(document).on('pageshow', '#comanda-add',function(event, ui){
         
-        R$.app.resetState();
+        App.resetState();
         
         
         // inicializar listado del Menu con la clase root-ul

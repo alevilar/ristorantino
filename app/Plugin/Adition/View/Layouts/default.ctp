@@ -49,24 +49,46 @@
         
     </head>
     <body>
+    	<div id="main-region"></div>
+    	
         <?php echo $this->fetch('content'); ?>
-    
+    	
 <?php
         echo $this->Html->script(array(
-            'json2',
+        	// Marionettejs
+            '/adition/js/vendors/backbone.marionette/json2',
             '/jquery/jquery-2.0.0.min',
             'handlebars',
-            'underscore',
-            'backbone',
-            '/adition/js/Risto',
+            '/adition/js/vendors/backbone.marionette/underscore',
+            '/adition/js/vendors/backbone.marionette/backbone',
+            '/adition/js/vendors/backbone.marionette/backbone.babysitter',
+            '/adition/js/vendors/backbone.marionette/backbone.wreqr',
+            '/adition/js/vendors/backbone.marionette/backbone.marionette',
+            //'https://raw.github.com/marionettejs/backbone.marionette/master/lib/backbone.marionette.js',
             
-            '/adition/js/Model/DetalleComandaModel',
-            '/adition/js/Collection/ComandaCollection',
+			//backbone relational
+			'/adition/js/vendors/backbone-relational',
+			
+			
+			// APP main
+            '/adition/js/App/app',
+            '/adition/js/App/appController',
+            '/adition/js/App/router',
             
-            '/adition/js/Model/AppModel',
-            
-            '/adition/js/Model/MesaModel',
-            '/adition/js/Collection/MesasCollection',
+			// App/Mesas module
+			'/adition/js/App/Mesa/mesaApp',
+            '/adition/js/App/Mesa/Model/Mesa',
+            '/adition/js/App/Mesa/Collection/Mesas',
+            '/adition/js/App/Mesa/Model/Mozo',
+            '/adition/js/App/Mesa/Collection/Mozos',
+            '/adition/js/App/Mesa/View/MozoView',
+            '/adition/js/App/Mesa/View/MozosView',            
+			'/adition/js/App/Mesa/View/MiniMesaView',
+            '/adition/js/App/Mesa/View/AppLayout',
+
+
+            //jQuery.Mobile
+			'/adition/js/jqm_events/listado_mesas',
             '/jquery/jquery.mobile/1.3.1/jquery.mobile-1.3.1',
             
              
@@ -82,9 +104,11 @@
          
          echo $this->Html->script(array(
              
-             '/adition/js/RistoRouter',
          ));
          
          ?>
+         <script>
+         	App.start();
+         </script>
         </body>
 </html>

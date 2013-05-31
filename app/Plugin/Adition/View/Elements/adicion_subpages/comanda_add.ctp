@@ -1,18 +1,4 @@
 <?php $this->start('jquery-tmpl'); ?>
-<?php echo $this->Html->script('/adition/js/Model/DetalleComandaModel'); ?>
-<?php echo $this->Html->script('/adition/js/Collection/ComandaCollection'); ?>
-
-<?php echo $this->Html->script('/adition/js/jqm_events/comanda_add'); ?>
-
-
-<?php echo $this->Html->script('/adition/js/View/ComandaAddDetalleComandaView'); ?>
-<?php echo $this->Html->script('/adition/js/View/ComandaAddCategoriasView'); ?>
-<?php echo $this->Html->script('/adition/js/View/ComandaAddConfirmacionView'); ?>
-<?php echo $this->Html->script('/adition/js/View/ComandaAddFabricaView'); ?>
-
-<?php echo $this->Html->script('/adition/js/View/ComandaAddView'); ?>
-<?php echo $this->Html->script('/adition/js/View/ComandaAddProductosView'); ?>
-
 <?php $this->end(); ?>
 
 <div data-role="page" id="comanda-add" class="comanda" data-enhance="false">

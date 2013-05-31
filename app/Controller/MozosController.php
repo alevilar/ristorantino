@@ -19,8 +19,9 @@ class MozosController extends AppController {
         }
         
 	public function index() {
-		$this->Mozo->recursive = 0;
-		$this->set('mozos', $this->paginate());
+		//$this->Mozo->recursive = 0;
+		//debug($this->Mozo->mesasAbiertas());
+		$this->set('mozos', $this->Mozo->mesasAbiertas());
 	}
 
 	public function view($id = null) {

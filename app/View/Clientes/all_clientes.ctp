@@ -63,15 +63,15 @@
         $('#listado-clientes').on('click', 'a', function(){
             cerrarTodo();
             var c = JSON.parse( this.getAttribute('data-cliente') );
-            R$.currentMesaView.model.set('cliente_id', c.id);
-            R$.currentMesaView.model.set('Cliente', c);    
-            R$.currentMesaView.model.save();
+            App.currentMesaView.model.set('cliente_id', c.id);
+            App.currentMesaView.model.set('Cliente', c);    
+            App.currentMesaView.model.save();
             
         });
     
         $('#mesa-eliminar-cliente').on('click', function(){
             cerrarTodo();
-            R$.currentMesaView.model.save({'cliente_id': null, 'Cliente': {}});
+            App.currentMesaView.model.save({'cliente_id': null, 'Cliente': {}});
         });
     })();
     

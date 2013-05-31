@@ -14,6 +14,7 @@ class Mozo extends AppModel {
         public $virtualFields = array(
             'numero_y_nombre' => "CONCAT(Mozo.numero,' (', Mozo.nombre, ' ', Mozo.apellido, ')')",
         );
+		
 	
 
 	public $hasMany = array(
@@ -88,47 +89,13 @@ class Mozo extends AppModel {
                 $conditionsMesa['Mesa.modified >='] = $lastAccess;
             }
             
-            $optionsEliminada = $optionsCobrada = $optionsUpdated = $optionsCreated = array(
+            $optionsCreated = array(
                 'contain' => array(
-                    'Mesa' => array(
-                        'Descuento',
-                        'Cliente' => 'Descuento',
-                        'Comanda' => array(
-                            'DetalleComanda' => array(
-                                'Producto',
-                                'Sabor'
-                                ),
-                        ),
-                        'conditions' => $conditionsMesa,
-                        'order' => 'Mesa.numero DESC',
-                    ),
+                    'Mesa' => $this->Mesa->defaultContain,
                  ),
                 'conditions'=> $conditions,
             );
-            
-            if ( !empty($lastAccess) ) {
-                // las que fueron creadas
-                $optionsCreated['contain']['Mesa']['conditions']['created >='] = $lastAccess;
-                $mesasABM['created'] = $this->find('all', $optionsCreated);
-
-                // las que fueron actualizadas
-                
-                $optionsUpdated['contain']['Mesa']['conditions']['created <'] = $lastAccess;
-                $mesasABM['modified'] = $this->find('all', $optionsUpdated);
-                
-                // las que fueron cobradas
-                unset( $optionsCobrada['contain']['Mesa']['conditions']["Mesa.estado_id <"] );
-                $optionsCobrada['contain']['Mesa']['conditions']['Mesa.estado_id'] = MESA_COBRADA;
-                $mesasABM['cobradas'] = $this->find('all', $optionsCobrada);
-                
-                // las que fueron borradas o eliminadas
-                $optionsEliminada['contain']['Mesa']['conditions']['Mesa.deleted_date >'] = $lastAccess;
-                $optionsEliminada['contain']['Mesa']['conditions']['Mesa.deleted'] = 1;
-                $mesasABM['deleted'] = $this->find('all', $optionsEliminada);
-            } else {
-                // traigo a todas como que son creadas, si no fue pasado un lastAccess
-                $mesasABM['created'] = $this->find('all', $optionsCreated);
-            }
+			$mesasABM = $this->find('all', $optionsCreated);
             return $mesasABM;
         }
 

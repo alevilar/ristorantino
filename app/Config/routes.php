@@ -44,6 +44,7 @@
  * the built-in default routes.
  */
         Router::mapResources('mesas');
+		Router::mapResources('mozos');
         Router::mapResources('comandas');
         
         

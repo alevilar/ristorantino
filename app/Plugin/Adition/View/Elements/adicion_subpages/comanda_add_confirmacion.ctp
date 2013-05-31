@@ -1,5 +1,4 @@
 <?php $this->start('jquery-tmpl'); ?>
-<?php echo $this->Html->script('/adition/js/View/ComandaAddConfirmacionView'); ?>
 <?php $this->end(); ?>
 
 <div data-role="dialog" id="comanda-add-confirmacion">
