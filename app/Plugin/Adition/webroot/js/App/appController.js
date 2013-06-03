@@ -9,39 +9,15 @@
     
 App.Controller = (function(){
 	
-		
-	function observer (eventName, initialValue) {
-	    var _latestValue = initialValue;
-	    function observable() {
-	        if (arguments.length > 0) {
-	            // Write
-	            App.app.trigger(eventName, arguments[0]);
-	            if ( arguments[0].hasOwnProperty('id') ) {
-	                App.app.trigger(eventName+'id:'+arguments[0].id, arguments[0]);
-	            }
-	            // Ignore writes if the value hasn't changed
-	            _latestValue = arguments[0];
-	            return this; // Permits chained assignments
-	        }
-	        else {
-	            // Read
-	            return _latestValue;
-	        }
-	    }
-	    return observable;
-	}
 	
 	var AppController = Marionette.Controller.extend({
-	    /**
-	     * Current Mesa
-	     */
-	    mesa: observer('app:mesa'),
+	   
 	    
-	    categoria: observer('app:categoria'),
+	    categoria: App.observer('app:categoria'),
 	                
-	    producto:  observer('app:producto'),
+	    producto:  App.observer('app:producto'),
 	                
-	    comanda:  observer('app:comanda'),
+	    comanda:  App.observer('app:comanda'),
 	    
 	//    mesasCollection : new App.Collection.Mesas,
 	    

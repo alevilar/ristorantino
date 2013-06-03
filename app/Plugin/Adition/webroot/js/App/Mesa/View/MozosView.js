@@ -2,7 +2,6 @@
 
 mesaApp.View.MozosView = Backbone.Marionette.CollectionView.extend({
 	itemView: mesaApp.View.MozoView,
-		
 });
 
 

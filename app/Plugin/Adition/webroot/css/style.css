@@ -1,4 +1,31 @@
-/* Put your CSS here */
-html, body {
-    margin: 20px;
+body{
+	background-color: #BBBBBB;
+}
+
+.mozo-column{
+	float: left;
+}
+
+.mozo-column ul{
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.mozo-column .mesa{
+	height: 80px;
+	background-color: buttonface;
+	margin: 5%;
+}
+
+.mozo-column .mozo{
+	width: 100%;
+}
+
+.estado_2 button{
+	background-color: #FFEFAA;
+}
+
+.estado_3 button{
+	background-color: #EEFFFF;
 }
