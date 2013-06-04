@@ -207,6 +207,7 @@ class AppSchema extends CakeSchema {
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'length' => 10, 'key' => 'primary'),
 		'apellido' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 64, 'collate' => 'utf8_spanish_ci', 'charset' => 'utf8'),
 		'nombre' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 64, 'collate' => 'utf8_spanish_ci', 'charset' => 'utf8'),
+		'image_url' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 164, 'collate' => 'utf8_spanish_ci', 'charset' => 'utf8'),
 		'user_id' => array('type' => 'integer', 'null' => true, 'default' => NULL, 'length' => 10),
 		'numero' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'index'),
 		'activo' => array('type' => 'boolean', 'null' => false, 'default' => '0'),

@@ -87,6 +87,8 @@
 	    	
 	    	<div id="dialog" role="dialog" class="modal hide fade"></div>
 	    	
+	    	<div id="big-dialog" role="dialog" class="modal hide fade big-modal"></div>
+	    	
     	
         <?php echo $this->fetch('content'); ?>
     	
@@ -113,7 +115,8 @@
             '/adition/js/App/router',
             
 			// App/Mesas module
-			'/adition/js/App/Mesa/mesaApp',
+			'/adition/js/App/app.mesa',
+			/*
             '/adition/js/App/Mesa/Model/Mesa',
             '/adition/js/App/Mesa/Collection/Mesas',
             '/adition/js/App/Mesa/Model/Mozo',
@@ -123,7 +126,7 @@
             '/adition/js/App/Mesa/View/MozosView',
             '/adition/js/App/Mesa/View/MesaFormView',
             '/adition/js/App/Mesa/View/MesaExtraView',            
-	
+	*/
 			'/adition/bootstrap/js/bootstrap',
             //jQuery.Mobile
 		//	'/adition/js/jqm_events/listado_mesas',
@@ -141,12 +144,8 @@
          echo $this->fetch('jquery-tmpl'); 
          
          echo $this->Html->script(array(
-             
-         ));
-         
+             '/adition/js/main'
+			 ));
          ?>
-         <script>
-         	App.start();
-         </script>
         </body>
 </html>

@@ -15,6 +15,7 @@ App = ( function( Backbone ) {
 	    	contentRegion: '#main-container',
 	    	footerRegion: '#main-footer',
 	    	dialog: '#dialog',
+	    	bigDialog: '#big-dialog',
 	    },
 	    
 	  
@@ -92,11 +93,21 @@ App = ( function( Backbone ) {
 			  
 			  
 			  // Set Region as jquery DIALOG
+			  
+			  // dialog
 			  App.dialog.on('close', function(){
 			  	this.$el.modal('hide');
 			  });
-			  
 			  App.dialog.on('show', function(){
+			  	this.$el.modal('show');
+			  });
+
+			  // big-dialog			  
+			  App.bigDialog.on('close', function(){
+			  	this.$el.modal('hide');
+			  });
+			  
+			  App.bigDialog.on('show', function(){
 			  	this.$el.modal('show');
 			  });
 		}

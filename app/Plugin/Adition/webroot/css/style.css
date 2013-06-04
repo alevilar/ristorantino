@@ -16,6 +16,11 @@ body{
 	height: 80px;
 	background-color: buttonface;
 	margin: 5%;
+	
+	 -webkit-transition: all 1s ease-in-out;
+	  -moz-transition: all 1s ease-in-out;
+	  -o-transition: all 1s ease-in-out;
+	  transition: all 1s ease-in-out;
 }
 
 .mozo-column .mozo{
@@ -28,4 +33,45 @@ body{
 
 .estado_3 button{
 	background-color: #EEFFFF;
+}
+
+.expanded{
+	top: 10%;
+	
+	position: fixed;
+	
+	top: 10%;
+	left: 50%;
+	z-index: 1050;
+	width: 680px;
+	height: 500px;
+	
+	margin-left: -340px;
+	background-color: #ffffff;
+	border: 1px solid #999;
+	border: 1px solid rgba(0, 0, 0, 0.3);
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+	outline: none;
+	-webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+	-moz-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+	box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+	-webkit-background-clip: padding-box;
+	-moz-background-clip: padding-box;
+	background-clip: padding-box;
+
+	transform: rotate3d(180, 0);
+	
+	-webkit-transform: rotate3d(180, 0);
+	
+	-moz-transform: rotate3d(180, 0);
+	
+	-o-transform: rotate3d(180, 0);
+}
+
+
+.big-modal{
+	width: 800px;
+	margin-left: -400px;
 }
