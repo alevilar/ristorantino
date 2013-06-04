@@ -1,7 +1,7 @@
         
 
 <div class="mozos form">
-<?php echo $this->Form->create('Mozo');?>
+<?php echo $this->Form->create('Mozo', array('type'=>'file'));?>
 	<fieldset>
  		<legend><?php echo __('Editar Mozo');?></legend>
 	<?php
@@ -9,6 +9,7 @@
 		echo $this->Form->input('numero');
                 echo $this->Form->input('nombre');
                 echo $this->Form->input('apellido');
+				echo $this->Form->input('image_url', array('type'=>'file'));
                 echo $this->Form->input('activo',array('after'=>'<p>Sólo los mozos activos apareran en la Adición.</br>Si BORRA un mozo se pierden los datos estadisticos, puede desactivarlo para no perder información.</p>'));
 	?>
      <?php echo $this->Form->end('Submit');?>           

@@ -7,6 +7,7 @@
 		echo $this->Form->input('numero');
                 echo $this->Form->input('nombre');
                 echo $this->Form->input('apellido');
+				echo $this->Form->input('image_url', array('type'=>'file'));
                 echo $this->Form->input('activo',array('after'=>'<p>Sólo los mozos activos aparecerán listados en la Adición.'));
                 
                 echo $this->Form->end('Submit');

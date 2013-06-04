@@ -1,27 +1,34 @@
 <?php
 class MozosController extends AppController {
 
-	public $helpers = array('Html', 'Form');
-        public $components = array('Session');
-        
-        
-        public $paginate = array(
-            'limit' => 40,
-            'order' => array(
-                'Mozo.activo' => 'desc',
-                'Mozo.numero' => 'asc',
-            )
-        );
-        
+    public $components = array('Session');
+    
+	public $helpers = array(
+		'Html', 'Form',
+    );
+    
+    public $paginate = array(
+        'limit' => 40,
+        'order' => array(
+            'Mozo.activo' => 'desc',
+            'Mozo.numero' => 'asc',
+        )
+    );
+    
 
-        public function beforeFilter() {
-            parent::beforeFilter();
-        }
+    public function beforeFilter() {
+        parent::beforeFilter();
+    }
         
 	public function index() {
 		//$this->Mozo->recursive = 0;
 		//debug($this->Mozo->mesasAbiertas());
-		$this->set('mozos', $this->Mozo->mesasAbiertas());
+		if ($this->request->is('ajax')){
+			$mozos = $this->Mozo->mesasAbiertas();
+		} else {
+			$mozos = $this->paginate();
+		}
+		$this->set('mozos', $mozos);
 	}
 
 	public function view($id = null) {

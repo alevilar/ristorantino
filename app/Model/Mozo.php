@@ -1,19 +1,32 @@
 <?php
+
+App::uses('AppModel', 'Model');
+
 class Mozo extends AppModel {
 
 	public $name = 'Mozo';
         
-        public $actsAs = array('Containable');
+		
+	public $actsAs = array(
+	    'Containable',
+    );
 
 	public $validate = array(
             'numero' => 'notempty',
             'nombre' => 'notempty',
             'apellido' => 'notempty',
+            
+            'image_url' => array(
+		        'rule'    => 'uploadError',
+		        'message' => 'La foto no pudo ser subida.',
+		        'required' => false,
+		        'allowEmpty' => true
+		    ),
 	);
         
-        public $virtualFields = array(
-            'numero_y_nombre' => "CONCAT(Mozo.numero,' (', Mozo.nombre, ' ', Mozo.apellido, ')')",
-        );
+    public $virtualFields = array(
+        'numero_y_nombre' => "CONCAT(Mozo.numero,' (', Mozo.nombre, ' ', Mozo.apellido, ')')",
+    );
 		
 	
 
@@ -30,7 +43,7 @@ class Mozo extends AppModel {
 	 * @param recursive -1 por default
 	 * @ return array del find(all)
 	 */
-	function dameActivos($recursive = 1)
+	public function dameActivos($recursive = 1)
 	{
 		$this->recursive = $recursive;
 		return $this->find('all',array(
@@ -46,14 +59,14 @@ class Mozo extends AppModel {
 	}
 	
 	
-	function dameTodos($recursive = 0){
+	public function dameTodos($recursive = 0){
 		$this->recursive = $recursive;
 		return $this->find('all');
 	}
 	
 	
 	
-	function getNumero($mozo_id = 0){
+	public function getNumero($mozo_id = 0){
 		if($mozo_id != 0){
 			$this->id = $mozo_id;
 		}
@@ -67,7 +80,7 @@ class Mozo extends AppModel {
          * @param int $mozo_id id del mozo, en caso de que no le pase ninguno, me busca todos
          * @return array Mozos con sus mesas, Comandas, detalleComanda, productos y sabores
          */
-        function mesasAbiertas($mozo_id = null, $lastAccess = null){
+        public function mesasAbiertas($mozo_id = null, $lastAccess = null){
             $conditions = array();
             
             // si vino el mozo por parametro, es porque solo quiero las mesas de ese mozo
@@ -98,6 +111,33 @@ class Mozo extends AppModel {
 			$mesasABM = $this->find('all', $optionsCreated);
             return $mesasABM;
         }
+
+
+		public function beforeSave(array $options = array()){
+			if (!empty($this->data[$this->name]['image_url']['name'])) {
+	            $path = IMAGES;
+				$newFile = $this->data[$this->name]['image_url'];
+				
+	            $name = Inflector::slug(strstr($newFile['name'], '.', true));
+	            $ext = substr(strrchr($newFile['name'], "."), 1);
+	            $nameFile = $name . ".$ext";
+	
+	            if (file_exists($path . $nameFile)) {
+	                $i = 1;
+	                $nameFile = $name . "_$i.$ext";
+	                while (file_exists($path . $nameFile)) {
+	                    $i++;
+	                    $nameFile = $name . "_$i.$ext";
+	                }
+	            }
+	
+	            $this->data[$this->name]['image_url'] = $name . ".$ext";
+	            move_uploaded_file($newFile['tmp_name'], $path . $nameFile);
+				debug($newFile);
+				debug($path. $nameFile);die;
+	        }
+			return true;
+		}
 
 }
 ?>

@@ -15,6 +15,7 @@ echo $this->Paginator->counter(array(
 <table cellpadding="0" cellspacing="0">
 <tr>
         <th><?php echo $this->Paginator->sort('activo');?>&nbsp;<?php echo $this->Paginator->sort('nombre');?></th>
+        <th>Foto</th>
 	<th><?php echo $this->Paginator->sort('numero');?></th>
 	<th class="actions"><?php echo __('Acciones');?></th>
 </tr>
@@ -26,9 +27,13 @@ foreach ($mozos as $mesa):
 		$class = ' class="altrow"';
 	}
 ?>
-	<tr<?php echo $class;?>>		
+	<tr<?php echo $class;?>>
+			
 		<td>
                     <span class="mozo-puntito <?php echo $mesa['Mozo']['activo'] ? 'mozo_activo' : 'mozo_inactivo' ?>">•</span> <?php echo $mesa['Mozo']['nombre']." ".$mesa['Mozo']['apellido']; ?>
+		</td>
+		<td>
+             <?php echo $this->Html->image($mesa['Mozo']['image_url']); ?>
 		</td>
 		<td>
 			<?php echo $mesa['Mozo']['numero']; ?>
