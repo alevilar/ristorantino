@@ -7,12 +7,13 @@
  * PHP 5
  *
  * CakePHP(tm) Tests <http://book.cakephp.org/2.0/en/development/testing.html>
- * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice
  *
- * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://book.cakephp.org/2.0/en/development/testing.html CakePHP(tm) Tests
  * @package       Cake.Test.Case.Controller.Component
  * @since         CakePHP(tm) v 1.2.0.5347
@@ -148,13 +149,12 @@ class EmailComponentTest extends CakeTestCase {
  * @return void
  */
 	public function setUp() {
-		$this->_appEncoding = Configure::read('App.encoding');
+		parent::setUp();
+
 		Configure::write('App.encoding', 'UTF-8');
 
 		$this->Controller = new EmailTestController();
-
 		$this->Controller->Components->init($this->Controller);
-
 		$this->Controller->EmailTest->initialize($this->Controller, array());
 
 		self::$sentDate = date(DATE_RFC2822);
@@ -162,17 +162,6 @@ class EmailComponentTest extends CakeTestCase {
 		App::build(array(
 			'View' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'View' . DS)
 		));
-	}
-
-/**
- * tearDown method
- *
- * @return void
- */
-	public function tearDown() {
-		Configure::write('App.encoding', $this->_appEncoding);
-		App::build();
-		ClassRegistry::flush();
 	}
 
 /**
@@ -608,13 +597,13 @@ HTMLBLOC;
 		$this->assertEquals($expected, $result);
 
 		$content = '<p>Some HTML content with an <a href="mailto:test@example.com">email link</a>';
-		$result  = $this->Controller->EmailTest->strip($content, true);
+		$result = $this->Controller->EmailTest->strip($content, true);
 		$expected = $content;
 		$this->assertEquals($expected, $result);
 
-		$content  = '<p>Some HTML content with an ';
+		$content = '<p>Some HTML content with an ';
 		$content .= '<a href="mailto:test@example.com,test2@example.com">email link</a>';
-		$result  = $this->Controller->EmailTest->strip($content, true);
+		$result = $this->Controller->EmailTest->strip($content, true);
 		$expected = $content;
 		$this->assertEquals($expected, $result);
 	}
@@ -862,7 +851,8 @@ HTMLBLOC;
 		$this->assertTrue($this->Controller->EmailTest->send('This is the body of the message'));
 		$result = DebugCompTransport::$lastEmail;
 
-		$this->assertRegExp('/Message-ID: \<[a-f0-9]{8}[a-f0-9]{4}[a-f0-9]{4}[a-f0-9]{4}[a-f0-9]{12}@' . env('HTTP_HOST') . '\>\n/', $result);
+		$host = env('HTTP_HOST') ? env('HTTP_HOST') : php_uname('n');
+		$this->assertRegExp('/Message-ID: \<[a-f0-9]{8}[a-f0-9]{4}[a-f0-9]{4}[a-f0-9]{4}[a-f0-9]{12}@' . $host . '\>\n/', $result);
 
 		$this->Controller->EmailTest->messageId = '<22091985.998877@example.com>';
 

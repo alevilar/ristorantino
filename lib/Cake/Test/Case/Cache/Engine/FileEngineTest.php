@@ -5,12 +5,13 @@
  * PHP 5
  *
  * CakePHP(tm) Tests <http://book.cakephp.org/2.0/en/development/testing.html>
- * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice
  *
- * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://book.cakephp.org/2.0/en/development/testing.html CakePHP(tm) Tests
  * @package       Cake.Test.Case.Cache.Engine
  * @since         CakePHP(tm) v 1.2.0.5434
@@ -53,6 +54,9 @@ class FileEngineTest extends CakeTestCase {
 		parent::tearDown();
 		Cache::clear(false, 'file_test');
 		Cache::drop('file_test');
+		Cache::drop('file_groups');
+		Cache::drop('file_groups2');
+		Cache::drop('file_groups3');
 	}
 
 /**
@@ -99,7 +103,7 @@ class FileEngineTest extends CakeTestCase {
 
 /**
  * Test read/write on the same cache key. Ensures file handles are re-wound.
- * 
+ *
  * @return void
  */
 	public function testConsecutiveReadWrite() {
@@ -178,7 +182,7 @@ class FileEngineTest extends CakeTestCase {
 
 		$newread = Cache::read('serialize_test', 'file_test');
 
-		$delete = Cache::delete('serialize_test', 'file_test');
+		Cache::delete('serialize_test', 'file_test');
 
 		$this->assertSame($read, serialize($data));
 
@@ -393,4 +397,86 @@ class FileEngineTest extends CakeTestCase {
 		Cache::drop('mask_test');
 	}
 
+/**
+ * Tests that configuring groups for stored keys return the correct values when read/written
+ *
+ * @return void
+ */
+	public function testGroupsReadWrite() {
+		Cache::config('file_groups', array('engine' => 'File', 'duration' => 3600, 'groups' => array('group_a', 'group_b')));
+		$this->assertTrue(Cache::write('test_groups', 'value', 'file_groups'));
+		$this->assertEquals('value', Cache::read('test_groups', 'file_groups'));
+
+		$this->assertTrue(Cache::write('test_groups2', 'value2', 'file_groups'));
+		$this->assertTrue(Cache::write('test_groups3', 'value3', 'file_groups'));
+	}
+
+/**
+ * Test that clearing with repeat writes works properly
+ */
+	public function testClearingWithRepeatWrites() {
+		Cache::config('repeat', array(
+			'engine' => 'File', 'groups' => array('users')
+		));
+
+		$this->assertTrue(Cache::write('user', 'rchavik', 'repeat'));
+		$this->assertEquals('rchavik', Cache::read('user', 'repeat'));
+
+		Cache::delete('user', 'repeat');
+		$this->assertEquals(false, Cache::read('user', 'repeat'));
+
+		$this->assertTrue(Cache::write('user', 'ADmad', 'repeat'));
+		$this->assertEquals('ADmad', Cache::read('user', 'repeat'));
+
+		Cache::clearGroup('users', 'repeat');
+		$this->assertEquals(false, Cache::read('user', 'repeat'));
+
+		$this->assertTrue(Cache::write('user', 'markstory', 'repeat'));
+		$this->assertEquals('markstory', Cache::read('user', 'repeat'));
+
+		Cache::drop('repeat');
+	}
+
+/**
+ * Tests that deleting from a groups-enabled config is possible
+ *
+ * @return void
+ */
+	public function testGroupDelete() {
+		Cache::config('file_groups', array('engine' => 'File', 'duration' => 3600, 'groups' => array('group_a', 'group_b')));
+		$this->assertTrue(Cache::write('test_groups', 'value', 'file_groups'));
+		$this->assertEquals('value', Cache::read('test_groups', 'file_groups'));
+		$this->assertTrue(Cache::delete('test_groups', 'file_groups'));
+
+		$this->assertFalse(Cache::read('test_groups', 'file_groups'));
+	}
+
+/**
+ * Test clearing a cache group
+ *
+ * @return void
+ */
+	public function testGroupClear() {
+		Cache::config('file_groups', array('engine' => 'File', 'duration' => 3600, 'groups' => array('group_a', 'group_b')));
+		Cache::config('file_groups2', array('engine' => 'File', 'duration' => 3600, 'groups' => array('group_b')));
+		Cache::config('file_groups3', array('engine' => 'File', 'duration' => 3600, 'groups' => array('group_a')));
+
+		$this->assertTrue(Cache::write('test_groups', 'value', 'file_groups'));
+		$this->assertTrue(Cache::write('test_groups2', 'value', 'file_groups2'));
+		$this->assertTrue(Cache::write('test_groups3', 'value', 'file_groups3'));
+
+		$this->assertTrue(Cache::clearGroup('group_a', 'file_groups'));
+		$this->assertFalse(Cache::read('test_groups', 'file_groups'));
+		$this->assertEquals('value', Cache::read('test_groups2', 'file_groups2'));
+		$this->assertFalse(Cache::read('test_groups3', 'file_groups3'));
+
+		$this->assertTrue(Cache::write('test_groups4', 'value', 'file_groups'));
+		$this->assertTrue(Cache::write('test_groups5', 'value', 'file_groups2'));
+		$this->assertTrue(Cache::write('test_groups6', 'value', 'file_groups3'));
+
+		$this->assertTrue(Cache::clearGroup('group_b', 'file_groups'));
+		$this->assertFalse(Cache::read('test_groups4', 'file_groups'));
+		$this->assertFalse(Cache::read('test_groups5', 'file_groups2'));
+		$this->assertEquals('value', Cache::read('test_groups6', 'file_groups3'));
+	}
 }

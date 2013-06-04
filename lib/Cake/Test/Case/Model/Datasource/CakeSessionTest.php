@@ -5,12 +5,13 @@
  * PHP 5
  *
  * CakePHP(tm) Tests <http://book.cakephp.org/2.0/en/development/testing.html>
- * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice
  *
- * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://book.cakephp.org/2.0/en/development/testing.html CakePHP(tm) Tests
  * @package       Cake.Test.Case.Model.Datasource
  * @since         CakePHP(tm) v 1.2.0.4206
@@ -18,6 +19,8 @@
  */
 
 App::uses('CakeSession', 'Model/Datasource');
+App::uses('DatabaseSession', 'Model/Datasource/Session');
+App::uses('CacheSession', 'Model/Datasource/Session');
 
 class TestCakeSession extends CakeSession {
 
@@ -27,6 +30,22 @@ class TestCakeSession extends CakeSession {
 
 	public static function setHost($host) {
 		self::_setHost($host);
+	}
+
+}
+
+class TestCacheSession extends CacheSession {
+
+	protected function _writeSession() {
+		return true;
+	}
+
+}
+
+class TestDatabaseSession extends DatabaseSession {
+
+	protected function _writeSession() {
+		return true;
 	}
 
 }
@@ -92,7 +111,7 @@ class CakeSessionTest extends CakeTestCase {
  */
 	public function teardown() {
 		if (TestCakeSession::started()) {
-			TestCakeSession::clear();
+			session_write_close();
 		}
 		unset($_SESSION);
 		parent::teardown();
@@ -213,7 +232,7 @@ class CakeSessionTest extends CakeTestCase {
 		TestCakeSession::write('SessionTestCase', 'value');
 		$this->assertTrue(TestCakeSession::check('SessionTestCase'));
 
-		$this->assertFalse(TestCakeSession::check('NotExistingSessionTestCase'), false);
+		$this->assertFalse(TestCakeSession::check('NotExistingSessionTestCase'));
 	}
 
 /**
@@ -326,21 +345,6 @@ class CakeSessionTest extends CakeTestCase {
 		$this->assertFalse(TestCakeSession::started());
 		$this->assertTrue(TestCakeSession::start());
 		$this->assertTrue(TestCakeSession::started());
-	}
-
-/**
- * testError method
- *
- * @return void
- */
-	public function testError() {
-		TestCakeSession::read('Does.not.exist');
-		$result = TestCakeSession::error();
-		$this->assertEquals("Does.not.exist doesn't exist", $result);
-
-		TestCakeSession::delete('Failing.delete');
-		$result = TestCakeSession::error();
-		$this->assertEquals("Failing.delete doesn't exist", $result);
 	}
 
 /**
@@ -566,6 +570,7 @@ class CakeSessionTest extends CakeTestCase {
  */
 	public function testReadAndWriteWithCacheStorage() {
 		Configure::write('Session.defaults', 'cache');
+		Configure::write('Session.handler.engine', 'TestCacheSession');
 
 		TestCakeSession::init();
 		TestCakeSession::destroy();
@@ -601,6 +606,7 @@ class CakeSessionTest extends CakeTestCase {
  */
 	public function testReadAndWriteWithCustomCacheConfig() {
 		Configure::write('Session.defaults', 'cache');
+		Configure::write('Session.handler.engine', 'TestCacheSession');
 		Configure::write('Session.handler.config', 'session_test');
 
 		Cache::config('session_test', array(
@@ -625,6 +631,7 @@ class CakeSessionTest extends CakeTestCase {
  */
 	public function testReadAndWriteWithDatabaseStorage() {
 		Configure::write('Session.defaults', 'database');
+		Configure::write('Session.handler.engine', 'TestDatabaseSession');
 		Configure::write('Session.handler.table', 'sessions');
 		Configure::write('Session.handler.model', 'Session');
 		Configure::write('Session.handler.database', 'test');
@@ -677,6 +684,7 @@ class CakeSessionTest extends CakeTestCase {
  */
 	public function testSessionTimeout() {
 		Configure::write('debug', 2);
+		Configure::write('Session.defaults', 'cake');
 		Configure::write('Session.autoRegenerate', false);
 
 		$timeoutSeconds = Configure::read('Session.timeout') * 60;
@@ -709,16 +717,18 @@ class CakeSessionTest extends CakeTestCase {
 	public function testCookieTimeoutFallback() {
 		$_SESSION = null;
 		Configure::write('Session', array(
-			'defaults' => 'php',
+			'defaults' => 'cake',
 			'timeout' => 400,
 		));
 		TestCakeSession::start();
 		$this->assertEquals(400, Configure::read('Session.cookieTimeout'));
 		$this->assertEquals(400, Configure::read('Session.timeout'));
+		$this->assertEquals(400 * 60, ini_get('session.cookie_lifetime'));
+		$this->assertEquals(400 * 60, ini_get('session.gc_maxlifetime'));
 
 		$_SESSION = null;
 		Configure::write('Session', array(
-			'defaults' => 'php',
+			'defaults' => 'cake',
 			'timeout' => 400,
 			'cookieTimeout' => 600
 		));

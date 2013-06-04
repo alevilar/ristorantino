@@ -43,7 +43,7 @@ class AppController extends Controller
     );
     public $components = array(
         'Auth',
-        'Acl',
+     //   'Acl',
         'Configurator',
         'RequestHandler',
         'Session',
@@ -55,15 +55,14 @@ class AppController extends Controller
     public function beforeFilter()
     {
 
-        $this->Auth->allow('*');
-        $this->Auth->authorize = array('Actions');
-
-
+        $this->Auth->allow();
+   //     $this->Auth->authorize = array('Actions');
+/*
         $this->Auth->loginAction = array(Configure::read('Routing.admin') => false, 'controller' => 'users', 'action' => 'login');
         $this->Auth->logoutRedirect = array(Configure::read('Routing.admin') => false, 'controller' => 'users', 'action' => 'logout');
+*/
 
-
-        $this->RequestHandler->setContent('jqm', 'xhtml');
+  //      $this->RequestHandler->setContent('jqm', 'xhtml');
 
         return parent::beforeFilter();
     }

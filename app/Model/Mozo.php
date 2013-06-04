@@ -113,7 +113,7 @@ class Mozo extends AppModel {
         }
 
 
-		public function beforeSave(array $options = array()){
+		public function beforeSave($options = array()) {
 			if (!empty($this->data[$this->name]['image_url']['name'])) {
 	            $path = IMAGES;
 				$newFile = $this->data[$this->name]['image_url'];
