@@ -81,13 +81,13 @@
 		      </div>
 		    </header>
 		    
-    		<div id="main-container" class="container"></div>
+    		<div id="main-container" class="container-fluid"></div>
 	    	
 	    	<footer id="main-footer"></footer>
 	    	
 	    	<div id="dialog" role="dialog" class="modal hide fade"></div>
 	    	
-	    	<div id="big-dialog" role="dialog" class="modal hide fade big-modal"></div>
+	    	<div id="big-dialog" role="dialog" class="modal hide big-modal"></div>
 	    	
     	
         <?php echo $this->fetch('content'); ?>
@@ -108,7 +108,6 @@
 			//backbone relational
 			'/adition/js/vendors/backbone-relational',
 			
-			
 			// APP main
             '/adition/js/App/app',
             '/adition/js/App/appController',
@@ -116,24 +115,12 @@
             
 			// App/Mesas module
 			'/adition/js/App/app.mesa',
-			/*
-            '/adition/js/App/Mesa/Model/Mesa',
-            '/adition/js/App/Mesa/Collection/Mesas',
-            '/adition/js/App/Mesa/Model/Mozo',
-            '/adition/js/App/Mesa/Collection/Mozos',
-            '/adition/js/App/Mesa/View/MesaView',
-            '/adition/js/App/Mesa/View/MozoView',
-            '/adition/js/App/Mesa/View/MozosView',
-            '/adition/js/App/Mesa/View/MesaFormView',
-            '/adition/js/App/Mesa/View/MesaExtraView',            
-	*/
+			
+			// App/Comandas module
+			'/adition/js/App/app.comanda',
+			
+			
 			'/adition/bootstrap/js/bootstrap',
-            //jQuery.Mobile
-		//	'/adition/js/jqm_events/listado_mesas',
-      //      '/jquery/jquery.mobile/1.3.1/jquery.mobile-1.3.1',
-            
-             
-//                       'alekeyboard',
         ));
         
         echo $this->element('js_init');

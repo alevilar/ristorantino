@@ -5,14 +5,14 @@ $this->Paginator->options(array('url' => $this->passedArgs));
 ?>
 
 <div class="mozos index">
-<h2><?php echo __('Mozos');?></h2>
+	
 <p>
 <?php
 echo $this->Paginator->counter(array(
     'format' => __('Página %page% de %pages%, mostrando %current% elementos de %count%')
 ));
 ?></p>
-<table cellpadding="0" cellspacing="0">
+<table cellpadding="0" cellspacing="0" class="table">
 <tr>
         <th><?php echo $this->Paginator->sort('activo');?>&nbsp;<?php echo $this->Paginator->sort('nombre');?></th>
         <th>Foto</th>
@@ -30,10 +30,16 @@ foreach ($mozos as $mesa):
 	<tr<?php echo $class;?>>
 			
 		<td>
-                    <span class="mozo-puntito <?php echo $mesa['Mozo']['activo'] ? 'mozo_activo' : 'mozo_inactivo' ?>">•</span> <?php echo $mesa['Mozo']['nombre']." ".$mesa['Mozo']['apellido']; ?>
+                    <span class="mozo-puntito <?php echo $mesa['Mozo']['activo'] ? 'text-success' : '' ?>" style="font-size:26pt">•</span> <?php echo $mesa['Mozo']['nombre']." ".$mesa['Mozo']['apellido']; ?>
 		</td>
 		<td>
-             <?php echo $this->Html->image($mesa['Mozo']['image_url']); ?>
+             <?php 
+             if (!empty($mesa['Mozo']['image_url']) ) {
+             	echo $this->Html->image("thumb_".$mesa['Mozo']['image_url'], array('img-polaroid', 'style'=>'width: 68px')); 
+			 } else {
+			 	echo "&nbsp;";
+			 }
+             	?>
 		</td>
 		<td>
 			<?php echo $mesa['Mozo']['numero']; ?>

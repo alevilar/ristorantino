@@ -130,11 +130,14 @@ class Mozo extends AppModel {
 	                    $nameFile = $name . "_$i.$ext";
 	                }
 	            }
-	
+				
 	            $this->data[$this->name]['image_url'] = $name . ".$ext";
 	            move_uploaded_file($newFile['tmp_name'], $path . $nameFile);
-				debug($newFile);
-				debug($path. $nameFile);die;
+				
+			    generate_image_thumbnail($path . $nameFile, $path . "thumb_".$nameFile);
+				
+				
+				//debug($path. $nameFile);die;
 	        }
 			return true;
 		}

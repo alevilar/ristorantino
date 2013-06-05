@@ -45,7 +45,7 @@
 
 	Router::mapResources('mesas');
 	Router::mapResources('mozos');
-        Router::mapResources('comandas');
+    Router::mapResources('comandas');
 
 
 	require CAKE . 'Config' . DS . 'routes.php';

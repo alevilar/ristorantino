@@ -20,93 +20,81 @@ el ajax que verifica el estado de las mesas (si fue abierta o cerrada alguna. --
 <script id="mesa-extra-view" type="text/x-template">
     <header class="modal-header">
     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <a href="#" data-rel="back" data-direction="reverse">Volver</a>
-        <h3 class="header">
-            <span class="mesa-numero"><%= numero %></span>
+    	<img src="<?= IMAGES_URL?>thumb_<%= Mozo.image_url %>" width="64"  class="img-circle" style="position: absolute; top: 10px; left: 10px;"/>
+        <h3 class="header text-center">
             <?php
-            echo $this->Html->image('mesa-abrio.png') . " " . Configure::read('Mesa.tituloMesa') . " - " .
-            Configure::read('Mesa.tituloMozo') . " " . $this->Html->image('mozomoniob.png')
+            echo $this->Html->image('mesa-abrio.png') . " " . Configure::read('Mesa.tituloMesa')
             ?>
-            <span class="mozo-numero"><%= Mozo.numero %></span>
-
-            <span class="mesa-estado">Abierta</span>
-
+            <span class="mesa-numero"><%= numero %></span>
         </h3>
+        <span class="mesa-estado">Abierta</span>
     </header>
 
-    <div  data-role="content" class="" data-scroll="true">
-
+    <div class="modal-body">
         <div class="mesa-actions">
-
-            <a id="btn-mesa-comanda" href="#comanda-add" data-role="button">
-                Comanda
-            </a>
-
-            <a id="btn-mesa-cerrar" href="mesas/cerrarMesa" data-direction="reverse" data-role="button">
+            <a id="btn-mesa-cerrar" href="mesas/cerrarMesa" class="btn">
                 Cerrar
             </a>
 
-            <a id="btn-mesa-cobrar" href="#mesa-cobrar" data-role="button">
+            <a id="btn-mesa-cobrar" href="#mesa-cobrar" class="btn">
                 Cobrar
             </a>
 
-            <a id="btn-mesa-reabrir" href="mesas/reabrir" data-direction="reverse" data-role="button">
+            <a id="btn-mesa-reabrir" href="mesas/reabrir" class="btn">
                 Re Abrir
             </a>
 
 
-            <a id="btn-mesa-clientes" href="<?php echo $this->Html->url('/clientes/all_clientes') ?>" data-rel="dialog" data-role="button">
+            <a id="btn-mesa-clientes" href="<?php echo $this->Html->url('/clientes/all_clientes') ?>" class="btn">
                 <span>Cliente</span>
             </a>
 
-            <a id="btn-mesa-descuento" href="<?php echo $this->Html->url('/descuentos') ?>" data-rel="dialog" data-role="button">
+            <a id="btn-mesa-descuento" href="<?php echo $this->Html->url('/descuentos') ?>" class="btn">
                 <span>Descuento</span>
             </a>
 
 
-            <a id="btn-mesa-ticket" href="mesas/imprimirTicket" data-direction="reverse" data-role="button">
+            <a id="btn-mesa-ticket" href="mesas/imprimirTicket" class="btn">
                 Imprimir Ticket
             </a>
 
-            <a id="btn-mesa-borrar" href="#listado-mesas" data-direction="reverse" data-role="button">
+            <a id="btn-mesa-borrar" href="#listado-mesas" class="btn">
                 Borrar
             </a>
 
-
-
-
-            <a id="btn-mesa-menu" href="#mesa-menu" data-rel="dialog" data-role="button">
+            <a id="btn-mesa-menu" href="#mesa-menu" class="btn">
                 <span style="color: red"></span> Menú
             </a>
 
-            <a  id="btn-mesa-edit" href="<? echo $this->Html->url('/mesas/edit/') ?>" data-role="button">
+            <a  id="btn-mesa-edit" href="<? echo $this->Html->url('/mesas/edit/') ?>" class="btn">
                 Editar
             </a>
 
-            <a id="btn-mesa-mozo" href="#mesa-cambiar-mozo" data-role="button">
+            <a id="btn-mesa-mozo" href="#mesa-cambiar-mozo" class="btn">
                 <?php echo Configure::read('Mesa.tituloMozo') ?>
             </a>
 
-            <a id="btn-mesa-numero" href="#mesa-cambiar-numero" data-rel="dialog" data-role="button">
+            <a id="btn-mesa-numero" href="#mesa-cambiar-numero" class="btn">
                 Número
             </a>
 
-            <a id="btn-mesa-cubiertos" href="#mesa-cambiar-cubiertos" data-rel="dialog" data-role="button">
+            <a id="btn-mesa-cubiertos" href="#mesa-cambiar-cubiertos" class="btn">
                 <span>Cubiertos</span>                            
             </a>
         </div>
-
+        
+        
+		<div>
+	        <h4>Listado de Comandas</h4>
+	
+	        <button id="btn-comanda-add" class="btn">Nueva Comanda</button>
+	    </div>
     </div>
 
-    <div class="mesa-view">
-        <h3 class="titulo-comanda">Listado de Comandas</h3>
-
-        <!-- @template listaComandas -->
-        <div id="comanda-detalle-collapsible" data-role="collapsible-set"></div>
-    </div>
+    
 
 
-    <footer data-role="footer" data-position="fixed">
+    <footer class="modal-footer">
         <h3>
             <span class="mesa-id" style="float: left;">
                 #<span class="mesa_id"></span>
@@ -119,7 +107,7 @@ el ajax que verifica el estado de las mesas (si fue abierta o cerrada alguna. --
 
 
 <script id="mozo-view" type="text/x-template">
-	<button class='mozo'><%= numero %></button>
+	<button class='mozo'><img src="<?= IMAGES_URL ?>/thumb_<%= image_url %>" /><%= numero %></button>
 	<div class="mesas-list"></div>
 </script>
 

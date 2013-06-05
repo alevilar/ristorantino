@@ -4,7 +4,7 @@
  * 
  */
 
-App.module("mesaApp", function () {
+App.module("mesaApp", function (mesaApp, App, Backbone, Marionette, $, _) {
 		var mesaApp = this;
 		
 		
@@ -36,7 +36,6 @@ App.module("mesaApp", function () {
 					// 'relatedModel' is automatically set to 'Zoo'; the 'relationType' to 'HasOne'.
 				}
 			}]
-		    
 		});
 	
 	
@@ -209,7 +208,9 @@ App.module("mesaApp", function () {
 		
 		    template: "#mesa-extra-view",		   
 		    
+		    
 		    events: {
+		    	"click #btn-comanda-add"    :   "crearNuevaComanda",
 		        "click #btn-mesa-cerrar"    :   "mandarAjaxYVolverAListadoDeMesas",
 		        "click #btn-mesa-reabrir"   :   "mandarAjaxYVolverAListadoDeMesas",
 		        "click #btn-mesa-ticket"    :   "mandarAjaxYVolverAListadoDeMesas",
@@ -231,8 +232,16 @@ App.module("mesaApp", function () {
 		        'change:menu'               :   'renderMenu',
 		        'change:cant_comensales'    :   'renderCubiertos'
 		    },
+		    
+		    
+		    crearNuevaComanda: function ()
+		    {
+		    	this.model.nuevaComanda();
+		    	return this;
+		    },
 		
-		    eliminarMesa: function(){
+		    eliminarMesa: function () 
+		    {
 		        this.model.destroy();
 		        return this;
 		    },
@@ -469,7 +478,7 @@ App.module("mesaApp", function () {
 		/**
 		 * 
 		 * ----------------------------------------------------------------------
-		 *  STARTS Module obects
+		 *  STARTS Module objects
 		 */
 		// instanciates controller
 		var controller = new MesaController;
@@ -479,21 +488,49 @@ App.module("mesaApp", function () {
 		
 		// create main views
 		var mozosView = new MozosView( {collection: mozosMesas} );
+		mozosView.on('itemview:mozo:select', function( e , view ) {
+			controller.show('mesaFormView', e , view);
+		});	
+			
+		mozosView.on('itemview:itemview:mesa:select', function( e , view ) {
+			controller.show('mesaExtraView', e , view);
+			this.currentMesa = view.model;
+		});	
 		
 		// Load Mesas
-		mozosMesas.fetch().success( function () {
-			App.contentRegion.show(mozosView);
-		});
+		mozosMesas.fetch();
+		var mesasInterval = setInterval( function(){
+			mozosMesas.fetch();
+		}, 3800);
 		
-		this.onStart = function () {
-			mozosView.on('itemview:mozo:select', function( e , view ) {
-				controller.show('mesaFormView', e , view);
-			});	
-				
-			mozosView.on('itemview:itemview:mesa:select', function( e , view ) {
-				controller.show('mesaExtraView', e , view);
-			});			
-		}
+		
+		
 
+		/**
+		 * Set Public objects
+		 */
+		
+		// sets the Module´s index view 
+		this.currentView = mozosView;
+		
+		// Mozos Collection
+		this.mesas = mozosMesas;
+		
+		// current selected Mesa Model
+		this.currentMesa = null;
+		
+		
+		// public Models Def
+		this.Model = {
+			Mesa: Mesa
+		}
+		
+		/**
+		 * Stops fetching mesas data
+		 */
+		this.stopMesasInterval = function () 	{
+			clearInterval( mesasInterval );
+			return this;
+		}
 	});
 

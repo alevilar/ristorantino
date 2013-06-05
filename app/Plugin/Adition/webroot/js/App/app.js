@@ -8,14 +8,44 @@
 App = ( function( Backbone ) {
 	
 	
+	var DialogRegion = Backbone.Marionette.Region.extend({
+		onClose: function ()
+		{
+			this.$el.modal('hide');
+		},
+		
+		onShow: function ()
+		{
+			this.$el.modal('show');
+		}
+	});
+	
+/*
+	  // big-dialog			  
+	  App.bigDialog.on('close', function(){
+	  	this.$el.modal('hide');
+	  });
+	  
+	  App.bigDialog.on('show', function(){
+	  	this.$el.modal('show');
+	  });
+	*/		  
+			  
+	
 	var App = new Backbone.Marionette.Application({
 		
 	    regions: {
 	    	headerRegion: '#main-header',
 	    	contentRegion: '#main-container',
 	    	footerRegion: '#main-footer',
-	    	dialog: '#dialog',
-	    	bigDialog: '#big-dialog',
+	    	dialog: {
+	    		regionType: DialogRegion,
+	    		selector: '#dialog'
+	    	},
+	    	bigDialog: {
+	    		regionType: DialogRegion,
+	    		selector: '#big-dialog'
+	    	},
 	    },
 	    
 	  
@@ -45,9 +75,9 @@ App = ( function( Backbone ) {
 		    function observable() {
 		        if (arguments.length > 0) {
 		            // Write
-		            App.app.trigger(eventName, arguments[0]);
+		            App.trigger(eventName, arguments[0]);
 		            if ( arguments[0].hasOwnProperty('id') ) {
-		                App.app.trigger(eventName+'id:'+arguments[0].id, arguments[0]);
+		                App.trigger(eventName+'id:'+arguments[0].id, arguments[0]);
 		            }
 		            // Ignore writes if the value hasn't changed
 		            _latestValue = arguments[0];
@@ -91,25 +121,6 @@ App = ( function( Backbone ) {
 			  // Acts as Mediator Object for the hole application	            
 			  App.controller = new App.Controller;   
 			  
-			  
-			  // Set Region as jquery DIALOG
-			  
-			  // dialog
-			  App.dialog.on('close', function(){
-			  	this.$el.modal('hide');
-			  });
-			  App.dialog.on('show', function(){
-			  	this.$el.modal('show');
-			  });
-
-			  // big-dialog			  
-			  App.bigDialog.on('close', function(){
-			  	this.$el.modal('hide');
-			  });
-			  
-			  App.bigDialog.on('show', function(){
-			  	this.$el.modal('show');
-			  });
 		}
 
 	});
