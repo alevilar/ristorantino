@@ -37,12 +37,18 @@ foreach ($egresos as $g){
         }
     ?></h3>
             <p>
-                <?php 
-                if (!empty($g['Egreso']['file'])) {
-                    $iii = $html->image($g['Egreso']['file'], array('width'=>48, 'alt' => 'Bajar', 'escape' => false));
-                    echo $html->link($iii, "/" .IMAGES_URL .$g['Egreso']['file'], array('target'=>'_blank', 'escape' => false));
+                <?php
+                $ext = substr(strrchr($g['Egreso']['file'],'.'),1);
+                if ( in_array(low($ext), array('jpg', 'png', 'gif', 'jpeg')) ) {
+                    $iii = $html->image(THUMB_FOLDER.$g['Egreso']['file'], array('width' => 48, 'alt' => 'Bajar', 'escape' => false));
+                } else {
+                    $iii = "Descargar $ext";
                 }
-        
+                if (!empty($g['Egreso']['file'])) {
+                    echo $html->link($iii, "/" . IMAGES_URL . $g['Egreso']['file'], array('target' => '_blank', 'escape' => false));
+                }
+
+                echo " - ";
                 echo $html->link('  Ver en detalle este egreso',array('action' => 'view', $g['Egreso']['id']));
                 echo " - ";
                 echo $html->link('  Editar egreso',array('action' => 'edit', $g['Egreso']['id']))?>

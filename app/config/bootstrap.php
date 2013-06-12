@@ -43,6 +43,10 @@
  */
 //EOF
 
+define('THUMB_FOLDER', 'thumbs' . DS);
+define('IMAGES_THUMB', IMAGES . DS . THUMB_FOLDER . DS);
+define('THUMBNAIL_IMAGE_MAX_WIDTH', 150);
+define('THUMBNAIL_IMAGE_MAX_HEIGHT', 150);
 
 define('DATETIME_NULL', '0000-00-00 00:00:00');
 

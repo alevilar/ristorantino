@@ -6,7 +6,13 @@ class Gasto extends AccountAppModel {
         
         var $displayField = 'importe_total';
 
-        var $actAs = array('Containable');
+        var $actAs = array('Containable'
+            );
+        
+        
+        var $files = array(
+            '_file' => 'file'
+        );
         
         var $validate = array(
 		'factura_nro' => array(
@@ -93,16 +99,8 @@ class Gasto extends AccountAppModel {
         {
             parent::beforeSave($options);
             
-        
-            if (!empty($this->data['Gasto']['Impuesto'])) {
-                // calcular total sumando los impuestos
-                $this->data['Gasto']['importe_neto']  = 0;
-                if (!empty($this->data['Gasto']['Impuesto'])) {
-                    foreach ($this->data['Gasto']['Impuesto'] as $imp){
-                        $this->data['Gasto']['importe_neto'] += $imp['neto'];
-                    }
-                }
-            }
+            $this->_calcularImporteNeto();
+            
             return true;
         }
        
@@ -111,6 +109,30 @@ class Gasto extends AccountAppModel {
         {
             parent::afterSave($created);
             
+            return $this->_refreshImpuestos($created);
+        }
+        
+        
+        /**
+         * Calcula el neto sumando los impuestos y lo setea en el data
+         */
+        private function _calcularImporteNeto(){
+            if (!empty($this->data['Gasto']['Impuesto'])) {
+                $this->data['Gasto']['importe_neto']  = 0;
+                if (!empty($this->data['Gasto']['Impuesto'])) {
+                    foreach ($this->data['Gasto']['Impuesto'] as $imp){
+                        $this->data['Gasto']['importe_neto'] += $imp['neto'];
+                    }
+                }
+            }
+        }
+        
+        /**
+         *  Ante un cambio en e gasto, resetea los valores anteriores
+         * @param boolean $created
+         * @return boolean
+         */
+        private function _refreshImpuestos($created){
             if (!empty($this->data['Gasto']['Impuesto'])) {
                 if (!$created){
                         $this->Impuesto->deleteAll(array('Impuesto.gasto_id'=>$this->id ));
@@ -133,7 +155,6 @@ class Gasto extends AccountAppModel {
                     }
                 }
             }
-            
             return true;
         }
         
@@ -164,7 +185,7 @@ class Gasto extends AccountAppModel {
                 ), $this
             );      
              
-            $conditions[] = "IFNULL(($subQuery), 0) < `Gasto`.`importe_total`";
+            $conditions[] = "IFNULL(($subQuery), 0) <> `Gasto`.`importe_total`";
             $fieldContain['recursive'] = -1;
             $fieldContain['fields'] = array('Gasto.id','Gasto.id');
             $fieldContain['conditions'] = $conditions;

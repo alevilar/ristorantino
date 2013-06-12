@@ -22,7 +22,12 @@ $class = ($gasto['Gasto']['importe_pagado'] < $gasto['Gasto']['importe_total'])?
 
 <?php
 if (!empty($gasto['Gasto']['file'])) {
-    $iii = $html->image($gasto['Gasto']['file'], array('width'=>348, 'alt' => 'Bajar', 'escape' => false));
+    $ext = substr(strrchr($gasto['Gasto']['file'],'.'),1);
+    if ( in_array(low($ext), array('jpg', 'png', 'gif', 'jpeg')) ) {
+        $iii = $html->image($gasto['Gasto']['file'], array('width'=>348, 'alt' => 'Bajar', 'escape' => false));
+    } else {
+        $iii = "ARCHIVO: ".$gasto['Gasto']['file'];
+    }
     echo $html->link($iii, "/" .IMAGES_URL .$gasto['Gasto']['file'], array('target'=>'_blank', 'escape' => false));
 }
 ?>

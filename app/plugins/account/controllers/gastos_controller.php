@@ -135,14 +135,7 @@ class GastosController extends AccountAppController
         $this->set('gasto', $this->Gasto->read(null, $id));
     }
     
-    function sala(){
-        if (!$this->RequestHandler->isAjax()) {
-            $this->redirect(array('action'=>'index'), 100);
-        } else {
-            $this->render('index');
-        }
-    }
-
+    
     function add()
     {
         $this->pageTitle = 'Nuevo Gasto';

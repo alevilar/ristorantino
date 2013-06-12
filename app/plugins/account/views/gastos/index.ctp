@@ -29,7 +29,12 @@
                     <div style="position: absolute; right: 3px;">
                         <?php
                         if (!empty($gasto['Gasto']['file'])) {
-                            $iii = $html->image($gasto['Gasto']['file'], array('width' => 48, 'alt' => 'Bajar', 'escape' => false));
+                            $ext = substr(strrchr($gasto['Gasto']['file'],'.'),1);
+                            if ( in_array(low($ext), array('jpg', 'png', 'gif', 'jpeg')) ) {
+                                $iii = $html->image(THUMB_FOLDER.$gasto['Gasto']['file'], array('width' => 48, 'alt' => 'Bajar', 'escape' => false));
+                            } else {
+                                $iii = "Descargar $ext";
+                            }
                             echo $html->link($iii, "/" . IMAGES_URL . $gasto['Gasto']['file'], array('target' => '_blank', 'escape' => false));
                         }
                         ?>

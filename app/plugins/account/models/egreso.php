@@ -4,6 +4,10 @@ class Egreso extends AccountAppModel {
 	var $name = 'Egreso';
         var $order = array('Egreso.fecha' => 'DESC', 'Egreso.modified' => 'DESC');
         
+        var $files = array(
+            '_file' => 'file'
+        );
+        
         var $validate = array(
                 'total' => array(
 			'numeric' => array(
@@ -94,11 +98,11 @@ class Egreso extends AccountAppModel {
         
         
         function afterSave($created) {
+            if (!$created) return true;
+            
             // convierte el HABTM en HasMany
             $join = 'AccountEgresosGasto';
             $this->bindModel( array('hasMany' => array($join)) );
-            
-            $thisId = $this->id;
             
             // Cuando se realiza un egreso se van procesando cada
             // salida para verificar quel dicho egreso cubra el gasto
@@ -110,24 +114,46 @@ class Egreso extends AccountAppModel {
                     'Gasto.id' => $this->data['Gasto']['Gasto'],
                 )
             ));
-            $total = $this->data['Egreso']['total'];
-            $pagado = 0;
+            
+            $totalEgresoDisponible = $this->data['Egreso']['total'];
+            
+            // Primero cobro las que tienen importe nbegativo, por ejemplo las Notas de Credito
+            // estas no pueden quedar con un saldo parcial
+            // estas suman al total que falta por pagar en lugar de ir restandolo
             foreach ($gastos as $gastoId=>$gastoImporteTotal) {
-               $paraPagar = $gastoImporteTotal - $this->Gasto->importePagado( $gastoId ) ;
-               $loQueHabriaQuePagar = $total-$pagado;
-               if ($loQueHabriaQuePagar > 0) {
-                   if ($paraPagar  > $loQueHabriaQuePagar) {
-                       $paraPagar = $loQueHabriaQuePagar;
-                   }
-                   $pagado += $paraPagar;
-                   
-                   $this->{$join}->create(array(
-                        'gasto_id' => $gastoId,
-                        'egreso_id'  => $thisId,
-                        'importe'  => $paraPagar,
-                       ));         
+               if ($gastoImporteTotal <= 0) {
+                   $importeParcialDeEsteGasto = $gastoImporteTotal - $this->Gasto->importePagado( $gastoId );
+
+                    $this->{$join}->create(array(
+                          'gasto_id' => $gastoId,
+                          'egreso_id'  => $this->id,
+                          'importe'  => $importeParcialDeEsteGasto,
+                         ));         
                     $this->{$join}->save();
+                    
+                    $totalEgresoDisponible -= $importeParcialDeEsteGasto;
                }
+            }
+            
+            // Luego cobro el resto, que van saldando el pago y pueden quedar sin saldar completamente
+            foreach ($gastos as $gastoId=>$gastoImporteTotal) {
+               if ($gastoImporteTotal > 0) {
+                    $importeParcialDeEsteGasto = $gastoImporteTotal - $this->Gasto->importePagado( $gastoId );
+                    
+                    if ( $importeParcialDeEsteGasto > $totalEgresoDisponible ) {
+                        $importeParcialDeEsteGasto = $totalEgresoDisponible;
+                    }
+                    $this->{$join}->create(array(
+                          'gasto_id' => $gastoId,
+                          'egreso_id'  => $this->id,
+                          'importe'  => $importeParcialDeEsteGasto,
+                         ));         
+                    $this->{$join}->save();
+                    
+                    $totalEgresoDisponible -= $importeParcialDeEsteGasto;
+
+                    if ($totalEgresoDisponible < 0) break;
+                }
                
             }
             return true;

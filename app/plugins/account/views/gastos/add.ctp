@@ -12,7 +12,7 @@
             echo $form->input('proveedor_id', array('empty' => '- Seleccione -'));
             echo $form->input('tipo_factura_id');
             echo $form->input('factura_nro');
-            echo $form->input('file', array('type'=>'file', 'accept'=> "image/*"));
+            echo $form->input('_file', array('type'=>'file', 'accept'=> "image/*", 'label' => 'PDF, Imagen, Archivo'));
             ?>
         </div>
         <div class="ui-block-b">

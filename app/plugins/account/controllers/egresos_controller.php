@@ -46,26 +46,6 @@ class EgresosController extends AccountAppController
     function edit($egreso_id)
     {
         if (!empty($this->data)) {
-            if (is_uploaded_file($this->data['Egreso']['file']['tmp_name'])) {
-                
-                $filename = $this->data['Egreso']['file']['name'];
-
-                $i = 0;
-                $fileAnt = $filename;
-                while (file_exists(IMAGES . $filename)) {
-                    $filename = "$i.$fileAnt";
-                    $i++;
-                }
-
-                move_uploaded_file(
-                        $this->data['Egreso']['file']['tmp_name'], IMAGES . $filename
-                );
-
-                // store the filename in the array to be saved to the db
-                $this->data['Egreso']['file'] = $filename;
-            } else {
-                unset($this->data['Egreso']['file']);
-            }
             if (!$this->Egreso->save($this->data )) {
                 $this->Session->setFlash('El egreso no pudo ser guardado');
             } else {
@@ -131,24 +111,6 @@ class EgresosController extends AccountAppController
     function save()
     {
         if (!empty($this->data)) {
-            if (is_uploaded_file($this->data['Egreso']['file']['tmp_name'])) {
-                $filename = $this->data['Egreso']['file']['name'];
-
-                $i = 0;
-                while (file_exists(IMAGES . $filename)) {
-                    $filename = "$i." . $filename;
-                    $i++;
-                }
-
-                move_uploaded_file(
-                        $this->data['Egreso']['file']['tmp_name'], IMAGES . $filename
-                );
-
-                // store the filename in the array to be saved to the db
-                $this->data['Egreso']['file'] = $filename;
-            } else {
-                unset($this->data['Egreso']['file']);
-            }
             $this->Egreso->create();
             if ($this->Egreso->save($this->data)) {
                 $this->Session->setFlash('El Egreso fue guardado correctamente');

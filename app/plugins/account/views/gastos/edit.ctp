@@ -11,8 +11,18 @@
             echo $form->input('observacion');
             echo $form->input('tipo_factura_id');
             echo $form->input('factura_nro');
-            echo $form->input('fecha', array('type' => 'date'));
-            echo $form->input('file', array('type'=>'file', 'accept'=> "image/*"));          
+            echo $form->input('fecha', array('type' => 'date')); 
+            echo $form->hidden('file');
+            echo $form->input('_file', array('type'=>'file', 'accept'=> "image/*", 'label' => 'PDF, Imagen, Archivo'));  
+            $ext = substr(strrchr($this->data['Gasto']['file'],'.'),1);
+            if ( in_array(low($ext), array('jpg', 'png', 'gif', 'jpeg')) ) {
+                $iii = $html->image(THUMB_FOLDER.$this->data['Gasto']['file'], array('width' => 48, 'alt' => 'Bajar', 'escape' => false));
+            } else {
+                $iii = "Descargar $ext";
+            }
+            if (!empty($this->data['Gasto']['file'])) {
+                echo $html->link($iii, "/" . IMAGES_URL . $this->data['Gasto']['file'], array('target' => '_blank', 'escape' => false));
+            }
             ?>
         </div>
         <div class="ui-block-b">

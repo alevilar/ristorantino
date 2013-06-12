@@ -8,12 +8,27 @@ echo "<span class='total'> " . $number->currency($egreso['Egreso']['total']) . "
 
 echo "<span class='tipo_de_pago'> " . $html->image($egreso['TipoDePago']['image_url']) . "</span>";
 
+echo "<p>";
+$ext = substr(strrchr($egreso['Egreso']['file'],'.'),1);
+if ( in_array(low($ext), array('jpg', 'png', 'gif', 'jpeg')) ) {
+    $iii = $html->image($egreso['Egreso']['file'], array('width' => 344, 'alt' => 'Bajar', 'escape' => false));
+} else {
+    $iii = "Descargar $ext";
+}
+if (!empty($egreso['Egreso']['file'])) {
+    echo $html->link($iii, "/" . IMAGES_URL . $egreso['Egreso']['file'], array('target' => '_blank', 'escape' => false));
+}
+echo "</p>";
+
 
 if (!empty($egreso['Egreso']['observacion'])) {
     echo "<span class='observacion'> " . $egreso['Egreso']['observacion'] . "</span>";
 }
 ?></p>
-
+    
+    <p>
+    <?php echo $html->link('  Editar egreso',array('action' => 'edit', $egreso['Egreso']['id'])); ?>
+    </p>
     <div>
         <ul data-role="listview">
             <li data-role="list-divider">Listado de Gastos involucrados en este egreso</li>
