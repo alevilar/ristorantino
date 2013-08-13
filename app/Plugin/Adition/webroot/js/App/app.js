@@ -5,10 +5,10 @@
  * Aplicacion que maneja la Adicion del Ristorantino Mágico
  * 
  */
-App = ( function( Backbone ) {
+App = ( function( Backbone, Marionette ) {
 	
 	
-	var DialogRegion = Backbone.Marionette.Region.extend({
+	var DialogRegion = Marionette.Region.extend({
 		onClose: function ()
 		{
 			this.$el.modal('hide');
@@ -20,24 +20,11 @@ App = ( function( Backbone ) {
 		}
 	});
 	
-/*
-	  // big-dialog			  
-	  App.bigDialog.on('close', function(){
-	  	this.$el.modal('hide');
-	  });
-	  
-	  App.bigDialog.on('show', function(){
-	  	this.$el.modal('show');
-	  });
-	*/		  
-			  
 	
-	var App = new Backbone.Marionette.Application({
+	var App = new Marionette.Application({
 		
 	    regions: {
-	    	headerRegion: '#main-header',
-	    	contentRegion: '#main-container',
-	    	footerRegion: '#main-footer',
+	    	body: '#body-container',
 	    	dialog: {
 	    		regionType: DialogRegion,
 	    		selector: '#dialog'
@@ -103,28 +90,21 @@ App = ( function( Backbone ) {
 			document.getElementsByTagName("head")[0].appendChild(styleElement);
 		},
 		
+		
 		// Run On Start EVENT
 		onStart: function ( options )
 		{
-			  App.controller = App.Controller;
-			  App.addRegions(App.regions);
-					
-			  App.router = new App.Router;
-			  Backbone.history.start();
-			  
-			  $.extend(  $.mobile , {
-			      backBtnText: "Volver",
-			      defaultPageTransition: 'slide',
-			      defaultDialogTransition: 'pop'
-			  });
-				            
-			  // Acts as Mediator Object for the hole application	            
-			  App.controller = new App.Controller;   
-			  
+                    
+			App.addRegions( this.regions );			  
+			
+                        App.trigger('start:after');
+                        
+			App.router = new App.Router;
+			Backbone.history.start();  
+                                                
 		}
-
-	});
 	
+	});
 	return App;
 	
 } )( Backbone, Backbone.Marionette ); 

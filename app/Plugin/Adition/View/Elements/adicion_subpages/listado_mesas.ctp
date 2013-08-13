@@ -1,6 +1,44 @@
 <!-- Template: 
 listado de mesas que será refrescado continuamente mediante 
 el ajax que verifica el estado de las mesas (si fue abierta o cerrada alguna. -->
+<script id="mesa-list-layout" type="text/x-template">
+    			
+		    	<header class="navbar navbar-inverse">
+			      <div class="navbar-inner">
+			        <div class="container">
+			          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+			            <span class="icon-bar"></span>
+			            <span class="icon-bar"></span>
+			            <span class="icon-bar"></span>
+			          </button>
+			          <span class="brand">COQUS :: El Ristorantino Mágico</span>
+			          <nav class="nav-collapse collapse nav">
+			            <ul class="nav nav-pill pull-right">	              
+			              <li class="dropdown">
+			                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Opciones <b class="caret"></b></a>
+			                <ul class="dropdown-menu">
+			                  <li><?= $this->Html->link('Ir a la página principal','/')?></li>
+			                  <li class="divider"></li>
+			                  <li class="nav-header">Opciones</li>
+			                  <li><a href="#">Separated link</a></li>
+			                  <li><a href="#">One more separated link</a></li>
+			                </ul>
+			              </li>
+			            </ul>	           
+			          </nav><!--/.nav-collapse -->
+			        </div>
+			      </div>
+			    </header>
+			    
+	    		<div id="listado-mesas-body" class="body container-fluid"></div>
+		    	
+		    	<footer></footer>
+		    	
+	    	</script>
+	    	
+	    	
+
+
 <script id="mesa-view" type="text/x-template">
         	<header>
         		<span class="mesa-cliente"><%= cliente_abr %></span>
@@ -20,14 +58,23 @@ el ajax que verifica el estado de las mesas (si fue abierta o cerrada alguna. --
 <script id="mesa-extra-view" type="text/x-template">
     <header class="modal-header">
     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-    	<img src="<?= IMAGES_URL?>thumb_<%= Mozo.image_url %>" width="64"  class="img-circle" style="position: absolute; top: 10px; left: 10px;"/>
+    	
+    	<% if ( _.isEmpty( Mozo.image_url ) ) {%>
+			<button class='mozo'>
+				<img src="adition/img/frame.png" width="64" style="position: absolute; top: 10px; left: 10px;"/>
+				<span style="position: absolute;margin-left: 17px;margin-top: 13px;"><%= Mozo.numero %></span>
+			</button>    		
+		<% } else { %>
+			<button class='mozo'><img src="<?= IMAGES_URL?>thumb_<%= Mozo.image_url %>" width="64"  class="img-circle" style="position: absolute; top: 10px; left: 10px;"/></button>
+		<% } %>
+
         <h3 class="header text-center">
             <?php
             echo $this->Html->image('mesa-abrio.png') . " " . Configure::read('Mesa.tituloMesa')
             ?>
             <span class="mesa-numero"><%= numero %></span>
         </h3>
-        <span class="mesa-estado">Abierta</span>
+        <span class="mesa-estado" style="position: absolute;right: 10px;top: 44px">Abierta</span>
     </header>
 
     <div class="modal-body">
@@ -87,7 +134,7 @@ el ajax que verifica el estado de las mesas (si fue abierta o cerrada alguna. --
 		<div>
 	        <h4>Listado de Comandas</h4>
 	
-	        <button id="btn-comanda-add" class="btn">Nueva Comanda</button>
+	        <button id="btn-comanda-add"  data-dismiss="modal" class="btn">Nueva Comanda</button>
 	    </div>
     </div>
 
@@ -107,7 +154,14 @@ el ajax que verifica el estado de las mesas (si fue abierta o cerrada alguna. --
 
 
 <script id="mozo-view" type="text/x-template">
-	<button class='mozo'><img src="<?= IMAGES_URL ?>/thumb_<%= image_url %>" /><%= numero %></button>
+	<% if ( _.isEmpty( image_url ) ) {%>
+		<button class='mozo'>
+			<img src="adition/img/frame.png" width="64"/>
+			<span style="position: absolute;margin-left: -34px;margin-top: 23px;"><%= numero %></span>
+		</button>    		
+	<% } else { %>
+		<button class='mozo'><img src="<?= IMAGES_URL?>thumb_<%= image_url %>" width="64"  class="img-circle"/></button>
+	<% } %>
 	<div class="mesas-list"></div>
 </script>
 

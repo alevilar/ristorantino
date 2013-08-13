@@ -1,47 +1,21 @@
 <?php
-/*
-$parentCat = 0;
-$superParentId = 0;
-$catName = 'Inicio';
-if (!empty($categorias['Categoria'])) {
-    $parentCat = $categorias['Categoria']['id'];
-    $superParentId = (int) $categorias['Categoria']['parent_id'];
-    $catName = $categorias['Categoria']['name'];
-}
+$catId = $categoria['Categoria']['id'];
+$catName = $categoria['Categoria']['name'];
+?>
+<li id='categoria-id-<?= $catId ?>'>
 
-$hide = '';
-if ($parentCat) {
-    $hide = 'style="display:none"';
-}
-echo "<div id='categoria-id-$parentCat' $hide>";
+	<label for="categoria_tree_view_<?= $catId ?>" class="btn"><?= $catName ?></label>
+	<input type="checkbox" id="categoria_tree_view_<?= $catId ?>" value="<?= $catId ?>"/>
 
-echo "<h3>$catName</h3>";
+	<?php if ( !empty($categoria['Hijos']) ) { ?>
+		<ol class="body">    		
+		<?php
+		    foreach ($categoria['Hijos'] as $c) {
+		        echo $this->element('comanda_add/listar_categorias', array('categoria' => $c));
+		    }
+		?>
+		</ol>
+	<?php } ?>
 
-if (!empty($categorias['Categoria']['image_url'])) {
-    echo "<p>" . $this->Html->image($categorias['Categoria']['image_url']) . "</p>";
-}
+</li>
 
-
-echo "<ul>";
-if ($parentCat) {
-    echo "<li class='bck-button'><button data-categoria-id='$superParentId'>... Volver</button></li>";
-}
-if (!empty($categorias['Hijos'])) {
-    foreach ($categorias['Hijos'] as $c) {
-        $cName = $c['Categoria']['name'];
-        $cId = $c['Categoria']['id'];
-        echo "<li><button data-categoria-id='$cId'>$cName</button></li>";
-    }
-}
-echo "</ul>";
-
-echo "</div>";
-
-if (!empty($categorias['Hijos'])) {
-    foreach ($categorias['Hijos'] as $c) {
-        echo $this->element('comanda_add/listar_categorias', array('categorias' => $c));
-    }
-}
-
-
-*/

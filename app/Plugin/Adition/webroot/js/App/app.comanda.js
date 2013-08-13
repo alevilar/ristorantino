@@ -1,16 +1,22 @@
 /**
  * Comanda Module
  */
-//App.module("Comanda", function (comanda, App, Backbone, Marionette, $, _) {
+App.module("comandaApp", function (comandaApp, App, Backbone, Marionette, $, _) {
+	 
 	
-	// load Categorias
-	var categorias = [];
-	if ( _.isObject(App.categoriasTree) ) {
-		categorias = [App.categoriasTree];
-	} else if ( _.isArray(App.categoriasTree) ) {
-		categorias = App.categoriasTree;
-	}
+	/**
+	 * Categoria Model
+	 */
+	var Categoria = Backbone.Model.extend({});
 	
+	
+	/**
+	 * Categorias Collection
+	 */
+	var Categorias = Backbone.Collection.extend({
+		model: Categoria
+	});
+	var categorias = new Categorias();
 	
 	/**
 	 * Producto Model
@@ -87,7 +93,6 @@
 	
 	
 	
-	
 	/**
 	 * ComandaLayout View
 	 */
@@ -101,31 +106,92 @@
 	  }
 	});
 	
-	var comandaLayout = new ComandaLayout();
+	
+	/**
+	 * Categoria View
+	 */
+	var CategoriasTreeView = Marionette.ItemView.extend({
+		template: "#categorias-tree",
+		
+		lastChanged: null,
+		
+		triggers: {
+			'change input': 'categoria:select'
+		},
+		
+		events: {
+			'change input': 'cambioCategoria',
+		},
+		
+		onClose: function () {
+			this.$('input').attr('checked', false);
+		},
+		
+		cambioCategoria: function(a) {
+			papa = a.target;
+			console.info("el valor: %f y el objeto es %o y el valor del checked", a.target.value, a.target, a.target.checked);
+		}
+		
+	});
+
+
+	/**
+	 * Controller	
+	 */
+	var Controller = Marionette.Controller.extend({
+		tagName: 'ul',
+		className: 'tree',
+		
+		// Add Comanda View
+		add: function ( mesa ) {
+			var comandaLayout = new ComandaLayout({model: mesa});
+			
+			var categoriasView = new CategoriasTreeView({});
+			
+			App.contentRegion.show( comandaLayout ) ;
+			comandaLayout.categoriasRegion.show( categoriasView );
+			
+			return comandaLayout;
+		}
+	});
+	var controller = new Controller;
+	
+	
+	
+	/**
+	 * Define Function to Load Categorias Collection
+	 */
+	function loadCategorias ( categoriasTree ) {
+		if ( _.isArray(categoriasTree) ) {
+			categorias = new Categorias(categoriasTree);
+		} else if ( _.isObject(categoriasTree) ) {
+			categorias = new Categorias([categoriasTree]);
+		} else {
+			throw Error('Se debe pasar un array o un objeto como parámetro');
+		}
+		
+		return categorias;
+	}
 	
 	
 	/**
 	 * 
 	 * Set Public Methods
-	 * 
+	 * @return View
 	 */
-	this.hacerComandaParaMesa = function (mesa) {
-		comandaLayout.render();
-		var defComanda = jQuery.Deferred();
-		
-		// gives resolve(new Comanda)
-		return defComanda.promise;
+	comandaApp.hacerComandaParaMesa = function ( mesa ) {
+		return controller.add( mesa );
 	}
 	
-	prod1 = new Producto({id:1, name:"bananas"});
-	prod2 = new Producto({id:1, name:"bananas"});
-	prod3 = new Producto({id:3, name:"manzanas"});
-	dv1 = new DetalleComanda({Producto: prod1, DetalleSabor:[{id:3,name:"dulce"}]});
-	dv2 = new DetalleComanda({Producto: prod2});
-	dv22 = new DetalleComanda({Producto: prod2});
-	dv3 = new DetalleComanda({Producto:prod3});
-	dv1.set('cant',dv1.get('cant'+1));
-	dv2.set('cant',dv2.get('cant'+1));
-	dcs = new DetalleComandas();
-	ccc = new Comanda({DetalleComanda: dcs});
-//});
+	
+	comandaApp.categorias = function () {
+		return categorias;
+	}
+	
+	
+	comandaApp.onStart = function () {
+		// call funcion to load categorias with App´s categorias
+		var cats = loadCategorias( App.categoriasTree );
+		console.debug("estas son las CATS %o", cats);
+	}
+});

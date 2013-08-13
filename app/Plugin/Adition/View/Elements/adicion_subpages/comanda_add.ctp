@@ -1,34 +1,31 @@
+
+<script id="categorias-tree" type="text/x-template">
+		<ol class="tree">
+	        	<?php
+	        	foreach ($categorias as $c) {
+			        echo $this->element('comanda_add/listar_categorias', array('categoria' => $c));
+			    }
+				?>
+        </ol>
+</script>
+
+
 <script id="comanda-add" type="text/x-template">
-
-	<?php //echo $this->Html->css('/adition/css/comanda_add'); ?>
-	    <div data-role="header" data-id="mesa-header" data-position="fixed">
-	        <a href="#mesa-view" data-rel="back" data-transition="reverse">Volver</a>
+	    <header>
 	        <h1>
-	            <span class="mesa-numero"></span>
-	<?php
-	echo $this->Html->image('mesa-abrio.png') . " " . Configure::read('Mesa.tituloMesa') . " - " .
-	 Configure::read('Mesa.tituloMozo') . " " . $this->Html->image('mozomoniob.png')
-	?>
-	            <span class="mozo-numero"></span>
-	
-	            <span class="hora-abrio">Estado: <span class="mesa-estado"></span></span>
+	            <span class="mesa-numero"><%= numero %></span>
+					<?php
+					echo $this->Html->image('mesa-abrio.png') . " " . Configure::read('Mesa.tituloMesa')
+					?>
 	        </h1>
-	        <a href="#comanda-add-confirmacion" id="confirmar-comanda" data-rel="dialog">Enviar Comanda</a>
-	    </div>
+	    </header>
 	
-	    <div data-role="content" data-enhance="false">
-	        <div id="listado_categorias">
-	<?php echo $this->element('comanda_add/listar_categorias', array('categorias' => array('Hijos' => $categorias))); ?>
-	        </div>
+	    <div class="row">
+	    	
+	    	<div class="span2" class="well	" id="listado_categorias"></div>
+	        	
+	        <div class="span6" id="listado_productos"></div>
 	
-	        <div id="listado_productos">
-	<?php echo $this->element('comanda_add/listar_productos'); ?>
-	        </div>
-	
-	        <div id="detalle_productos">
-	<?php echo $this->element('comanda_add/detalle_producto'); ?>
-	        </div>
+	        <div class="span4" id="detalle_productos"></div>
 	    </div>    
-	</div>
-
 </script>

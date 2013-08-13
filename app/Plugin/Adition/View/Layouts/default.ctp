@@ -4,12 +4,7 @@
         <script type="text/javascript">
             <!--
             // Inicializacion de variable global de url
-            var urlDomain = "<?php echo $this->Html->url('/', true); ?>";
-            
-            // ir siempre a la HOME
-            if (window.location.hash && window.location.hash != '#listado-mesas') {
-                window.location.replace('<?php echo $this->Html->url('/adition'); ?>');
-            }
+            var urlDomain = "<?php echo $this->Html->url('/', true); ?>";                    
 
             -->
         </script>
@@ -36,6 +31,7 @@
 			'/adition/bootstrap/css/bootstrap',
 			'/adition/bootstrap/css/bootstrap-responsive',
             '/adition/css/style',
+            '/adition/css/tree',
   //                  '/adition/css/jquery-mobile-custom/ristorantino',
 //                    'keyboard',
 //                    'alekeyboard',
@@ -51,48 +47,15 @@
         
     </head>
     <body>
-    		
-	    	<header id="main-header" class="navbar navbar-inverse">
-		      <div class="navbar-inner">
-		        <div class="container">
-		          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-		            <span class="icon-bar"></span>
-		            <span class="icon-bar"></span>
-		            <span class="icon-bar"></span>
-		          </button>
-		          <span class="brand">COQUS :: El Ristorantino Mágico</span>
-		          <div class="nav-collapse collapse">
-		            <ul class="nav nav-pill pull-right">	              
-		              <li class="dropdown">
-		                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Opciones <b class="caret"></b></a>
-		                <ul class="dropdown-menu">
-		                  <li><a href="#">Action</a></li>
-		                  <li><a href="#">Another action</a></li>
-		                  <li><a href="#">Something else here</a></li>
-		                  <li class="divider"></li>
-		                  <li class="nav-header">Nav header</li>
-		                  <li><a href="#">Separated link</a></li>
-		                  <li><a href="#">One more separated link</a></li>
-		                </ul>
-		              </li>
-		            </ul>	           
-		          </div><!--/.nav-collapse -->
-		        </div>
-		      </div>
-		    </header>
-		    
-    		<div id="main-container" class="container-fluid"></div>
-	    	
-	    	<footer id="main-footer"></footer>
-	    	
-	    	<div id="dialog" role="dialog" class="modal hide fade"></div>
-	    	
+	    	<div id="body-container"></div>
+		    <div id="dialog" role="dialog" class="modal hide fade"></div>
 	    	<div id="big-dialog" role="dialog" class="modal hide big-modal"></div>
 	    	
     	
-        <?php echo $this->fetch('content'); ?>
-    	
-<?php
+        <?php 
+        
+        echo $this->fetch('content'); 
+
         echo $this->Html->script(array(
         	// Marionettejs
             '/adition/js/vendors/backbone.marionette/json2',
@@ -102,7 +65,7 @@
             '/adition/js/vendors/backbone.marionette/backbone',
             '/adition/js/vendors/backbone.marionette/backbone.babysitter',
             '/adition/js/vendors/backbone.marionette/backbone.wreqr',
-            '/adition/js/vendors/backbone.marionette/backbone.marionette.min',
+            '/adition/js/vendors/backbone.marionette/backbone.marionette',
             //'https://raw.github.com/marionettejs/backbone.marionette/master/lib/backbone.marionette.js',
             
 			//backbone relational

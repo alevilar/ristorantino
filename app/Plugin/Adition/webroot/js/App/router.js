@@ -1,27 +1,23 @@
 App.Router = Backbone.Router.extend({
     routes: {
         "": "root",
-        "listado-mesas": 'listadoMesas',
-        "mesa-view?:mesaId": "mesaView",
-        "comanda-add": "comandaAdd"
+        "comanda-add/:mesaId": "comandaAdd"
     },
     
-    
-    comandaAddView: null,
-    
-    
-    comandaAdd: function() {        
-       
+    comandaAdd: function( mesaCid ) { 
+       	var mesa = App.module('mesaApp').getMesaByCid( mesaCid );
+       	var comandaView = App.module('comandaApp').hacerComandaParaMesa( mesa );
+       	
+		 
+		//console.info("===============================  = =");
+		
     },
+    
     
         
     root: function(){
-    },
-     
-    listadoMesas: function(){
-    },
-
-    mesaView: function(mesaId) {
-        console.info("en mesa view para "+ mesaId);        
+                App.module('mesaApp').mesaController.viewMesaList();
+                //console.debug(mm);
+                
     }
 });
