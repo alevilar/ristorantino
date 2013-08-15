@@ -16,8 +16,6 @@ App.Router = Backbone.Router.extend({
     
         
     root: function(){
-                App.module('mesaApp').mesaController.viewMesaList();
-                //console.debug(mm);
-                
+                App.module('mesaApp').initView();
     }
 });

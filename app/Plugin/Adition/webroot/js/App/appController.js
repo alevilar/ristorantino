@@ -34,4 +34,4 @@ App.Controller = (function(){
 	});
 	
 	return AppController;
-})()    
+})();

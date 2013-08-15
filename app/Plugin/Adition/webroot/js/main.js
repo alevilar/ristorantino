@@ -3,9 +3,7 @@
 (function(App, mesaApp, comandaApp){
 	
 	// run on DOM Loaded
-	$(function(){
-		App.start();
-	});
+        App.start();
 	
 	
 	

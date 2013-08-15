@@ -5,12 +5,12 @@
  */
 
 App.module("mesaApp", function (mesaApp, App, Backbone, Marionette, $, _) {
-		
-		
-		/**
-		 *  Mesa Model
-		 */
-		var Mesa = Backbone.RelationalModel.extend({
+
+            /**
+             *  Mesa Model
+             */
+            var Mesa = Backbone.RelationalModel.extend({
+                url: 'mesas',
 	        defaults: {
 	                estado_id: 1,
 	                cliente_abr: '"B"',
@@ -28,17 +28,18 @@ App.module("mesaApp", function (mesaApp, App, Backbone, Marionette, $, _) {
 		 * Mozo Model
 		 */
 		var Mozo = Backbone.RelationalModel.extend({
-			relations: [{
-				type: Backbone.HasMany,
-				key: 'mesas',
-				relatedModel: Mesa,
-				collectionType: Mesas,
-				reverseRelation: {
-					key: 'mozo',
-					includeInJSON: 'id'
-					// 'relatedModel' is automatically set to 'Zoo'; the 'relationType' to 'HasOne'.
-				}
-			}]
+                    url: 'mozos',
+                    relations: [{
+                            type: Backbone.HasMany,
+                            key: 'mesas',
+                            relatedModel: Mesa,
+                            collectionType: Mesas,
+                            reverseRelation: {
+                                    key: 'mozo',
+                                    includeInJSON: 'id'
+                                    // 'relatedModel' is automatically set to 'Zoo'; the 'relationType' to 'HasOne'.
+                            }
+                    }]
 		});
 	
 	
@@ -73,7 +74,7 @@ App.module("mesaApp", function (mesaApp, App, Backbone, Marionette, $, _) {
 		    {
 		        return this.find(function(m){
 		            return m.id == mesaId;
-		        })
+		        });
 		    }
 		});
 	
@@ -86,7 +87,7 @@ App.module("mesaApp", function (mesaApp, App, Backbone, Marionette, $, _) {
 		        
 		    url: 'mozos',
 		        
-		    model: Mozo,
+		    model: Mozo
 		});
 		
 		
@@ -99,9 +100,6 @@ App.module("mesaApp", function (mesaApp, App, Backbone, Marionette, $, _) {
 		    
 		    tagName:  "article",
 		    
-		    triggers: {
-		    	"click": 'mesa:select'
-		  	},
 		    
 		    modelEvents:{
 		        'change:estado_id'  :   'cambiarEstado',
@@ -110,6 +108,10 @@ App.module("mesaApp", function (mesaApp, App, Backbone, Marionette, $, _) {
 		        'change:time_cerro' :   'cambiarTimeCerro',
 		        'change:Cliente'    :   'render',
 		        'remove destroy'    :   'remove',
+		    },
+                    
+                    events: {
+		    	"click"    :   "view"
 		    },
 		    
 		 
@@ -149,7 +151,17 @@ App.module("mesaApp", function (mesaApp, App, Backbone, Marionette, $, _) {
 		        $a.attr('data-theme', App._jqmThemeMap[this.model.get('estado_id')]);
 		        
 		        $a.addClass(this.jqmThemeByEstado());
-		    } 
+		    },
+                            
+                    view: function () {       
+                        this.trigger('mesa:select');
+                        // instanciar nueva vista
+                        // @TODO store each mesa view in cache
+                        var extraView = new MesaExtraView({model: this.model});
+                        App.bigDialog.show( extraView );
+                        
+                        mesaApp.trigger('mesa:select');
+                    }
 		});
 		
 		
@@ -180,10 +192,11 @@ App.module("mesaApp", function (mesaApp, App, Backbone, Marionette, $, _) {
 			itemView: MesaView,
 			
 		    itemViewContainer: '.mesas-list',
-		  
-		    triggers: {
-		    	"click button.mozo": 'mozo:select'
-		  	},
+	                      
+                    events: {
+                        "click button.mozo": 'mozoSelect'
+                    },
+                            
 		   
 		    initialize: function( e ) {                        
 		    	var mesas = this.model.get('mesas');                        
@@ -194,7 +207,23 @@ App.module("mesaApp", function (mesaApp, App, Backbone, Marionette, $, _) {
 		    	// sets width porporcionaly
 		    	var width = 100/mesaApp.mozos.length;
 		    	this.el.style.width = width+"%";                   
-		    }
+		    },
+                            
+                    mozoSelect: function () {
+                        this.trigger('mozo:select');                        
+                        var mozoModel = this.model,
+                        mesaFormView = new MesaFormView( {model: mozoModel} );
+
+                        mesaFormView.once('submit', function( data ) {
+                                data.preventDefault();
+                                var mesaObj = App.formToObject( data.view.$('form') );
+                                App.dialog.close(mesaFormView);
+                                mozoModel.get('mesas').create(mesaObj);	
+                                return false;
+                        });
+                        
+                        App.dialog.show(mesaFormView);
+                    }
 		});
 		
 		
@@ -202,17 +231,7 @@ App.module("mesaApp", function (mesaApp, App, Backbone, Marionette, $, _) {
 		 * Mozos View
 		 */		
 		var MozosView = Backbone.Marionette.CollectionView.extend({
-			itemView: MozoView,
-                        // The default implementation:
-                        appendHtml: function(collectionView, itemView, index){
-                            console.debug(itemView);
-                          collectionView.$el.append(itemView.el);
-                        },
-                                
-                        onRender: function(){
-                         console.info("asa asjais asjoiasj");
-                       }
-
+			itemView: MozoView          
 		});
 		
 		
@@ -223,9 +242,18 @@ App.module("mesaApp", function (mesaApp, App, Backbone, Marionette, $, _) {
 			
 			template: '#mesa-add',
 			
-		  	triggers: {
-		  		"submit form": 'submit'
-		  	}
+		  	events: {
+		  		"submit form": 'doSubmit'
+		  	},
+                        
+                        doSubmit: function (data) {
+                            debugger;
+                            var f = $(data.target);
+                            var mesaObj = App.formToObject( f );
+                            App.dialog.close(this);
+                            var mess = this.model.get('mesas');
+                            mess.create( mesaObj );
+                        }
 		});
 		
 		
@@ -457,141 +485,7 @@ App.module("mesaApp", function (mesaApp, App, Backbone, Marionette, $, _) {
 		});	
 		
 		
-		/**
-		 * mesaApp Controller
-		 * 
-		 * controlls how views are rendered
-		 * bassicaly, sets models and controll in views tnat needs some controll flown
-		 */		
-		var MesaController = Marionette.Controller.extend({
-			/**
-			 * Stores current View object
-			 * it vould be a layout or a view itself
-			 * @param View
-			 */
-			_view: null,
-			
-			mesaAppLayout: null,
-			mozosView: null,
-						
-			initialize: function ()
-			{
-				// create Main Layout Views wrapper
-				this.mesaAppLayout = new MesaAppMainLayout();
-				this.mesaAppLayout.render();          
-                               // console.debug(App.body);
-                                App.body.show( this.mesaAppLayout );
-			},
-			
-			/**
-			 * trigger view change event
-			 * Changes current View state
-			 * Return the current view
-			 */
-			view: function ( view )
-			{
-				if ( view ) {
-					this.trigger('view:change', view);
-					this._view = view;	
-				} else {
-					// run only first time when the _mesa is not instanciated
-					this._view = this._createDefaultIndexView();
-				}
-                                
-				return this._view;	
-			},
-                                
-                        viewMesaList: function () {
-                            if ( !this.mozosView ) {
-                                this.mozosView = this._createMozosView();
-                            }
-                            
-                            this.mesaAppLayout.body.show( this.mozosView );
-                            
-                            return this.mesaAppLayout;
-                        },
-			
-			/**
-			 * Default Index view of this Module
-			 */
-			_createDefaultIndexView: function()
-			{
-				// create main view and atach view to controller
-				this.mozosView = this._createMozosView();
-                                
-				this.mesaAppLayout.body.show( this.mozosView );
-                                
-				// set view
-				return this.mesaAppLayout;
-			},
-			
-			_createMozosView: function ()
-			{
-				var mozosView = new MozosView( {collection: mesaApp.mozos} );                                
-				this.listenTo(mozosView, 'itemview:mozo:select', this.onMozoSelect);	
-				this.listenTo(mozosView, 'itemview:itemview:mesa:select', this.onMesaSelect);
-                                
-				return mozosView;
-			},
-			
-			onMozoSelect: function (e, view)
-			{
-				this.show('mesaFormView', e , view);
-				mesaApp.trigger('mozo:select');
-			},
-			
-			onMesaSelect: function( e , view ) {
-				this.show('mesaExtraView', e , view);
-				this.currentMesa = view.model;
-				mesaApp.trigger('mesa:select');
-			},
-			
-			mesaFormView: function (view , e)
-			{
-				var mozoModel = view.model,
-					mesaFormView = new MesaFormView({model: mozoModel});
-					
-				mesaFormView.once('submit', function( data ) {
-					var mesaObj = App.formToObject( data.view.$('form') );
-					App.dialog.close(mesaFormView);
-					mozoModel.get('mesas').create(mesaObj);	
-				});
-				App.dialog.show(mesaFormView);
-			},
-						
-			mesaExtraView: function (view , e)
-			{
-	    		// instanciar nueva vista
-	    		// @TODO store each mesa view in cache
-	    		var extraView = new MesaExtraView({model: view.model});
-	    			
-				App.bigDialog.show(extraView);
-			},
-			
-			/**
-			 * calls the function by name
-			 */
-			show: function ( mesaViewName )
-			{
-				if ( _.isFunction(this[mesaViewName]) ){
-					this[mesaViewName].call(arguments[1], arguments[2]);	
-				} else {
-					throw new Error("View '" + mesaViewName + "' is not a function in this controller");
-				}
-				
-			}
-		});
 		
-		
-                
-                 // instanciates controller for View´s controller when DOM is loaded
-                mesaApp.mesaController;
-                App.on('start:after', function(){
-                    mesaApp.mesaController = new MesaController();
-                    mesaApp.trigger('mesaController:init');
-                    
-                    
-                });
 		
 		/**
 		 * Data Fetch
@@ -604,9 +498,9 @@ App.module("mesaApp", function (mesaApp, App, Backbone, Marionette, $, _) {
 		}
 		
 		function startMesasInterval () {
-			mesaApp.mozos.fetch();
 			mesasInterval = setInterval( function(){
 			  	mesaApp.mozos.fetch();
+                                mesaApp.trigger('mesas:fetch');
 			}, App.MESAS_RELOAD_INTERVAL);
 			return this;
 		}
@@ -618,13 +512,35 @@ App.module("mesaApp", function (mesaApp, App, Backbone, Marionette, $, _) {
 		 * ----------------------------------------------------------------------
 		 *  STARTS Module objects
 		 */
+                
+                /**
+		 * Start Event
+		 */
+                var mesaAppLayout;
+                mesaAppLayout = new MesaAppMainLayout();
+                mesaAppLayout.render();
+                
+                // Mozos Collection
+		mesaApp.mozos = new Mozos;       
+                mesaApp.mozos.fetch();
+                var mozosView = new MozosView( { collection: mesaApp.mozos } );
+                
+                //on sync show mozosview
+                mesaApp.mozos.once('sync',function(w){
+                   mesaAppLayout.body.show(mozosView);
+                });
+                
 		
 		/**
 		 * Set Public objects
 		 */
+                mesaApp.initView = function () {   
+                    App.body.show( mesaAppLayout );
+                    return mesaAppLayout;
+                };
 		
-		// Mozos Collection
-		mesaApp.mozos = new Mozos;
+		
+                 
 		
 		// public Models Def
 		mesaApp.Model = {
@@ -642,26 +558,8 @@ App.module("mesaApp", function (mesaApp, App, Backbone, Marionette, $, _) {
 			return mesa;
 		};
 		
-		/**
-		 * Current View
-		 * getter and setter of private var _view	
-                 * created on DOM loaded and layout init	
-		 *  
-		 */
-                mesaApp.on('mesaController:init', function(){
-                    mesaApp.view = function(v){
-                        return mesaApp.mesaController.view(v);
-                    }
-                });
-		
-		
-                
-		
-		/**
-		 * Start Event
-		 */
 		mesaApp.onStart = function ( options ){
-			startMesasInterval();
+                    startMesasInterval();
 		};
 		
 		

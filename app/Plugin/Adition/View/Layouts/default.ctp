@@ -46,9 +46,9 @@
         ?>
         
     </head>
-    <body>
+    <body id="app-body">
 	    	<div id="body-container"></div>
-		    <div id="dialog" role="dialog" class="modal hide fade"></div>
+                <div id="dialog" role="dialog" class="modal hide fade"></div>
 	    	<div id="big-dialog" role="dialog" class="modal hide big-modal"></div>
 	    	
     	

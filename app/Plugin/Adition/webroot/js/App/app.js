@@ -89,22 +89,21 @@ App = ( function( Backbone, Marionette ) {
 			}
 			document.getElementsByTagName("head")[0].appendChild(styleElement);
 		},
-		
+
+                onInitializeAfter: function () {
+                        App.addRegions( this.regions );	
+                },
 		
 		// Run On Start EVENT
 		onStart: function ( options )
 		{
-                    
-			App.addRegions( this.regions );			  
-			
-                        App.trigger('start:after');
-                        
 			App.router = new App.Router;
 			Backbone.history.start();  
                                                 
 		}
 	
 	});
+                
 	return App;
 	
 } )( Backbone, Backbone.Marionette ); 
