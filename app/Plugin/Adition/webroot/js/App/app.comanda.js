@@ -1,58 +1,23 @@
 /**
+ * 
  * Comanda Module
+ * 
  */
-App.module("comandaApp", function (comandaApp, App, Backbone, Marionette, $, _) {
-	 
-	
-	/**
-	 * Categoria Model
-	 */
-	var Categoria = Backbone.Model.extend({});
-	
-	
-	/**
-	 * Categorias Collection
-	 */
-	var Categorias = Backbone.Collection.extend({
-		model: Categoria
-	});
-	var categorias = new Categorias();
-	
-	/**
-	 * Producto Model
-	 */
-	var Producto = Backbone.Model.extend({
-	});
-	
-	
-	/**
-	 * Productos Collection
-	 */
-	var Productos = Backbone.Collection.extend({
-		model: Producto
-	});
-	
-	
-	
-	/**
-	 * Sabor Model
-	 */
-	var Sabor = Backbone.Model.extend({
-	});
-	
-	
-	/**
-	 * Sabores Collection
-	 */
-	var Sabores = Backbone.Collection.extend({
-		model: Sabor
-	});
+App.module("appComanda", function (appComanda, App, Backbone, Marionette, $, _) {
+	      
 	
 	
 	/**
 	 * DetalleComanda Model
 	 */
-	var DetalleComanda = Backbone.Model.extend({
+	appComanda.DetalleComanda = Backbone.Model.extend({
+                url: function() {
+                    var url = 'detalle_comandas';
+                    if (!this.isNew()) {
+                        url += '/' + this.get('id');
+                    }
+                    return url;
+                },
 		defaults: {
 			cant: 0			
 		},
@@ -71,15 +36,16 @@ App.module("comandaApp", function (comandaApp, App, Backbone, Marionette, $, _) 
 	/**
 	 * DetalleComandas Collection
 	 */
-	var DetalleComandas = Backbone.Collection.extend({
-		model: DetalleComanda
+	appComanda.DetalleComandas = Backbone.Collection.extend({
+                url: 'detalle_comandas',
+		model: appComanda.DetalleComanda
 	});
 	
 	
 	/**
 	 * Comanda Model
 	 */
-	var Comanda = Backbone.Model.extend({
+	appComanda.Comanda = Backbone.Model.extend({
 		url: 'comandas',
 		
 		initialize: function ( data )
@@ -88,7 +54,17 @@ App.module("comandaApp", function (comandaApp, App, Backbone, Marionette, $, _) 
 				throw new Error('Se debe pasar una Mesa como parametro');
 			}
 			this.set('mesa_id', data.Mesa.get('id'));
-		}
+		},
+                relations: [{
+                    type: Backbone.HasMany,
+                    key: 'detalle_comanda',
+                    relatedModel: appComanda.DetalleComanda,
+                    collectionType: appComanda.DetalleComandas,
+                    reverseRelation: {
+                        key: 'comanda',
+                        includeInJSON: 'id'
+                    }
+                }]
 	});
 	
 	
@@ -96,102 +72,34 @@ App.module("comandaApp", function (comandaApp, App, Backbone, Marionette, $, _) 
 	/**
 	 * ComandaLayout View
 	 */
-	var ComandaLayout = Marionette.Layout.extend({
+	appComanda.ComandaLayout = Marionette.Layout.extend({
 	  template: "#comanda-add",
 	
 	  regions: {
-	    categoriasRegion: "#listado_categorias",
-	    productosRegion: "#listado_productos",
-	    detalleProductoRegion: "#detalle_productos"
+                mesaLabelRegion: ".mesa-label",
+                detalleComandaRegion: ".detalle_comanda",
+                comandaRegion: ".comandas",
+                productosRegion: "#productos-container"
 	  }
 	});
-	
-	
-	/**
-	 * Categoria View
-	 */
-	var CategoriasTreeView = Marionette.ItemView.extend({
-		template: "#categorias-tree",
-		
-		lastChanged: null,
-		
-		triggers: {
-			'change input': 'categoria:select'
-		},
-		
-		events: {
-			'change input': 'cambioCategoria',
-		},
-		
-		onClose: function () {
-			this.$('input').attr('checked', false);
-		},
-		
-		cambioCategoria: function(a) {
-			papa = a.target;
-			console.info("el valor: %f y el objeto es %o y el valor del checked", a.target.value, a.target, a.target.checked);
-		}
-		
-	});
+                
 
 
-	/**
-	 * Controller	
+        /**
+         * 
 	 */
-	var Controller = Marionette.Controller.extend({
-		tagName: 'ul',
-		className: 'tree',
-		
-		// Add Comanda View
-		add: function ( mesa ) {
-			var comandaLayout = new ComandaLayout({model: mesa});
-			
-			var categoriasView = new CategoriasTreeView({});
-			
-			App.contentRegion.show( comandaLayout ) ;
-			comandaLayout.categoriasRegion.show( categoriasView );
-			
-			return comandaLayout;
-		}
-	});
-	var controller = new Controller;
-	
-	
-	
-	/**
-	 * Define Function to Load Categorias Collection
+	appComanda.DetalleComandaView = Marionette.ItemView.extend({
+		template: "#detalle_comanda"
+        });
+
+            
+        /**
+         * 
 	 */
-	function loadCategorias ( categoriasTree ) {
-		if ( _.isArray(categoriasTree) ) {
-			categorias = new Categorias(categoriasTree);
-		} else if ( _.isObject(categoriasTree) ) {
-			categorias = new Categorias([categoriasTree]);
-		} else {
-			throw Error('Se debe pasar un array o un objeto como parámetro');
-		}
-		
-		return categorias;
-	}
+	appComanda.ComandaView = Marionette.ItemView.extend({
+		template: "#comanda"
+        });
+        
 	
-	
-	/**
-	 * 
-	 * Set Public Methods
-	 * @return View
-	 */
-	comandaApp.hacerComandaParaMesa = function ( mesa ) {
-		return controller.add( mesa );
-	}
-	
-	
-	comandaApp.categorias = function () {
-		return categorias;
-	}
-	
-	
-	comandaApp.onStart = function () {
-		// call funcion to load categorias with App´s categorias
-		var cats = loadCategorias( App.categoriasTree );
-		console.debug("estas son las CATS %o", cats);
-	}
+        
 });

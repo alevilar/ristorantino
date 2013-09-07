@@ -53,103 +53,110 @@ el ajax que verifica el estado de las mesas (si fue abierta o cerrada alguna. --
             </footer>
 </script>
 
+<script id="mesa-comandas" type="text/x-template">
+    <h4>Listado de Comandas</h4>
 
+    <a id="btn-comanda-add"  class="btn">Nueva Comanda</a>
 
-<script id="mesa-extra-view" type="text/x-template">
-    <header class="modal-header">
-    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-    	
-    	<% if ( _.isEmpty( Mozo.image_url ) ) {%>
-			<button class='mozo'>
-				<img src="adition/img/frame.png" width="64" style="position: absolute; top: 10px; left: 10px;"/>
-				<span style="position: absolute;margin-left: 17px;margin-top: 13px;"><%= Mozo.numero %></span>
-			</button>    		
-		<% } else { %>
-			<button class='mozo'><img src="<?= IMAGES_URL?>thumb_<%= Mozo.image_url %>" width="64"  class="img-circle" style="position: absolute; top: 10px; left: 10px;"/></button>
-		<% } %>
+    <a id="btn-mesa-cobrar" href="#mesa-cobrar" class="btn">
+        Cobrar
+    </a>
+</script>
 
-        <h3 class="header text-center">
-            <?php
-            echo $this->Html->image('mesa-abrio.png') . " " . Configure::read('Mesa.tituloMesa')
-            ?>
-            <span class="mesa-numero"><%= numero %></span>
-        </h3>
-        <span class="mesa-estado" style="position: absolute;right: 10px;top: 44px">Abierta</span>
-    </header>
+<script id="mesa-actions" type="text/x-template">
+<div class="mesa-actions">
+    <ul class="nav nav-tabs nav-stacked">
+        <li><a id="btn-mesa-cerrar" href="mesas/cerrarMesa" class="">
+            <i class="icon-usd icon-large"></i>
+            Cerrar
+        </a>
+        </li>
 
-    <div class="modal-body">
-        <div class="mesa-actions">
-            <a id="btn-mesa-cerrar" href="mesas/cerrarMesa" class="btn">
-                Cerrar
-            </a>
+        <li>
+        <a id="btn-mesa-reabrir" href="mesas/reabrir" class="">
+            <i class="icon-share icon-large"></i>
+            Re Abrir
+        </a>
+        </li>
 
-            <a id="btn-mesa-cobrar" href="#mesa-cobrar" class="btn">
-                Cobrar
-            </a>
+        <li>
+        <a id="btn-mesa-clientes" href="<?php echo $this->Html->url('/clientes/all_clientes') ?>" class="">
+            <i class="icon-user icon-large"></i>
+            <span>Cliente</span>
+        </a>
+        </li>
 
-            <a id="btn-mesa-reabrir" href="mesas/reabrir" class="btn">
-                Re Abrir
-            </a>
+        <li>
+        <a id="btn-mesa-descuento" href="<?php echo $this->Html->url('/descuentos') ?>" class="">
+            <i class="icon-download-alt icon-large"></i>
+            <span>Descuento</span>
+        </a>
+        </li>
 
+        <li>
+        <a id="btn-mesa-ticket" href="mesas/imprimirTicket" class="">
+            <i class="icon-print icon-large"></i>
+            Imprimir Ticket
+        </a>
+        </li>
 
-            <a id="btn-mesa-clientes" href="<?php echo $this->Html->url('/clientes/all_clientes') ?>" class="btn">
-                <span>Cliente</span>
-            </a>
+        <li>
+        <a id="btn-mesa-borrar" href="#listado-mesas" class="closemodal">
+            <i class="icon-remove icon-large"></i>
+            Borrar
+        </a>
+        </li>
 
-            <a id="btn-mesa-descuento" href="<?php echo $this->Html->url('/descuentos') ?>" class="btn">
-                <span>Descuento</span>
-            </a>
+        <li>
+        <a id="btn-mesa-menu" href="#mesa-menu" class="">
+            <i class="icon-maxcdn icon-large"></i>
+            <span style="color: red"></span> Menú
+        </a>
+        </li>
 
+        <li>
+        <a  id="btn-mesa-edit" href="<? echo $this->Html->url('/mesas/edit/') ?>" class="">
+            <i class="icon-edit icon-large"></i>
+            Editar
+        </a>
+        </li>            
+    </div>
+</script>
 
-            <a id="btn-mesa-ticket" href="mesas/imprimirTicket" class="btn">
-                Imprimir Ticket
-            </a>
-
-            <a id="btn-mesa-borrar" href="#listado-mesas" class="btn">
-                Borrar
-            </a>
-
-            <a id="btn-mesa-menu" href="#mesa-menu" class="btn">
-                <span style="color: red"></span> Menú
-            </a>
-
-            <a  id="btn-mesa-edit" href="<? echo $this->Html->url('/mesas/edit/') ?>" class="btn">
-                Editar
-            </a>
-
-            <a id="btn-mesa-mozo" href="#mesa-cambiar-mozo" class="btn">
-                <?php echo Configure::read('Mesa.tituloMozo') ?>
-            </a>
-
-            <a id="btn-mesa-numero" href="#mesa-cambiar-numero" class="btn">
-                Número
-            </a>
-
-            <a id="btn-mesa-cubiertos" href="#mesa-cambiar-cubiertos" class="btn">
-                <span>Cubiertos</span>                            
-            </a>
+<script id="mesa-layout-view" type="text/x-template">
+    <div class="row-fluid">
+        <div class="span4">
+            
+            <nav class="actions"></nav>
         </div>
         
-        
-		<div>
-	        <h4>Listado de Comandas</h4>
-	
-	        <button id="btn-comanda-add"  data-dismiss="modal" class="btn">Nueva Comanda</button>
-	    </div>
+        <div class="span8">
+            <div class="body">
+                <div id="seleccionar-mozo" class="hide">
+                        <div data-role="content">           
+                                <input type="hidden" name="mesa_id" data-bind="value: adn().currentMesa().id"/>
+                                <fieldset data-role="controlgroup" data-type="horizontal">
+                                    <legend>Seleccionar <?php echo Configure::read('Mesa.tituloMozo') ?></legend>
+                                    <?php
+                                    foreach ($mozos as $m) {
+                                        $k = $m['Mozo']['id'];
+                                        $n = $m['Mozo']['numero'];
+                                        echo "<input type='radio' name='mozo_id' id='radio-mozo-cambiar-id-$k' value='$k' class='select-mozo'/>";
+                                        echo "<label for='radio-mozo-cambiar-id-$k'  style='display:inline'>$n</label>";
+                                    }
+                                    ?>
+                                </fieldset>
+
+                                <a href="#" class="btn pull-right" onclick="$('#seleccionar-mozo').toggle('slideUp');">Cancelar</a>
+                        <div class="clearfix"></div>
+                        </div>
+                </div>
+
+                <div class="content"></div>
+                
+            </div>
+        </div>
     </div>
-
-    
-
-
-    <footer class="modal-footer">
-        <h3>
-            <span class="mesa-id" style="float: left;">
-                #<span class="mesa_id"></span>
-            </span>
-            <span class="mesa-total"></span>
-            <span class="hora-abrio"></span>
-        </h3>
-    </footer>
 </script>
 
 
@@ -187,3 +194,30 @@ el ajax que verifica el estado de las mesas (si fue abierta o cerrada alguna. --
 	  		<button type="submit" class="btn-primary" form="mesa-add-form">Abrir Mesa</button>
 	  </div>	
 </script>
+
+
+
+<script id="mesa-label" type="text/x-template">
+    <header>
+        <span class="mesa-estado">Abierta</span>
+
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Volver</button>
+
+        <% if ( _.isEmpty( Mozo.image_url ) ) {%>
+                <button class='mozo'>
+                        <img src="adition/img/frame.png" width="64" style="position: absolute; top: 10px; left: 10px;"/>
+                        <span style="position: absolute;margin-left: 17px;margin-top: 13px;" class="mozo-numero"><%= Mozo.numero %></span>
+                </button>    		
+        <% } else { %>
+                <button class='mozo'><img src="<?= IMAGES_URL?>thumb_<%= Mozo.image_url %>" width="64"  class="img-circle" style="position: absolute; top: 10px; left: 10px;"/></button>
+        <% } %>
+
+        <h3 class="header text-center">
+            <?php
+            echo $this->Html->image('mesa-abrio.png') . " " . Configure::read('Mesa.tituloMesa')
+            ?>
+            <span class="mesa-numero"><%= numero %></span>
+        </h3>
+    </header>
+</script>
+

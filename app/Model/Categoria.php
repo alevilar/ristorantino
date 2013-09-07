@@ -44,29 +44,49 @@ class Categoria extends AppModel
      * @param $parent_cat_id de donde yovoy a leer los hijos
      * @return unknown_type
      */
-    public function array_listado($parent_cat_id = null)
+    public function array_listado($cat_id = null)
     {
         $conditions = array( 'Categoria.deleted' => 0 );
-        if (empty($parent_cat_id)) {
-            // categorias root
-            $conditions[] = 'Categoria.parent_id IS NULL';
+        if ( empty( $cat_id ) ) {
+           $categoria = array(
+               'Categoria' => array(
+                    'id' => 0,
+                    'name' => 'INICIO',
+                   )
+           );
+           $productos = $this->Producto->find('all', array(
+               'conditions' => array(
+                   'Producto.deleted' => 0,
+                   'OR' => array (
+                       'Producto.categoria_id' => 0,
+                       'Producto.categoria_id IS NULL',
+                   ),
+               )
+           ));
+           $categoria['Producto'] = $productos['Producto'];
         } else {
-            $conditions['Categoria.parent_id'] = $parent_cat_id;
-        }
-        
-        $categorias = $this->find('all', array(
-                'conditions' => $conditions,
+            $categoria = $this->find('first', array(
+                'conditions' => array(
+                    'Categoria.deleted' => 0,
+                    'Categoria.id' => $cat_id
+                ),
                 'contain' => array(
-                    'Producto',
-                    'Sabor',
+                    'Producto'
                 )
             ));
-        foreach ($categorias as &$c) {
-            $c['Hijos'] = $this->array_listado($c['Categoria']['id']);
         }
-        
-        
-        return $categorias;
+                
+       $children = $this->children($cat_id, true);
+       
+       $categoriasHijo = array();
+       foreach ($children as $c) {
+           $categoriasHijo[] = $this->array_listado($c['Categoria']['id']);
+       }
+       
+       $catFinal = $categoria['Categoria'];
+       $catFinal['Producto'] = $categoria['Producto'];
+       $catFinal['Categorias'] = $categoriasHijo;       
+        return $catFinal;
     }
 
 }

@@ -27,12 +27,12 @@ body{
 	width: 100%;
 }
 
-.estado_2 button{
-	background-color: #FFEFAA;
+.estado_2{
+	background-color: #FFEFAA !important;
 }
 
-.estado_3 button{
-	background-color: #EEFFFF;
+.estado_3{
+	background-color: #EEFFFF !important;
 }
 
 .expanded{
@@ -72,9 +72,41 @@ body{
 
 
 .big-modal{
-	width: 800px;
-	margin-left: -400px;
+	width: 92%;
+	margin-left: -46%;
+        height: 92%;
+        top: 2%;
+      
+}
+/*
+.big-modal footer {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+}
+*/
+
+.big-modal .mesa{
+     height: 100%;
+    
+}
+
+.mesa .mesa-actions a{
+    width: 100%;
 }
 
 
 
+#listado_categorias, #listado_productos{
+    -moz-column-count: 7;
+    -moz-column-gap: 3px;
+    -webkit-column-count: 7;
+    -webkit-column-gap: 3px;
+    column-count: 7;
+    column-gap: 3px;
+}
+
+#listado_productos button, #listado_categorias button{    
+    margin: 2px;
+    width: 95%;
+}

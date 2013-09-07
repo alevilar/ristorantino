@@ -267,7 +267,6 @@ class MesasController extends AppController
      */
     public function delete($id = null)
     {
-
         $this->Mesa->id = $id;
         if (!$this->Mesa->exists()) {
             throw new NotFoundException(__('Invalid mesa'));
