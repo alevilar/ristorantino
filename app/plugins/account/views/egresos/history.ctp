@@ -49,9 +49,9 @@ foreach ($egresos as $g){
                 }
 
                 echo " - ";
-                echo $html->link('  Ver en detalle este egreso',array('action' => 'view', $g['Egreso']['id']));
+                echo $html->link('  Ver en detalle este pago',array('action' => 'view', $g['Egreso']['id']));
                 echo " - ";
-                echo $html->link('  Editar egreso',array('action' => 'edit', $g['Egreso']['id']))?>
+                echo $html->link('  Editar pago',array('action' => 'edit', $g['Egreso']['id']))?>
             </p>
             <div>
                 <ul data-role="listview">

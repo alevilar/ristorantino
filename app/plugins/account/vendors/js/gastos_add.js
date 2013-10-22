@@ -1,32 +1,68 @@
 (function() {
     
     function redondeo(valor){
-        return Math.round(valor*100)/100
+        return Math.round(valor*100)/100;
     }
-     
     
-    function sumaNetos() {
-        var $importes = jQuery('#GastoAddForm input.calc_impuesto, #GastoAddForm input.calc_neto');
-        var total = 0;
-        jQuery.each($importes, function (v){
-            total += Number(jQuery($importes[v]).val());
-        })
+    function __sumaByTag( tagName ){
+        var $importes = jQuery( tagName );
+        
+        var total = 0;           
+        
+        if ($importes) {
+            jQuery.each($importes, function (v){
+                total += Number(jQuery($importes[v]).val());
+            });
+        }
         return redondeo(total);
     }
     
+    
+    function sumaImpuestos () {
+        return __sumaByTag('#GastoAddForm input.calc_impuesto');
+    };
+     
+    
+    function sumaNetos() {
+        return __sumaByTag('#GastoAddForm input.calc_neto');        
+    };
+    
+    function sumaTotal () {
+        return sumaNetos()+sumaImpuestos();
+    }
+    
     function modificarTotalesSumados(){
-        $('#importes-sumados').text( sumaNetos() );
+        var vsumaNetos = sumaNetos();
+        var vsumaTotal = sumaTotal();        
+        
+        if ( vsumaTotal ) {
+            $('#importe-total').val( vsumaTotal );
+        }
+        
+        if ( vsumaNetos ) {
+            $('#importe-neto').val( vsumaNetos );
+        }
     }
     
     
-    $('input','#GastoAddForm').bind('keyup', modificarTotalesSumados);
+    $('input.importe','#GastoAddForm').bind('keyup', modificarTotalesSumados);
     
     
     $('#GastoAddForm').bind('submit', function(){
-        if  ( sumaNetos() != $('#importe-total').val() ) {
-            return confirm("El importe Total no es igual a la Suma de todos los netos!! ¿Seguro que desea guardar?");
+        var okNeto = true,
+            okTotal = true;
+            
+        if  ( sumaNetos() != 0 && sumaNetos() != $('#importe-neto').val() ) {
+            okNeto = confirm("El importe NETO no es igual a la Suma de todos los netos!! ¿Seguro que desea guardar?");
         }
-        return true;
+        if  ( sumaTotal() != 0 && sumaTotal() != $('#importe-total').val() ) {
+            okTotal = confirm("El importe Total no es igual a la Suma de todos los importes!! ¿Seguro que desea guardar?");
+        }
+        if ( !okNeto || !okTotal ) {
+            return false
+        } else {
+            return true;
+        }
     });
        
         
@@ -41,7 +77,6 @@
                     jQuery(this).val(redondeo(valor));
                 }
             }
-            modificarTotalesSumados();
         }
     });
 
@@ -55,7 +90,6 @@
                     jQuery(this).val(redondeo(valor));
                 }
             }
-            modificarTotalesSumados();
         }
     });
 
@@ -81,6 +115,6 @@
         return $('#GastoAddForm').submit(); 
     });
     
-    modificarTotalesSumados();
+//    modificarTotalesSumados();
 
 })();

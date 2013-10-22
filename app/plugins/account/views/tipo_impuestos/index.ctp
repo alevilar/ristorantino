@@ -14,6 +14,8 @@ echo $paginator->counter(array(
 <tr>
 	<th><?php echo $paginator->sort('Nombre','name');?></th>
 	<th><?php echo $paginator->sort('porcentaje');?></th>
+        <th><?php echo $paginator->sort('tiene_neto');?></th>
+        <th><?php echo $paginator->sort('tiene_impuesto');?></th>
 	<th class="actions"><?php __('Acciones');?></th>
 </tr>
 <?php
@@ -30,6 +32,12 @@ foreach ($tipoImpuestos as $tipoImpuesto):
 		</td>
 		<td>
 			<?php echo $tipoImpuesto['TipoImpuesto']['porcentaje']; ?>
+		</td>
+                <td>
+			<?php echo $tipoImpuesto['TipoImpuesto']['tiene_neto']; ?>
+		</td>
+                <td>
+			<?php echo $tipoImpuesto['TipoImpuesto']['tiene_impuesto']; ?>
 		</td>
 		<td class="actions">
 			<?php echo $html->link(__('Editar', true), array('action' => 'edit', $tipoImpuesto['TipoImpuesto']['id'])); ?>

@@ -31,6 +31,13 @@ echo $html->link('Descargar Excel', $this->action.'.xls'.strstr($_SERVER['REQUES
     'data-ajax'=>'false'
     )) ?>
 
+<style id="style-ss">
+    .impuestos{
+        display: none;
+    }
+</style>
+
+<a href="#" id="btn-mostrar-impuestos" class="" style="float: right">Mostrar Impuestos</a>
 
 <div id="tabla-de-gastos">   
     <table data-role="table" data-mode="columntoggle">
@@ -45,7 +52,7 @@ echo $html->link('Descargar Excel', $this->action.'.xls'.strstr($_SERVER['REQUES
                 <th rowspan="2" data-priority="1">Importe Neto</th>
 <?php
 foreach ($tipo_impuestos as $ti) {
-    echo "<th colspan='2'  data-priority='5'>$ti</th>";
+    echo "<th colspan='2'  data-priority='5' class='impuestos'>$ti</th>";
 }
 ?>
                 <th class="total" rowspan="2">Total</th>
@@ -58,7 +65,7 @@ foreach ($tipo_impuestos as $ti) {
                 <td>CUIT</td>
                 <?php
                 foreach ($tipo_impuestos as $ti) {
-                    echo "<td>Neto</td><td>Imp.</td>";
+                    echo "<td class='impuestos'>Neto</td><td class='impuestos'>Imp.</td>";
                 }
                 ?>
             </tr>
@@ -68,7 +75,7 @@ foreach ($tipo_impuestos as $ti) {
 <?php
 foreach ($gastos as $g) {
     $classpagado = 'pagado';
-    $faltaPagar = $g['Gasto']['importe_total'] - $g['Gasto']['importe_pagado'];
+    $faltaPagar = abs($g['Gasto']['importe_total']) - abs($g['Gasto']['importe_pagado']);
     if ($g['Gasto']['importe_pagado'] < $g['Gasto']['importe_total']) {
         $classpagado = 'no-pagado';
     }
@@ -114,14 +121,14 @@ foreach ($gastos as $g) {
                     <?php
                     foreach ($tipo_impuestos as $tid => $ti) {
                         if (!empty($g['Impuesto'])) {
-                            echo "<td>" . mostrarNetoDe($tid, $g['Impuesto']) . "</td>";
+                            echo "<td class='impuestos'>" . mostrarNetoDe($tid, $g['Impuesto']) . "</td>";
                         } else {
-                            echo "<td>&nbsp;</td>";
+                            echo "<td class='impuestos'>&nbsp;</td>";
                         }
                         if (!empty($g['Impuesto'])) {
-                            echo "<td>" . mostrarImpuestoDe($tid, $g['Impuesto']) . "</td>";
+                            echo "<td class='impuestos'>" . mostrarImpuestoDe($tid, $g['Impuesto']) . "</td>";
                         } else {
-                            echo "<td>&nbsp;</td>";
+                            echo "<td class='impuestos'>&nbsp;</td>";
                         }
                     }
 
@@ -129,7 +136,16 @@ foreach ($gastos as $g) {
 
                     echo "<td class='faltapagar'>$faltaPagar" . "&nbsp;</td>";
                     echo "<td class='obs'>" . $g['Gasto']['observacion'] . "&nbsp;</td>";
-                    echo "<td class='acciones'>" . $html->link('Ver', array('action' => 'view', $g['Gasto']['id'])) . "<br>" . $html->link('Editar', array('action' => 'edit', $g['Gasto']['id']), array('data-ajax' => 'false')) . "</td>";
+                    
+                    if ($faltaPagar) {
+                        $linkPagar = $html->link(__('Pagar', true), array(
+                                'controller' => 'egresos',
+                                'action' => 'add', $g['Gasto']['id']), array(
+                                'data-ajax' => 'false',
+                            ));
+                    }
+                    
+                    echo "<td class='acciones'>$linkPagar<br>" . $html->link('Ver', array('action' => 'view', $g['Gasto']['id'])) . "<br>" . $html->link('Editar', array('action' => 'edit', $g['Gasto']['id']), array('data-ajax' => 'false')) . "</td>";
                 }
                 ?>
             </tr>
@@ -140,7 +156,26 @@ foreach ($gastos as $g) {
 </div>
 
 <script type="text/javascript">
+    
+
     (function(){
+        var $lala = $("#style-ss");        
+        var show = false;
+        var $impu = $('#btn-mostrar-impuestos');
+        $impu.click( function () {
+            if (show) {
+                // ocultar
+                $(document.body).prepend($lala);
+                show = !show;
+                $impu.html("Mostrar Impuestos");
+            } else{
+                // mostrar
+                $impu.html("Ocultar Impuestos");
+                $lala = $lala.remove();
+                show = !show;
+            }
+            $impu.addClass('active');
+        });
         
         var $inputs = $('tbody', '#tabla-de-gastos').find('input[type=checkbox]');
  

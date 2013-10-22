@@ -55,7 +55,7 @@ class Gasto extends AccountAppModel {
 	);
         
         var $hasMany = array(
-		'Account.Impuesto',
+		'Account.Impuesto'
             );
         
         //The Associations below have been created with all possible keys, those that are not needed can be removed
@@ -65,7 +65,7 @@ class Gasto extends AccountAppModel {
 			'joinTable' => 'account_egresos_gastos',
 			'foreignKey' => 'gasto_id',
 			'associationForeignKey' => 'egreso_id',
-			'unique' => true,
+			'unique' => true, 
 			'conditions' => '',
 			'fields' => '',
 			'order' => '',
@@ -94,6 +94,17 @@ class Gasto extends AccountAppModel {
 	);
            
         
+        public function beforeDelete($cascade = true)
+        {            
+            parent::beforeDelete($cascade);
+            $gasto = $this->read();            
+            foreach ( $gasto['Egreso'] as $g ) {
+                if ( !$this->Egreso->delete($g['id']) ) {
+                    return false;
+                }
+            }
+            return true;
+        }
        
         public function beforeSave($options = array())
         {
@@ -117,8 +128,7 @@ class Gasto extends AccountAppModel {
          * Calcula el neto sumando los impuestos y lo setea en el data
          */
         private function _calcularImporteNeto(){
-            if (!empty($this->data['Gasto']['Impuesto'])) {
-                $this->data['Gasto']['importe_neto']  = 0;
+            if (!empty($this->data['Gasto']['Impuesto']) && empty($this->data['Gasto']['importe_neto'])) {
                 if (!empty($this->data['Gasto']['Impuesto'])) {
                     foreach ($this->data['Gasto']['Impuesto'] as $imp){
                         $this->data['Gasto']['importe_neto'] += $imp['neto'];
@@ -141,11 +151,13 @@ class Gasto extends AccountAppModel {
                 foreach ($this->data['Gasto']['Impuesto'] as $impId=>$imp){
                     if (!empty($imp)) {                       
                         if (!empty($imp['checked']) && (!empty($imp['importe']) || !empty($imp['neto'])) ) {
+                            $importe = empty($imp['importe'])?0:$imp['importe'];
+                            $neto = empty($imp['neto'])?0:$imp['neto'];
                             $nuevoImp = array(
                                 'gasto_id' => $this->id,
                                 'tipo_impuesto_id' => $impId,
-                                'importe' => $imp['importe'],
-                                'neto' => $imp['neto'],
+                                'importe' => $importe,
+                                'neto' => $neto,
                             );
                             $this->Impuesto->create($nuevoImp);
                             if (!$this->Impuesto->save()){

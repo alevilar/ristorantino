@@ -47,7 +47,7 @@ class EgresosController extends AccountAppController
     {
         if (!empty($this->data)) {
             if (!$this->Egreso->save($this->data )) {
-                $this->Session->setFlash('El egreso no pudo ser guardado');
+                $this->Session->setFlash('El pago no pudo ser guardado');
             } else {
                 $this->Session->setFlash('El Pago fue guardado');
             }
@@ -113,10 +113,10 @@ class EgresosController extends AccountAppController
         if (!empty($this->data)) {
             $this->Egreso->create();
             if ($this->Egreso->save($this->data)) {
-                $this->Session->setFlash('El Egreso fue guardado correctamente');
+                $this->Session->setFlash('El Pago fue guardado correctamente');
                 $this->redirect(array('controller' => 'gastos', 'action' => 'index'));
             } else {
-                $this->Session->setFlash('Error al guardar el egreso');
+                $this->Session->setFlash('Error al guardar el pago');
             }
         }
     }
@@ -124,7 +124,7 @@ class EgresosController extends AccountAppController
     function view($id)
     {
         if (empty($id)) {
-            $this->flash('No se pasó un ID de egreso correcto', array('controller' => 'gastos', 'action' => 'index'));
+            $this->flash('No se pasó un ID de pago correcto', array('controller' => 'gastos', 'action' => 'index'));
         }
         $this->Egreso->id = $id;
         $this->set('egreso', $this->Egreso->read());

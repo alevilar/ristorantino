@@ -26,9 +26,6 @@
             ?>
         </div>
         <div class="ui-block-b">
-            <?php
-            echo $form->input('importe_total', array('id' => 'importe-total'));
-            ?>
             <div id="impuestos-check">
                 <h4>Seleccionar los impuestos aplicados en esta factura</h4>
 
@@ -57,21 +54,29 @@
                     <fieldset <?php echo ($ocultar) ? 'style="display: none;"' : ''; ?>  id="<?php echo 'tipo-impuesto-id-' . $ti['TipoImpuesto']['id'] ?>">
                         <legend><?php echo $ti['TipoImpuesto']['name'] ?></legend>
                         <?php
-                        echo $form->input('Gasto.Impuesto.' . $ti['TipoImpuesto']['id'] . ".neto", array(
-                            'type' => 'text',
-                            'label' => "Neto",
-                            'data-porcent' => $ti['TipoImpuesto']['porcentaje'],
-                            'class' => 'calc_neto importe',
-                            'value' => !empty($this->data['Impuesto'][$ti['TipoImpuesto']['id']]) ? $this->data['Impuesto'][$ti['TipoImpuesto']['id']]['neto'] : '',
-                        ));
-
-                        echo $form->input('Gasto.Impuesto.' . $ti['TipoImpuesto']['id'] . '.importe', array(
-                            'type' => 'text',
-                            'label' => 'Importe',
-                            'data-porcent' => $ti['TipoImpuesto']['porcentaje'],
-                            'class' => 'calc_impuesto importe',
-                            'value' => !empty($this->data['Impuesto'][$ti['TipoImpuesto']['id']]) ? $this->data['Impuesto'][$ti['TipoImpuesto']['id']]['importe'] : '',
-                        ));
+                        if ( $ti['TipoImpuesto']['tiene_neto']
+                                || !empty($this->data['Impuesto'][$ti['TipoImpuesto']['id']]['neto'])
+                                ) {
+                            echo $form->input('Gasto.Impuesto.' . $ti['TipoImpuesto']['id'] . ".neto", array(
+                                'type' => 'text',
+                                'label' => "Neto",
+                                'data-porcent' => $ti['TipoImpuesto']['porcentaje'],
+                                'class' => 'calc_neto importe',
+                                'value' => !empty($this->data['Impuesto'][$ti['TipoImpuesto']['id']]) ? $this->data['Impuesto'][$ti['TipoImpuesto']['id']]['neto'] : '',
+                            ));
+                        }
+                        
+                        if ( $ti['TipoImpuesto']['tiene_impuesto'] 
+                                || !empty($this->data['Impuesto'][$ti['TipoImpuesto']['id']]['importe'])
+                                ) {
+                            echo $form->input('Gasto.Impuesto.' . $ti['TipoImpuesto']['id'] . '.importe', array(
+                                'type' => 'text',
+                                'label' => 'Importe',
+                                'data-porcent' => $ti['TipoImpuesto']['porcentaje'],
+                                'class' => 'calc_impuesto importe',
+                                'value' => !empty($this->data['Impuesto'][$ti['TipoImpuesto']['id']]) ? $this->data['Impuesto'][$ti['TipoImpuesto']['id']]['importe'] : '',
+                            ));
+                        }
                         ?>
                     </fieldset>
                     <?php
@@ -79,7 +84,11 @@
                 ?>
 
             </div>
-            <div style="color: brown; text-align: center">Total de "Netos" e "Importes sumados": $<b id="importes-sumados"></b></div>
+            <?php
+            echo $form->input('importe_neto', array('id' => 'importe-neto'));
+            echo $form->input('importe_total', array('id' => 'importe-total'));
+
+            ?>
         </div>
     </div>
 

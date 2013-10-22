@@ -27,7 +27,7 @@ if (!empty($egreso['Egreso']['observacion'])) {
 ?></p>
     
     <p>
-    <?php echo $html->link('  Editar egreso',array('action' => 'edit', $egreso['Egreso']['id'])); ?>
+    <?php echo $html->link('  Editar pago',array('action' => 'edit', $egreso['Egreso']['id'])); ?>
     </p>
     <div>
         <ul data-role="listview">

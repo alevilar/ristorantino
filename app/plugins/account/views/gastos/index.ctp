@@ -1,10 +1,19 @@
-<div style="text-align: center">
+<div style="clear: both">
+<div class="" style="width: 25%; float: left" >
+    <label for="selectall">Seleccionar Todos</label>
+    <input id="selectall" type="checkbox" data-role="none"/>
+</div>
+
+<div style="width: 70%; float: right; text-align: center">
     <?php echo $form->create('Gasto', array('action' => 'index')); ?>
     <?php echo $form->input('proveedor_id', array('onchange' => 'this.form.submit();', 'empty' => 'Filtrar por Proveedor', 'label' => false)) ?>
     <?php echo $form->end() ?>
 </div>
 
-<br><br>
+</div>
+<div style="clear: both"></div>
+
+
 
 <div class="gastos index">
 
@@ -62,10 +71,20 @@
                             'value' => $gasto['Gasto']['id'],
                             'type' => 'checkbox',
                             'data-mini' => true,
-                            'label' => 'Seleccionar Gasto'
+                            'label' => false,
+                            'data-role' => "none",
+                            'style' => 'float: left; margin-right: 35px;',
                         ));
                         ?>
                         <?php
+                        echo $html->link(__('Pagar', true), array(
+                            'controller' => 'egresos',
+                            'action' => 'add', $gasto['Gasto']['id']), array(
+                            'data-ajax' => 'false',
+                        ));
+                        
+                        echo " - ";
+                        
                         echo $html->link(__('Ver', true), array(
                             'action' => 'view', $gasto['Gasto']['id']), array(
                             'data-ajax' => 'false',
@@ -77,6 +96,10 @@
                             'action' => 'edit', $gasto['Gasto']['id']), array(
                             'data-ajax' => 'false',
                         ));
+                        
+                        echo " - ";
+                        
+                        echo $html->link(__('Borrar', true), array('action' => 'delete', $gasto['Gasto']['id']), array('class' => 'ajaxlink'), sprintf(__('Seguro queres borrar el # %s?', true), $gasto['Gasto']['id']));
                         ?>
 
                     </p>
@@ -87,8 +110,19 @@
 
     <div style="clear: both"></div>
 <?php
-echo $form->submit('Nuevo egreso', array('disabled' => (count($gastos) == 0)));
+echo $form->submit('Nuevo pago', array('disabled' => (count($gastos) == 0)));
 echo $form->end();
 ?>
 
 </div>
+
+
+<script>    
+        $inputs = $('input[type="checkbox"]','#EgresoAddForm');
+        $('#selectall').bind('change', function(e){
+            $inputs.each(function(k,i){                
+                i.checked = e.currentTarget.checked;                              
+            });
+        });
+ 
+</script>

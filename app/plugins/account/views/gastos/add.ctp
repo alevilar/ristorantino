@@ -16,11 +16,7 @@
             ?>
         </div>
         <div class="ui-block-b">
-            <?php
-            echo $form->input('importe_total', array('id' => 'importe-total'));
-
-            //echo $form->input('importe_total');
-            ?>
+            
             <div id="impuestos-check">
                 <h4>Seleccionar los impuestos aplicados en esta factura</h4>
                 
@@ -38,27 +34,30 @@
                 </fieldset>
                 
             </div>
-            
             <div id="impuestos">
                 <?php
                 foreach ($tipo_impuestos as $ti) {
                     ?>
                 <fieldset style="display: none;" id="<?php echo 'tipo-impuesto-id-'.$ti['TipoImpuesto']['id'] ?>">
                          <legend><?php echo $ti['TipoImpuesto']['name'] ?></legend>
-                <?php                    
+                <?php       
+                if ( $ti['TipoImpuesto']['tiene_neto'] ) {
                     echo $form->input('Gasto.Impuesto.' . $ti['TipoImpuesto']['id'].".neto", array(
                         'type' => 'text',
                         'label' => "Neto",
                         'data-porcent' => $ti['TipoImpuesto']['porcentaje'],
                         'class' => 'calc_neto importe',
                     ));
-                    
+                }
+                
+                if ( $ti['TipoImpuesto']['tiene_impuesto'] ) {
                     echo $form->input('Gasto.Impuesto.' . $ti['TipoImpuesto']['id'].'.importe', array(
                         'type' => 'text',
-                        'label' => 'Importe',
+                        'label' => 'Impuesto',
                         'data-porcent' => $ti['TipoImpuesto']['porcentaje'],
                         'class' => 'calc_impuesto importe',
                     ));
+                }
                     ?>
                          
                     </fieldset>
@@ -66,7 +65,12 @@
                 }
                 ?>
             </div>
-            <div style="color: brown; text-align: center">Total de "Netos" e "Importes sumados": $<b id="importes-sumados"></b></div>
+            
+             <?php
+            echo $form->input('importe_neto', array('id' => 'importe-neto'));
+            echo $form->input('importe_total', array('id' => 'importe-total'));
+
+            ?>
         </div>
     </div>
     

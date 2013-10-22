@@ -35,9 +35,7 @@ class GastosController extends AccountAppController
 
     function index()
     {
-        $conds = array(
-            'Gasto.cierre_id IS NULL'
-        );
+        $conds = array();
         if (!empty($this->data['Gasto']['proveedor_id'])){
             $conds['Gasto.proveedor_id'] = $this->data['Gasto']['proveedor_id'];
         }
@@ -222,7 +220,9 @@ class GastosController extends AccountAppController
         }
         if ($this->Gasto->del($id)) {
             $this->Session->setFlash(__('Gasto deleted', true));
-            $this->redirect(array('action' => 'index'));
+            if ( !$this->RequestHandler->isAjax() ) {
+                $this->redirect(array('action' => 'index'));
+            }
         }
         $this->Session->setFlash(__('The Gasto could not be deleted. Please, try again.', true));
         $this->redirect(array('action' => 'index'));

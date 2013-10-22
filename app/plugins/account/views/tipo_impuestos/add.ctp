@@ -8,6 +8,8 @@
 	<?php
 		echo $form->input('name');
 		echo $form->input('porcentaje');
+                echo $form->input('tiene_neto', array('options' => array('No', 'Si'))); 
+                echo $form->input('tiene_impuesto', array('options' => array('No', 'Si'))); 
 	?>
 <?php echo $form->end('Submit');?>
     </fieldset>

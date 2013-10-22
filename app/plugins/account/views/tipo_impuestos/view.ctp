@@ -16,6 +16,16 @@
 			<?php echo $tipoImpuesto['TipoImpuesto']['porcentaje']; ?>
 			&nbsp;
 		</dd>
+                <dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Tiene Neto'); ?></dt>
+		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
+			<?php echo $tipoImpuesto['TipoImpuesto']['tiene_neto']; ?>
+			&nbsp;
+		</dd>
+                <dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Tiene Impuesto'); ?></dt>
+		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
+			<?php echo $tipoImpuesto['TipoImpuesto']['tiene_impuesto']; ?>
+			&nbsp;
+		</dd>
 	</dl>
 </div>
 <div class="actions">
