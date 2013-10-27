@@ -28,7 +28,7 @@
     };
     
     function sumaTotal () {
-        return sumaNetos()+sumaImpuestos();
+        return redondeo( sumaNetos()+sumaImpuestos() );
     }
     
     function modificarTotalesSumados(){
@@ -37,10 +37,14 @@
         
         if ( vsumaTotal ) {
             $('#importe-total').val( vsumaTotal );
+        } else {
+            $('#importe-total').val( null );
         }
         
         if ( vsumaNetos ) {
             $('#importe-neto').val( vsumaNetos );
+        } else {
+            $('#importe-neto').val( null );
         }
     }
     
@@ -69,27 +73,29 @@
         
     jQuery("input.calc_impuesto", "#GastoAddForm").bind('click', function(e){
         var porcent = Number( jQuery(this).attr('data-porcent') );
-        if (porcent && !jQuery(this).val()) {
-            var valor;
-            if (porcent){
-                valor = jQuery( this.form.elements['data[Gasto][importe_total]'] ).val() / ((100/porcent)+1);
-                if (valor) {
-                    jQuery(this).val(redondeo(valor));
-                }
+        var $parent = jQuery(this).parents('fieldset');
+        var neto = $parent.find('input.calc_neto').val();
+        var valor;
+        if (porcent && !jQuery(this).val() && neto) {
+            valor = neto *  (porcent/100) ;
+            if (valor > 0) {
+                jQuery(this).val(redondeo(valor));
             }
+            modificarTotalesSumados();
         }
     });
 
     jQuery("input.calc_neto", '#GastoAddForm').bind('click', function(e){   
         var porcent = Number( jQuery(this).attr('data-porcent') );
+        var $parent = jQuery(this).parents('fieldset');
+        var impuesto = $parent.find('input.calc_impuesto').val();
         var valor;
-        if (porcent && !jQuery(this).val()) {
-            if (porcent){
-                valor = jQuery( this.form.elements['data[Gasto][importe_total]'] ).val() / ((porcent/100)+1);
-                if (valor) {
-                    jQuery(this).val(redondeo(valor));
-                }
+        if (porcent && !jQuery(this).val() && impuesto) {
+            valor = impuesto / ( porcent/100 );
+            if (valor > 0) {
+                jQuery(this).val(redondeo(valor));
             }
+            modificarTotalesSumados();
         }
     });
 

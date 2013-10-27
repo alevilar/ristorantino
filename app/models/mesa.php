@@ -58,6 +58,21 @@ class Mesa extends AppModel {
         function beforeSave($options = array()) {
            $this->data[$this->name]['modified'] = date('Y-m-d H:i:s', strtotime('now'));
            
+           if ( !empty($this->data['Mesa']['id']) 
+                   && !empty($this->data['Mesa']['estado_id'])
+                   && $this->data['Mesa']['estado_id'] != MESA_COBRADA
+                   ) {               
+               if ( $this->estaCobrada($this->data['Mesa']['id'], $force_db = true) ) {
+                // Si la mesa estaba cobrada, y la paso a un estado anterio, por ejemplo, la abro
+                // enctonces debo eliminar todos los pagos realizados para que no me los duplique
+                // cuando la vuelva a cobrar
+                   $this->Pago->deleteAll(array(
+                      'Pago.mesa_id' => $this->data['Mesa']['id']
+                   ));
+                   $this->data['Mesa']['time_cobro'] = '0000-00-00 00:00:00';
+               }
+           }
+           
            return parent::beforeSave($options);
        }
 
@@ -453,6 +468,37 @@ class Mesa extends AppModel {
         }
         
         
+        /**
+         * Dice si una mesa esta cobrada o no
+         * @param integer $id
+         * @param boolean $force_db indica si quiero forzar para que busque en la BBDD
+         * @return boolean
+         */
+        function estaCobrada($id = null, $force_db = false){
+            $ret = false;
+            if (!empty($id)){
+                $this->id = $id;
+            }
+            
+            if ( !empty($this->data[$this->name]['estado_id']) ){
+                    $ret = $this->data[$this->name]['estado_id'] == MESA_COBRADA;
+            }
+            
+            if ( $force_db) {
+                 // lo busco en BBDD        
+                $ret = $this->find('count', array(
+                    'conditions' => array(
+                        'Mesa.estado_id' => MESA_COBRADA,
+                        'Mesa.id' => $this->id,
+                    )
+                ));
+            }
+           
+
+            return $ret;
+        }
+        
+        
         
         
         /**
@@ -565,6 +611,11 @@ LEFT JOIN mozos z ON z.id = m.mozo_id
 '. $groupByText .'
 '. $orderByText. '    
 '. $limit;
+            $retVal = $this->query($query);
+            if ( !empty($retVal) && !empty($retVal[0]) && !empty($retVal[0][0]) && empty($retVal[0][0]['cant_mesas'])) {
+                // sin resultados
+                return array();
+            }
             return $this->query($query);
         }
 }

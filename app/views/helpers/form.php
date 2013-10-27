@@ -155,7 +155,7 @@ class FormHelper extends AppHelper {
 			$this->fieldset = compact('fields', 'key', 'validates');
 		}
 
-		$data = $this->fieldset;
+		$data = $this->fieldset;                
 		$recordExists = (
 			isset($this->data[$model]) &&
 			isset($this->data[$model][$data['key']]) &&

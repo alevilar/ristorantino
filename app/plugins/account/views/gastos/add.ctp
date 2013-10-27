@@ -47,6 +47,9 @@
                         'label' => "Neto",
                         'data-porcent' => $ti['TipoImpuesto']['porcentaje'],
                         'class' => 'calc_neto importe',
+                        'div' => array(
+                            'style' =>'float: left;'
+                        )
                     ));
                 }
                 
@@ -56,6 +59,9 @@
                         'label' => 'Impuesto',
                         'data-porcent' => $ti['TipoImpuesto']['porcentaje'],
                         'class' => 'calc_impuesto importe',
+                        'div' => array(
+                            'style' =>'float: right;'
+                        ),
                     ));
                 }
                     ?>

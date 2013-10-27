@@ -25,20 +25,37 @@ class PagosController extends AppController {
                         $this->Pago->Mesa->save($this->data['Mesa']);
                     }
                     
+                    $importeMesa = $this->Pago->Mesa->calcular_total($this->data['Mesa']['id']);
+                    
                     if ( !empty( $this->data['Pago'] ) && count($this->data['Pago']) == 1 && empty($this->data['Pago'][0]['valor']) ) {
                         if (!empty($this->data['Mesa'])) {
-                            $total_pagado = $this->Pago->Mesa->calcular_total($this->data['Mesa']['id']);
-                            $this->data['Pago'][0]['valor'] = $total_pagado;
-                        }                    
-                        
-                        if ($this->Pago->saveAll($this->data['Pago'])) {				
-                            $this->Session->setFlash(__('The Pago has been saved', true));
-                        } else {
-                            $this->Session->setFlash(__('The Pago could not be saved. Please, try again.', true));
+                            $this->data['Pago'][0]['valor'] = $importeMesa;
                         }
                     }
                     
+                    $sumaPagos = 0;
+                    foreach ( $this->data['Pago'] as $key=>$pago ) {
+                        if ( !array_key_exists('valor', $pago ) || empty($pago['valor']) ) {
+                            unset($this->data['Pago'][$key]);
+                        } else {
+                            $sumaPagos += $pago['valor'];
+                        }
+                    }
                     
+                    if ( $sumaPagos != $importeMesa ) {
+                        // creo un importe en efectivo que devuelva el cambio
+                        $this->data['Pago'][] = array(
+                            'mesa_id' => $this->data['Mesa']['id'],
+                            'tipo_de_pago_id' => TIPO_DE_PAGO_EFECTIVO,
+                            'valor' => $importeMesa - $sumaPagos,
+                        );
+                    }
+                    
+                    if ($this->Pago->saveAll($this->data['Pago'])) {
+                        $this->Session->setFlash(__('The Pago has been saved', true));
+                    } else {
+                        $this->Session->setFlash(__('The Pago could not be saved. Please, try again.', true));
+                    }
 		}
                 if (!$this->RequestHandler->isAjax()) {
                     $this->redirect($this->referer());

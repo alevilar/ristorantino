@@ -35,7 +35,7 @@
  */
         //$pluralRules = array();
         // jose lorenzo 
-        $pluralRules = array('/([r|d|j|n|l|m|y|z])$/i' => '\1es','/a$/i' => '\1as');
+       $pluralRules = array('/([r|d|j|n|l|m|y|z])$/i' => '\1es','/a$/i' => '\1as');
         
 /**
  * This is a key only array of plural words that should not be inflected.

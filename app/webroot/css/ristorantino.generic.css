@@ -378,6 +378,10 @@ li.selected    {
 	background-image: url("../img/admin.png");
 }
 
+#bton-arqueo{
+	background-image: url("../img/botonarqueo.png");
+}
+
 #bton-contabilidad{
 	background-image: url("../img/contabilidad.png");
         background-position: center top;

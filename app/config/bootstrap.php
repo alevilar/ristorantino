@@ -54,6 +54,7 @@ define('MESA_ABIERTA', 1);
 define('MESA_CERRADA', 2);
 define('MESA_COBRADA', 3);
 
+define('TIPO_DE_PAGO_EFECTIVO', 1);
 
 define('MENU_FOLDER', 'menu');
 define('IMG_MENU', WWW_ROOT . 'img/' . MENU_FOLDER . '/');

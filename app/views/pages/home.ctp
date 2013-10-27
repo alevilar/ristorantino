@@ -25,4 +25,8 @@
         <?php echo $html->link('Contabilidad', array('controller'=>'account','action'=>'index','plugin'=>'account'),array('id'=>'bton-contabilidad'));?>
         </li>       
         
+        <li>  
+        <?php echo $html->link('Arqueo de Caja','/cash/arqueos/help',array('id'=>'bton-arqueo'));?>
+        </li>     
+        
 </ul>
