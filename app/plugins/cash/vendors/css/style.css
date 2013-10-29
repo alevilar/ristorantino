@@ -1,0 +1,42 @@
+form input[type=text], form input[type=password], form input[type=file], form textarea {
+    width: 60%;
+    text-align: center;
+    border: none;
+}
+
+form textarea{
+    text-align: left;
+}
+
+
+form input[type=text].muted, form input[type=password].muted, form input[type=file].muted, form textarea.muted {
+    background: transparent;
+    
+}
+
+form input[type=text].muted:active, form input[type=password].muted:active, form input[type=file].muted:active, form textarea.muted:active,
+form input[type=text].muted:focus, form input[type=password].muted:focus, form input[type=file].muted:focus, form textarea.muted:focus{
+    background: white;
+}
+
+table.mini td, table.mini th{
+    padding: 2px;
+}
+
+table.mini > tbody > tr:last-child{
+    background: #014d68;
+    color: lavender;
+}
+
+#arqueoContainer, .zeta{
+    text-align: center;
+}
+
+.mostrar_zeta{
+    background: #E4EFFD;
+}
+
+#ArqueoDatetime{
+    font-size: 12pt;
+    width: 100%;
+}

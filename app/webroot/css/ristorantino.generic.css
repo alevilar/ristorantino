@@ -736,3 +736,12 @@ td.edit{
     border: 1px solid grey;
     margin: 10px;
 }
+
+.ui-timepicker-div dd{
+    margin-left: auto !important;
+    margin-top: auto !important;
+}
+
+.ui-timepicker-div dl{
+    width: 100% !important;
+}

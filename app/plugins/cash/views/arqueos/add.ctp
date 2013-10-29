@@ -2,11 +2,24 @@
 $ingresoEfectivo = $egresoEfectivo = null;
 
 echo $html->css('/cash/css/style');
+
+echo $html->css('/css/jquery.timepicker');
+
+echo $javascript->link('/js/jquery/jquery.timepicker');
 ?>
 
 <div class="grid_3 alpha">
 
-    <?php if ( empty($caja) || ( isset($caja['Caja']['computa_ingresos']) && !empty($caja['Caja']['computa_ingresos']) ) ) { ?>
+    <?php
+    $cajaName = 'Caja';
+    if (!empty($caja) && !empty($caja['Caja']) && !empty($caja['Caja']['name'])) {
+        $cajaName = $caja['Caja']['name'];
+    }
+    $desde = date('d/m/y H:i:s', strtotime($desde));
+    $hasta = date('d/m/y H:i:s', strtotime($hasta));
+    echo "Tablas de datos con información<br>desde: $desde<br>hasta $hasta";
+    ?>
+    <?php if ( !empty($ingresosList)) { ?>
     <table class="mini">
         <caption>Ingresos</caption>
         <tbody>
@@ -29,7 +42,7 @@ echo $html->css('/cash/css/style');
     <?php } ?>
 
 
-    <?php if ( empty($caja) || ( isset($caja['Caja']['computa_egresos']) && !empty($caja['Caja']['computa_egresos']) ) ) { ?>
+    <?php if ( !empty($egresosList) ) { ?>
     <table class="mini">
         <caption>Egresos</caption>
         <tbody>
@@ -59,7 +72,7 @@ echo $form->create('Arqueo');
 echo $form->input('id');
 ?>
 <div class="grid_5" id="arqueoContainer">
-    <h2>Nuevo Arqueo de Caja</h2>
+    <h2>Nuevo Arqueo de <?php echo $cajaName?></h2>
 
     <div class="grid_6">
         <?php
@@ -68,7 +81,7 @@ echo $form->input('id');
         } else {
             echo $form->hidden('caja_id');
         }
-        echo $form->input('datetime', array('class' => "datepicker muted", 'type' => 'text'));
+        echo $form->input('datetime', array('class' => "datepicker muted", 'type' => 'text', 'label'=>'Fecha y Hora', 'div'=>array('style'=>'width:100%;')));
         echo $form->input('importe_final');
         echo $form->input('saldo', array('disabled' => true));
         echo $form->input('observacion', array('label' => 'Obs. del Arqueo', 'style' => 'height:100px'));

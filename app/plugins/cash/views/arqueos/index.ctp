@@ -24,7 +24,7 @@
 <?php foreach ($arqueos as $arq) { ?>
     <tr>
         <td><?php echo $arq['Caja']['name'] ?></td>
-        <td><?php echo date('d/m/Y', strtotime($arq['Arqueo']['datetime'])) ?></td>
+        <td><?php echo date('d/m/Y H:i', strtotime($arq['Arqueo']['datetime'])) ?></td>
         <td><?php echo $arq['Arqueo']['saldo'] ?></td>
         <td><?php echo $arq['Arqueo']['importe_inicial'] ?></td>
         <td><?php echo $arq['Arqueo']['ingreso'] ?></td>

@@ -3,3 +3,4 @@ app/webroot/img/thumbs
 vendors
 /nbproject/private/
 !/app/plugins/account/vendors/
+!/app/plugins/cash/vendors/
