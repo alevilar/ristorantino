@@ -8,8 +8,9 @@ if (!empty($this->data['Egreso']['id'])) {
 
 echo $form->input('tipo_de_pago_id', array('options'=>$tipo_de_pagos));
 echo $form->input('observacion');
-$date = date('Y-m-d', strtotime('now'));
-echo $form->input('fecha', array('default' => $date, 'type'=>'date' ));
+$date = date('Y-m-d H:i', strtotime('now'));
+echo $form->input('fecha', array('default' => $date, 'type'=>'datetime' ));
+
 echo $form->input('total', array('default'=>$suma_gastos));
 echo $form->input('_file', array('type'=>'file', 'accept'=> "image/*", 'label' => 'PDF, Imagen, Archivo'));
 

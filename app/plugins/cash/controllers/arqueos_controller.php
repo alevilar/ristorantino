@@ -3,11 +3,15 @@
 class ArqueosController extends CashAppController
 {
 
+
     public $uses = array('Cash.Arqueo', 'Account.Egreso', 'Pago');
+    
+    public $components = array('Email');
     
     
     public function help() {
-        
+        $this->Arqueo->Caja->recursive = -1;
+        $this->set('cajas', $this->Arqueo->Caja->find('all'));
     }
 
     public function index()
@@ -150,6 +154,11 @@ class ArqueosController extends CashAppController
         
         
     }
+    
+    
+    private function __enviarArqueoPorMail($arqueo_id) {
+                                
+    }
 
     public function add($caja_id = null)
     {
@@ -165,6 +174,7 @@ class ArqueosController extends CashAppController
                     }
                 }
                 if (!$error) {
+                    $this->__enviarArqueoPorMail($this->Arqueo->id);
                     $this->redirect('edit/'.$this->Arqueo->id);
                 }
             } else {

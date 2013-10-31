@@ -38,9 +38,20 @@ class EgresosController extends AccountAppController
             $conditions['Egreso.fecha >='] = $this->data['Gasto']['fecha_desde'] = date('Y-m-d', strtotime('-1month'));
             $conditions['Egreso.fecha <='] = $this->data['Gasto']['fecha_hasta'] = date('Y-m-d', strtotime('now'));
         }
+        
+        $this->paginate = array(
+            'contain' => array(
+                'TipoDePago',
+                'Gasto' => array(
+                    'Proveedor',
+                    'TipoFactura',
+                ),
+            ),
+            'conditions' => $conditions,
+        );
 
-        $this->set('egresos', $this->Egreso->Gasto->Proveedor->find('list'));
-        $this->set('egresos', $this->Egreso->find('all', array('conditions' => $conditions)));
+        $this->set('proveedores', $this->Egreso->Gasto->Proveedor->find('list'));
+        $this->set('egresos', $this->paginate());
     }
 
     function edit($egreso_id)

@@ -25,9 +25,21 @@ foreach ($egresos as $g){
         <h3>
             <?php echo $html->image($g['TipoDePago']['image_url'], array('class' => 'tipo_de_pago')); ?>
             <?php
-        
+            $proveedor = '';
+            $tipoFactura = '';
+            foreach ($g['Gasto'] as $gasto) {
+                if (!empty($gasto['Proveedor'])) {
+                    $proveedor = $gasto['Proveedor']['name'].', ';
+                }
+                if (!empty($gasto['TipoFactura'])) {
+                    $tipoFactura = $gasto['TipoFactura']['name'];
+                }
+            }
+            $proveedor = trim($proveedor,', ');
+            $tipoFactura = trim($tipoFactura, ', ');
+            
         echo "<span class='fecha'>(".date('d-m-y', strtotime($g['Egreso']['fecha'])).")</span>";
-        echo "<span class='total'> ".$number->currency($g['Egreso']['total'])."</span>";
+        echo "<span class='total'> ".$number->currency($g['Egreso']['total'])."</span> -  <span class='proveedor'>$proveedor</span> - <span class='tipofactura'>$tipoFactura</span> ";
         
         
 
@@ -91,4 +103,17 @@ foreach ($egresos as $g){
 }
 
 ?>
+       
 </ul>
+
+<?php
+        echo $paginator->counter(array(
+        'format' => __('Página %page% de %pages%, mostrando %current% elementos de %count%', true)
+        ));
+        ?>
+
+ <div class="paging">
+                <?php echo $paginator->prev('<< '.__('anterior', true), array(), null, array('class'=>'disabled'));?>
+         | 	<?php echo $paginator->numbers();?>
+                <?php echo $paginator->next(__('próximo', true).' >>', array(), null, array('class'=>'disabled'));?>
+        </div>

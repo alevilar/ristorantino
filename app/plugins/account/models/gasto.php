@@ -176,7 +176,7 @@ class Gasto extends AccountAppModel {
          * o sea, cuyo importe_total no llega a ser cubierto con los pagos realizados
          * @return array de Gastos
          */
-        public  function enDeuda($conditions){
+        public  function enDeuda($conditions = array()){
             
              $dbo = $this->getDataSource();  
              

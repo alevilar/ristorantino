@@ -101,3 +101,12 @@ form .required{
     background: #eee;
     padding-left: 30px;
 }
+
+
+.datetime .ui-select{
+    width: 14%;
+}
+
+.datetime label.ui-select{
+    width: 10%;
+}

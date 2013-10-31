@@ -1,7 +1,7 @@
 <?php
 $ingresoEfectivo = $egresoEfectivo = null;
 
-echo $html->css('/cash/css/style');
+echo $html->css('/cash/css/style_cash');
 
 echo $html->css('/css/jquery.timepicker');
 
@@ -136,12 +136,33 @@ echo $form->input('id');
     </div>
 </div>
 
+
 <div style="text-align: center; margin-left: 20%;">
     <?php echo $form->button('Guardar Arqueo', array('type' => 'submit', 'style' => ' background-color: #1c94c4; color: white; padding: 30px; text-align: center;')); ?>
 </div>
 <?php
 echo $form->end();
 ?>
+
+
+<div id="billetines" class="hidden">
+    <a class="pull-right" href="#billetines" onclick="jQuery('#billetines').hide()"><b>Cerrar</b></a>
+        <br><br>
+        <p class="muted">Ingresar cantidades de cada billete</p>
+        <?php 
+        echo $form->create('Billetes');
+        echo $form->input('b100', array('label' => '100'));
+        echo $form->input('b50', array('label' => '50'));
+        echo $form->input('b20', array('label' => '20'));
+        echo $form->input('b10', array('label' => '10'));
+        echo $form->input('b5', array('label' => '5'));
+        echo $form->input('b2', array('label' => '2'));
+        echo $form->input('b1', array('label' => '1'));
+        echo $form->input('b0', array('label' => '0,50C'));
+        echo $form->input('bA', array('label' => 'Otro'));
+        echo $form->end(null);
+        ?>
+</div>
 
 
 <?php echo $javascript->link('/cash/js/arqueos_add') ?>

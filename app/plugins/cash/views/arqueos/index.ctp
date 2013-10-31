@@ -39,3 +39,17 @@
 
 <?php } ?>
 </table>
+
+
+<p>
+    <?php
+    echo $paginator->counter(array(
+        'format' => __('Página %page% de %pages%, mostrando %current% elementos de %count%', true)
+    ));
+    ?>
+</p>
+<div class="paging">
+    <?php echo $paginator->prev('<< ' . __('anterior', true), array(), null, array('class' => 'disabled')); ?>
+    | 	<?php echo $paginator->numbers(); ?>
+    <?php echo $paginator->next(__('próximo', true) . ' >>', array(), null, array('class' => 'disabled')); ?>
+</div>

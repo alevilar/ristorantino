@@ -24,8 +24,8 @@ class Egreso extends AccountAppModel {
                         ),
 		),
                 'fecha' => array(
-			'date' => array(
-				'rule' => 'date',
+			'datetime' => array(
+				'rule' => array('datetime', 'dmy H:i'),
                                 'message' => 'Ingrese una fecha válida',
                                 'allowEmpty' => false,
 				'required' => true,

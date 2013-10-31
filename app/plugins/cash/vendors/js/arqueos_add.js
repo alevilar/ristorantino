@@ -64,6 +64,9 @@
 
         });
         
+        jQuery("#ArqueoImporteFinal").focusin(function(){
+            jQuery("#billetines").show();            
+        });
         
         jQuery('#ZetaMontoNeto').change(function(){
             var valor = new Number(this.value);
@@ -74,6 +77,31 @@
             var valor = new Number(this.value);
             jQuery('#ZetaNotaCreditoIva').val(parseInt(valor * 0.21 * 100)/100);
         });
+        
+        
+        function sumarBilletes(){
+            var b100 = new Number(jQuery('#BilletesB100').val())*100;
+            var b50 = new Number(jQuery('#BilletesB50').val())*50;
+            var b20 = new Number(jQuery('#BilletesB20').val())*20;
+            var b10 = new Number(jQuery('#BilletesB10').val())*10;
+            var b5 = new Number(jQuery('#BilletesB5').val())*5;
+            var b2 = new Number(jQuery('#BilletesB2').val())*2;
+            var b1 = new Number(jQuery('#BilletesB1').val())*1;
+            var b0 = new Number(jQuery('#BilletesB0').val())*0.5;
+            var bA = new Number(jQuery('#BilletesBA').val());
+            
+            jQuery('#ArqueoImporteFinal').val(b100+b50+b20+b10+b5+b2+b1+b0+bA);
+        }
+        
+        jQuery('#BilletesB100').change(sumarBilletes);
+        jQuery('#BilletesB50').change(sumarBilletes);
+        jQuery('#BilletesB20').change(sumarBilletes);
+        jQuery('#BilletesB10').change(sumarBilletes);
+        jQuery('#BilletesB5').change(sumarBilletes);
+        jQuery('#BilletesB2').change(sumarBilletes);
+        jQuery('#BilletesB1').change(sumarBilletes);
+        jQuery('#BilletesB0').change(sumarBilletes);
+        jQuery('#BilletesBA').change(sumarBilletes);
 
     });
 
