@@ -19,7 +19,7 @@
  * @subpackage    cake.cake.libs.view.helpers
  * @since         CakePHP(tm) v 0.10.0.1076
  * @version       $Revision$
- * @modifiedby    $LastChangedBy$
+ * @modifiedby    $LastChangedBy$ch
  * @lastmodified  $Date$
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
@@ -390,7 +390,7 @@ class FormHelper extends AppHelper {
  * @access public
  */
 	function error($field, $text = null, $options = array()) {
-		$defaults = array('wrap' => true, 'class' => 'error-message', 'escape' => true);
+		$defaults = array('wrap' => true, 'class' => 'text-danger error-message', 'escape' => true);
 		$options = array_merge($defaults, $options);
 		$this->setEntity($field);
 
@@ -672,7 +672,7 @@ class FormHelper extends AppHelper {
 		}
 
 		if (!empty($div)) {
-			$divOptions['class'] = 'input';
+			$divOptions['class'] = 'input form-group';
 			$divOptions = $this->addClass($divOptions, $options['type']);
 			if (is_string($div)) {
 				$divOptions['class'] = $div;
@@ -778,20 +778,30 @@ class FormHelper extends AppHelper {
 				$out = $this->hidden($fieldName, $options);
 				unset($divOptions);
 			break;
-			case 'checkbox':
+			case 'checkbox':                                
 				$out = $before . $this->checkbox($fieldName, $options) . $between . $out;
 			break;
 			case 'radio':
 				$out = $before . $out . $this->radio($fieldName, $radioOptions, $options) . $between;
 			break;
+                        case 'number':
 			case 'text':
 			case 'password':
+                                if ( empty($options['class']) ){
+                                    $options['class'] = 'form-control';
+                                }
 				$out = $before . $out . $between . $this->{$type}($fieldName, $options);
 			break;
 			case 'file':
+                            if ( empty($options['class']) ){
+                                    $options['class'] = 'form-control';
+                                }
 				$out = $before . $out . $between . $this->file($fieldName, $options);
 			break;
 			case 'select':
+                            if ( empty($options['class']) ){
+                                    $options['class'] = 'form-control';
+                                }
 				$options = array_merge(array('options' => array()), $options);
 				$list = $options['options'];
 				unset($options['options']);
@@ -800,31 +810,57 @@ class FormHelper extends AppHelper {
 				);
 			break;
 			case 'time':
-				$out = $before . $out . $between . $this->dateTime(
-					$fieldName, null, $timeFormat, $selected, $options, $empty
-				);
+                            if ( empty($options['class']) ){
+                                    $options['class'] = 'form-control';
+                                }
+                                $options['data-format'] = "hh:mm:ss";
+                            $options['class'] .= ' datetimepicker';
+                                $out = $before . $out . $between . $this->text($fieldName, $options);
+//				$out = $before . $out . $between . $this->dateTime(
+//					$fieldName, null, $timeFormat, $selected, $options, $empty
+//				);
 			break;
-//			case 'date':
+			case 'date':
+                            if ( empty($options['class']) ){
+                                    $options['class'] = 'form-control';
+                                }
+                                $options['data-format'] = "yyyy-MM-dd";
+                            $options['class'] .= ' datetimepicker';
+                                $out = $before . $out . $between . $this->text($fieldName, $options);
 //				$out = $before . $out . $between . $this->dateTime(
 //					$fieldName, $dateFormat, null, $selected, $options, $empty
 //				);
-//			break;
+			break;
 			case 'datetime':
-				$out = $before . $out . $between . $this->dateTime(
-					$fieldName, $dateFormat, $timeFormat, $selected, $options, $empty
-				);
+                            if ( empty($options['class']) ){
+                                    $options['class'] = 'form-control';
+                                }
+                                $options['data-format'] = "yyyy-MM-dd hh:mm:ss";
+                                $options['class'] .= ' datetimepicker';
+                                $out = $before . $out . $between . $this->text($fieldName, $options);
+//				$out = $before . $out . $between . $this->dateTime(
+//					$fieldName, $dateFormat, $timeFormat, $selected, $options, $empty
+//				);
 			break;
 			case 'textarea':
-			
+			if ( empty($options['class']) ){
+                                    $options['class'] = 'form-control';
+                                }
 				$out = $before . $out . $between . $this->textarea($fieldName, array_merge(
 					array('cols' => '30', 'rows' => '6'), $options
 				));
 			break;
                         case 'date':
+                            if ( empty($options['class']) ){
+                                    $options['class'] = 'form-control';
+                                }
                                 $options['type'] = 'date';
                                 $out = $before . $out . $between . $this->text($fieldName, $options);
                             break;
                         default:
+                            if ( empty($options['class']) ){
+                                    $options['class'] = 'form-control';
+                                }
                                 $out = $before . $out . $between . $this->text($fieldName, $options);
                         break;
 		}
@@ -989,6 +1025,25 @@ class FormHelper extends AppHelper {
 			$this->_parseAttributes($options, array('name'), null, ' ')
 		));
 	}
+        
+/**
+ * Creates a number input widget.
+ *
+ * @param string $fieldName Name of a field, in the form "Modelname.fieldname"
+ * @param array  $options Array of HTML attributes.
+ * @return string An HTML text input element
+ */
+	function number($fieldName, $options = array()) {
+		$options = $this->_initInputField($fieldName, array_merge(
+			array('type' => 'number', 'step'=>'0.01'), $options
+		));
+		return $this->output(sprintf(
+			$this->Html->tags['input'],
+			$options['name'],
+			$this->_parseAttributes($options, array('name'), null, ' ')
+		));
+	}
+        
 /**
  * Creates a password input widget.
  *

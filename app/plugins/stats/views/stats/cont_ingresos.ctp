@@ -78,7 +78,7 @@
 </div>
 
 
-<div class="grid_12">
+<div class="col-md-12">
 <table cellspacing="0" cellpadding="0">
         <caption class="editable">Total de ingresos</caption>
         <thead>

@@ -4,7 +4,7 @@ class StatsController extends StatsAppController {
 
     var $helpers = array('Html', 'Form', 'Ajax', 'Number');
     var $components = array('Auth', 'RequestHandler');
-    var $uses = array('Mesa', 'Account.Egreso');
+    var $uses = array('Mesa', 'Account.Egreso', 'Account.Gasto','Cash.Zeta');
 
     function year() {
         //SELECT SUM(total),YEAR(mesas.created) FROM `mesas` GROUP BY YEAR(mesas.created) ORDER BY YEAR(mesas.created) asc
@@ -43,9 +43,6 @@ class StatsController extends StatsAppController {
             $this->data['Linea'][0]['desde'] = date('d/m/Y',strtotime('-1 month'));
         }
         
-        
-         
-        
         $mesasLineas = array();
         if ( !empty($this->data['Linea'] )) {
             $lineas = array();
@@ -62,43 +59,67 @@ class StatsController extends StatsAppController {
                     
                     // primero buscar los egresos del intervalo seleccionado
                     $egresos = $this->Egreso->pagosDelDia($desde, $hasta);
-                    foreach ($egresos as &$e){
-                        $e['Egreso']['fecha'] = date('d-M-y',strtotime($e['Egreso']['fecha']));
+                    $egresos_total = 0;
+                    foreach ($egresos as $e) {
+                        $egresos_total += $e['Egreso']['importe'];
                     }
+                    $this->set('egresos_total', $egresos_total);
                     $egresos = array($egresos);
                     
+                    // buscar gastos
+                    $gasOps = array(
+                        'fields' => array(
+                            'sum(Gasto.importe_neto) as neto',
+                            'sum(Gasto.importe_total) as total',
+                        ),
+                        'conditions' => array(
+                            'Gasto.created BETWEEN ? AND ?' => array($desde, $hasta)
+                        ),
+                        'group' => array(
+                            'DATE(Gasto.created)'
+                        )
+                    );
+                    $gastosSumas = $this->Gasto->find('first', $gasOps);
+                    $gasOps['group'] = array(
+                            'DATE(Gasto.created)'
+                    );
+                    $gastos = $this->Gasto->find('all', $gasOps);
+                    $this->set('gastos', $gastos);
+                    $this->set('gastos_neto', $gastosSumas[0]['neto']);
+                    $this->set('gastos_total', $gastosSumas[0]['total']);
+                    
+                    
+                    $zetas = $this->Zeta->delDia($desde, $hasta);
+                    $zeta_iva_total = $zeta_neto_total = 0;
+                    foreach ($zetas as $z) {
+                        $zeta_iva_total += $z[0]['iva'];
+                        $zeta_neto_total += $z[0]['neto'];
+                    }
+                    $this->set('zetas', $zetas);
+                    $this->set('zeta_iva_total', $zeta_iva_total);
+                    $this->set('zeta_neto_total', $zeta_neto_total);
                     
                     // luego, lo mas largo: buscar las mesas
-                    $fields = array(
-                         'sum(m.cant_comensales) as "cant_cubiertos"' ,
-                         'sum(m.subtotal) as "subtotal"', 
-                         'sum(m.total) as "total"', 
-                         'sum(m.total)/sum(m.cant_comensales) as "promedio_cubiertos"',
-                    );
+                    $fields = array();
                     $group = array();
                     
                     switch ( strtolower( $groupByRange) ){
                         case 'day':
-                            $fields[] = 'DATE(m.created) as "fecha"';
-                            $group = array(
-                                 'DATE(m.created)',
-                            );
                             break;
                         case 'month':
-//                            $fields[] = 'GET_FORMAT( DATE(m.created),"%Y-%m") as "fecha"';
-                            $fields[] = 'DATE(m.created) as "fecha"';
-                            $fields[] = 'YEAR(m.created) as "anio"';
-                            $fields[] = 'MONTH(m.created) as "mes"';
-                            $fields[] = 'CONCAT(YEAR(m.created),"-",MONTH(m.created)) as "fecha"';
+//                            $fields[] = 'GET_FORMAT( DATE(Mesa.created),"%Y-%m") as "fecha"';
+                            $fields[] = 'YEAR(Mesa.created) as "anio"';
+                            $fields[] = 'MONTH(Mesa.created) as "mes"';
+                            $fields[] = 'CONCAT(YEAR(Mesa.created),"-",MONTH(Mesa.created)) as "fecha"';
                             
                             $group = array(
-                                 'YEAR(m.created)','MONTH(m.created)',
+                                 'YEAR(fecha)','MONTH(fecha)',
                             );
                             break;
                         case 'year':
-                            $fields[] = 'YEAR(m.created) as "fecha"';
+                            $fields[] = 'YEAR(Mesa.created) as "fecha"';
                             $group = array(
-                                 'YEAR(m.created)',
+                                 'YEAR(fecha)',
                             );
                             break;
                     }
@@ -119,8 +140,6 @@ class StatsController extends StatsAppController {
                    
                     foreach ($mesas as &$m) {
                         $m['Mesa'] = $m[0];
-                         $m['Mesa']['fecha'] = date('d-M-y',strtotime($m['Mesa']['fecha']));
-                         
                          
                          $resumenCuadro['cubiertos'] += $m['Mesa']['cant_cubiertos'];
                          $resumenCuadro['total'] += $m['Mesa']['total'];
@@ -157,33 +176,29 @@ class StatsController extends StatsAppController {
 
                     list($dia, $mes, $anio) = explode("/", $linea['hasta']);
                     $hasta = $anio."-".$mes."-".$dia;
+                    
+
 
                     $mesas = $this->Mesa->totalesDeMesasEntre($desde, $hasta, array(
                         'fields' => array(
-                             'sum(m.cant_comensales) as "cant_cubiertos"' ,
-                             'sum(m.total) as "total"', 
-                             'sum(m.total)/sum(m.cant_comensales) as "promedio_cubiertos"',
-                             'DATE(m.created) as "fecha"',
-                             'z.numero as "mozo"',
-                             'z.id as "mozo_id"'
+                             'Mozo.*'
                         ),
                         'group' => array(
-                            'DATE(m.created), z.id, z.numero',
+                            'Mozo.id',
+                            'Mozo.numero',
                         ),
                         'order' => array(
-                            'DATE(m.created) DESC',
-                            'z.numero ASC',
+                            'fecha DESC',
+                            'Mozo.numero ASC',
+                        ),
+                        'contain' => array(
+                            'Mozo'
                         )
                     ));
-                      
+                                   
                     $fechas = array();
-                    foreach ($mesas as &$m) {
-                        $m['Mozo'] = $m[0];
-                        $m['Mozo']['numero'] = $m['z']['mozo'];
-                        $m['Mozo']['id'] = $m['z']['mozo_id'];
-                        $fechas[$m['Mozo']['fecha']][$m['Mozo']['id']] = $m;
-                        unset($m[0]);
-                        unset($m['z']);
+                    foreach ($mesas as &$m) {                       
+                        $fechas[$m[0]['fecha']][$m['Mozo']['id']] = $m;
                     }
                 }
             }

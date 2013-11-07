@@ -96,9 +96,9 @@
 
 <div class="clear" style="height: 20px;"></div>
 <div class="grid_7 alpha">
-    <div id="chart1" class="grid_12 alpha omega" style="height:350px;"></div>
+    <div id="chart1" class="col-md-12 alpha omega" style="height:350px;"></div>
     
-    <div class="grid_12 alpha omega">
+    <div class="col-md-12 alpha omega">
         <?php 
         echo $form->create('Mesa',array('url'=>'/pquery/stats/mesas_total', 'class' => 'formufecha')); 
         ?>

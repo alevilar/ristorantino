@@ -89,7 +89,7 @@
      * @property {String} syntax The default syntax to use [perl].
      */
     jsDate.config = {
-        defaultLocale: 'en',
+        defaultLocale: 'es',
         syntax: 'perl',
         defaultCentury: 1900
     };

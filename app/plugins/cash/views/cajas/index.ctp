@@ -1,5 +1,5 @@
 
-<table>
+<table class="table">
     <thead>
         <tr>
             <th>Id</th>

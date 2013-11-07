@@ -5,6 +5,8 @@ class Mozo extends AppModel {
 
         var $actsAs = array('SoftDeletable', 'Containable');
         
+        var $order = array('Mozo.activo DESC', 'Mozo.numero');
+        
 	var $validate = array(
 		'user_id' => array(
                     'isUnique' => array(

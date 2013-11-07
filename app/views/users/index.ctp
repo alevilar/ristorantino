@@ -17,7 +17,7 @@ echo $form->input('txt_buscar', array('label' => 'Introducir texto a buscar'));
 echo $form->end();
 ?>
 
-<table cellpadding="0" cellspacing="0">
+<table class="table">
 <tr>
 	<th><?php echo $paginator->sort('Usuario','username');?></th>
 	<th><?php echo $paginator->sort('nombre');?></th>

@@ -23,7 +23,7 @@ echo $javascript->link('/stats/js/mesas_total', false); //plugin estadisticas
 <?php } ?>
 </script>
 
-<div>
+<div class="grid_4 alpha">
     <?php
     echo $form->create('Mesa', array('url' => array('controller' => 'stats', 'action' => 'mesas_total'), 'class' => ''));
     ?>
@@ -39,22 +39,42 @@ echo $javascript->link('/stats/js/mesas_total', false); //plugin estadisticas
     <?php
     echo $form->end();
     ?>
-
-
-
-    <p>
-        Resumen del Cuadro: <br />
-        Fecha, entre <b><?php echo date('D d, M Y', strtotime($resumenCuadro['desde'])) ?></b> y <b><?php echo date('D d, M Y', strtotime($resumenCuadro['hasta'])) ?></b>
-        <br />Total de ventas: <b><?php echo money_format('%2n', $resumenCuadro['total']) ?></b><br />
-        Cantidad de cubiertos: <b><?php echo $resumenCuadro['cubiertos'] ?></b>
-    </p>
-    <div id="chart1" ></div>
-    <div class="clear"></div>
+    <div class="clear clearfix"></div>
 </div>
 
+<div class="grid_8 omega">
+    Datos entre <b><?php echo strftime('%A %d de %B %Y', strtotime($resumenCuadro['desde'])) ?></b> y <b><?php echo strftime('%A %d de %B %Y', strtotime($resumenCuadro['hasta'])) ?></b>
+        <br />
+    <div class="grid_6 alpha">
+        <h3>Ingresos/Ventas</h3>
+        Total de ventas: <b><?php echo $number->currency($resumenCuadro['total']) ?></b><br />
+        Cierre Zeta Total: <b><?php echo $number->currency($zeta_iva_total+$zeta_neto_total) ?></b><br>
+        Zeta Neto: <b><?php  echo $number->currency($zeta_neto_total) ?></b><br>
+        Zeta Iva: <b><?php echo $number->currency($zeta_iva_total) ?></b><br>
+        
+        <p>Cantidad de cubiertos: <b><?php echo $resumenCuadro['cubiertos'] ?></b></p>
+    </div>
+    
+    <div class="grid_6 omega">
+        <h3>Egresos/Pagos</h3>
+        Pagos: <b><?php echo $number->currency($egresos_total)?></b>
+        <br><br>
+        Gastos Total: <b><?php echo $number->currency($gastos_total) ?></b><br>
+        Gasto Neto: <b><?php echo $number->currency($gastos_neto) ?></b><br>
+        Gastos Impuestos: <b><?php echo $number->currency($gastos_total-$gastos_neto) ?></b><br>
+    </div>
+    <div class="clear"></div>
+</div>
+<hr />
 <div class="clear"></div>
+<hr />
+<div class="col-md-12 alpha omega">
+<div id="chart1" ></div>
+</div>
 
-<div class="grid_6 alpha">
+<div class="clear clearfix"></div>
+
+<div class="grid_5 alpha">
     <?php
     foreach ($mesas as $i => $mozo) {
         if (!empty($mozo['desde']))
@@ -78,7 +98,15 @@ echo $javascript->link('/stats/js/mesas_total', false); //plugin estadisticas
                         } else {
                             echo('class="colordos"');
                         }
-        ?>>Total</th>                        
+        ?>>Total</th>   
+                        <th <?php
+                        if ($i == 0) {
+                            echo('class="coloruno"');
+                        } else {
+                            echo('class="colortres"');
+                        }
+        ?>>$Cubierto</th>
+                        
                         <th <?php
                         if ($i == 0) {
                             echo('class="coloruno"');
@@ -93,13 +121,7 @@ echo $javascript->link('/stats/js/mesas_total', false); //plugin estadisticas
                             echo('class="colortres"');
                         }
         ?>>Cubiertos</th>
-                        <th <?php
-                        if ($i == 0) {
-                            echo('class="coloruno"');
-                        } else {
-                            echo('class="colortres"');
-                        }
-        ?>>Prom. Cubierto</th>
+                        
                     </tr>
                 </thead>
                 <tbody>
@@ -110,13 +132,21 @@ echo $javascript->link('/stats/js/mesas_total', false); //plugin estadisticas
                         foreach ($mozo as $m) {
                             echo('<tr>');
                             echo('<td>');
-                            echo(date('D d, M', strtotime($m['Mesa']['fecha'])));
+                            echo(strftime('%a %d %b', strtotime($m['Mesa']['fecha'])));
                             echo('</td>');
                             echo('<td>');
 
                             echo('$');
                             echo($m['Mesa']['total']);
-
+                            echo('</td>');
+                            
+                            // prom cubiertos
+                            echo('<td>');
+                            if ($m['Mesa']['cant_cubiertos']) {
+                                echo $number->currency($m['Mesa']['total'] / $m['Mesa']['cant_cubiertos']);
+                            } else {
+                                echo $number->currency($m['Mesa']['total']);
+                            }
                             echo('</td>');
                            
                             echo('<td>');
@@ -125,13 +155,7 @@ echo $javascript->link('/stats/js/mesas_total', false); //plugin estadisticas
                             echo('<td>');
                             echo($m['Mesa']['cant_cubiertos']);
                             echo('</td>');
-                            echo('<td>');
-                            if ($m['Mesa']['cant_cubiertos']) {
-                                echo $number->currency($m['Mesa']['total'] / $m['Mesa']['cant_cubiertos']);
-                            } else {
-                                echo $number->currency($m['Mesa']['total']);
-                            }
-                            echo('</td>');
+                            
                             echo('</tr>');
                         }
                     } else {
@@ -154,7 +178,31 @@ echo $javascript->link('/stats/js/mesas_total', false); //plugin estadisticas
     <div class="clear"></div>
 </div>
 
-<div class="grid_6 omega">
+<div class="grid_4">
+    <div class="tabla-info">
+        <h3>Zetas</h3>
+        <table cellspacing="0" cellpadding="0" style="text-align: center; width: 100%">
+            <thead>
+                <tr>
+                    <th style="background: #00650e; color: white; text-align: center;">Fecha</th>
+                    <th style="background: #00650e; color: white; text-align: center;">Neto</th>
+                    <th style="background: #00650e; color: white; text-align: center;">Iva</th>
+                </tr>
+            </thead>
+            <tbody>
+        <?php foreach ($zetas as $z) { ?>
+            <tr>
+                <td><?php echo strftime('%a %d %b',strtotime($z[0]['fecha'])); ?></td>
+                <td><?php echo $number->currency($z[0]['neto'])?></td>
+                <td><?php echo $number->currency($z[0]['iva'])?></td>
+            </tr>
+        <?php } ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="grid_3 omega">
     <div class="tabla-info">
         <h3>Pagos</h3>
         <table cellspacing="0" cellpadding="0" style="text-align: center; width: 100%">
@@ -167,7 +215,7 @@ echo $javascript->link('/stats/js/mesas_total', false); //plugin estadisticas
             <tbody>
                 <?php foreach ($egresos[0] as $e) { ?>
                     <tr>
-                        <td><?php echo $e['Egreso']['fecha'] ?></td>
+                        <td><?php echo strftime('%a %d %b', strtotime($e['Egreso']['fecha']));?></td>
                         <td><?php echo $number->currency($e['Egreso']['importe']) ?></td>
                     </tr>
                 <?php } ?>
@@ -176,4 +224,5 @@ echo $javascript->link('/stats/js/mesas_total', false); //plugin estadisticas
     </div>
     <div class="clear"></div>
 </div>
+
 <div class="clear"></div>

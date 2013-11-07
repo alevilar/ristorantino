@@ -1,17 +1,17 @@
-(function() {
+(function($) {
     
     function redondeo(valor){
         return Math.round(valor*100)/100;
     }
     
     function __sumaByTag( tagName ){
-        var $importes = jQuery( tagName );
+        var $importes = $( tagName );
         
         var total = 0;           
         
         if ($importes) {
             jQuery.each($importes, function (v){
-                total += Number(jQuery($importes[v]).val());
+                total += Number($($importes[v]).val());
             });
         }
         return redondeo(total);
@@ -68,59 +68,92 @@
             return true;
         }
     });
-       
-        
-        
-    jQuery("input.calc_impuesto", "#GastoAddForm").bind('click', function(e){
-        var porcent = Number( jQuery(this).attr('data-porcent') );
-        var $parent = jQuery(this).parents('fieldset');
-        var neto = $parent.find('input.calc_neto').val();
+    
+    
+    
+    function $netoVecino (el) {
+        var $parent = $(el).parents('fieldset');
+        return $parent.find('input.calc_neto')
+    }
+    
+    function $impuestoVecino (el) {
+        var $parent = $(el).parents('fieldset');
+        return $parent.find('input.calc_impuesto');
+    }
+    
+    
+    function calcularImpuestoSegunNetoVecino(elImpuesto){
+        var porcent = Number( $(elImpuesto).attr('data-porcent') );
+        var neto = $netoVecino(elImpuesto).val();
         var valor;
-        if (porcent && !jQuery(this).val() && neto) {
+        if (porcent && !$(elImpuesto).val() && neto) {
             valor = neto *  (porcent/100) ;
             if (valor > 0) {
-                jQuery(this).val(redondeo(valor));
+                $(elImpuesto).val(redondeo(valor));
             }
             modificarTotalesSumados();
         }
-    });
-
-    jQuery("input.calc_neto", '#GastoAddForm').bind('click', function(e){   
-        var porcent = Number( jQuery(this).attr('data-porcent') );
-        var $parent = jQuery(this).parents('fieldset');
-        var impuesto = $parent.find('input.calc_impuesto').val();
+    }
+    
+    
+    function calcularNetoSegunImpuestoVecino(elNeto) {
+        var porcent = Number( $(elNeto).attr('data-porcent') );
+        var impuesto = $impuestoVecino().val();
         var valor;
-        if (porcent && !jQuery(this).val() && impuesto) {
+        if (porcent && !$(elNeto).val() && impuesto) {
             valor = impuesto / ( porcent/100 );
             if (valor > 0) {
-                jQuery(this).val(redondeo(valor));
+                $(elNeto).val(redondeo(valor));
             }
             modificarTotalesSumados();
         }
+    }
+       
+       
+    $(".calc_impuesto", "#GastoAddForm").bind('focus', function(e){
+        calcularImpuestoSegunNetoVecino(this);
+    });
+
+    $(".calc_neto", '#GastoAddForm').bind('focus', function(e){   
+        calcularNetoSegunImpuestoVecino(this);
     });
 
 
-    jQuery("input.calc_neto", '#GastoAddForm').bind('change', function(e){
-        var porcent = jQuery(this).attr('data-porcent');
-        var valor = jQuery(this).val()*porcent/100;
-        var $impuesto = jQuery(this).parents('fieldset').find('input.calc_impuesto');
+    $("input.calc_neto", '#GastoAddForm').bind('change', function(e){
+        var porcent = $(this).attr('data-porcent');
+        var valor = $(this).val()*porcent/100;
+        var $impuesto = $(this).parents('fieldset').find('input.calc_impuesto');
         if ( porcent && !$impuesto.val() ) {
-            jQuery(this).parents('fieldset').find('input.calc_impuesto').val(redondeo(valor));
+            $(this).parents('fieldset').find('input.calc_impuesto').val(redondeo(valor));
             modificarTotalesSumados();
         }
     });
 
 
-    jQuery("#btn-guardar-sin-pagar").click(function(e){      
+    $("#btn-guardar-sin-pagar").click(function(e){      
         $(this.form.elements['data[Gasto][pagar]']).val(0);
         return $('#GastoAddForm').submit(); 
     });
     
-    jQuery("#btn-guardar-y-pagar").click(function(e){      
+    $("#btn-guardar-y-pagar").click(function(e){      
         $(this.form.elements['data[Gasto][pagar]']).val(1);
         return $('#GastoAddForm').submit(); 
     });
     
-//    modificarTotalesSumados();
 
-})();
+
+
+    // Autocomplete
+        $('input.auto-complete').typeahead({
+            source: function(a,b ){
+                var obj = {
+                    'data[Proveedor][buscar_proveedor]': a
+                };
+                $.post(urlDomain+'account/proveedores/index.json', obj).done(b);
+            }
+        }).on('select', function(a,b,c){
+            var id = $(b).attr('data-id');
+            $("#GastoProveedorId").val(id);
+        });
+      
+})(jQuery);

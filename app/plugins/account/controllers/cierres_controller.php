@@ -34,8 +34,19 @@ class CierresController extends AccountAppController
     }
     
     function view($id) {
-        
-        $this->set('cierre', $this->Cierre->read(null, $id));
+        $cierre = $this->Cierre->find('first', array(
+            'conditions' => array(
+                'Cierre.id' => $id,
+            ),
+            'contain' => array(
+                'Gasto'=> array(
+                    'TipoFactura',
+                    'Proveedor',
+                    'Clasificacion'
+                )
+            ),
+        ));
+        $this->set('cierre', $cierre);
     }
 
 

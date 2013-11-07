@@ -1,53 +1,17 @@
-#ArqueoAddForm input[type=text], #ArqueoAddForm input[type=password], #ArqueoAddForm input[type=file], #ArqueoAddForm textarea {
-    width: 60%;
-    text-align: center;
+
+input.muted {
     border: none;
 }
 
-#ArqueoAddForm textarea{
-    text-align: left;
-}
-
-
-#ArqueoAddForm input[type=text].muted, #ArqueoAddForm input[type=password].muted, #ArqueoAddForm input[type=file].muted, #ArqueoAddForm textarea.muted {
-    background: rgba(255,255,255,0.28);
-    
-}
-
-#ArqueoAddForm input[type=text].muted:active, #ArqueoAddForm input[type=password].muted:active, #ArqueoAddForm input[type=file].muted:active, #ArqueoAddForm textarea.muted:active,
-#ArqueoAddForm input[type=text].muted:focus, #ArqueoAddForm input[type=password].muted:focus, #ArqueoAddForm input[type=file].muted:focus, #ArqueoAddForm textarea.muted:focus{
-    background: rgba(255,255,255,1);
-}
-
-table.mini td, table.mini th{
-    padding: 2px;
+input.muted:active, input.muted:focus {
+    border: 1px solid #CCC;
 }
 
 table.mini > tbody > tr:last-child{
-    background: #014d68;
-    color: lavender;
+    background: #F7F7F2;
+    color: #003d4c;
 }
 
-#arqueoContainer, .zeta{
-    text-align: center;
-}
-
-.mostrar_zeta{
-    background: #E4EFFD;
-}
-.pull-right{
-    float: right;
-}
-
-#ArqueoDatetime{
-    font-size: 12pt;
-    width: 100%;
-}
-
-#ArqueoImporteFinal{
-    background: #993;
-    color: white;    
-}
 
 #billetines{
     position: fixed;
@@ -76,4 +40,3 @@ table.mini > tbody > tr:last-child{
     padding: 0px;
     color: white;
 }
-

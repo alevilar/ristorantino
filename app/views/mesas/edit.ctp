@@ -6,7 +6,7 @@
 
         <div class="mesas form">
             <?php echo $form->create('Mesa'); ?>
-            <div class="grid_6 ">
+            <div class="col-md-6 ">
                 <fieldset>
                     <legend><?php __('Datos Generales'); ?></legend>
                     <?php
@@ -18,7 +18,7 @@
                 </fieldset>
             </div>
 
-            <div class="grid_6">
+            <div class="col-md-6">
                 <fieldset>
                     <legend><?php __('Totales de Mesa'); ?></legend>
                     <?php

@@ -9,9 +9,12 @@
  		<legend><?php __('Editar Mozo');?></legend>
 	<?php
 		echo $form->input('id');
-		echo $form->input('user_id', array('empty'=>'No relacionar con usuarios del sistema'));
 		echo $form->input('numero');
-                echo $form->input('activo',array('after'=>'<p>Sólo los mozos activos apareran en la Adición.</br>Si BORRA un mozo se pierden los datos estadisticos, puede desactivarlo para no perder información.</p>'));
+                echo $form->input('activo');
+                echo $form->input('User.id');
+                echo $form->input('User.username');
+                echo $form->input('User.nombre');
+                echo $form->input('User.apellido');
 	?>
      <?php echo $form->end('Submit');?>           
 	</fieldset>
@@ -26,3 +29,5 @@
                 <li><?php echo $html->link(__('Nuevo usuario', true), array('controller'=> 'users', 'action'=>'add')); ?> </li>
 	</ul>
 </div>
+
+

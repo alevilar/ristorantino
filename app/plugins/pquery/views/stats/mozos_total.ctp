@@ -80,7 +80,7 @@ foreach ($fechas as $fecha=>$mozo) {
 </div>
 
 
-<div class="grid_12 alpha omega">
+<div class="col-md-12 alpha omega">
         <?php 
         echo $form->create('Mesa',array('url'=>'/pquery/stats/mozos_total', 'class' => 'formufecha')); 
         ?>

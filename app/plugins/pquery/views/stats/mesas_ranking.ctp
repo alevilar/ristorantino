@@ -41,7 +41,7 @@
 
   
 <!-- TABLA DE MOZOS -->
-<div class="grid_12">  
+<div class="col-md-12">  
     </br></br>
 <table cellspacing="0" cellpadding="0">
         <caption class="editable">Total mesas</caption>

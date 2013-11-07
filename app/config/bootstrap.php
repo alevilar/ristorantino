@@ -164,4 +164,23 @@ function validate_cuit_cuil($cuit)
 //    $currentNumber+1 % $gridToNumber[strtolower($grid)]
 //
 //}
+
+function explorar_dias($fecha_ini, $dias_dif) {
+    $mes = NULL;
+    for($i=0; $i <= $dias_dif; $i++) {
+        $dia_mes = date("d F", mktime(0, 0, 0, $fecha_ini[1], $fecha_ini[0]+$i, $fecha_ini[2]))."\n";
+        $dia_mes = explode(" ", $dia_mes);
+        $dia[$i] = $dia_mes[0];
+        
+        if($mes <> $dia_mes[1]) {
+            $mes = $dia_mes[1];
+            echo "<h2>".$mes."</h2>";
+        }
+        echo "<p>".$dia[$i]."</p>";
+        
+    }
+    
+    return true;
+}
+
 ?>

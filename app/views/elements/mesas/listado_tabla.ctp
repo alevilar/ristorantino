@@ -1,4 +1,4 @@
-<table cellpadding="0" cellspacing="0">
+<table class="table">
 <tr>
 	<th><?php echo $paginator->sort('Mesa','numero');?></th>
 	<th><?php echo $paginator->sort('Nº de Mozo','mozo_id');?></th>

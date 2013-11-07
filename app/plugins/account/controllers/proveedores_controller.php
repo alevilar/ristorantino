@@ -11,7 +11,14 @@ class ProveedoresController extends AppController {
         
         
 	function index() {
-		$this->Proveedor->recursive = 0;
+		$this->Proveedor->recursive = 0;                
+                if ( !empty($this->data['Proveedor']['buscar_proveedor'])) {
+                    $this->paginate['conditions']['or']['UPPER(Proveedor.name) LIKE'] = "%".strtoupper($this->data['Proveedor']['buscar_proveedor'])."%";
+                    $this->paginate['conditions']['or']['Proveedor.cuit LIKE'] = "%".$this->data['Proveedor']['buscar_proveedor']."%";
+                }
+                if ($this->RequestHandler->isAjax()) {
+                    $this->paginate['limit'] = 999;
+                }
 		$this->set('proveedores', $this->paginate());
 	}
 

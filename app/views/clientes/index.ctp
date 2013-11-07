@@ -18,7 +18,7 @@
         'format' => __('Página %page% de %pages%, mostrando %current% elementos de %count%', true)
         ));
         ?></p>
-        <table cellpadding="0" cellspacing="0">
+        <table class="table">
             
              <tr>
                 <?php echo $form->create("Cliente",array("action"=>"index")); echo $form->input("id") ?>

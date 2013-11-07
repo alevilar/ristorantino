@@ -1,5 +1,5 @@
 
-<table>
+<table class="table table-hover">
     <thead>
         <tr>
             <th>Total Ventas</th>
@@ -19,12 +19,12 @@
     <tbody>
 <?php foreach ($zetas as $z) {?>
         <tr>
-            <td><?php echo $z['Zeta']['total_ventas']?></td>
-            <td><?php echo $z['Zeta']['numero_comprobante']?></td>
-            <td><?php echo $z['Zeta']['monto_iva']?></td>
-            <td><?php echo $z['Zeta']['monto_neto']?></td>
-            <td><?php echo $z['Zeta']['nota_credito_iva']?></td>
-            <td><?php echo $z['Zeta']['nota_credito_neto']?></td>
+            <td><?php echo $number->currency($z['Zeta']['total_ventas'])?></td>
+            <td class="center"><?php echo $z['Zeta']['numero_comprobante']?></td>
+            <td><?php echo $number->currency($z['Zeta']['monto_iva'])?></td>
+            <td><?php echo $number->currency($z['Zeta']['monto_neto'])?></td>
+            <td><?php echo $number->currency($z['Zeta']['nota_credito_iva'])?></td>
+            <td><?php echo $number->currency($z['Zeta']['nota_credito_neto'])?></td>
             <td><?php echo $z['Zeta']['observacion_comprobante_tarjeta']?></td>
             <td><?php echo $z['Zeta']['observacion']?></td>
             <td><?php echo $z['Zeta']['created']?></td>

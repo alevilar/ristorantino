@@ -64,23 +64,21 @@
     var cords = [cords1[0], cords2[0]];
     
                plot1 = $.jqplot('chart1',  cords,{
+                   
                    title: 'Ventas y Pagos',
                    axes: {
                        xaxis: {
                            renderer: $.jqplot.DateAxisRenderer,
                            tickOptions: {
-                               formatString: '%#d&nbsp;%b'
+                               formatString: '%a %e de %b'
                                                //formato de la fecha
                            }
                        },
                        yaxis: {
                            tickOptions: {
-                               formatString: '$%.2f'
+                               formatString: '$%.0f'
                            }
                        }
-                   },
-                   highlighter: {
-                       tooltipAxes: 'both'
                    }
                });
                

@@ -13,7 +13,7 @@ echo $paginator->counter(array(
 	</ul>
 </div>
 
-<table cellpadding="0" cellspacing="0">
+<table class="table">
 <tr>
 	<th><?php echo $paginator->sort('id');?></th>
 	<th><?php echo $paginator->sort('nombre');?></th>

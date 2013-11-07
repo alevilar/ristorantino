@@ -49,9 +49,6 @@ class ProductosPreciosFuturosController extends AppController {
 		 $this->paginate['ProductosPreciosFuturo']['contain'] = array('Producto.Categoria');
                  $prods = $this->paginate('ProductosPreciosFuturo');
 
-                 
-		
-		$this->Producto->recursive = 0;
 		$this->set('productos', $prods);
 	}
         

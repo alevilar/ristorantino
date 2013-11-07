@@ -14,7 +14,7 @@ echo $paginator->counter(array(
 'format' => __('Pagina %page% de %pages%, mostrando %current% elementos de %count%.', true)
 ));
 ?></p>
-<table class="productos" cellpadding="0" cellspacing="0">
+<table class="productos table">
 
     <?php echo $form->create("ProductosPreciosFuturo",array("action"=>"index")); ?>
     
@@ -25,16 +25,14 @@ echo $paginator->counter(array(
     
     
 <tr>
-	<th><?php echo $form->input('Producto.name',array('style'=>'width:170px;','placeholder'=>'Nomnre', 'label'=>false));?></th>
-	<th><?php echo $form->input('Producto.abrev',array('style'=>'width:150px;','placeholder'=>'Abreviatura','label'=>false));?></th>
-	<th><?php echo $form->input('Producto.precio',array('style'=>'width:60px;','placeholder'=>'Precio','label'=>false));?></th>
+	<th><?php echo $form->input('Producto.name',array('placeholder'=>'Nomnre', 'label'=>false));?></th>
+	<th><?php echo $form->input('Producto.precio',array('placeholder'=>'Precio','label'=>false));?></th>
 	<th>&nbsp;</th>
 	<th class="actions"><?php echo $form->end("Buscar")?></th>
 </tr>
 
 <tr>
 	<th><?php echo $paginator->sort('Nombre','name');?></th>
-	<th><?php echo $paginator->sort('abreviatura','abrev');?></th>
 	<th><?php echo $paginator->sort('Precio','precio');?></th>
 	<th><?php echo $paginator->sort('Modificado','modified');?></th>
 	<th class="actions"><?php __('Acciones');?></th>
@@ -59,10 +57,9 @@ foreach ($productos as $producto):
                             $producto['Producto']['name'];
 
                         echo $name;
+                        echo "<br>";
+                        echo "<small>Ticket: <cite>".$producto['Producto']['abrev']."</cite></small>"
                         ?>
-		</td>
-		<td>
-			<?php echo $producto['Producto']['abrev']; ?>
 		</td>
 		
                 

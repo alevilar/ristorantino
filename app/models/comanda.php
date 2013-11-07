@@ -60,7 +60,10 @@ class Comanda extends AppModel {
 			$ids[] = $m['Mesa']['id'];
 		endforeach;
 		
-		return $this->find('all',array('conditions'=>array('Comanda.mesa_id'=>$ids)));
+		return $this->find('all',array(
+                    'conditions'=>array('Comanda.mesa_id'=>$ids),
+                    'order' => array('Comanda.created DESC')
+                    ));
 	}
 	
 	

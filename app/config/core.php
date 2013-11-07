@@ -28,7 +28,7 @@
  * @license			http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 
-
+setlocale(LC_TIME ,"es_AR.utf8");
 //setlocale(LC_ALL, 'es_AR.utf8');
 
 

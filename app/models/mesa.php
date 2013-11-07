@@ -548,75 +548,47 @@ class Mesa extends AppModel {
          */
         function totalesDeMesasEntre($fechaDesde = '', $fechaHasta = '', $conds = array()){
             $horarioCorte = Configure::read('Horario.corte_del_dia');
-            $limit = empty($conds['limit']) ? '' : $conds['limit'];
+            if ( $horarioCorte < 10 ) {
+                $horarioCorte = "0$horarioCorte";
+            }
+            $sqlHorarioDeCorte = "DATE(SUBTIME(Mesa.created, '$horarioCorte:00:00'))";
             $desde = empty($fechaDesde) ? date('Y-m-d', strtotime('now')) : $fechaDesde;
             $hasta = empty($fechaHasta) ? date('Y-m-d', strtotime('now')) : $fechaHasta;
+            $defaultOrder = array();
             
-            $fieldConds = empty($conds['fields']) ? array() : $conds['fields'];
-            $fields = array_merge( array( 'count(*) as "cant_mesas"'), $fieldConds );
+            $defaultFields = array(
+                'count(*) as "cant_mesas"',
+                'sum(Mesa.cant_comensales) as "cant_cubiertos"',
+                'sum(Mesa.total) as "total"',
+                'sum(Mesa.total)/sum(Mesa.cant_comensales) as "promedio_cubiertos"',
+                "$sqlHorarioDeCorte as fecha",                
+            );
             
-            $groups = empty($conds['fields']) ? array() : $conds['group'];
-            
-            $fieldsText = '';
-            $i = 0;
-            foreach ($fields as $f){
-                if ($i > 0) {
-                    $fieldsText .= ', ';
-                }
-                $fieldsText .= $f;
-                $i++;
+            $defaultGroup = array(
+                'fecha'  ,
+            );
+            if ( empty($conds['order'])) {
+                $defaultOrder = array(
+                    "Mesa.created DESC"
+                );
             }
             
-            $groupByText = '';
-            if (!empty($groups)) {
-                $groupByText = 'GROUP BY ';
-                $i = 0;
-                foreach ($groups as $g){
-                    if ($i > 0) {
-                        $groupByText .= ', ';
-                    }
-                    $groupByText .= $g;
-                    $i++;
-                }
-            }
             
-            $orderByText = 'ORDER BY m.created DESC ';
-            $order = empty($conds['order']) ? array() : $conds['order'];
-            if (!empty($order)) {
-                $orderByText = 'ORDER BY ';
-                $i = 0;
-                foreach ($order as $o){
-                    if ($i > 0) {
-                        $orderByText .= ', ';
-                    }
-                    $orderByText .= $o;
-                    $i++;
-                }
-            }
+            $defaultConditions = array(
+                    'Mesa.deleted' => '0', // mesas no borradas
+                    "$sqlHorarioDeCorte BETWEEN '$desde' AND '$hasta'"
+            );
             
-            $query = '    SELECT 
-                    '.$fieldsText.'
-FROM (
-    SELECT m.id, m.numero, m.mozo_id, m.total,m.subtotal, m.cant_comensales, 
-    m.cliente_id, m.menu, ADDDATE(m.created,-1) as created, m.modified, m.time_cerro, m.time_cobro 
-    FROM mesas m
-    WHERE m.deleted = 0 AND DATE(m.created) BETWEEN DATE(ADDDATE("'.$desde.'",+1)) AND DATE(ADDDATE("'.$hasta.'",+1)) 
-          AND HOUR(m.created) BETWEEN 0 AND '. $horarioCorte.'
-UNION
-    SELECT id,numero,mozo_id,total, m.total, cant_comensales, cliente_id,menu, created, modified, time_cerro, time_cobro 
-    FROM mesas m
-    WHERE m.deleted = 0 AND DATE(m.created) BETWEEN "'.$desde.'" AND "'.$hasta.'" AND HOUR(m.created) BETWEEN '.$horarioCorte.' AND 24) as m    
-              
-LEFT JOIN mozos z ON z.id = m.mozo_id              
-'. $groupByText .'
-'. $orderByText. '    
-'. $limit;
-            $retVal = $this->query($query);
-            if ( !empty($retVal) && !empty($retVal[0]) && !empty($retVal[0][0]) && empty($retVal[0][0]['cant_mesas'])) {
-                // sin resultados
-                return array();
-            }
-            return $this->query($query);
+            $ops = array(
+                'fields' => $defaultFields,
+                'conditions' => $defaultConditions,
+                'group' => $defaultGroup,
+                'order' => $defaultOrder,
+            );
+            
+            $ops = array_merge_recursive($ops, $conds);
+            $mesas =  $this->find('all', $ops);
+            return $mesas;
         }
 }
 ?>

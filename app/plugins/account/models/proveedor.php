@@ -16,6 +16,10 @@ class Proveedor extends AccountAppModel {
                     'cuit' => array(
                             'rule' => 'validate_cuit',
                             'message' => 'CUIT inválido',
+                    ),
+                    'unique' => array(
+                        'rule' => 'isUnique',
+                        'message' => 'El Cuit ya existe'
                     )
                 ),
 	);

@@ -28,22 +28,20 @@
 echo $paginator->options(array('url'=>$this->params['PaginateConditions']));
 //debug($paginator->params['paging']['Producto']['count']);
 echo $paginator->counter(array('format' => __('Pagina %page% de %pages%, mostrando %current% elementos de %count%.', true)));?></p>
-<table class="productos" cellpadding="0" cellspacing="0">
+<table class="productos table">
         <tr>
 	<?php echo $form->create("Producto",array("action"=>"index")); echo $form->input("id") ?>
-	<th><?php echo $form->input('name',array('style'=>'width:170px;','placeholder'=>'Nombre del producto', 'label'=>false));?></th>
-	<th><?php echo $form->input('abrev',array('style'=>'width:145px;','placeholder'=>'Abreviatura','label'=>false));?></th>
-	<th><?php echo $form->input('Comandera.name',array('style'=>'width:85px;','placeholder'=>'Comandera','label'=>false));?></th>
-	<th><?php echo $form->input('Categoria.name',array('style'=>'width:85px;','placeholder'=>'Categoria','label'=>false));?></th>
-	<th><?php echo $form->input('precio',array('style'=>'width:40px;','placeholder'=>'Precio','label'=>false));?></th>
-        <th><?php echo $form->input('order',array('style'=>'width:35px;','placeholder'=>'Orden','label'=>false));?></th>
+	<th><?php echo $form->input('name',array('placeholder'=>'Nombre del producto', 'label'=>false));?></th>
+        <th><?php echo $form->input('comandera_id',array('placeholder'=>'Comandera','label'=>false, 'empty'=>'Comandera'));?></th>
+	<th><?php echo $form->input('Categoria.name',array('placeholder'=>'Categoria','label'=>false));?></th>
+	<th><?php echo $form->input('precio',array('placeholder'=>'Precio','label'=>false));?></th>
+        <th><?php echo $form->input('order',array('placeholder'=>'Orden','label'=>false));?></th>
 	<th>&nbsp;</th>
 	<th class="actions"><?php echo $form->end("Buscar")?></th>
         </tr>
 
 <tr>
 	<th><?php echo $paginator->sort('Nombre','name');?></th>
-	<th><?php echo $paginator->sort('Abreviatura','abrev');?></th>
 	<th><?php echo $paginator->sort('Comandera','Comandera.description');?></th>
 	<th><?php echo $paginator->sort('Categoria','Categoria.name');?></th>
 	<th><?php echo $paginator->sort('Precio','precio');?></th>
@@ -70,11 +68,10 @@ foreach ($productos as $producto):
                             $producto['Producto']['name'];
 
                         echo trim($name);
+                        echo "<br>";
+                        echo "<small>Ticket:<cite>".$producto['Producto']['abrev']."</cite></small>"; 
                 ?></td>
                 
-		<td class='edit' field='abrev' product_id='<?php echo $prodId ?>'><?php 
-                    echo $producto['Producto']['abrev']; 
-                ?></td>
                 
 		<td class="edit_field_types" options_types='<?php print json_encode($comanderas) ?>' field="comandera_id" product_id="<?php echo $prodId; ?>">
 			<?php echo $producto['Comandera']['description']; ?>

@@ -84,7 +84,7 @@ foreach ($fechas as $fecha=>$mozo) {
             ?>
             <tr>
                 <td><?php echo $m['Mozo']['numero']; ?></td>
-                <td style="text-align: right">$<?php echo number_format ( $m['Mozo']['total'] , 2 , ',' , $thousands_sep = '.' ); ?></td>
+                <td style="text-align: right">$<?php echo number_format ( $m[0]['total'] , 2 , ',' , $thousands_sep = '.' ); ?></td>
             </tr>
             <?php
         }
@@ -99,7 +99,7 @@ foreach ($fechas as $fecha=>$mozo) {
 </div>
 
 
-<div class="grid_12 alpha omega">
+<div class="col-md-12 alpha omega">
         <?php 
         echo $form->create('Mesa',array('url'=>'/stats/mozos_total', 'class' => 'formufecha')); 
         ?>

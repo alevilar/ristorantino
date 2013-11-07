@@ -2,7 +2,7 @@
 class DetalleComandasController extends AppController {
 
 	var $name = 'DetalleComandas';
-	var $helpers = array('Html', 'Form');
+	var $helpers = array('Html', 'Form', 'Number');
 	var $components = array( 'Printer');
 
 	function index() {
@@ -30,8 +30,14 @@ class DetalleComandasController extends AppController {
                         'conditions' => 'Mesa.id = Comanda.mesa_id',
                     ), 
                 );
-                $conditions['fields'] = array('Producto.name', 'sum(DetalleComanda.cant-DetalleComanda.cant_eliminada) as "cant"');
-                
+                $conditions['fields'] = array(
+                    'Producto.name', 
+                    'sum(DetalleComanda.cant-DetalleComanda.cant_eliminada)*Producto.precio as "ventas"',
+                    'Producto.precio', 
+                    'sum(DetalleComanda.cant-DetalleComanda.cant_eliminada) as "cant"',
+                    );
+                $conditions['order'] = array('ventas DESC',"cant DESC");
+                        
                 // procesar buscador
                 if (!empty($this->data)) {
                     if (!empty( $this->data['Producto']['id'] )) {
@@ -49,9 +55,16 @@ class DetalleComandasController extends AppController {
                     }
                 }
                 
+                $comandas  = $this->DetalleComanda->Producto->find('all', $conditions);
+                $cantTotal = 0;
+                $ventasTotal = 0;
+                foreach ($comandas as $c) {
+                    $cantTotal += $c[0]['cant'];
+                    $ventasTotal += $c[0]['ventas'];
+                }
                 $this->set('categorias', $this->DetalleComanda->Producto->Categoria->generatetreelist());
                 $this->set('productos', $this->DetalleComanda->Producto->find('list', array('order' => 'name')));
-		$this->set('comandas', $this->DetalleComanda->Producto->find('all', $conditions));
+		$this->set(compact('comandas', 'cantTotal', 'ventasTotal'));
 	}
 	
 	function prueba(){

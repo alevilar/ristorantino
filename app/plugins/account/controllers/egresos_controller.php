@@ -16,7 +16,6 @@ class EgresosController extends AccountAppController
     {
         $this->pageTitle = "Pagos Realizados";
         $this->Egreso->recursive = 1;
-        $conditions = array();
 
         $conditions = array();
         $url = $this->params['url'];
@@ -25,18 +24,18 @@ class EgresosController extends AccountAppController
 
         
         if (!empty($url['fecha_desde'])) {
-            $conditions['Egreso.fecha >='] = $url['fecha_desde'];
+            $conditions['DATE(Egreso.fecha) >='] = $url['fecha_desde'];
             $this->data['Egreso']['fecha_desde'] = $url['fecha_desde'];
         }
 
         if (!empty($url['fecha_hasta'])) {
-            $conditions['Egreso.fecha <='] = $url['fecha_hasta'];
+            $conditions['DATE(Egreso.fecha) <='] = $url['fecha_hasta'];
             $this->data['Egreso']['fecha_hasta'] = $url['fecha_hasta'];
         }        
 
         if (empty($url)) {
-            $conditions['Egreso.fecha >='] = $this->data['Gasto']['fecha_desde'] = date('Y-m-d', strtotime('-1month'));
-            $conditions['Egreso.fecha <='] = $this->data['Gasto']['fecha_hasta'] = date('Y-m-d', strtotime('now'));
+            $conditions['DATE(Egreso.fecha) >='] = $this->data['Egreso']['fecha_desde'] = date('Y-m-d', strtotime('-2 day'));
+            $conditions['DATE(Egreso.fecha) <='] = $this->data['Egreso']['fecha_hasta'] = date('Y-m-d', strtotime('now'));
         }
         
         $this->paginate = array(
@@ -65,6 +64,7 @@ class EgresosController extends AccountAppController
         }
         $this->data = $this->Egreso->read(null, $egreso_id);
         $this->set('tipoDePagos', $this->Egreso->TipoDePago->find('list'));
+        $this->render('add');
     }
 
     function add($gasto_id = null)
@@ -75,16 +75,18 @@ class EgresosController extends AccountAppController
         }
 
         $suma_gastos = 0;
+        $cant_gastos = 0;
         $gastosAll = array();
 
-
         if (!empty($this->data['Gasto'])) {
+            
             // re armo el array de gastos limpiando los que no fueron seleccionados para pagar
             foreach ($this->data['Gasto'] as $g) {
                 if ($g['gasto_seleccionado']) {
                     $gastos[] = $g['gasto_seleccionado'];
                 }
             }
+            $cant_gastos = count($gastos);
         }
 
         if (!empty($gastos)) {
@@ -113,9 +115,12 @@ class EgresosController extends AccountAppController
         } else {
             $this->pageTitle = 'Pagando ' . count($gastos) . ' Gasto';
         }
-        $this->set('tipo_de_pagos', $this->Egreso->TipoDePago->find('list'));
+        
+        $this->data['Egreso']['fecha'] = $date = date('Y-m-d H:i', strtotime('now'));
+        $this->data['Egreso']['total'] = $suma_gastos;
+        $this->set('tipoDePagos', $this->Egreso->TipoDePago->find('list'));
         $this->data['Gasto'] = $gastos;
-        $this->set('suma_gastos', $suma_gastos);
+        $this->set('cant_gastos', $cant_gastos);
         $this->set('gastosAll', $gastosAll);
     }
 

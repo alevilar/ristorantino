@@ -50,7 +50,7 @@ class GastosController extends AccountAppController
 
     function history()
     {
-        $this->Gasto->recursive = 1;
+        $this->Gasto->recursive = 0;
 
         $conditions = array();
         $url = $this->params['url'];
@@ -72,6 +72,11 @@ class GastosController extends AccountAppController
         if (!empty($url['fecha_desde'])) {
             $conditions['Gasto.fecha >='] = $url['fecha_desde'];
             $this->data['Gasto']['fecha_desde'] = $url['fecha_desde'];
+        }
+        
+        if (!empty($url['importe_neto'])) {
+            $conditions['Gasto.importe_neto'] = $url['importe_neto'];
+            $this->data['Gasto']['importe_neto'] = $url['importe_neto'];
         }
 
         if (!empty($url['fecha_hasta'])) {
@@ -152,14 +157,17 @@ class GastosController extends AccountAppController
                 $this->Session->setFlash("Error al guardar el gasto");
             }
         }
+        
+        $this->data['Gasto']['fecha'] = date('Y-m-d', strtotime('now'));
 
         $tipo_facturas = $this->Gasto->TipoFactura->find('list');
-         $this->set('tipo_impuestos', $this->Gasto->TipoImpuesto->find('all', array('recursive' => -1)));
+        $this->set('tipo_impuestos', $this->Gasto->TipoImpuesto->find('all', array('recursive' => -1)));
         $impuestos = $this->Gasto->Impuesto->find('all');
         $clasificaciones = $this->Gasto->Clasificacion->generatetreelist();
         $proveedores = $this->Gasto->Proveedor->find('list', array(
             'order' => array('Proveedor.name')
                 ));
+               
         $this->set(compact('proveedores', 'tipo_facturas', 'clasificaciones'));
     }
 
@@ -174,11 +182,7 @@ class GastosController extends AccountAppController
             if ($this->Gasto->save($this->data)) {
                 $this->Session->setFlash(__('The Gasto has been saved', true));
 
-                if (!empty($this->data['Gasto']['pagar'])) {
-                    $this->redirect(array('controller' => 'egresos', 'action' => 'add', $this->Gasto->id));
-                } else {
-                    $this->redirect(array('action' => 'index'));
-                }
+                $this->redirect(array('action' => 'index'));
             } else {
                 $this->Session->setFlash(__('The Gasto could not be saved. Please, try again.', true));
             }
@@ -209,7 +213,12 @@ class GastosController extends AccountAppController
             'order' => array('Proveedor.name')
                 ));
         $this->set('tipo_impuestos', $tipo_impuestos);
+        
+        if (!empty($this->data['Proveedor']['id'])) {
+            $this->data['Gasto']['proveedor_list'] = $this->data['Proveedor']['name'] . ' ('.$this->data['Proveedor']['cuit'] .')';
+        }
         $this->set(compact('proveedores', 'tipo_facturas', 'clasificaciones'));
+        $this->render('add');
     }
 
     function delete($id = null)

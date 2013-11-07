@@ -1,3 +1,5 @@
+<h1>Gastos por Clasificación</h1>
+
 <?php
 echo $html->link('Nueva Clasificación', array('action' => 'add_edit'), array(
     'data-role'=>'button',

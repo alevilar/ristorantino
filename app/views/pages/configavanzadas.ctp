@@ -4,7 +4,7 @@ echo $this->element('menuadmin');
 
 <div class="administracion_menu">
     <h1>Configuraciones del sistema</h1>
-    <div class="grid_6 alpha">
+    <div class="col-md-6 ">
         </br></br>
         <?php
         echo $html->link('Tipos de Documentos', '/tipo_documentos') . '<br>';
@@ -13,7 +13,7 @@ echo $this->element('menuadmin');
         ?>
         </br></br>
     </div>
-    <div class="grid_6 omega">
+    <div class="col-md-6 ">
         <h2>Impresoras</h2>
         <?php
         echo $html->link('CUPS Printer Manager', FULL_BASE_URL . ':631') . '<br>';

@@ -24,26 +24,8 @@ class ReportShell extends Shell {
 	    $this->__initializeScript();
             App::import('Component', 'Email'); 
 	    $this->Email =& new EmailComponent(null); 
-
             $desde =  date('Y-m-d', strtotime('-1 day') );
-            $hasta =  date('Y-m-d', strtotime('-1 day'));
-            
-            $fields = array(
-                     'sum(m.cant_comensales) as "cant_cubiertos"' ,
-                     'sum(m.subtotal) as "subtotal"', 
-                     'sum(m.total) as "total"', 
-                     'sum(m.total)/sum(m.cant_comensales) as "promedio_cubiertos"',
-                );
-
-            $fields[] = 'DATE(m.created) as "fecha"';
-            $group = array(
-                 'DATE(m.created)',
-            );
-
-            $mesas = $this->Mesa->totalesDeMesasEntre($desde, $hasta, array(
-                        'fields' => $fields,
-                        'group' => $group,
-                    ));
+            $mesas = $this->Mesa->totalesDeMesasEntre($desde, $desde);
 
             if ( !empty($mesas) ) {
 
@@ -71,5 +53,5 @@ class ReportShell extends Shell {
                 $this->Email->send($mensaje);
 		}
 
-            }            
+            }         
 }

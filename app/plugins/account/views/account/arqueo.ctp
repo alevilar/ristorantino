@@ -10,7 +10,7 @@
         jQuery( "#arqueoFecha" ).datepicker({ dateFormat: 'dd/mm/yy' });
     });
 </script>
-<div class="grid_12">
+<div class="col-md-12">
     <div>Comprobante diario nro: </div>
     <div>
         <form method="post">

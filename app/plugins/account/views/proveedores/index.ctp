@@ -2,6 +2,11 @@
         echo $this->element('menuadmin');
      ?>
 
+<?php
+echo $form->create('Proveedor', array('url'=>$this->action));
+echo $form->input('buscar_proveedor', array('type'=>'text'));
+echo $form->end('buscar');
+?>
 <div class="proveedores index">
 <h2><?php __('Proveedores');?></h2>
 <p>

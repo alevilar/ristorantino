@@ -120,11 +120,13 @@ class User extends AppModel {
         function afterSave($created) {
                 if (!$created) {
                     $node = $this->node();
-                    $aro = $node[0];
-                    if (!empty($this->data['User']['grupo'])) {
-                        $aro['Aro']['parent_id'] = $this->data['User']['grupo'];
+                    if (!empty($node)) {
+                        $aro = $node[0];
+                        if (!empty($this->data['User']['grupo'])) {
+                            $aro['Aro']['parent_id'] = $this->data['User']['grupo'];
+                        }
+                        $this->Aro->save($aro);
                     }
-                    $this->Aro->save($aro);
                 }
                 else {
                     $node = $this->node();

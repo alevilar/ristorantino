@@ -15,7 +15,7 @@ echo $paginator->counter(array(
 'format' => __('Página %page% de %pages%, mostrando %current% elementos de %count%', true)
 ));
 ?></p>
-<table cellpadding="0" cellspacing="0">
+<table class="table">
 <tr>
 	<th><?php echo $paginator->sort('activo');?></th>
 	<th><?php echo $paginator->sort('Nombre','User.nombre');?></th>
@@ -31,8 +31,9 @@ foreach ($mozos as $mozo):
 	}
 ?>
 	<tr<?php echo $class;?>>
-		<td class="<?php echo $mozo['Mozo']['activo'] ? 'mozo_activo' : 'mozo_inactivo' ?>">
-                    ■
+		<td class="<?php echo $mozo['Mozo']['activo'] ? 'text-success' : 'text-muted' ?>">
+                    <?php echo $mozo['Mozo']['activo'] ? '✓' : '■' ?>
+                    
 		</td>
 		<td>
 			<?php echo $html->link($mozo['User']['nombre']." ".$mozo['User']['apellido'], array('controller'=> 'users', 'action'=>'view', $mozo['User']['id'])); ?>

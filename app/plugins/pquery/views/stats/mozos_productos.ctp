@@ -16,7 +16,7 @@
 <option value="mozos">Bernardo</option>
 </select>
 </div>
-<div class="grid_12">
+<div class="col-md-12">
 <table cellspacing="0" cellpadding="0">
         <caption class="editable">Ranking de productos mas vendidos por MOZO</caption>
         <thead>

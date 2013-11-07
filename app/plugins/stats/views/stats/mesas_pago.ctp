@@ -63,7 +63,7 @@
 <div class="clear" style="height: 20px;"></div>
 
 <div class="grid_9 alpha">
-    <div id="chart1" class="grid_12 alpha omega" style="height:350px;"></div>
+    <div id="chart1" class="col-md-12 alpha omega" style="height:350px;"></div>
 
 </div>
 

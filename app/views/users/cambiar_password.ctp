@@ -9,8 +9,7 @@
     <fieldset>
         <?php
         echo $form->input('id');
-        echo $form->input('password',array('label'=>'Ingrese una nueva contraseña'));
-        ?><br><cite>(Borre previamente los asteriscos)</cite><br /><?php
+        echo $form->input('password',array('label'=>'Ingrese una nueva contraseña', 'after' => "(Borre previamente los asteriscos)"));
         echo $form->input('password_check',array('label'=>'Reingrese su contraseña','type'=>'password'));
 
         ?>

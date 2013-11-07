@@ -14,13 +14,13 @@ echo $paginator->counter(array(
 ?></p>
 
 
-<table cellpadding="0" cellspacing="0">
+<table class="table">
 
     <tr>
 	<?php echo $form->create('Sabor',array('action'=>'index'));?>
-	<th><?php echo $form->input('Sabor.name',array('style'=>'width:170px;','placeholder'=>'Sabor', 'label'=>false));?></th>
-	<th><?php echo $form->input('Categoria.name',array('style'=>'width:120px;','placeholder'=>'Categoría', 'label'=>false));?></th>
-	<th><?php echo $form->input('Sabor.precio',array('style'=>'width:40px;','placeholder'=>'Precio', 'label'=>false));?></th>
+	<th><?php echo $form->input('Sabor.name',array('placeholder'=>'Sabor', 'label'=>false));?></th>
+	<th><?php echo $form->input('Categoria.name',array('placeholder'=>'Categoría', 'label'=>false));?></th>
+	<th><?php echo $form->input('Sabor.precio',array('placeholder'=>'Precio', 'label'=>false));?></th>
 	<th>&nbsp; </th>
 	<th><?php echo $form->end('Buscar');?></th>
     </tr>

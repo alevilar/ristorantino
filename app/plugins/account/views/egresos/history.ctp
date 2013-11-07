@@ -1,119 +1,134 @@
+<h1>Listado de Pagos</h1>
+
 <?php
+echo $html->css('/account/css/style');
 echo $this->element('form_mini_year_month_search');
-?>
 
-
-<ul class="pagos-list">
-<?php
-$sumatoria = 0;
-foreach ($egresos as $g){
-        $sumatoria += $g['Egreso']['total'];
-}
-
-?>
-    
-    
-    <h3>Total de Pagos en el intervalo seleccionado: <?php echo $number->currency($sumatoria); ?></h3>
-    
-    <h4>Detalle de Pagos realizados</h4>
-    <?
-foreach ($egresos as $g){
-    ?>
-    <li>
-        <div data-role="collapsible" data-theme="c" data-content-theme="c">
-        
-        <h3>
-            <?php echo $html->image($g['TipoDePago']['image_url'], array('class' => 'tipo_de_pago')); ?>
-            <?php
-            $proveedor = '';
-            $tipoFactura = '';
-            foreach ($g['Gasto'] as $gasto) {
-                if (!empty($gasto['Proveedor'])) {
-                    $proveedor = $gasto['Proveedor']['name'].', ';
-                }
-                if (!empty($gasto['TipoFactura'])) {
-                    $tipoFactura = $gasto['TipoFactura']['name'];
-                }
-            }
-            $proveedor = trim($proveedor,', ');
-            $tipoFactura = trim($tipoFactura, ', ');
-            
-        echo "<span class='fecha'>(".date('d-m-y', strtotime($g['Egreso']['fecha'])).")</span>";
-        echo "<span class='total'> ".$number->currency($g['Egreso']['total'])."</span> -  <span class='proveedor'>$proveedor</span> - <span class='tipofactura'>$tipoFactura</span> ";
-        
-        
-
-
-        if (!empty($g['Egreso']['observacion'])) {
-            echo "<span class='observacion'> ".$g['Egreso']['observacion']."</span>";
+$urlTex = '';
+foreach ($this->params['url'] as $u => $v) {
+    if ($u != 'ext' && $u != 'url' && $u != 'page') {
+        if (!empty($v)) {
+            $urlTex .= "$u=$v&";
         }
-    ?></h3>
-            <p>
-                <?php
-                $ext = substr(strrchr($g['Egreso']['file'],'.'),1);
-                if ( in_array(low($ext), array('jpg', 'png', 'gif', 'jpeg')) ) {
-                    $iii = $html->image(THUMB_FOLDER.$g['Egreso']['file'], array('width' => 48, 'alt' => 'Bajar', 'escape' => false));
-                } else {
-                    $iii = "Descargar $ext";
-                }
-                if (!empty($g['Egreso']['file'])) {
-                    echo $html->link($iii, "/" . IMAGES_URL . $g['Egreso']['file'], array('target' => '_blank', 'escape' => false));
-                }
-
-                echo " - ";
-                echo $html->link('  Ver en detalle este pago',array('action' => 'view', $g['Egreso']['id']));
-                echo " - ";
-                echo $html->link('  Editar pago',array('action' => 'edit', $g['Egreso']['id']))?>
-            </p>
-            <div>
-                <ul data-role="listview">
-                    <li data-role="list-divider">Listado de Gastos involucrados en este Pago</li>
-                    <?php 
-                    foreach ($g['Gasto'] as $ga){ ?>
-                    <li>
-                        
-                        <?php 
-                        echo $html->link(                                
-                                "Pagado: ".$number->currency($ga['AccountEgresosGasto']['importe'])." Total: ".
-                                $number->currency($ga['importe_total'])." (".date('d-m-Y',strtotime($ga['fecha'])).")"
-                                , 
-                                array(
-                                    'controller'=>'gastos', 
-                                    'action'=>'view', 
-                                    $ga['id']
-                                )
-                                );
-                        
-                        if (!empty($ga['observacion'])) {
-                        ?>
-                        <p>
-                            <?php 
-                            echo $ga['observacion'];
-                            ?>
-                        </p>
-                        <?php } ?>
-                    </li>
-                    <?php } ?>
-                </ul>
-            </div>
-            
-        </div>
-    </li>
-            <?php
+    }
 }
+$urlTex = trim($urlTex, '&');
+$paginator->options(array('url' => array('?' => $urlTex)));
 
 ?>
-       
-</ul>
+
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>&nbsp;</th>
+            <th>Importe</th>
+            <th>Fecha</th>
+            <th>Listado de Gastos Pagados</th>
+            <th>Observacion</th>
+            <th>&nbsp;</th>
+            <th>&nbsp;</th>
+        </tr>
+    </thead>
+
+
+    <tbody>
+        <?php
+        
+        foreach ($egresos as $g) {
+            ?>
+
+            <tr>
+                <td>
+                    <?php echo $html->image($g['TipoDePago']['image_url'], array('class' => 'thumb')); ?>
+                </td>
+                
+                <td><?php echo $number->currency($g['Egreso']['total']); ?></td>
+
+                <td><?php echo strftime('%d %b', strtotime($g['Egreso']['fecha'])); ?></td>
+
+                
+                
+                <td>
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr>
+                                <th>Proveedor</th>
+                                <th>Factura</th>
+                                <th>Fecha</th>
+                                <th>Neto</th>
+                                <th>Total</th>
+                                <th>Obs.</th>
+                            </tr>
+                        </thead>
+                        
+                        <tbody>
+                            <?php
+                            $proveedor = '';
+                            $tipoFactura = '';
+                            foreach ($g['Gasto'] as $gasto) {
+                                if (!empty($gasto['Proveedor'])) {
+                                    $proveedor = $gasto['Proveedor']['name'] . ', ';
+                                }
+                                if (!empty($gasto['TipoFactura'])) {
+                                    $tipoFactura = $gasto['TipoFactura']['name'];
+                                }
+                                ?>
+                                <tr>
+                                    <td><?php echo $proveedor ?></td>
+                                    <td><?php echo $tipoFactura ?> <?php echo $gasto['factura_nro'] ?></td>
+                                    <td><?php echo date('d-m-Y', strtotime($gasto['fecha'])) ?></td>
+                                    <td><?php echo $gasto['importe_neto'] ?></td>
+                                    <td><?php echo $gasto['importe_total'] ?></td>
+                                    <td><?php echo $gasto['observacion'] ?></td>
+                                </tr>
+                                <?
+                            }
+                            $proveedor = trim($proveedor, ', ');
+                            $tipoFactura = trim($tipoFactura, ', ');
+                            ?>
+                        </tbody>
+                    </table>
+
+                <td><?php echo $g['Egreso']['observacion']; ?></td>
+
+                <td>
+                    <?php
+                    $ext = substr(strrchr($g['Egreso']['file'], '.'), 1);
+                    if (in_array(low($ext), array('jpg', 'png', 'gif', 'jpeg'))) {
+                        $iii = $html->image(THUMB_FOLDER . $g['Egreso']['file'], array('width' => 48, 'alt' => 'Bajar', 'escape' => false));
+                    } else {
+                        $iii = "Descargar $ext";
+                    }
+                    if (!empty($g['Egreso']['file'])) {
+                        echo $html->link($iii, "/" . IMAGES_URL . $g['Egreso']['file'], array('target' => '_blank', 'escape' => false));
+                    }
+                    ?>
+                </td>
+
+                <td>
+                    <?php
+                    echo $html->link('Ver', array('action' => 'view', $g['Egreso']['id']));
+                    echo "<br>";
+                    echo $html->link('Editar', array('action' => 'edit', $g['Egreso']['id']))
+                    ?>
+                </td>
+
+            </tr>
+            <?php
+        }
+        ?>
+    </tbody>
+</table>
 
 <?php
-        echo $paginator->counter(array(
-        'format' => __('Página %page% de %pages%, mostrando %current% elementos de %count%', true)
-        ));
-        ?>
+echo $paginator->counter(array(
+    'format' => __('Página %page% de %pages%, mostrando %current% elementos de %count%', true)
+));
+?>
 
- <div class="paging">
-                <?php echo $paginator->prev('<< '.__('anterior', true), array(), null, array('class'=>'disabled'));?>
-         | 	<?php echo $paginator->numbers();?>
-                <?php echo $paginator->next(__('próximo', true).' >>', array(), null, array('class'=>'disabled'));?>
-        </div>
+<div class="paging">
+    <?php echo $paginator->prev('<< ' . __('anterior', true), array(), null, array('class' => 'disabled')); ?>
+    | 	<?php echo $paginator->numbers(); ?>
+    <?php echo $paginator->next(__('próximo', true) . ' >>', array(), null, array('class' => 'disabled')); ?>
+</div>

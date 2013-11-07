@@ -45,6 +45,7 @@ class ReservasController extends AppController {
 		if (empty($this->data)) {
 			$this->data = $this->Reserva->read(null, $id);
 		}
+                $this->render('add');
 	}
 
 	function delete($id = null) {

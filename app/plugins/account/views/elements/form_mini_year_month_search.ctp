@@ -17,8 +17,8 @@ echo $form->create($modelName, array(
     
 </style>
 
-<div class="ui-grid-d">
-    <div class="ui-block-a">
+<div class="row">
+    <div class="col-md-2">
         <?php
         echo $form->input('cierre_id', array(
             'label' => 'Estado',
@@ -29,14 +29,13 @@ echo $form->create($modelName, array(
             'label' => false,
             'empty' => 'Estado',
             'placeholder' => 'Estado',
-            'onchange' => 'this.form.submit()'));
+            ));
         ?>
     </div>
-    <div class="ui-block-b">
+    <div class="col-md-2">
         <?php
         if (!empty($proveedores)) {
             echo $form->input('proveedor_id', array(
-                'onchange' => 'this.form.submit()', 
                 'label'=>false, 
                 'empty' => 'Proveedor',
                 'placeholder' => 'Proveedor'));
@@ -45,11 +44,10 @@ echo $form->create($modelName, array(
         }
         ?>
     </div>
-    <div class="ui-block-c">
+    <div class="col-md-2">
         <?php
         if (!empty($clasificaciones)) {
         echo $form->input('clasificacion_id', array(
-            'onchange' => 'this.form.submit()', 
             'empty' => 'Clasificacion',
             'label'=>false));
         } else {
@@ -57,14 +55,24 @@ echo $form->create($modelName, array(
         }
         ?>
     </div>
-    <div class="ui-block-d">
+    <div class="col-md-2">
         <?php
-        echo $form->input('fecha_desde', array('onchange' => 'this.form.submit()', 'label'=>'Desde', 'type' => 'date'));
+        echo $form->input('fecha_desde', array('label'=>false, 'type' => 'date', 'pladeholder'=>'Desde'));
         ?>
     </div>
-    <div class="ui-block-e">
+    <div class="col-md-2">
         <?php
-        echo  $form->input('fecha_hasta', array('onchange' => 'this.form.submit()', 'label'=>'Hasta', 'type' => 'date'));
+        echo  $form->input('fecha_hasta', array('label'=>false,'placeholder'=>'Hasta', 'type' => 'date'));
+        ?>
+    </div>
+    <div class="col-md-1">
+        <?php
+        echo  $form->input('importe_neto', array('label'=>false, 'placeholder'=>'Neto'));
+        ?>
+    </div>
+    <div class="col-md-1">
+        <?php
+        echo  $form->button('Buscar', array('class'=>'btn btn-primary', 'type'=>'submit'));
         ?>
     </div>
 </div>

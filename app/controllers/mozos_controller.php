@@ -49,9 +49,8 @@ class MozosController extends AppController {
 			$this->redirect(array('action'=>'index'));
 		}
 		if (!empty($this->data)) {
-			if ($this->Mozo->save($this->data)) {
-				$this->Session->setFlash(__('The Mozo has been saved', true));
-				$this->redirect(array('action'=>'index'));
+			if ($this->Mozo->saveAll($this->data)) {
+				$this->Session->setFlash(__('The Mozo has been saved', true));				
 			} else {
 				$this->Session->setFlash(__('The Mozo could not be saved. Please, try again.', true));
 			}
@@ -60,7 +59,6 @@ class MozosController extends AppController {
 			$this->data = $this->Mozo->read(null, $id);
 		}
 		
-		$users = $this->Mozo->User->find('list',array('fields'=>array('id','username'), 'conditions'=> array('User.role'=>'mozo')));
 		$this->set(compact('users'));
 	}
 

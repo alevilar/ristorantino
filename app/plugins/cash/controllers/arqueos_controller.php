@@ -32,7 +32,7 @@ class ArqueosController extends CashAppController
             'order' => array('Arqueo.datetime DESC'),
         );
         $computa_ingresos = $computa_egresos = true;
-        if (!empty( $caja ) ) {
+        if ( !empty( $caja ) ) {
             $conditions['conditions']['Arqueo.caja_id'] = $caja['Caja']['id'];
             $computa_ingresos = $caja['Caja']['computa_ingresos'];
             $computa_egresos = $caja['Caja']['computa_egresos'];
@@ -41,7 +41,6 @@ class ArqueosController extends CashAppController
             $conditions['conditions'][ 'Arqueo.datetime <'] = $this->data['Arqueo']['datetime'];
         }
         $ultimoArqueo = $this->Arqueo->find('first', $conditions);
-        
         if ( empty($ultimoArqueo) ) {
                 $desde = date('Y-m-d H:i:s', strtotime('-4 month') );
         } else {
@@ -82,7 +81,7 @@ class ArqueosController extends CashAppController
             ),
         ));
         $sumaEgresos = 0;
-        foreach ($egresosList as $el) {
+        foreach ($egresosList as $el) {            
             if (empty($this->data['Arqueo']['egreso'])) {
                 if ($el['TipoDePago']['id'] == TIPO_DE_PAGO_EFECTIVO) {
                     if ( $computa_egresos ) {
@@ -215,7 +214,11 @@ class ArqueosController extends CashAppController
                         $error = true;
                     }
                 }
-                $this->redirect('index');
+                if (!$error) {
+                    $this->__enviarArqueoPorMail($this->Arqueo->id);                    
+                    $this->redirect('index');
+                }
+                
             } else {
                 $this->Session->setFlash(__('No se pudo guardar el Arqueo', true));
                 $error = true;
@@ -232,7 +235,12 @@ class ArqueosController extends CashAppController
             }
         }
         
-        $this->__presetIngresosEgresos();
+        $this->Arqueo->Caja->recursive = -1;
+        $caja = $this->Arqueo->Caja->read(null, $this->data['Arqueo']['caja_id']);
+      
+        $this->set('caja', $caja);
+        
+        $this->__presetIngresosEgresos($caja);
         
         if ( !empty($this->data['Caja']['id']) ) {
             $this->data['Arqueo']['caja_id'] = $this->data['Caja']['id'];            
