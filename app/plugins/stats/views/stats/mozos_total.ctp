@@ -1,118 +1,65 @@
-<style>
-    table.data-activo{
-        border: 3px solid #E47211;
-    }
-    
-    h2.data-activo{
-        color: white;
-        background-color: #E47211;
-        margin-bottom: -11px;
-        padding-bottom: 11px;
-    }
-    
-    .wrapper1, .wrapper2{
-        width: 100%; border: none 0px RED;
-    overflow-x: scroll; overflow-y:hidden;}
-    .wrapper1{ }
-    .wrapper2{}
-    .div1 {width:999999px; height: 1px;}
-    .div2 {width:999999px; background-color: whitesmoke;
-    overflow: auto;}
-</style>
 
 
-<script>
-(function($){
-    $(function(){
-        $(".wrapper1").scroll(function(){
-            $(".wrapper2")
-                .scrollLeft($(".wrapper1").scrollLeft());
-        });
-        $(".wrapper2").scroll(function(){
-            $(".wrapper1")
-                .scrollLeft($(".wrapper2").scrollLeft());
-        });
-        
-        
-        dates = $( ".datepicker" ).datepicker({
-                    defaultDate: "+1w",
-                    changeMonth: true,
-                    numberOfMonths: 1,              
-                    dateFormat: 'dd/mm/yy',
-                    onSelect: function( selectedDate ) {
-    //                    var option = this.id == "from" ? "minDate" : "maxDate",
-    //                    instance = $( this ).data( "datepicker" ),
-    //                    date = $.datepicker.parseDate(
-    //                    instance.settings.dateFormat ||
-    //                    $.datepicker._defaults.dateFormat,
-    //                    selectedDate, instance.settings );
-    //                    dates.not( this ).datepicker( "option", option, date );
-                    }
-                
-            }); 
+<div class="well pull-right">
+    <?php
+    echo $form->create('Mesa', array('url' => '/stats/mozos_total', 'class' => 'form-inline formufecha'));
+    ?>
+    <legend>Filtrar por rango de fechas</legend>
+    <?php
+    echo $form->input('desde', array('type' => 'date', 'label'=>false));
+    echo $form->input('hasta', array('type' => 'date', 'label'=>false));
+    echo $form->submit('Aceptar', array('class' => 'btn btn-default', 'div' => false));
+    echo $form->end();
+    ?>
 
-    })
-})(jQuery);
-</script>
-
-
-<div class="wrapper1">
-    <div class="div1">
-    </div>
 </div>
 
-<div class="wrapper2">
-    
-<div class="div2">
-<?php
-$first = true;
-foreach ($fechas as $fecha=>$mozo) {
-?>
-    <div style="float: left; margin-left: 10px;">
-<h2 class="centrado <?= $first ? 'data-activo':'';?>"><?php echo date('d-m-Y',strtotime($fecha))?></h2>
-<table class="fecha-<?php echo "fecha"?> <?= $first ? 'data-activo' : ''; $first = false ?>" cellspacing="0" cellpadding="0" style="text-align: center; width: 200px;">
+<h1>Ventas Por Mozo</h1>
+
+
+<div class="clearfix"></div>
+
+<div class="row">
+    <table class="table table-bordered table-condensed table-responsive table-striped ">
         <thead>
             <tr>
-                <th style="text-align: center">Mozo</th>
-                <th style="text-align: center">Total</th>
+                <th class="text-center">Mozo N°</th>
+                <?php foreach ($mozos as $mz) { ?>
+                <th colspan="2" class="text-center"><?php echo $mz ?></th>
+                <?php } ?>
+            </tr>
+            <tr>
+                <th class="text-center">Fecha</th>
+                <?php foreach ($mozos as $mz) { ?>
+                <th class="text-center"><span class="glyphicon glyphicon-cutlery"></span></th>
+                <th class="text-right"><span class="glyphicon glyphicon-usd"></span></th>
+                <?php } ?>
             </tr>
         </thead>
         
-        <tbody>
-<?php
-        foreach($mozo as $m){
-            ?>
+        <tfoot class="text-primary">
             <tr>
-                <td><?php echo $m['Mozo']['numero']; ?></td>
-                <td style="text-align: right">$<?php echo number_format ( $m[0]['total'] , 2 , ',' , $thousands_sep = '.' ); ?></td>
+                <td class="text-center">TOTALES</td>
+                <?php foreach($mozosTotales as $mt) { ?>
+                <td class="text-center"><?php echo $mt['cubiertos']; ?></td>
+                <td class="text-right"><?php echo $number->currency($mt['total'],'$', array('places'=>0)); ?></td>
+                <?php } ?>
             </tr>
-            <?php
-        }
-        ?>
-    </tbody>              
+        </tfoot>
+        
+        <tbody>
+            <?php foreach ($fechas as $fDate=>$f) { ?>
+                <tr>
+                    <td class="text-center"><?php echo $fDate;?></td>
+                    
+                    <?php foreach ($f as $mId=>$mdata) { ?>
+                    <td class="text-center"><?php echo $mdata[0]['cant_cubiertos']?></td>
+                        <td class="text-right"><?php echo $number->currency($mdata[0]['total'],'$', array('places'=>0));?></td>
+                    <?php } ?>
+                </tr>
+            <?php } ?>
+        </tbody>
+        
     </table>
-    </div>
-<?php } ?>
-
-
-</div>
 </div>
 
-
-<div class="col-md-12 alpha omega">
-        <?php 
-        echo $form->create('Mesa',array('url'=>'/stats/mozos_total', 'class' => 'formufecha')); 
-        ?>
-
-        <h2>Modificar rango de fechas</h2>
-            <?php
-            echo "Desde: ".$form->text('Linea.0.desde', array('placeholder'=>'Ej: 22/09/2011','id'=>'from', 'class' =>'datepicker'));
-            echo "Hasta: ".$form->text('Linea.0.hasta', array('placeholder'=>'Ej: 30/09/2011','id'=>'to', 'class' =>'datepicker'));  
-            echo $form->submit('Aceptar', array('class' => '', 'div' => false));
-            ?>
-
-        <?php
-        echo $form->end();
-        ?>
-
-    </div>

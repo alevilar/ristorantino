@@ -18,7 +18,12 @@ echo $html->css('/account/css/style');
 
 <?php echo $form->create('Cierre'); ?>
 <div id='place-for-inputs' class="cq-hide"></div>
-<div id='descripcion-cierre' class="well cq-hide"><p><span class='detalle-gastos'></span> gastos seleccionados</p>
+<div id='descripcion-cierre' class="well cq-hide">
+    <div class="pull-right">
+        <span class="glyphicon glyphicon-info-sign"></span>
+        <small><cite>Al cerrar un conjunto de gastos se impide que estos sean modificados.</cite></small>
+    </div>
+    <p><span class='detalle-gastos'></span> gastos seleccionados</p>
     <?php
     echo $form->input('name', array('placeholder'=>'Ejemplo: Cierre de Abril','label' => 'breve descripción del cierre', 'required' => true));
     echo $form->button('Cancelar', array('type' => 'button', 'onclick'=>'$("#descripcion-cierre").hide("fade")', 'class'=>'btn'));

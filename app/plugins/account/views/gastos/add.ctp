@@ -63,13 +63,14 @@ echo $javascript->link('/lib/bootstrap.typehead/bootstrap3-typeahead');
 
                     <div class="col-md-8">
 
-                        <div id="impuestos">
+                        <div class="row" id="impuestos">
                             <?php
                             foreach ($tipo_impuestos as $ti) {
                                 $ocultar = empty($this->data['Impuesto'][$ti['TipoImpuesto']['id']]);
                                 ?>
                                 <fieldset <?php echo ($ocultar) ? 'style="display: none;"' : ''; ?> id="<?php echo 'tipo-impuesto-id-' . $ti['TipoImpuesto']['id'] ?>">
                                     <legend><?php echo $ti['TipoImpuesto']['name'] ?></legend>
+                                    <div class="col-md-6">
                                     <?php
                                     if ( $ti['TipoImpuesto']['tiene_neto']
                                         || !empty($this->data['Impuesto'][$ti['TipoImpuesto']['id']]['neto'])
@@ -78,13 +79,15 @@ echo $javascript->link('/lib/bootstrap.typehead/bootstrap3-typeahead');
                                             'type' => 'number',
                                             'label' => "Neto",
                                             'data-porcent' => $ti['TipoImpuesto']['porcentaje'],
-                                            'class' => 'calc_neto importe',
-                                            'div' => array(
-                                                'style' => 'float: left;'
-                                            ),
+                                            'class' => 'calc_neto importe',                                            
                                             'value' => !empty($this->data['Impuesto'][$ti['TipoImpuesto']['id']]) ? $this->data['Impuesto'][$ti['TipoImpuesto']['id']]['neto'] : '',
                                         ));
                                     }
+                                    ?>
+                                        </div>
+                                    
+                                    <div class="col-md-6">
+                                    <?php
 
                                      if ( $ti['TipoImpuesto']['tiene_impuesto'] 
                                         || !empty($this->data['Impuesto'][$ti['TipoImpuesto']['id']]['importe'])
@@ -93,15 +96,12 @@ echo $javascript->link('/lib/bootstrap.typehead/bootstrap3-typeahead');
                                             'type' => 'number',
                                             'label' => 'Impuesto',
                                             'data-porcent' => $ti['TipoImpuesto']['porcentaje'],
-                                            'class' => 'calc_impuesto importe',
-                                            'div' => array(
-                                                'style' => 'float: right;'
-                                            ),
+                                            'class' => 'calc_impuesto importe',                                            
                                             'value' => !empty($this->data['Impuesto'][$ti['TipoImpuesto']['id']]) ? $this->data['Impuesto'][$ti['TipoImpuesto']['id']]['importe'] : '',
                                         ));
                                     }
                                     ?>
-
+                                    </div>
                                 </fieldset>
                                 <?php
                             }

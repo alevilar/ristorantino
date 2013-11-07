@@ -1,7 +1,26 @@
 <?php
 echo $html->css('/cash/css/style_cash');
+
+
 ?>
+
+
+
 <h1>Listado de Arqueos</h1>
+
+
+<div class="pull-right">
+<?php foreach ($cajas as $cId=>$cName) { ?>
+    <?php 
+        echo $html->link('Hacer Arqueo de '.$cName, array('controller'=>'arqueos', 'action'=>'add', $cId), array('class'=>'btn btn-md  btn-primary'));
+        echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+      ?>
+<?php } ?>
+
+</div>
+
+<br><br>
+
 
 
 <table class="table table-hover">

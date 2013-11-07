@@ -141,7 +141,7 @@ echo $html->css('/cash/css/style_cash');
                     if (empty($this->data['Arqueo']['hacer_cierre_zeta'])) {
                         $display = 'display: none';
                     }
-                    echo $form->input('hacer_cierre_zeta', array('type' => 'checkbox', 'class' => '', 'label'=>array('escape'=>false, 'text'=>'<h2>Imprimir Cierre Z</h2>'), 'id'=>'ArqueoHacerCierreZeta'));
+                    echo $form->input('hacer_cierre_zeta', array('type' => 'checkbox', 'class' => '', 'label'=>array('escape'=>false, 'text'=>'<h2>Hacer Cierre Z</h2>'), 'id'=>'ArqueoHacerCierreZeta'));
                     echo $form->hidden('Zeta.id');
                     ?>
                     

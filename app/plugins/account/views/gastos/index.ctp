@@ -15,9 +15,9 @@
 
 <div class="row">
     <div class="col-md-2">
-        <label for="selectall">Seleccionar Todos</label>
+        
         <input id="selectall" type="checkbox" data-role="none"/>
-
+        <label for="selectall">Seleccionar Todos</label>
     </div>
 
     <div class="col-md-2">
@@ -35,7 +35,7 @@
 <div class="row">
 
 
-    <table class="table table-hover table-responsive">
+    <table class="table table-hover table-responsive table-condensed">
 
         <tbody>
             <?php
@@ -44,6 +44,10 @@
                 $i++;
                 ?>
                 <tr>
+                     
+                    
+
+                    
                     <td>
                         <?php
                         echo $form->checkbox("Gasto.$i.gasto_seleccionado", array(
@@ -55,34 +59,12 @@
                         ));
                         ?>
                     </td>
-
+                    
                     <td>
-                        <?php echo $gasto['TipoFactura']['name'] . ' #' . $gasto['Gasto']['factura_nro']; ?><br>
-                        <?php if (!empty($gasto['Proveedor'])) { ?>
-                            <small><?php echo $html->link($gasto['Proveedor']['name'], array('controller' => 'proveedores', 'action' => 'view', $gasto['Proveedor']['id']), array('data-rel' => 'dialog')); ?></small>
-                        <?php } ?>
-                    </td>
-
-                    <td>
-                        <?php
-                        if (!empty($gasto['Gasto']['file'])) {
-                            $ext = substr(strrchr($gasto['Gasto']['file'], '.'), 1);
-                            if (in_array(low($ext), array('jpg', 'png', 'gif', 'jpeg'))) {
-                                $iii = $html->image(THUMB_FOLDER . $gasto['Gasto']['file'], array('width' => 48, 'alt' => 'Bajar', 'escape' => false));
-                            } else {
-                                $iii = "Descargar $ext";
-                            }
-                            echo $html->link($iii, "/" . IMAGES_URL . $gasto['Gasto']['file'], array('target' => '_blank', 'escape' => false));
-                        }
-                        ?>
-                    </td>
-
-                    <td>
-                        Obs: <?php echo $gasto['Gasto']['observacion']; ?><br>
-                        Clasificacion: <?php echo $gasto['Clasificacion']['name']; ?><br>
                         <?php echo date("d/m/Y", strtotime($gasto['Gasto']['fecha'])) ?>
                     </td>
-
+                    
+                     
                     <td>
                         <?php
                         if ($gasto['Gasto']['importe_pagado']) {
@@ -94,9 +76,43 @@
                         ?> 
                     </td>
 
+
+                    <td>
+                        <small><?php echo $gasto['TipoFactura']['name']; ?></small>
+                    </td>
+                    
+                    <td>
+                            <small><?php echo $html->link($gasto['Proveedor']['name'], array('controller' => 'proveedores', 'action' => 'view', $gasto['Proveedor']['id']), array('data-rel' => 'dialog')); ?></small>
+                    </td>
+
+                    <td class="center">
+                        <?php
+                        if (!empty($gasto['Gasto']['file'])) {
+                            $ext = substr(strrchr($gasto['Gasto']['file'], '.'), 1);
+                            if (in_array(low($ext), array('jpg', 'png', 'gif', 'jpeg'))) {
+                                $iii = $html->image(THUMB_FOLDER . $gasto['Gasto']['file'], array('width' => 48, 'alt' => 'Bajar', 'escape' => false));
+                            } else {
+                                $iii = "<span class='glyphicon glyphicon glyphicon-cloud-download'></span><br>".strtoupper($ext);
+                            }
+                            echo $html->link($iii, "/" . IMAGES_URL . $gasto['Gasto']['file'], array('target' => '_blank', 'escape' => false));
+                        }
+                        ?>
+                    </td>
+                    
+                    
+                     <td>
+                        <?php echo $gasto['Gasto']['observacion']; ?>
+                    </td>
+                   
+                    
+                    <td>
+                        <?php echo $gasto['Clasificacion']['name']; ?>
+                    </td>
+
+                   
                     <td>
                         <div class="btn-group">
-                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
                                 Action <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" role="menu">

@@ -165,22 +165,26 @@ function validate_cuit_cuil($cuit)
 //
 //}
 
-function explorar_dias($fecha_ini, $dias_dif) {
-    $mes = NULL;
-    for($i=0; $i <= $dias_dif; $i++) {
-        $dia_mes = date("d F", mktime(0, 0, 0, $fecha_ini[1], $fecha_ini[0]+$i, $fecha_ini[2]))."\n";
-        $dia_mes = explode(" ", $dia_mes);
-        $dia[$i] = $dia_mes[0];
-        
-        if($mes <> $dia_mes[1]) {
-            $mes = $dia_mes[1];
-            echo "<h2>".$mes."</h2>";
-        }
-        echo "<p>".$dia[$i]."</p>";
-        
-    }
-    
-    return true;
+function crear_fechas($desde, $hasta) {
+     $arr = array();
+     $td = strtotime($desde);
+     $th = strtotime($hasta);
+     
+     if ($th < $td) {
+         $taux = $td;
+         $td = $th;
+         $th = $taux;
+     }
+     
+     $dcurr = date('Y-m-d', $td);
+     $tcurr = $td;
+     while ( $tcurr <= $th ) {
+         $arr[] = $dcurr;
+         $dcurr = date('Y-m-d', strtotime('1 day',$tcurr));
+         $tcurr = strtotime($dcurr);
+         
+     }     
+     return $arr;
 }
 
 ?>

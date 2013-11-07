@@ -1,6 +1,6 @@
 
 ( function($) {
-
+        $.jsDate.config.defaultLocale = 'es';
 
         $(document).ready(function(){
             
@@ -34,23 +34,6 @@
                     return lineas; 
             } 
       
-            dates = $( ".datepicker" ).datepicker({
-                    defaultDate: "+1w",
-                    changeMonth: true,
-                    numberOfMonths: 1,              
-                    dateFormat: 'dd/mm/yy',
-                    onSelect: function( selectedDate ) {
-    //                    var option = this.id == "from" ? "minDate" : "maxDate",
-    //                    instance = $( this ).data( "datepicker" ),
-    //                    date = $.datepicker.parseDate(
-    //                    instance.settings.dateFormat ||
-    //                    $.datepicker._defaults.dateFormat,
-    //                    selectedDate, instance.settings );
-    //                    dates.not( this ).datepicker( "option", option, date );
-                    }
-                
-            }); 
-
  
             $.jqplot.config.enablePlugins = true;    
             

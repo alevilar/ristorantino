@@ -17,8 +17,8 @@ class ArqueosController extends CashAppController
     public function index()
     {
         $arqueos = $this->paginate();
-
-        $this->set(compact('arqueos'));
+        $cajas = $this->Arqueo->Caja->find('list');
+        $this->set(compact('arqueos', 'cajas'));
     }
     
     private function __presetIngresosEgresos ($caja = null) {

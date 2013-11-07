@@ -87,7 +87,7 @@ foreach ($gastos as $g) {
                         }
                     }
 
-                    echo "<td class='total'>" . $g['Gasto']['importe_total'] . "</td>";
+                    echo "<td class='total' style=\"mso-number-format:'0.00';\">" . $g['Gasto']['importe_total'] . "</td>";
 
                     echo "<td class='faltapagar'>$faltaPagar" . "&nbsp;</td>";
                     echo "<td class='obs'>" . $g['Gasto']['observacion'] . "&nbsp;</td>";

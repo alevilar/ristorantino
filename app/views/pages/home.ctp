@@ -36,7 +36,7 @@ echo $html->css('ristorantino.home');
     </li>       
 
     <li>  
-        <?php echo $html->link('Arqueo', '/cash/arqueos/help', array('id' => 'bton-arqueo')); ?>
+        <?php echo $html->link('Arqueo', '/cash/arqueos', array('id' => 'bton-arqueo')); ?>
     </li>     
 
 </ul>

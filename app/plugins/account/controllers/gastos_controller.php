@@ -115,7 +115,7 @@ class GastosController extends AccountAppController
         $this->set('gastos', $this->Gasto->find('all', array('conditions' => $conditions)));   
         
         if ($this->params['url']['ext'] == 'xls' ) {
-            $this->layout = 'xls/default';
+            $this->layout = 'xls';
             $this->render( 'xls/'.$this->action );
         } 
     }

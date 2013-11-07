@@ -1,4 +1,5 @@
-
+<h1>Listado de Cajas</h1>
+<br><br>
 <table class="table">
     <thead>
         <tr>

@@ -4,3 +4,4 @@ vendors
 /nbproject/private/
 !/app/plugins/account/vendors/
 !/app/plugins/cash/vendors/
+!/app/plugins/stats/vendors/
