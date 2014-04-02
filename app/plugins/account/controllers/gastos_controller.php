@@ -106,13 +106,21 @@ class GastosController extends AccountAppController
             $conditions['Gasto.tipo_factura_id'] = $url['tipo_factura_id'];
             $this->data['Gasto']['tipo_factura_id'] = $url['tipo_factura_id'];
         }
-//debug($this);die;
            
         $this->set('tipo_facturas', $this->Gasto->TipoFactura->find('list'));
         $this->set('proveedores', $this->Gasto->Proveedor->find('list'));
         $this->set('clasificaciones', $this->Gasto->Clasificacion->find('list'));
         $this->set('tipo_impuestos', $this->Gasto->TipoImpuesto->find('list'));
-        $this->set('gastos', $this->Gasto->find('all', array('conditions' => $conditions)));   
+        
+        $ops = array(
+            'conditions' => $conditions,
+            'recursive' => 1,
+        );
+        
+        $gastos = $this->Gasto->find('all', $ops);
+        
+        
+        $this->set(compact('gastos'));
         
         if ($this->params['url']['ext'] == 'xls' ) {
             $this->layout = 'xls';
@@ -215,7 +223,11 @@ class GastosController extends AccountAppController
         $this->set('tipo_impuestos', $tipo_impuestos);
         
         if (!empty($this->data['Proveedor']['id'])) {
-            $this->data['Gasto']['proveedor_list'] = $this->data['Proveedor']['name'] . ' ('.$this->data['Proveedor']['cuit'] .')';
+            $cuit = '';
+            if ( !empty($this->data['Proveedor']['cuit']) ) {
+                $cuit = ' ('.$this->data['Proveedor']['cuit'] .')';
+            }
+            $this->data['Gasto']['proveedor_list'] = $this->data['Proveedor']['name'].$cuit;
         }
         $this->set(compact('proveedores', 'tipo_facturas', 'clasificaciones'));
         $this->render('add');

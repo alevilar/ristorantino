@@ -1,5 +1,5 @@
 <?php
-class ProveedoresController extends AppController {
+class ProveedoresController extends AccountAppController {
 
 	var $name = 'Proveedores';
 	var $helpers = array('Html', 'Form');

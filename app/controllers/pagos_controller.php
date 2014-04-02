@@ -2,10 +2,18 @@
 class PagosController extends AppController {
 
 	var $name = 'Pagos';
-	var $helpers = array('Html', 'Form');
+	var $helpers = array('Html', 'Form','Number');
 
 	function index() {
 		$this->Pago->recursive = 0;
+                $this->paginate = array(
+                    'contain' => array(
+                    'Mesa.Mozo',
+                    'TipoDePago'
+                ),
+                    'order' => 'Pago.created DESC'
+                    );
+                
 		$this->set('pagos', $this->paginate());
 	}
 
@@ -80,9 +88,9 @@ class PagosController extends AppController {
 		if (empty($this->data)) {
 			$this->data = $this->Pago->read(null, $id);
 		}
-		$mesas = $this->Pago->Mesa->find('list');
+		$mesa = $this->Pago->Mesa->read(null, $this->data['Pago']['mesa_id']);
 		$tipoDePagos = $this->Pago->TipoDePago->find('list');
-		$this->set(compact('mesas','tipoDePagos'));
+		$this->set(compact('mesa','tipoDePagos'));
 	}
 
 	function delete($id = null) {

@@ -1,12 +1,19 @@
 <div class="pagos form">
 <?php echo $form->create('Pago');?>
 	<fieldset>
- 		<legend><?php __('Edit Pago');?></legend>
+ 		<legend>Editando Pago</legend>
+                
+                <p>
+                <h4>Mesa N° <?php echo $mesa['Mesa']['numero']?>, Mozo <?php echo $mesa['Mozo']['numero']?></h4>
+                    Hora de apertura: <?php echo strftime('%a %e de %B %H:%M', strtotime($mesa['Mesa']['created']))?><br>
+                    Hora de cierre: <?php echo strftime('%a %e de %B %H:%M', strtotime($mesa['Mesa']['time_cerro']))?><br>
+                    Hora de cobro: <?php echo strftime('%a %e de %B %H:%M', strtotime($mesa['Mesa']['time_cobro']))?>
+                </p>
 	<?php
 		echo $form->input('id');
-		echo $form->input('mesa_id');
+		echo $form->hidden('mesa_id');
 		echo $form->input('tipo_de_pago_id');
-		echo $form->input('valor');
+		echo $form->input('valor', array('disabled'=>true));
 	?>
 	</fieldset>
 <?php echo $form->end('Submit');?>

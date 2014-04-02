@@ -9,7 +9,7 @@ echo $html->link('Nueva Clasificación', array('action' => 'add_edit'), array(
         );
 ?>
 <h2>Listado de Clasificaciones</h2>
-<ul data-role="listview">
+<ul class="list-group">
 <?php
 
 

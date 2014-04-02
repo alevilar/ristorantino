@@ -1,5 +1,5 @@
 <?php
-class TipoImpuestosController extends AppController {
+class TipoImpuestosController extends AccountAppController {
 
 	var $name = 'TipoImpuestos';
 	var $helpers = array('Html', 'Form');

@@ -2,7 +2,7 @@
 
 <div class="well pull-right">
     <?php
-    echo $form->create('Mesa', array('url' => '/stats/mozos_total', 'class' => 'form-inline formufecha'));
+    echo $form->create('Mesa', array('url' => $this->action, 'class' => 'form-inline formufecha'));
     ?>
     <legend>Filtrar por rango de fechas</legend>
     <?php

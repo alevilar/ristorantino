@@ -15,28 +15,4 @@ table.mini > tbody > tr:last-child{
 
 #billetines{
     position: fixed;
-    left: 568px;
-    top: 10%;
-    border: solid grey thin;
-    background: #993;
-    padding: 10px;
-    width: 170px;
-    color: white;
-}
-
-
-#billetines input{
-    width: 50% !important;
-    font-size: 12pt;
-    margin: 0px;
-    float: right;    
-    height: 20px;
-    padding: 0px;
-}
-
-#billetines label{
-    float: left;
-    margin: 0px;
-    padding: 0px;
-    color: white;
 }

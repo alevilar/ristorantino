@@ -2,7 +2,8 @@
 echo $javascript->link('/lib/bootstrap.typehead/bootstrap3-typeahead');
 ?>
 <div class="gastos form">
-    <?php echo $form->create('Gasto', array('data-ajax' => "false", 'type' => 'file', 'id'=>'GastoAddForm')); ?>
+    <?php echo $form->create('Gasto', array('url'=>$this->action,'type' => 'file', 'id'=>'GastoAddForm')); ?>
+    <?php echo $form->hidden('id'); ?>
     <?php echo $form->hidden('pagar', array('value' => true)); ?>
     <div class="row">
 
@@ -12,7 +13,16 @@ echo $javascript->link('/lib/bootstrap.typehead/bootstrap3-typeahead');
             
 
             echo $form->hidden('proveedor_id');
-            echo $form->input('proveedor_list', array('autocomplete'=>'off','label' => 'Proveedor', 'type' => 'text', 'id' => 'proveedores', 'class' => 'form-control auto-complete'));
+            echo $form->input('proveedor_list', array(
+                'autocomplete'=>'off',
+                'label' => 'Proveedor', 
+                'type' => 'text', 
+                'id' => 'proveedores', 
+                'class' => 'form-control auto-complete',
+                'data-toggle' => 'popover',
+                'after' => '<div style="display:none" class="text-warning" id="nuevo-proveedor">Se va a creear un nuevo proveedor</div>',
+                )
+                    );
 
             echo $form->input('tipo_factura_id');
             echo $form->input('factura_nro');

@@ -143,6 +143,10 @@ class EgresosController extends AccountAppController
             $this->flash('No se pasó un ID de pago correcto', array('controller' => 'gastos', 'action' => 'index'));
         }
         $this->Egreso->id = $id;
+        $this->Egreso->contain(array(
+            'TipoDePago',
+            'Gasto.Proveedor'
+        ));
         $this->set('egreso', $this->Egreso->read());
     }
 

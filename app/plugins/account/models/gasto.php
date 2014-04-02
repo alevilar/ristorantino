@@ -112,6 +112,41 @@ class Gasto extends AccountAppModel {
             
             $this->_calcularImporteNeto();
             
+            if (empty($this->data['Gasto']['proveedor_id']) && !empty($this->data['Gasto']['proveedor_list'])) {
+                $cuit = null;
+                $name = trim($this->data['Gasto']['proveedor_list']);
+                if ( preg_match_all('/(?:\s|^)(\d{11}|\d{2}-\d{8}-\d{1})(?:\s|$)/', $this->data['Gasto']['proveedor_list'], $m) ) {
+                    // sacar guion del cuit
+                    $cuit = trim(str_replace("-", "", $m[1][0] ));
+                    // sacar el cuit al string
+                    $name = trim( str_replace($cuit, '', $this->data['Gasto']['proveedor_list']) );
+                    
+                    if ( !validate_cuit_cuil($cuit) ) {
+                        $cuit = null;                    
+                        $name.= ' [CUIT ERROR: '.$cuit.'?, por favor resolver editando a mano]';
+                    }
+                }
+                
+                $data = array(
+                    'Proveedor' => array(
+                        'cuit' => $cuit,
+                        'name' => $name,
+                    )
+                );
+                
+                $provExist = $this->Proveedor->findByCuit($cuit);
+                if ( empty($provExist) ) {                   
+                    $this->Proveedor->create();
+                    if ( $this->Proveedor->save($data) ) {
+                        $this->data['Gasto']['proveedor_id'] = $this->Proveedor->id;
+                    } else {
+                        throw new Exception('No se pudo guardar el proveedor');
+                    }
+                } else {
+                    $this->data['Gasto']['proveedor_id'] = $provExist['Proveedor']['id'];
+                }
+            }
+            
             return true;
         }
        

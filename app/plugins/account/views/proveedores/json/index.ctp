@@ -3,7 +3,11 @@
 $np = array();
 $i = 0;
 foreach ( $proveedores as $p ) {
-   $np[$i]['value']  = $p['Proveedor']['name']."( ".$p['Proveedor']['cuit'] . " )";
+    $cuit = '';
+    if (!empty( $p['Proveedor']['cuit'] )) {
+        $cuit = " (".$p['Proveedor']['cuit'].")";
+    }
+   $np[$i]['value']  = $p['Proveedor']['name'].$cuit;
    $np[$i]['id']  = $p['Proveedor']['id'];
    $i++;
 }

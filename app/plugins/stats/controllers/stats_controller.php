@@ -5,7 +5,7 @@ class StatsController extends StatsAppController
 
     var $helpers = array('Html', 'Form', 'Ajax', 'Number');
     var $components = array('Auth', 'RequestHandler');
-    var $uses = array('Mesa', 'Account.Egreso', 'Account.Gasto', 'Cash.Zeta');
+    var $uses = array('Mesa', 'Pago', 'Account.Egreso', 'Account.Gasto', 'Cash.Zeta','TipoDePago');
 
     /**
      *
@@ -167,6 +167,7 @@ class StatsController extends StatsAppController
 
             // traer array de fechas
             $fechas = array_flip(crear_fechas($desde, $hasta));
+            $fechas = array_reverse($fechas);
 
             // aray de los mozos que estan en este intervalo de mesas
             $mozosList = $mozos = $mozosTotales = $mozosCubiertos = array();
@@ -194,6 +195,81 @@ class StatsController extends StatsAppController
             }
         }
         $this->set(compact('fechas', 'mozos', 'mozosTotales'));
+    }
+
+    
+    function tipos_de_pago()
+    {
+        $fechas = array();
+        // por default buscar hoy
+        if (empty($this->data['Mesa'])) {
+            $this->data['Mesa']['hasta'] = date('Y-m-d', strtotime('now'));
+            $this->data['Mesa']['desde'] = date('Y-m-d', strtotime('-6 day'));
+        }
+
+        if (!empty($this->data['Mesa']['desde']) && !empty($this->data['Mesa']['hasta'])) {
+            $desde = $this->data['Mesa']['desde'];
+            $hasta = $this->data['Mesa']['hasta'];
+
+            $horarioCorte = Configure::read('Horario.corte_del_dia');
+            $sqlHorarioDeCorte = "DATE(SUBTIME(Pago.created, '$horarioCorte:00:00'))";
+            
+            $pagos = $this->Pago->find('all', array(
+                'conditions' => array(
+                    "DATE(SUBTIME(Pago.created, '$horarioCorte:00:00')) BETWEEN ? AND ?" => array(
+                        $this->data['Mesa']['desde'],
+                        $this->data['Mesa']['hasta']
+                    ) , 
+                ),
+                'fields' => array(
+                    "DATE(SUBTIME(Pago.created, '$horarioCorte:00:00')) as fecha",
+                    'sum(Pago.valor) as total',
+                    'TipoDePago.*'
+                ),
+                'group' => array(
+                    "fecha",
+                    'TipoDePago.id',
+                ),
+                'order' => array(
+                    'Pago.created DESC',
+                    'TipoDePago.name ASC',
+                ),
+                'contain' => array(
+                    'TipoDePago'
+                )
+            ));
+
+            // traer array de fechas
+            $fechas = array_flip(crear_fechas($desde, $hasta));
+            $fechas = array_reverse($fechas);
+            // aray de los mozos que estan en este intervalo de mesas
+            $tipoPagos = $tipoPagosList = $totales = array();
+            foreach ($pagos as &$m) {
+                $tipoPagos[$m['TipoDePago']['id']] = null;
+                $tipoPagosList[$m['TipoDePago']['id']] = array(
+                    'name' => $m['TipoDePago']['name'],
+                    'image_url' =>  $m['TipoDePago']['image_url'],
+                ) ;
+                
+                if ( empty($totales[$m['TipoDePago']['id']]) ) {
+                    $totales[$m['TipoDePago']['id']] = array(
+                        'total' => 0,
+                    );
+                }
+                $totales[$m['TipoDePago']['id']]['total'] += $m[0]['total'];
+            }
+
+            // convertir matriz con fechas y mozos
+            foreach ($fechas as &$f) {
+                $f = $tipoPagos;
+            }
+            // colocar el dato en la matriz
+            foreach ($pagos as &$m) {
+                $fechas[$m[0]['fecha']][$m['TipoDePago']['id']] = $m;
+            }
+            
+        }
+        $this->set(compact('fechas', 'tipoPagosList', 'totales'));
     }
 
 }

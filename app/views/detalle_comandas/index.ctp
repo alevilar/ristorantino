@@ -19,12 +19,13 @@
             <div>
                 <div class="well">
                     <h3>Principio de Pareto</h3>
-                    <p>
-                        En esta tabla, los productos se encuentran separados segun el <a target="_blank" href="http://es.wikipedia.org/wiki/Principio_de_Pareto">Principio de Pareto</a> del 80-20.
-                        El 20% de los productos mas vendidos aparecen en <span class="text-success">color verde</span>
-                        El 20% de abajo de la tabla en <span class="text-danger">color rojo</span> y son los menos vendidos
-                        
-                        
+                    <p>                        
+                        En esta tabla, los productos se encuentran separados según diagrama ABC del principio de pareto.<br>                      
+                        <span class="text-success">Los primeros</span> productos pertenecen al 70% de las ventas<br>
+                        <span class="text-warning">Los segundos</span>, al 20%<br>
+                        <span class="text-danger">Por último</span>, los que pertenecen al 10%.<br>
+                        <br>
+                        Para mas informacion: <a href="http://www.monografias.com/trabajos47/diagrama-pareto/diagrama-pareto.shtml">ver esta monografia</a>
                     </p>
                 </div>
             </div>
@@ -48,8 +49,13 @@
                     $leyPareto = 0;
                     foreach ($comandas as $comanda):
                         $porcentaje = ((int) (($comanda[0]['ventas'] / $ventasTotal) * 10000)) / 100;
-                        $trclass = ($leyPareto > 80) ? 'danger' : '';
-                        $trclass = ($leyPareto < 21) ? 'success' : $trclass;
+                        if ( $leyPareto < 70 ) {
+                            $trclass = 'success';
+                        } elseif ($leyPareto < 80) {
+                            $trclass = 'warning';
+                        } else {
+                            $trclass = 'danger';
+                        }
                         ?>
                         <tr class="<?php echo $trclass ?>">
                             <td><?php echo $comanda['Producto']['name']; ?></td>

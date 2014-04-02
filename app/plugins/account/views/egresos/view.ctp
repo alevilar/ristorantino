@@ -1,4 +1,4 @@
-
+<?php echo $html->css('/account/css/style'); ?>
 <h1>Pago #<?php echo $egreso['Egreso']['id']?></h1>
 
 <div class="pagos-list">
@@ -30,17 +30,21 @@ if (!empty($egreso['Egreso']['observacion'])) {
     <?php echo $html->link('  Editar pago',array('action' => 'edit', $egreso['Egreso']['id'])); ?>
     </p>
     <div>
-        <ul data-role="listview">
-            <li data-role="list-divider">Listado de Gastos involucrados en este egreso</li>
+        <h3>Listado de Gastos</h3>
+        <ul>
             <?php
             foreach ($egreso['Gasto'] as $ga){ ?>
                     <li>
-                        
-                        <?php 
+                        <?php
+                        $proveedor = '';
+                        if (!empty($ga['Proveedor'])) {
+                            $proveedor = $ga['Proveedor']['name'];
+                        }
+                        echo "$proveedor Total: ".$number->currency($ga['importe_total'])
+                        ." Pagado: ".$number->currency($ga['AccountEgresosGasto']['importe'])
+                        ." (".date('d-m-Y',strtotime($ga['fecha'])).") ";
                         echo $html->link(                                
-                                "Pagado: ".$number->currency($ga['AccountEgresosGasto']['importe'])." Total: ".
-                                $number->currency($ga['importe_total'])." (".date('d-m-Y',strtotime($ga['fecha'])).")"
-                                , 
+                                'ver', 
                                 array(
                                     'controller'=>'gastos', 
                                     'action'=>'view', 

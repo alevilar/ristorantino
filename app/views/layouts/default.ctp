@@ -48,7 +48,7 @@
 
             <div class="container">
 
-                <div class="nav navbar-right">
+                <div class="nav navbar-right text-warning">
                     <?php
                     echo $session->read('Auth.User.nombre') . " " . $session->read('Auth.User.apellido');
 

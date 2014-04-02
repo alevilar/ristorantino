@@ -7,7 +7,7 @@ if( $this->name == 'Stats' && $this->action == 'mesas_total') {
 if( $this->name == 'Stats' && $this->action == 'mozos_total') {
     $c2 = 'active';
 }
-if( $this->name == 'Pquery' && $this->action == 'descargar_queries') {
+if( $this->name == 'Stats' && $this->action == 'tipos_de_pago') {
     $c3 = 'active';
 }
 
@@ -17,6 +17,8 @@ if( $this->name == 'Pquery' && $this->action == 'descargar_queries') {
         <li class="<?php echo $c1?>"><?php echo $html->link('Ventas totales','/stats/mesas_total',array('class'=>'ventas'));?></li>
         
         <li class="<?php echo $c2?>"><?php echo $html->link('Ventas Mozo','/stats/mozos_total',array('class'=>'ventas'));?></li>
+        
+        <li class="<?php echo $c3?>"><?php echo $html->link('Tipos de Pago','/stats/tipos_de_pago',array('class'=>'ventas'));?></li>
         
     </ul>
     

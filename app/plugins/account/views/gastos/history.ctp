@@ -33,12 +33,15 @@ echo $html->css('/account/css/style');
     ?>
 </div>
 
+
+<div class="btn-group">
 <?php
 echo $form->button('Aplicar Cierre', array(
     'type' => 'button',
     'data-theme' => 'b',
     'data-inline' => 'true',
     'data-role' => 'button',
+    'class' => 'btn btn-default',
     'id' => 'btn-gastos-apli-cierre'));
 
 echo $form->end();
@@ -46,15 +49,21 @@ echo $form->end();
 
 <?php
 
+
+
 echo $html->link('Descargar Excel', $this->action . '.xls' . strstr($_SERVER['REQUEST_URI'], '?'), array(
-    'data-ajax' => 'false'
+    'data-ajax' => 'false',
+    'class' => 'btn btn-success',
 ));
 ?>
+    </div>
 
+<br>
 
 <a href="#" id="btn-mostrar-impuestos" class="" style="float: right">Mostrar Impuestos</a>
 
-<div id="tabla-de-gastos">   
+<div id="tabla-de-gastos">      
+    
     <table class="table table-hover">
         <thead>
             <tr>    
@@ -118,10 +127,12 @@ echo $html->link('Descargar Excel', $this->action . '.xls' . strstr($_SERVER['RE
 
 
                     if (!empty($g['Proveedor']) && !empty($g['Proveedor']['id'])) {
-                        echo "<td>" . $g['Proveedor']['name'] .
-                        '<br><small>CUIT: ' .
-                        $g['Proveedor']['cuit'] . '</small>' .
-                        "</td>";
+                        echo "<td>" . $g['Proveedor']['name'];
+                        if (!empty($g['Proveedor']['cuit'])) {
+                            echo '<br><small>CUIT: ' .
+                                $g['Proveedor']['cuit'] . '</small>';
+                        }
+                        echo "</td>";
                     } else {
                         echo "<td>&nbsp;</td>";
                     }
@@ -190,7 +201,11 @@ echo $html->link('Descargar Excel', $this->action . '.xls' . strstr($_SERVER['RE
                             <ul class="dropdown-menu" role="menu">
                                 <?php echo $linkPagar ? "<li>$linkPagar</li>" : ''; ?>
                                 <li><?php echo $html->link('Ver', array('action' => 'view', $g['Gasto']['id'])) ?></li>
+                                
+                                <?php if ( empty($g['Gasto']['cierre_id']) ) { ?>
                                 <li><?php echo $html->link('Editar', array('action' => 'edit', $g['Gasto']['id']), array('data-ajax' => 'false')) ?></li>
+                                <li><?php echo $html->link('Borrar', array('action' => 'delete', $g['Gasto']['id'])) ?></li>
+                                <?php } ?>
                             </ul>
                         </div>
                     </td>

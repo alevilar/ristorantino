@@ -54,6 +54,14 @@
     
 
     $(function() {
+        
+        // imprimir cierre Z en ajax
+        $("#btn-imprimir-z").on('click', function(){
+            $.get(this.href);
+            return false;
+        });
+        
+        
         // recalcular saldo
         $('input','#ArqueoAddForm').bind('change', calcularSaldo);
         
@@ -77,15 +85,15 @@
 
         $("#ArqueoHacerCierreZeta").change(function() {
             if (this.checked) {
-                $('.mostrar_zeta').show();
+                $('.mostrar_zeta').show('fade');
             } else {
-                $('.mostrar_zeta').hide();
+                $('.mostrar_zeta').hide('fade');
             }
 
         });
         
-        $("#ArqueoImporteFinal").focusin(function(){
-            $("#billetines").show();            
+        $("#ArqueoImporteFinal").on('focus',function(){
+            $("#billetines").show('fade');
         });
         
         $('#ZetaMontoNeto').change(function(){

@@ -239,17 +239,17 @@
 
         case 9: // tab
         case 13: // enter
-          if (!this.shown) return
-          this.select()
+          if (!this.shown) return;
+          this.select();
           break
 
         case 27: // escape
-          if (!this.shown) return
-          this.hide()
+          if (!this.shown) return;
+          this.hide();
           break
 
         default:
-          this.lookup()
+          this.lookup();
       }
 
       e.stopPropagation()
@@ -266,10 +266,10 @@
     }
 
   , click: function (e) {
-      e.stopPropagation()
-      e.preventDefault()
-      this.select()
-      this.$element.focus()
+      e.stopPropagation();
+      e.preventDefault();
+      this.select();
+      this.$element.focus();
     }
 
   , mouseenter: function (e) {

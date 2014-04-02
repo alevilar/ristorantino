@@ -56,6 +56,7 @@ class ArqueosController extends CashAppController
                 'TipoDePago'
             ),
             'fields' => array(
+                'count(1) as cant',
                 'sum(Egreso.total) as total',
                 'TipoDePago.name'
             ),
@@ -64,6 +65,31 @@ class ArqueosController extends CashAppController
             ),
         ));
 
+        $sumaEgresos = 0;
+        $sumaEgCant = 0;
+        foreach ($egresosList as $el) {            
+            if (empty($this->data['Arqueo']['egreso'])) {
+                if ($el['TipoDePago']['id'] == TIPO_DE_PAGO_EFECTIVO) {
+                    if ( $computa_egresos ) {
+                        $this->data['Arqueo']['egreso'] = $el[0]['total'];
+                    }
+                }
+            }
+            $sumaEgCant++;
+            $sumaEgresos += $el[0]['total'];
+        }
+        $egresosList[] = array(
+            0 => array(
+                'total' => $sumaEgresos,
+                'cant' => $sumaEgCant,
+            ),
+            'TipoDePago' => array(
+                'name' => 'Total'
+            )
+        );
+                
+        
+        
         $ingresosList = $this->Pago->find('all', array(
             'conditions' => array(
                 'Pago.created BETWEEN ? AND ?' => array($desde, $hasta),
@@ -73,6 +99,7 @@ class ArqueosController extends CashAppController
                 'TipoDePago',
             ),
             'fields' => array(
+                'count(1) as cant',
                 'sum(Pago.valor) as total',
                 'TipoDePago.name'
             ),
@@ -80,27 +107,9 @@ class ArqueosController extends CashAppController
                 'TipoDePago.name'
             ),
         ));
-        $sumaEgresos = 0;
-        foreach ($egresosList as $el) {            
-            if (empty($this->data['Arqueo']['egreso'])) {
-                if ($el['TipoDePago']['id'] == TIPO_DE_PAGO_EFECTIVO) {
-                    if ( $computa_egresos ) {
-                        $this->data['Arqueo']['egreso'] = $el[0]['total'];
-                    }
-                }
-            }
-            $sumaEgresos += $el[0]['total'];
-        }
-        $egresosList[] = array(
-            0 => array(
-                'total' => $sumaEgresos
-            ),
-            'TipoDePago' => array(
-                'name' => 'Total'
-            )
-        );
-                
+        
         $sumaIngresos = 0;
+        $sumaIngCant = 0;
         foreach ($ingresosList as $el) {
             if ( empty($this->data['Arqueo']['ingreso']) ) {
                 if ($el['TipoDePago']['id'] == TIPO_DE_PAGO_EFECTIVO) {
@@ -109,17 +118,18 @@ class ArqueosController extends CashAppController
                     }
                 }
             }
+            $sumaIngCant++;
             $sumaIngresos += $el[0]['total'];
         }
         $ingresosList[] = array(
             0 => array(
-                'total' => $sumaIngresos
+                'total' => $sumaIngresos,
+                'cant' => $sumaIngCant,
             ),
             'TipoDePago' => array(
                 'name' => 'Total'
             )
         );
-        
         $this->set(compact('egresosList', 'ingresosList','desde','hasta'));    
         
         return $sumaIngresos;
@@ -174,23 +184,19 @@ class ArqueosController extends CashAppController
                 }
                 if (!$error) {
                     $this->__enviarArqueoPorMail($this->Arqueo->id);
-                    $this->redirect('edit/'.$this->Arqueo->id);
                 }
+            }
+            
+            if (!$error) {
+                $this->Session->setFlash("Se guardó un nuevo arqueo de caja");
+                $this->redirect('edit/'.$this->Arqueo->id);
             } else {
                 $this->Session->setFlash(__('No se pudo guardar el Arqueo', true));
                 $error = true;
             }
-            if (!$error) {
-                $this->Session->setFlash("Se guardó un nuevo arqueo de caja");
-            }
         }
         
-         $now = strtotime('now');
-        if (date('H', $now) > 0 && date('H', $now) < 5) {
-            // si estamos entre la 1 y las 5 de la mañana, entonces poner como que es el dia de ayer
-            $now = strtotime('-1 day');
-        }
-        $this->data['Arqueo']['datetime'] = date('Y-m-d H:i', $now);
+        $this->data['Arqueo']['datetime'] = date('Y-m-d H:i', strtotime('now'));
 
         $this->__presetData($caja_id);
         

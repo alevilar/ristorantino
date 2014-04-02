@@ -1,4 +1,5 @@
 <?php 
+echo $html->css('/account/css/style');
 $class = (abs($gasto['Gasto']['importe_pagado']) < abs($gasto['Gasto']['importe_total']))?'deuda':'pagado';
 ?>
 <div class="imagen-pagado <?php echo $class ?>">
@@ -55,7 +56,7 @@ if ( $gasto['Gasto']['importe_total'] - $gasto['Gasto']['importe_pagado'] ) {
 <?php echo $html->link('Borrar', array('action' => 'delete', $gasto['Gasto']['id']), array('class' => 'ajaxlink'), sprintf(__('Seguro queres borrar el # %s?', true), $gasto['Gasto']['id'])); ?>
 
 <?php if (!empty($gasto['Egreso'])) { ?>
-<h3>Pagos realizados sobre este Gasto</h3>
+<h3>Listado de Pagos</h3>
 <ul>
 <?php foreach ($gasto['Egreso'] as $pags){ ?>    
     <li>
