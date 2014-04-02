@@ -1,33 +1,6 @@
 /* PARA INICIALIZAR LA BD CON ALGUN DATO BASICO */
 
 
-
--- phpMyAdmin SQL Dump
--- version 2.11.8.1deb5+lenny9
--- http://www.phpmyadmin.net
---
--- Servidor: localhost
--- Tiempo de generación: 28-11-2012 a las 23:14:17
--- Versión del servidor: 5.0.51
--- Versión de PHP: 5.2.6-1+lenny16
-
-DROP DATABASE IF EXISTS coqus;
-CREATE DATABASE coqus;
-USE coqus;
-
-
-
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-
---
---
-
 -- --------------------------------------------------------
 
 --
@@ -674,8 +647,10 @@ CREATE TABLE IF NOT EXISTS `categorias` (
 --
 
 INSERT INTO `categorias` (`id`, `parent_id`, `lft`, `rght`, `name`, `description`, `image_url`, `created`, `modified`, `deleted_date`, `deleted`) VALUES
-(1, NULL, 1, 4, '/', '', '', '2012-11-28 22:57:10', '2012-11-28 22:57:10', NULL, 0),
-(2, 1, 2, 3, 'Guarnicion', '', 'french_fries_icon.png', '2013-05-17 13:49:56', '2013-05-17 13:46:57', NULL, 0);
+(1, NULL, 1, 8, '/', '', '', '2012-11-28 22:57:10', '2012-11-28 22:57:10', NULL, 0),
+(2, 1, 2, 3, 'Guarnicion', '', 'french_fries_icon.png', '2013-05-17 13:49:56', '2013-05-17 13:46:57', NULL, 0),
+(3, 1, 4, 5, 'Bebidas', '', 'Pepsi_Classic_128.png', '2014-04-02 06:49:47', '2014-04-02 06:49:47', NULL, 0),
+(4, 1, 6, 7, 'Hamburguesas', '', 'hamburger_128.png', '2014-04-02 06:53:54', '2014-04-02 06:53:54', NULL, 0);
 -- --------------------------------------------------------
 
 --
@@ -1144,7 +1119,8 @@ CREATE TABLE IF NOT EXISTS `mozos` (
 --
 
 INSERT INTO `mozos` (`id`, `user_id`, `numero`, `activo`, `deleted_date`, `deleted`) VALUES
-(1, 2, 1, 1, NULL, 0);
+(1, 2, 1, 1, NULL, 0),
+(2, 2, 4, 1, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -1160,6 +1136,10 @@ CREATE TABLE IF NOT EXISTS `observaciones` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=1 ;
 
+
+INSERT INTO `observaciones` (`name`) VALUES
+("Observacion de comanda predefinida 1. Ejemplo: Marchar en 10 minutos"),
+("Observacion 2");
 --
 -- Volcar la base de datos para la tabla `observaciones`
 --
@@ -1179,6 +1159,10 @@ CREATE TABLE IF NOT EXISTS `observacion_comandas` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=1 ;
 
+
+INSERT INTO `observacion_comandas` (`name`) VALUES
+("Observacion predefinida 1 de producto. Ejemplo: SIN SAL"),
+("Observacion 2 de producto");
 --
 -- Volcar la base de datos para la tabla `observacion_comandas`
 --
@@ -1275,10 +1259,13 @@ CREATE TABLE IF NOT EXISTS `productos` (
 
 
 INSERT INTO `productos` (`id`, `name`, `abrev`, `description`, `categoria_id`, `precio`, `comandera_id`, `order`, `created`, `modified`, `deleted_date`, `deleted`) VALUES
-(1, 'Milanesa de Ternera', 'mila', '', 1, 100.00, 0, NULL, '2012-11-28 23:11:57', '2012-11-28 23:11:57', NULL, 0),
+(1, 'Paella', 'paella', '', 1, 100.00, 0, NULL, '2012-11-28 23:11:57', '2012-11-28 23:11:57', NULL, 0),
 (2, 'Pure', 'pure', '', 2, 12.00, 0, 2, '2013-05-17 13:50:34', '2013-05-17 13:50:34', NULL, 0),
 (3, 'Papas Fritas', 'papas', '', 2, 33.00, 0, NULL, '2013-05-17 13:50:46', '2013-05-17 13:50:46', NULL, 0),
-(4, 'Papa al Natural', 'papa', '', 2, 21.00, 0, 2, '2013-05-17 13:51:09', '2013-05-17 13:51:09', NULL, 0);
+(4, 'Papa al Natural', 'papa', '', 2, 21.00, 0, 2, '2013-05-17 13:51:09', '2013-05-17 13:51:09', NULL, 0),
+(5, 'Pepsi', 'pepsi', '', 3, 20.00, 0, NULL, '2014-04-02 06:52:34', '2014-04-02 06:52:34', NULL, 0),
+(6, 'Big Ristorantino', 'bg risto', '', 4, 40.00, 0, 2, '2014-04-02 06:56:37', '2014-04-02 06:56:37', NULL, 0),
+(7, 'Super de Pollo', 'pollo', '', 4, 33.00, 0, NULL, '2014-04-02 06:57:03', '2014-04-02 06:57:03', NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -1356,8 +1343,15 @@ CREATE TABLE IF NOT EXISTS `sabores` (
   `deleted_date` timestamp NULL default NULL,
   `deleted` tinyint(4) NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=1 ;
+);
 
+
+INSERT INTO `sabores` (`id`, `name`, `categoria_id`, `precio`, `created`, `modified`, `deleted_date`, `deleted`) VALUES
+(1, 'Queso', 4, 10, '2014-04-02 06:54:36', '2014-04-02 06:54:36', NULL, 0),
+(2, 'Tomate', 4, 5, '2014-04-02 06:54:47', '2014-04-02 06:54:47', NULL, 0),
+(3, 'Lechuga', 4, 4, '2014-04-02 06:55:00', '2014-04-02 06:55:00', NULL, 0),
+(4, 'Huevo', 4, 5, '2014-04-02 06:55:29', '2014-04-02 06:55:29', NULL, 0),
+(5, 'Sola', 4, 0, '2014-04-02 06:58:00', '2014-04-02 06:58:00', NULL, 0);
 --
 -- Volcar la base de datos para la tabla `sabores`
 --
