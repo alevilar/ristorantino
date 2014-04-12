@@ -53,7 +53,7 @@
         ?>
     </div>
 
-    <h2>Inventario</h2>
+<!--    <h2>Inventario</h2>
     <div class="list-group">
         <?php
         echo $html->link('Listar productos', '/inventory/products', array('class' => 'list-group-item'));
@@ -64,7 +64,7 @@
         echo $html->link('Agregar stock a inventario', '/inventory/counts/add', array('class' => 'list-group-item'));
         echo $html->link('Listar para imprimir', '/inventory/counts/listar_faltantes_para_imprimir', array('class' => 'list-group-item'));
         ?>
-    </div>
+    </div>-->
 </div>
 
 <div class="col-md-3">
