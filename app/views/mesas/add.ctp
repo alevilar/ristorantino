@@ -13,6 +13,12 @@
 <?php echo $form->create('Mesa');?>
 	<fieldset>
  		<legend><?php __('Agregar Mesa');?></legend>
+                <p class="well info text text-info">
+                    Agregar mesa manualmente es para cuando, por algún motivo, no se pudo utilizar
+                    el sistema, pero queremos cargar las mesas hechas en ese intervalo de tiempo
+                    para que computen en la estadística.<br>
+                    Al agregar una mesa, automáticamente se va a marcar como que ya fue cerrada y cobrada.
+                </p>
 	<?php
         //debug($mozos);
 		echo $form->input('numero', array('label'=>'Numero de Mesa', 'after'=>'<br>Este dato modifica el valor estadistico acumulado por mesa. Lo ideal es poner el numero de mesa verdadero, caso contrario poner un numero alto.'));

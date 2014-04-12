@@ -325,13 +325,18 @@ class MesasController extends AppController {
             ),
         );
               
-$mozos = $this->Mesa->Mozo->find('list',array('fields'=>array('Mozo.id','User.nombre'),'joins'=>array(  array('table' => 'users',
-                                                                                                            'alias' => 'User',
-                                                                                                            'type' => 'inner',
-                                                                                                            'conditions' => array(
-                                                                                                            'user.id = Mozo.user_id')
-                                                                                                            )
-                                                                                                          )));
+$mozosAll = $this->Mesa->Mozo->find('all', array(
+    'fields'=>array('Mozo.id','Mozo.numero','User.username','User.nombre','User.apellido'),
+    'recursive' => 0,
+    'conditions' => array(
+        'Mozo.activo' => 1
+    )
+    ));
+
+$mozos = array();
+foreach ($mozosAll as $mz) {
+    $mozos[$mz['Mozo']['id']] = "(".$mz['Mozo']['numero'] . ") " .$mz['User']['nombre']. " ". $mz['User']['apellido'];
+}
 $tipo_pagos = $this->Mesa->Pago->TipoDePago->find('list');
 
         $this->set('tipo_pagos',$tipo_pagos);
