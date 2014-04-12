@@ -46,7 +46,7 @@
         echo $html->link('Categorias', '/categorias', array('class' => 'list-group-item'));
         echo $html->link('Productos', '/productos', array('class' => 'list-group-item'));
         echo $html->link('Observaciones de Productos', '/observaciones', array('class' => 'list-group-item'));
-        echo $html->link('Observaciones de Comandas', '/observacision_comandas', array('class' => 'list-group-item'));
+        echo $html->link('Observaciones de Comandas', '/observacion_comandas', array('class' => 'list-group-item'));
         echo $html->link('Gustos y Sabores', '/sabores', array('class' => 'list-group-item'));
         echo $html->link('Precios Futuros', '/productos_precios_futuros', array('class' => 'list-group-item'));
         echo $html->link('Productos Pedidos', '/detalle_comandas/', array('class' => 'list-group-item'));
