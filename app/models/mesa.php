@@ -559,6 +559,7 @@ class Mesa extends AppModel {
             $defaultFields = array(
                 'count(*) as "cant_mesas"',
                 'sum(Mesa.cant_comensales) as "cant_cubiertos"',
+                'sum(Mesa.subtotal) as "subtotal"',
                 'sum(Mesa.total) as "total"',
                 'sum(Mesa.total)/sum(Mesa.cant_comensales) as "promedio_cubiertos"',
                 "$sqlHorarioDeCorte as fecha",                

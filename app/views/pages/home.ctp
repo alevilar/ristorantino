@@ -3,8 +3,8 @@ echo $html->css('ristorantino.home');
 ?>
 <div class="jumbotron">
     <div style="text-align: center">
-    <h1>COQUS</h1>
-  <h2>El Ristorantino Mágico</h2>
+    <h1><?php echo Configure::read('Restaurante.name');?></h1>
+  
   </div>
   <p>
    <ul class="dashboard-buttons">
@@ -20,9 +20,9 @@ echo $html->css('ristorantino.home');
         <?php echo $html->link('Admin', '/pages/administracion', array('id' => 'bton-admin')); ?>
     </li>  
 
-    <li>   
+<!--    <li>   
         <?php echo $html->link('Inventario', '/inventory', array('id' => 'bton-inven')); ?>
-    </li>  
+    </li>  -->
    </ul>
   
   <ul class="dashboard-buttons">

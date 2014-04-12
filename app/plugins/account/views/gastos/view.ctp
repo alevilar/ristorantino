@@ -64,6 +64,8 @@ if ( $gasto['Gasto']['importe_total'] - $gasto['Gasto']['importe_pagado'] ) {
         Fecha: <?php echo date('d-m-y', strtotime($pags['fecha']))?>
         Importe: <?php echo $number->currency($pags['AccountEgresosGasto']['importe'])?>
         <?php echo $html->link('ir al pago', array('controller'=>'egresos', 'action'=>'view', $pags['id'])) ?>
+        <?php echo $html->link('eliminar pago', array('controller'=>'egresos', 'action'=>'delete', $pags['AccountEgresosGasto']['egreso_id']), null, sprintf(__('¿Está seguro que desea borrar el pago %s', true), $pags['TipoDePago']['name'])) ?>
+        
     </li>
 <?php } ?>
 </ul>

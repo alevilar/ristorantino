@@ -149,6 +149,23 @@ class EgresosController extends AccountAppController
         ));
         $this->set('egreso', $this->Egreso->read());
     }
+    
+    
+    function delete($id = null)
+    {
+        if (!$id) {
+            $this->Session->setFlash(__('Invalid id for Egreso', true));
+            $this->redirect(array('action' => 'history'));
+        }
+        if ($this->Egreso->del($id)) {
+            $this->Session->setFlash(__('Egreso deleted', true));
+            if ( !$this->RequestHandler->isAjax() ) {
+                $this->redirect(array('action' => 'history'));
+            }
+        }
+        $this->Session->setFlash(__('The Egreso could not be deleted. Please, try again.', true));
+        $this->redirect(array('action' => 'history'));
+    }
 
 }
 

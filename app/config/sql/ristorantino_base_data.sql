@@ -1437,7 +1437,7 @@ INSERT INTO `comandas` (`id`, `mesa_id`, `prioridad`, `impresa`, `created`, `obs
 
 INSERT INTO `configs` (`id`, `config_category_id`, `key`, `value`, `description`, `created`, `modified`) VALUES
 (1, 1, 'imprimePrimeroRemito', '1', 'Esta variable sirve para imprimir siempre un comprobante de consumicion antes de imprimir el ticket los valores posibles son 1 o 0 (para imprimir directamente la factura)', NULL, '2012-01-13 22:12:39'),
-(2, 2, 'name', 'Nombre', 'Generalmente utilizado para las impresiones extra como remitos e informes', NULL, '2012-11-28 21:36:07'),
+(2, 2, 'name', 'Nombre Comercio', 'Generalmente utilizado para las impresiones extra como remitos e informes', NULL, '2012-11-28 21:36:07'),
 (3, 2, 'razon_social', '', '', NULL, NULL),
 (4, 2, 'cuit', '', '', NULL, NULL),
 (5, 2, 'ib', '', 'ingresos brutos', NULL, NULL),

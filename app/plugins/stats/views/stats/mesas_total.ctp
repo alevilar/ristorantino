@@ -44,6 +44,7 @@
             <br />
             <div class="col-md-6">
                 <h3>Ingresos/Ventas</h3>
+                Ventas Netas (sin descuentos): <b><?php echo $number->currency($resumenCuadro['subtotal'],'$', array('places'=>0)) ?></b><br />
                 Total de ventas: <b><?php echo $number->currency($resumenCuadro['total'],'$', array('places'=>0)) ?></b><br />
                 Cierre Zeta Total: <b><?php echo $number->currency($zeta_iva_total + $zeta_neto_total,'$', array('places'=>0)) ?></b><br>
                 Zeta Neto: <b><?php echo $number->currency($zeta_neto_total,'$', array('places'=>0)) ?></b><br>

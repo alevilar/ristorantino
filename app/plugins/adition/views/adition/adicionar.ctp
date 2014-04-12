@@ -69,11 +69,11 @@
             <hr />
             <h3>Impresoras</h3>
             <div data-role="fieldcontain">
-                    <label for="slider">Imprime Encuesta:</label>
+                    <label for="slider">Imprimir Ticket al Cerrar:</label>
                     <select name="slider" id="modo-k" data-role="slider">
                             
-                            <option value="0" <?php echo Configure::read('Mesa.imprimePrimeroRemito')?'':'selected="selected"'?>>No</option>
-                            <option value="1" <?php echo Configure::read('Mesa.imprimePrimeroRemito')?'selected="selected"':''?>>Si</option>
+                            <option value="0" <?php echo Configure::read('Mesa.imprimePrimeroRemito')?'':'selected="selected"'?>>Si</option>
+                            <option value="1" <?php echo Configure::read('Mesa.imprimePrimeroRemito')?'selected="selected"':''?>>No</option>
                     </select> 
             </div>
             <a href="#listado-mesas-cerradas" data-role="button" data-href="<?php echo $html->url('/adition/cashier/vaciar_cola_impresion_fiscal');?>" class="silent-click" >Vaciar cola de impresión</a>

@@ -28,6 +28,8 @@ if (!empty($egreso['Egreso']['observacion'])) {
     
     <p>
     <?php echo $html->link('  Editar pago',array('action' => 'edit', $egreso['Egreso']['id'])); ?>
+        <br>
+     <?php echo $html->link('Eliminar pago', array('action'=>'delete', $egreso['Egreso']['id']), null, sprintf(__('¿Está seguro que desea borrar el pago $%s', true), $egreso['Egreso']['total'])) ?>
     </p>
     <div>
         <h3>Listado de Gastos</h3>

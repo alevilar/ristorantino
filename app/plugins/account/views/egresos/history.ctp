@@ -58,6 +58,7 @@ $paginator->options(array('url' => array('?' => $urlTex)));
                                 <th>Fecha</th>
                                 <th>Neto</th>
                                 <th>Total</th>
+                                <th>Pago</th>
                                 <th>Obs.</th>
                             </tr>
                         </thead>
@@ -73,6 +74,7 @@ $paginator->options(array('url' => array('?' => $urlTex)));
                                 if (!empty($gasto['TipoFactura'])) {
                                     $tipoFactura = $gasto['TipoFactura']['name'];
                                 }
+                                
                                 ?>
                                 <tr>
                                     <td><?php echo $proveedor ?></td>
@@ -80,6 +82,7 @@ $paginator->options(array('url' => array('?' => $urlTex)));
                                     <td><?php echo date('d-m-Y', strtotime($gasto['fecha'])) ?></td>
                                     <td><?php echo $gasto['importe_neto'] ?></td>
                                     <td><?php echo $gasto['importe_total'] ?></td>
+                                    <td class="text text-warning"><?php echo $number->currency($gasto['AccountEgresosGasto']['importe']) ?></td>
                                     <td><?php echo $gasto['observacion'] ?></td>
                                 </tr>
                                 <?
@@ -110,7 +113,9 @@ $paginator->options(array('url' => array('?' => $urlTex)));
                     <?php
                     echo $html->link('Ver', array('action' => 'view', $g['Egreso']['id']));
                     echo "<br>";
-                    echo $html->link('Editar', array('action' => 'edit', $g['Egreso']['id']))
+                    echo $html->link('Editar', array('action' => 'edit', $g['Egreso']['id']));
+                    echo "<br>";
+                    echo $html->link('Eliminar', array('action'=>'delete', $g['Egreso']['id']), null, sprintf(__('¿Está seguro que desea borrar el pago de %s', true), $number->currency($g['Egreso']['total'])));
                     ?>
                 </td>
 

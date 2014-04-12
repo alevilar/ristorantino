@@ -112,6 +112,7 @@ class StatsController extends StatsAppController
 
                     $resumenCuadro = array(
                         'total' => 0,
+                        'subtotal' => 0,
                         'cubiertos' => 0,
                         'desde' => $desde,
                         'hasta' => $hasta,
@@ -122,7 +123,7 @@ class StatsController extends StatsAppController
 
                         $resumenCuadro['cubiertos'] += $m['Mesa']['cant_cubiertos'];
                         $resumenCuadro['total'] += $m['Mesa']['total'];
-
+                        $resumenCuadro['subtotal'] += $m['Mesa']['subtotal'];
                         unset($m[0]);
                     }
                     $mesasLineas[] = $mesas;
