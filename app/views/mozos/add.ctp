@@ -4,18 +4,19 @@ echo $this->element('menuadmin');
 
 <div class="mozos form">
     <?php echo $form->create('Mozo'); ?>
-        <legend>Nuevo Mozo</legend>
-        <?php
-        echo $form->input('numero');
-        echo $form->input('activo');
-        
-        echo $form->input('User.nombre');
-        echo $form->hidden('User.role', array('value'=>'mozo'));
-        echo $form->input('User.apellido');
-        echo $form->input('User.username');
-        echo $form->input('User.password');
-        echo $form->end('Submit');
+        <fieldset>
+ 		<legend>Nuevo Mozo</legend>
+	<?php
+                echo $form->input('id');
+		echo $form->input('numero');
+                echo $form->input('nombre');
+                echo $form->input('apellido');
+                echo $form->input('image_url', array('type'=>'file'));
+                echo $form->input('activo',array('after'=>'<p>Sólo los mozos activos aparecerán listados en la Adición.'));
+                
+                echo $form->end('Submit');
         ?>
+	</fieldset>
 
 </div>
 <div class="actions">

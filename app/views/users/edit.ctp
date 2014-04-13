@@ -4,23 +4,45 @@
 
 
 <div class="users form">
+    
+    <p class="text-right">
+    <?php echo $html->link('Modificarle la Contraseña','/users/cambiar_password/'.$this->data['User']['id'], array('class'=>'cambiopass'));?>
+    </p>
+    
+    <div class="clear"></div>
 <?php echo $form->create('User');?>
-	<fieldset>
  		<legend><?php __('Editar Usuario');?></legend>
-	<?php
+                
         
-        echo $html->link('Modificarle la Contraseña','/users/cambiar_password/'.$this->data['User']['id'], array('class'=>'cambiopass'));?>
-        <?php
-		echo $form->input('id');
-                    
-                echo $form->input('grupo', array('label'=>'Tipo de Usuario', 'options'=>$aros, 'selected'=>$parent_aro_seleced));
-		echo $form->input('username');
-		echo $form->input('nombre');
-		echo $form->input('apellido');
-		echo $form->input('telefono');
+            <div class="col-md-6">
+                <fieldset>
+                <?php
+               echo $form->input('id');
+               echo $form->input('username');
+               ?>
+               </fieldset>
+                
+               <?php
+               echo $form->input('rol_id', array(
+//                   'type' => "radio",
+                   'label' => array(
+                       'fieldset' => array(
+                           'class' => 'papspas',
+                           'data-type' => "horizontal"
+                           )
+                       )
+               ));
+               ?>
+            </div>
+                
+           
+            <fieldset class="col-md-6">
+                <?php
+                echo $form->input('nombre');
+                echo $form->input('apellido');
+                echo $form->input('telefono');
                 echo $form->input('domicilio');
-		
-	?>
+                ?>
                 </br>
                     
                 <?php echo $form->end('Submit');?>

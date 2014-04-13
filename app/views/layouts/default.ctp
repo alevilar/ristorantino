@@ -21,7 +21,7 @@
         if (is_file(APP . WEBROOT_DIR . DS . "css" . DS . $cssUserRole . ".css")) {
             echo $html->css($cssUserRole, 'stylesheet', array('media' => 'screen'));
         }
-
+        
         echo $javascript->link(array(
             'jquery/jquery-1.9.1.min',
             '/lib/bootstrap/js/bootstrap.min',

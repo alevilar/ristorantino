@@ -5,6 +5,10 @@
 
 
 <div class="tipoDePagos index">
+   
+    <div class="text-right" style="float: right">
+    <?php echo $html->link(__('Crear Tipo de pago', true), array('action'=>'edit'), array('class'=> 'btn btn-primary btn-lg')); ?>
+    </div>
 <h2><?php __('Tipo de Pagos');?></h2>
 <p>
 <?php
@@ -16,7 +20,6 @@ echo $paginator->counter(array(
 <tr>
 	<th><?php echo $paginator->sort('id');?></th>
 	<th><?php echo $paginator->sort('Nombre');?></th>
-	<th><?php echo $paginator->sort('Descripción');?></th>
 	<th class="actions"><?php __('Acciones');?></th>
 </tr>
 <?php
@@ -29,14 +32,11 @@ foreach ($tipoDePagos as $tipoDePago):
 ?>
 	<tr<?php echo $class;?>>
 		<td>
-			<?php echo $tipoDePago['TipoDePago']['id']; ?>
+                    <?php echo $tipoDePago['TipoDePago']['id']; ?>
                     <?php echo $html->image($tipoDePago['TipoDePago']['image_url'], array('width'=>40)); ?>
 		</td>
 		<td>
 			<?php echo $tipoDePago['TipoDePago']['name']; ?>
-		</td>
-		<td>
-			<?php echo $tipoDePago['TipoDePago']['description']; ?>
 		</td>
 		<td class="actions">
 			<?php echo $html->link(__('Editar', true), array('action'=>'edit', $tipoDePago['TipoDePago']['id'])); ?>
@@ -51,9 +51,5 @@ foreach ($tipoDePagos as $tipoDePago):
  | 	<?php echo $paginator->numbers();?>
 	<?php echo $paginator->next(__('próximo', true).' >>', array(), null, array('class'=>'disabled'));?>
 </div>
-<div class="actions">
-	<ul>
-		<li><?php echo $html->link(__('Crear Tipo de pago', true), array('action'=>'edit')); ?></li>
-		<li><?php echo $html->link(__('Listar Pagos', true), array('controller'=> 'pagos', 'action'=>'index')); ?> </li>
-	</ul>
-</div>
+
+

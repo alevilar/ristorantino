@@ -55,7 +55,6 @@ class ClientesController extends AppController {
                  $this->paginate['conditions'] = $condiciones;
  
                 /* <- Esto es lo original -> */
-                debug($this->paginate);
 		$this->Cliente->recursive = 0;
 		$this->set('clientes', $this->paginate());
                 
@@ -74,24 +73,22 @@ class ClientesController extends AppController {
 	}
 
 	function add() {
-            $this->rutaUrl_for_layout[] =array('name'=> 'Clientes','link'=>'/clientes' );
 		if (!empty($this->data)) {
-			$this->Cliente->create();
+                        $this->Cliente->create();
 			if ($this->Cliente->save($this->data)) {
-				$this->Session->setFlash(__('Se agregó un nuevo cliente', true));
+				$this->Session->setFlash(__('El Cliente fue guardado', true));
 				$this->redirect(array('action'=>'index'));
 			} else {
-				$this->Session->setFlash(__('El Cliente no pudo ser gardado, intente nuevamente.', true));
+				$this->Session->setFlash(__('El Cliente no pudo ser guardado.intente nuevamente.', true));
 			}
 		}
-		$users = $this->Cliente->User->find('list',array('fields'=>array('User.nombre')));
+                
 		$descuentos = $this->Cliente->Descuento->find('list');
-		
-		$tipo_documentos = $this->Cliente->TipoDocumento->find('list');		
+                $tipo_documentos = $this->Cliente->TipoDocumento->find('list');		
 		$iva_responsabilidades = $this->Cliente->IvaResponsabilidad->find('list');
-                $this->set('tipo_documentos', $tipo_documentos);
-                $this->set('iva_responsabilidades', $iva_responsabilidades);
-		$this->set(compact('users', 'descuentos'));
+                
+                $this->set(compact('tipo_documentos', 'iva_responsabilidades', 'descuentos'));
+                $this->render('edit');
 	}
 
         function addFacturaA() {
@@ -115,7 +112,6 @@ class ClientesController extends AppController {
 	}
 
 	function edit($id = null) {
-            $this->rutaUrl_for_layout[] =array('name'=> 'Clientes','link'=>'/clientes' );
 		if (!$id && empty($this->data)) {
 			$this->Session->setFlash(__('Cliente incorrecto', true));
 			$this->redirect(array('action'=>'index'));
@@ -131,15 +127,11 @@ class ClientesController extends AppController {
 		if (empty($this->data)) {
 			$this->data = $this->Cliente->read(null, $id);
 		}
-		$users = $this->Cliente->User->find('list',array('fields'=>array('User.nombre')));
 		$descuentos = $this->Cliente->Descuento->find('list');
-		
                 $tipo_documentos = $this->Cliente->TipoDocumento->find('list');		
 		$iva_responsabilidades = $this->Cliente->IvaResponsabilidad->find('list');
-                $this->set('tipo_documentos', $tipo_documentos);
-                $this->set('iva_responsabilidades', $iva_responsabilidades);
                 
-		$this->set(compact('users', 'descuentos'));
+                $this->set(compact('tipo_documentos', 'iva_responsabilidades', 'descuentos'));
 	}
 
 	function delete($id = null) {

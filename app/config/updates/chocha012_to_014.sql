@@ -5,11 +5,14 @@ ALTER TABLE  `users` CHANGE  `apellido`  `apellido` VARCHAR( 40 ) NULL DEFAULT  
 
 
 ALTER TABLE  `users` CHANGE  `domicilio`  `domicilio` VARCHAR( 110 ) NULL DEFAULT  '';
+ALTER TABLE  `users` ADD  `rol_id` INT NOT NULL AFTER  `username`;
 
-ALTER TABLE `users` DROP `numero`;
 
 ALTER TABLE `mozos`  ADD `apellido` VARCHAR(64) NOT NULL AFTER `id`;
 ALTER TABLE  `mozos` ADD  `nombre` VARCHAR( 64 ) NOT NULL AFTER  `id`;
+ALTER TABLE  `mozos` ADD  `image_url` VARCHAR( 256 ) NULL AFTER  `apellido`;
+
+
 
 
 /* colocar los nombres de usuarios al mozo */
@@ -66,7 +69,7 @@ ALTER TABLE `tipo_de_pagos` DROP `description`;
 ALTER TABLE  `comanderas` ADD  `driver_name` VARCHAR( 32 ) NULL AFTER  `description`;
 
 
-ALTER TABLE  `users` ADD  `rol_id` INT NOT NULL AFTER  `username`;
+
 
 
 INSERT INTO `configs` 
@@ -94,7 +97,8 @@ CREATE TABLE IF NOT EXISTS `tags` (
 
 
 ALTER TABLE  `iva_responsabilidades` ADD  `tipo_factura_id` INT NOT NULL;
-ALTER TABLE  `tipo_facturas` ADD  `codename` VARCHAR( 1 ) NULL AFTER  `name`
+ALTER TABLE  `tipo_facturas` ADD  `codename` VARCHAR( 1 ) NULL AFTER  `name`;
+
 DROP TABLE  IF EXISTS `egresos`;
 
 

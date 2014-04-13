@@ -16,42 +16,46 @@ echo $paginator->counter(array(
 ));
 ?></p>
 <table class="table">
-<tr>
-	<th><?php echo $paginator->sort('activo');?></th>
-	<th><?php echo $paginator->sort('Nombre','User.nombre');?></th>
-	<th><?php echo $paginator->sort('numero');?></th>
-	<th class="actions"><?php __('Acciones');?></th>
-</tr>
+    <thead>
+        <tr>
+            <th><?php echo $paginator->sort('activo');?><?php echo $paginator->sort('Nombre','User.nombre');?></th>
+            <th></th>
+            <th><?php echo $paginator->sort('numero');?></th>
+            <th class="actions"><?php __('Acciones');?></th>
+        </tr>
+    </thead>
+
 <?php
 $i = 0;
-foreach ($mozos as $mozo):
-	$class = null;
-	if ($i++ % 2 == 0) {
-		$class = ' class="altrow"';
-	}
+foreach ($mozos as $mesa):
 ?>
-	<tr<?php echo $class;?>>
-		<td class="<?php echo $mozo['Mozo']['activo'] ? 'text-success' : 'text-muted' ?>">
-                    <?php echo $mozo['Mozo']['activo'] ? '✓' : '■' ?>
-                    
+	<tr>
+			
+		<td>
+                    <span class="mozo-puntito <?php echo $mesa['Mozo']['activo'] ? 'text-success' : '' ?>" style="font-size:26pt">•</span> <?php echo $mesa['Mozo']['nombre']." ".$mesa['Mozo']['apellido']; ?>
 		</td>
 		<td>
-			<?php echo $html->link($mozo['User']['nombre']." ".$mozo['User']['apellido'], array('controller'=> 'users', 'action'=>'view', $mozo['User']['id'])); ?>
+             <?php 
+                if (!empty($mesa['Mozo']['image_url']) ) {
+                    echo $html->image(THUMB_FOLDER.DS.$mesa['Mozo']['image_url'], array('img-polaroid', 'style'=>'width: 68px')); 
+                } else {
+                       echo "&nbsp;";
+                }
+             	?>
 		</td>
 		<td>
-			<?php echo $mozo['Mozo']['numero']; ?>
+			<?php echo $mesa['Mozo']['numero']; ?>
 		</td>
 		<td class="actions">
-			<?php // echo $html->link(__('View', true), array('action'=>'view', $mozo['Mozo']['id'])); ?>
-			<?php echo $html->link(__('Editar', true), array('action'=>'edit', $mozo['Mozo']['id'])); ?>
+			<?php // echo $html->link(__('View'), array('action'=>'view', $mozo['Mozo']['id'])); ?>
+			<?php echo $html->link(__('Editar', true), array('action'=>'edit', $mesa['Mozo']['id'])); ?>
 			<?php
-                        if ($session->read('Auth.User.role') == 'superuser') {
-                            echo $html->link(__('Delete', true), array('action'=>'delete', $mozo['Mozo']['id']), null, sprintf(__('¿Desea borrar el mozo nº # %s?. Si borra el mozo desaparecerá de las estadísticas.', true), $mozo['Mozo']['numero']));
-                        }
+                        echo $html->link(__('Delete', true), array('action'=>'delete', $mesa['Mozo']['id']), null, sprintf( '¿Desea borrar el mozo nº # %s?. Si borra el mozo desapareceran las estadísticas.', $mesa['Mozo']['numero']));
                         ?>
 		</td>
 	</tr>
 <?php endforeach; ?>
+        
 </table>
 </div>
 <div class="paging">

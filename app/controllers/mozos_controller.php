@@ -3,6 +3,15 @@ class MozosController extends AppController {
 
 	var $name = 'Mozos';
 	var $helpers = array('Html', 'Form');
+        
+
+        public $paginate = array(
+            'limit' => 40,
+            'order' => array(
+                'Mozo.activo' => 'desc',
+                'Mozo.numero' => 'asc',
+            )
+        );
 
         function beforeFilter() {
             parent::beforeFilter();
@@ -11,7 +20,8 @@ class MozosController extends AppController {
         
 	function index() {
 		$this->Mozo->recursive = 0;
-		$this->set('mozos', $this->paginate());
+                $mozos = $this->paginate();
+		$this->set(compact('mozos' ));
 	}
 
 	function view($id = null) {
@@ -24,53 +34,48 @@ class MozosController extends AppController {
 	}
 
 	function add() {
-            $this->rutaUrl_for_layout[] =array('name'=> 'Mozos','link'=>'/mozos' );
-		if (!empty($this->data)) {
-			//$this->Mozo->create();
+            if (!empty($this->data)) {
+                    //$this->Mozo->create();
 
-                        
-			if ($this->Mozo->saveAll($this->data)) {
-				$this->Session->setFlash(__('The Mozo has been saved', true));
-				$this->redirect(array('action'=>'index'));
-			} else {
-				$this->Session->setFlash(__('The Mozo could not be saved. Please, try again.', true));
-			}
-		}
-		
-		$users = $this->Mozo->User->find('list',array('fields'=>array('id','username'), 'conditions'=> array('User.role'=>'mozo')));
-		
-		$this->set(compact('users'));
+
+                    if ($this->Mozo->saveAll($this->data)) {
+                            $this->Session->setFlash(__('The Mozo has been saved'));
+                            $this->redirect(array('action'=>'index'));
+                    } else {
+                            $this->Session->setFlash(__('The Mozo could not be saved. Please, try again.'));
+                    }
+            }
+            $this->render('edit');
 	}
 
 	function edit($id = null) {
-            $this->rutaUrl_for_layout[] =array('name'=> 'Mozos','link'=>'/mozos' );
-		if (!$id && empty($this->data)) {
-			$this->Session->setFlash(__('Invalid Mozo', true));
-			$this->redirect(array('action'=>'index'));
+            $this->Mozo->id = $id;
+		if (!$this->Mozo->exists()) {
+			throw new NotFoundException(__('Invalid mozo'));
 		}
 		if (!empty($this->data)) {
-			if ($this->Mozo->saveAll($this->data)) {
-				$this->Session->setFlash(__('The Mozo has been saved', true));				
+			if ($this->Mozo->save($this->data)) {
+				$this->Session->setFlash(__('The mozo has been saved'));
+				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The Mozo could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('The mozo could not be saved. Please, try again.'));
 			}
-		}
-		if (empty($this->data)) {
+		} else {
 			$this->data = $this->Mozo->read(null, $id);
 		}
-		
-		$this->set(compact('users'));
 	}
 
 	function delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for Mozo', true));
-			$this->redirect(array('action'=>'index'));
+			
 		}
 		if ($this->Mozo->del($id)) {
 			$this->Session->setFlash(__('Mozo deleted', true));
-			$this->redirect(array('action'=>'index'));
-		}
+		} else {
+                    $this->Session->setFlash(__('Error al borrar', true));
+                }
+                $this->redirect(array('action'=>'index'));
 	}
 
         /**

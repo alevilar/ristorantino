@@ -1,8 +1,10 @@
 <div class="clientes form">
     <?php echo $form->create('Cliente');?>
-    <fieldset class="ui-grid-a">
-        <div class="ui-block-a">
+    <fieldset class="row">
+        
         <legend><?php echo __('Edit Cliente');?></legend>
+        
+        <div class="col-md-6">
         <?php
        echo $form->input('id');
         echo $form->input('nombre',
@@ -24,13 +26,13 @@
         ?>
         </div>
         
-        <div class="ui-block-b">
+        <div class="col-md-6">
             <?
 
-            echo $jqm->horizontalRadio('tipo_documento_id',
-                               $tipo_documentos,
+            echo $form->input('tipo_documento_id',
                                array(
-                                   'default'=>1, // CUIT, numero hardcodeado de la base de datos
+//                                   'type' => 'radio',
+                                   'default'=> 1, // CUIT, numero hardcodeado de la base de datos
                                    'label'=>'Tipo de Identificación',
                                    'fieldset' => false,
                                    'empty'=>'Seleccione'));
@@ -44,8 +46,7 @@
             echo $form->input('iva_responsabilidad_id',
                                array(
                                    'label'=>'Responsabilidad ante el IVA',
-                                   'options' => $iva_responsabilidades,
-                                   'default'=>4, // Consumidor final
+                                   'default'=> 4, // Consumidor final
                                    'empty'=>'Seleccione'));
             ?>
 
@@ -53,9 +54,4 @@
         </div>
     </fieldset>
 
-</div>
-<div class="actions">
-    <ul>
-        <li><?php echo $html->link(__('List Clientes'), array('action'=>'index'));?></li>
-    </ul>
 </div>

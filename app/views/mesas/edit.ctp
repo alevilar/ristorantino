@@ -1,37 +1,36 @@
-<div data-role="page">
-    <div data-role="content">
-        <?php
-        echo $this->element('menuadmin');
-        ?>
 
-        <div class="mesas form">
+        <div class="row mesas form">
             <?php echo $form->create('Mesa'); ?>
+            <legend><?php __('Editando Mesa'); ?></legend>
             <div class="col-md-6 ">
                 <fieldset>
-                    <legend><?php __('Datos Generales'); ?></legend>
+                    
                     <?php
                     echo $form->input('id');
                     echo $form->input('estado_id');
-                    echo $form->input('numero', array('after' => '</br>Si cambia este número, cambiara el número de la mesa', 'label' => 'Cambiar Número de Mesa'));
-                    echo $form->input('mozo_id', array('after' => '</br>Aquí puede cambiar el mozo de la mesa'));
+                    echo $form->input('numero', array('label' => 'Número de Mesa'));
+                    echo $form->input('mozo_id', array());
                     ?>
                 </fieldset>
             </div>
 
             <div class="col-md-6">
                 <fieldset>
-                    <legend><?php __('Totales de Mesa'); ?></legend>
                     <?php
-                    echo $form->input('cant_comensales', array('after' => '</br>Aquí puede cambiar la cantidad de cubiertos de la mesa'));
-                    echo $form->input('total', array('after' => '</br>Aquí puede cambiar el total de la mesa.'));
-                    ?>
-                    <?php echo $form->end('Guardar Cambios'); ?>
+                    echo $form->input('cant_comensales', array('label' => 'Cant. de Cubiertos (comensales)'));
+                    echo $form->input('total', array());
+                    
+                    echo "<br>".$form->submit('Guardar Cambios', array('class'=>'btn btn-primary btn-lg')); ?>
+                    
+                    
                 </fieldset>
             </div>
+            <?php echo $form->end(); ?>
         </div>
 
         <div class="clear"></div>
-        <div class="detallesmesa">
+        
+        <div class="row detallesmesa">
             <h2>Detalles de la Mesa</h2>
 
             <dl>
@@ -59,9 +58,6 @@
                     echo "<dd>" . $dto . "% &nbsp;</dd>";
                 }
 
-                echo "<dt>Imprime Ticket</dt>";
-                echo "<dd>";
-                echo ($mesa['Cliente']['imprime_ticket']) ? 'SI' : 'NO';
                 echo "</dd>"
                 ?>
             </dl>

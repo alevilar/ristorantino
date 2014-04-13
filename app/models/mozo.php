@@ -17,28 +17,20 @@ class Mozo extends AppModel {
                     )
 	);
 
-	//The Associations below have been created with all possible keys, those that are not needed can be removed
-	var $belongsTo = array(
-			'User' => array('className' => 'User',
-								'foreignKey' => 'user_id',
-								'conditions' => '',
-								'fields' => '',
-								'order' => ''
-			)
-	);
+        
 
 	var $hasMany = array(
 			'Mesa' => array('className' => 'Mesa',
-								'foreignKey' => 'mozo_id',
-								'dependent' => true,
-								'conditions' => '',
-								'fields' => '',
-								'order' => '',
-								'limit' => '',
-								'offset' => '',
-								'exclusive' => '',
-								'finderQuery' => '',
-								'counterQuery' => ''
+                            'foreignKey' => 'mozo_id',
+                            'dependent' => true,
+                            'conditions' => '',
+                            'fields' => '',
+                            'order' => '',
+                            'limit' => '',
+                            'offset' => '',
+                            'exclusive' => '',
+                            'finderQuery' => '',
+                            'counterQuery' => ''
 			)
 	);
 	
@@ -62,6 +54,30 @@ class Mozo extends AppModel {
                     'conditions'=>array('Mozo.activo'=>1),
                     'order'=>'Mozo.numero ASC'));
 	}
+        
+        /**
+         * 
+         * @return stringFind 'list' de los mozos con el numero + nombre completo
+         */
+        function listActivos() {
+            $mozosAll = $this->find('all', array(
+                'fields'=>array(
+                    'Mozo.id',
+                    'Mozo.numero',
+                    'Mozo.nombre',
+                    'Mozo.apellido'),
+                'recursive' => -1,
+                'conditions' => array(
+                    'Mozo.activo' => 1
+                )
+            ));
+
+            $mozos = array();
+            foreach ($mozosAll as $mz) {
+                $mozos[$mz['Mozo']['id']] = "(".$mz['Mozo']['numero'] . ") " .$mz['Mozo']['nombre']. " ". $mz['Mozo']['apellido'];
+            }
+            return $mozos;
+        }
 	
 	
 	function dameTodos($recursive = 0){
@@ -85,7 +101,7 @@ class Mozo extends AppModel {
          * @param int $mozo_id id del mozo, en caso de que no le pase ninguno, me busca todos
          * @return array Mozos con sus mesas, Comandas, detalleComanda, productos y sabores
          */
-        function mesasAbiertas($mozo_id = null, $lastAccess = null){
+        public function mesasAbiertas($mozo_id = null, $lastAccess = null){
             $conditions = array();
             
             // si vino el mozo por parametro, es porque solo quiero las mesas de ese mozo
@@ -107,47 +123,45 @@ class Mozo extends AppModel {
                 $conditionsMesa['Mesa.modified >='] = $lastAccess;
             }
             
-            $optionsEliminada = $optionsCobrada = $optionsUpdated = $optionsCreated = array(
+            $optionsCreated = array(
                 'contain' => array(
-                    'Mesa' => array(
-                        'Cliente' => 'Descuento',
-                        'Comanda' => array(
-                            'DetalleComanda' => array(
-                                'Producto','DetalleSabor.Sabor'),
-                        ),
-                        'conditions' => $conditionsMesa,
-                        'order' => 'Mesa.numero DESC',
-                    ),
+                    'Mesa' => $this->Mesa->defaultContain,
                  ),
                 'conditions'=> $conditions,
             );
-            
-            if ( !empty($lastAccess) ) {
-                // las que fueron creadas
-                $optionsCreated['contain']['Mesa']['conditions']['created >='] = $lastAccess;
-                $mesasABM['created'] = $this->find('all', $optionsCreated);
-
-                // las que fueron actualizadas
-                
-                $optionsUpdated['contain']['Mesa']['conditions']['created <'] = $lastAccess;
-                $mesasABM['modified'] = $this->find('all', $optionsUpdated);
-                
-                // las que fueron cobradas
-                unset( $optionsCobrada['contain']['Mesa']['conditions']["Mesa.estado_id <"] );
-                $optionsCobrada['contain']['Mesa']['conditions']['Mesa.estado_id'] = MESA_COBRADA;
-                $mesasABM['cobradas'] = $this->find('all', $optionsCobrada);
-                
-                // las que fueron borradas o eliminadas
-                $optionsEliminada['contain']['Mesa']['conditions']['Mesa.deleted_date >'] = $lastAccess;
-                $optionsEliminada['contain']['Mesa']['conditions']['Mesa.deleted'] = 1;
-                $mesasABM['deleted'] = $this->find('all', $optionsEliminada);
-            } else {
-                // traigo a todas como que son creadas, si no fue pasado un lastAccess
-                $mesasABM['created'] = $this->find('all', $optionsCreated);
-            }
-
+			$mesasABM = $this->find('all', $optionsCreated);
             return $mesasABM;
         }
+        
+        
+        
+        
+        public function beforeSave($options = array()) {
+                if (!empty($this->data[$this->name]['image_url']['name'])) {
+                    
+	            $path = IMAGES;
+				$newFile = $this->data[$this->name]['image_url'];
+				
+	            $name = Inflector::slug(strstr($newFile['name'], '.', true));
+	            $ext = substr(strrchr($newFile['name'], "."), 1);
+	            $nameFile = $name . ".$ext";
+	
+	            if (file_exists($path . $nameFile)) {
+	                $i = 1;
+	                $nameFile = $name . "_$i.$ext";
+	                while (file_exists($path . $nameFile)) {
+	                    $i++;
+	                    $nameFile = $name . "_$i.$ext";
+	                }
+	            }
+				
+	            $this->data[$this->name]['image_url'] = $nameFile;
+	            move_uploaded_file($newFile['tmp_name'], $path . $nameFile);
+				
+                    generate_image_thumbnail($path . $nameFile, IMAGES_THUMB . DS . $nameFile);
+	        }
+                return true;
+            }
 
 }
 ?>

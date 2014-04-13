@@ -59,18 +59,7 @@ class PagosController extends AppController {
                 );
                 $tipo_de_pagos = $this->Pago->TipoDePago->find('list');
                 
-                $mozosAll = $this->Pago->Mesa->Mozo->find('all', array(
-                    'fields'=>array('Mozo.id','Mozo.numero','User.username','User.nombre','User.apellido'),
-                    'recursive' => 0,
-                    'conditions' => array(
-                        'Mozo.activo' => 1
-                    )
-                ));
-
-                $mozos = array();
-                foreach ($mozosAll as $mz) {
-                    $mozos[$mz['Mozo']['id']] = "(".$mz['Mozo']['numero'] . ") " .$mz['User']['nombre']. " ". $mz['User']['apellido'];
-                }
+                $mozos = $this->Pago->Mesa->Mozo->listActivos();
 
                 $this->set(compact('tipo_de_pagos', 'mozos'));
 		$this->set('pagos', $this->paginate());

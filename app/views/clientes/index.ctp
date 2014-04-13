@@ -26,23 +26,15 @@
                 <th></th>
                 <th></th>
                 <th></th>
-                <th></th>
-                <th></th>
                 <th><?php echo $form->input('nrodocumento',array('style'=>'width:120px;','placeholder'=>'CUIT / CUIL / DNI','label'=>false));?></th>
-                <th></th>
                 <th class="actions"><?php echo $form->end("Buscar")?></th>
                 </tr>
-                
-                
         <tr>
                 <th><?php echo $paginator->sort('nombre');?></th>
-                <th><?php echo $paginator->sort('Usuario','User.username');?></th>
                 <th><?php echo $paginator->sort('Descuento','Descuento.name');?></th>
                 <th style="text-align: center;"><?php echo $paginator->sort('IVA','IvaResponsabilidad');?></th>
                 <th><?php echo $paginator->sort('Factura','tipofactura');?></th>
-                <th><?php echo $paginator->sort('Ticket','imprime_ticket');?></th>
                 <th><?php echo $paginator->sort('CUIT/CUIL/DNI', 'nrodocumento');?></th>
-                <th><?php echo $paginator->sort('Creado','created');?></th>
                 <th class="actions"><?php __('Acciones');?></th>
         </tr>
         <?php
@@ -59,9 +51,6 @@
                         <td>
                                 <?php echo $cliente['Cliente']['nombre']; ?>
                         </td>
-                        <td title="<?php echo $cliente['User']['nombre'].", ".$cliente['User']['apellido']; ?>">
-                                <?php echo $cliente['User']['username']; ?>
-                        </td>
                         <td title="<?php echo $cliente['Descuento']['description']." (%".$cliente['Descuento']['porcentaje'].")"; ?>">
                                 <?php echo $cliente['Descuento']['name']; ?>
                         </td>
@@ -72,18 +61,13 @@
                                 <?php echo ($cliente['Cliente']['tipofactura'])?'"'.$cliente['Cliente']['tipofactura'].'"':'Remito'; ?>
                         </td>
 
-                        <td style="text-align: center;">
-                                <?php echo ($cliente['Cliente']['imprime_ticket'])?'Si':'No'; ?>
-                        </td>
-
                         <td>
                                 <?php 
                                  echo (!empty($cliente['TipoDocumento']['name']))?$cliente['Cliente']['nrodocumento']." (".$cliente['TipoDocumento']['name'].")":''; 
                                  ?>
                         </td>
-                        <td>
-                                <?php echo date('d/m/Y H:i',strtotime($cliente['Cliente']['created'])); ?>
-                        </td>
+                        
+                        
                         <td class="actions">
                                 <?php echo $html->link(__('Ver', true), array('action'=>'view', $cliente['Cliente']['id'])); ?>
                                 <?php echo $html->link(__('Editar', true), array('action'=>'edit', $cliente['Cliente']['id'])); ?>

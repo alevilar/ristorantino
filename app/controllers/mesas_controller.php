@@ -306,7 +306,6 @@ class MesasController extends AppController {
                                        'valor'=>$this->data['Mesa']['total']
                     );
                 if ($this->Mesa->Pago->save($pago, array('fields'=>array('mesa_id','tipo_de_pago_id')))) {
-                    debug($this->Mesa->Pago->id);
                     $this->Session->setFlash(__('La mesa fue guardada', true));
                    // $this->redirect(array('action'=>'index'));
                 }
@@ -325,23 +324,10 @@ class MesasController extends AppController {
             ),
         );
               
-$mozosAll = $this->Mesa->Mozo->find('all', array(
-    'fields'=>array('Mozo.id','Mozo.numero','User.username','User.nombre','User.apellido'),
-    'recursive' => 0,
-    'conditions' => array(
-        'Mozo.activo' => 1
-    )
-    ));
-
-$mozos = array();
-foreach ($mozosAll as $mz) {
-    $mozos[$mz['Mozo']['id']] = "(".$mz['Mozo']['numero'] . ") " .$mz['User']['nombre']. " ". $mz['User']['apellido'];
-}
-$tipo_pagos = $this->Mesa->Pago->TipoDePago->find('list');
-
-        $this->set('tipo_pagos',$tipo_pagos);
-        //$descuentos = $this->Mesa->Descuento->find('list');
-        $this->set(compact('mozos', 'descuentos'));
+        $mozos = $this->Mesa->Mozo->listActivos();
+        $tipo_pagos = $this->Mesa->Pago->TipoDePago->find('list');
+        
+        $this->set(compact('tipo_pagos', 'mozos'));
     }
 
 
@@ -415,17 +401,7 @@ $tipo_pagos = $this->Mesa->Pago->TipoDePago->find('list');
         $items = $this->data['Comanda'];
         $mesa = $this->data;
         
-        $mozos = $this->Mesa->Mozo->find('all',array(
-            'contain' => array('User'),
-            'conditions' => array('Mozo.activo' => 1),
-            ));
-        $mooo = array();
-        foreach ( $mozos as $mm) {
-            $mooo[$mm['Mozo']['id']] = $mm['Mozo']['numero'] ."- ";
-            if (!empty( $mm['User'] )) {
-                $mooo[$mm['Mozo']['id']] .= " " . $mm['User']['nombre'] . " " . $mm['User']['apellido'];
-            }
-        }
+        $mozos = $this->Mesa->Mozo->listActivos();       
         
         $this->id = $id;
         $this->set('subtotal',$this->Mesa->calcular_subtotal());

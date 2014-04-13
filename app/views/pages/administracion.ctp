@@ -4,6 +4,7 @@
     <div class="list-group">
         <?php
         echo $html->link('Usuarios', '/users/index', array('class' => 'list-group-item'));
+        echo $html->link('Roles', '/roles/index', array('class' => 'list-group-item'));
         echo $html->link('Mozos', '/mozos/index', array('class' => 'list-group-item'));
         ?>
     </div>
@@ -11,7 +12,6 @@
     <h2>Clientes</h2>
     <div class="list-group">
         <?php
-        echo $html->link('Reservas', '/reservas', array('class' => 'list-group-item'));
         echo $html->link('Clientes', '/clientes', array('class' => 'list-group-item'));
         echo $html->link('Descuentos', '/descuentos', array('class' => 'list-group-item'));
         echo $html->link('Tipo de Pagos', '/TipoDePagos', array('class' => 'list-group-item'));
@@ -48,6 +48,7 @@
         echo $html->link('Observaciones de Productos', '/observaciones', array('class' => 'list-group-item'));
         echo $html->link('Observaciones de Comandas', '/observacion_comandas', array('class' => 'list-group-item'));
         echo $html->link('Productos Pedidos', '/detalle_comandas/', array('class' => 'list-group-item'));
+        echo $html->link('Tags', '/tags', array('class' => 'list-group-item'));
         ?>
     </div>
 

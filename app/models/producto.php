@@ -24,6 +24,9 @@ class Producto extends AppModel {
 	);
 
         var $hasOne = array('ProductosPreciosFuturo');
+
+        
+        public $hasAndBelongsToMany = array('Tag');
         
 
 	var $hasMany = array(
@@ -97,8 +100,7 @@ class Producto extends AppModel {
                     
         return true;
        
-    }
-	
+    } 
 	
 
 }

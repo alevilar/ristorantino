@@ -1,6 +1,3 @@
-        <?php    
-        echo $this->element('menuadmin');
-        ?>
 
 
 <div class="productos form">
@@ -13,6 +10,7 @@
 		echo $form->input('abrev', array('label'=>'Abreviatura','after'=>'</br>Nombre con el que se imprimirá el ticket factura'));
 		//echo $form->input('description', array('label'=>'Descripción'));
 		echo $form->input('categoria_id',array('label'=>'Categoria a la que pertenece este producto'));
+                echo $form->input('Tag');
 		echo $form->input('comandera_id',array('after'=>'</br>Seleccione en que comandera quiere que se imprima el producto'));
 		echo $form->input('precio',array('label'=>'Precio $','after'=>'</br>Los centavos van separados de un punto, NO poner coma ni el signo pesos.</br>Ejemplo de un precio correcto: <b>6.50</b>'));
 

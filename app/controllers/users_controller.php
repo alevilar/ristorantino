@@ -3,6 +3,7 @@ class UsersController extends AppController {
 
 	var $name = 'Users';
 	var $helpers = array('Html', 'Form');
+        var $components = array('RequestHandler');
 
         
         function beforeFilter() {
@@ -11,9 +12,7 @@ class UsersController extends AppController {
         }
         
 	function index() {
-		$this->User->recursive = 0;
-                
-                if (!empty($this->data)){
+		if ( !empty($this->data['User']['txt_buscar']) ){
                     $this->paginate['conditions'] = array('or' => array(
                         'lower(User.username) LIKE' => '%'. strtolower( $this->data['User']['txt_buscar'] ) .'%',
                         'lower(User.nombre) LIKE'   => '%'. strtolower( $this->data['User']['txt_buscar'] ) .'%',
@@ -21,11 +20,7 @@ class UsersController extends AppController {
                     ));
                 }
                 
-                $pag = $this->paginate();
-                foreach ($pag as &$p) {
-                    $p['User']['grupo'] =  $this->User->groupName( $p['User']['id'] );
-                }
-		$this->set( 'users', $pag );
+		$this->set('users', $this->paginate());
 	}
 
         function listar_x_nombre($nombre = '') {
@@ -46,48 +41,57 @@ class UsersController extends AppController {
 		$this->set('user', $this->User->read(null, $id));
 	}
 
-	function add() {
-             $this->rutaUrl_for_layout[] =array('name'=> 'Usuarios','link'=>'/users' );
-             if (!empty($this->data)) {
-			$this->User->create();
+	
+        /**
+ * add method
+ *
+ * @return void
+ */
+	public function add() {
+		if (!empty($this->data)) {
+                        $this->User->create();
 			if ($this->User->save($this->data)) {
-				$this->Session->setFlash(__('The User has been saved', true));
-				$this->redirect(array('action'=>'index'));
+				$this->Session->setFlash(__('The user has been saved'));
+				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The User could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('The user could not be saved. Please, try again.'));
 			}
 		}
-                $this->Acl->Aro->recursive = 0;
-                $aros = $this->Acl->Aro->find('list', array('fields' => array('alias'), 'conditions'=>array('parent_id'=>1), 'order'=>'alias'));
-                $this->set(compact('aros'));
-                $this->set('roles', $aros);
+                
+		$roles = $this->User->Rol->find('list');
+                $title_for_layout = __('Add New User');
+		$this->set(compact('roles', 'title_for_layout'));
+                $this->render('edit');
 	}
-
-	function edit($id = null) {
-             $this->rutaUrl_for_layout[] =array('name'=> 'Usuarios','link'=>'/users' );
-                if (!$id && empty($this->data)) {
-			$this->Session->setFlash(__('Invalid User', true));
-			$this->redirect(array('action'=>'index'));
+        
+       
+        
+        
+/**
+ * edit method
+ *
+ * @param string $id
+ * @return void
+ */
+	public function edit($id = null) {
+		$this->User->id = $id;
+		if (!$this->User->exists()) {
+			throw new NotFoundException(__('Invalid user'));
 		}
 		if (!empty($this->data)) {
 			if ($this->User->save($this->data)) {
-				$this->Session->setFlash(__('The User has been saved', true));
-				$this->redirect(array('action'=>'index'));
+				$this->Session->setFlash(__('The user has been saved'));
+				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The User could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('The user could not be saved. Please, try again.'));
 			}
-		}
-		if (empty($this->data)) {
+		} else {
 			$this->data = $this->User->read(null, $id);
 		}
-                
-                
-                
-                 $this->Acl->Aro->recursive = 0;
-                $aros = $this->Acl->Aro->find('list', array('fields' => array('alias'), 'conditions'=>array('parent_id'=>1), 'order'=>'alias'));
-                $this->set(compact('aros'));
-                $this->set('parent_aro_seleced', $this->User->parentNodeId());
+		$roles = $this->User->Rol->find('list');
+		$this->set(compact('roles'));
 	}
+        
 
 	function delete($id = null) {
 		if (!$id) {
@@ -107,11 +111,15 @@ class UsersController extends AppController {
          * 
          */
         function login(){
-            if(empty($this->data) == false) 
-            {                
-                $user = $this->Auth->user();
-                $this->Session->write('User', $user);                
-            } 
+            
+            if ($this->Auth->login()) {
+                    $this->User->id = $this->Session->read( 'Auth.User.id');
+                    $usr = $this->User->read();       
+                    $this->Session->write( 'Auth.User.rol', strtolower( Inflector::Slug($usr['Rol']['machin_name']) ) );
+                    return $this->redirect($this->Auth->redirect());
+            } else {
+                $this->Session->setFlash('Usuario o contraseña incorrectos', array('class'=>'alert alert-danger'), 'auth');
+            }
         }
         
         

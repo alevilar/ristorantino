@@ -3,6 +3,13 @@ class ProductosController extends AppController {
 
 	var $name = 'Productos';
 	var $helpers = array('Html', 'Form', 'Number');
+        
+        public $paginate = array(
+            'limit' => 30,
+            'order' => array(
+                'Producto.name' => 'asc',
+            )
+        );
 
         function beforeFilter() {
             parent::beforeFilter();
@@ -23,7 +30,7 @@ class ProductosController extends AppController {
 							$pagCondiciones[$modelo.".".$key] = $val;
 				}
 			}
-			$this->Producto->recursive = 0;
+			$this->Producto->recursive = 1;
 			$this->paginate['Producto'] = array(
 				'conditions' => $condiciones
 			);
@@ -55,38 +62,13 @@ class ProductosController extends AppController {
 		 
 		 
 		$this->Producto->recursive = 0;
-                $comanderas = $this->Producto->Comandera->find('list',array('fields'=>array('id','description')));
+                $comanderas = $this->Producto->Comandera->listWithDescription();
 		$categorias = $this->Producto->Categoria->generatetreelist(null, null, null, '___');
                 $this->set(compact('categorias','comanderas'));
 		$this->set('productos', $this->paginate());
 	}
 
-	function view($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid Producto.', true));
-			$this->redirect(array('action'=>'index'));
-		}
-                $fields = array(
-                    'DetalleComanda.producto_id',
-                    'sum(DetalleComanda.cant_eliminada) as "cant_eliminada"',
-                    'sum(DetalleComanda.cant - DetalleComanda.cant_eliminada) as "suma"', 
-                    'DATE(DetalleComanda.created) as "date"');
-                
-                $this->set('consumiciones', $this->Producto->DetalleComanda->find('all', array(
-                    'conditions' => array(
-                        'DetalleComanda.producto_id' => $id,
-                    ),
-                    'contain' => array('DetalleSabor.Sabor'),
-                    'fields' => $fields,
-                    'group' => 'DetalleComanda.producto_id, DATE(DetalleComanda.created) HAVING sum(DetalleComanda.cant - DetalleComanda.cant_eliminada) > 0',
-                    'order' => 'DetalleComanda.created DESC',                    
-                )));
-                
-                $this->Producto->contain(array(
-                   'Categoria', 'HistoricoPrecio' => array('order'=>'HistoricoPrecio.created DESC') , 'Comandera', 'ProductosPreciosFuturo'
-                ));
-		$this->set('producto', $this->Producto->read(null, $id));
-	}
+	
 	
 	/**
 	 * busca un producto por su nombre
@@ -121,7 +103,7 @@ class ProductosController extends AppController {
 			$this->redirect(array('action'=>'index'));
 		}
 		if (!empty($this->data)) {
-			if ($this->Producto->save($this->data['Producto'])) {
+			if ($this->Producto->save($this->data)) {
 //                            $this->Session->setFlash('El producto fue guardado correctamente');
                             if (!empty($this->data['ProductosPreciosFuturo']['precio'])){
                                 $this->data['ProductosPreciosFuturo']['producto_id'] = $this->data['Producto']['id'];
@@ -143,9 +125,10 @@ class ProductosController extends AppController {
 		}
                 
                 $this->data = $this->Producto->read(null, $id);
+                $tags = $this->Producto->Tag->find('list');
 		$comanderas = $this->Producto->Comandera->find('list',array('fields'=>array('id','description')));
 		$categorias = $this->Producto->Categoria->generatetreelist(null, null, null, '___');
-		$this->set(compact('categorias','comanderas'));
+		$this->set(compact('categorias','comanderas','tags'));
 	}
 
 	function delete($id = null) {
