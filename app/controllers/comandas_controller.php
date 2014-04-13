@@ -31,11 +31,6 @@ class ComandasController extends AppController {
             $this->set(compact('categorias', 'categorias_tree' ) );
 	}
 	
-	
-	function index() {
-		$this->set('comandas',$comandas = $this->Comanda->dame_las_comandas_abiertas());
-	}
-	
 	/**
 	 * REimprime comandas
 	 * @param integer $id ID de la comanda

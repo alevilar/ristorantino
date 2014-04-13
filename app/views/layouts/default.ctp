@@ -64,7 +64,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <?php echo $html->link("Ristorantino Mágico", '/pages/home', array('class' => 'navbar-brand')) ?>
+                    <?php echo $html->link(Configure::read('Restaurante.name'), '/pages/home', array('class' => 'navbar-brand')) ?>
                 </div>
 
                 <?php if (!empty($elementMenu)) {

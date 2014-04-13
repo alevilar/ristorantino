@@ -6,7 +6,7 @@
 
         $menubread=array();   
         echo $this->element('menuadmin', array('menubread'=>$menubread));
-        ?>x
+        ?>
 
 
 <script type="text/javascript">
@@ -45,6 +45,7 @@ echo $paginator->counter(array('format' => __('Pagina %page% de %pages%, mostran
 	<th><?php echo $paginator->sort('Comandera','Comandera.description');?></th>
 	<th><?php echo $paginator->sort('Categoria','Categoria.name');?></th>
 	<th><?php echo $paginator->sort('Precio','precio');?></th>
+	<th><?php echo $paginator->sort('Precio Futuro','ProductosPreciosFuturo.precio');?></th>
         <th><?php echo $paginator->sort('Orden','order');?></th>
 	<th><?php echo $paginator->sort('Creado','created');?></th>
 	<th class="actions"><?php __('Acciones');?></th>
@@ -80,9 +81,14 @@ foreach ($productos as $producto):
 			<?php echo $producto['Categoria']['name']; ?>
 		</td>
 		<td  class='edit' field='precio' product_id='<?php echo $prodId ?>'><?php 
-                        echo trim( "$".$producto['Producto']['precio'] ); 
-                        if ( !empty($producto['ProductosPreciosFuturo']['precio']) ) {
-                          echo " <b>[$".$producto['ProductosPreciosFuturo']['precio']."]</b>" ;
+                        echo $number->currency( $producto['Producto']['precio'] );                        
+                ?></td>
+                
+                
+                <td  class='edit text text-success'  field='precio_futuro' 
+                     product_id='<?php echo $prodId ?>'><?php 
+                        if ( isset($producto['ProductosPreciosFuturo']['precio']) ) {
+                          echo $number->currency( $producto['ProductosPreciosFuturo']['precio'] );
                         }
                 ?></td>
                 

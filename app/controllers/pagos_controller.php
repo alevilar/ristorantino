@@ -5,15 +5,74 @@ class PagosController extends AppController {
 	var $helpers = array('Html', 'Form','Number');
 
 	function index() {
+                $conditions = array();
+                if (!empty($this->passedArgs)){
+                    if ( !empty($this->passedArgs['valor']) ){
+                            $this->data['Pago']['valor'] = $this->passedArgs['valor'];
+                    }
+                    if ( !empty($this->passedArgs['mozo_id']) ){
+                            $this->data['Mesa']['mozo_id'] = $this->passedArgs['mozo_id'];
+                    }
+                    if ( !empty($this->passedArgs['numero']) ){
+                            $this->data['Mesa']['numero'] = $this->passedArgs['numero'];
+                    }
+                    if ( !empty($this->passedArgs['created_from']) ){
+                            $this->data['Pago']['created_from'] = $this->passedArgs['created_from'];
+                    }
+                    if ( !empty($this->passedArgs['created_to']) ){
+                            $this->data['Pago']['created_to'] = $this->passedArgs['created_to'];
+                    }
+                    if ( !empty($this->passedArgs['tipo_de_pago_id']) ){
+                            $this->data['Pago']['tipo_de_pago_id'] = $this->passedArgs['tipo_de_pago_id'];
+                    }
+                }
+                
+                
+                if (!empty($this->data['Pago']['valor'])) {
+                    $this->passedArgs['valor'] = $conditions['Pago.valor'] = $this->data['Pago']['valor']; 
+                }
+                if (!empty($this->data['Mesa']['mozo_id'])) {
+                    $this->passedArgs['mozo_id'] = $conditions['Mesa.mozo_id'] = $this->data['Mesa']['mozo_id']; 
+                }
+                if (!empty($this->data['Mesa']['numero'])) {
+                    $this->passedArgs['numero'] = $conditions['Mesa.numero'] = $this->data['Mesa']['numero']; 
+                }
+                if (!empty($this->data['Pago']['created_from'])) {
+                    $this->passedArgs['created_from'] = $conditions['Pago.created >='] = $this->data['Pago']['created_from']; 
+                }
+                if (!empty($this->data['Pago']['created_to'])) {
+                    $this->passedArgs['created_to'] = $conditions['Pago.created <='] = $this->data['Pago']['created_to']; 
+                }
+                if (!empty($this->data['Pago']['tipo_de_pago_id'])) {
+                    $this->passedArgs['tipo_de_pago_id'] = $conditions['Pago.tipo_de_pago_id'] = $this->data['Pago']['tipo_de_pago_id']; 
+                }
+                
+                
 		$this->Pago->recursive = 0;
                 $this->paginate = array(
                     'contain' => array(
-                    'Mesa.Mozo',
-                    'TipoDePago'
-                ),
+                        'Mesa.Mozo',
+                        'TipoDePago'
+                    ),
+                    'conditions' => $conditions,
                     'order' => 'Pago.created DESC'
-                    );
+                );
+                $tipo_de_pagos = $this->Pago->TipoDePago->find('list');
                 
+                $mozosAll = $this->Pago->Mesa->Mozo->find('all', array(
+                    'fields'=>array('Mozo.id','Mozo.numero','User.username','User.nombre','User.apellido'),
+                    'recursive' => 0,
+                    'conditions' => array(
+                        'Mozo.activo' => 1
+                    )
+                ));
+
+                $mozos = array();
+                foreach ($mozosAll as $mz) {
+                    $mozos[$mz['Mozo']['id']] = "(".$mz['Mozo']['numero'] . ") " .$mz['User']['nombre']. " ". $mz['User']['apellido'];
+                }
+
+                $this->set(compact('tipo_de_pagos', 'mozos'));
 		$this->set('pagos', $this->paginate());
 	}
 

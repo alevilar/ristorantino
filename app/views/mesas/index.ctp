@@ -36,14 +36,14 @@ $paginator->options(array('url' => $this->passedArgs));
             echo $form->input('Mesa.created_from', array(
                 'label' => 'Abierta desde',
                 'class' => 'datetimepicker form-control',
-                'data-format' =>  "yyyy/MM/dd hh:mm:ss",
+                'data-format' =>  "yyyy-MM-dd hh:mm:ss",
             ));
             ?>
             <?php
             echo $form->input('Mesa.created_to', array(
                 'label' => 'Abierta hasta',
                 'class' => 'datetimepicker form-control',
-                'data-format' =>  "yyyy/MM/dd hh:mm:ss",
+                'data-format' =>  "yyyy-MM-dd hh:mm:ss",
             ));
             ?>
         </div>
@@ -53,14 +53,14 @@ $paginator->options(array('url' => $this->passedArgs));
             echo $form->input('Mesa.time_cerro_from', array(
                 'label' => 'Cerró desde',
                 'class' => 'datetimepicker form-control',
-                'data-format' =>  "yyyy/MM/dd hh:mm:ss",
+                'data-format' =>  "yyyy-MM-dd hh:mm:ss",
             ));
             ?>
             <?php
             echo $form->input('Mesa.time_cerro_to', array(
                 'label' => 'Cerró hasta',
                 'class' => 'datetimepicker form-control',
-                'data-format' =>  "yyyy/MM/dd hh:mm:ss",
+                'data-format' =>  "yyyy-MM-dd hh:mm:ss",
             ));
             ?>
         </div>
@@ -70,14 +70,14 @@ $paginator->options(array('url' => $this->passedArgs));
             echo $form->input('Mesa.time_cobro_from', array(
                 'label' => 'Cobrada desde',
                 'class' => 'datetimepicker form-control',
-                'data-format' =>  "yyyy/MM/dd hh:mm:ss",
+                'data-format' =>  "yyyy-MM-dd hh:mm:ss",
             ));
             ?>
             <?php
             echo $form->input('Mesa.time_cobro_to', array(
                 'label' => 'Cobrada hasta',
                 'class' => 'datetimepicker form-control',
-                'data-format' =>  "yyyy/MM/dd hh:mm:ss",
+                'data-format' =>  "yyyy-MM-dd hh:mm:ss",
             ));
             ?>
         </div>

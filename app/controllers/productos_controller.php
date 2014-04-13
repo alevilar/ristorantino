@@ -2,7 +2,7 @@
 class ProductosController extends AppController {
 
 	var $name = 'Productos';
-	var $helpers = array('Html', 'Form');
+	var $helpers = array('Html', 'Form', 'Number');
 
         function beforeFilter() {
             parent::beforeFilter();
@@ -259,16 +259,35 @@ class ProductosController extends AppController {
         
         function update()
         {
+            Configure::write('debug',0);
             $this->Producto->id = $this->params['form']['product_id'];
             
             $pf = 'precio_futuro';
             
-            
-            if ($this->Producto->saveField($this->params['form']['field'], $this->params['form']['value'], false)) {
-                $txtShow = (!empty($this->params['form']['text'])) ? $this->params['form']['text'] : $this->params['form']['value'];
-                echo $txtShow;
+            if ( $this->params['form']['field'] == 'precio_futuro') {
+                //buscar a ver si existe previamente
+                $ppf = $this->Producto->ProductosPreciosFuturo->read(null, $this->Producto->id );
+                $ppf['ProductosPreciosFuturo']['producto_id'] = $this->Producto->id;
+                $ppf['ProductosPreciosFuturo']['precio'] = trim(trim($this->params['form']['value']), "$");
+                
+                // si existe y el precio vino vacio, borrarlo
+                if ( !empty($ppf) && empty($ppf['ProductosPreciosFuturo']['precio']) && !is_numeric($ppf['ProductosPreciosFuturo']['precio'])) {
+                    $proddel = $this->Producto->ProductosPreciosFuturo->delete( $ppf['ProductosPreciosFuturo']['producto_id'] );
+                } else {
+                    if ( $this->Producto->ProductosPreciosFuturo->save($ppf) )  {
+                        $txtShow = (!empty($this->params['form']['text'])) ? $this->params['form']['text'] : $this->params['form']['value'];
+                        echo $txtShow;
+                    } else {
+                        echo "error al guardar";
+                    }
+                }
             } else {
-                echo "error al guardar";
+                if ($this->Producto->saveField($this->params['form']['field'], trim(trim($this->params['form']['value']),'$'), false)) {
+                    $txtShow = (!empty($this->params['form']['text'])) ? $this->params['form']['text'] : $this->params['form']['value'];
+                    echo $txtShow;
+                } else {
+                    echo "error al guardar";
+                }
             }
             exit;
         }

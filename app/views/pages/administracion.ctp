@@ -23,7 +23,6 @@
     <h2>Mesas</h2>
     <div class="list-group">
         <?php
-        echo $html->link('Comandas Activas', '/Comandas', array('class' => 'list-group-item'));
         echo $html->link('Listado de Mesas', '/Mesas', array('class' => 'list-group-item'));
         echo $html->link('Pagos de Mesas', '/pagos', array('class' => 'list-group-item'));
         echo $html->link('Nueva Mesa', '/Mesas/add', array('class' => 'list-group-item'));
@@ -45,10 +44,9 @@
         <?php
         echo $html->link('Categorias', '/categorias', array('class' => 'list-group-item'));
         echo $html->link('Productos', '/productos', array('class' => 'list-group-item'));
+        echo $html->link('Sabores', '/sabores', array('class' => 'list-group-item'));
         echo $html->link('Observaciones de Productos', '/observaciones', array('class' => 'list-group-item'));
         echo $html->link('Observaciones de Comandas', '/observacion_comandas', array('class' => 'list-group-item'));
-        echo $html->link('Gustos y Sabores', '/sabores', array('class' => 'list-group-item'));
-        echo $html->link('Precios Futuros', '/productos_precios_futuros', array('class' => 'list-group-item'));
         echo $html->link('Productos Pedidos', '/detalle_comandas/', array('class' => 'list-group-item'));
         ?>
     </div>

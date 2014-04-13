@@ -2,12 +2,56 @@
 <h2><?php __('Pagos');?></h2>
 <p>
 <?php
+$paginator->options(array('url' => $this->passedArgs));
+
 echo $paginator->counter(array(
 'format' => __('Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%', true)
 ));
 ?></p>
+
+
+
+
+
+        <h2 style="text-align: center;"><?php __('Buscador de Pagos'); ?></h2>
+
 <table class="table">
-    <thead>
+    
+<?php echo $form->create("Pago", array("action" => "index", 'method'=>'get')); ?>
+<thead>
+<tr>
+	<th>&nbsp;</th>
+        <th><?php echo $form->input('Mesa.mozo_id', array('placeholder' => 'N°Mozo', 'label' => false, 'empty' => 'Seleccione')); ?></th>
+	<th><?php echo $form->input('Mesa.numero', array('placeholder' => 'N°Mesa', 'label' => false)); ?></th>
+	<th><?php echo $form->input('Pago.tipo_de_pago_id', array('placeholder' => 'Tipo de Pago', 'label' => false, 'empty' => 'Seleccione')); ?></th>
+	<th>
+            <?php echo $form->input('Pago.valor', array('placeholder' => 'Valor', 'label' => false)); ?>            
+        </th>
+        <th>
+            <?php
+            echo $form->input('Pago.created_from', array(
+                'placeholder' => 'Desde',
+                'label' => false,
+                'class' => 'datetimepicker form-control',
+                'data-format' =>  "yyyy-MM-dd hh:mm:ss",
+            ));
+            ?>
+            <?php
+            echo $form->input('Pago.created_to', array(
+                'placeholder' => 'Hasta',
+                'label' => false,
+                'class' => 'datetimepicker form-control',
+                'data-format' =>  "yyyy-MM-dd hh:mm:ss",
+            ));
+            ?>
+        </th>
+	<th class="actions"><?php echo $form->submit("Buscar") ?></th>
+</tr>
+</thead>
+<?php echo $form->end() ?>
+
+
+<thead>
 <tr>
 	<th><?php echo $paginator->sort('id');?></th>
         <th>Mozo</th>
@@ -15,7 +59,7 @@ echo $paginator->counter(array(
 	<th><?php echo $paginator->sort('Tipo de Pago','TipoDePago.nombre');?></th>
 	<th><?php echo $paginator->sort('valor');?></th>
         <th><?php echo $paginator->sort('created');?></th>
-	<th class="actions"><?php __('Actions');?></th>
+	<th class="actions">&nbsp;</th>
 </tr>
 </thead>
 
@@ -60,9 +104,4 @@ foreach ($pagos as $pago):
 	<?php echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
  | 	<?php echo $paginator->numbers();?>
 	<?php echo $paginator->next(__('next', true).' >>', array(), null, array('class'=>'disabled'));?>
-</div>
-<div class="actions">
-	<ul>
-		<li><?php echo $html->link(__('New Pago', true), array('action'=>'add')); ?></li>
-	</ul>
 </div>

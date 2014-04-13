@@ -53,24 +53,6 @@ class Comanda extends AppModel {
         }
 	
 	
-	function dame_las_comandas_abiertas(){
-		$mesas_abiertas = $this->Mesa->listado_de_abiertas();
-		
-		foreach($mesas_abiertas as $m):
-			$ids[] = $m['Mesa']['id'];
-		endforeach;
-		
-		return $this->find('all',array(
-                    'conditions'=>array('Comanda.mesa_id'=>$ids),
-                    'order' => array('Comanda.created DESC')
-                    ));
-	}
-	
-	
-	
-	
-	
-	
 	
 	
 	
