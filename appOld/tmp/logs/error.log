@@ -1,0 +1,511 @@
+2013-08-19 16:22:40 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-08-19 16:22:47 Warning: Warning (2): Missing argument 1 for Gasto::enDeuda(), called in /home/alejandro/workspace/www/ristorantinoChocha012/app/plugins/account/models/egreso.php on line 181 and defined in [APP/plugins/account/models/gasto.php, line 178]
+2013-08-19 16:23:31 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/account/views/egresos/view.ctp, line 36]
+2013-08-19 16:23:39 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/account/views/gastos/view.ctp, line 13]
+2013-08-19 20:53:17 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-08-19 20:53:22 Warning: Warning (2): Missing argument 1 for Gasto::enDeuda(), called in /home/alejandro/workspace/www/ristorantinoChocha012/app/plugins/account/models/egreso.php on line 181 and defined in [APP/plugins/account/models/gasto.php, line 178]
+2013-10-21 12:00:05 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-10-21 12:07:46 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-10-21 13:41:49 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/basics.php:326) in [CORE/cake/libs/controller/controller.php, line 646]
+2013-10-21 13:49:30 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-10-21 13:49:38 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-10-21 13:51:34 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-10-21 13:57:52 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-10-21 13:58:05 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-10-21 23:59:02 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-10-22 00:12:00 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-10-22 00:13:30 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-10-22 00:15:29 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-10-26 12:49:03 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'paginate' at line 1</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2013-10-26 13:20:59 Error: imprimiendo a con la impresora Barra al server: slocalhost
+2013-10-26 13:21:00 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/basics.php:134) in [APP/views/layouts/json/default.ctp, line 2]
+2013-10-26 13:21:00 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/basics.php:134) in [APP/views/layouts/json/default.ctp, line 3]
+2013-10-26 13:21:00 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/basics.php:134) in [APP/views/layouts/json/default.ctp, line 4]
+2013-10-26 13:21:05 Error: imprimiendo a con la impresora Barra al server: slocalhost
+2013-10-26 13:22:33 Error: imprimiendo a con la impresora Barra al server: slocalhost
+2013-10-26 19:16:12 Warning: Warning (512): Method FormHelper::date does not exist in [CORE/cake/libs/view/helper.php, line 142]
+2013-10-26 22:51:57 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'saveAssociated' at line 1</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2013-10-26 22:55:31 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1048: Column 'nota_credito_iva' cannot be null</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2013-10-26 23:03:40 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1048: Column 'importe_inicial' cannot be null</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2013-10-26 23:04:34 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1048: Column 'nota_credito_iva' cannot be null</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2013-10-26 23:09:18 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/cash/views/arqueos/add.ctp, line 13]
+2013-10-26 23:09:18 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/cash/views/arqueos/add.ctp, line 32]
+2013-10-27 12:03:48 Warning: Warning (2): array_key_exists() expects parameter 2 to be array, null given in [APP/plugins/cash/views/arqueos/add.ctp, line 83]
+2013-10-27 15:30:27 Warning: Warning (512): Method FormHelper::cnd does not exist in [CORE/cake/libs/view/helper.php, line 142]
+2013-10-27 16:44:55 Error: imprimiendo a con la impresora Barra al server: slocalhost
+2013-10-27 16:45:46 Error: imprimiendo a con la impresora Barra al server: slocalhost
+2013-10-27 16:48:11 Error: imprimiendo a con la impresora Cocina al server: slocalhost
+2013-10-27 16:48:11 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/basics.php:134) in [APP/views/layouts/json/default.ctp, line 2]
+2013-10-27 16:48:11 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/basics.php:134) in [APP/views/layouts/json/default.ctp, line 3]
+2013-10-27 16:48:11 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/basics.php:134) in [APP/views/layouts/json/default.ctp, line 4]
+2013-10-27 16:50:23 Error: imprimiendo a con la impresora Barra al server: slocalhost
+2013-10-27 16:50:23 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/basics.php:134) in [APP/views/layouts/json/default.ctp, line 2]
+2013-10-27 16:50:23 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/basics.php:134) in [APP/views/layouts/json/default.ctp, line 3]
+2013-10-27 16:50:23 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/basics.php:134) in [APP/views/layouts/json/default.ctp, line 4]
+2013-10-27 16:50:29 Error: imprimiendo a con la impresora Barra al server: slocalhost
+2013-10-27 16:50:31 Error: imprimiendo a con la impresora Barra al server: slocalhost
+2013-10-27 16:56:34 Error: imprimiendo a con la impresora Barra al server: slocalhost
+2013-10-27 16:59:41 Error: imprimiendo a con la impresora Cocina al server: slocalhost
+2013-10-27 16:59:41 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/basics.php:134) in [APP/views/layouts/json/default.ctp, line 2]
+2013-10-27 16:59:41 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/basics.php:134) in [APP/views/layouts/json/default.ctp, line 3]
+2013-10-27 16:59:41 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/basics.php:134) in [APP/views/layouts/json/default.ctp, line 4]
+2013-10-27 16:59:47 Error: imprimiendo a con la impresora Barra al server: slocalhost
+2013-10-27 17:02:46 Error: imprimiendo a con la impresora Cocina al server: slocalhost
+2013-10-27 17:02:46 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/basics.php:134) in [APP/views/layouts/json/default.ctp, line 2]
+2013-10-27 17:02:46 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/basics.php:134) in [APP/views/layouts/json/default.ctp, line 3]
+2013-10-27 17:02:46 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/basics.php:134) in [APP/views/layouts/json/default.ctp, line 4]
+2013-10-27 17:02:48 Error: imprimiendo a con la impresora Barra al server: slocalhost
+2013-10-27 17:14:46 Error: imprimiendo a con la impresora Cocina al server: slocalhost
+2013-10-27 17:14:47 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/basics.php:134) in [APP/views/layouts/json/default.ctp, line 2]
+2013-10-27 17:14:47 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/basics.php:134) in [APP/views/layouts/json/default.ctp, line 3]
+2013-10-27 17:14:47 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/basics.php:134) in [APP/views/layouts/json/default.ctp, line 4]
+2013-10-27 17:14:56 Error: imprimiendo a con la impresora Barra al server: slocalhost
+2013-10-27 17:15:45 Error: imprimiendo a con la impresora Cocina al server: slocalhost
+2013-10-27 17:15:45 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/basics.php:134) in [APP/views/layouts/json/default.ctp, line 2]
+2013-10-27 17:15:45 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/basics.php:134) in [APP/views/layouts/json/default.ctp, line 3]
+2013-10-27 17:15:45 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/basics.php:134) in [APP/views/layouts/json/default.ctp, line 4]
+2013-10-27 17:15:50 Error: imprimiendo a con la impresora Barra al server: slocalhost
+2013-10-27 17:17:43 Error: imprimiendo a con la impresora Cocina al server: slocalhost
+2013-10-27 17:17:43 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/basics.php:134) in [APP/views/layouts/json/default.ctp, line 2]
+2013-10-27 17:17:43 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/basics.php:134) in [APP/views/layouts/json/default.ctp, line 3]
+2013-10-27 17:17:43 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/basics.php:134) in [APP/views/layouts/json/default.ctp, line 4]
+2013-10-27 17:17:44 Error: imprimiendo a con la impresora Barra al server: slocalhost
+2013-10-27 17:20:53 Error: imprimiendo a con la impresora Cocina al server: slocalhost
+2013-10-27 17:20:53 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/basics.php:134) in [APP/views/layouts/json/default.ctp, line 2]
+2013-10-27 17:20:53 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/basics.php:134) in [APP/views/layouts/json/default.ctp, line 3]
+2013-10-27 17:20:53 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/basics.php:134) in [APP/views/layouts/json/default.ctp, line 4]
+2013-10-27 17:21:04 Error: imprimiendo a con la impresora Barra al server: slocalhost
+2013-10-27 17:22:35 Error: imprimiendo a con la impresora Barra al server: slocalhost
+2013-10-27 17:22:35 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/basics.php:134) in [APP/views/layouts/json/default.ctp, line 2]
+2013-10-27 17:22:35 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/basics.php:134) in [APP/views/layouts/json/default.ctp, line 3]
+2013-10-27 17:22:35 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/basics.php:134) in [APP/views/layouts/json/default.ctp, line 4]
+2013-10-27 17:22:37 Error: imprimiendo a con la impresora Barra al server: slocalhost
+2013-10-27 17:23:27 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-10-27 17:23:31 Warning: Warning (2): Missing argument 1 for Gasto::enDeuda(), called in /home/alejandro/workspace/www/ristorantinoChocha012/app/plugins/account/models/egreso.php on line 181 and defined in [APP/plugins/account/models/gasto.php, line 179]
+2013-10-27 17:23:40 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-10-27 17:23:47 Warning: Warning (2): Missing argument 1 for Gasto::enDeuda(), called in /home/alejandro/workspace/www/ristorantinoChocha012/app/plugins/account/models/egreso.php on line 181 and defined in [APP/plugins/account/models/gasto.php, line 179]
+2013-10-27 17:23:57 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-10-27 17:24:08 Warning: Warning (2): Missing argument 1 for Gasto::enDeuda(), called in /home/alejandro/workspace/www/ristorantinoChocha012/app/plugins/account/models/egreso.php on line 181 and defined in [APP/plugins/account/models/gasto.php, line 179]
+2013-10-27 17:42:33 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/cash/views/zetas/index.ctp, line 20]
+2013-10-27 18:21:18 Error: imprimiendo a con la impresora Cocina al server: slocalhost
+2013-10-27 18:21:28 Error: imprimiendo a con la impresora Barra al server: slocalhost
+2013-10-27 18:21:40 Error: imprimiendo a con la impresora Cocina al server: slocalhost
+2013-10-27 18:21:44 Error: imprimiendo a con la impresora Barra al server: slocalhost
+2013-10-27 18:21:46 Error: imprimiendo a con la impresora Barra al server: slocalhost
+2013-10-27 18:41:29 Error: imprimiendo a con la impresora Cocina al server: slocalhost
+2013-10-27 18:41:32 Error: imprimiendo a con la impresora Barra al server: slocalhost
+2013-10-28 18:52:09 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/cash/views/arqueos/add.ctp, line 17]
+2013-10-29 11:08:12 Warning: Warning (2): Illegal string offset 'Caja' in [APP/plugins/cash/views/arqueos/add.ctp, line 16]
+2013-10-29 11:08:12 Warning: Warning (2): Illegal string offset 'name' in [APP/plugins/cash/views/arqueos/add.ctp, line 16]
+2013-10-29 12:25:58 Warning: Warning (2): preg_match() [<a href='http://php.net/function.preg-match'>function.preg-match</a>]: Delimiter must not be alphanumeric or backslash in [CORE/cake/libs/model/model.php, line 2520]
+2013-10-29 12:27:32 Warning: Warning (2): preg_match() [<a href='http://php.net/function.preg-match'>function.preg-match</a>]: Delimiter must not be alphanumeric or backslash in [CORE/cake/libs/model/model.php, line 2520]
+2013-10-29 12:27:39 Warning: Warning (2): preg_match() [<a href='http://php.net/function.preg-match'>function.preg-match</a>]: Delimiter must not be alphanumeric or backslash in [CORE/cake/libs/model/model.php, line 2520]
+2013-10-29 12:27:54 Warning: Warning (2): preg_match() [<a href='http://php.net/function.preg-match'>function.preg-match</a>]: Delimiter must not be alphanumeric or backslash in [CORE/cake/libs/model/model.php, line 2520]
+2013-10-29 12:28:14 Warning: Warning (2): preg_match() [<a href='http://php.net/function.preg-match'>function.preg-match</a>]: Delimiter must not be alphanumeric or backslash in [CORE/cake/libs/model/model.php, line 2520]
+2013-10-29 12:28:41 Warning: Warning (2): preg_match() [<a href='http://php.net/function.preg-match'>function.preg-match</a>]: Delimiter must not be alphanumeric or backslash in [CORE/cake/libs/model/model.php, line 2520]
+2013-10-29 12:29:14 Warning: Warning (2): preg_match() [<a href='http://php.net/function.preg-match'>function.preg-match</a>]: Delimiter must not be alphanumeric or backslash in [CORE/cake/libs/model/model.php, line 2520]
+2013-10-29 12:29:31 Warning: Warning (2): preg_match() [<a href='http://php.net/function.preg-match'>function.preg-match</a>]: Delimiter must not be alphanumeric or backslash in [CORE/cake/libs/model/model.php, line 2520]
+2013-10-31 17:23:41 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-10-31 17:25:51 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-10-31 17:26:25 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-10-31 17:26:28 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-10-31 17:26:30 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-10-31 17:27:16 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-10-31 17:27:25 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-10-31 17:28:15 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-10-31 17:28:53 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-10-31 17:29:04 Warning: Warning (2): Missing argument 1 for Gasto::enDeuda(), called in /home/alejandro/workspace/www/ristorantinoChocha012/app/plugins/account/models/egreso.php on line 181 and defined in [APP/plugins/account/models/gasto.php, line 179]
+2013-10-31 17:30:01 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-10-31 17:30:12 Warning: Warning (2): Missing argument 1 for Gasto::enDeuda(), called in /home/alejandro/workspace/www/ristorantinoChocha012/app/plugins/account/models/egreso.php on line 181 and defined in [APP/plugins/account/models/gasto.php, line 179]
+2013-10-31 17:30:12 Warning: Warning (2): preg_match() [<a href='http://php.net/function.preg-match'>function.preg-match</a>]: Delimiter must not be alphanumeric or backslash in [CORE/cake/libs/model/model.php, line 2520]
+2013-10-31 17:31:49 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-10-31 17:31:54 Warning: Warning (2): preg_match() [<a href='http://php.net/function.preg-match'>function.preg-match</a>]: Delimiter must not be alphanumeric or backslash in [CORE/cake/libs/model/model.php, line 2520]
+2013-10-31 17:35:15 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-10-31 17:39:48 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-10-31 17:39:51 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-10-31 17:39:53 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-10-31 17:39:55 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-10-31 17:40:22 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-10-31 17:40:25 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-10-31 17:40:57 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-10-31 17:41:31 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-10-31 17:42:06 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-10-31 17:42:15 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-10-31 17:53:46 Warning: Warning (2): Illegal string offset 'Caja' in [APP/plugins/cash/views/arqueos/help.ctp, line 6]
+2013-10-31 17:53:46 Warning: Warning (2): Illegal string offset 'name' in [APP/plugins/cash/views/arqueos/help.ctp, line 6]
+2013-10-31 17:53:46 Warning: Warning (2): Illegal string offset 'id' in [APP/plugins/cash/views/arqueos/help.ctp, line 6]
+2013-11-02 12:09:32 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'm.cant_comensales' in 'field list'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2013-11-02 12:09:32 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'm.deleted = 0
+                    AND SUBTIME(Mesa.created, '06:00:00') BETWEEN ' at line 4</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2013-11-02 12:09:32 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/stats/controllers/stats_controller.php, line 117]
+2013-11-02 12:10:01 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'm.cant_comensales' in 'field list'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2013-11-02 12:10:01 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'm.deleted = 0
+                    AND SUBTIME(Mesa.created, '06:00:00') BETWEEN ' at line 4</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2013-11-02 12:10:01 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/stats/controllers/stats_controller.php, line 117]
+2013-11-02 12:11:43 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'sum(`m`.`total`)/sum(`m`.`cant_comensales`) as "promedio_cubiertos", DATE("SUBTI' at line 1</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2013-11-02 12:11:43 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'm.deleted = 0
+                    AND SUBTIME(Mesa.created, '06:00:00') BETWEEN ' at line 4</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2013-11-02 12:11:43 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/stats/controllers/stats_controller.php, line 117]
+2013-11-02 12:11:51 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'sum(`m`.`total`)/sum(`m`.`cant_comensales`) as "promedio_cubiertos", DATE("SUBTI' at line 1</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2013-11-02 12:11:51 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'm.deleted = 0
+                    AND SUBTIME(Mesa.created, '06:00:00') BETWEEN ' at line 4</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2013-11-02 12:11:51 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/stats/controllers/stats_controller.php, line 117]
+2013-11-02 12:11:57 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'sum(`m`.`total`)/sum(`m`.`cant_comensales`) as "promedio_cubiertos", DATE("SUBTI' at line 1</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2013-11-02 12:12:15 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'sum(`Mesa`.`total`)/sum(`m`.`cant_comensales`) as "promedio_cubiertos", DATE("SU' at line 1</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2013-11-02 12:21:43 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'm.cant_comensales' in 'field list'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2013-11-02 12:51:04 Error: imprimiendo a con la impresora SinComandera al server: slocalhost
+2013-11-02 12:51:04 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/basics.php:134) in [APP/views/layouts/json/default.ctp, line 2]
+2013-11-02 12:51:04 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/basics.php:134) in [APP/views/layouts/json/default.ctp, line 3]
+2013-11-02 12:51:04 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/basics.php:134) in [APP/views/layouts/json/default.ctp, line 4]
+2013-11-02 12:51:06 Error: imprimiendo a con la impresora Barra al server: slocalhost
+2013-11-02 12:51:27 Error: imprimiendo a con la impresora SinComandera al server: slocalhost
+2013-11-02 12:51:27 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/basics.php:134) in [APP/views/layouts/json/default.ctp, line 2]
+2013-11-02 12:51:27 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/basics.php:134) in [APP/views/layouts/json/default.ctp, line 3]
+2013-11-02 12:51:27 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/basics.php:134) in [APP/views/layouts/json/default.ctp, line 4]
+2013-11-02 12:51:29 Error: imprimiendo a con la impresora Barra al server: slocalhost
+2013-11-02 12:51:50 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'z.numero as "mozo"' in 'field list'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2013-11-02 12:51:51 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/stats/controllers/stats_controller.php, line 173]
+2013-11-02 12:52:23 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'z.numero as "mozo"' in 'field list'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2013-11-02 12:52:23 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/stats/controllers/stats_controller.php, line 172]
+2013-11-02 12:52:32 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'z.numero as "mozo"' in 'field list'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2013-11-02 12:52:32 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/stats/controllers/stats_controller.php, line 172]
+2013-11-02 12:52:58 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Mozo.numero as "mozo"' in 'field list'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2013-11-02 12:52:58 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/stats/controllers/stats_controller.php, line 172]
+2013-11-02 12:53:31 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Mozo.numero as "mozo"' in 'field list'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2013-11-02 12:53:31 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/stats/controllers/stats_controller.php, line 172]
+2013-11-02 12:53:44 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Mozo.numero as "mozo"' in 'field list'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2013-11-02 12:53:44 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/stats/controllers/stats_controller.php, line 172]
+2013-11-02 12:53:55 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Mozo.numero as "mozo"' in 'field list'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2013-11-02 12:53:55 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/stats/controllers/stats_controller.php, line 172]
+2013-11-02 12:54:36 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Mozo.numero as "mozo"' in 'field list'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2013-11-02 12:54:36 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/stats/controllers/stats_controller.php, line 172]
+2013-11-02 12:54:43 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Mozo.numero as "mozo"' in 'field list'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2013-11-02 12:54:43 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/stats/controllers/stats_controller.php, line 172]
+2013-11-02 12:54:45 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Mozo.numero as "mozo"' in 'field list'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2013-11-02 12:54:45 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/stats/controllers/stats_controller.php, line 172]
+2013-11-02 12:54:56 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Mozo.numero as "mozo"' in 'field list'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2013-11-02 12:54:56 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/stats/controllers/stats_controller.php, line 172]
+2013-11-02 12:55:00 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Mozo LEFT JOIN `mozos` AS `Mozo` ON (`Mesa`.`mozo_id` = `Mozo`.`id`) LEFT JOIN `' at line 1</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2013-11-02 12:55:00 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/stats/controllers/stats_controller.php, line 172]
+2013-11-02 12:55:24 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Mozo.numero as "mozo"' in 'field list'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2013-11-02 12:55:24 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/stats/controllers/stats_controller.php, line 172]
+2013-11-02 12:55:46 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'fecha' in 'group statement'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2013-11-02 12:55:46 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/stats/controllers/stats_controller.php, line 172]
+2013-11-02 12:56:50 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Mozo.numero as "mozo"' in 'field list'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2013-11-02 12:56:50 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/stats/controllers/stats_controller.php, line 172]
+2013-11-02 13:00:38 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'mozos Mozo LEFT LEFT JOIN `mozos` AS `Mozo` ON (`Mesa`.`mozo_id` = `Mozo`.`id`) ' at line 1</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2013-11-02 13:00:38 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/stats/controllers/stats_controller.php, line 172]
+2013-11-02 13:00:46 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'mozos Mozo LEFT LEFT JOIN `mozos` AS `Mozo` ON (`Mesa`.`mozo_id` = `Mozo`.`id`) ' at line 1</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2013-11-02 13:00:46 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/stats/controllers/stats_controller.php, line 172]
+2013-11-02 13:03:51 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'mozos Mozo LEFT JOIN `mozos` AS `Mozo` ON (`Mesa`.`mozo_id` = `Mozo`.`id`) LEFT ' at line 1</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2013-11-02 13:03:51 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/stats/controllers/stats_controller.php, line 172]
+2013-11-02 13:04:31 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'mozos Mozo LEFT JOIN `mozos` AS `Mozo` ON (`Mesa`.`mozo_id` = `Mozo`.`id`) LEFT ' at line 1</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2013-11-02 13:04:31 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/stats/controllers/stats_controller.php, line 172]
+2013-11-02 13:05:46 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Mozo.numero as "mozo"' in 'field list'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2013-11-02 13:05:46 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/stats/controllers/stats_controller.php, line 172]
+2013-11-02 13:07:49 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Mozo.numero as mozo' in 'field list'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2013-11-02 13:07:49 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/stats/controllers/stats_controller.php, line 172]
+2013-11-02 13:11:22 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Mozo.numero as mozo' in 'field list'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2013-11-02 13:11:22 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/stats/controllers/stats_controller.php, line 173]
+2013-11-02 13:11:40 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Mozo.id as mozo_id' in 'field list'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2013-11-02 13:11:40 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/stats/controllers/stats_controller.php, line 173]
+2013-11-02 13:15:19 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/stats/views/stats/mozos_total.ctp, line 69]
+2013-11-02 13:43:35 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/libs/debugger.php:492) in [CORE/cake/libs/controller/controller.php, line 646]
+2013-11-02 13:44:00 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/basics.php:326) in [CORE/cake/libs/controller/controller.php, line 646]
+2013-11-02 13:44:37 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/basics.php:326) in [CORE/cake/libs/controller/controller.php, line 646]
+2013-11-02 14:14:15 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''2013-10-02' AND '2013-11-02'  GROUP BY fecha  ORDER BY `fecha` DESC' at line 1</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2013-11-02 14:27:24 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1048: Column 'monto_iva' cannot be null</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2013-11-02 14:27:53 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1048: Column 'monto_neto' cannot be null</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2013-11-02 14:29:56 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1048: Column 'monto_neto' cannot be null</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2013-11-04 19:48:27 Warning: Warning (512): Method JavascriptHelper::script does not exist in [CORE/cake/libs/view/helper.php, line 142]
+2013-11-05 15:24:30 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-11-05 18:51:53 Warning: Warning (2): array_merge() [<a href='http://php.net/function.array-merge'>function.array-merge</a>]: Argument #2 is not an array in [APP/views/helpers/form.php, line 174]
+2013-11-05 19:53:14 Warning: Warning (512): AclNode::node() - Couldn't find Aro node identified by "Array
+(
+    [Aro0.model] => User
+    [Aro0.foreign_key] => 20
+)
+" in [CORE/cake/libs/model/db_acl.php, line 191]
+2013-11-05 19:53:14 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/basics.php:326) in [CORE/cake/libs/controller/controller.php, line 646]
+2013-11-05 19:56:16 Warning: Warning (512): AclNode::node() - Couldn't find Aro node identified by "Array
+(
+    [Aro0.model] => User
+    [Aro0.foreign_key] => 20
+)
+" in [CORE/cake/libs/model/db_acl.php, line 191]
+2013-11-05 19:56:16 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/basics.php:326) in [CORE/cake/libs/controller/controller.php, line 646]
+2013-11-05 19:57:11 Warning: Warning (512): AclNode::node() - Couldn't find Aro node identified by "Array
+(
+    [Aro0.model] => User
+    [Aro0.foreign_key] => 20
+)
+" in [CORE/cake/libs/model/db_acl.php, line 191]
+2013-11-05 19:58:15 Warning: Warning (512): AclNode::node() - Couldn't find Aro node identified by "Array
+(
+    [Aro0.model] => User
+    [Aro0.foreign_key] => 20
+)
+" in [CORE/cake/libs/model/db_acl.php, line 191]
+2013-11-05 19:59:01 Warning: Warning (512): AclNode::node() - Couldn't find Aro node identified by "Array
+(
+    [Aro0.model] => User
+    [Aro0.foreign_key] => 20
+)
+" in [CORE/cake/libs/model/db_acl.php, line 191]
+2013-11-05 19:59:38 Warning: Warning (512): AclNode::node() - Couldn't find Aro node identified by "Array
+(
+    [Aro0.model] => User
+    [Aro0.foreign_key] => 20
+)
+" in [CORE/cake/libs/model/db_acl.php, line 191]
+2013-11-05 19:59:38 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/basics.php:326) in [CORE/cake/libs/controller/controller.php, line 646]
+2013-11-06 11:06:40 Warning: Warning (2): Creating default object from empty value in [APP/controllers/mesas_controller.php, line 121]
+2013-11-06 11:08:06 Warning: Warning (2): Creating default object from empty value in [APP/controllers/mesas_controller.php, line 121]
+2013-11-06 11:08:17 Warning: Warning (2): Creating default object from empty value in [APP/controllers/mesas_controller.php, line 121]
+2013-11-06 11:10:02 Warning: Warning (2): Creating default object from empty value in [APP/controllers/mesas_controller.php, line 121]
+2013-11-06 11:10:13 Warning: Warning (2): Creating default object from empty value in [APP/controllers/mesas_controller.php, line 121]
+2013-11-06 11:10:36 Warning: Warning (2): Creating default object from empty value in [APP/controllers/mesas_controller.php, line 121]
+2013-11-06 11:11:34 Warning: Warning (2): Creating default object from empty value in [APP/controllers/mesas_controller.php, line 121]
+2013-11-06 11:11:48 Warning: Warning (2): Creating default object from empty value in [APP/controllers/mesas_controller.php, line 121]
+2013-11-06 11:16:15 Warning: Warning (2): Creating default object from empty value in [APP/controllers/mesas_controller.php, line 121]
+2013-11-06 11:16:23 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'user.id' in 'on clause'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2013-11-06 11:22:23 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'user.id' in 'on clause'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2013-11-06 11:23:19 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'user.id' in 'on clause'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2013-11-06 12:15:24 Warning: Warning (512): Method NumberHelper::money does not exist in [CORE/cake/libs/view/helper.php, line 142]
+2013-11-06 12:22:49 Warning: Warning (2): Missing argument 1 for UsersController::self_user_edit(), called in /home/alejandro/workspace/www/ristorantinoChocha012/cake/libs/object.php on line 115 and defined in [APP/controllers/users_controller.php, line 129]
+2013-11-06 12:22:53 Warning: Warning (2): Missing argument 1 for UsersController::cambiar_password(), called in /home/alejandro/workspace/www/ristorantinoChocha012/cake/libs/object.php on line 115 and defined in [APP/controllers/users_controller.php, line 155]
+2013-11-06 13:44:20 Warning: Warning (2): Creating default object from empty value in [APP/controllers/sabores_controller.php, line 21]
+2013-11-06 13:44:37 Warning: Warning (2): Creating default object from empty value in [APP/controllers/productos_precios_futuros_controller.php, line 54]
+2013-11-06 13:46:45 Warning: Warning (2): Creating default object from empty value in [APP/controllers/productos_precios_futuros_controller.php, line 54]
+2013-11-06 13:46:55 Warning: Warning (2): Creating default object from empty value in [APP/controllers/productos_precios_futuros_controller.php, line 54]
+2013-11-06 13:47:39 Warning: Warning (2): Creating default object from empty value in [APP/controllers/productos_precios_futuros_controller.php, line 54]
+2013-11-06 16:28:48 Warning: Warning (2): mkdir() [<a href='http://php.net/function.mkdir'>function.mkdir</a>]: Permission denied in [APP/plugins/account/account_app_model.php, line 38]
+2013-11-06 16:46:20 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-11-06 17:07:03 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-11-06 17:07:37 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-11-06 17:17:07 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-11-06 17:19:02 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-11-06 17:19:20 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-11-06 17:21:54 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-11-06 17:24:34 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-11-06 17:25:10 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-11-06 17:25:44 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-11-06 17:26:22 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-11-06 17:27:41 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-11-06 17:28:04 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-11-06 17:28:50 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-11-06 19:34:58 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-11-06 20:49:03 Warning: Warning (512): Method FormHelper::number does not exist in [CORE/cake/libs/view/helper.php, line 142]
+2013-11-06 23:44:02 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-11-06 23:53:43 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-11-06 23:54:05 Warning: Warning (2): mkdir() [<a href='http://php.net/function.mkdir'>function.mkdir</a>]: Permission denied in [APP/plugins/account/account_app_model.php, line 38]
+2013-11-06 23:57:48 Warning: Warning (2): move_uploaded_file(/home/alejandro/workspace/www/ristorantinoChocha012/app/webroot/img/yo_y_juli_tapas.jpg) [<a href='http://php.net/function.move-uploaded-file'>function.move-uploaded-file</a>]: failed to open stream: Permission denied in [APP/plugins/account/account_app_model.php, line 52]
+2013-11-06 23:57:48 Warning: Warning (2): move_uploaded_file() [<a href='http://php.net/function.move-uploaded-file'>function.move-uploaded-file</a>]: Unable to move '/tmp/phpUV56dH' to '/home/alejandro/workspace/www/ristorantinoChocha012/app/webroot/img/yo_y_juli_tapas.jpg' in [APP/plugins/account/account_app_model.php, line 52]
+2013-11-07 01:20:59 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/account/views/egresos/add.ctp, line 38]
+2013-11-07 01:23:05 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/account/views/egresos/add.ctp, line 38]
+2013-11-07 01:23:16 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/account/views/egresos/add.ctp, line 38]
+2013-11-07 01:23:35 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/account/views/egresos/add.ctp, line 39]
+2013-11-07 01:25:20 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/account/views/egresos/add.ctp, line 39]
+2013-11-07 01:26:55 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/account/views/egresos/add.ctp, line 51]
+2013-11-07 01:27:40 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/account/views/egresos/add.ctp, line 51]
+2013-11-07 01:27:48 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/account/views/egresos/add.ctp, line 51]
+2013-11-07 01:28:20 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/account/views/egresos/add.ctp, line 51]
+2013-11-07 01:28:40 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/account/views/egresos/add.ctp, line 51]
+2013-11-07 01:28:47 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/account/views/egresos/add.ctp, line 51]
+2013-11-07 01:29:47 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/account/views/egresos/add.ctp, line 58]
+2013-11-07 01:30:10 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-11-07 01:47:45 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-11-07 01:49:25 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-11-07 01:51:51 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-11-07 01:52:00 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-11-07 01:52:16 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-11-07 01:53:08 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-11-07 03:12:13 Warning: Warning (2): Illegal string offset 'Caja' in [APP/plugins/cash/views/elements/menu.ctp, line 14]
+2013-11-07 03:12:13 Warning: Warning (2): Illegal string offset 'name' in [APP/plugins/cash/views/elements/menu.ctp, line 14]
+2013-11-07 03:12:13 Warning: Warning (2): Illegal string offset 'id' in [APP/plugins/cash/views/elements/menu.ctp, line 14]
+2013-11-07 03:12:30 Warning: Warning (2): Illegal string offset 'Caja' in [APP/plugins/cash/views/elements/menu.ctp, line 15]
+2013-11-07 03:12:30 Warning: Warning (2): Illegal string offset 'name' in [APP/plugins/cash/views/elements/menu.ctp, line 15]
+2013-11-07 03:12:30 Warning: Warning (2): Illegal string offset 'id' in [APP/plugins/cash/views/elements/menu.ctp, line 15]
+2013-11-07 03:42:19 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-11-07 03:45:41 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2013-11-07 12:09:00 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/cash/views/arqueos/index.ctp, line 8]
+2013-11-07 18:24:33 Warning: Warning (2): Cannot use a scalar value as an array in [APP/plugins/stats/controllers/stats_controller.php, line 183]
+2013-11-07 18:26:00 Warning: Warning (2): Cannot use a scalar value as an array in [APP/plugins/stats/controllers/stats_controller.php, line 185]
+2013-11-07 18:26:30 Warning: Warning (2): Cannot use a scalar value as an array in [APP/plugins/stats/controllers/stats_controller.php, line 186]
+2013-11-07 18:27:09 Warning: Warning (2): Cannot use a scalar value as an array in [APP/plugins/stats/controllers/stats_controller.php, line 179]
+2013-11-07 18:27:24 Warning: Warning (2): Cannot use a scalar value as an array in [APP/plugins/stats/controllers/stats_controller.php, line 180]
+2013-11-07 18:27:37 Warning: Warning (2): Cannot use a scalar value as an array in [APP/plugins/stats/controllers/stats_controller.php, line 180]
+2013-11-07 18:37:34 Warning: Warning (2): Illegal string offset 'cant_cubiertos' in [APP/plugins/stats/views/stats/mozos_total.ctp, line 38]
+2013-11-07 18:37:34 Warning: Warning (2): Illegal string offset 'total' in [APP/plugins/stats/views/stats/mozos_total.ctp, line 39]
+2013-11-07 18:38:55 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/stats/views/stats/mozos_total.ctp, line 27]
+2013-11-07 18:39:07 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/stats/views/stats/mozos_total.ctp, line 27]
+2013-11-07 18:43:01 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/stats/views/stats/mozos_total.ctp, line 27]
+2013-11-07 18:43:01 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/stats/views/stats/mozos_total.ctp, line 33]
+2013-11-07 18:43:01 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/stats/views/stats/mozos_total.ctp, line 40]
+2013-11-08 17:48:37 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/libs/debugger.php:503) in [APP/views/layouts/json/default.ctp, line 2]
+2013-11-08 17:48:37 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/libs/debugger.php:503) in [APP/views/layouts/json/default.ctp, line 3]
+2013-11-08 17:48:37 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/libs/debugger.php:503) in [APP/views/layouts/json/default.ctp, line 4]
+2013-11-08 18:32:00 Warning: Warning (2): preg_match_all() [<a href='http://php.net/function.preg-match-all'>function.preg-match-all</a>]: Compilation failed: missing terminating ] for character class at offset 40 in [APP/plugins/account/models/gasto.php, line 117]
+2013-11-08 18:32:06 Warning: Warning (2): preg_match_all() [<a href='http://php.net/function.preg-match-all'>function.preg-match-all</a>]: Compilation failed: missing terminating ] for character class at offset 40 in [APP/plugins/account/models/gasto.php, line 117]
+2013-11-08 18:32:15 Warning: Warning (2): preg_match_all() [<a href='http://php.net/function.preg-match-all'>function.preg-match-all</a>]: Compilation failed: missing terminating ] for character class at offset 41 in [APP/plugins/account/models/gasto.php, line 117]
+2013-11-08 19:10:33 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1048: Column 'importe_total' cannot be null</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2013-11-08 23:49:50 Warning: Warning (512): Model "Mesa" is not associated with model "TipoDePago" in [CORE/cake/libs/model/behaviors/containable.php, line 356]
+2013-11-08 23:49:50 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1051: Unknown table 'TipoDePago'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2013-11-08 23:49:50 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/stats/controllers/stats_controller.php, line 236]
+2013-11-08 23:49:50 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/stats/controllers/stats_controller.php, line 253]
+2013-11-08 23:58:48 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'fecha' in 'order clause'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2013-11-08 23:58:48 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/stats/controllers/stats_controller.php, line 243]
+2013-11-08 23:58:48 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/stats/controllers/stats_controller.php, line 260]
+2013-11-08 23:59:41 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'fecha' in 'order clause'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2013-11-08 23:59:41 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/stats/controllers/stats_controller.php, line 244]
+2013-11-08 23:59:41 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/stats/controllers/stats_controller.php, line 261]
+2013-11-09 00:18:37 Warning: Warning (2): Illegal string offset 'TipoDePago' in [APP/plugins/stats/controllers/stats_controller.php, line 246]
+2013-11-09 00:18:37 Warning: Warning (2): Illegal string offset 'id' in [APP/plugins/stats/controllers/stats_controller.php, line 246]
+2013-11-09 00:18:37 Warning: Warning (2): Illegal string offset 'TipoDePago' in [APP/plugins/stats/controllers/stats_controller.php, line 247]
+2013-11-09 00:18:37 Warning: Warning (2): Illegal string offset 'id' in [APP/plugins/stats/controllers/stats_controller.php, line 247]
+2013-11-09 00:18:38 Warning: Warning (2): Illegal string offset 'TipoDePago' in [APP/plugins/stats/controllers/stats_controller.php, line 248]
+2013-11-09 00:18:38 Warning: Warning (2): Illegal string offset 'name' in [APP/plugins/stats/controllers/stats_controller.php, line 248]
+2013-11-09 00:18:38 Warning: Warning (2): Illegal string offset 'TipoDePago' in [APP/plugins/stats/controllers/stats_controller.php, line 249]
+2013-11-09 00:18:38 Warning: Warning (2): Illegal string offset 'image_url' in [APP/plugins/stats/controllers/stats_controller.php, line 249]
+2013-11-09 00:18:38 Warning: Warning (2): Illegal string offset 'TipoDePago' in [APP/plugins/stats/controllers/stats_controller.php, line 252]
+2013-11-09 00:18:38 Warning: Warning (2): Illegal string offset 'id' in [APP/plugins/stats/controllers/stats_controller.php, line 252]
+2013-11-09 00:18:38 Warning: Warning (2): Illegal string offset 'TipoDePago' in [APP/plugins/stats/controllers/stats_controller.php, line 253]
+2013-11-09 00:18:38 Warning: Warning (2): Illegal string offset 'id' in [APP/plugins/stats/controllers/stats_controller.php, line 253]
+2013-11-09 00:18:38 Warning: Warning (2): Illegal string offset 'TipoDePago' in [APP/plugins/stats/controllers/stats_controller.php, line 257]
+2013-11-09 00:18:38 Warning: Warning (2): Illegal string offset 'id' in [APP/plugins/stats/controllers/stats_controller.php, line 257]
+2013-11-09 00:18:39 Warning: Warning (2): Illegal string offset 'total' in [APP/plugins/stats/controllers/stats_controller.php, line 257]
+2013-11-09 00:18:40 Warning: Warning (2): Illegal string offset 'fecha' in [APP/plugins/stats/controllers/stats_controller.php, line 266]
+2013-11-09 00:18:40 Warning: Warning (2): Illegal string offset 'Mozo' in [APP/plugins/stats/controllers/stats_controller.php, line 266]
+2013-11-09 00:18:40 Warning: Warning (2): Illegal string offset 'id' in [APP/plugins/stats/controllers/stats_controller.php, line 266]
+2013-11-09 00:18:41 Warning: Warning (2): Illegal string offset 'total' in [APP/plugins/stats/views/stats/tipos_de_pago.ctp, line 47]
+2013-11-09 00:19:16 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1052: Column 'created' in order clause is ambiguous</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2013-11-09 00:19:17 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/stats/controllers/stats_controller.php, line 244]
+2013-11-09 00:19:17 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/stats/controllers/stats_controller.php, line 264]
+2013-11-16 02:44:06 Error: imprimiendo a con la impresora fiscal al server: slocalhost
+2013-11-16 02:45:19 Error: imprimiendo a con la impresora fiscal al server: slocalhost
+2013-11-16 02:47:21 Error: imprimiendo a con la impresora fiscal al server: slocalhost
+2013-11-16 02:47:28 Error: imprimiendo a con la impresora fiscal al server: slocalhost
+2013-11-16 02:47:31 Error: imprimiendo a con la impresora fiscal al server: slocalhost
+2013-11-16 02:47:33 Error: imprimiendo a con la impresora fiscal al server: slocalhost
+2013-11-16 02:48:00 Error: imprimiendo a con la impresora fiscal al server: slocalhost
+2013-11-16 02:48:03 Error: imprimiendo a con la impresora fiscal al server: slocalhost
+2013-11-16 02:48:05 Error: imprimiendo a con la impresora fiscal al server: slocalhost
+2013-11-16 02:48:16 Error: imprimiendo a con la impresora fiscal al server: slocalhost
+2013-11-17 13:17:59 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Egreso.total' in 'field list'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2013-11-17 13:17:59 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/cash/controllers/arqueos_controller.php, line 106]
+2013-11-17 14:03:34 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'contains' at line 1</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2013-11-17 14:07:49 Warning: Warning (512): Method HtmlHelper::img does not exist in [CORE/cake/libs/view/helper.php, line 142]
+2013-11-17 14:07:58 Warning: Warning (512): Method HtmlHelper::img does not exist in [CORE/cake/libs/view/helper.php, line 142]
+2013-11-17 14:08:27 Warning: Warning (512): Method HtmlHelper::img does not exist in [CORE/cake/libs/view/helper.php, line 142]
+2014-04-11 09:52:15 Error: imprimiendo a con la impresora Cocina al server: slocalhost
+2014-04-11 09:52:27 Error: imprimiendo a con la impresora Barra al server: slocalhost
+2014-04-11 09:52:29 Error: imprimiendo a con la impresora Barra al server: slocalhost
+2014-04-11 09:52:31 Error: imprimiendo a con la impresora Barra al server: slocalhost
+2014-04-11 09:53:19 Error: imprimiendo a con la impresora Cocina al server: slocalhost
+2014-04-11 09:53:19 Error: imprimiendo a con la impresora Barra al server: slocalhost
+2014-04-11 09:53:20 Error: imprimiendo a con la impresora Barra al server: slocalhost
+2014-04-11 11:23:45 Error: imprimiendo a con la impresora Cocina al server: slocalhost
+2014-04-11 11:23:45 Error: imprimiendo a con la impresora SinComandera al server: slocalhost
+2014-04-11 11:23:45 Error: imprimiendo a con la impresora Barra al server: slocalhost
+2014-04-11 11:28:30 Error: imprimiendo a con la impresora Cocina al server: slocalhost
+2014-04-11 11:36:38 Error: imprimiendo a con la impresora Barra al server: slocalhost
+2014-04-11 11:49:15 Error: imprimiendo a con la impresora Barra al server: slocalhost
+2014-04-11 11:49:16 Error: imprimiendo a con la impresora Barra al server: slocalhost
+2014-04-11 16:03:28 Error: imprimiendo a con la impresora Barra al server: slocalhost
+2014-04-11 16:03:28 Error: imprimiendo a con la impresora Cocina al server: slocalhost
+2014-04-11 16:03:28 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/basics.php:134) in [APP/views/layouts/json/default.ctp, line 2]
+2014-04-11 16:03:28 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/basics.php:134) in [APP/views/layouts/json/default.ctp, line 3]
+2014-04-11 16:03:28 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/basics.php:134) in [APP/views/layouts/json/default.ctp, line 4]
+2014-04-11 16:03:28 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/basics.php:134) in [APP/views/layouts/json/default.ctp, line 2]
+2014-04-11 16:03:28 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/basics.php:134) in [APP/views/layouts/json/default.ctp, line 3]
+2014-04-11 16:03:28 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/basics.php:134) in [APP/views/layouts/json/default.ctp, line 4]
+2014-04-11 16:03:34 Error: imprimiendo a con la impresora Barra al server: slocalhost
+2014-04-12 12:05:18 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/account/views/egresos/view.ctp, line 36]
+2014-04-12 12:05:44 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2014-04-12 12:08:30 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/account/views/egresos/view.ctp, line 38]
+2014-04-12 12:10:30 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/account/views/egresos/view.ctp, line 38]
+2014-04-12 12:10:55 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2014-04-12 12:29:44 Warning: Warning (2): Illegal string offset 'id' in [CORE/cake/libs/view/helper.php, line 706]
+2014-04-12 12:32:38 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/account/views/egresos/history.ctp, line 79]
+2014-04-12 12:32:47 Warning: Warning (2): Illegal string offset 'egreso_id' in [APP/plugins/account/views/egresos/history.ctp, line 80]
+2014-04-12 12:33:05 Warning: Warning (2): Illegal string offset 'egreso_id' in [APP/plugins/account/views/egresos/history.ctp, line 81]
+2014-04-12 13:08:04 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'user.id' in 'on clause'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2014-04-12 13:11:02 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'User.nombre' in 'field list'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2014-04-12 14:22:00 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1062: Duplicate entry '1' for key 'PRIMARY'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2014-04-12 14:23:01 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1062: Duplicate entry '1' for key 'PRIMARY'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2014-04-12 14:26:50 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1062: Duplicate entry '1' for key 'PRIMARY'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2014-04-12 23:40:10 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'dela' at line 1</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2014-04-13 13:14:47 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Pago.mozo_id' in 'where clause'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2014-04-13 13:14:47 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/views/pagos/index.ctp, line 67]
+2014-04-13 13:15:50 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Pago.created_from' in 'where clause'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2014-04-13 13:15:50 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/views/pagos/index.ctp, line 67]
+2014-04-13 15:14:57 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Mozo.user_id' in 'on clause'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2014-04-13 15:14:57 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/adition/views/adition/adicionar.ctp, line 21]
+2014-04-13 15:14:57 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/adition/views/adition/adicionar.ctp, line 172]
+2014-04-13 15:14:57 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/adition/views/adition/adicionar.ctp, line 471]
+2014-04-13 15:15:09 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'groupName' at line 1</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2014-04-13 15:20:08 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'parentNodeId' at line 1</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2014-04-13 15:36:23 Warning: Warning (2): Creating default object from empty value in [APP/controllers/users_controller.php, line 60]
+2014-04-13 15:37:45 Warning: Warning (512): AclNode::node() - Couldn't find Aro node identified by "Array
+(
+    [Aro0.model] => Rol
+    [Aro0.foreign_key] => 2
+)
+" in [CORE/cake/libs/model/db_acl.php, line 191]
+2014-04-13 15:37:45 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/libs/debugger.php:503) in [CORE/cake/libs/controller/controller.php, line 646]
+2014-04-13 15:54:51 Warning: Warning (512): Method FormHelper::postLink does not exist in [CORE/cake/libs/view/helper.php, line 142]
+2014-04-13 15:55:02 Warning: Warning (512): Method FormHelper::link does not exist in [CORE/cake/libs/view/helper.php, line 142]
+2014-04-13 16:00:25 Warning: Warning (512): Method FormHelper::postLink does not exist in [CORE/cake/libs/view/helper.php, line 142]
+2014-04-13 16:00:41 Warning: Warning (512): Method FormHelper::link does not exist in [CORE/cake/libs/view/helper.php, line 142]
+2014-04-13 16:10:46 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Mozo.user_id' in 'on clause'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2014-04-13 16:10:46 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/adition/views/adition/adicionar.ctp, line 21]
+2014-04-13 16:10:46 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/adition/views/adition/adicionar.ctp, line 172]
+2014-04-13 16:10:46 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/plugins/adition/views/adition/adicionar.ctp, line 471]
+2014-04-13 16:12:13 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Mozo.user_id' in 'on clause'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2014-04-13 16:12:13 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/views/mozos/index.ctp, line 27]
+2014-04-13 16:30:34 Warning: Warning (512): AclNode::node() - Couldn't find Aro node identified by "Array
+(
+    [Aro0.model] => Rol
+    [Aro0.foreign_key] => 1
+)
+" in [CORE/cake/libs/model/db_acl.php, line 191]
+2014-04-13 16:30:34 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/libs/debugger.php:503) in [CORE/cake/libs/controller/controller.php, line 646]
+2014-04-13 16:32:53 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Mozo.user_id' in 'on clause'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2014-04-13 16:32:53 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/views/mozos/index.ctp, line 27]
+2014-04-13 16:34:44 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Mozo.user_id' in 'on clause'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2014-04-13 16:34:44 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/views/mozos/index.ctp, line 27]
+2014-04-13 16:35:46 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Mozo.user_id' in 'on clause'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2014-04-13 16:35:46 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/views/mozos/index.ctp, line 29]
+2014-04-13 16:36:41 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Mozo.user_id' in 'on clause'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2014-04-13 16:36:41 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/views/mozos/index.ctp, line 29]
+2014-04-13 16:37:09 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Mozo.user_id' in 'on clause'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2014-04-13 16:37:09 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/views/mozos/index.ctp, line 30]
+2014-04-13 16:37:59 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Mozo.user_id' in 'on clause'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2014-04-13 16:37:59 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/views/mozos/index.ctp, line 30]
+2014-04-13 16:38:27 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Mozo.user_id' in 'on clause'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2014-04-13 16:38:27 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/views/mozos/index.ctp, line 30]
+2014-04-13 16:41:42 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Mozo.user_id' in 'on clause'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2014-04-13 16:41:42 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/views/mozos/index.ctp, line 30]
+2014-04-13 16:42:12 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Mozo.user_id' in 'on clause'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2014-04-13 16:42:12 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/views/mozos/index.ctp, line 30]
+2014-04-13 17:37:28 Warning: Warning (2): imagecopyresampled() expects parameter 2 to be resource, null given in [APP/config/bootstrap.php, line 223]
+2014-04-13 17:37:28 Warning: Warning (2): imagedestroy() expects parameter 1 to be resource, null given in [APP/config/bootstrap.php, line 225]
+2014-04-13 17:37:28 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/basics.php:326) in [CORE/cake/libs/controller/controller.php, line 646]
+2014-04-13 17:39:50 Warning: Warning (512): Model "Mozo" is not associated with model "User" in [CORE/cake/libs/model/behaviors/containable.php, line 356]
+2014-04-13 17:39:52 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/libs/debugger.php:503) in [APP/views/layouts/json/default.ctp, line 2]
+2014-04-13 17:39:52 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/libs/debugger.php:503) in [APP/views/layouts/json/default.ctp, line 3]
+2014-04-13 17:39:52 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /home/alejandro/workspace/www/ristorantinoChocha012/cake/libs/debugger.php:503) in [APP/views/layouts/json/default.ctp, line 4]
+2014-04-13 17:39:58 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Cliente.user_id' in 'on clause'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2014-04-13 18:10:07 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'User.username' in 'field list'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2014-04-13 18:10:07 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/controllers/pagos_controller.php, line 71]
+2014-04-13 18:11:12 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'User.username' in 'field list'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2014-04-13 18:11:12 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/controllers/pagos_controller.php, line 71]
+2014-04-13 18:13:37 Warning: Warning (512): Model "Mozo" is not associated with model "User" in [CORE/cake/libs/model/behaviors/containable.php, line 356]
+2014-04-13 18:23:05 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'User.username' in 'field list'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2014-04-13 18:23:05 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/controllers/mesas_controller.php, line 337]
+2014-04-13 18:27:12 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'User.username' in 'field list'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2014-04-13 18:27:12 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/controllers/pagos_controller.php, line 71]
+2014-04-13 19:03:29 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Tag.name' in 'order clause'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2014-04-13 19:03:30 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/views/productos/index.ctp, line 58]
+2014-04-13 19:04:36 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Tag.name' in 'order clause'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 526]
+2014-04-13 19:04:36 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/views/productos/index.ctp, line 58]

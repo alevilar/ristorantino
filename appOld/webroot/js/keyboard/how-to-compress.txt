@@ -1,0 +1,46 @@
+This file explains how to compress the Virtual Keyboard script with ESC
+(EcmaScript Cruncher, http://www.saltstorm.net/depo/esc/) if you've
+made changes to the original script and want to compress (and obfuscate) it.
+
+The following procedure applies to full script (vkboard.js) and slim
+variant of the script (vkboards.js). For other two variants, steps 3, 4 and 6
+should be omitted.
+
+1. In the archive with the ESC.wsf you'll find the 'bless.map.dynapi' file.
+   Copy it to the same directory where ESC.wsf is; rename it to 'bless.map'
+   and append the following items to the end of the file:
+
+     SetParameters
+     Show
+     ShowNumpad
+     avail_langs
+
+  If you wish to use compressed script with the translator setup
+ (see '3-edit-translator.html'), then you must additionally append
+  this line:
+
+     _refresh_layout
+
+2. Cut legal (disclaimer) part, and save it to another file (e.g. 'legal.txt').
+
+3. Cut language arrays, starting from comment:
+
+     // Layout info:
+
+   finishing with the last ']', and save them to another file (e.g. 'lang.js').
+
+4. Compress 'lang.js' to 'langc.js' with level of compression of 3:
+
+     cscript ESC.wsf -l 3 -ow langc.js lang.js
+
+  (level of compression must be 3, not 4! You must keep the array names untouched,
+    but 4th level of compression involves variable substitution that you don't need here).
+
+5. Compress 'vkboard.js' to 'vkboardc.js' with level of compression of 4:
+
+     cscript ESC.wsf -l 4 -ow vkboardc.js vkboard.js
+
+6. Restore the language arrays: place 'langc.js' contents between the last '}' and the comma preceeding it.
+
+7. Restore the disclaimer (from 'legal.txt') at the start of the script.
+   Don't forget to mention changes you've made and the tool you've used for compression.
