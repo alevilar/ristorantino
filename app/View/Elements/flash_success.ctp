@@ -1,3 +1,3 @@
-<p class="alert alert-success">
+<p class="alert alert-success text-center">
   <?php echo $message; ?>
 </p>

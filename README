@@ -11,7 +11,7 @@ y puesta en funcionamiento
 Imprime tickets o facturas fiscales. Solo probado con impresoras HASAR.
 
 
-Está desarrollado con CakePHP 1.2.12
+Está desarrollado con CakePHP 2.5
 
 Utiliza mucho javascript para el frontend para que sea mas rápido. La intención
 es un mozo toque y responda en tiempo real.

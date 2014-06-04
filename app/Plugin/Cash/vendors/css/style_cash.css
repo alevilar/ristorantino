@@ -1,0 +1,18 @@
+
+input.muted {
+    border: none;
+}
+
+input.muted:active, input.muted:focus {
+    border: 1px solid #CCC;
+}
+
+table.mini > tbody > tr:last-child{
+    background: #F7F7F2;
+    color: #003d4c;
+}
+
+
+#billetines{
+    position: fixed;
+}

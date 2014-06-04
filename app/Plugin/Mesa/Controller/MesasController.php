@@ -10,7 +10,6 @@ class MesasController extends MesaAppController {
     public $components = array(        
         'Search.Prg',
         'Paginator', 
-        
         );
 
     public $paginate = array(
@@ -26,7 +25,7 @@ class MesasController extends MesaAppController {
 
 
     
-    function index() {
+    public function index() {
         $this->Prg->commonProcess();
         $conds = $this->Mesa->parseCriteria( $this->Prg->parsedParams() );
 
@@ -61,10 +60,10 @@ class MesasController extends MesaAppController {
     }
 
 
-    function view($id = null) {
+    public function view($id = null) {
 
         if (!$id) {
-            $this->Session->setFlash(__('Invalid Mesa.', true));
+            $this->Session->setFlash(__('Invalid Mesa.'));
             $this->redirect(array('action'=>'index'));
         }
 
@@ -107,17 +106,6 @@ class MesasController extends MesaAppController {
 
 
 
-    
-
-
-    
-    /**
-     * Imprime un ticket fiscal
-     * @param type $mesa_id 
-     */
-    private function __imprimir($mesa_id) {
-        $this->Printer->doPrint($mesa_id);
-    }
 
 
     /**
@@ -127,7 +115,8 @@ class MesasController extends MesaAppController {
      * @param type $imprimir_ticket
      * @return type 
      */
-    function cerrarMesa($mesa_id, $imprimir_ticket = true) {
+    /*
+    public function cerrarMesa($mesa_id, $imprimir_ticket = true) {
         
         $this->Mesa->id = $mesa_id;
 
@@ -137,7 +126,7 @@ class MesasController extends MesaAppController {
 
         $retData = $this->Mesa->cerrar_mesa();
 
-        if($this->RequestHandler->isAjax()){
+        if($this->request->is('ajax')){
             $this->autoRender = false;
             $this->layout = 'ajax';
             debug($retData);
@@ -146,42 +135,41 @@ class MesasController extends MesaAppController {
             $this->redirect( $this->referer() );
         }
     }
+    */
 
 
 
 
-    function imprimirTicket($mesa_id) {
-        $this->Printer->doPrint($mesa_id);
-        if($this->RequestHandler->isAjax()){
-            $this->autoRender = false;
-            $this->layout = 'ajax';
-            return 1;
-        } else {
-            if(Configure::read('debug') == 0){
-                $this->redirect($this->referer());
-            } else {
-                $this->flash('Se imprimio comanda de mesa ID: '.$mesa_id.' (click para reimprimir)', $this->action.'/'.$mesa_id);
-            }
-        }
-    }
+    public function imprimirTicket($mesa_id) {
+        $this->Mesa->printFiscalEvent($mesa_id);
 
-
-    function abrirMesa(){
+        //        $this->Printer->doPrint($mesa_id);
         
-        $insertedId = 0;
-        if (!empty($this->request->data['Mesa'])) {
-            $this->request->data['Mesa']['estado_id'] = MESA_ABIERTA;
-//            unset( $this->request->data['Mesa']['created'] );
-            if ( $this->Mesa->save($this->request->data) ){
-                $insertedId = $this->Mesa->getLastInsertId();
-            }
+        if( !$this->request->is('ajax') ){
+            $this->Session->setFlash(__('Se imprimio comanda de mesa ID: '.$mesa_id), 'flash_success');
+            $this->redirect($this->referer());
+        } else {
+            return 1;
         }
-        $this->set('insertedId', $insertedId);
-        $this->set('mesa', $this->Mesa->read(null) );
-        $this->set('validationErrors', $this->Mesa->validationErrors);
     }
+
+
+//     public function abrirMesa ( ) {
+        
+//         $insertedId = 0;
+//         if (!empty($this->request->data['Mesa'])) {
+//             $this->request->data['Mesa']['estado_id'] = MESA_ABIERTA;
+// //            unset( $this->request->data['Mesa']['created'] );
+//             if ( $this->Mesa->save($this->request->data) ){
+//                 $insertedId = $this->Mesa->getLastInsertId();
+//             }
+//         }
+//         $this->set('insertedId', $insertedId);
+//         $this->set('mesa', $this->Mesa->read(null) );
+//         $this->set('validationErrors', $this->Mesa->validationErrors);
+//     }
     
-    function add() {
+    public function add() {
         if (!empty($this->request->data)) {
             $this->Mesa->create();
             $this->request->data['Mesa']['created'] = $this->request->data['Mesa']['time_cobro'];
@@ -192,41 +180,18 @@ class MesasController extends MesaAppController {
                     );
                 if ($this->Mesa->Pago->save($pago, array('fields'=>array('mesa_id','tipo_de_pago_id')))) {
                     debug($this->Mesa->Pago->id);
-                    $this->Session->setFlash(__('La mesa fue guardada', true));
+                    $this->Session->setFlash(__('La mesa fue guardada', 'flash_success'));
                    // $this->redirect(array('action'=>'index'));
                 }
             } else {
-                $this->Session->setFlash(__('La mesa no pudo ser guardada. Intente nuevamente.', true));
+                $this->Session->setFlash(__('La mesa no pudo ser guardada. Intente nuevamente.', 'flash_error'));
             }
         }
-        
-        $options['joins'] = array(
-            array('table' => 'users',
-            'alias' => 'User',
-            'type' => 'inner',
-            'conditions' => array(
-            'user.role = mozo'
-                )
-            ),
-        );
               
-$mozosAll = $this->Mesa->Mozo->find('all', array(
-    'fields'=>array('Mozo.id','Mozo.numero','User.username','User.nombre','User.apellido'),
-    'recursive' => 0,
-    'conditions' => array(
-        'Mozo.activo' => 1
-    )
-    ));
+        $mozos = $this->Mesa->Mozo->listFullName();
+        $tipo_pagos = $this->Mesa->Pago->TipoDePago->find('list');
 
-$mozos = array();
-foreach ($mozosAll as $mz) {
-    $mozos[$mz['Mozo']['id']] = "(".$mz['Mozo']['numero'] . ") " .$mz['User']['nombre']. " ". $mz['User']['apellido'];
-}
-$tipo_pagos = $this->Mesa->Pago->TipoDePago->find('list');
-
-        $this->set('tipo_pagos',$tipo_pagos);
-        //$descuentos = $this->Mesa->Descuento->find('list');
-        $this->set(compact('mozos', 'descuentos'));
+        $this->set(compact('mozos', 'descuentos', 'tipo_pagos'));
     }
 
 
@@ -234,18 +199,18 @@ $tipo_pagos = $this->Mesa->Pago->TipoDePago->find('list');
     
 
 
-    function edit($id = null) {
+    public function edit($id = null) {
                 
         if (!$id && empty($this->request->data)) {
-            $this->Session->setFlash(__('Invalid Mesa', true));
+            $this->Session->setFlash(__('Invalid Mesa', 'flash_error'));
             $this->redirect(array('action'=>'index'));
         }
         if (!empty($this->request->data)) {
             if ($this->Mesa->save($this->request->data)) {
-                $this->Session->setFlash(__('La mesa fue editada correctamente', true));
+                $this->Session->setFlash(__('La mesa fue editada correctamente', 'flash_success'));
                 $this->redirect(array('action'=>'index'));
             } else {
-                $this->Session->setFlash(__('La mesa no pudo ser guardada. Intente nuevamente.', true));
+                $this->Session->setFlash(__('La mesa no pudo ser guardada. Intente nuevamente.', 'flash_error'));
             }
         }
         if (empty($this->request->data)) {
@@ -267,35 +232,24 @@ $tipo_pagos = $this->Mesa->Pago->TipoDePago->find('list');
 
         $items = $this->request->data['Comanda'];
         $mesa = $this->request->data;
-        $mozos = $this->Mesa->Mozo->find('all',array(
-            'recursive' => -1,
-            'conditions' => array('Mozo.activo' => 1),
-            ));
-        $mooo = array();
-        foreach ( $mozos as $mm) {
-            $mooo[$mm['Mozo']['id']] = $mm['Mozo']['numero'] ."- ";
-            if (!empty( $mm['User'] )) {
-                $mooo[$mm['Mozo']['id']] .= " " . $mm['User']['nombre'] . " " . $mm['User']['apellido'];
-            }
-        }
+        $mozos = $this->Mesa->Mozo->listFullName();
         
         $this->id = $id;
         $this->set('subtotal',$this->Mesa->calcular_subtotal());
         $this->set('total',$this->Mesa->calcular_total());
         $this->set('estados', $this->estados);
-        $this->set('mozos', $mooo);
-        $this->set(compact('mesa', 'items'));
+        $this->set(compact('mesa', 'items', 'mozos'));
     }
 
-    function delete($id = null) {
+    public function delete($id = null) {
         if (!$id) {
             $this->Session->setFlash(__('Invalid id for Mesa', true));
         }
-        if ($this->Mesa->del($id)) {
+        if ($this->Mesa->delete($id)) {
             $this->Session->setFlash(__('Mesa deleted', true));     
         } else {
         }
-        if (!$this->RequestHandler->isAjax()){
+        if (!$this->request->is('ajax')){
             $this->redirect($this->referer());
         } else {
             die(1);
@@ -303,19 +257,19 @@ $tipo_pagos = $this->Mesa->Pago->TipoDePago->find('list');
     }
 
 
-    function cerradas(){
+    public function cerradas(){
         $mesas = $this->Mesa->todasLasCerradas();
         $this->set('mesas', $mesas);
         $this->render('mesas');
     }
 
 
-    function abiertas()
+/*
+    public function abiertas()
     {
         $options = array(
             'conditions' => array(
-                "Mesa.time_cobro" => "0000-00-00 00:00:00",
-                "Mesa.time_cerro" => "0000-00-00 00:00:00",
+                "Mesa.estado_id" => MESA_ABIERTA,
             ),
             'order' => 'Mesa.created DESC',
             'contain' => array(
@@ -329,21 +283,20 @@ $tipo_pagos = $this->Mesa->Pago->TipoDePago->find('list');
         $this->set('mesas', $mesas);
         $this->render('mesas');
     }
+*/
 
 
+    public function reabrir($id){
 
-    function reabrir($id){
-        $this->Session->setFlash('Se reabrió la mesa', true);
+        $this->Session->setFlash('Se reabrió la mesa', 'flash_success');
         $this->Mesa->reabrir($id);
-        if ($this->RequestHandler->isAjax()) {
-            die("reabrio la mesa ID: $id");
-        } else{
+        if ( !$this->request->is('ajax') ) {            
             $this->redirect($this->referer());
         }
     }
     
     
-    function addClienteToMesa($mesa_id, $cliente_id = 0){
+    public function addClienteToMesa($mesa_id, $cliente_id = 0){
         if ($cliente_id) {
             $this->Mesa->Cliente->contain(array(
                         'Descuento',
@@ -361,7 +314,7 @@ $tipo_pagos = $this->Mesa->Pago->TipoDePago->find('list');
     }
     
     
-    function cobradas(){
+    public function cobradas(){
         $mesas = $this->Mesa->ultimasCobradas();
         $this->set('title_for_layout', 'Últimas Mesas Cobradas');
         

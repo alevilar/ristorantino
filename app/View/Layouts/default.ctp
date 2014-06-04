@@ -99,7 +99,7 @@
                 </div>
 
                 <div class="col-md-12">
-                    <?php echo $this->element('sql_dump'); ?>
+                    <?php //echo $this->element('sql_dump'); ?>
                 </div>
             </div>
         </footer>

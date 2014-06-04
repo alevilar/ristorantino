@@ -5,16 +5,16 @@
         <?php
         echo $this->Html->link('Usuarios', '/user/users/index', array('class' => 'list-group-item'));
         echo $this->Html->link('Roles', '/user/roles/index', array('class' => 'list-group-item'));
-        echo $this->Html->link('Mozos', '/user/mozos/index', array('class' => 'list-group-item'));
+        echo $this->Html->link('Mozos', '/mesa/mozos/index', array('class' => 'list-group-item'));
         ?>
     </div>
 
     <h2>Mesas</h2>
     <div class="list-group">
         <?php
-        echo $this->Html->link('Listado de Mesas', '/Mesas', array('class' => 'list-group-item'));
-        echo $this->Html->link('Pagos de Mesas', '/pagos', array('class' => 'list-group-item'));
-        echo $this->Html->link('Nueva Mesa', '/Mesas/add', array('class' => 'list-group-item'));
+        echo $this->Html->link('Listado de Mesas', '/mesa/Mesas', array('class' => 'list-group-item'));
+        echo $this->Html->link('Pagos de Mesas', '/mesa/pagos', array('class' => 'list-group-item'));
+        echo $this->Html->link('Nueva Mesa', '/mesa/Mesas/add', array('class' => 'list-group-item'));
         
         
         ?>

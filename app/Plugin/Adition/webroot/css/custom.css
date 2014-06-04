@@ -1,0 +1,9 @@
+
+#ul-productos > a{
+ max-width: 31% !important;
+}
+
+#ul-productos > a .ui-btn-inner{
+ white-space:normal !important;
+}
+

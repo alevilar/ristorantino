@@ -1,0 +1,359 @@
+body{
+}
+
+ul.listado-adicion{
+    list-style: none;
+    padding: 0px;
+    -webkit-margin-before: 0 !important;
+    margin: 0 !important;
+}
+
+
+ul.listado-adicion li {
+    height: auto;
+    margin: 0.5%;
+}
+ul.listado-adicion li a {
+    margin: 0;
+    width: 100%;
+}
+.mesa-span {
+    padding-left: 25px !important;
+    padding-right: 33px !important;
+    padding-top: 0.9em !important;
+    padding-bottom: 0.9em !important;
+    text-overflow: clip !important;
+}
+
+.mesa-icon {
+    left: 7% !important;
+    padding: 0 !important;
+}
+
+.mesa-created{
+    color: #ffffff;
+    font-size: small;
+}
+
+.listado-adicion li{
+    display: inline-block;
+    width: 10%;
+}
+
+
+
+ul.listado-adicion .mesa-cobrada A{
+    border: 1px solid 		#721E1E;
+    background: 			#B05D5D;
+    color: 					#fff;
+    font-weight: bold;
+    text-shadow: none !important;
+    
+}
+
+ul.listado-adicion .mesa-cerrada A{
+    border: 1px solid 		#996F45;
+    background: 			#B0875D;
+    color: 					#fff;
+    font-weight: bold;
+    text-shadow: none !important;
+   
+}
+
+ul.listado-adicion .mesa-cerrada A:focus, ul.listado-adicion .mesa-cerrada A:active {
+    background:#FF9C56;
+    text-shadow: none !important;
+}
+
+ul.listado-adicion .mesa-abierta A:focus, ul.listado-adicion .mesa-abierta A:active{
+    color:#fff !important;
+    background:#4596ce;
+    font-weight:bold;
+    cursor:pointer;
+    text-shadow: none !important;
+    text-decoration:none;
+    outline:0
+}
+
+.mesa-numero, .mozo-numero{
+    font-size: 125%;
+    padding-left: 8%;
+}
+
+
+.mozos li a {
+    color: #1C6F9A;
+}
+
+.mesa-mozo:focus, .mozo-cant-mesas:focus {
+    color: #666666 !important;
+}
+
+ul.listado-adicion .mesa-mozo,ul.listado-adicion .mozo-cant-mesas {
+    padding: 10px 0px 7px 0px;
+    width: 15px;
+    text-align: center;
+    font-size: small;
+    position: absolute;
+    right: 3px;
+    top: -3px;
+    text-shadow: none !important;
+    font-weight:bold;
+    background-image: url(../../css/jquery-mobile/images/mozomonio.png);
+    background-repeat: no-repeat;
+}
+
+.mesa {
+    text-decoration: none;
+}
+
+.titulo-comanda {
+    color: rgba(0, 0, 0, 0.4);
+    margin: 0;
+}
+
+.id-comanda {
+    color: rgba(0, 0, 0, 0.4);
+}
+.hora-comanda {
+    color: #666666;
+}
+
+.ui-listview li div div a img {
+    top: 12%;
+    left: 5%;
+}
+
+.content_mesas, .content_mozos {
+    background: none !important;
+}
+
+#listado-mozos, #listado-mesas  {
+     background:#BBBBBB;
+}
+
+.abrir-mesa {
+    margin: 0.5%;
+    font-size: 96%;
+    width: 10%;
+    float: left;
+    height: 72px;
+}
+.abrir-mesa span {
+    overflow: visible !important;   
+}
+
+
+.mesa-total {
+    color: #FF0000;
+    font-size: 110%;
+}
+.hora-abrio {
+    position: absolute;
+    right: 20px;
+}
+
+.sep {
+    color: #666666;
+    font-weight: normal;
+    font-size: 90%;
+}
+
+.comanda-listado-productos-string {
+    font-size: 85%;
+    color: #666666;
+    font-weight: normal;
+}
+
+.comanda-items li{
+    padding: .3em 10px!important;
+    border-left-color: #B3B3B3;
+    border-left-width: 1px;
+    border-left-style: solid;
+    border-right-color: #B3B3B3;
+    border-right-width: 1px;
+    border-right-style: solid;
+
+}
+
+.mesa-actions{
+    width: 29%; 
+    float: left;
+}
+
+.mesa-actions UL{
+    width: 100%; 
+}
+
+.mesa-view{
+    width: 70%; 
+    float:right; 
+    margin-top: -7px;
+}
+
+.mesa-actions ul li {
+    border-right-color: #B3B3B3;
+    border-right-width: 1px;
+    border-right-style: solid;
+}
+
+.mesa-actions ul li A {
+    padding-left: 30% !important;
+    font-size: 92% !important;
+    overflow: visible !important;
+    padding-right: 0 !important;
+    text-overflow: visible !important;
+}
+
+.mesa-actions ul li[estado='comanda-add-menu_mesa-cerrada'],
+.mesa-actions ul li[estado='mesa-cliente_mesa-cerrada'],
+.mesa-actions ul li[estado='mesa-cerrar_mesa-cerrada'],
+.mesa-actions ul li[estado='mesa-reabrir_mesa-abierta'],
+.mesa-actions ul li[estado='mesa-re-print_mesa-abierta'],
+.mesa-actions ul li[estado='mesa-cobrar_mesa-abierta'],
+
+.mesa-actions ul li[estado='comanda-add-menu_mesa-cobrada'],
+.mesa-actions ul li[estado='mesa-cliente_mesa-cobrada'],
+.mesa-actions ul li[estado='mesa-cerrar_mesa-cobrada'],
+.mesa-actions ul li[estado='mesa-cobrar_mesa-cobrada']
+{
+    display: none;
+}
+
+
+
+ul.listado-mozos-para-mesas{
+    padding: 0px;
+    margin: 0px;
+    background-color: #E7E7E7;
+}
+
+.listado-mozos-para-mesas li{
+    display: inline-block;
+    min-width: 40px;
+    min-height: 30px;
+    text-align: center;
+}
+
+.listado-mozos-para-mesas li a{
+    text-decoration: none;
+}
+
+
+.menu-img{
+    width: 50px; 
+    height: 50px;
+}
+
+.menu-letra-con-imagen{
+    font-size: xx-small;
+    
+}
+
+.btn-categoria{
+    min-width: 92px;
+    min-height: 76px;
+    padding: 3px;
+}
+
+
+ul.tipo_de_pagos ,.tipo_de_pagos ul{
+    margin: 0px;
+    padding: 0px;
+        
+}
+
+.tipo_de_pagos li{
+    text-align: center;
+    display: inline-block;
+    margin: 8px;
+}
+
+.tipo_de_pagos li a{
+       text-decoration: none;
+}
+
+.tipo_de_pagos li img{
+    width: 80px;
+}
+
+
+
+.pagos_creados{}
+
+.pagos_creados li{
+    display: inline-block;
+    width: 33%;
+}
+
+.pagos_creados li img{
+    width: 60px;
+}
+
+.es_entrada{
+    background: #437FBE;
+}
+
+.tachada{
+    text-decoration: line-through;
+    color: #333;
+    font-weight: normal;
+}
+
+.mesa-time{
+    font-size: xx-small;
+    margin-left: -17px;
+    position: relative;
+    margin-left: 2px;
+}
+
+.cant_comensales{
+    float: left;
+}
+
+
+.producto-precio{
+    float: right;
+    margin-top: 11px;
+}
+
+
+#comanda-opciones{
+  position: absolute;
+  top: 40%;
+  left: 40%;
+  z-index: 99;
+}
+
+
+#comanda-add-observacion{
+    position: absolute;
+    right: 170px;
+    width: 60%;
+    z-index: 99;
+    background-color: #4F4F4F;
+}
+
+#comanda-add-observacion TEXTAREA{
+    width: 100%;
+}
+
+
+
+.btn-comanda-icon{
+    width: 15px;
+    position: relative;
+    left: -15px;
+}
+
+
+
+.dialog-arriba .ui-header{margin-top: 10px;}
+.dialog-ancho .ui-header, .dialog-ancho .ui-content, .dialog-ancho .ui-footer { max-width: 100% !important;}
+.dialog-reancho .ui-header, .dialog-reancho .ui-content, .dialog-reancho .ui-footer { max-width: 100% !important; width: 94% !important; margin-left: 2% !important;}
+
+
+
+#ul-productos > a .ui-btn-inner{
+ 
+}
