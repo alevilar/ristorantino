@@ -20,9 +20,9 @@
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $html->link(__('Editar Tipo de Documento', true), array('action' => 'edit', $tipoDocumento['TipoDocumento']['id'])); ?> </li>
-		<li><?php echo $html->link(__('Borrar Tipo de Documento', true), array('action' => 'delete', $tipoDocumento['TipoDocumento']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $tipoDocumento['TipoDocumento']['id'])); ?> </li>
-		<li><?php echo $html->link(__('Listar Tipo de Documentos', true), array('action' => 'index')); ?> </li>
-		<li><?php echo $html->link(__('Crear Tipo de Documento', true), array('action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('Editar Tipo de Documento', true), array('action' => 'edit', $tipoDocumento['TipoDocumento']['id'])); ?> </li>
+		<li><?php echo $this->Html->link(__('Borrar Tipo de Documento', true), array('action' => 'delete', $tipoDocumento['TipoDocumento']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $tipoDocumento['TipoDocumento']['id'])); ?> </li>
+		<li><?php echo $this->Html->link(__('Listar Tipo de Documentos', true), array('action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('Crear Tipo de Documento', true), array('action' => 'add')); ?> </li>
 	</ul>
 </div>

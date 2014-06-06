@@ -11,8 +11,8 @@ header("Expires: 0");
 <html>
     <head>
         <?php
-        echo $html->charset();
-        echo $html->meta('icon');
+        echo $this->Html->charset();
+        echo $this->Html->meta('icon');
         ?>
         <title><?php echo $name?></title>
         <META NAME="GENERATOR" CONTENT="PQuery Report">

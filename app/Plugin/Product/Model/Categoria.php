@@ -1,6 +1,5 @@
 <?php
 
-$GLOBALS['papa'] = 0;
 
 App::uses('ProductAppModel', 'Product.Model');
 
@@ -13,22 +12,27 @@ App::uses('ProductAppModel', 'Product.Model');
 class Categoria extends ProductAppModel
 {
 
-    var $name = 'Categoria';
-    var $actsAs = array(
-        'SoftDelete',
+    public $name = 'Categoria';
+    public $actsAs = array(
         'Tree',
         'Containable',
+        'SoftDelete',
         'FileUpload.FileUpload' => array(
-            'fields' => array('name' => 'image_url', 'type' => 'file_type', 'size' => 'file_size'),
+            'fields' => array(
+                'name' => 'image_url', 
+                'type' => 'file_type', 
+                'size' => 'file_size'
+                ),
         ),
+        
     );
-    //var $cacheQueries = true;
+    //public $cacheQueries = true;
 
-    var $validate = array(
+    public $validate = array(
         'name' => array('notempty')
     );
     //The Associations below have been created with all possible keys, those that are not needed can be removed
-    var $hasMany = array(
+    public $hasMany = array(
         'Producto' => array(
             'className' => 'Product.Producto',
             'order' => array('Producto.order', 'Producto.name'),
@@ -83,7 +87,7 @@ class Categoria extends ProductAppModel
             ));
         }
                 
-       $children = $this->children($cat_id, true);
+       $children = $this->children($cat_id);
        
        $categoriasHijo = array();
        foreach ($children as $c) {

@@ -1,8 +1,8 @@
 <?php
 
-echo $form->create('Caja');
-echo $form->input('id');
-echo $form->input('name');
-echo $form->input('computa_ingresos');
-echo $form->input('computa_egresos');
-echo $form->end('Guardar');
+echo $this->Form->create('Caja');
+echo $this->Form->input('id');
+echo $this->Form->input('name');
+echo $this->Form->input('computa_ingresos');
+echo $this->Form->input('computa_egresos');
+echo $this->Form->end('Guardar');

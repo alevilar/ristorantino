@@ -21,14 +21,16 @@
                     <legend><?php __('Totales de Mesa'); ?></legend>
                     <?php
                     echo $this->Form->input('cant_comensales', array('after' => '</br>Aquí puede cambiar la cantidad de cubiertos de la mesa'));
-                    echo $this->Form->input('total', array('after' => '</br>Aquí puede cambiar el total de la mesa.'));
+                    echo $this->Form->input('total', array(
+                        'required' => 'required',
+                        'after' => '</br>Aquí puede cambiar el total de la mesa.'));
                     ?>
                     <?php echo $this->Form->end('Guardar Cambios'); ?>
                 </fieldset>
             </div>
         </div>
 
-        <div class="clear"></div>
+        <div class="clearfix"></div>
         <div class="detallesmesa">
             <h2>Detalles de la Mesa</h2>
 
@@ -62,39 +64,78 @@
 
             <p>
                 <?php
-                echo "Abrió a las <b>" . date('H:i', strtotime($this->data['Mesa']['created'])) . "</b>";
+                echo "Abrió a las <b>" . date('H:i', strtotime($this->request->data['Mesa']['created'])) . "</b>";
 
-                if (!empty($this->data['Mesa']['time_cerro'])) {
-                    echo ", Cerró a las <b>" . date('H:i', strtotime($this->data['Mesa']['time_cerro'])) . "</b>";
+                if (!empty($this->request->data['Mesa']['time_cerro'])) {
+                    echo ", Cerró a las <b>" . date('H:i', strtotime($this->request->data['Mesa']['time_cerro'])) . "</b>";
                 }
 
-                if (!empty($this->data['Mesa']['time_cobro'])) {
-                    echo ", Cobrada a las <b>" . date('H:i', strtotime($this->data['Mesa']['time_cobro'])) . "</b>";
+                if (!empty($this->request->data['Mesa']['time_cobro'])) {
+                    echo ", Cobrada a las <b>" . date('H:i', strtotime($this->request->data['Mesa']['time_cobro'])) . "</b>";
                 }
                 ?>
             </p>
         </div>
+
+        <?php echo $this->Html->link('Crear Comanda'
+                , array('plugin'=>'comanda', 'controller'=>'DetalleComandas', 'action'=>'add', $this->request->data['Mesa']['id'])
+                , array('class'=>'btn btn-success'));?>
 
         <ul class="items_mesas">
 
             <?php
             $totalSumado = 0;
             foreach ($items as $comanda):
-                echo "<li><p>";
-                echo "#" . $comanda['id'] . "</p>";
-                echo $this->Html->link("Reimprimir Comanda #" . $comanda['id'], array('controller' => 'comandas', 'action' => 'imprimir', $comanda['id']), array('style' => 'float:right;margin-right: 100px;font-size:120%;color:#000000;font-weight: normal;'));
+                echo "<li>";
+                echo "Comanda #" . $comanda['id']. "  (".date('H:i, d M',strtotime($comanda['created'])).")";
+                echo " &nbsp;-&nbsp; ";
+                echo $this->Html->link("Editar"
+                        , array('plugin'=>'comanda', 'controller' => 'comandas', 'action' => 'edit', $comanda['id'])
+                        , array(
+                          
+                            )
+                        );
+                echo " &nbsp;-&nbsp; ";
+                echo $this->Html->link(__('Delete')
+                                    , array('plugin'=>'comanda', 'controller' => 'comandas', 'action'=>'delete', $comanda['id'])
+                                    , null
+                                    , sprintf(__('Are you sure you want to delete # %s?'), $comanda['id']));
+
+                echo " &nbsp;-&nbsp; ";
+                echo $this->Html->link("Reimprimir"
+                        , array('plugin'=>'comanda', 'controller' => 'comandas', 'action' => 'imprimir', $comanda['id'])
+                        , array(                            
+                            )
+                        );
                 if ($comanda['observacion']) {
                     echo "<cite>Observacion: ";
                     echo $comanda['observacion'] . "</cite>";
                     //echo "</li>";
                 }
                 ?>
+
                 <ul>
                 <?php //debug($comanda); ?>
                 <?php foreach ($comanda['DetalleComanda'] as $detalle) { ?>
                         <li>
                         <?php echo "Cant Pedida: " . $detalle['cant'] . ($detalle['cant_eliminada'] != '0' ? " Sacada: " . $detalle['cant_eliminada'] : '') ?>
                             <br>
+                            <?php
+                             echo $this->Html->link("Editar"
+                                    , array('plugin'=>'comanda','controller' => 'DetalleComandas', 'action' => 'edit', $detalle['id'])
+                                    , array(
+                                      
+                                        )
+                                    );
+                             echo " - ";
+                             echo $this->Html->link(__('Delete')
+                                    , array('plugin'=>'comanda', 'controller' => 'DetalleComandas', 'action'=>'delete', $detalle['id'])
+                                    , null
+                                    , sprintf(__('Are you sure you want to delete # %s?'), $detalle['id']));
+                            ?>
+                        
+
+
                             <span style="color: #AD0101; font-weight: normal; font-size: 120%; <?php if (($detalle['cant'] - $detalle['cant_eliminada']) == 0) echo "text-decoration: line-through;" ?> ">
                             <?php echo $detalle['cant'] - $detalle['cant_eliminada'] . ")  " . (!empty($detalle['Producto']['name']) ? $detalle['Producto']['name'] : '') . " [p-u $ " . $detalle['Producto']['precio'] . "]" ?>
                             </span>

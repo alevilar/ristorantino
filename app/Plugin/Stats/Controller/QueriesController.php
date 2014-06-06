@@ -22,9 +22,9 @@ class QueriesController extends StatsAppController {
 	}
 
 	function add() {
-		if (!empty($this->data)) {
+		if (!empty($this->request->data)) {
 			$this->Query->create();
-			if ($this->Query->save($this->data)) {
+			if ($this->Query->save($this->request->data)) {
 				$this->Session->setFlash(__('The Query has been saved'));
 				$this->redirect(array('action'=>'index'));
 			} else {
@@ -34,20 +34,20 @@ class QueriesController extends StatsAppController {
 	}
 
 	function edit($id = null) {
-		if (!$id && empty($this->data)) {
+		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__('Invalid Query'));
 			$this->redirect(array('action'=>'index'));
 		}
-		if (!empty($this->data)) {
-			if ($this->Query->save($this->data)) {
+		if (!empty($this->request->data)) {
+			if ($this->Query->save($this->request->data)) {
 				$this->Session->setFlash(__('The Query has been saved'));
 				$this->redirect(array('action'=>'index'));
 			} else {
 				$this->Session->setFlash(__('The Query could not be saved. Please, try again.'));
 			}
 		}
-		if (empty($this->data)) {
-			$this->data = $this->Query->read(null, $id);
+		if (empty($this->request->data)) {
+			$this->request->data = $this->Query->read(null, $id);
 		}
 	}
 
@@ -63,7 +63,7 @@ class QueriesController extends StatsAppController {
 	}
 	
 	function descargar_queries() {
-		$categoria=(isset($this->data['Query']['categoria']))? $this->data['Query']['categoria'] : "";
+		$categoria=(isset($this->request->data['Query']['categoria']))? $this->request->data['Query']['categoria'] : "";
 		$this->set('categoria',$categoria);
 
 		$categorias = array();
@@ -78,9 +78,9 @@ class QueriesController extends StatsAppController {
 		if($categoria!=""){
 			$conditions['categoria']=$categoria;
 		}
-		if(isset($this->data['Query']['description']) && $this->data['Query']['description']!="") {
-			$conditions['OR']['lower(to_ascii(Query.description)) SIMILAR TO ?'] = array($this->Query->convertir_para_busqueda_avanzada(utf8_decode($this->data['Query']['description'])));
-			$conditions['OR']['lower(to_ascii(Query.name)) SIMILAR TO ?'] = array($this->Query->convertir_para_busqueda_avanzada(utf8_decode($this->data['Query']['description'])));
+		if(isset($this->request->data['Query']['description']) && $this->request->data['Query']['description']!="") {
+			$conditions['OR']['lower(to_ascii(Query.description)) SIMILAR TO ?'] = array($this->Query->convertir_para_busqueda_avanzada(utf8_decode($this->request->data['Query']['description'])));
+			$conditions['OR']['lower(to_ascii(Query.name)) SIMILAR TO ?'] = array($this->Query->convertir_para_busqueda_avanzada(utf8_decode($this->request->data['Query']['description'])));
 		}
 
 		$queries=$this->Query->find('all',array('order'=>'modified DESC', 'conditions'=>$conditions));
@@ -120,8 +120,8 @@ class QueriesController extends StatsAppController {
 		$this->Query->recursive = -1;
                 
 		$categorias = array();
-		if(!empty($this->data['Query']['categoria'])){
-			$categorias = $this->Query->listarCategorias($this->data['Query']['categoria']);
+		if(!empty($this->request->data['Query']['categoria'])){
+			$categorias = $this->Query->listarCategorias($this->request->data['Query']['categoria']);
 		}
                 if (!empty($this->passedArgs['term'])) {
                     $categorias = $this->passedArgs['term'];
@@ -133,7 +133,7 @@ class QueriesController extends StatsAppController {
 
 
 		$this->set('categorias',$categorias);
-		$this->set('string_categoria',$this->data['Query']['categoria']);
+		$this->set('string_categoria',$this->request->data['Query']['categoria']);
 		$this->layout = 'ajax';
 	}
 

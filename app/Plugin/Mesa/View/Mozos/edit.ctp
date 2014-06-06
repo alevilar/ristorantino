@@ -5,8 +5,8 @@
 	<fieldset>
  		<legend><?php echo __('Editar Mozo');?></legend>
 	<?php
-        if (!empty($this->data['Mozo']['image_url']) ) {
-            echo $this->Html->image(THUMB_FOLDER . DS .$this->data['Mozo']['image_url'], array('img-polaroid', 'style'=>'width: 68px')); 
+        if (!empty($this->request->data['Mozo']['image_url']) ) {
+            echo $this->Html->image(THUMB_FOLDER . DS .$this->request->data['Mozo']['image_url'], array('img-polaroid', 'style'=>'width: 68px')); 
         }
 		echo $this->Form->input('id');
 		echo $this->Form->input('numero');

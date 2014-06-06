@@ -12,12 +12,12 @@ class ZetasController extends CashAppController
         unset($url['url']);
         if (!empty($url['fecha_desde'])) {
             $conditions['Zeta.created >='] = $url['fecha_desde'];
-            $this->data['Zeta']['fecha_desde'] = $url['fecha_desde'];
+            $this->request->data['Zeta']['fecha_desde'] = $url['fecha_desde'];
         }
         
         if (!empty($url['fecha_hasta'])) {
             $conditions['Zeta.created <='] = $url['fecha_hasta'];
-            $this->data['Zeta']['fecha_hasta'] = $url['fecha_hasta'];
+            $this->request->data['Zeta']['fecha_hasta'] = $url['fecha_hasta'];
         }
 
         $this->paginate['conditions'] = $conditions;

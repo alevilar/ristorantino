@@ -46,14 +46,24 @@ class CategoriasController extends ProductAppController
 
     function recover()
     {
-        debug($this->Categoria->recover());
-        exit();
+        if ( $this->Categoria->recover() ) {
+            $this->Session->setFlash('Recuperación correcta', 'flash_success');
+        } else {
+            $this->Session->setFlash('Error al querer arreglar la estructura', 'flash_error');
+        }
+        $this->redirect(array('action' => 'index'));
     }
 
     function verify()
     {
-        debug($this->Categoria->verify());
-        exit();
+        $verificados = $this->Categoria->verify();
+        if ( empty($verificados) ) {
+            $this->Session->setFlash('Recuperación correcta', 'flash_success');
+        } else {
+            $cant = count($verificados);
+            $this->Session->setFlash("Existen $cant de registros que no estan correctos. Pruebe con el link de \"recuperar\"", 'flash_error');
+        }
+        $this->redirect(array('action' => 'index'));
     }
 
     function edit($id = null)
@@ -77,8 +87,6 @@ class CategoriasController extends ProductAppController
 
             $this->request->data['Categoria']['image_url'] = $name . ".$ext";
 
-
-            $this->request->data['Categoria']['image_url'] = $name . ".$ext";
             move_uploaded_file($this->request->data['Categoria']['newfile']['tmp_name'], $path . $nameFile);
         }
 
@@ -87,14 +95,14 @@ class CategoriasController extends ProductAppController
                 $this->Categoria->create();
             }
             if ($this->Categoria->save($this->request->data)) {
-                $this->Session->setFlash(__('The Categoria has been saved'));
+                $this->Session->setFlash(__('The Categoria has been saved'), 'flash_success');
 //				$this->redirect(array('action'=>'index'));
             } else {
-                $this->Session->setFlash(__('The Categoria could not be saved. Please, try again.'));
+                $this->Session->setFlash(__('The Categoria could not be saved. Please, try again.'), 'flash_error');
             }
 
             if (empty($id)) {
-                $this->redirect('/categorias/index');
+                $this->redirect(array('action'=>'index'));
             }
         }
         if (empty($this->request->data)) {
@@ -106,10 +114,10 @@ class CategoriasController extends ProductAppController
     function delete($id = null)
     {
         if (!$id) {
-            $this->Session->setFlash(__('Invalid id for Categoria'));
+            $this->Session->setFlash(__('Invalid id for Categoria'), 'flash_error');
         }
-        if ($this->Categoria->delete($id)) {
-            $this->Session->setFlash(__('Categoria deleted'));
+        if ($this->Categoria->delete( $id )) {
+            $this->Session->setFlash(__('Categoria deleted'), 'flash_success');
         }
         $this->redirect(array('action' => 'index'));
     }

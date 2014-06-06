@@ -25,17 +25,17 @@ class EgresosController extends AccountAppController
         
         if (!empty($url['fecha_desde'])) {
             $conditions['DATE(Egreso.fecha) >='] = $url['fecha_desde'];
-            $this->data['Egreso']['fecha_desde'] = $url['fecha_desde'];
+            $this->request->data['Egreso']['fecha_desde'] = $url['fecha_desde'];
         }
 
         if (!empty($url['fecha_hasta'])) {
             $conditions['DATE(Egreso.fecha) <='] = $url['fecha_hasta'];
-            $this->data['Egreso']['fecha_hasta'] = $url['fecha_hasta'];
+            $this->request->data['Egreso']['fecha_hasta'] = $url['fecha_hasta'];
         }        
 
         if (empty($url)) {
-            $conditions['DATE(Egreso.fecha) >='] = $this->data['Egreso']['fecha_desde'] = date('Y-m-d', strtotime('-2 day'));
-            $conditions['DATE(Egreso.fecha) <='] = $this->data['Egreso']['fecha_hasta'] = date('Y-m-d', strtotime('now'));
+            $conditions['DATE(Egreso.fecha) >='] = $this->request->data['Egreso']['fecha_desde'] = date('Y-m-d', strtotime('-2 day'));
+            $conditions['DATE(Egreso.fecha) <='] = $this->request->data['Egreso']['fecha_hasta'] = date('Y-m-d', strtotime('now'));
         }
         
         $this->paginate = array(
@@ -55,14 +55,14 @@ class EgresosController extends AccountAppController
 
     function edit($egreso_id)
     {
-        if (!empty($this->data)) {
-            if (!$this->Egreso->save($this->data )) {
+        if (!empty($this->request->data)) {
+            if (!$this->Egreso->save($this->request->data )) {
                 $this->Session->setFlash('El pago no pudo ser guardado');
             } else {
                 $this->Session->setFlash('El Pago fue guardado');
             }
         }
-        $this->data = $this->Egreso->read(null, $egreso_id);
+        $this->request->data = $this->Egreso->read(null, $egreso_id);
         $this->set('tipoDePagos', $this->Egreso->TipoDePago->find('list'));
         $this->render('add');
     }
@@ -78,10 +78,10 @@ class EgresosController extends AccountAppController
         $cant_gastos = 0;
         $gastosAll = array();
 
-        if (!empty($this->data['Gasto'])) {
+        if (!empty($this->request->data['Gasto'])) {
             
             // re armo el array de gastos limpiando los que no fueron seleccionados para pagar
-            foreach ($this->data['Gasto'] as $g) {
+            foreach ($this->request->data['Gasto'] as $g) {
                 if ($g['gasto_seleccionado']) {
                     $gastos[] = $g['gasto_seleccionado'];
                 }
@@ -116,19 +116,19 @@ class EgresosController extends AccountAppController
             $this->pageTitle = 'Pagando ' . count($gastos) . ' Gasto';
         }
         
-        $this->data['Egreso']['fecha'] = $date = date('Y-m-d H:i', strtotime('now'));
-        $this->data['Egreso']['total'] = $suma_gastos;
+        $this->request->data['Egreso']['fecha'] = $date = date('Y-m-d H:i', strtotime('now'));
+        $this->request->data['Egreso']['total'] = $suma_gastos;
         $this->set('tipoDePagos', $this->Egreso->TipoDePago->find('list'));
-        $this->data['Gasto'] = $gastos;
+        $this->request->data['Gasto'] = $gastos;
         $this->set('cant_gastos', $cant_gastos);
         $this->set('gastosAll', $gastosAll);
     }
 
     function save()
     {
-        if (!empty($this->data)) {
+        if (!empty($this->request->data)) {
             $this->Egreso->create();
-            if ($this->Egreso->save($this->data)) {
+            if ($this->Egreso->save($this->request->data)) {
                 $this->Session->setFlash('El Pago fue guardado correctamente');
                 $this->redirect(array('controller' => 'gastos', 'action' => 'index'));
             } else {
@@ -159,7 +159,7 @@ class EgresosController extends AccountAppController
         }
         if ($this->Egreso->del($id)) {
             $this->Session->setFlash(__('Egreso deleted', true));
-            if ( !$this->RequestHandler->isAjax() ) {
+            if ( !$this->request->is('ajax') ) {
                 $this->redirect(array('action' => 'history'));
             }
         }

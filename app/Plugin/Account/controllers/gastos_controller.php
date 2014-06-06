@@ -16,8 +16,8 @@ class GastosController extends AccountAppController
     function index()
     {
         $conds = array();
-        if (!empty($this->data['Gasto']['proveedor_id'])){
-            $conds['Gasto.proveedor_id'] = $this->data['Gasto']['proveedor_id'];
+        if (!empty($this->request->data['Gasto']['proveedor_id'])){
+            $conds['Gasto.proveedor_id'] = $this->request->data['Gasto']['proveedor_id'];
         }
         $this->pageTitle = 'Gastos Pendientes de Pago';
         $this->Gasto->recursive = 1;
@@ -41,50 +41,50 @@ class GastosController extends AccountAppController
                 if ( $url['cierre_id'] == 1) {
                     // Abiertas
                     $conditions[] = 'Gasto.cierre_id IS NULL';
-                    $this->data['Gasto']['cierre_id'] = $url['cierre_id'];
+                    $this->request->data['Gasto']['cierre_id'] = $url['cierre_id'];
                 } else {               
                     //cerradas
                     $conditions[] = 'Gasto.cierre_id IS NOT NULL';
-                    $this->data['Gasto']['cierre_id'] = $url['cierre_id'];
+                    $this->request->data['Gasto']['cierre_id'] = $url['cierre_id'];
                 }
         }
 
         if (!empty($url['fecha_desde'])) {
             $conditions['Gasto.fecha >='] = $url['fecha_desde'];
-            $this->data['Gasto']['fecha_desde'] = $url['fecha_desde'];
+            $this->request->data['Gasto']['fecha_desde'] = $url['fecha_desde'];
         }
         
         if (!empty($url['importe_neto'])) {
             $conditions['Gasto.importe_neto'] = $url['importe_neto'];
-            $this->data['Gasto']['importe_neto'] = $url['importe_neto'];
+            $this->request->data['Gasto']['importe_neto'] = $url['importe_neto'];
         }
 
         if (!empty($url['fecha_hasta'])) {
             $conditions['Gasto.fecha <='] = $url['fecha_hasta'];
-            $this->data['Gasto']['fecha_hasta'] = $url['fecha_hasta'];
+            $this->request->data['Gasto']['fecha_hasta'] = $url['fecha_hasta'];
         }
 
 
         if (empty($url)) {
-            $conditions['Gasto.fecha >='] = $this->data['Gasto']['fecha_desde'] = date('Y-m-d', strtotime('-1month'));
-            $conditions['Gasto.fecha <='] = $this->data['Gasto']['fecha_hasta'] = date('Y-m-d', strtotime('now'));
+            $conditions['Gasto.fecha >='] = $this->request->data['Gasto']['fecha_desde'] = date('Y-m-d', strtotime('-1month'));
+            $conditions['Gasto.fecha <='] = $this->request->data['Gasto']['fecha_hasta'] = date('Y-m-d', strtotime('now'));
         }
 
 
         if (!empty($url['proveedor_id'])) {
             $conditions['Gasto.proveedor_id'] = $url['proveedor_id'];
-            $this->data['Gasto']['proveedor_id'] = $url['proveedor_id'];
+            $this->request->data['Gasto']['proveedor_id'] = $url['proveedor_id'];
         }
 
         if (!empty($url['clasificacion_id'])) {
             $conditions['Gasto.clasificacion_id'] = $url['clasificacion_id'];
-            $this->data['Gasto']['clasificacion_id'] = $url['clasificacion_id'];
+            $this->request->data['Gasto']['clasificacion_id'] = $url['clasificacion_id'];
         }
 
-        $this->data['Gasto']['tipo_factura_id'] = null;
+        $this->request->data['Gasto']['tipo_factura_id'] = null;
         if (!empty($url['tipo_factura_id'])) {
             $conditions['Gasto.tipo_factura_id'] = $url['tipo_factura_id'];
-            $this->data['Gasto']['tipo_factura_id'] = $url['tipo_factura_id'];
+            $this->request->data['Gasto']['tipo_factura_id'] = $url['tipo_factura_id'];
         }
            
         $this->set('tipo_facturas', $this->Gasto->TipoFactura->find('list'));
@@ -131,13 +131,13 @@ class GastosController extends AccountAppController
     function add()
     {
         $this->pageTitle = 'Nuevo Gasto';
-        if (!empty($this->data)) {
+        if (!empty($this->request->data)) {
             $this->Gasto->create();
             
-            if ($this->Gasto->save($this->data)) {
+            if ($this->Gasto->save($this->request->data)) {
                 $this->Session->setFlash(__('The Gasto has been saved', true));
 
-                if (!empty($this->data['Gasto']['pagar'])) {
+                if (!empty($this->request->data['Gasto']['pagar'])) {
                     $this->redirect(array('controller' => 'egresos', 'action' => 'add', $this->Gasto->id));
                 } else {
                     $this->redirect(array('controller' => 'gastos', 'action' => 'index'));
@@ -147,7 +147,7 @@ class GastosController extends AccountAppController
             }
         }
         
-        $this->data['Gasto']['fecha'] = date('Y-m-d', strtotime('now'));
+        $this->request->data['Gasto']['fecha'] = date('Y-m-d', strtotime('now'));
 
         $tipo_facturas = $this->Gasto->TipoFactura->find('list');
         $this->set('tipo_impuestos', $this->Gasto->TipoImpuesto->find('all', array('recursive' => -1)));
@@ -162,13 +162,13 @@ class GastosController extends AccountAppController
 
     function edit($id = null)
     {
-        if (!$id && empty($this->data)) {
+        if (!$id && empty($this->request->data)) {
             $this->Session->setFlash(__('Invalid Gasto', true));
             $this->redirect(array('action' => 'index'));
         }
 
-        if (!empty($this->data)) {
-            if ($this->Gasto->save($this->data)) {
+        if (!empty($this->request->data)) {
+            if ($this->Gasto->save($this->request->data)) {
                 $this->Session->setFlash(__('The Gasto has been saved', true));
 
                 $this->redirect(array('action' => 'index'));
@@ -177,19 +177,19 @@ class GastosController extends AccountAppController
             }
         }
 
-        if (empty($this->data)) {
-            $this->data = $this->Gasto->read(null, $id);
-            if ($this->data['Gasto']['cierre_id']) {
+        if (empty($this->request->data)) {
+            $this->request->data = $this->Gasto->read(null, $id);
+            if ($this->request->data['Gasto']['cierre_id']) {
                 $this->Session->setFlash('El gasto ya está "Cerrado", no puede ser modificado');
                 $this->redirect(array('action'=>'view', $id));
             }
         }
 
-        if (!empty($this->data['Impuesto'])){
-            $imps = $this->data['Impuesto'];
-            $this->data['Impuesto'] = array();
+        if (!empty($this->request->data['Impuesto'])){
+            $imps = $this->request->data['Impuesto'];
+            $this->request->data['Impuesto'] = array();
             foreach ($imps as $i) {
-                $this->data['Impuesto'][$i['tipo_impuesto_id']] = $i;
+                $this->request->data['Impuesto'][$i['tipo_impuesto_id']] = $i;
             }
         }
         $this->pageTitle = 'Editar Gasto #' . $id;
@@ -203,12 +203,12 @@ class GastosController extends AccountAppController
                 ));
         $this->set('tipo_impuestos', $tipo_impuestos);
         
-        if (!empty($this->data['Proveedor']['id'])) {
+        if (!empty($this->request->data['Proveedor']['id'])) {
             $cuit = '';
-            if ( !empty($this->data['Proveedor']['cuit']) ) {
-                $cuit = ' ('.$this->data['Proveedor']['cuit'] .')';
+            if ( !empty($this->request->data['Proveedor']['cuit']) ) {
+                $cuit = ' ('.$this->request->data['Proveedor']['cuit'] .')';
             }
-            $this->data['Gasto']['proveedor_list'] = $this->data['Proveedor']['name'].$cuit;
+            $this->request->data['Gasto']['proveedor_list'] = $this->request->data['Proveedor']['name'].$cuit;
         }
         $this->set(compact('proveedores', 'tipo_facturas', 'clasificaciones'));
         $this->render('add');
@@ -222,7 +222,7 @@ class GastosController extends AccountAppController
         }
         if ($this->Gasto->del($id)) {
             $this->Session->setFlash(__('Gasto deleted', true));
-            if ( !$this->RequestHandler->isAjax() ) {
+            if ( !$this->request->is('ajax') ) {
                 $this->redirect(array('action' => 'index'));
             }
         }

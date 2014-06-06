@@ -14,20 +14,15 @@ echo $this->Html->script('mesas/index_head', false);
         <h2 style="text-align: center;"><?php __('Buscador de Mesas'); ?></h2>
         <?php echo $this->Form->create("Mesa", array("action" => "index")); ?>
         <div class=" col-md-1">
-            <?php echo $this->Form->input('numero', array('label' => 'N°Mesa')); ?>
+            <?php echo $this->Form->input('numero', array('label' => 'N°Mesa', 'required'=>false)); ?>
             <?php echo $this->Form->input('mozo_numero', array('label' => 'N°Mozo')); ?>
         </div>
         <div class="col-md-2">
-            <?php echo $this->Form->input('total', array('label' => 'Importe', 'style' => 'width: 100px;'));
+            <?php echo $this->Form->input('total', array('label' => 'Importe'));
             echo $this->Form->input('estado_id', array(
                 'label' => '¿Qué mesas?',
                 'type' => 'select',
-                'options' => array(
-                    'todas' => 'Todas las mesas',
-                    'abiertas' => 'Sólo Abiertas',
-                    'cerradas' => 'Sólo Cerradas pero sin Cobrar',
-                    'cobradas' => 'Sólo Cerradas y Cobradas'),
-                'style' => 'width: 112px;'
+                'empty' => 'Seleccione',                
             ));
             ?>
         </div>

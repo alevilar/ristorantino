@@ -1,12 +1,12 @@
 <?php
 echo $this->element('form_mini_year_month_search');
-echo $html->css('/account/css/style');
+echo $this->Html->css('/account/css/style');
 ?>
 
 
 <h1>Listado de Gastos</h1>
 
-<?php echo $form->create('Cierre'); ?>
+<?php echo $this->Form->create('Cierre'); ?>
 <div id='place-for-inputs' class="cq-hide"></div>
 <div id='descripcion-cierre' class="well cq-hide">
     <div class="pull-right">
@@ -15,10 +15,10 @@ echo $html->css('/account/css/style');
     </div>
     <p><span class='detalle-gastos'></span> gastos seleccionados</p>
     <?php
-    echo $form->input('name', array('placeholder'=>'Ejemplo: Cierre de Abril','label' => 'breve descripción del cierre', 'required' => true));
-    echo $form->button('Cancelar', array('type' => 'button', 'onclick'=>'$("#descripcion-cierre").hide("fade")', 'class'=>'btn'));
+    echo $this->Form->input('name', array('placeholder'=>'Ejemplo: Cierre de Abril','label' => 'breve descripción del cierre', 'required' => true));
+    echo $this->Form->button('Cancelar', array('type' => 'button', 'onclick'=>'$("#descripcion-cierre").hide("fade")', 'class'=>'btn'));
     echo "&nbsp;";
-    echo $form->button('Guardar', array('type' => 'submit', 'class'=>'btn btn-primary'));
+    echo $this->Form->button('Guardar', array('type' => 'submit', 'class'=>'btn btn-primary'));
     
     ?>
 </div>
@@ -26,7 +26,7 @@ echo $html->css('/account/css/style');
 
 <div class="btn-group">
 <?php
-echo $form->button('Aplicar Cierre', array(
+echo $this->Form->button('Aplicar Cierre', array(
     'type' => 'button',
     'data-theme' => 'b',
     'data-inline' => 'true',
@@ -34,14 +34,14 @@ echo $form->button('Aplicar Cierre', array(
     'class' => 'btn btn-default',
     'id' => 'btn-gastos-apli-cierre'));
 
-echo $form->end();
+echo $this->Form->end();
 ?>
 
 <?php
 
 
 
-echo $html->link('Descargar Excel', $this->action . '.xls' . strstr($_SERVER['REQUEST_URI'], '?'), array(
+echo $this->Html->link('Descargar Excel', $this->action . '.xls' . strstr($_SERVER['REQUEST_URI'], '?'), array(
     'data-ajax' => 'false',
     'class' => 'btn btn-success',
 ));

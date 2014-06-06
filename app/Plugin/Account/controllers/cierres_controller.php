@@ -19,10 +19,10 @@ class CierresController extends AccountAppController
    
     function add()
     {        
-        if (!empty($this->data)) {
+        if (!empty($this->request->data)) {
             $this->Cierre->create();
-            if ($this->Cierre->save($this->data)) {
-                foreach ($this->data['Gasto'] as $gasto){
+            if ($this->Cierre->save($this->request->data)) {
+                foreach ($this->request->data['Gasto'] as $gasto){
                     $this->Cierre->Gasto->id = $gasto['id'];
                     $this->Cierre->Gasto->saveField('cierre_id', $this->Cierre->id);
                 }

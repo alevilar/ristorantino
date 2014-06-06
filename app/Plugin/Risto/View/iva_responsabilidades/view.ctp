@@ -20,9 +20,9 @@
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $html->link(__('Editar IVA responsabilidad', true), array('action' => 'edit', $ivaResponsabilidad['IvaResponsabilidad']['id'])); ?> </li>
-		<li><?php echo $html->link(__('Borrar IVA responsabilidad', true), array('action' => 'delete', $ivaResponsabilidad['IvaResponsabilidad']['id']), null, sprintf(__('Esta seguro que desea borrar # %s?', true), $ivaResponsabilidad['IvaResponsabilidad']['id'])); ?> </li>
-		<li><?php echo $html->link(__('Listar IVA responsabilidad', true), array('action' => 'index')); ?> </li>
-		<li><?php echo $html->link(__('Crear IVA responsabilidad', true), array('action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('Editar IVA responsabilidad', true), array('action' => 'edit', $ivaResponsabilidad['IvaResponsabilidad']['id'])); ?> </li>
+		<li><?php echo $this->Html->link(__('Borrar IVA responsabilidad', true), array('action' => 'delete', $ivaResponsabilidad['IvaResponsabilidad']['id']), null, sprintf(__('Esta seguro que desea borrar # %s?', true), $ivaResponsabilidad['IvaResponsabilidad']['id'])); ?> </li>
+		<li><?php echo $this->Html->link(__('Listar IVA responsabilidad', true), array('action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('Crear IVA responsabilidad', true), array('action' => 'add')); ?> </li>
 	</ul>
 </div>

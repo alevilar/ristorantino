@@ -20,12 +20,12 @@
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $html->link(__('Edit TipoDePago', true), array('action'=>'edit', $tipoDePago['TipoDePago']['id'])); ?> </li>
-		<li><?php echo $html->link(__('Delete TipoDePago', true), array('action'=>'delete', $tipoDePago['TipoDePago']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $tipoDePago['TipoDePago']['id'])); ?> </li>
-		<li><?php echo $html->link(__('List TipoDePagos', true), array('action'=>'index')); ?> </li>
-		<li><?php echo $html->link(__('New TipoDePago', true), array('action'=>'add')); ?> </li>
-		<li><?php echo $html->link(__('List Pagos', true), array('controller'=> 'pagos', 'action'=>'index')); ?> </li>
-		<li><?php echo $html->link(__('New Pago', true), array('controller'=> 'pagos', 'action'=>'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('Edit TipoDePago', true), array('action'=>'edit', $tipoDePago['TipoDePago']['id'])); ?> </li>
+		<li><?php echo $this->Html->link(__('Delete TipoDePago', true), array('action'=>'delete', $tipoDePago['TipoDePago']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $tipoDePago['TipoDePago']['id'])); ?> </li>
+		<li><?php echo $this->Html->link(__('List TipoDePagos', true), array('action'=>'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New TipoDePago', true), array('action'=>'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Pagos', true), array('controller'=> 'pagos', 'action'=>'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Pago', true), array('controller'=> 'pagos', 'action'=>'add')); ?> </li>
 	</ul>
 </div>
 	<div class="related">
@@ -52,7 +52,7 @@
 	<?php endif; ?>
 		<div class="actions">
 			<ul>
-				<li><?php echo $html->link(__('Edit Pago', true), array('controller'=> 'pagos', 'action'=>'edit', $tipoDePago['Pago']['id'])); ?></li>
+				<li><?php echo $this->Html->link(__('Edit Pago', true), array('controller'=> 'pagos', 'action'=>'edit', $tipoDePago['Pago']['id'])); ?></li>
 			</ul>
 		</div>
 	</div>
@@ -81,9 +81,9 @@
 			<td><?php echo $pago['tipo_de_pago_id'];?></td>
 			<td><?php echo $pago['valor'];?></td>
 			<td class="actions">
-				<?php echo $html->link(__('View', true), array('controller'=> 'pagos', 'action'=>'view', $pago['id'])); ?>
-				<?php echo $html->link(__('Edit', true), array('controller'=> 'pagos', 'action'=>'edit', $pago['id'])); ?>
-				<?php echo $html->link(__('Delete', true), array('controller'=> 'pagos', 'action'=>'delete', $pago['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $pago['id'])); ?>
+				<?php echo $this->Html->link(__('View', true), array('controller'=> 'pagos', 'action'=>'view', $pago['id'])); ?>
+				<?php echo $this->Html->link(__('Edit', true), array('controller'=> 'pagos', 'action'=>'edit', $pago['id'])); ?>
+				<?php echo $this->Html->link(__('Delete', true), array('controller'=> 'pagos', 'action'=>'delete', $pago['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $pago['id'])); ?>
 			</td>
 		</tr>
 	<?php endforeach; ?>
@@ -92,7 +92,7 @@
 
 	<div class="actions">
 		<ul>
-			<li><?php echo $html->link(__('New Pago', true), array('controller'=> 'pagos', 'action'=>'add'));?> </li>
+			<li><?php echo $this->Html->link(__('New Pago', true), array('controller'=> 'pagos', 'action'=>'add'));?> </li>
 		</ul>
 	</div>
 </div>

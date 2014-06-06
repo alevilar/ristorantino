@@ -56,14 +56,14 @@
         
             <a href="#listado-mesas" data-role="button">Modo Adicionista</a>
             
-            <a href="<?php echo $html->url('/adition/adicionar#listado-mesas-cerradas')?>" rel="external" data-role="button" data-icon="refresh">Refrescar Cajero</a>
+            <a href="<?php echo $this->Html->url('/adition/adicionar#listado-mesas-cerradas')?>" rel="external" data-role="button" data-icon="refresh">Refrescar Cajero</a>
             
             <h3>Informes Fiscales</h3>
             <div class="ui-grid-a">
-                <div class="ui-block-a"><a href="#listado-mesas-cerradas" data-role="button" data-href="<?php echo $html->url('/adition/cashier/cierre_x');?>" data-direction="reverse">Imprimir informe "X"</a></div>
-                <div class="ui-block-b"><a href="#listado-mesas-cerradas" data-role="button" data-href="<?php echo $html->url('/adition/cashier/cierre_z');?>" data-direction="reverse">Imprimir informe "Z"</a></div>
+                <div class="ui-block-a"><a href="#listado-mesas-cerradas" data-role="button" data-href="<?php echo $this->Html->url('/adition/cashier/cierre_x');?>" data-direction="reverse">Imprimir informe "X"</a></div>
+                <div class="ui-block-b"><a href="#listado-mesas-cerradas" data-role="button" data-href="<?php echo $this->Html->url('/adition/cashier/cierre_z');?>" data-direction="reverse">Imprimir informe "Z"</a></div>
             </div>
-            <a href="<?php echo $html->url('/adition/cashier/nota_credito');?>" data-role="button">Nota de crédito</a>
+            <a href="<?php echo $this->Html->url('/adition/cashier/nota_credito');?>" data-role="button">Nota de crédito</a>
             
             
             <hr />
@@ -76,13 +76,13 @@
                             <option value="1" <?php echo Configure::read('Mesa.imprimePrimeroRemito')?'selected="selected"':''?>>No</option>
                     </select> 
             </div>
-            <a href="#listado-mesas-cerradas" data-role="button" data-href="<?php echo $html->url('/adition/cashier/vaciar_cola_impresion_fiscal');?>" class="silent-click" >Vaciar cola de impresión</a>
+            <a href="#listado-mesas-cerradas" data-role="button" data-href="<?php echo $this->Html->url('/adition/cashier/vaciar_cola_impresion_fiscal');?>" class="silent-click" >Vaciar cola de impresión</a>
             
             <hr />
             
             <div class="ui-grid-a">
                 <div class="ui-block-a"><a href="#" data-rel="back" data-role="button">Cancelar</a></div>
-                <div class="ui-block-b"><a data-icon="home" data-role="button" href="<?php echo $html->url('/');?>" rel="external" data-theme="b">Ir a Página Principal</a></div>
+                <div class="ui-block-b"><a data-icon="home" data-role="button" href="<?php echo $this->Html->url('/');?>" rel="external" data-theme="b">Ir a Página Principal</a></div>
             </div>
     </div>
 </div>
@@ -103,15 +103,15 @@
             
             <a href="#" onclick="window.location.reload(true);" data-ajax="false" data-role="button" data-icon="refresh">Refrescar Adición</a>
             
-            <a href="<?php echo $html->url('/mesas/cobradas');?>" data-role="button" data-rel="dialog">Mesas Cobradas</a>
+            <a href="<?php echo $this->Html->url('/mesas/cobradas');?>" data-role="button" data-rel="dialog">Mesas Cobradas</a>
             
-            <a href="#" data-role="button" title="Actualizar Menú" onclick="Risto.Adition.menu.update()"><?php echo $html->image('refresh.png', array('class'=> 'btn-comanda-icon'))?> Actualizar Menú</a>
+            <a href="#" data-role="button" title="Actualizar Menú" onclick="Risto.Adition.menu.update()"><?php echo $this->Html->image('refresh.png', array('class'=> 'btn-comanda-icon'))?> Actualizar Menú</a>
             
             
             
              <div class="ui-grid-a">
                 <div class="ui-block-a"><a href="#" data-rel="back" data-role="button">Cancelar</a></div>
-                <div class="ui-block-b"><a data-icon="home" data-role="button" href="<?php echo $html->url('/');?>" rel="external" data-theme="b">Ir a Página Principal</a></div>
+                <div class="ui-block-b"><a data-icon="home" data-role="button" href="<?php echo $this->Html->url('/');?>" rel="external" data-theme="b">Ir a Página Principal</a></div>
             </div>
             
     </div>
@@ -253,14 +253,14 @@
                 <span class="mesa-id" style="float: left;">
                     #<span data-bind="text: adn().currentMesa().id()"></span>
                     <span data-bind="visible: !adn().currentMesa().id()">
-                        <?php echo $html->image('loader.gif'); ?>
+                        <?php echo $this->Html->image('loader.gif'); ?>
                     </span>
                 </span>
                 
                 <span data-bind="text: adn().currentMesa().numero()"></span>
                 <?php 
-                echo $html->image('mesa-abrio.png') . " " . Configure::read('Mesa.tituloMesa') ." - " .
-                Configure::read('Mesa.tituloMozo') . " " . $html->image('mozomoniob.png') 
+                echo $this->Html->image('mesa-abrio.png') . " " . Configure::read('Mesa.tituloMesa') ." - " .
+                Configure::read('Mesa.tituloMozo') . " " . $this->Html->image('mozomoniob.png') 
                 ?>
                 <span data-bind="text: adn().currentMesa().mozo().numero()"></span>
                  
@@ -273,45 +273,45 @@
                 <ul data-role="listview"  data-bind="attr: {'estado': adn().currentMesa().estado().icon}">
                     
                     <li id="mesa-action-comanda" data-bind="attr: {'estado': 'comanda-add-menu_'+adn().currentMesa().estado().icon}">
-                        <a href="#comanda-add-menu" data-rel="dialog"><?= $html->image('/adition/css/img/chef_64.png')?>Comanda</a>
+                        <a href="#comanda-add-menu" data-rel="dialog"><?= $this->Html->image('/adition/css/img/chef_64.png')?>Comanda</a>
                     </li>
                     
                     <li id="mesa-action-cliente" data-bind="attr: {'estado': 'mesa-cliente_'+adn().currentMesa().estado().icon}">
-                        <a href="<?php echo $html->url('/clientes/jqm_clientes')?>" data-rel="dialog">
-                                <?= $html->image('/adition/css/img/customers.png')?>
+                        <a href="<?php echo $this->Html->url('/clientes/jqm_clientes')?>" data-rel="dialog">
+                                <?= $this->Html->image('/adition/css/img/customers.png')?>
                             <span data-bind="visible: !adn().currentMesa().Cliente()">Agregar Cliente</span>
                             <span data-bind="visible: adn().currentMesa().Cliente()" style="white-space: normal"><span data-bind="text: adn().currentMesa().clienteNameData()"></span></span>
                         </a>
                     </li>
                     
                     <li id="mesa-action-cerrar" data-bind="attr: {'estado': 'mesa-cerrar_'+adn().currentMesa().estado().icon}">
-                        <a href="#listado-mesas" id="mesa-cerrar" data-direction="reverse"><?= $html->image('/adition/css/img/cerrarmesa.png')?>Cerrar</a>
+                        <a href="#listado-mesas" id="mesa-cerrar" data-direction="reverse"><?= $this->Html->image('/adition/css/img/cerrarmesa.png')?>Cerrar</a>
                     </li>
                     
                     
                     <li id="mesa-action-cobrar" data-bind="attr: {'estado': 'mesa-cobrar_'+adn().currentMesa().estado().icon}">
-                        <a href="#mesa-cobrar" data-rel="dialog"><?= $html->image('/adition/css/img/cobrar.png')?>Cobrar</a>
+                        <a href="#mesa-cobrar" data-rel="dialog"><?= $this->Html->image('/adition/css/img/cobrar.png')?>Cobrar</a>
                     </li>
                     
                     <li id="mesa-action-reimprimir" data-bind="attr: {'estado': 'mesa-re-print_'+adn().currentMesa().estado().icon}">
-                        <a href="#listado-mesas" class="mesa-reimprimir"  data-rel="back"><?= $html->image('/adition/css/img/printer.png')?>Imprimir Ticket</a>
+                        <a href="#listado-mesas" class="mesa-reimprimir"  data-rel="back"><?= $this->Html->image('/adition/css/img/printer.png')?>Imprimir Ticket</a>
                     </li>
 
                     
                     <li id="mesa-action-cambiar-mozo">
-                        <a href="#mesa-cambiar-mozo" data-rel="dialog"><?= $html->image('/adition/css/img/cambiarmozo.png')?>Cambiar <?php echo Configure::read('Mesa.tituloMozo')?></a>
+                        <a href="#mesa-cambiar-mozo" data-rel="dialog"><?= $this->Html->image('/adition/css/img/cambiarmozo.png')?>Cambiar <?php echo Configure::read('Mesa.tituloMozo')?></a>
                     </li>
                     
                     <li id="mesa-action-cambiar-numero">
-                        <a href="#mesa-cambiar-numero" data-rel="dialog"><?= $html->image('/adition/css/img/cambiarmesa.png')?>Cambiar N°</a>
+                        <a href="#mesa-cambiar-numero" data-rel="dialog"><?= $this->Html->image('/adition/css/img/cambiarmesa.png')?>Cambiar N°</a>
                     </li>
                     
                     <li id="mesa-action-reabrir" data-bind="attr: {'estado': 'mesa-reabrir_'+adn().currentMesa().estado().icon}">
-                        <a href="#listado-mesas" id="mesa-reabrir"><?= $html->image('/adition/css/img/reabrir.png')?>Re Abrir</a>
+                        <a href="#listado-mesas" id="mesa-reabrir"><?= $this->Html->image('/adition/css/img/reabrir.png')?>Re Abrir</a>
                     </li>
                     
                     <li style="" id="mesa-action-menu" data-bind="attr: {'estado': 'mesa-borrar_'+adn().currentMesa().estado().icon}">
-                        <a href="#" id="mesa-menu"><?= $html->image('/adition/css/img/write.png')?>Menú <span style="color: red" data-bind="visible: adn().currentMesa().menu() != 0,text: adn().currentMesa().menu"></span></a>
+                        <a href="#" id="mesa-menu"><?= $this->Html->image('/adition/css/img/write.png')?>Menú <span style="color: red" data-bind="visible: adn().currentMesa().menu() != 0,text: adn().currentMesa().menu"></span></a>
                     </li>
                     
                     <li>
@@ -319,11 +319,11 @@
                     </li>
                     
                     <li style="width: 49%; float: left;" id="mesa-action-borrar" data-bind="attr: {'estado': 'mesa-borrar_'+adn().currentMesa().estado().icon}">
-                        <a href="#listado-mesas" id="mesa-borrar" data-rel="back"><?= $html->image('/adition/css/img/borrarmesa.png')?>Borrar</a>
+                        <a href="#listado-mesas" id="mesa-borrar" data-rel="back"><?= $this->Html->image('/adition/css/img/borrarmesa.png')?>Borrar</a>
                     </li>
                     
                     <li style="width: 49%; float: right;" id="mesa-action-edit" data-bind="attr: {'estado': 'mesa-borrar_'+adn().currentMesa().estado().icon}">
-                        <a href="#" data-href="<? echo $html->url('/mesas/edit/') ?>">Editar</a>
+                        <a href="#" data-href="<? echo $this->Html->url('/mesas/edit/') ?>">Editar</a>
                     </li>
                     
                     
@@ -367,10 +367,10 @@
 
             <div data-role="controlgroup" data-type="horizontal" style="float: right;">
 
-                <a style="min-width: 160px" href="#" data-role="button" title="Haga click para desactivar la impresión de comanda" data-bind="click: function(){adn().currentMesa().currentComanda().comanda.imprimir( 0 )}, visible: adn().currentMesa().currentComanda().comanda.imprimir()"><?php echo $html->image('print48.png', array('class'=> 'btn-comanda-icon'))?>Si Imprime</a>
-                <a style="min-width: 160px" href="#" data-role="button" title="Haga click para activar impresión de comanda" data-bind="click: function(){adn().currentMesa().currentComanda().comanda.imprimir( 1 )}, visible: !adn().currentMesa().currentComanda().comanda.imprimir()" ><?php echo $html->image('dontprint48.png', array('class'=> 'btn-comanda-icon'))?>No Imprime</a>
+                <a style="min-width: 160px" href="#" data-role="button" title="Haga click para desactivar la impresión de comanda" data-bind="click: function(){adn().currentMesa().currentComanda().comanda.imprimir( 0 )}, visible: adn().currentMesa().currentComanda().comanda.imprimir()"><?php echo $this->Html->image('print48.png', array('class'=> 'btn-comanda-icon'))?>Si Imprime</a>
+                <a style="min-width: 160px" href="#" data-role="button" title="Haga click para activar impresión de comanda" data-bind="click: function(){adn().currentMesa().currentComanda().comanda.imprimir( 1 )}, visible: !adn().currentMesa().currentComanda().comanda.imprimir()" ><?php echo $this->Html->image('dontprint48.png', array('class'=> 'btn-comanda-icon'))?>No Imprime</a>
 
-                <a style="min-width: 160px" href="#" id="comanda-obervacion-a" data-role="button" title="Agregar Observación"><?php echo $html->image('pencil_48.png', array('class'=> 'btn-comanda-icon'))?>Observación</a>
+                <a style="min-width: 160px" href="#" id="comanda-obervacion-a" data-role="button" title="Agregar Observación"><?php echo $this->Html->image('pencil_48.png', array('class'=> 'btn-comanda-icon'))?>Observación</a>
                 <a href="#mesa-view" data-role="button" id="comanda-add-guardar"  data-icon="check" data-theme="b">Enviar Comanda</a>
 
             </div>
@@ -545,7 +545,7 @@
             <li>
                 <a href="#" onclick='new Risto.Adition.pago(<?php echo $pagoJson?>)'>
             <?php
-            echo $html->image($tp['TipoDePago']['image_url']);
+            echo $this->Html->image($tp['TipoDePago']['image_url']);
             echo '<br />';
             echo $pago['name'];
             ?>

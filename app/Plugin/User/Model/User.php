@@ -100,9 +100,9 @@ class User extends UserAppModel {
                
         
         public function comparePassword($coso) {          
-            if ( !empty($this->data['User']['password']) && !empty( $this->data['User']['password_check'] )  ) {
-                $pass1 = AuthComponent::password($this->data['User']['password']);
-                $pass2 = AuthComponent::password( $this->data['User']['password_check'] );
+            if ( !empty($this->request->data['User']['password']) && !empty( $this->request->data['User']['password_check'] )  ) {
+                $pass1 = AuthComponent::password($this->request->data['User']['password']);
+                $pass2 = AuthComponent::password( $this->request->data['User']['password_check'] );
                 
                 if ($pass1 != $pass2){
                     return false;
@@ -112,8 +112,8 @@ class User extends UserAppModel {
         }
 
         public function beforeSave($options = array()) {
-            if ( !empty($this->data['User']['password']) ) {
-                $this->data['User']['password'] = AuthComponent::password($this->data['User']['password']);
+            if ( !empty($this->request->data['User']['password']) ) {
+                $this->request->data['User']['password'] = AuthComponent::password($this->request->data['User']['password']);
             }
 
             return parent::beforeSave($options);
@@ -121,9 +121,9 @@ class User extends UserAppModel {
         
         public function afterSave($created, $options = array() )
         {
-            if ($created && !empty($this->data['User']['username']) ) {
+            if ($created && !empty($this->request->data['User']['username']) ) {
                 // colocar el nombre del rol como alias den Aro ACL
-                if ( $this->Aro->saveField('alias', $this->data['User']['username']) ) { 
+                if ( $this->Aro->saveField('alias', $this->request->data['User']['username']) ) { 
                     return parent::afterSave($created);
                 } else {
                     return false;
@@ -133,11 +133,11 @@ class User extends UserAppModel {
         
         
         function parentNode() {
-            if (!$this->id && empty($this->data)) {
+            if (!$this->id && empty($this->request->data)) {
                 return null;
             }
-            $data = $this->data;
-            if (empty($this->data)) {
+            $data = $this->request->data;
+            if (empty($this->request->data)) {
                 $data = $this->read();
             }
             if (!$data['User']['rol_id']) {

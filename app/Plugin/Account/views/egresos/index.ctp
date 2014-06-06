@@ -9,7 +9,7 @@ foreach ($egresos as $p){
             [<?php echo $p['Egreso']['fecha'] ?>]
         </span>
         <span>
-            <?php echo $number->currency($p['Egreso']['total']); ?>
+            <?php echo $this->Number-> currency($p['Egreso']['total']); ?>
         </span>
         <span>
             <?php echo $p['Egreso']['observacion']; ?>
@@ -18,7 +18,7 @@ foreach ($egresos as $p){
             <?php foreach ($p['Gasto'] as $g){ ?>
             <li>
                 <span>
-                    <?php echo $number->currency($g['importe_total'])?>
+                    <?php echo $this->Number-> currency($g['importe_total'])?>
                 </span>
             </li>
             <?php } ?>

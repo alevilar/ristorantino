@@ -19,20 +19,20 @@ class Zeta extends CashAppModel {
         
         function beforeSave($options = array())
         {
-            if (empty($this->data['Zeta']['total_ventas'])){
-                $this->data['Zeta']['total_ventas'] = 0;
+            if (empty($this->request->data['Zeta']['total_ventas'])){
+                $this->request->data['Zeta']['total_ventas'] = 0;
             }
-            if (empty($this->data['Zeta']['monto_iva'])){
-                $this->data['Zeta']['monto_iva'] = 0;
+            if (empty($this->request->data['Zeta']['monto_iva'])){
+                $this->request->data['Zeta']['monto_iva'] = 0;
             }
-            if (empty($this->data['Zeta']['nota_credito_iva'])){
-                $this->data['Zeta']['nota_credito_iva'] = 0;
+            if (empty($this->request->data['Zeta']['nota_credito_iva'])){
+                $this->request->data['Zeta']['nota_credito_iva'] = 0;
             }
-            if (empty($this->data['Zeta']['monto_neto'])){
-                $this->data['Zeta']['monto_neto'] = 0;
+            if (empty($this->request->data['Zeta']['monto_neto'])){
+                $this->request->data['Zeta']['monto_neto'] = 0;
             }
-            if (empty($this->data['Zeta']['nota_credito_neto'])){
-                $this->data['Zeta']['nota_credito_neto'] = 0;
+            if (empty($this->request->data['Zeta']['nota_credito_neto'])){
+                $this->request->data['Zeta']['nota_credito_neto'] = 0;
             }
             return parent::beforeSave($options);
         }

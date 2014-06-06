@@ -3,11 +3,11 @@
 		echo $this->Html->script('/pquery/js/jquery.jqplot.js');
 		echo $this->Html->script('/pquery/js/plugins/jqplot.pieRenderer.js');
                 
-                echo $html->css('/pquery/css/examples.css');
-                echo $html->css('/pquery/css/examples.css');
-                echo $html->css('cake.css');         
-                echo $html->css('/pquery/css/jquery.jqplot.css');
-                echo $html->css('estadisticas');
+                echo $this->Html->css('/pquery/css/examples.css');
+                echo $this->Html->css('/pquery/css/examples.css');
+                echo $this->Html->css('cake.css');         
+                echo $this->Html->css('/pquery/css/jquery.jqplot.css');
+                echo $this->Html->css('estadisticas');
         
                 
 ?>
@@ -105,10 +105,10 @@
 
 </div>
     <div class="grid_2 push_1 select_periodo">
-        <?php echo $html->link("Dia", 'mesas_pago/dia', array('class' => 'menu_periodo')) ?>
-        <?php echo $html->link("Semana", 'mesas_pago/semana', array('class' => 'menu_periodo')) ?>
-        <?php echo $html->link("Mes", 'mesas_pago/mes', array('class' => 'menu_periodo')) ?>
-        <?php echo $html->link("Año", 'mesas_pago/anio', array('class' => 'menu_periodo')) ?>
+        <?php echo $this->Html->link("Dia", 'mesas_pago/dia', array('class' => 'menu_periodo')) ?>
+        <?php echo $this->Html->link("Semana", 'mesas_pago/semana', array('class' => 'menu_periodo')) ?>
+        <?php echo $this->Html->link("Mes", 'mesas_pago/mes', array('class' => 'menu_periodo')) ?>
+        <?php echo $this->Html->link("Año", 'mesas_pago/anio', array('class' => 'menu_periodo')) ?>
     </div>
 
 

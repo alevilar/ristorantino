@@ -1,6 +1,6 @@
 <?php
-echo $javascript->link('jquery-ui-1.8.5.custom.min', false);
-echo $html->css('smoothness/jquery-ui-1.8.5.custom',null, false);
+echo $this->Html->script('jquery-ui-1.8.5.custom.min', false);
+echo $this->Html->css('smoothness/jquery-ui-1.8.5.custom',null, false);
 ?>
 
 <script type="text/javascript">
@@ -11,29 +11,29 @@ echo $html->css('smoothness/jquery-ui-1.8.5.custom',null, false);
 
 
 <div class="queries form">
-<?php echo $form->create('Query');?>
+<?php echo $this->Form->create('Query');?>
 	<fieldset>
  		<legend><?php echo __('Editar Query');?></legend>
 	<?php
-		echo $form->input('id');
-		echo $form->input('name');
-		echo $form->input('description');
+		echo $this->Form->input('id');
+		echo $this->Form->input('name');
+		echo $this->Form->input('description');
 
 		 /* @var $ajax AjaxHelper */
 		echo $ajax->autoComplete('categoria', '/pquery/queries/listado_categorias');
                 
 		echo "<div>";
-		echo $form->input('ver_online',array('label'=>'¿Ver Online?','after'=>'si se tilda esta opcion se habiiltara la query para ver de forma online como una pagina normal.'));
+		echo $this->Form->input('ver_online',array('label'=>'¿Ver Online?','after'=>'si se tilda esta opcion se habiiltara la query para ver de forma online como una pagina normal.'));
 		echo "</div>";
 		
-		echo $form->input('query');
+		echo $this->Form->input('query');
 	?>
 	</fieldset>
-<?php echo $form->end('Submit');?>
+<?php echo $this->Form->end('Submit');?>
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $html->link(__('Delete'), array('action'=>'delete', $form->value('Query.id')), null, sprintf(__('Are you sure you want to delete # %s?'), $form->value('Query.id'))); ?></li>
-		<li><?php echo $html->link(__('List Queries'), array('action'=>'index'));?></li>
+		<li><?php echo $this->Html->link(__('Delete'), array('action'=>'delete', $this->Form->value('Query.id')), null, sprintf(__('Are you sure you want to delete # %s?'), $this->Form->value('Query.id'))); ?></li>
+		<li><?php echo $this->Html->link(__('List Queries'), array('action'=>'index'));?></li>
 	</ul>
 </div>

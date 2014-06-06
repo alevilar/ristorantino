@@ -2,8 +2,8 @@
         echo $this->element('menuadmin');
      ?>
 <?php 
-    echo $javascript->link('jquery/jquery-ui-1.8.14.custom.min'); 
-    echo $html->css('jquery-ui/jquery-ui-1.8.14.custom');
+    echo $this->Html->script('jquery/jquery-ui-1.8.14.custom.min'); 
+    echo $this->Html->css('jquery-ui/jquery-ui-1.8.14.custom');
 ?>
 <script type="text/javascript">
     jQuery(function() {

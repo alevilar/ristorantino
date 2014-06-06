@@ -101,18 +101,18 @@ foreach ($fechas as $fecha=>$mesa) {
 
 <div class="grid_12 alpha omega">
         <?php 
-        echo $form->create('Mesa',array('url'=>'/stats/mozos_total', 'class' => 'formufecha')); 
+        echo $this->Form->create('Mesa',array('url'=>'/stats/mozos_total', 'class' => 'formufecha')); 
         ?>
 
         <h2>Modificar rango de fechas</h2>
             <?php
-            echo "Desde: ".$form->text('Linea.0.desde', array('placeholder'=>'Ej: 22/09/2011','id'=>'from', 'class' =>'datepicker'));
-            echo "Hasta: ".$form->text('Linea.0.hasta', array('placeholder'=>'Ej: 30/09/2011','id'=>'to', 'class' =>'datepicker'));  
-            echo $form->submit('Aceptar', array('class' => '', 'div' => false));
+            echo "Desde: ".$this->Form->text('Linea.0.desde', array('placeholder'=>'Ej: 22/09/2011','id'=>'from', 'class' =>'datepicker'));
+            echo "Hasta: ".$this->Form->text('Linea.0.hasta', array('placeholder'=>'Ej: 30/09/2011','id'=>'to', 'class' =>'datepicker'));  
+            echo $this->Form->submit('Aceptar', array('class' => '', 'div' => false));
             ?>
 
         <?php
-        echo $form->end();
+        echo $this->Form->end();
         ?>
 
     </div>

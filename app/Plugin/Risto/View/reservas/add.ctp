@@ -1,23 +1,23 @@
 <div class="reservas form">
-<?php echo $form->create('Reserva');?>
+<?php echo $this->Form->create('Reserva');?>
 	<fieldset>
  		<legend><?php __('Add Reserva');?></legend>
 	<?php
-		echo $form->input('nombre');
-		echo $form->input('personas');
-                echo $form->input('menores');
-		echo $form->input('mesa');
-                echo $form->input('debe_pagar');
-                echo $form->input('pago');
-		echo $form->input('observaciones');
-		echo $form->input('evento');
-		echo $form->input('fecha');
+		echo $this->Form->input('nombre');
+		echo $this->Form->input('personas');
+                echo $this->Form->input('menores');
+		echo $this->Form->input('mesa');
+                echo $this->Form->input('debe_pagar');
+                echo $this->Form->input('pago');
+		echo $this->Form->input('observaciones');
+		echo $this->Form->input('evento');
+		echo $this->Form->input('fecha');
 	?>
 	</fieldset>
-<?php echo $form->end('Submit');?>
+<?php echo $this->Form->end('Submit');?>
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $html->link(__('List Reservas', true), array('action' => 'index'));?></li>
+		<li><?php echo $this->Html->link(__('List Reservas', true), array('action' => 'index'));?></li>
 	</ul>
 </div>

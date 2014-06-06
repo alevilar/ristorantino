@@ -1,7 +1,7 @@
 <script type="text/javascript">
 var cajero = new Cajero();
 
-cajero.urlGuardar = "<?php echo $html->url('/pagos/add');?>";
+cajero.urlGuardar = "<?php echo $this->Html->url('/pagos/add');?>";
 
 
 function cobrarMesa(mesa, total){
@@ -31,7 +31,7 @@ function cobrarMesa(mesa, total){
 <?php echo $this->renderElement('mesas_scroll');?>
 
 <div id="mesas-paginador">
-	<?php echo $paginator->prev(); ?> 
-	<?php echo $paginator->numbers(); ?> 
-	<?php echo $paginator->next(); ?>
+	<?php echo $this->Paginator->prev(); ?> 
+	<?php echo $this->Paginator->numbers(); ?> 
+	<?php echo $this->Paginator->next(); ?>
 </div>

@@ -30,9 +30,9 @@
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $html->link(__('Editar TipoImpuesto', true), array('action' => 'edit', $tipoImpuesto['TipoImpuesto']['id'])); ?> </li>
-		<li><?php echo $html->link(__('Borrar TipoImpuesto', true), array('action' => 'delete', $tipoImpuesto['TipoImpuesto']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $tipoImpuesto['TipoImpuesto']['id'])); ?> </li>
-		<li><?php echo $html->link(__('Listar TipoImpuestos', true), array('action' => 'index')); ?> </li>
-		<li><?php echo $html->link(__('Crear  Tipo de impuesto', true), array('action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('Editar TipoImpuesto', true), array('action' => 'edit', $tipoImpuesto['TipoImpuesto']['id'])); ?> </li>
+		<li><?php echo $this->Html->link(__('Borrar TipoImpuesto', true), array('action' => 'delete', $tipoImpuesto['TipoImpuesto']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $tipoImpuesto['TipoImpuesto']['id'])); ?> </li>
+		<li><?php echo $this->Html->link(__('Listar TipoImpuestos', true), array('action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('Crear  Tipo de impuesto', true), array('action' => 'add')); ?> </li>
 	</ul>
 </div>

@@ -63,7 +63,7 @@ class Egreso extends AccountAppModel {
             if (!empty($gasto_id)) {
                 $gastos[$gasto_id] = $gasto_id;
             }
-            if(!empty($this->data['Gasto']['seleccionados'])){
+            if(!empty($this->request->data['Gasto']['seleccionados'])){
                 
             }
         }
@@ -111,11 +111,11 @@ class Egreso extends AccountAppModel {
                 'fields' => array('Gasto.id', 'Gasto.importe_total'),
                 'recursive' => -1,
                 'conditions' => array(
-                    'Gasto.id' => $this->data['Gasto']['Gasto'],
+                    'Gasto.id' => $this->request->data['Gasto']['Gasto'],
                 )
             ));
             
-            $totalEgresoDisponible = $this->data['Egreso']['total'];
+            $totalEgresoDisponible = $this->request->data['Egreso']['total'];
             
             // Primero cobro las que tienen importe nbegativo, por ejemplo las Notas de Credito
             // estas no pueden quedar con un saldo parcial
@@ -180,7 +180,7 @@ class Egreso extends AccountAppModel {
         function gastos_pagos(){
             $gastosDeuda = $this->Gasto->enDeuda();
             
-            $gastosSeleccionados = $this->data['Gasto']['Gasto'];
+            $gastosSeleccionados = $this->request->data['Gasto']['Gasto'];
 
             foreach ($gastosSeleccionados as $gs){
                 if (in_array($gs, $gastosDeuda)){

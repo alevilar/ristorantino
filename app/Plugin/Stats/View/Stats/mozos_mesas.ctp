@@ -2,9 +2,9 @@
                 echo $this->Html->script('/pquery/js/jquery.min.js'); 
 		echo $this->Html->script('/pquery/js/jquery.jqplot.js');
 		echo $this->Html->script('/pquery/js/plugins/jqplot.pieRenderer.js');
-                echo $html->css('/pquery/css/examples.css');
+                echo $this->Html->css('/pquery/css/examples.css');
                
-                echo $html->css('/pquery/css/jquery.jqplot.css');
+                echo $this->Html->css('/pquery/css/jquery.jqplot.css');
 
 ?>
 

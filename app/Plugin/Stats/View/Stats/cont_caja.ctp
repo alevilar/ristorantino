@@ -9,8 +9,8 @@
                 echo $this->Html->script('/pquery/js/plugins/jqplot.canvasOverlay.js');
 
 
-                echo $html->css('/pquery/css/examples.css');
-                echo $html->css('/pquery/css/jquery.jqplot.css');
+                echo $this->Html->css('/pquery/css/examples.css');
+                echo $this->Html->css('/pquery/css/jquery.jqplot.css');
 
 ?>
 

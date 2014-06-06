@@ -23,8 +23,8 @@ class ArqueosController extends CashAppController
     
     private function __presetIngresosEgresos ($caja = null) {
         
-        if ( !empty($this->data['Arqueo']['id']) ) {
-            $hasta = $this->data['Arqueo']['datetime'];
+        if ( !empty($this->request->data['Arqueo']['id']) ) {
+            $hasta = $this->request->data['Arqueo']['datetime'];
         } else {
             $hasta = date('Y-m-d H:i:s', strtotime('now'));
         }
@@ -37,15 +37,15 @@ class ArqueosController extends CashAppController
             $computa_ingresos = $caja['Caja']['computa_ingresos'];
             $computa_egresos = $caja['Caja']['computa_egresos'];
         }
-        if ( !empty($this->data['Arqueo']['id']) ) {
-            $conditions['conditions'][ 'Arqueo.datetime <'] = $this->data['Arqueo']['datetime'];
+        if ( !empty($this->request->data['Arqueo']['id']) ) {
+            $conditions['conditions'][ 'Arqueo.datetime <'] = $this->request->data['Arqueo']['datetime'];
         }
         $ultimoArqueo = $this->Arqueo->find('first', $conditions);
         if ( empty($ultimoArqueo) ) {
                 $desde = date('Y-m-d H:i:s', strtotime('-4 month') );
         } else {
             $desde = $ultimoArqueo['Arqueo']['datetime'];
-            $this->data['Arqueo']['importe_inicial'] = $ultimoArqueo['Arqueo']['importe_final'];
+            $this->request->data['Arqueo']['importe_inicial'] = $ultimoArqueo['Arqueo']['importe_final'];
         }
          $egresosList = $this->Egreso->find('all', array(
             'conditions' => array(
@@ -68,10 +68,10 @@ class ArqueosController extends CashAppController
         $sumaEgresos = 0;
         $sumaEgCant = 0;
         foreach ($egresosList as $el) {            
-            if (empty($this->data['Arqueo']['egreso'])) {
+            if (empty($this->request->data['Arqueo']['egreso'])) {
                 if ($el['TipoDePago']['id'] == TIPO_DE_PAGO_EFECTIVO) {
                     if ( $computa_egresos ) {
-                        $this->data['Arqueo']['egreso'] = $el[0]['total'];
+                        $this->request->data['Arqueo']['egreso'] = $el[0]['total'];
                     }
                 }
             }
@@ -111,10 +111,10 @@ class ArqueosController extends CashAppController
         $sumaIngresos = 0;
         $sumaIngCant = 0;
         foreach ($ingresosList as $el) {
-            if ( empty($this->data['Arqueo']['ingreso']) ) {
+            if ( empty($this->request->data['Arqueo']['ingreso']) ) {
                 if ($el['TipoDePago']['id'] == TIPO_DE_PAGO_EFECTIVO) {
                     if ( $computa_ingresos ) {
-                        $this->data['Arqueo']['ingreso'] = $el[0]['total'];
+                        $this->request->data['Arqueo']['ingreso'] = $el[0]['total'];
                     }
                 }
             }
@@ -139,14 +139,14 @@ class ArqueosController extends CashAppController
     private function __presetData ($caja_id) {
         $caja = null;
         if (!empty($caja_id)) {
-            $this->data['Arqueo']['caja_id'] = $caja_id;
+            $this->request->data['Arqueo']['caja_id'] = $caja_id;
             $this->Arqueo->Caja->recursive = -1;
             $caja = $this->Arqueo->Caja->read(null, $caja_id);
             if (!empty($caja) && empty($caja['Caja']['computa_egresos'])) {
-                $this->data['Arqueo']['egreso'] = null;
+                $this->request->data['Arqueo']['egreso'] = null;
             }
             if (!empty($caja) && empty($caja['Caja']['computa_ingresos'])) {
-                $this->data['Arqueo']['ingreso'] = null;
+                $this->request->data['Arqueo']['ingreso'] = null;
             }
             $this->set('caja', $caja);
         }
@@ -157,8 +157,8 @@ class ArqueosController extends CashAppController
             'order' => 'numero_comprobante DESC'
         ));
         if ( !empty($ultimoZeta)) {
-            $this->data['Zeta']['numero_comprobante'] = $ultimoZeta['Zeta']['numero_comprobante']+1;
-            $this->data['Zeta']['total_ventas'] = $sumaIngresos;
+            $this->request->data['Zeta']['numero_comprobante'] = $ultimoZeta['Zeta']['numero_comprobante']+1;
+            $this->request->data['Zeta']['total_ventas'] = $sumaIngresos;
         }
         
         
@@ -171,13 +171,13 @@ class ArqueosController extends CashAppController
 
     public function add($caja_id = null)
     {
-        if (!empty($this->data)) {
+        if (!empty($this->request->data)) {
             $error = false;
             
-            if ($this->Arqueo->save($this->data)) {
-                $this->data['Zeta']['arqueo_id'] = $this->Arqueo->id;
-                if ( !empty($this->data['Arqueo']['hacer_cierre_zeta']) ) {
-                    if (!$this->Arqueo->Zeta->save($this->data)) {
+            if ($this->Arqueo->save($this->request->data)) {
+                $this->request->data['Zeta']['arqueo_id'] = $this->Arqueo->id;
+                if ( !empty($this->request->data['Arqueo']['hacer_cierre_zeta']) ) {
+                    if (!$this->Arqueo->Zeta->save($this->request->data)) {
                         $this->Session->setFlash(__('No se pudo guardar el Zeta', true));
                         $error = true;
                     }
@@ -196,7 +196,7 @@ class ArqueosController extends CashAppController
             }
         }
         
-        $this->data['Arqueo']['datetime'] = date('Y-m-d H:i', strtotime('now'));
+        $this->request->data['Arqueo']['datetime'] = date('Y-m-d H:i', strtotime('now'));
 
         $this->__presetData($caja_id);
         
@@ -207,15 +207,15 @@ class ArqueosController extends CashAppController
     
     public function edit($id) {
         
-        if (!empty($this->data)) {
+        if (!empty($this->request->data)) {
             $this->Arqueo->create();
             $error = false;
-            if ($this->Arqueo->save($this->data)) {
+            if ($this->Arqueo->save($this->request->data)) {
 
-                if ( !empty($this->data['Arqueo']['hacer_cierre_zeta']) ) {
+                if ( !empty($this->request->data['Arqueo']['hacer_cierre_zeta']) ) {
                     $this->Arqueo->Zeta->create();
-                    $this->data['Zeta']['arqueo_id'] = $this->Arqueo->id;
-                    if (!$this->Arqueo->Zeta->save($this->data)) {
+                    $this->request->data['Zeta']['arqueo_id'] = $this->Arqueo->id;
+                    if (!$this->Arqueo->Zeta->save($this->request->data)) {
                         $this->Session->setFlash(__('No se pudo guardar el Zeta', true));
                         $error = true;
                     }
@@ -233,25 +233,25 @@ class ArqueosController extends CashAppController
                 $this->Session->setFlash("Se guardó un nuevo arqueo de caja");
             }
         } else {
-            $this->data = $this->Arqueo->read(null, $id);
-            if ( array_key_exists('Zeta', $this->data) && array_key_exists('id', $this->data['Zeta']) && !empty($this->data['Zeta']['id'])) {
-                $this->data['Arqueo']['hacer_cierre_zeta'] = 1;
+            $this->request->data = $this->Arqueo->read(null, $id);
+            if ( array_key_exists('Zeta', $this->request->data) && array_key_exists('id', $this->request->data['Zeta']) && !empty($this->request->data['Zeta']['id'])) {
+                $this->request->data['Arqueo']['hacer_cierre_zeta'] = 1;
             } else {
-                $this->data['Arqueo']['hacer_cierre_zeta'] = 0;
+                $this->request->data['Arqueo']['hacer_cierre_zeta'] = 0;
             }
         }
         
         $this->Arqueo->Caja->recursive = -1;
-        $caja = $this->Arqueo->Caja->read(null, $this->data['Arqueo']['caja_id']);
+        $caja = $this->Arqueo->Caja->read(null, $this->request->data['Arqueo']['caja_id']);
       
         $this->set('caja', $caja);
         
         $this->__presetIngresosEgresos($caja);
         
-        if ( !empty($this->data['Caja']['id']) ) {
-            $this->data['Arqueo']['caja_id'] = $this->data['Caja']['id'];            
+        if ( !empty($this->request->data['Caja']['id']) ) {
+            $this->request->data['Arqueo']['caja_id'] = $this->request->data['Caja']['id'];            
             $this->Arqueo->Caja->recursive = -1;
-            $caja = $this->Arqueo->Caja->read(null, $this->data['Caja']['id']);            
+            $caja = $this->Arqueo->Caja->read(null, $this->request->data['Caja']['id']);            
             $this->set('caja', $caja);
         }
         

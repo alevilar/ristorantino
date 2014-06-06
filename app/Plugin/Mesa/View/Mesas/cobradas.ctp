@@ -6,7 +6,7 @@
             foreach ($mesas as $m) {
 
                 echo "<li>" .
-                $html->link(
+                $this->Html->link(
                         "Mesa N° " . $m['numero'] . " Mozo " . $m['Mozo']['numero'] . ". Cobrada el " . date('d M H:i', strtotime($m['time_cobro']))
                         , '#mesa-view'
                         , array(

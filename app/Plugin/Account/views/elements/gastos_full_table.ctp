@@ -71,7 +71,7 @@
                     } else {
                         // cerrado
                         $cierreTitle = $g['Cierre']['name'];
-                        $meterInput = $html->link(
+                        $meterInput = $this->Html->link(
                         	"<span class='glyphicon glyphicon-saved' title='$cierreTitle'></span>", 
                         	array(
                         		'controller'=>'cierres', 
@@ -114,12 +114,12 @@
                     if (!empty($g['Gasto']['file'])) {
                         $ext = substr(strrchr($g['Gasto']['file'], '.'), 1);
                         if (in_array(low($ext), array('jpg', 'png', 'gif', 'jpeg'))) {
-                            $iii = $html->image(THUMB_FOLDER . $g['Gasto']['file'], array('class' => 'thumb', 'alt' => 'Descargar', 'escape' => false));
+                            $iii = $this->Html->image(THUMB_FOLDER . $g['Gasto']['file'], array('class' => 'thumb', 'alt' => 'Descargar', 'escape' => false));
                         } else {
                             $iii = "<span class='glyphicon glyphicon glyphicon-cloud-download'></span><br>".strtoupper($ext);
                         }
                         if (!empty($g['Gasto']['file'])) {
-                            echo $html->link($iii, "/" . IMAGES_URL . $g['Gasto']['file'], array('target' => '_blank', 'escape' => false));
+                            echo $this->Html->link($iii, "/" . IMAGES_URL . $g['Gasto']['file'], array('target' => '_blank', 'escape' => false));
                         }
                     }
                     echo "&nbsp;</td>";
@@ -131,7 +131,7 @@
                     }
 
                     echo "<td>" . $g['Gasto']['factura_nro'] . "</td>";
-                    echo "<td>" . $number->currency($g['Gasto']['importe_neto']) . "</td>";
+                    echo "<td>" . $this->Number-> currency($g['Gasto']['importe_neto']) . "</td>";
                     ?>
 
                     <?php
@@ -148,14 +148,14 @@
                         }
                     }
 
-                    echo "<td class='total'>" . $number->currency($g['Gasto']['importe_total']) . "</td>";
+                    echo "<td class='total'>" . $this->Number-> currency($g['Gasto']['importe_total']) . "</td>";
 
-                    echo "<td class='faltapagar'>".$number->currency($faltaPagar)."&nbsp;</td>";
+                    echo "<td class='faltapagar'>".$this->Number-> currency($faltaPagar)."&nbsp;</td>";
                     echo "<td class='obs'>" . $g['Gasto']['observacion'] . "&nbsp;</td>";
 
                     $linkPagar = '';
                     if ($faltaPagar) {
-                        $linkPagar = $html->link(__('Pagar', true), array(
+                        $linkPagar = $this->Html->link(__('Pagar', true), array(
                             'controller' => 'egresos',
                             'action' => 'add', $g['Gasto']['id']), array(
                             'data-ajax' => 'false',
@@ -170,16 +170,16 @@
                             </button>
                             <ul class="dropdown-menu" role="menu">
                                 <?php echo $linkPagar ? "<li>$linkPagar</li>" : ''; ?>
-                                <li><?php echo $html->link('Ver', array(
+                                <li><?php echo $this->Html->link('Ver', array(
                                     'controller' => 'gastos',
                                     'action' => 'view', 
                                     $g['Gasto']['id'])) ?></li>
                                 
                                 <?php if ( empty($g['Gasto']['cierre_id']) ) { ?>
-                                <li><?php echo $html->link('Editar', array(
+                                <li><?php echo $this->Html->link('Editar', array(
                                     'controller' => 'gastos',
                                     'action' => 'edit', $g['Gasto']['id']), array('data-ajax' => 'false')) ?></li>
-                                <li><?php echo $html->link('Borrar', array(
+                                <li><?php echo $this->Html->link('Borrar', array(
                                     'controller' => 'gastos',
                                     'action' => 'delete', $g['Gasto']['id'])) ?></li>
                                 <?php } ?>

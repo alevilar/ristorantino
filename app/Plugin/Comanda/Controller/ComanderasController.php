@@ -4,59 +4,54 @@ App::uses('ComandaAppController', 'Comanda.Controller');
 
 class ComanderasController extends ComandaAppController {
 
-	var $name = 'Comanderas';
-	var $helpers = array('Html', 'Form');
+	public $name = 'Comanderas';
+	public $helpers = array('Html', 'Form');
 
-	function index() {
+	public function index() {
 		$this->Comandera->recursive = 0;
 		$this->set('comanderas', $this->paginate());
 	}
+	
 
-	function view($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid Comandera.', true));
-			$this->redirect(array('action'=>'index'));
-		}
-		$this->set('comandera', $this->Comandera->read(null, $id));
-	}
-
-	function add() {
-		if (!empty($this->data)) {
+	public function add() {
+		if (!empty($this->request->data)) {
 			$this->Comandera->create();
-			if ($this->Comandera->save($this->data)) {
-				$this->Session->setFlash(__('The Comandera has been saved', true));
+			if ($this->Comandera->save($this->request->data)) {
+				$this->Session->setFlash(__('The Comandera has been saved'), 'flash_success');
 				$this->redirect(array('action'=>'index'));
 			} else {
-				$this->Session->setFlash(__('The Comandera could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('The Comandera could not be saved. Please, try again.'), 'flash_success');
 			}
 		}
+		$this->render('form');
 	}
 
-	function edit($id = null) {
-		if (!$id && empty($this->data)) {
-			$this->Session->setFlash(__('Invalid Comandera', true));
+	public function edit($id = null) {
+		if (!$id && empty($this->request->data)) {
+			$this->Session->setFlash(__('Invalid Comandera'), 'flash_error');
 			$this->redirect(array('action'=>'index'));
 		}
-		if (!empty($this->data)) {
-			if ($this->Comandera->save($this->data)) {
-				$this->Session->setFlash(__('The Comandera has been saved', true));
+		if (!empty($this->request->data)) {
+			if ($this->Comandera->save($this->request->data)) {
+				$this->Session->setFlash(__('The Comandera has been saved'), 'flash_success');
 				$this->redirect(array('action'=>'index'));
 			} else {
-				$this->Session->setFlash(__('The Comandera could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('The Comandera could not be saved. Please, try again.', 'flash_error'), 'flash_success');
 			}
 		}
-		if (empty($this->data)) {
-			$this->data = $this->Comandera->read(null, $id);
+		if (empty($this->request->data)) {
+			$this->request->data = $this->Comandera->read(null, $id);
 		}
+		$this->render('form');
 	}
 
-	function delete($id = null) {
+	public function delete($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for Comandera', true));
+			$this->Session->setFlash(__('Invalid id for Comandera'), 'flash_success');
 			$this->redirect(array('action'=>'index'));
 		}
-		if ($this->Comandera->del($id)) {
-			$this->Session->setFlash(__('Comandera deleted', true));
+		if ($this->Comandera->delete($id)) {
+			$this->Session->setFlash(__('Comandera deleted'), 'flash_error');
 			$this->redirect(array('action'=>'index'));
 		}
 	}

@@ -32,8 +32,8 @@ App::uses('Controller', 'Controller');
  */
 class AppController extends Controller {
     public $helpers = array(
-        'Html',
-        'Form' => array('className' => 'BootstrapForm'),
+        'Html' => array('className' => 'Bs3Html'),
+        'Form' => array('className' => 'Bs3Form'),
         'Session',
         'Paginator',
     );

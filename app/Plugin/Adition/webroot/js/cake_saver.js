@@ -3,7 +3,7 @@
  *
  * Clase CakeSaver
  * 
- * Convierte objetos de javascript en algo que CakePhp pueda leer bajo el $this->data
+ * Convierte objetos de javascript en algo que CakePhp pueda leer bajo el $this->request->data
  * o sea, convierte los objetos a un array para enviar via method POST en ajax
  * 
  * EL objeto debe tener un atributo (key denominada: "Model", con el nombre del modelo.
@@ -24,9 +24,9 @@
  * }
  * 
  * Envia un ajax post para que Cake pueda crear 
- *      $this->data['Producto']['name']
- *      $this->data['Producto']['precio']
- *      $this->data['Producto']['observacion']
+ *      $this->request->data['Producto']['name']
+ *      $this->request->data['Producto']['precio']
+ *      $this->request->data['Producto']['observacion']
  *      
  *      
  *      El objeto debe tener lso siguientes atributos o claves:

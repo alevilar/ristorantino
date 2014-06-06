@@ -21,7 +21,7 @@ class ConfigsController extends AppController {
             $conf['Config']['value'] = !$conf['Config']['value'];
             $this->Config->save($conf);
             
-            if ($this->RequestHandler->isAjax()) {
+            if ($this->request->is('ajax')) {
                 $this->autoRender = false;
                 return $conf['Config']['value'];
             }

@@ -37,15 +37,15 @@ class StatsController extends StatsAppController {
         $lineas = array($desdeHasta);
         
         // por default buscar 1 semana atras
-        if (empty($this->data['Linea'])){
-            $this->data['Linea'][0]['hasta'] = date('d/m/Y',strtotime('now'));
-            $this->data['Linea'][0]['desde'] = date('d/m/Y',strtotime('-1 month'));
+        if (empty($this->request->data['Linea'])){
+            $this->request->data['Linea'][0]['hasta'] = date('d/m/Y',strtotime('now'));
+            $this->request->data['Linea'][0]['desde'] = date('d/m/Y',strtotime('-1 month'));
         }
         
         $mesasLineas = array();
-        if ( !empty($this->data['Linea'] )) {
+        if ( !empty($this->request->data['Linea'] )) {
             $lineas = array();
-            foreach ($this->data['Linea'] as $linea) {
+            foreach ($this->request->data['Linea'] as $linea) {
                 if(!empty($linea['desde']) && !empty($linea['hasta']))
                     {
                     list($dia, $mes, $anio) = explode("/", $linea['desde']);
@@ -124,15 +124,15 @@ class StatsController extends StatsAppController {
     
     function mozos_total() {        
         // por default buscar hoy
-        if ( empty($this->data['Linea']) ) {
-            $this->data['Linea'][0]['hasta'] = date('d/m/Y',strtotime('now'));
-            $this->data['Linea'][0]['desde'] = date('d/m/Y',strtotime('-1 week'));
+        if ( empty($this->request->data['Linea']) ) {
+            $this->request->data['Linea'][0]['hasta'] = date('d/m/Y',strtotime('now'));
+            $this->request->data['Linea'][0]['desde'] = date('d/m/Y',strtotime('-1 week'));
         }
         
         $mesasLineas = array();
-        if ( !empty($this->data['Linea'] )) {
+        if ( !empty($this->request->data['Linea'] )) {
             $lineas = array();
-            foreach ($this->data['Linea'] as $linea) {
+            foreach ($this->request->data['Linea'] as $linea) {
                 if(!empty($linea['desde']) && !empty($linea['hasta']))
                     {
                     list($dia, $mes, $anio) = explode("/", $linea['desde']);

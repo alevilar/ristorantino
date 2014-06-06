@@ -25,12 +25,12 @@
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $html->link(__('Edit TipoFactura', true), array('action' => 'edit', $tipoFactura['TipoFactura']['id'])); ?> </li>
-		<li><?php echo $html->link(__('Delete TipoFactura', true), array('action' => 'delete', $tipoFactura['TipoFactura']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $tipoFactura['TipoFactura']['id'])); ?> </li>
-		<li><?php echo $html->link(__('List TipoFacturas', true), array('action' => 'index')); ?> </li>
-		<li><?php echo $html->link(__('New TipoFactura', true), array('action' => 'add')); ?> </li>
-		<li><?php echo $html->link(__('List Egresos', true), array('controller' => 'egresos', 'action' => 'index')); ?> </li>
-		<li><?php echo $html->link(__('New Egreso', true), array('controller' => 'egresos', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('Edit TipoFactura', true), array('action' => 'edit', $tipoFactura['TipoFactura']['id'])); ?> </li>
+		<li><?php echo $this->Html->link(__('Delete TipoFactura', true), array('action' => 'delete', $tipoFactura['TipoFactura']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $tipoFactura['TipoFactura']['id'])); ?> </li>
+		<li><?php echo $this->Html->link(__('List TipoFacturas', true), array('action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New TipoFactura', true), array('action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Egresos', true), array('controller' => 'egresos', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Egreso', true), array('controller' => 'egresos', 'action' => 'add')); ?> </li>
 	</ul>
 </div>
 <div class="related">
@@ -68,9 +68,9 @@
 			<td><?php echo $egreso['created'];?></td>
 			<td><?php echo $egreso['modified'];?></td>
 			<td class="actions">
-				<?php echo $html->link(__('View', true), array('controller' => 'egresos', 'action' => 'view', $egreso['id'])); ?>
-				<?php echo $html->link(__('Edit', true), array('controller' => 'egresos', 'action' => 'edit', $egreso['id'])); ?>
-				<?php echo $html->link(__('Delete', true), array('controller' => 'egresos', 'action' => 'delete', $egreso['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $egreso['id'])); ?>
+				<?php echo $this->Html->link(__('View', true), array('controller' => 'egresos', 'action' => 'view', $egreso['id'])); ?>
+				<?php echo $this->Html->link(__('Edit', true), array('controller' => 'egresos', 'action' => 'edit', $egreso['id'])); ?>
+				<?php echo $this->Html->link(__('Delete', true), array('controller' => 'egresos', 'action' => 'delete', $egreso['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $egreso['id'])); ?>
 			</td>
 		</tr>
 	<?php endforeach; ?>
@@ -79,7 +79,7 @@
 
 	<div class="actions">
 		<ul>
-			<li><?php echo $html->link(__('New Egreso', true), array('controller' => 'egresos', 'action' => 'add'));?> </li>
+			<li><?php echo $this->Html->link(__('New Egreso', true), array('controller' => 'egresos', 'action' => 'add'));?> </li>
 		</ul>
 	</div>
 </div>

@@ -39,8 +39,8 @@
 
             <div class="" style="width: 28%; float: left;">
                 <ul data-role="listview" style="width: 100%">
-                    <li><a href="<?php echo $html->url('/comandas/add')?>" daxta-bind="attr: {href: currentMesa().urlComandaAdd()}" ><?= $html->image('/adition/css/img/chef_64.png')?>Comanda</a></li>
-                    <li><a href="<?= $html->url('/pages/panel')?>" >PAnel</a></li>
+                    <li><a href="<?php echo $this->Html->url('/comandas/add')?>" daxta-bind="attr: {href: currentMesa().urlComandaAdd()}" ><?= $this->Html->image('/adition/css/img/chef_64.png')?>Comanda</a></li>
+                    <li><a href="<?= $this->Html->url('/pages/panel')?>" >PAnel</a></li>
                     <li><a href="#sacar-item" >Sacar Item</a></li>
                     <li><a href="#Agregar Cliente" >Agregar Cliente</a></li>
                     <li><a href="#Agragar Descuento" >Agregar Descuento</a></li>

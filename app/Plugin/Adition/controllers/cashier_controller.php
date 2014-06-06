@@ -25,7 +25,7 @@ class CashierController extends AditionAppController {
         function cierre_z(){
 		$this->Printer->imprimirCierreZ();
 
-                if (! $this->RequestHandler->isAjax()) {
+                if (! $this->request->is('ajax')) {
                     $this->Session->setFlash("Se imprimió un Cierre Z");
                     $this->redirect($this->referer());
                 }
@@ -36,7 +36,7 @@ class CashierController extends AditionAppController {
 	function cierre_x(){
 		$this->Printer->imprimirCierreX(); 
 		
-                if (! $this->RequestHandler->isAjax()) {
+                if (! $this->request->is('ajax')) {
                     $this->Session->setFlash("Se imprimió un reporte X");
                    // $this->redirect($this->referer());
                 }
@@ -44,20 +44,20 @@ class CashierController extends AditionAppController {
 	}
 
         function nota_credito(){
-		if (!empty($this->data)) {
+		if (!empty($this->request->data)) {
                     $cliente = array();
-                    if(!empty($this->data['Cliente']) && $this->data['Cajero']['tipo'] == 'A'){
-                        $cliente['razonsocial'] = $this->data['Cliente']['razonsocial'];
-                        $cliente['numerodoc'] = $this->data['Cliente']['numerodoc'];
-                        $cliente['respo_iva'] = $this->data['Cliente']['respo_iva'];
-                        $cliente['tipodoc'] = $this->data['Cliente']['tipodoc'];
+                    if(!empty($this->request->data['Cliente']) && $this->request->data['Cajero']['tipo'] == 'A'){
+                        $cliente['razonsocial'] = $this->request->data['Cliente']['razonsocial'];
+                        $cliente['numerodoc'] = $this->request->data['Cliente']['numerodoc'];
+                        $cliente['respo_iva'] = $this->request->data['Cliente']['respo_iva'];
+                        $cliente['tipodoc'] = $this->request->data['Cliente']['tipodoc'];
                     }
                     
                     $this->Printer->imprimirNotaDeCredito(
-                            $this->data['Cajero']['numero_ticket'],
-                            $this->data['Cajero']['importe'],
-                            $this->data['Cajero']['tipo'],
-                            $this->data['Cajero']['descripcion'],
+                            $this->request->data['Cajero']['numero_ticket'],
+                            $this->request->data['Cajero']['importe'],
+                            $this->request->data['Cajero']['tipo'],
+                            $this->request->data['Cajero']['descripcion'],
                             $cliente
                             );
                     $this->Session->setFlash("Se imprimió una nota de crédito");

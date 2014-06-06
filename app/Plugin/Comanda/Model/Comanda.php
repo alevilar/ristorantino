@@ -40,21 +40,7 @@ class Comanda extends ComandaAppModel {
 	);
         
         
-        
-        function beforeSave($options = array()) {
-           $this->data[$this->name]['modified'] = date('Y-m-d H:i:s', strtotime('now'));
-           
-           return parent::beforeSave($options);
-        }
-       
-        
-        function afterSave( $created, $options = array() ){
-            $this->Mesa->id = $this->data['Comanda']['mesa_id'];
-            $this->Mesa->saveField('modified', date('Y-m-d H:i:s', strtotime('now')), false);
-            return true;
-        }
-	
-	
+         
 	
 	
 	
@@ -129,6 +115,19 @@ class Comanda extends ComandaAppModel {
 		return $v_retorno;
 	}
 	
+
+	public function printEvent ( $id ) {
+		if (empty($id)) {
+            if ( empty($this->id) ) 
+              throw new InternalErrorException("Se debe pasar el ID de la mesa para imprimir");
+            $id = $this->id;
+          }
+
+          $event = new CakeEvent('Comanda.print', $this, array(
+                  'id' => $id
+              ));
+          $this->getEventManager()->dispatch($event);
+	}
 
 }
 ?>

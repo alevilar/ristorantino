@@ -1,7 +1,7 @@
 <?php
 $ingresoEfectivo = $egresoEfectivo = null;
 
-echo $html->css('/cash/css/style_cash');
+echo $this->Html->css('/cash/css/style_cash');
 
 ?>
 
@@ -34,7 +34,7 @@ echo $html->css('/cash/css/style_cash');
                                     <?php echo $ing['TipoDePago']['name'] ?>
                                 </td>
                                 <td>
-                                    <?php echo "(".$ing[0]['cant'].") ".$number->currency($ing[0]['total']); ?>
+                                    <?php echo "(".$ing[0]['cant'].") ".$this->Number-> currency($ing[0]['total']); ?>
                                 </td>
                             </tr>
                         <?php } ?>   
@@ -57,7 +57,7 @@ echo $html->css('/cash/css/style_cash');
                                     <?php echo $eg['TipoDePago']['name'] ?>
                                 </td>
                                 <td>
-                                    <?php echo "(".$eg[0]['cant'].") ".$number->currency($eg[0]['total']); ?>
+                                    <?php echo "(".$eg[0]['cant'].") ".$this->Number-> currency($eg[0]['total']); ?>
                                 </td>
                             </tr>
                         <?php } ?>    
@@ -67,21 +67,21 @@ echo $html->css('/cash/css/style_cash');
         </div>
     </div>
 
-    <?php echo $form->button('Guardar Arqueo', array('type' => 'submit', 'class' => 'btn btn-lg btn-primary btn-block', 'id' => 'btn-submit', "form" => "ArqueoAddForm")); ?>
+    <?php echo $this->Form->button('Guardar Arqueo', array('type' => 'submit', 'class' => 'btn btn-lg btn-primary btn-block', 'id' => 'btn-submit', "form" => "ArqueoAddForm")); ?>
 </div>
 
 <div class="col-md-9">
     <div class="row">
         <?php
-        echo $form->create('Arqueo', array('id' => 'ArqueoAddForm'));
+        echo $this->Form->create('Arqueo', array('id' => 'ArqueoAddForm'));
 
-        echo $form->input('id');
+        echo $this->Form->input('id');
 
         $classArqueoContainer = 'panel-primary';
-        if (isset($this->data['Arqueo']['saldo'])) {
-            if (abs($this->data['Arqueo']['saldo']) == 0) {
+        if (isset($this->request->data['Arqueo']['saldo'])) {
+            if (abs($this->request->data['Arqueo']['saldo']) == 0) {
                 $classArqueoContainer = 'panel-success';
-            } elseif (abs($this->data['Arqueo']['saldo']) < 11) {
+            } elseif (abs($this->request->data['Arqueo']['saldo']) < 11) {
                 $classArqueoContainer = 'panel-warning';
             } else {
                 $classArqueoContainer = 'panel-danger';
@@ -99,34 +99,34 @@ echo $html->css('/cash/css/style_cash');
                     <div class="row">
                         <div class="col-md-6">
                             <?php
-                            if (empty($this->data['Arqueo']['caja_id'])) {
-                                echo $form->input('caja_id');
+                            if (empty($this->request->data['Arqueo']['caja_id'])) {
+                                echo $this->Form->input('caja_id');
                             } else {
-                                echo $form->hidden('caja_id');
+                                echo $this->Form->hidden('caja_id');
                             }
-                            echo $form->input('datetime', array('class' => "form-control muted", 'type' => 'datetime', 'label' => 'Fecha y Hora'));
-                            echo $form->input('importe_final', array('type' => 'number', 'required' => true));
-                            echo $form->input('saldo', array('disabled' => true));
-                            echo $form->input('observacion', array('label' => 'Obs. del Arqueo'));
+                            echo $this->Form->input('datetime', array('class' => "form-control muted", 'type' => 'datetime', 'label' => 'Fecha y Hora'));
+                            echo $this->Form->input('importe_final', array('type' => 'number', 'required' => true));
+                            echo $this->Form->input('saldo', array('disabled' => true));
+                            echo $this->Form->input('observacion', array('label' => 'Obs. del Arqueo'));
                             ?>
                         </div>
 
                         <div class="col-md-6">
                             <?php
-                            echo $form->input('importe_inicial', array('type' => 'number', 'class' => 'form-control muted'));
-                            if (!empty($this->data['Arqueo']['ingreso']) || (!empty($caja) && !empty($caja['Caja']['name']) && !empty($caja['Caja']['computa_ingresos']) )) {
-                                echo $form->input('ingreso', array('type' => 'number', 'label' => 'Ventas en efectivo', 'class' => 'form-control muted'));
+                            echo $this->Form->input('importe_inicial', array('type' => 'number', 'class' => 'form-control muted'));
+                            if (!empty($this->request->data['Arqueo']['ingreso']) || (!empty($caja) && !empty($caja['Caja']['name']) && !empty($caja['Caja']['computa_ingresos']) )) {
+                                echo $this->Form->input('ingreso', array('type' => 'number', 'label' => 'Ventas en efectivo', 'class' => 'form-control muted'));
                             } else {
-                                echo $form->hidden('ingreso');
+                                echo $this->Form->hidden('ingreso');
                             }
 
-                            if (!empty($this->data['Arqueo']['egreso']) || (!empty($caja) && !empty($caja['Caja']['name']) && !empty($caja['Caja']['computa_egresos']) )) {
-                                echo $form->input('egreso', array('type' => 'number', 'label' => 'Pagos en efectivo', 'class' => 'form-control muted'));
+                            if (!empty($this->request->data['Arqueo']['egreso']) || (!empty($caja) && !empty($caja['Caja']['name']) && !empty($caja['Caja']['computa_egresos']) )) {
+                                echo $this->Form->input('egreso', array('type' => 'number', 'label' => 'Pagos en efectivo', 'class' => 'form-control muted'));
                             } else {
-                                echo $form->hidden('egreso');
+                                echo $this->Form->hidden('egreso');
                             }
-                            echo $form->input('otros_ingresos', array('type' => 'number', 'class' => 'form-control muted'));
-                            echo $form->input('otros_egresos', array('type' => 'number', 'class' => 'form-control muted'));
+                            echo $this->Form->input('otros_ingresos', array('type' => 'number', 'class' => 'form-control muted'));
+                            echo $this->Form->input('otros_egresos', array('type' => 'number', 'class' => 'form-control muted'));
                             ?>
                         </div>  
                     </div>
@@ -139,11 +139,11 @@ echo $html->css('/cash/css/style_cash');
                 <div class="panel-heading">
                     <?php
                     $display = "";
-                    if (empty($this->data['Arqueo']['hacer_cierre_zeta'])) {
+                    if (empty($this->request->data['Arqueo']['hacer_cierre_zeta'])) {
                         $display = 'display: none';
                     }
-                    echo $form->input('hacer_cierre_zeta', array('type' => 'checkbox', 'class' => '', 'label' => array('escape' => false, 'text' => '<h2>Hacer Cierre Z</h2>'), 'id' => 'ArqueoHacerCierreZeta'));
-                    echo $form->hidden('Zeta.id');
+                    echo $this->Form->input('hacer_cierre_zeta', array('type' => 'checkbox', 'class' => '', 'label' => array('escape' => false, 'text' => '<h2>Hacer Cierre Z</h2>'), 'id' => 'ArqueoHacerCierreZeta'));
+                    echo $this->Form->hidden('Zeta.id');
                     ?>
 
                 </div>
@@ -152,33 +152,33 @@ echo $html->css('/cash/css/style_cash');
                     <div class="row">
                         <p class="text-center">
                         <?php 
-                        echo $html->link("Imprimir Z", '/adition/cashier/cierre_z', array('id'=>'btn-imprimir-z', 'class'=>'btn btn-success', 'role'=>'buton'));
+                        echo $this->Html->link("Imprimir Z", '/adition/cashier/cierre_z', array('id'=>'btn-imprimir-z', 'class'=>'btn btn-success', 'role'=>'buton'));
                         ?>
                         </p>
                         <div class="col-md-6">
                             <?php
-                            echo $form->input('Zeta.total_ventas', array(
+                            echo $this->Form->input('Zeta.total_ventas', array(
                                 'type' => 'number',
                                 'label' => 'Ventas del Día',
                                 'class' => 'form-control muted')
                             );
-                            echo $form->input('Zeta.monto_neto', array('type' => 'number'));
-                            echo $form->input('Zeta.nota_credito_neto', array('type' => 'number'));
-                            echo $form->input('Zeta.observacion', array('label' => 'Obs. General Z'));
+                            echo $this->Form->input('Zeta.monto_neto', array('type' => 'number'));
+                            echo $this->Form->input('Zeta.nota_credito_neto', array('type' => 'number'));
+                            echo $this->Form->input('Zeta.observacion', array('label' => 'Obs. General Z'));
                             ?>
                         </div>
 
                         <div class="col-md-6">
                             <?php
-                            echo $form->input('Zeta.numero_comprobante', array(
+                            echo $this->Form->input('Zeta.numero_comprobante', array(
                                 'type' => 'number',
                                 'step' => '1',
                                 'label' => '#Comprobante',
                                 'class' => 'form-control muted')
                             );
-                            echo $form->input('Zeta.monto_iva', array('type' => 'number'));
-                            echo $form->input('Zeta.nota_credito_iva', array('type' => 'number'));
-                            echo $form->input('Zeta.observacion_comprobante_tarjeta', array('label' => 'Obs. Tarjetas'));
+                            echo $this->Form->input('Zeta.monto_iva', array('type' => 'number'));
+                            echo $this->Form->input('Zeta.nota_credito_iva', array('type' => 'number'));
+                            echo $this->Form->input('Zeta.observacion_comprobante_tarjeta', array('label' => 'Obs. Tarjetas'));
                             ?>
                         </div>
 
@@ -188,7 +188,7 @@ echo $html->css('/cash/css/style_cash');
         </div>
 
         <?php
-        echo $form->end(null);
+        echo $this->Form->end(null);
         ?>
     </div>
 </div>
@@ -262,5 +262,5 @@ echo $html->css('/cash/css/style_cash');
 </div>
 
 
-<?php echo $javascript->link('/cash/js/arqueos_add') ?>
+<?php echo $this->Html->script('/cash/js/arqueos_add') ?>
  

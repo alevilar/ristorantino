@@ -1,7 +1,7 @@
 <?php
-echo $javascript->link('jquery-1.4.2.min', false);
-echo $javascript->link('jquery-ui-1.8.5.custom.min', false);
-echo $javascript->link('jquery.jeditable.mini', false);
+echo $this->Html->script('jquery-1.4.2.min', false);
+echo $this->Html->script('jquery-ui-1.8.5.custom.min', false);
+echo $this->Html->script('jquery.jeditable.mini', false);
 ?>
 
 <script type="text/javascript">
@@ -42,14 +42,14 @@ echo $javascript->link('jquery.jeditable.mini', false);
     <p style="text-align: center;" class="no-imprimir">
         <?php
         if (isset($paginator)) {
-            $paginator->options(array('url' => $url_conditions));
+            $this->Paginator->options(array('url' => $url_conditions));
         }
-//echo $paginator->counter(array(
+//echo $this->Paginator->counter(array(
 //'format' => __('Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%')
 //));
 
         if (isset($paginator)) {
-            echo $paginator->counter(array(
+            echo $this->Paginator->counter(array(
             'format' => __('Pagina %page% de %pages% Mostrando %current% registros de %count% encontrados')
             ));
         }
@@ -60,20 +60,20 @@ echo $javascript->link('jquery.jeditable.mini', false);
     <p class="no-imprimir">
         <?php
         if ($viewAll) {
-            echo $html->link('Ver Todos','/pquery/Queries/list_view/query.id:'.$url_conditions['query.id'] . '/viewAll:true/',array('class'=>'clearTag'));
+            echo $this->Html->link('Ver Todos','/pquery/Queries/list_view/query.id:'.$url_conditions['query.id'] . '/viewAll:true/',array('class'=>'clearTag'));
         } else {
-            echo $html->link('Ver por página','/pquery/Queries/list_view/query.id:'.$url_conditions['query.id'] . '/viewAll:false/',array('class'=>'clearTag'));
+            echo $this->Html->link('Ver por página','/pquery/Queries/list_view/query.id:'.$url_conditions['query.id'] . '/viewAll:false/',array('class'=>'clearTag'));
         }
         ?>
 
         <?php echo " | "?>
-        <?php echo $html->link('Imprimir','#Imprimir',array('class'=>'clearTag','onclick'=>'window.print()'));?>
+        <?php echo $this->Html->link('Imprimir','#Imprimir',array('class'=>'clearTag','onclick'=>'window.print()'));?>
 
         <?php echo " | "?>
-        <?php echo $html->link('descargar excel','/pquery/Queries/list_view/'.$url_conditions['query.id'].'.xls' ,array('class'=>'clearTag'));?>
+        <?php echo $this->Html->link('descargar excel','/pquery/Queries/list_view/'.$url_conditions['query.id'].'.xls' ,array('class'=>'clearTag'));?>
 
         <?php echo " | "?>
-        <?php echo $html->link('Volver','/pquery/Queries/descargar_queries/',array('class'=>'clearTag'));?>
+        <?php echo $this->Html->link('Volver','/pquery/Queries/descargar_queries/',array('class'=>'clearTag'));?>
 
     </p>
 
@@ -109,11 +109,11 @@ echo $javascript->link('jquery.jeditable.mini', false);
 <div class="paging" style="background-color: #F0F7FC; height: 60px; padding-top: 20px; text-align: center;border-top: 3px solid #DBEBF6">
     <?php
     if (isset($paginator)) {
-        echo $paginator->prev('<<');
+        echo $this->Paginator->prev('<<');
         echo "&nbsp;";
-        echo $paginator->numbers();
+        echo $this->Paginator->numbers();
         echo "&nbsp;";
-        echo $paginator->next('>>');
+        echo $this->Paginator->next('>>');
     }
     ?>
 </div>

@@ -17,9 +17,9 @@ class GastosTipoImpuestosController extends AccountAppController {
 	}
 
 	function add() {
-		if (!empty($this->data)) {
+		if (!empty($this->request->data)) {
 			$this->GastosTipoImpuesto->create();
-			if ($this->GastosTipoImpuesto->save($this->data)) {
+			if ($this->GastosTipoImpuesto->save($this->request->data)) {
 				$this->Session->setFlash(__('The GastosTipoImpuesto has been saved', true));
 				$this->redirect(array('action' => 'index'));
 			} else {
@@ -29,20 +29,20 @@ class GastosTipoImpuestosController extends AccountAppController {
 	}
 
 	function edit($id = null) {
-		if (!$id && empty($this->data)) {
+		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__('Invalid GastosTipoImpuesto', true));
 			$this->redirect(array('action' => 'index'));
 		}
-		if (!empty($this->data)) {
-			if ($this->GastosTipoImpuesto->save($this->data)) {
+		if (!empty($this->request->data)) {
+			if ($this->GastosTipoImpuesto->save($this->request->data)) {
 				$this->Session->setFlash(__('The GastosTipoImpuesto has been saved', true));
 				$this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The GastosTipoImpuesto could not be saved. Please, try again.', true));
 			}
 		}
-		if (empty($this->data)) {
-			$this->data = $this->GastosTipoImpuesto->read(null, $id);
+		if (empty($this->request->data)) {
+			$this->request->data = $this->GastosTipoImpuesto->read(null, $id);
 		}
 	}
 

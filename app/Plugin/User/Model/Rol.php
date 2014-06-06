@@ -57,14 +57,14 @@ class Rol extends UserAppModel {
 	);
         
         public function beforeSave($options = array()) {
-            $this->data['Rol']['machin_name'] = strtolower( Inflector::slug( $this->data['Rol']['name'])) ;
+            $this->request->data['Rol']['machin_name'] = strtolower( Inflector::slug( $this->request->data['Rol']['name'])) ;
             return true;
         }
         
         public function afterSave($created, $options = Array())
         {
             // colocar el nombre del rol como alias den Aro ACL
-            if ( $this->Aro->saveField('alias', $this->data['Rol']['machin_name']) ) { 
+            if ( $this->Aro->saveField('alias', $this->request->data['Rol']['machin_name']) ) { 
                 return parent::afterSave($created);
             } else {
                 return false;

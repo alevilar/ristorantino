@@ -56,6 +56,7 @@ class MesasController extends MesaAppController {
             ));
         $tot = empty($tot['0']['total']) ? 0 : $tot['0']['total'];
         $this->set('mesas_suma_total', money_format('%.2n', $tot) );
+        $this->set('estados', $this->estados);
 
     }
 

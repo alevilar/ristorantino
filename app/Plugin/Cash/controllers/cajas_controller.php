@@ -18,8 +18,8 @@ class CajasController extends CashAppController {
         }
         
         public function add() {
-            if (!empty($this->data)) {
-                if ($this->Caja->save($this->data)) {
+            if (!empty($this->request->data)) {
+                if ($this->Caja->save($this->request->data)) {
                     $this->Session->setFlash('Se ha guardado la caja correctamente');
                     $this->redirect('index');
                 } else {
@@ -30,15 +30,15 @@ class CajasController extends CashAppController {
         
         
         public function edit($id) {
-            if (!empty($this->data)) {
-                if ($this->Caja->save($this->data)) {
+            if (!empty($this->request->data)) {
+                if ($this->Caja->save($this->request->data)) {
                     $this->Session->setFlash('Se ha guardado la caja correctamente');
                     $this->redirect('index');
                 } else {
                     $this->Session->setFlash('Error al guardar');
                 }
             } else {
-                $this->data = $this->Caja->read(null, $id);
+                $this->request->data = $this->Caja->read(null, $id);
             }
             $this->render('add');
         }

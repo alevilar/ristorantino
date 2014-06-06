@@ -24,9 +24,9 @@ class TipoImpuestosController extends AccountAppController {
 
 	function add() {
             $this->rutaUrl_for_layout[] =array('name'=> 'Tipo de impuestos','link'=>'/account/tipoImpuestos' );
-		if (!empty($this->data)) {
+		if (!empty($this->request->data)) {
 			$this->TipoImpuesto->create();
-			if ($this->TipoImpuesto->save($this->data)) {
+			if ($this->TipoImpuesto->save($this->request->data)) {
 				$this->Session->setFlash(__('The TipoImpuesto has been saved', true));
 				$this->redirect(array('action' => 'index'));
 			} else {
@@ -37,20 +37,20 @@ class TipoImpuestosController extends AccountAppController {
 
 	function edit($id = null) {
             $this->rutaUrl_for_layout[] =array('name'=> 'Tipo de impuestos','link'=>'/account/tipoImpuestos' );
-		if (!$id && empty($this->data)) {
+		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__('Invalid TipoImpuesto', true));
 			$this->redirect(array('action' => 'index'));
 		}
-		if (!empty($this->data)) {
-			if ($this->TipoImpuesto->save($this->data)) {
+		if (!empty($this->request->data)) {
+			if ($this->TipoImpuesto->save($this->request->data)) {
 				$this->Session->setFlash(__('The TipoImpuesto has been saved', true));
 				$this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The TipoImpuesto could not be saved. Please, try again.', true));
 			}
 		}
-		if (empty($this->data)) {
-			$this->data = $this->TipoImpuesto->read(null, $id);
+		if (empty($this->request->data)) {
+			$this->request->data = $this->TipoImpuesto->read(null, $id);
 		}
 	}
 

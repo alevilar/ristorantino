@@ -5,9 +5,9 @@
 
     <div class="pull-right">
     <?php
-    echo $form->create('Zeta', array('type' => 'get', 'url' => $this->action, 'class' => 'form-inline', 'role' => "form"));
+    echo $this->Form->create('Zeta', array('type' => 'get', 'url' => $this->action, 'class' => 'form-inline', 'role' => "form"));
     ?>
-            <?php echo $form->input('fecha_desde', array(
+            <?php echo $this->Form->input('fecha_desde', array(
                 'label' => array(
                     'text' => 'Desde',
                     'class' => 'sr-only',
@@ -17,7 +17,7 @@
             ))?>
         
         
-        <?php echo  $form->input('fecha_hasta', array(
+        <?php echo  $this->Form->input('fecha_hasta', array(
                 'label' => array(
                     'text' => 'Hasta',
                     'class' => 'sr-only',
@@ -30,12 +30,12 @@
 
     
     <?php
-    echo $form->end(null);
+    echo $this->Form->end(null);
     ?>
         <br>
         <?php
 
-        echo $html->link('Descargar Excel', $this->action . '.xls' . strstr($_SERVER['REQUEST_URI'], '?'));
+        echo $this->Html->link('Descargar Excel', $this->action . '.xls' . strstr($_SERVER['REQUEST_URI'], '?'));
         ?>
     </div>
 <br><br>
@@ -62,17 +62,17 @@
     <tbody>
         <?php foreach ($zetas as $z) { ?>
             <tr>
-                <td><?php echo $number->currency($z['Zeta']['total_ventas']) ?></td>
+                <td><?php echo $this->Number-> currency($z['Zeta']['total_ventas']) ?></td>
                 <td class="center"><?php echo $z['Zeta']['numero_comprobante'] ?></td>
-                <td><?php echo $number->currency($z['Zeta']['monto_iva']) ?></td>
-                <td><?php echo $number->currency($z['Zeta']['monto_neto']) ?></td>
-                <td><?php echo $number->currency($z['Zeta']['nota_credito_iva']) ?></td>
-                <td><?php echo $number->currency($z['Zeta']['nota_credito_neto']) ?></td>
+                <td><?php echo $this->Number-> currency($z['Zeta']['monto_iva']) ?></td>
+                <td><?php echo $this->Number-> currency($z['Zeta']['monto_neto']) ?></td>
+                <td><?php echo $this->Number-> currency($z['Zeta']['nota_credito_iva']) ?></td>
+                <td><?php echo $this->Number-> currency($z['Zeta']['nota_credito_neto']) ?></td>
                 <td><?php echo $z['Zeta']['observacion_comprobante_tarjeta'] ?></td>
                 <td><?php echo $z['Zeta']['observacion'] ?></td>
                 <td><?php echo $z['Zeta']['created'] ?></td>
                 <td><?php echo $z['Zeta']['modified'] ?></td>
-                <td><?php echo $html->link('arqueo', array('controller' => 'arqueos', 'action' => 'edit', $z['Zeta']['arqueo_id'])); ?></td>
+                <td><?php echo $this->Html->link('arqueo', array('controller' => 'arqueos', 'action' => 'edit', $z['Zeta']['arqueo_id'])); ?></td>
             </tr>
         <?php } ?>
     </tbody>
@@ -81,13 +81,13 @@
 
 <p>
     <?php
-    echo $paginator->counter(array(
+    echo $this->Paginator->counter(array(
         'format' => __('Página %page% de %pages%, mostrando %current% elementos de %count%', true)
     ));
     ?>
 </p>
 <div class="paging">
-    <?php echo $paginator->prev('<< ' . __('anterior', true), array(), null, array('class' => 'disabled')); ?>
-    | 	<?php echo $paginator->numbers(); ?>
-    <?php echo $paginator->next(__('próximo', true) . ' >>', array(), null, array('class' => 'disabled')); ?>
+    <?php echo $this->Paginator->prev('<< ' . __('anterior', true), array(), null, array('class' => 'disabled')); ?>
+    | 	<?php echo $this->Paginator->numbers(); ?>
+    <?php echo $this->Paginator->next(__('próximo', true) . ' >>', array(), null, array('class' => 'disabled')); ?>
 </div>

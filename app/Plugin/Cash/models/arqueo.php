@@ -28,8 +28,8 @@ class Arqueo extends CashAppModel {
         public function beforeSave($options = array())
         {
             parent::beforeSave($options);
-            if (strlen( $this->data['Arqueo']['datetime'] ) == '16') {
-                $this->data['Arqueo']['datetime'] = $this->data['Arqueo']['datetime'].':59';
+            if (strlen( $this->request->data['Arqueo']['datetime'] ) == '16') {
+                $this->request->data['Arqueo']['datetime'] = $this->request->data['Arqueo']['datetime'].':59';
             }
             return true;
         }

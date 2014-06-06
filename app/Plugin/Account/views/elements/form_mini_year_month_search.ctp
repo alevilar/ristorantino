@@ -2,7 +2,7 @@
 if ( empty($modelName) ) {
     $modelName = Inflector::classify($this->name);
 }
-echo $form->create($modelName, array(
+echo $this->Form->create($modelName, array(
     'url' => array('controller' => $this->name,'action' => $this->action), 
     'type' => 'get', 
     'name' => 
@@ -20,7 +20,7 @@ echo $form->create($modelName, array(
 <div class="row">
     <div class="col-md-2">
         <?php
-        echo $form->input('cierre_id', array(
+        echo $this->Form->input('cierre_id', array(
             'label' => 'Estado',
             'options' => array(
                 1 => 'Abierto',
@@ -35,7 +35,7 @@ echo $form->create($modelName, array(
     <div class="col-md-2">
         <?php
         if (!empty($proveedores)) {
-            echo $form->input('proveedor_id', array(
+            echo $this->Form->input('proveedor_id', array(
                 'label'=>false, 
                 'empty' => 'Proveedor',
                 'placeholder' => 'Proveedor'));
@@ -47,7 +47,7 @@ echo $form->create($modelName, array(
     <div class="col-md-2">
         <?php
         if (!empty($clasificaciones)) {
-        echo $form->input('clasificacion_id', array(
+        echo $this->Form->input('clasificacion_id', array(
             'empty' => 'Clasificacion',
             'label'=>false));
         } else {
@@ -57,24 +57,24 @@ echo $form->create($modelName, array(
     </div>
     <div class="col-md-2">
         <?php
-        echo $form->input('fecha_desde', array('label'=>false, 'type' => 'date', 'pladeholder'=>'Desde'));
+        echo $this->Form->input('fecha_desde', array('label'=>false, 'type' => 'date', 'pladeholder'=>'Desde'));
         ?>
     </div>
     <div class="col-md-2">
         <?php
-        echo  $form->input('fecha_hasta', array('label'=>false,'placeholder'=>'Hasta', 'type' => 'date'));
+        echo  $this->Form->input('fecha_hasta', array('label'=>false,'placeholder'=>'Hasta', 'type' => 'date'));
         ?>
     </div>
     <div class="col-md-1">
         <?php
-        echo  $form->input('importe_neto', array('label'=>false, 'placeholder'=>'Neto'));
+        echo  $this->Form->input('importe_neto', array('label'=>false, 'placeholder'=>'Neto'));
         ?>
     </div>
     <div class="col-md-1">
         <?php
-        echo  $form->button('Buscar', array('class'=>'btn btn-primary', 'type'=>'submit'));
+        echo  $this->Form->button('Buscar', array('class'=>'btn btn-primary', 'type'=>'submit'));
         ?>
     </div>
 </div>
 
-<?php echo $form->end(); ?>
+<?php echo $this->Form->end(); ?>

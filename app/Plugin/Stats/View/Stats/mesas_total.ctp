@@ -1,6 +1,6 @@
 <?php
-    echo $html->css('/stats/css/examples', false);
-    echo $html->css('/stats/css/stats', false);
+    echo $this->Html->css('/stats/css/examples', false);
+    echo $this->Html->css('/stats/css/stats', false);
 
     
     echo $this->Html->script('/stats/js/jqplot/jquery.jqplot.js', false); //plugin estadisticas
@@ -30,19 +30,19 @@
     
     <div>
         <?php 
-        echo $form->create('Mesa',array('url' => array( 'controller' => 'stats','action'=>'mesas_total'), 'class' => '')); 
+        echo $this->Form->create('Mesa',array('url' => array( 'controller' => 'stats','action'=>'mesas_total'), 'class' => '')); 
         ?>
 
         <h2>Rango de Fechas</h2>
         
         <?php
-        echo "Desde: ".$form->text('Linea.0.desde', array('placeholder'=>'Ej: 22/09/2011','id'=>'from', 'class' =>'datepicker'));
-        echo "Hasta: ".$form->text('Linea.0.hasta', array('placeholder'=>'Ej: 30/09/2011','id'=>'to', 'class' =>'datepicker'));  
-        echo $form->submit('Aceptar', array('style' => 'margin-left: 136px', 'div' => false));
+        echo "Desde: ".$this->Form->text('Linea.0.desde', array('placeholder'=>'Ej: 22/09/2011','id'=>'from', 'class' =>'datepicker'));
+        echo "Hasta: ".$this->Form->text('Linea.0.hasta', array('placeholder'=>'Ej: 30/09/2011','id'=>'to', 'class' =>'datepicker'));  
+        echo $this->Form->submit('Aceptar', array('style' => 'margin-left: 136px', 'div' => false));
         ?>
 
         <?php
-        echo $form->end();
+        echo $this->Form->end();
         ?>
 
     </div>

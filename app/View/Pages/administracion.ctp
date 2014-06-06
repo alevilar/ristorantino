@@ -29,13 +29,14 @@
     <h2>Productos</h2>
     <div class="list-group">
         <?php
-        echo $this->Html->link('Categorias', '/categorias', array('class' => 'list-group-item'));
-        echo $this->Html->link('Productos', '/productos', array('class' => 'list-group-item'));
-        echo $this->Html->link('Sabores', '/sabores', array('class' => 'list-group-item'));
-        echo $this->Html->link('Observaciones de Productos', '/observaciones', array('class' => 'list-group-item'));
-        echo $this->Html->link('Observaciones de Comandas', '/observacion_comandas', array('class' => 'list-group-item'));
-        echo $this->Html->link('Productos Pedidos', '/detalle_comandas/', array('class' => 'list-group-item'));
-        echo $this->Html->link('Tags', '/tags', array('class' => 'list-group-item'));
+        echo $this->Html->link('Categorias', '/product/categorias', array('class' => 'list-group-item'));
+        echo $this->Html->link('Productos', '/product/productos', array('class' => 'list-group-item'));
+        echo $this->Html->link('Sabores', '/product/sabores', array('class' => 'list-group-item'));
+        
+        echo $this->Html->link('Observaciones de Productos', '/comanda/observaciones', array('class' => 'list-group-item'));
+        echo $this->Html->link('Observaciones de Comandas', '/comanda/observacion_comandas', array('class' => 'list-group-item'));
+        echo $this->Html->link('Productos Pedidos', '/comanda/detalle_comandas/', array('class' => 'list-group-item'));
+        echo $this->Html->link('Tags', '/product/tags', array('class' => 'list-group-item'));
         ?>
     </div>
 

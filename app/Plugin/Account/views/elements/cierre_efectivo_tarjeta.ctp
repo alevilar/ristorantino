@@ -17,10 +17,10 @@
 	</div>
 
 	<div>
-            <a href="#Reimprimir" onclick="cajero.reimprimir('<?= $html->url('/mesas/imprimirTicket')?>')">Re Print Ticket</a>
-            <a href="#reAbrirMesa" onclick="cajero.cancelarCierreDeMesa('<?= $html->url('/mesas/ajax_edit')?>')">Re Abrir Mesa</a>
-            <a href="#cerrarMesa" onclick="cajero.enviarACajero('<?= $html->url('/mesas/ajax_edit')?>')">Cerrar (envia al cajero)</a>
-            <a href="javascript:" onclick="window.location.href='<?php echo $html->url('/mesas/edit/')?>'+cajero.mesa_id">Editar Mesa</a>
+            <a href="#Reimprimir" onclick="cajero.reimprimir('<?= $this->Html->url('/mesas/imprimirTicket')?>')">Re Print Ticket</a>
+            <a href="#reAbrirMesa" onclick="cajero.cancelarCierreDeMesa('<?= $this->Html->url('/mesas/ajax_edit')?>')">Re Abrir Mesa</a>
+            <a href="#cerrarMesa" onclick="cajero.enviarACajero('<?= $this->Html->url('/mesas/ajax_edit')?>')">Cerrar (envia al cajero)</a>
+            <a href="javascript:" onclick="window.location.href='<?php echo $this->Html->url('/mesas/edit/')?>'+cajero.mesa_id">Editar Mesa</a>
             <dl id="cobro-estado"></dl>
 	</div>
 </div>

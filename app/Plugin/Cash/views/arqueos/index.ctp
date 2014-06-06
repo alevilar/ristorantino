@@ -1,5 +1,5 @@
 <?php
-echo $html->css('/cash/css/style_cash');
+echo $this->Html->css('/cash/css/style_cash');
 
 
 ?>
@@ -12,7 +12,7 @@ echo $html->css('/cash/css/style_cash');
 <div class="pull-right">
 <?php foreach ($cajas as $cId=>$cName) { ?>
     <?php 
-        echo $html->link('Hacer Arqueo de '.$cName, array('controller'=>'arqueos', 'action'=>'add', $cId), array('class'=>'btn btn-md  btn-primary'));
+        echo $this->Html->link('Hacer Arqueo de '.$cName, array('controller'=>'arqueos', 'action'=>'add', $cId), array('class'=>'btn btn-md  btn-primary'));
         echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
       ?>
 <?php } ?>
@@ -60,17 +60,17 @@ echo $html->css('/cash/css/style_cash');
                 <td><?php echo strftime('%a %d de %b %H:%M ', strtotime($arq['Arqueo']['datetime'])) ?></td>
 
 
-                <td><?php echo $number->currency($arq['Arqueo']['saldo']) ?></td>
+                <td><?php echo $this->Number-> currency($arq['Arqueo']['saldo']) ?></td>
 
-                <td><?php echo  $number->currency($arq['Arqueo']['importe_inicial']) ?></td>
-                <td><?php echo  $number->currency($arq['Arqueo']['ingreso']) ?></td>
-                <td><?php echo  $number->currency($arq['Arqueo']['otros_ingresos']) ?></td>
-                <td><?php echo  $number->currency($arq['Arqueo']['egreso']) ?></td>
-                <td><?php echo  $number->currency($arq['Arqueo']['otros_egresos']) ?></td>
-                <td><?php echo  $number->currency($arq['Arqueo']['importe_final']) ?></td>
+                <td><?php echo  $this->Number-> currency($arq['Arqueo']['importe_inicial']) ?></td>
+                <td><?php echo  $this->Number-> currency($arq['Arqueo']['ingreso']) ?></td>
+                <td><?php echo  $this->Number-> currency($arq['Arqueo']['otros_ingresos']) ?></td>
+                <td><?php echo  $this->Number-> currency($arq['Arqueo']['egreso']) ?></td>
+                <td><?php echo  $this->Number-> currency($arq['Arqueo']['otros_egresos']) ?></td>
+                <td><?php echo  $this->Number-> currency($arq['Arqueo']['importe_final']) ?></td>
                 <td><?php echo date('d/m/Y H:i:s', strtotime($arq['Arqueo']['created'])) ?></td>
                 <td><?php echo date('d/m/Y H:i:s', strtotime($arq['Arqueo']['modified'])) ?></td>
-                <td><?php echo $html->link('Editar', 'edit/' . $arq['Arqueo']['id']); ?></td>
+                <td><?php echo $this->Html->link('Editar', 'edit/' . $arq['Arqueo']['id']); ?></td>
             </tr>
 
         <?php } ?>
@@ -80,13 +80,13 @@ echo $html->css('/cash/css/style_cash');
 
 <p>
     <?php
-    echo $paginator->counter(array(
+    echo $this->Paginator->counter(array(
         'format' => __('Página %page% de %pages%, mostrando %current% elementos de %count%', true)
     ));
     ?>
 </p>
 <div class="paging">
-    <?php echo $paginator->prev('<< ' . __('anterior', true), array(), null, array('class' => 'disabled')); ?>
-    | 	<?php echo $paginator->numbers(); ?>
-    <?php echo $paginator->next(__('próximo', true) . ' >>', array(), null, array('class' => 'disabled')); ?>
+    <?php echo $this->Paginator->prev('<< ' . __('anterior', true), array(), null, array('class' => 'disabled')); ?>
+    | 	<?php echo $this->Paginator->numbers(); ?>
+    <?php echo $this->Paginator->next(__('próximo', true) . ' >>', array(), null, array('class' => 'disabled')); ?>
 </div>

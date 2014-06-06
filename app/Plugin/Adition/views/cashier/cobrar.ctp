@@ -2,7 +2,7 @@
 
 var cajero = new Cajero();
 cajero.tiposDePagos = <?php echo json_encode($tipo_de_pagos)?>;
-cajero.urlGuardar = "<?php echo $html->url('/pagos/add');?>";
+cajero.urlGuardar = "<?php echo $this->Html->url('/pagos/add');?>";
 
 
 // LOS SCROLL BARS !!!!
@@ -31,7 +31,7 @@ cajero.urlGuardar = "<?php echo $html->url('/pagos/add');?>";
 
 new PeriodicalExecuter(function(pe) {
 	 
-		new Ajax.Request('<?php echo $html->url('ajax_mesas_x_cobrar.json')?>', {
+		new Ajax.Request('<?php echo $this->Html->url('ajax_mesas_x_cobrar.json')?>', {
 			  onSuccess: function(transport) {
 			  
 			   // var mesas_cerradas_json = transport.headerJSON;

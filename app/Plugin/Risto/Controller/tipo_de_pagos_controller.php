@@ -27,10 +27,10 @@ class TipoDePagosController extends AppController {
              $this->rutaUrl_for_layout[] =array('name'=> 'Tipo de pagos','link'=>'/TipoDePagos' );
 		
                 
-                if( !empty($this->data['TipoDePago']['newfile']['name'])){
+                if( !empty($this->request->data['TipoDePago']['newfile']['name'])){
                     $path = WWW_ROOT.'img/';
                   
-                    $cadToVec = explode('.', $this->data['TipoDePago']['newfile']['name']);
+                    $cadToVec = explode('.', $this->request->data['TipoDePago']['newfile']['name']);
                     $name = Inflector::slug( $cadToVec[0] );
                     $ext = $cadToVec[1];
                     $nameFile = $name.".$ext";
@@ -44,28 +44,28 @@ class TipoDePagosController extends AppController {
                         }
                     }
                     
-                    $this->data['TipoDePago']['image_url'] = $name.".$ext";
+                    $this->request->data['TipoDePago']['image_url'] = $name.".$ext";
                     
-                    $this->data['TipoDePago']['image_url'] = $name.".$ext";
+                    $this->request->data['TipoDePago']['image_url'] = $name.".$ext";
                     debug($path.$nameFile);
-                    move_uploaded_file($this->data['TipoDePago']['newfile']['tmp_name'], $path.$nameFile) ;
+                    move_uploaded_file($this->request->data['TipoDePago']['newfile']['tmp_name'], $path.$nameFile) ;
                     
                 }
                 
                 
-		if (!empty($this->data)) {
+		if (!empty($this->request->data)) {
                     if ( !empty($id)) {
                         $this->TipoDePago->create();
                     }
-			if ($this->TipoDePago->save($this->data)) {
+			if ($this->TipoDePago->save($this->request->data)) {
 				$this->Session->setFlash(__('The TipoDePago has been saved', true));
 				$this->redirect(array('action'=>'index'));
 			} else {
 				$this->Session->setFlash(__('The TipoDePago could not be saved. Please, try again.', true));
 			}
 		}
-		if (empty($this->data)) {
-			$this->data = $this->TipoDePago->read(null, $id);
+		if (empty($this->request->data)) {
+			$this->request->data = $this->TipoDePago->read(null, $id);
 		}
 	}
 

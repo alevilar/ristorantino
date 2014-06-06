@@ -5,11 +5,11 @@
         <script type="text/javascript">
             <!--
             // Inicializacion de variable global de url
-            var urlDomain = "<?php echo $html->url('/', true); ?>";
+            var urlDomain = "<?php echo $this->Html->url('/', true); ?>";
             -->
         </script>
 
-        <?php echo $html->charset(); ?>
+        <?php echo $this->Html->charset(); ?>
         <title>
             <?php echo $title_for_layout; ?>
         </title>
@@ -19,12 +19,12 @@
 
 
 
-        <base href="<?= $html->url('/') ?>" />
+        <base href="<?= $this->Html->url('/') ?>" />
         <?php
-        echo $html->meta('icon');
+        echo $this->Html->meta('icon');
 
         // para los modal window
-        echo $html->css(array(
+        echo $this->Html->css(array(
 //                    'http://code.jquery.com/mobile/latest/jquery.mobile.min.css',
 //                    'jquery-mobile/jquery.mobile-1.0',
             //  'jquery-mobile/jquerymobile.coqus',
@@ -39,10 +39,10 @@
 
         $cssUserRole = "acl-" . $session->read('Auth.User.role');
         if (is_file(APP . WEBROOT_DIR . DS . "css" . DS . $cssUserRole . ".css")) {
-            echo $html->css($cssUserRole, 'stylesheet', array('media' => 'screen'));
+            echo $this->Html->css($cssUserRole, 'stylesheet', array('media' => 'screen'));
         }
 
-        echo $javascript->link(array(
+        echo $this->Html->script(array(
             'jquery/jquery-1.9.1.min',
 //            'jquery/jquery-1.6.4',
             'jquery/jquery.tmpl.min',
@@ -90,10 +90,10 @@
             
             <div data-role="content" data-theme="c">
                 <ul data-role="listview">
-                    <li><?php echo $html->link('Volver a Página Principal', '/', array('data-ajax'=>'false'))?></li>
-                    <li><?php echo $html->link('Proveedores', array('controller'=>'proveedores'), array())?></li>
-                    <li><?php echo $html->link('Impuestos', array('controller'=>'tipo_impuestos'), array())?></li>
-                    <li><?php echo $html->link('Clasificaciones', array('controller'=>'clasificaciones'), array())?></li>
+                    <li><?php echo $this->Html->link('Volver a Página Principal', '/', array('data-ajax'=>'false'))?></li>
+                    <li><?php echo $this->Html->link('Proveedores', array('controller'=>'proveedores'), array())?></li>
+                    <li><?php echo $this->Html->link('Impuestos', array('controller'=>'tipo_impuestos'), array())?></li>
+                    <li><?php echo $this->Html->link('Clasificaciones', array('controller'=>'clasificaciones'), array())?></li>
                 </ul>
             </div>
         </div>

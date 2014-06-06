@@ -1,4 +1,4 @@
-<?php //echo $html->css('/account/css/style'); ?>
+<?php //echo $this->Html->css('/account/css/style'); ?>
 <h1>Viendo detalle del Cierre <small><cite>"<?php echo $cierre['Cierre']['name'] ?>"</cite></small></h1>
 
 <p>
@@ -10,7 +10,7 @@
 <?php
 
 
-echo $html->link('Descargar Excel', $this->action . "/".$cierre['Cierre']['id']. '.xls' . strstr($_SERVER['REQUEST_URI'], '?'), array(
+echo $this->Html->link('Descargar Excel', $this->action . "/".$cierre['Cierre']['id']. '.xls' . strstr($_SERVER['REQUEST_URI'], '?'), array(
     'data-ajax' => 'false',
     'class' => 'btn btn-success',
 ));

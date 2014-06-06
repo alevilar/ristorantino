@@ -13,8 +13,8 @@ class ClasificacionesController extends AccountAppController
     function add_edit($id = null)
     {
 
-        if (!empty($this->data)) {
-            if ($this->Clasificacion->save($this->data)) {
+        if (!empty($this->request->data)) {
+            if ($this->Clasificacion->save($this->request->data)) {
                 $this->Session->setFlash('La clasificacion ha sido guardada');
             } else {
                 $this->Session->setFlash('Error al guardar la clasificación');
@@ -23,7 +23,7 @@ class ClasificacionesController extends AccountAppController
 
         if (!empty($id)) {
             $this->Clasificacion->recursive = 0;
-            $this->data = $this->Clasificacion->read(null, $id);
+            $this->request->data = $this->Clasificacion->read(null, $id);
         }
 
         $this->set('clasificacion_id', $id);
@@ -54,27 +54,27 @@ class ClasificacionesController extends AccountAppController
                 if ( $url['cierre_id'] == 1) {
                     // Abiertas
                     $conditions[] = 'Gasto.cierre_id IS NULL';
-                    $this->data['Gasto']['cierre_id'] = $url['cierre_id'];
+                    $this->request->data['Gasto']['cierre_id'] = $url['cierre_id'];
                 } else {               
                     //cerradas
                     $conditions[] = 'Gasto.cierre_id IS NOT NULL';
-                    $this->data['Gasto']['cierre_id'] = $url['cierre_id'];
+                    $this->request->data['Gasto']['cierre_id'] = $url['cierre_id'];
                 }
         }
 
         if (!empty($url['fecha_desde'])) {
             $conditions['Gasto.fecha >='] = $url['fecha_desde'];
-            $this->data['Gasto']['fecha_desde'] = $url['fecha_desde'];
+            $this->request->data['Gasto']['fecha_desde'] = $url['fecha_desde'];
         }
 
         if (!empty($url['fecha_hasta'])) {
             $conditions['Gasto.fecha <='] = $url['fecha_hasta'];
-            $this->data['Gasto']['fecha_hasta'] = $url['fecha_hasta'];
+            $this->request->data['Gasto']['fecha_hasta'] = $url['fecha_hasta'];
         }
         
         if (empty($url)) {
-            $conditions['Gasto.fecha >='] = $this->data['Gasto']['fecha_desde'] = date('Y-m-d', strtotime('-1month'));
-            $conditions['Gasto.fecha <='] = $this->data['Gasto']['fecha_hasta'] = date('Y-m-d', strtotime('now'));
+            $conditions['Gasto.fecha >='] = $this->request->data['Gasto']['fecha_desde'] = date('Y-m-d', strtotime('-1month'));
+            $conditions['Gasto.fecha <='] = $this->request->data['Gasto']['fecha_hasta'] = date('Y-m-d', strtotime('now'));
         }
 
         $this->set('resumen_x_clasificacion', $this->Clasificacion->gastos($conditions));

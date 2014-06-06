@@ -55,9 +55,9 @@
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $html->link(__('Edit Reserva', true), array('action' => 'edit', $reserva['Reserva']['id'])); ?> </li>
-		<li><?php echo $html->link(__('Delete Reserva', true), array('action' => 'delete', $reserva['Reserva']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $reserva['Reserva']['id'])); ?> </li>
-		<li><?php echo $html->link(__('List Reservas', true), array('action' => 'index')); ?> </li>
-		<li><?php echo $html->link(__('New Reserva', true), array('action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('Edit Reserva', true), array('action' => 'edit', $reserva['Reserva']['id'])); ?> </li>
+		<li><?php echo $this->Html->link(__('Delete Reserva', true), array('action' => 'delete', $reserva['Reserva']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $reserva['Reserva']['id'])); ?> </li>
+		<li><?php echo $this->Html->link(__('List Reservas', true), array('action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Reserva', true), array('action' => 'add')); ?> </li>
 	</ul>
 </div>

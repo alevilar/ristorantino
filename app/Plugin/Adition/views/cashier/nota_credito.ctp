@@ -9,7 +9,7 @@
 
 <?php
 
-echo $form->create('Cajero', array(
+echo $this->Form->create('Cajero', array(
     'url'=>'nota_credito', 
     'type' =>'post', 
     'data-rel' => 'back', 
@@ -19,22 +19,22 @@ echo $form->create('Cajero', array(
 ?>
            <fieldset data-role="controlgroup" data-type="horizontal">
            <?php
-echo $form->input('tipo', array('label' => 'Seleccionar Tipo de Factura','options'=> array('B'=>'"B"', 'A' => '"A"'), 'type'=>'radio', 'required'=>'required'));
+echo $this->Form->input('tipo', array('label' => 'Seleccionar Tipo de Factura','options'=> array('B'=>'"B"', 'A' => '"A"'), 'type'=>'radio', 'required'=>'required'));
 ?>
            </fieldset>
 <?
-$cc = $form->input('Cliente.razonsocial', array('label'=>'Razon Social (sin acentos ni eñies, ningún carácter "raro")'));
-$cc .= $form->input('Cliente.numerodoc', array('label'=>'CUIT'));
-$cc .= $form->input('Cliente.respo_iva', array('type'=>'hidden', 'value'=>'I'));
-$cc .= $form->input('Cliente.tipodoc', array('type'=>'hidden', 'value'=>'C'));
+$cc = $this->Form->input('Cliente.razonsocial', array('label'=>'Razon Social (sin acentos ni eñies, ningún carácter "raro")'));
+$cc .= $this->Form->input('Cliente.numerodoc', array('label'=>'CUIT'));
+$cc .= $this->Form->input('Cliente.respo_iva', array('type'=>'hidden', 'value'=>'I'));
+$cc .= $this->Form->input('Cliente.tipodoc', array('type'=>'hidden', 'value'=>'C'));
 
-echo $html->div('factura_a',$cc,array('style'=>'display:none'),false);
+echo $this->Html->div('factura_a',$cc,array('style'=>'display:none'),false);
 
-echo $form->input('numero_ticket', array('label' => 'Número de Ticket (sin guiones "-")'));
+echo $this->Form->input('numero_ticket', array('label' => 'Número de Ticket (sin guiones "-")'));
 
-echo $form->input('importe');
+echo $this->Form->input('importe');
 
-echo $form->input('descripcion', array('default'=>'Error Corregido', 'label' => 'Ingresar una pequeña descripción'));
+echo $this->Form->input('descripcion', array('default'=>'Error Corregido', 'label' => 'Ingresar una pequeña descripción'));
 
 ?>
             <div class="ui-grid-a">
@@ -46,7 +46,7 @@ echo $form->input('descripcion', array('default'=>'Error Corregido', 'label' => 
                 </div>
             </div>
             
-   <?php echo $form->end() ?>         
+   <?php echo $this->Form->end() ?>         
 <script type="text/javascript">
     jQuery('#CajeroTipoA').live('change', function(){
             jQuery('.factura_a').show();

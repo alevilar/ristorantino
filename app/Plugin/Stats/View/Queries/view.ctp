@@ -35,9 +35,9 @@
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $html->link(__('Edit Query'), array('action'=>'edit', $query['Query']['id'])); ?> </li>
-		<li><?php echo $html->link(__('Delete Query'), array('action'=>'delete', $query['Query']['id']), null, sprintf(__('Are you sure you want to delete # %s?'), $query['Query']['id'])); ?> </li>
-		<li><?php echo $html->link(__('List Queries'), array('action'=>'index')); ?> </li>
-		<li><?php echo $html->link(__('New Query'), array('action'=>'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('Edit Query'), array('action'=>'edit', $query['Query']['id'])); ?> </li>
+		<li><?php echo $this->Html->link(__('Delete Query'), array('action'=>'delete', $query['Query']['id']), null, sprintf(__('Are you sure you want to delete # %s?'), $query['Query']['id'])); ?> </li>
+		<li><?php echo $this->Html->link(__('List Queries'), array('action'=>'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Query'), array('action'=>'add')); ?> </li>
 	</ul>
 </div>

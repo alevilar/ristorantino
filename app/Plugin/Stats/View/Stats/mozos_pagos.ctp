@@ -8,9 +8,9 @@
                 echo $this->Html->script('/pquery/js/plugins/jqplot.highlighter.js', false);
                 echo $this->Html->script('/pquery/js/plugins/jqplot.pointLabels.js', false);
                 
-                echo $html->css('/pquery/css/examples.css', false);
-                echo $html->css('cake.css', false);         
-                echo $html->css('/pquery/css/jquery.jqplot.css', false);
+                echo $this->Html->css('/pquery/css/examples.css', false);
+                echo $this->Html->css('cake.css', false);         
+                echo $this->Html->css('/pquery/css/jquery.jqplot.css', false);
 
 ?>
 

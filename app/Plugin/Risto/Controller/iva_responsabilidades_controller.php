@@ -18,9 +18,9 @@ class IvaResponsabilidadesController extends AppController {
 	}
 
 	function add() {
-		if (!empty($this->data)) {
+		if (!empty($this->request->data)) {
 			$this->IvaResponsabilidad->create();
-			if ($this->IvaResponsabilidad->save($this->data)) {
+			if ($this->IvaResponsabilidad->save($this->request->data)) {
 				$this->Session->setFlash(__('The IvaResponsabilidad has been saved', true));
 				$this->redirect(array('action'=>'index'));
 			} else {
@@ -30,20 +30,20 @@ class IvaResponsabilidadesController extends AppController {
 	}
 
 	function edit($id = null) {
-		if (!$id && empty($this->data)) {
+		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__('Invalid IvaResponsabilidad', true));
 			$this->redirect(array('action'=>'index'));
 		}
-		if (!empty($this->data)) {
-			if ($this->IvaResponsabilidad->save($this->data)) {
+		if (!empty($this->request->data)) {
+			if ($this->IvaResponsabilidad->save($this->request->data)) {
 				$this->Session->setFlash(__('The IvaResponsabilidad has been saved', true));
 				$this->redirect(array('action'=>'index'));
 			} else {
 				$this->Session->setFlash(__('The IvaResponsabilidad could not be saved. Please, try again.', true));
 			}
 		}
-		if (empty($this->data)) {
-			$this->data = $this->IvaResponsabilidad->read(null, $id);
+		if (empty($this->request->data)) {
+			$this->request->data = $this->IvaResponsabilidad->read(null, $id);
 		}
 	}
 

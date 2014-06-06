@@ -8,15 +8,15 @@
 <h2><?php __('Tipo de Pagos');?></h2>
 <p>
 <?php
-echo $paginator->counter(array(
+echo $this->Paginator->counter(array(
 'format' => __('Pagina %page% de %pages%, mostrando %current% elementos de %count%', true)
 ));
 ?></p>
 <table class="table">
 <tr>
-	<th><?php echo $paginator->sort('id');?></th>
-	<th><?php echo $paginator->sort('Nombre');?></th>
-	<th><?php echo $paginator->sort('Descripción');?></th>
+	<th><?php echo $this->Paginator->sort('id');?></th>
+	<th><?php echo $this->Paginator->sort('Nombre');?></th>
+	<th><?php echo $this->Paginator->sort('Descripción');?></th>
 	<th class="actions"><?php __('Acciones');?></th>
 </tr>
 <?php
@@ -30,7 +30,7 @@ foreach ($tipoDePagos as $tipoDePago):
 	<tr<?php echo $class;?>>
 		<td>
 			<?php echo $tipoDePago['TipoDePago']['id']; ?>
-                    <?php echo $html->image($tipoDePago['TipoDePago']['image_url'], array('width'=>40)); ?>
+                    <?php echo $this->Html->image($tipoDePago['TipoDePago']['image_url'], array('width'=>40)); ?>
 		</td>
 		<td>
 			<?php echo $tipoDePago['TipoDePago']['name']; ?>
@@ -39,21 +39,21 @@ foreach ($tipoDePagos as $tipoDePago):
 			<?php echo $tipoDePago['TipoDePago']['description']; ?>
 		</td>
 		<td class="actions">
-			<?php echo $html->link(__('Editar', true), array('action'=>'edit', $tipoDePago['TipoDePago']['id'])); ?>
-			<?php echo $html->link(__('Borrar', true), array('action'=>'delete', $tipoDePago['TipoDePago']['id']), null, sprintf(__('¿Está seguro que desea borrar el tipo de pago: %s?', true), $tipoDePago['TipoDePago']['name'])); ?>
+			<?php echo $this->Html->link(__('Editar', true), array('action'=>'edit', $tipoDePago['TipoDePago']['id'])); ?>
+			<?php echo $this->Html->link(__('Borrar', true), array('action'=>'delete', $tipoDePago['TipoDePago']['id']), null, sprintf(__('¿Está seguro que desea borrar el tipo de pago: %s?', true), $tipoDePago['TipoDePago']['name'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>
 </table>
 </div>
 <div class="paging">
-	<?php echo $paginator->prev('<< '.__('anterior', true), array(), null, array('class'=>'disabled'));?>
- | 	<?php echo $paginator->numbers();?>
-	<?php echo $paginator->next(__('próximo', true).' >>', array(), null, array('class'=>'disabled'));?>
+	<?php echo $this->Paginator->prev('<< '.__('anterior', true), array(), null, array('class'=>'disabled'));?>
+ | 	<?php echo $this->Paginator->numbers();?>
+	<?php echo $this->Paginator->next(__('próximo', true).' >>', array(), null, array('class'=>'disabled'));?>
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $html->link(__('Crear Tipo de pago', true), array('action'=>'edit')); ?></li>
-		<li><?php echo $html->link(__('Listar Pagos', true), array('controller'=> 'pagos', 'action'=>'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('Crear Tipo de pago', true), array('action'=>'edit')); ?></li>
+		<li><?php echo $this->Html->link(__('Listar Pagos', true), array('controller'=> 'pagos', 'action'=>'index')); ?> </li>
 	</ul>
 </div>

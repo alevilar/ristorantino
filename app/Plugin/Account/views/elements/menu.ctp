@@ -31,20 +31,20 @@ if ($this->name == 'Clasificaciones' && $this->action == 'index') {
         
 
         <li class="dropdown">
-            <?php echo $html->link('Gastos<b class="caret"></b>', '#', array(
+            <?php echo $this->Html->link('Gastos<b class="caret"></b>', '#', array(
                  "class"=>"dropdown-toggle" ,
                  "data-toggle"=> "dropdown",
                  "escape" => false
             )) ?>
             <ul class="dropdown-menu">
                 <li class="<?php echo $c1 ?>">
-                    <?php echo $html->link('Pendientes de Pago', '/account/gastos') ?>
+                    <?php echo $this->Html->link('Pendientes de Pago', '/account/gastos') ?>
                 </li>
                 <li class="<?php echo $c2 ?>">
-                    <?php echo $html->link('Listado de Gastos', '/account/gastos/history') ?>
+                    <?php echo $this->Html->link('Listado de Gastos', '/account/gastos/history') ?>
                 </li>
                 <li class="<?php echo $c3 ?>">
-                    <?php echo $html->link('Gastos x Clasificación', '/account/clasificaciones/gastos') ?>
+                    <?php echo $this->Html->link('Gastos x Clasificación', '/account/clasificaciones/gastos') ?>
                 </li>
             </ul>
         </li>
@@ -52,24 +52,24 @@ if ($this->name == 'Clasificaciones' && $this->action == 'index') {
 
 
         <li class="<?php echo $c4 ?>">
-            <?php echo $html->link('Pagos', '/account/egresos/history') ?>
+            <?php echo $this->Html->link('Pagos', '/account/egresos/history') ?>
         </li>
         <li class="<?php echo $c5 ?>">
-            <?php echo $html->link('Cierres', '/account/cierres') ?>
+            <?php echo $this->Html->link('Cierres', '/account/cierres') ?>
         </li>
 
         <li class="<?php echo $c6 ?>">
-            <?php echo $html->link('Proveedores', '/account/proveedores') ?>
+            <?php echo $this->Html->link('Proveedores', '/account/proveedores') ?>
         </li>
 
         <li class="<?php echo $c7 ?>">
-            <?php echo $html->link('Impuestos', '/account/tipo_impuestos') ?>
+            <?php echo $this->Html->link('Impuestos', '/account/tipo_impuestos') ?>
         </li>
         
          <li class="<?php echo $c8 ?>">
-            <?php echo $html->link('Clasificaciones', '/account/clasificaciones') ?>
+            <?php echo $this->Html->link('Clasificaciones', '/account/clasificaciones') ?>
         </li>
     </ul>      
 
-    <?php echo $html->link('Nuevo Gasto', '/account/gastos/add', array('class' => 'btn btn-success pull-right')) ?>
+    <?php echo $this->Html->link('Nuevo Gasto', '/account/gastos/add', array('class' => 'btn btn-success pull-right')) ?>
 </nav>

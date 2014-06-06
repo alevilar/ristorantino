@@ -1,19 +1,19 @@
 <?php 
-echo $javascript->link('/lib/bootstrap.typehead/bootstrap3-typeahead');
+echo $this->Html->script('/lib/bootstrap.typehead/bootstrap3-typeahead');
 ?>
 <div class="gastos form">
-    <?php echo $form->create('Gasto', array('url'=>$this->action,'type' => 'file', 'id'=>'GastoAddForm')); ?>
-    <?php echo $form->hidden('id'); ?>
-    <?php echo $form->hidden('pagar', array('value' => true)); ?>
+    <?php echo $this->Form->create('Gasto', array('url'=>$this->action,'type' => 'file', 'id'=>'GastoAddForm')); ?>
+    <?php echo $this->Form->hidden('id'); ?>
+    <?php echo $this->Form->hidden('pagar', array('value' => true)); ?>
     <div class="row">
 
         <div class="col-md-4">
             <?php
-            echo $form->input('fecha', array('type' => 'date'));
+            echo $this->Form->input('fecha', array('type' => 'date'));
             
 
-            echo $form->hidden('proveedor_id');
-            echo $form->input('proveedor_list', array(
+            echo $this->Form->hidden('proveedor_id');
+            echo $this->Form->input('proveedor_list', array(
                 'autocomplete'=>'off',
                 'label' => 'Proveedor', 
                 'type' => 'text', 
@@ -24,26 +24,26 @@ echo $javascript->link('/lib/bootstrap.typehead/bootstrap3-typeahead');
                 )
                     );
 
-            echo $form->input('tipo_factura_id');
-            echo $form->input('factura_nro');
+            echo $this->Form->input('tipo_factura_id');
+            echo $this->Form->input('factura_nro');
             
-            echo $form->hidden('file');
-            echo $form->input('_file', array('type'=>'file', 'accept'=> "image/*", 'label' => 'PDF, Imagen, Archivo'));  
+            echo $this->Form->hidden('file');
+            echo $this->Form->input('_file', array('type'=>'file', 'accept'=> "image/*", 'label' => 'PDF, Imagen, Archivo'));  
             
-            if (!empty($this->data['Gasto']['file'])) {
-                $ext = substr(strrchr($this->data['Gasto']['file'],'.'),1);
+            if (!empty($this->request->data['Gasto']['file'])) {
+                $ext = substr(strrchr($this->request->data['Gasto']['file'],'.'),1);
                 if ( in_array(low($ext), array('jpg', 'png', 'gif', 'jpeg')) ) {
-                    $iii = $html->image(THUMB_FOLDER.$this->data['Gasto']['file'], array('width' => 48, 'alt' => 'Bajar', 'escape' => false));
+                    $iii = $this->Html->image(THUMB_FOLDER.$this->request->data['Gasto']['file'], array('width' => 48, 'alt' => 'Bajar', 'escape' => false));
                 } else {
                     $iii = "Descargar $ext";
                 }
-                if (!empty($this->data['Gasto']['file'])) {
-                    echo $html->link($iii, "/" . IMAGES_URL . $this->data['Gasto']['file'], array('target' => '_blank', 'escape' => false));
+                if (!empty($this->request->data['Gasto']['file'])) {
+                    echo $this->Html->link($iii, "/" . IMAGES_URL . $this->request->data['Gasto']['file'], array('target' => '_blank', 'escape' => false));
                 }
             }
             
-            echo $form->input('clasificacion_id', array('empty' => '- Seleccione -'));
-            echo $form->input('observacion');
+            echo $this->Form->input('clasificacion_id', array('empty' => '- Seleccione -'));
+            echo $this->Form->input('observacion');
             ?>
         </div>
         <div class="col-md-8">
@@ -55,12 +55,12 @@ echo $javascript->link('/lib/bootstrap.typehead/bootstrap3-typeahead');
                             <h4>Seleccionar los impuestos aplicados en esta factura</h4>
                             <?php
                             foreach ($tipo_impuestos as $ti) {
-                                echo $form->input('Gasto.Impuesto.' . $ti['TipoImpuesto']['id'] . '.checked', array(
+                                echo $this->Form->input('Gasto.Impuesto.' . $ti['TipoImpuesto']['id'] . '.checked', array(
                                     'type' => 'checkbox',
                                     'class' => '',
                                     'label' => $ti['TipoImpuesto']['name'],
                                     'div' => array('class' => 'checkbox'),
-                                    'checked' => !empty($this->data['Impuesto'][$ti['TipoImpuesto']['id']]),
+                                    'checked' => !empty($this->request->data['Impuesto'][$ti['TipoImpuesto']['id']]),
                                     'onchange' => 'if(this.checked){jQuery("#tipo-impuesto-id-' . $ti['TipoImpuesto']['id'] . '").show()} else {jQuery("#tipo-impuesto-id-' . $ti['TipoImpuesto']['id'] . '").hide()}'
                                 ));
                             }
@@ -76,21 +76,21 @@ echo $javascript->link('/lib/bootstrap.typehead/bootstrap3-typeahead');
                         <div class="row" id="impuestos">
                             <?php
                             foreach ($tipo_impuestos as $ti) {
-                                $ocultar = empty($this->data['Impuesto'][$ti['TipoImpuesto']['id']]);
+                                $ocultar = empty($this->request->data['Impuesto'][$ti['TipoImpuesto']['id']]);
                                 ?>
                                 <fieldset <?php echo ($ocultar) ? 'style="display: none;"' : ''; ?> id="<?php echo 'tipo-impuesto-id-' . $ti['TipoImpuesto']['id'] ?>">
                                     <legend><?php echo $ti['TipoImpuesto']['name'] ?></legend>
                                     <div class="col-md-6">
                                     <?php
                                     if ( $ti['TipoImpuesto']['tiene_neto']
-                                        || !empty($this->data['Impuesto'][$ti['TipoImpuesto']['id']]['neto'])
+                                        || !empty($this->request->data['Impuesto'][$ti['TipoImpuesto']['id']]['neto'])
                                         ) {
-                                        echo $form->input('Gasto.Impuesto.' . $ti['TipoImpuesto']['id'] . ".neto", array(
+                                        echo $this->Form->input('Gasto.Impuesto.' . $ti['TipoImpuesto']['id'] . ".neto", array(
                                             'type' => 'number',
                                             'label' => "Neto",
                                             'data-porcent' => $ti['TipoImpuesto']['porcentaje'],
                                             'class' => 'calc_neto importe',                                            
-                                            'value' => !empty($this->data['Impuesto'][$ti['TipoImpuesto']['id']]) ? $this->data['Impuesto'][$ti['TipoImpuesto']['id']]['neto'] : '',
+                                            'value' => !empty($this->request->data['Impuesto'][$ti['TipoImpuesto']['id']]) ? $this->request->data['Impuesto'][$ti['TipoImpuesto']['id']]['neto'] : '',
                                         ));
                                     }
                                     ?>
@@ -100,14 +100,14 @@ echo $javascript->link('/lib/bootstrap.typehead/bootstrap3-typeahead');
                                     <?php
 
                                      if ( $ti['TipoImpuesto']['tiene_impuesto'] 
-                                        || !empty($this->data['Impuesto'][$ti['TipoImpuesto']['id']]['importe'])
+                                        || !empty($this->request->data['Impuesto'][$ti['TipoImpuesto']['id']]['importe'])
                                         ) {
-                                        echo $form->input('Gasto.Impuesto.' . $ti['TipoImpuesto']['id'] . '.importe', array(
+                                        echo $this->Form->input('Gasto.Impuesto.' . $ti['TipoImpuesto']['id'] . '.importe', array(
                                             'type' => 'number',
                                             'label' => 'Impuesto',
                                             'data-porcent' => $ti['TipoImpuesto']['porcentaje'],
                                             'class' => 'calc_impuesto importe',                                            
-                                            'value' => !empty($this->data['Impuesto'][$ti['TipoImpuesto']['id']]) ? $this->data['Impuesto'][$ti['TipoImpuesto']['id']]['importe'] : '',
+                                            'value' => !empty($this->request->data['Impuesto'][$ti['TipoImpuesto']['id']]) ? $this->request->data['Impuesto'][$ti['TipoImpuesto']['id']]['importe'] : '',
                                         ));
                                     }
                                     ?>
@@ -122,27 +122,27 @@ echo $javascript->link('/lib/bootstrap.typehead/bootstrap3-typeahead');
             </div>
 
             <?php
-            echo $form->input('importe_neto', array('id' => 'importe-neto', 'type' => 'number'));
-            echo $form->input('importe_total', array('id' => 'importe-total', 'type' => 'number'));
+            echo $this->Form->input('importe_neto', array('id' => 'importe-neto', 'type' => 'number'));
+            echo $this->Form->input('importe_total', array('id' => 'importe-total', 'type' => 'number'));
             ?>
 
 
-            <?php if (empty($this->data['Gasto']['id'])) { ?>
+            <?php if (empty($this->request->data['Gasto']['id'])) { ?>
                 <div>
-                    <?php echo $form->button('Guardar Sin Pagar', array('data-theme' => 'b', 'id' => 'btn-guardar-sin-pagar', 'class' => 'btn btn-lg')); ?>
+                    <?php echo $this->Form->button('Guardar Sin Pagar', array('data-theme' => 'b', 'id' => 'btn-guardar-sin-pagar', 'class' => 'btn btn-lg')); ?>
 
-                    <?php echo $form->button('Pagar', array('data-theme' => 'e', 'id' => 'btn-guardar-y-pagar', 'class' => 'pull-right btn btn-lg btn-primary')); ?>            
+                    <?php echo $this->Form->button('Pagar', array('data-theme' => 'e', 'id' => 'btn-guardar-y-pagar', 'class' => 'pull-right btn btn-lg btn-primary')); ?>            
 
                 </div>
             <?php } else { ?>
-                <?php echo $form->button('Editar', array('type' => 'submit', 'id' => 'btn-guardar-sin-pagar',  'class' => 'pull-right btn btn-lg btn-primary')); ?>
+                <?php echo $this->Form->button('Editar', array('type' => 'submit', 'id' => 'btn-guardar-sin-pagar',  'class' => 'pull-right btn btn-lg btn-primary')); ?>
             <?php } ?>
         </div>
     </div>
 
-    <?php echo $form->end(); ?>
+    <?php echo $this->Form->end(); ?>
 </div>
 
 <div>
-    <?php echo $javascript->link('/account/js/gastos_add'); ?>
+    <?php echo $this->Html->script('/account/js/gastos_add'); ?>
 </div>

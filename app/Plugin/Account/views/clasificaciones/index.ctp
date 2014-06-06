@@ -1,7 +1,7 @@
 <h1>Gastos por Clasificación</h1>
 
 <?php
-echo $html->link('Nueva Clasificación', array('action' => 'add_edit'), array(
+echo $this->Html->link('Nueva Clasificación', array('action' => 'add_edit'), array(
     'data-role'=>'button',
     'data-theme' => 'b',
     
@@ -15,7 +15,7 @@ echo $html->link('Nueva Clasificación', array('action' => 'add_edit'), array(
 
 foreach ($clasificaciones as $id=>$c) {
     echo "<li>";
-    echo $html->link($c, array('action'=>'add_edit', $id));    
+    echo $this->Html->link($c, array('action'=>'add_edit', $id));    
     echo "</li>";
 }
 

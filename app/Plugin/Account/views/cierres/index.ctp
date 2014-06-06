@@ -4,7 +4,7 @@
     <tbody>
         <?php
         foreach ($cierres as $c) {
-            $link = $html->link($c['Cierre']['name'], array('controller' => 'cierres', 'action' => 'view', $c['Cierre']['id']));
+            $link = $this->Html->link($c['Cierre']['name'], array('controller' => 'cierres', 'action' => 'view', $c['Cierre']['id']));
 
 
             $cierreName = "<span class='name'>$link</span>";
