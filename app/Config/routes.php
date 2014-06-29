@@ -30,6 +30,48 @@
  */
 	Router::connect('/pages/*', array('controller' => 'pages', 'action' => 'display'));
 
+
+
+	Router::connect('/aditions/adicionar', array('plugin'=>'aditions','controller' => 'aditions', 'action' => 'adicionar'));
+
+
+	Router::connect('/users/login', array('plugin'=>'users','controller' => 'users', 'action' => 'login'));
+	Router::connect('/users/logout', array('plugin'=>'users','controller' => 'users', 'action' => 'logout'));
+
+
+
+
+
+	Router::connect('/aditions/cashier/:action/*', array('plugin'=>'billings','controller' => 'fiscal_printers'));
+
+
+
+	// URL´s para la adicion
+	// estos se suponen que son rutas temporales de migracion de Chocha012 a la Chocha014
+	$myPlugins = array(
+		array('plugin' => 'fidelization', 'controller'=>'clientes'),
+		array('plugin' => 'mesa', 'controller'=>'mesas'),
+		array('plugin' => 'mesa', 'controller'=>'mozos'),
+		array('plugin' => 'product', 'controller'=>'categorias'),
+		array('plugin' => 'comanda', 'controller'=>'detalle_comandas'),
+		array('plugin' => 'mesa', 'controller'=>'pagos'),
+		);
+
+	foreach ( $myPlugins as $rt) {		
+		Router::connect('/:controller', array('plugin'=>$rt['plugin'], 'action' => 'index', array('controller' => $rt['controller'])));
+		Router::connect('/:controller/:action/*', array('plugin'=>$rt['plugin']), array('controller' => $rt['controller']));		
+	}
+
+	unset($myPlugins);
+	
+
+
+
+
+
+
+
+
 /**
  * Load all plugin routes. See the CakePlugin documentation on
  * how to customize the loading of plugin routes.
@@ -41,3 +83,4 @@
  * the built-in default routes.
  */
 	require CAKE . 'Config' . DS . 'routes.php';
+

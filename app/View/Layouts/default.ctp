@@ -1,10 +1,12 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
     <head>
         <script>
         var urlDomain = "<?php echo $this->Html->url('/', true); ?>";
         </script>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8">
+
         <?php echo $this->Html->charset(); ?>
         <title><?php echo $title_for_layout; ?></title>
         <?php
@@ -13,7 +15,7 @@
         echo $this->Html->css(array(
             '/lib/bootstrap/css/bootstrap.min',
             '/lib/bootstrap/css/bootstrap-theme.min',
-//            'ristorantino.generic',
+            'ristorantino/style',
             '/lib/bootstrap_datetimepicker/css/bootstrap-datetimepicker.min',
         ));
 
@@ -23,7 +25,7 @@
         }
         
         echo $this->Html->script(array(
-            'jquery-2.0.0.min',
+            'jquery.min',
             '/lib/bootstrap/js/bootstrap.min',
             '/lib/bootstrap_datetimepicker/js/bootstrap-datetimepicker.min',
         ));

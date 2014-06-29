@@ -104,3 +104,8 @@ DROP TABLE  IF EXISTS `egresos`;
 
 ALTER TABLE  `mesas` CHANGE  `time_cerro`  `time_cerro` TIMESTAMP NULL DEFAULT NULL;
 ALTER TABLE  `mesas` CHANGE  `time_cobro`  `time_cobro` TIMESTAMP NULL DEFAULT NULL;
+
+
+ALTER TABLE  `productos_precios_futuros` ADD UNIQUE (
+`producto_id`
+);

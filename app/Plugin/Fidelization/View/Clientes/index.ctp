@@ -3,24 +3,24 @@
 	<table class="table">
             
             <thead>
-                <?php echo $this->Form->create('') ?>
+                <?php echo $this->Form->create('Cliente') ?>
                 <tr>
                         <th><?php echo $this->Form->text('codigo'); ?></th>
                         <th><?php echo $this->Form->text('mail'); ?></th>
                         <th><?php echo $this->Form->text('telefono'); ?></th>
-                        <th><?php echo $this->Form->text('descuento_id'); ?></th>
+                        <th><?php echo $this->Form->select('descuento_id', $descuentos); ?></th>
                         <th><?php echo $this->Form->text('tipofactura'); ?></th>
                         <th><?php echo $this->Form->text('nombre'); ?></th>
                         <th><?php echo $this->Form->text('nrodocumento'); ?></th>
-                        <th><?php echo $this->Form->sekect('tipo_documento_id'); ?></th>
+                        <th><?php echo $this->Form->select('tipo_documento_id', $tipoDocumentos); ?></th>
                         <th><?php echo $this->Form->text('domicilio'); ?></th>
                         <th><?php echo $this->Form->text('responsabilidad_iva'); ?></th>
-                        <th><?php echo $this->Form->text('iva_responsabilidad_id'); ?></th>
+                        <th><?php echo $this->Form->select('iva_responsabilidad_id', $ivaResponsabilidades); ?></th>
                         <th><?php echo $this->Form->text('created'); ?></th>
                         <th><?php echo $this->Form->text('modified'); ?></th>
-                        <th class="actions"><?php echo __('Actions'); ?></th>
+                        <th><?php echo $this->Form->submit('Buscar', array('class'=>'btn btn-primary')); ?></th>
                 </tr>
-
+                <?php echo $this->Form->end() ?>
 
                 <tr>
                                 <th><?php echo $this->Paginator->sort('codigo'); ?></th>

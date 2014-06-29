@@ -27,6 +27,22 @@ class Mesa extends MesaAppModel {
          ));
 
 
+    public $defaultContain = array(
+                    'Mozo',
+                    'Cliente' => array(
+                        'Descuento',
+                        'TipoDocumento',
+                        'IvaResponsabilidad.TipoFactura',
+                        ),
+                    'Descuento',
+                    'Estado',
+                    'Comanda' => array(
+                        'DetalleComanda' => array(
+                            'Producto',
+                            'DetalleSabor.Sabor'),
+                    ),
+    );
+
     public $filterArgs = array(
         'numero' => array(
             'type' => 'value',
@@ -80,23 +96,18 @@ class Mesa extends MesaAppModel {
         public $total = array();
 
 
-	//The Associations below have been created with all possible keys, those that are not needed can be removed
+        /**
+         * belongsTo associations
+         *
+         * @var array
+         */
         public $belongsTo = array(
-         'Mozo' => array(
-            'className' => 'Mesa.Mozo',
-            'foreignKey' => 'mozo_id',
-            'conditions' => '',
-            'fields' => '',
-            'order' => ''
-            ),
-         'Cliente' => array(
-            'className' => 'Fidelization.Cliente',
-            'foreignKey' => 'cliente_id',
-            'conditions' => '',
-            'fields' => '',
-            'order' => ''
-            ),
-         );
+            'Mesa.Estado',
+            'Mesa.Mozo',
+            'Fidelization.Cliente',
+            'Fidelization.Descuento',
+        );
+
 
 
         public $hasMany = array(   
@@ -112,6 +123,8 @@ class Mesa extends MesaAppModel {
             ),         
         );
 
+
+    public $order = array('Mesa.created' => 'desc');
         
         
     function beforeSave( $options = array() ) 
@@ -126,14 +139,14 @@ class Mesa extends MesaAppModel {
     // enctonces debo eliminar todos los pagos realizados para que no me los duplique
     // cuando la vuelva a cobrar
      private function __deletePagosSiReabre () {
-         if ( !empty($this->request->data['Mesa']['id']) 
-             && !empty($this->request->data['Mesa']['estado_id'])
-             && $this->request->data['Mesa']['estado_id'] != MESA_COBRADA
+         if ( !empty($this->data['Mesa']['id']) 
+             && !empty($this->data['Mesa']['estado_id'])
+             && $this->data['Mesa']['estado_id'] != MESA_COBRADA
              ) {               
-             if ( $this->estaCobrada($this->request->data['Mesa']['id'], $force_db = true) ) {
+             if ( $this->estaCobrada($this->data['Mesa']['id'], $force_db = true) ) {
                 
                  $this->Pago->deleteAll(array(
-                  'Pago.mesa_id' => $this->request->data['Mesa']['id']
+                  'Pago.mesa_id' => $this->data['Mesa']['id']
                   ));
                  
              }
@@ -181,7 +194,13 @@ class Mesa extends MesaAppModel {
         $mesaData['Mesa']['time_cobro'] = DATETIME_NULL;
     }
 
-    $this->save($mesaData, false);
+    if ( $this->save($mesaData, false) ) {
+        $this->printFiscalEvent( $mesa_id );
+    } else {
+        throw new Exception("Error al guardar para cerrar mesa");
+    }
+
+
     return $mesaData;
 
 }
@@ -404,8 +423,8 @@ function calcular_subtotal($id = null){
 	 */
 // 	function numero_de_mesa_existente($numero_mesa = 0){
 // 		if($numero_mesa == 0){
-//             if(!empty($this->request->data['Mesa']['numero'])){
-//                $numero_mesa = $this->request->data['Mesa']['numero'];
+//             if(!empty($this->data['Mesa']['numero'])){
+//                $numero_mesa = $this->data['Mesa']['numero'];
 //            }
 //        }		
 
@@ -527,8 +546,8 @@ function calcular_subtotal($id = null){
         //         $this->id = $id;
         //     }
         //     // si lo tengo en memoria primero busco por aca
-        //     if (!empty($this->request->data[$this->name]['estado_id'])){
-        //         return $this->request->data[$this->name]['estado_id'] == MESA_CERRADA;
+        //     if (!empty($this->data[$this->name]['estado_id'])){
+        //         return $this->data[$this->name]['estado_id'] == MESA_CERRADA;
         //     }
         //     // lo busco en BBDD        
         //     $ret = $this->find('count', array(
@@ -556,8 +575,8 @@ function calcular_subtotal($id = null){
                 $this->id = $id;
             }
             
-            if ( !empty($this->request->data[$this->name]['estado_id']) ){
-                $ret = $this->request->data[$this->name]['estado_id'] == MESA_COBRADA;
+            if ( !empty($this->data[$this->name]['estado_id']) ){
+                $ret = $this->data[$this->name]['estado_id'] == MESA_COBRADA;
             }
             
             if ( $force_db) {
@@ -587,8 +606,8 @@ function calcular_subtotal($id = null){
         //         $this->id = $id;
         //     }
         //     // si lo tengo en memoria primero busco por aca
-        //     if ( !empty($this->request->data[$this->name]['estado_id']) ){
-        //         return $this->request->data[$this->name]['estado_id'] == MESA_ABIERTA;
+        //     if ( !empty($this->data[$this->name]['estado_id']) ){
+        //         return $this->data[$this->name]['estado_id'] == MESA_ABIERTA;
         //     }
         //     // lo busco en BBDD        
         //     $ret = $this->find('count', array(

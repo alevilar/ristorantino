@@ -1,4 +1,4 @@
-
+﻿
 
     <?php    
     echo $this->Html->script('jquery/jquery.jeditable.mini', false);
@@ -11,15 +11,26 @@
     new Afups("<?php echo $this->Html->url(array('action'=>'update'))?>");
 </script>
 
+<style type="text/css">
+	.abrev{
+		font-size: 8pt;
+		opacity: 0.9;
+		font-weight: bolder;
+	}
+	.edit input[type="text"]{
+		text-align: left;
+	}
+</style>
+
 
 <div class="productos index">
 <h2><?php __('Productos');?></h2>
 
 <div>
     <?php
-    echo $this->Html->link('Aplicar Precios Futuros'
+    echo $this->Html->link('<span class="glyphicon glyphicon-usd"></span>   Aplicar Precios Futuros'
     	, array('action' => 'actualizarPreciosFuturos')
-    	, array('class' => 'button' )
+    	, array('class' => 'btn btn-warning btn-lg', 'escape' => false )
     	, 'Está por modificar todos los precios, por su valor futuro. ¿Seguro?');
     ?>
 </div>
@@ -36,6 +47,8 @@
 	echo $this->Form->input("id") 
 	?>
 	<th><?php echo $this->Form->input('name',array('placeholder'=>'Nombre del producto', 'label'=>false));?></th>
+	<th><?php echo $this->Form->input('abrev',array('placeholder'=>'Abreviatura', 'label'=>false));?></th>
+
         <th><?php echo $this->Form->input('comandera_id',array(
         					'placeholder'=>'Comandera',
         					'label'=>false, 
@@ -47,13 +60,16 @@
 					'placeholder'=>'Categoria',
 					'label'=>false));?></th>
 	<th><?php echo $this->Form->input('precio',array('placeholder'=>'Precio','label'=>false));?></th>
-        <th><?php echo $this->Form->input('order',array('placeholder'=>'Orden','label'=>false));?></th>
-	<th>&nbsp;</th>
-	<th class="actions"><?php echo $this->Form->end("Buscar")?></th>
+	<th><?php echo $this->Form->input('precio_futuro',array('placeholder'=>'P. Futuro','label'=>false));?></th>
+    <th><?php echo $this->Form->input('order',array('placeholder'=>'Orden','label'=>false, 'style'=>'width:40px'));?></th>
+	<th colspan="2" class="actions"><?php echo $this->Form->submit('Buscar', array('class'=>'btn btn-primary'))?></th>
+
+	<?php echo $this->Form->end()?>
         </tr>
 
 <tr>
 	<th><?php echo $this->Paginator->sort('name', 'Nombre');?></th>
+	<th><?php echo $this->Paginator->sort('abrev', 'Ticket');?></th>
 	<th><?php echo $this->Paginator->sort('Comandera.name', 'Comandera');?></th>
 	<th><?php echo $this->Paginator->sort('Categoria.name', 'Categoria');?></th>
 	<th><?php echo $this->Paginator->sort('precio');?></th>
@@ -74,24 +90,30 @@ foreach ($productos as $producto):
         $prodId = $producto['Producto']['id'];
 ?>
 	<tr<?php echo $class;?>>
-		<td class='edit' field='name' product_id='<?php echo $prodId ?>'><?php 
-                         $name = ($producto['Producto']['deleted'])? 
-                            $producto['Producto']['name']." (borrado el ".date("d/m/y H:i:s", strtotime($producto['Producto']['deleted_date']))." )"
-                            :
-                            $producto['Producto']['name'];
+		<?php 
+        $name = ($producto['Producto']['deleted'])? 
+            $producto['Producto']['name']." (borrado el ".date("d/m/y H:i:s", strtotime($producto['Producto']['deleted_date']))." )"
+            :
+            $producto['Producto']['name'];
 
-                        echo trim($name);
-                        echo "<br>";
-                        echo "<small>Ticket:<cite>".$producto['Producto']['abrev']."</cite></small>"; 
-                ?></td>
+        $name =  trim($name);
+        $abrev =  trim($producto['Producto']['abrev']);
+        ?>
+
+
+		<td class='edit' field='name' product_id='<?php echo $prodId ?>'><?php echo $name; ?></td>
+			
                 
-                
-		<td class="edit_field_types" options_types='<?php print json_encode($comanderas) ?>' field="comandera_id" product_id="<?php echo $prodId; ?>">
-			<?php echo $producto['Comandera']['description']; ?>
-		</td>
-		<td class="edit_field_types" options_types='<?php print json_encode($categorias) ?>' field="categoria_id" product_id="<?php echo $prodId; ?>">
-			<?php echo $producto['Categoria']['name']; ?>
-		</td>
+        <td class='edit abrev' field='abrev' product_id='<?php echo $prodId ?>'><?php echo $abrev; ?></td>
+
+		<td class="edit_field_types" options_types='<?php print json_encode($comanderas) ?>' field="comandera_id" product_id="<?php echo $prodId; ?>"><?php 
+			echo $producto['Comandera']['description']; 
+		?></td>
+
+
+		<td class="edit_field_types" options_types='<?php print json_encode($categorias) ?>' field="categoria_id" product_id="<?php echo $prodId; ?>"><?php echo $producto['Categoria']['name']; ?></td>
+
+
 		<td  class='edit' field='precio' product_id='<?php echo $prodId ?>'><?php 
                         echo $this->Number->currency( $producto['Producto']['precio'] );                        
                 ?></td>
@@ -108,7 +130,7 @@ foreach ($productos as $producto):
                     echo $producto['Producto']['order']; 
                 ?></td>
 		<td>
-			<?php echo date('d-m-y',strtotime($producto['Producto']['created'])); ?>
+			<?php echo date('d D, M Y',strtotime($producto['Producto']['created'])); ?>
 		</td>
 		<td class="actions">
                     <?php echo $this->Html->link(__('Ver', true), array('action'=>'view', $producto['Producto']['id'])); ?>

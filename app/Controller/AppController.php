@@ -51,6 +51,10 @@ class AppController extends Controller {
     public function beforeFilter()
     {
 
+        Configure::read('Mesa.tituloMozo');
+        Configure::read('Restaurante.razon_social');
+
+        
         $this->Auth->allow();
    //     $this->Auth->authorize = array('Actions');
 /*

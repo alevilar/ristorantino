@@ -1,3 +1,3 @@
 <?php
 
-echo $javascript->object($categorias);
+echo json_encode( $categorias );

@@ -101,16 +101,17 @@ class DetalleComandasController extends ComandaAppController {
 	
 	public function add ( $mesa_id = null ) {
         
-        if ( !empty($this->request->data) ) {
+        if ( $this->request->is('post') ) {
     		if ( $this->DetalleComanda->saveComanda( $this->request->data ) ) {
                 $this->Session->setFlash('Se guardó correctamente', 'flash_success');
             } else {
                 $this->Session->setFlash('No se guardó correctamente', 'flash_error');
             }
             if ( $this->request->is('ajax') ) {
-                 exit;
+                 
+            } else {
+                $this->redirect($this->request->data['Comanda']['redirect']);    
             }
-            $this->redirect($this->request->data['Comanda']['redirect']);
         }
 	
         $productos = $this->DetalleComanda->Producto->find('list');
@@ -120,6 +121,11 @@ class DetalleComandasController extends ComandaAppController {
             'conditions' => array("Mesa.estado_id" => MESA_ABIERTA),
             ));
         $this->set(compact('productos', 'mesas', 'mesa_id'));
+
+        $this->DetalleComanda->Comanda->contain(array('DetalleComanda' => array('DetalleSabor.Sabor')));
+        $this->set('comanda', $this->DetalleComanda->Comanda->read());
+
+        
 	}
 
 	public function edit($id = null) {

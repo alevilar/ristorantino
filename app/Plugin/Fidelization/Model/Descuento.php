@@ -5,8 +5,15 @@ App::uses('FidelizationAppModel', 'Fidelization.Model');
 
 class Descuento extends FidelizationAppModel {
 
-	var $name = 'Descuento';
-	var $validate = array(
+	public $name = 'Descuento';
+
+    public $actsAs = array(
+        'SoftDelete', 
+        'Containable',
+        );
+
+
+	public $validate = array(
 		'name' => array('notempty'),
 		'porcentaje' => array(
             'numeric' => array(

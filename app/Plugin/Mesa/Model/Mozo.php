@@ -102,12 +102,12 @@ class Mozo extends MesaAppModel {
 	}
 
 
-        /**
-         * Para todos los mozos activos, me trae sus mesas abiertas
-         * @param int $mozo_id id del mozo, en caso de que no le pase ninguno, me busca todos
-         * @return array Mozos con sus mesas, Comandas, detalleComanda, productos y sabores
-         */
-        public function mesasAbiertas($mozo_id = null, $lastAccess = null){
+    /**
+     * Para todos los mozos activos, me trae sus mesas abiertas
+     * @param int $mozo_id id del mozo, en caso de que no le pase ninguno, me busca todos
+     * @return array Mozos con sus mesas, Comandas, detalleComanda, productos y sabores
+     */
+    public function mesasAbiertas($mozo_id = null, $lastAccess = null){
             $conditions = array();
             
             // si vino el mozo por parametro, es porque solo quiero las mesas de ese mozo
@@ -129,14 +129,25 @@ class Mozo extends MesaAppModel {
                 $conditionsMesa['Mesa.modified >='] = $lastAccess;
             }
             
+            $contain = $this->Mesa->defaultContain;
+            $contain['conditions'] = $conditionsMesa;
             $optionsCreated = array(
-                'contain' => array(
-                    'Mesa' => $this->Mesa->defaultContain,
-                 ),
+                'contain' => array('Mesa' => $contain),
                 'conditions'=> $conditions,
             );
 			$mesasABM = $this->find('all', $optionsCreated);
-            return $mesasABM;
+
+            $mozosMesa = array();
+            foreach ( $mesasABM as $abmMesas ) {
+                // traer todos los mozos, con su array de mesas
+                $abmMesas['Mozo']['mesas'] = $abmMesas['Mesa'];
+                if (!empty($abmMesas['Mesa'])) {
+                    $mozosMesa['mozos'][] = $abmMesas['Mozo'];    
+                }
+            }
+            
+
+            return $mozosMesa;
         }
         
         

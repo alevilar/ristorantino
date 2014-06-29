@@ -33,12 +33,13 @@ class Producto extends ProductAppModel {
         )
      );
 
-    public $hasOne = array('ProductosPreciosFuturo');
+    public $hasOne = array('Product.ProductosPreciosFuturo');
     
 
     public $hasMany = array(
-        'HistoricoPrecio',
-        'DetalleComanda' => array('className' => 'DetalleComanda',
+        'Product.HistoricoPrecio',
+        'DetalleComanda' => array(
+            'className' => 'Comanda.DetalleComanda',
             'foreignKey' => 'producto_id',
             'dependent' => false,
             'conditions' => '',
@@ -52,11 +53,22 @@ class Producto extends ProductAppModel {
             )
         );
 
+    /**
+     * hasAndBelongsToMany associations
+     *
+     * @var array
+     */
+    public $hasAndBelongsToMany = array('Product.Tag','Product.GrupoSabor');
+
 
 
     public $filterArgs = array(
         'name' => array(
             'type' => 'like',
+            ),
+        'precio_futuro' => array(
+            'type' => 'value',
+            'field' => 'ProductosPreciosFuturo.precio'
             ),
         'categoria_name' => array(
             'type' => 'value',
@@ -104,43 +116,81 @@ class Producto extends ProductAppModel {
     // }
 
 
-    function   beforeSave($options = array()) 
+
+    public function save($data = null, $validate = true, $fieldList = array())
     {            
-        if ( isset($options['validate']) && $options['validate'] && !empty($this->request->data['Producto']['id']) && !empty($this->request->data['Producto']['precio'])) {
-            $precioViejo = $this->field('precio', array('Producto.id'=>$this->request->data['Producto']['id']));
-            if ( $this->request->data['Producto']['precio'] != $precioViejo ){
-                
-                $this->ProductosPreciosFuturo->create();
-                if ( !$this->ProductosPreciosFuturo->save(array(
-                    'ProductosPreciosFuturo' => array(
-                        'precio' => $this->request->data['Producto']['precio'] ,
-                        'producto_id' => $this->request->data['Producto']['id'],
-                        )
-                    ), false)){
-                    return false;
-                }                                
-            } else {
-                $this->request->data['Producto']['precio'] = $precioViejo;                
-            }
+        // cargo el precio futuro si es que lo tiene
+        $pf = $this->__getPrecioFuturoData( $data );
+        
+        // cargo con el precio historico si es que lo tiene
+        $hp = $this->__getPrecioHistoricoData( $data );
+        // if ( $hp ) {
+        //     $data['HistoricoPrecio'] = $hp['HistoricoPrecio'];
+        // }
+       
+        if ( !parent::save($data, $validate, $fieldList) ) {
+            return false;
+        }
+
+        // finalmente guardo el precio historico
+        if ( $hp && !$this->HistoricoPrecio->save($hp) ) {
+            $this->validationErrors = $this->HistoricoPrecio->validationErrors;            
+            return false;
         }
         
-        if (!empty($precioViejo)) {
-            $this->HistoricoPrecio->create();
-            if ( !$this->HistoricoPrecio->save(array(
-                'HistoricoPrecio' => array(
-                    'precio' => $precioViejo ,
-                    'producto_id' => $this->request->data['Producto']['id'],
-                    )
-                ), false)){
-                return false;
-            }
+        if ( $pf && !$this->ProductosPreciosFuturo->save($pf) ) {
+            $this->validationErrors = $this->ProductosPreciosFuturo->validationErrors;
+            return false;
         }
 
-
-    return true;    
-
+        return true;
     }
 
+
+    private function __getPrecioFuturoData ($data) {
+        $precioFutData = null;
+
+        if ( isset($data['ProductosPreciosFuturo'])){
+            $precioFutData['ProductosPreciosFuturo'] = $data['ProductosPreciosFuturo'];    
+        }
+        if ( !empty($data['ProductosPreciosFuturo']['precio']) ) {
+
+            $data['ProductosPreciosFuturo']['producto_id'] = $data['Producto']['id'];
+
+            $precioFutData = $this->ProductosPreciosFuturo->find('first', array(
+                'recursive' => -1,
+                'conditions'=> array(
+                    'ProductosPreciosFuturo.producto_id' => $data['Producto']['id']
+                )));
+            if ( !empty($precioFutData) ) {
+                $precio = $data['ProductosPreciosFuturo']['precio'];
+                $precioFutData['ProductosPreciosFuturo'] = $precioFutData['ProductosPreciosFuturo'];
+                $precioFutData['ProductosPreciosFuturo']['precio'] = $precio;
+            } else {
+                $precioFutData['ProductosPreciosFuturo'] = $data['ProductosPreciosFuturo'];
+            }
+        }        
+        return $precioFutData;
+    }
+
+
+    private function __getPrecioHistoricoData ($data = null ) {
+        $hpData = null;
+
+        if ( !empty($data['Producto']['id']) && !empty($data['Producto']['precio']) ) {            
+            $precioViejo = $this->field( 'precio', array( 'Producto.id'=> $data['Producto']['id'] ) );
+            if ( !empty($precioViejo) && ( $precioViejo != $data['Producto']['precio'])) {
+
+                $hpData = array(
+                    'HistoricoPrecio' => array(
+                        'precio' => $precioViejo ,
+                        'producto_id' => $data['Producto']['id'],
+                        )
+                );
+            }
+        }
+        return $hpData;
+    }
 
 
 }

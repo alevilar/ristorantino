@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 echo $this->Html->css('ristorantino/home/ristorantino.home');
 ?>
 <div class="jumbotron">
@@ -9,11 +9,11 @@ echo $this->Html->css('ristorantino/home/ristorantino.home');
   <p>
    <ul class="dashboard-buttons">
     <li>
-        <?php echo $this->Html->link('Adición', '/adition/adicionar', array('id' => 'bton-adicion')); ?>
+        <?php echo $this->Html->link('Adición', '/aditions/adicionar', array('id' => 'bton-adicion')); ?>
     </li>
 
     <li>
-        <?php echo $this->Html->link('Caja', '/adition/adicionar/#listado-mesas-cerradas', array('id' => 'bton-caja')); ?>
+        <?php echo $this->Html->link('Caja', '/aditions/adicionar/#listado-mesas-cerradas', array('id' => 'bton-caja')); ?>
     </li>
 
     <li>   

@@ -115,23 +115,30 @@ CakeLog::config('error', array(
 
 
 
+
+
 // Read configuration file from ini file
 App::uses('IniReader', 'Configure');
 Configure::config('ini', new IniReader(ROOT . "/" . APP_DIR . '/Config/'));
 Configure::load('coqus_config', 'ini');
 
 
-App::uses('PrinterHelperSkel', 'PrinterEngine.Lib');
-App::uses('FiscalPrinterHelper', 'PrinterEngine.Lib');
+// App::uses('PrinterHelperSkel', 'PrinterEngine.Lib');
+// App::uses('FiscalPrinterHelper', 'PrinterEngine.Lib');
 
 
 CakePlugin::load('Acl', array('bootstrap' => true));
 
+CakePlugin::load('Aditions', array( 'bootstrap' => true, 'routes' => true ));
 
-CakePlugin::loadAll(array(
+
+// Loads all plugins at once
+CakePlugin::loadAll();
+
+// CakePlugin::loadAll(array(
 //    'Adition',
 //    'Stats',
-)); // Loads all plugins at once
+// )); 
 
 CakePlugin::load('DebugKit');
 CakePlugin::load('Search');
@@ -326,7 +333,4 @@ function aplanar_mesas($mesas)
     }
     return $newMesas;
 }
-
-
-
 

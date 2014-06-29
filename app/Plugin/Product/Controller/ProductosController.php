@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 App::uses('ProductAppController', 'Product.Controller');
 
@@ -7,7 +7,6 @@ App::uses('ProductAppController', 'Product.Controller');
 class ProductosController extends ProductAppController {
 
 	public $name = 'Productos';
-	public $helpers = array('Html', 'Form', 'Number');
 
 	public $components = array(        
         'Search.Prg',
@@ -74,8 +73,9 @@ class ProductosController extends ProductAppController {
 			}
 		}
 		$comanderas = $this->Producto->Comandera->find('list',array('fields'=>array('id','description')));
+        $tags = $this->Producto->Tag->find('list');
 		$categorias = $this->Producto->Categoria->generateTreeList(null, null, null, '___');
-		$this->set(compact('categorias','comanderas'));
+		$this->set(compact('categorias','comanderas', 'tags'));
         $this->render('form');
 	}
 
@@ -87,31 +87,19 @@ class ProductosController extends ProductAppController {
 		}
 
 		if (!empty($this->request->data)) {
-			if ($this->Producto->save($this->request->data['Producto'])) {
-//                            $this->Session->setFlash('El producto fue guardado correctamente');
-                            if (!empty($this->request->data['ProductosPreciosFuturo']['precio'])){
-                                $this->request->data['ProductosPreciosFuturo']['producto_id'] = $this->request->data['Producto']['id'];
-                                //debug($this->Producto->ProductosPreciosFuturo);die;
-                                if (!$this->Producto->ProductosPreciosFuturo->save($this->request->data['ProductosPreciosFuturo'])){
-                                    $this->Session->setFlash(__('No se pudo guardar el precio futuro', true));
-                                }
-                                
-                            // reseteo los precios futuros
-                            } elseif(!empty($this->request->data['ProductosPreciosFuturo']['producto_id'])){
-                                if (!$this->Producto->ProductosPreciosFuturo->del($this->request->data['ProductosPreciosFuturo']['producto_id'], false)){
-                                    $this->Session->setFlash(__('No se pudo eliminar el precio futuro', true));
-                                }
-                            }
-                            $this->redirect(array('action'=>'index'));
+			if ($this->Producto->save($this->request->data)) {
+                $this->Session->setFlash('El producto fue guardado correctamente');                
+                $this->redirect(array('action'=>'index'));
 			} else {
-				$this->Session->setFlash(__('The Producto could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('The Producto could not be saved. Please, try again.'), 'flash_error');
 			}
 		}
                 
         $this->request->data = $this->Producto->read(null, $id);
 		$comanderas = $this->Producto->Comandera->find('list',array('fields'=>array('id','description')));
 		$categorias = $this->Producto->Categoria->generateTreeList(null, null, null, '___');
-		$this->set(compact('categorias','comanderas'));
+        $tags = $this->Producto->Tag->find('list');
+		$this->set(compact('categorias','comanderas', 'tags'));
         $this->render('form');
 	}
 
@@ -137,24 +125,26 @@ class ProductosController extends ProductAppController {
         public function actualizarPreciosFuturos(){
             $failed = false;
             $preciosFuturos = $this->Producto->ProductosPreciosFuturo->find('all');
+            $productos = array();
+            $pfs['ProductosPreciosFuturo.id'] = array();
             foreach ($preciosFuturos as $pf){
-                $productos = array();
-                $productos['Producto']['precio'] = $pf['ProductosPreciosFuturo']['precio'];
-                $productos['Producto']['id'] = $pf['ProductosPreciosFuturo']['producto_id'];
-                if (!$this->Producto->save($productos, array('validate'=>false))){
-                    $failed = true;
-                }
-            }
-            if (!$failed){
-                $this->Producto->query("
-                    truncate productos_precios_futuros
-                ");
-                $this->Session->setFlash('Se han modificado TODOS los precios futuros de los productos');
-            } else {
-                $this->Session->setFlash('Fallo al aplicar los cambios');
-                debug($this->Producto);
+                $pfs['ProductosPreciosFuturo.id'][] = $pf['ProductosPreciosFuturo']['id'];
+                $productos[] = array( 'Producto' => array(
+                        'precio' => $pf['ProductosPreciosFuturo']['precio'],
+                        'id' => $pf['ProductosPreciosFuturo']['producto_id']
+                    ));
             }
 
+            if ( $this->Producto->saveAll($productos)) {
+                    if ( $this->Producto->ProductosPreciosFuturo->deleteAll($pfs) ) {
+                        $this->Session->setFlash('Falló al querer eliminar los precios futuros', 'flash_error');
+                    }
+
+                    $this->Session->setFlash('Se han modificado TODOS los precios futuros de los productos');
+
+            } else {
+                $this->Session->setFlash('Fallo al aplicar los cambios', 'flash_error');
+            }
             
             $this->redirect($this->referer());
         }
@@ -230,33 +220,32 @@ class ProductosController extends ProductAppController {
             // Configure::write('debug',0);
             $data = $this->request->data;
             $this->Producto->id = $data['product_id'];
+
+            $dataField = $data['field'];
+            $dataValue = trim(trim($data['value']));
+            $dataFinal = (!empty($data['text'])) ? $data['text'] : $dataValue;
             
             $pf = 'precio_futuro';
             
-            if ( $data['field'] == 'precio_futuro') {
-                //buscar a ver si existe previamente
-                $ppf = $this->Producto->ProductosPreciosFuturo->read(null, $this->Producto->id );
-                $ppf['ProductosPreciosFuturo']['producto_id'] = $this->Producto->id;
-                $ppf['ProductosPreciosFuturo']['precio'] = trim(trim($data['value']), "$");
-                
-                // si existe y el precio vino vacio, borrarlo
-                if ( !empty($ppf) && empty($ppf['ProductosPreciosFuturo']['precio']) && !is_numeric($ppf['ProductosPreciosFuturo']['precio'])) {
-                    $proddel = $this->Producto->ProductosPreciosFuturo->delete( $ppf['ProductosPreciosFuturo']['producto_id'] );
+            if ( $dataField == 'precio_futuro') {
+                //buscar a ver si existe previamente            
+                $ppf['ProductosPreciosFuturo'] = array(
+                        'producto_id' => $this->Producto->id,
+                        'precio' => $dataValue
+                    );
+                if ( $this->Producto->ProductosPreciosFuturo->save( $ppf ) )  {
+                    $msg = $dataFinal;
                 } else {
-                    if ( $this->Producto->ProductosPreciosFuturo->save($ppf) )  {
-                        $txtShow = (!empty($data['text'])) ? $data['text'] : $data['value'];
-                        $msg = $txtShow;
-                    } else {
-                        $msg = "error al guardar";
-                        $this->Session->setFlash($msg, 'flash_error');
-                    }
+                    $msg = "error al guardar precio futuro";
+                    $this->log($msg);
                 }
             } else {
-                if ($this->Producto->saveField($data['field'], trim(trim($data['value']),'$'), false)) {
-                    $txtShow = (!empty($data['text'])) ? $data['text'] : $data['value'];
-                    $msg = $txtShow;
-                } else {
-                    $msg = "error al guardar";
+                if ($this->Producto->saveField($dataField, $dataValue)) {
+                    $msg = $dataFinal;
+                } else {             
+                    $msg = "error al guardar campo: $dataField, valor: $dataValue";
+                    $this->log($msg);
+                    $this->log( json_encode($this->Producto->validationErrors) );
                 }
             }
             $this->set('msg', $msg);

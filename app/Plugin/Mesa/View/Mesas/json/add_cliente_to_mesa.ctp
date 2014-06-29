@@ -5,10 +5,10 @@ if (!empty($cliente['Descuento'])) {
     unset($cliente['Descuento']);
 }
 
-$cliente['msg'] = $session->read('Message.flash');
-if ($session->check('auth')) {
-    $cliente['msg-auth'] = $session->read('Message.auth');
+$cliente['msg'] = $this->Session->read('Message.flash');
+if ($this->Session->check('auth')) {
+    $cliente['msg-auth'] = $this->Session->read('Message.auth');
 }
 
-echo $javascript->object($cliente);
+echo json_encode( $cliente );
 

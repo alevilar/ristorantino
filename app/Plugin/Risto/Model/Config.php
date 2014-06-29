@@ -1,11 +1,19 @@
 <?php
 
+die("asas");
+
+
 App::uses('RistoAppModel', 'Risto.Model');
 
 class Config extends RistoAppModel {
 
-    var $name = "Config";
+    public $name = "Config";
 
-    var $belongsTo = array('Risto.ConfigCategory');
+    public $actsAs = array(
+        'Containable',
+        );
+
+
+    public $belongsTo = array('Risto.ConfigCategory');
 }
 ?>

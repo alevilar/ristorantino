@@ -8,7 +8,7 @@ App::uses('FidelizationAppController', 'Fidelization.Controller');
  */
 class ClientesController extends FidelizationAppController {
 
-       public $presetVars = true; // using the model configuration
+    public $presetVars = true; // using the model configuration
          
 /**
  * Components
@@ -23,42 +23,83 @@ class ClientesController extends FidelizationAppController {
  * @return void
  */
 	public function index() {
+		$this->Prg->commonProcess();
+        $conds = $this->Cliente->parseCriteria( $this->Prg->parsedParams() );
+
 		$this->Cliente->recursive = 0;
                 
-                $descuentoMaximo = Configure::read('Mozo.descuento_maximo');
-                $currentRole = $this->Session->read('Auth.User.role');
-                
-                $this->Prg->commonProcess();
-                $this->Paginator->settings['conditions'] = $this->Article->parseCriteria($this->Prg->parsedParams());
+        $descuentoMaximo = Configure::read('Mozo.descuento_maximo');
+        $currentRole = $this->Session->read('Auth.User.role');
+             
         
-                $condiciones = array();
-                
-                if ( strtolower($currentRole) == 'mozo' && is_numeric( $descuentoMaximo ) ) {                
-                    $condiciones['OR'] = array(
-                            "Descuento.porcentaje <= $descuentoMaximo",
-                            'Descuento.porcentaje IS NULL'
-                        );
-                }
-                $this->paginate->settings['conditions'] = $condiciones;
-                
-                $this->set('tipo_documentos', $this->Cliente->TipoDocumento->find('list'));
+        if ( strtolower($currentRole) == 'mozo' && is_numeric( $descuentoMaximo ) ) {                
+            $conds['OR'] = array(
+                    "Descuento.porcentaje <= $descuentoMaximo",
+                    'Descuento.porcentaje IS NULL'
+                );
+        }
+        $this->Paginator->settings['conditions'] = $conds;
+        
+        $descuentos = $this->Cliente->Descuento->find('list');
+		$tipoDocumentos = $this->Cliente->TipoDocumento->find('list');
+		$ivaResponsabilidades = $this->Cliente->IvaResponsabilidad->find('list');
+		$this->set(compact('descuentos', 'tipoDocumentos', 'ivaResponsabilidades'));
 		$this->set('clientes', $this->Paginator->paginate());
 	}
 
-/**
- * view method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function view($id = null) {
-		if (!$this->Cliente->exists($id)) {
-			throw new NotFoundException(__('Invalid cliente'));
+
+
+	public function jqm_clientes($tipo = 'todos'){
+		// die("asas asmasm");
+             $this->conHeader = false;
+             $this->pageTitle = 'Listado de Clientes';
+             $tipo = '';
+             $clientes = array();
+             switch ($tipo) {
+                 case 'a':
+                 case 'A':
+                     $clientes = $this->Cliente->todosLosTipoA();
+                     $tipo = 'a';
+                     break;
+                 case 'd':
+                 case 'descuento':
+                     $clientes = $this->Cliente->todosLosDeDescuentos();
+                     $tipo = 'd';
+                     break;
+                 default:
+                     $tipo = 't';
+                         $clientes = $this->Cliente->todos();
+                     break;
+             }
+            // $this->layout = 'jqm' ;
+            $this->set('title_for_layout',"Clientes");
+            $this->set('tipo',$tipo);
+            $this->set('clientes',$clientes);
+        }
+
+
+
+    function addFacturaA() {
+        $this->pageTitle = 'Agregar Factura A';
+		if (!empty($this->request->data)) {
+			$this->Cliente->create();
+			if ($this->Cliente->save($this->request->data)) {
+				$this->Session->setFlash(__('Se agregó un nuevo cliente'));
+			} else {
+				$this->Session->setFlash(__('El Cliente no pudo ser gardado, intente nuevamente.'), 'flash_error');
+			}
+            $this->set('cliente_id', $this->Cliente->id);
+            $this->layout = false;
+            $this->render('jqm_result');
 		}
-		$options = array('conditions' => array('Cliente.' . $this->Cliente->primaryKey => $id));
-		$this->set('cliente', $this->Cliente->find('first', $options));
+		
+		$tipo_documentos = $this->Cliente->TipoDocumento->find('list');
+		$iva_responsabilidades = $this->Cliente->IvaResponsabilidad->find('list');
+
+		$this->set(compact('iva_responsabilidades', 'tipo_documentos'));
 	}
+
+
 
 /**
  * add method
@@ -79,6 +120,7 @@ class ClientesController extends FidelizationAppController {
 		$tipoDocumentos = $this->Cliente->TipoDocumento->find('list');
 		$ivaResponsabilidades = $this->Cliente->IvaResponsabilidad->find('list');
 		$this->set(compact('descuentos', 'tipoDocumentos', 'ivaResponsabilidades'));
+		$this->render('form');
 	}
 
 /**
@@ -107,6 +149,7 @@ class ClientesController extends FidelizationAppController {
 		$tipoDocumentos = $this->Cliente->TipoDocumento->find('list');
 		$ivaResponsabilidades = $this->Cliente->IvaResponsabilidad->find('list');
 		$this->set(compact('descuentos', 'tipoDocumentos', 'ivaResponsabilidades'));
+		$this->render('form');
 	}
 
 /**

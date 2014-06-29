@@ -3,8 +3,8 @@ App::uses('RistoAppModel', 'Risto.Model');
 
 class ConfigCategory extends RistoAppModel {
 
-    var $name = "ConfigCategory";
+    public $name = "ConfigCategory";
 
-    var $hasMany = array('Risto.Config');
+    public $hasMany = array('Risto.Config');
 }
 ?>

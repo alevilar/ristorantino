@@ -5,11 +5,26 @@ App::uses('AppController', 'Controller');
 
 class ConfigsController extends AppController {
 
-	var $name = 'Configs';
-	var $scaffold;
+	public $name = 'Configs';
+
+
+	public $scaffold;
+
+    public function beforeFilter() {
+        $this->Config->recursive = 1;
+    }
+
+    public function beforeRender() {        
+        $this->set('scaffoldFields', array(
+                'config_category_id',
+                'key',
+                'value',
+                'description',
+            ));
+    }
         
         
-        function toggle_remito() {
+    public function toggle_remito() {
             $par = array(                
                 'ConfigCategory.name' => 'Mesa', 
                 'Config.key' => 'imprimePrimeroRemito',

@@ -13,6 +13,15 @@ class Cliente extends FidelizationAppModel {
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
+	public $actsAs = array(
+        'Search.Searchable',
+        'Containable',
+        );
+
+	public $virtualFields = array(
+            'nombre_nrodocumento' => 'CONCAT(Cliente.nombre, " (", Cliente.nrodocumento, ")")'
+        );
+
 /**
  * belongsTo associations
  *
@@ -39,6 +48,13 @@ class Cliente extends FidelizationAppModel {
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
+		),
+		'TipoFactura' => array(
+			'className' => 'Risto.TipoFactura',
+			'foreignKey' => 'tipo_factura_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
 		)
 	);
 
@@ -62,5 +78,60 @@ class Cliente extends FidelizationAppModel {
 			'counterQuery' => ''
 		)
 	);
+
+
+
+	public $filterArgs = array(
+        'codigo' => array(
+            'type' => 'like',
+            ),
+        'mail' => array(
+            'type' => 'like',
+            ),
+        'mozo_numero' => array(
+            'type' => 'value',
+            'field' => 'Mozo.numero'
+            ),
+        'nrodocumento' => array(
+            'type' => 'like',
+            ),
+        'tipo_documento_id' => array(
+            'type' => 'value',
+            ),
+        'nombre' => array(
+            'type' => 'like',
+            ),
+        'descuento' => array(
+            'type' => 'value'
+            ),        
+        'tipofactura' => array(
+            'type' => 'value',
+            ),        
+        'iva_responsabilidad_id' => array(
+            'type' => 'value',
+            ),  
+        'descuento_id' => array(
+            'type' => 'value',
+            ),
+        'telefono' => array(
+            'type' => 'like',
+            ),  
+        'domicilio' => array(
+            'type' => 'like',
+            ),
+        );
+
+
+	public function todos ($type = 'all')
+    {
+        $clientes = $this->find($type, array(
+            'order' => 'Cliente.nombre',
+//                    'limit' => 10,
+            'contain' => array(
+                'Descuento'
+            ),
+                ));
+        return $clientes;
+    }
 
 }

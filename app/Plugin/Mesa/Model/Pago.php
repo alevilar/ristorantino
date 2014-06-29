@@ -31,7 +31,7 @@ class Pago extends MesaAppModel {
 	);
 
 //        function afterSave() {
-//            $this->Mesa->id = $this->request->data[$this->name]['mesa_id'];
+//            $this->Mesa->id = $this->data[$this->name]['mesa_id'];
 //            $this->Mesa->saveField('modified', date('Y-m-d H:i:s', strtotime('now')), false);
 //            return true;
 //        }

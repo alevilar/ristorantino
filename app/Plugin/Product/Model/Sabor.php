@@ -1,74 +1,86 @@
 <?php
-
 App::uses('ProductAppModel', 'Product.Model');
-
+/**
+ * Sabor Model
+ *
+ * @property Categoria $Categoria
+ * @property DetalleComanda $DetalleComanda
+ */
 class Sabor extends ProductAppModel {
-
-	public $name = 'Sabor';
-
-
-    public $actsAs = array(
-        'SoftDelete', 
-        'Search.Searchable',
-        'Containable',
+/**
+ * Display field
+ *
+ * @var string
+ */
+	public $displayField = 'name';
+        
+        public $actsAs = array(
+            'SoftDelete', 
+            'Search.Searchable'
+            );
+      
+       public $filterArgs = array(
+			'name' => array('type' => 'like'),
+			'categoria' => array('type' => 'like', 'field' => 'Categoria.name'),
+                        'precio' => array('type' => 'value'),
         );
-
-
+      
+      
+/**
+ * Validation rules
+ *
+ * @var array
+ */
 	public $validate = array(
-		'name' => array('notempty'),
-		'categoria_id' => array('numeric')
+		'name' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'categoria_id' => array(
+			'numeric' => array(
+				'rule' => array('numeric'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'deleted' => array(
+			'numeric' => array(
+				'rule' => array('numeric'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
 	);
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
+
+/**
+ * belongsTo associations
+ *
+ * @var array
+ */
 	public $belongsTo = array(
-			'Categoria' => array('className' => 'Product.Categoria',
-								'foreignKey' => 'categoria_id',
-								'conditions' => '',
-								'fields' => '',
-								'order' => 'Categoria.name'
-			)
+		'Categoria' => array(
+			'className' => 'Product.Categoria',
+			'foreignKey' => 'categoria_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		)
 	);
-
-	public $hasMany = array(
-			'DetalleSabor' => array('className' => 'Product.DetalleSabor',
-								'foreignKey' => 'sabor_id',
-								'dependent' => false,
-								'conditions' => '',
-								'fields' => '',
-								'order' => '',
-								'limit' => '',
-								'offset' => '',
-								'exclusive' => '',
-								'finderQuery' => '',
-								'counterQuery' => ''
-			)
-	);
-
-
-
-	public $filterArgs = array(
-        'name' => array(
-            'type' => 'like',
-            ),
-        'precio' => array(
-            'type' => 'value',
-            ),
-        'categoria_name' => array(
-            'type' => 'like',
-            'field' => 'Categoria.name'
-            ),
-        'categoria_id' => array(
-            'type' => 'value',
-            ),  
-        'created_from' => array(
-            'type' => 'value',
-            'field' => 'Producto.created >='
-            ),
-        'created_to' => array(
-            'type' => 'value',
-            'field' => 'Producto.created <='
-            ),        
-        );
-
+      
+        
+        public $hasMany = array('Product.GrupoSabor');
 }
-?>

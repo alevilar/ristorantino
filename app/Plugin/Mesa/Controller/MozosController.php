@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 App::uses('MesaAppController', 'Mesa.Controller');
 
@@ -84,41 +84,17 @@ class MozosController extends MesaAppController {
             $lastAccess = null;
             if ( $microtime != 0 ) {
                 $lastAccess = $this->Session->read('lastAccess');
-            }
-            $mesas = $this->Mozo->mesasAbiertas(null, $lastAccess); 
-                     
-            $mozosMesa = array();
-            foreach ( $mesas as $key=>$abmMesas ) {
-                $i = 0;
-                foreach ( $abmMesas as $m ) {
-//                    debug($m);
-                    // si es la primera vez que pido esta action, entonces me trae a TODOS los mozos del array
-                    // caso contrario solo me traera los mozos que tienen alguna mesa donde se haya realizado algun cambio
-                    if ( !empty($lastAccess) ) {
-                        // solo mandar un array con los mozos que tienen mesas modificadas despues del $lastAccess
-                        if ( !empty($m['Mesa']) ) {  
-                            $m['Mozo']['mesas'] = $m['Mesa'];
-                            $mozosMesa[$key]['mozos'][] = $m['Mozo'];
-                            $i++;
-                        }
-                    } else {
-                        // traer todos los mozos, con su array de mesas
-                        $m['Mozo']['mesas'] = $m['Mesa'];
-                        $mozosMesa[$key]['mozos'][] = $m['Mozo'];
-                        $i++;
-                    }
-                }
-            }
-//            debug( $mozosMesa );
-            if ( !empty( $mozosMesa ) ) {
+
+                // setear el nuevo lastAccess
                 $nowTime = date('Y-m-d H:i:s', strtotime('now'));
                 $this->Session->write('lastAccess', $nowTime );
-//                debug( $this->Session->read('lastAccess') );
             }
-            
+
+            $mesas = $this->Mozo->mesasAbiertas(null, $lastAccess);             
+
             $this->set('mesasLastUpdatedTime', 1 );
             $this->set('modified', $lastAccess );
-            $this->set('mesas', $mozosMesa);
+            $this->set('mesas', array('created' => $mesas));
             
         }
 

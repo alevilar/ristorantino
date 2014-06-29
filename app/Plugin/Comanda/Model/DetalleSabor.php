@@ -27,8 +27,8 @@ class DetalleSabor extends ComandaAppModel {
         
         
         function beforeSave($options = array()) {
-           if (!empty($this->request->data[$this->name]['modified'])){
-                unset($this->request->data[$this->name]['modified']);
+           if (!empty($this->data[$this->name]['modified'])){
+                unset($this->data[$this->name]['modified']);
            }
            return parent::beforeSave($options);
        }
