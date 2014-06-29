@@ -20,6 +20,8 @@
         echo $this->Form->input('ProductosPreciosFuturo.producto_id', array('type'=>'hidden'));
         echo $this->Form->input('ProductosPreciosFuturo.precio',array('placeholder'=>'$','label'=>'Precio Futuro $'));
 
+   
+
         
 
 

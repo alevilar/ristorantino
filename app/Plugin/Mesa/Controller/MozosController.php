@@ -1,5 +1,6 @@
 ﻿<?php
 
+
 App::uses('MesaAppController', 'Mesa.Controller');
 
 class MozosController extends MesaAppController {

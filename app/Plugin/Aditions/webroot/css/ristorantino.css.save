@@ -25,6 +25,8 @@ ul.listado-adicion li a {
     text-overflow: clip !important;
 }
 
+
+
 .mesa-icon {
     left: 7% !important;
     padding: 0 !important;

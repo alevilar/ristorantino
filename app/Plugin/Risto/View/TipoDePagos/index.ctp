@@ -11,6 +11,8 @@
 	<th class="actions"><?php __('Acciones');?></th>
 </tr>
 <?php
+
+
 $i = 0;
 foreach ($tipoDePagos as $tipoDePago):
 	$class = null;

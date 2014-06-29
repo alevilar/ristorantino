@@ -10,6 +10,8 @@
         <?php echo $this->Html->charset(); ?>
         <title><?php echo $title_for_layout; ?></title>
         <?php
+
+        
         echo $this->Html->meta('icon');
 
         echo $this->Html->css(array(

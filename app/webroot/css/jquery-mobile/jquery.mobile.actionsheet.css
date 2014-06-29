@@ -1,4 +1,6 @@
-﻿.ui-actionsheet-wallpaper { 
+﻿
+
+.ui-actionsheet-wallpaper { 
 	display: none;
 	background-color: black; 
 	opacity: .3;
@@ -9,6 +11,9 @@
 	height: auto;
 	width: 100%;
 }
+
+
+
 .ui-actionsheet-content {
 	-moz-border-radius: 8px;
 	-webkit-border-radius: 8px;
@@ -34,6 +39,7 @@
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5E6369', endColorstr='#303339',GradientType=0 ); /* ie */
 	background: -o-linear-gradient(top, #5E6369 0%,#52575D 1%,#40454E 46%,#141D26 50%,#252F38 98%,#303339 100%); /* opera */
 }
+
 @-webkit-keyframes actionsheet-open-fade {
   from {
     opacity: 0;

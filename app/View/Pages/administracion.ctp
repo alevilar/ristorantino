@@ -16,10 +16,10 @@
         echo $this->Html->link('Pagos de Mesas', '/mesa/pagos', array('class' => 'list-group-item'));
         echo $this->Html->link('Nueva Mesa', '/mesa/Mesas/add', array('class' => 'list-group-item'));
         ?>
-    </div>
-
-    
+    </div>    
 </div>
+
+
 
 
 

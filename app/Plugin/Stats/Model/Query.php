@@ -1,4 +1,6 @@
 ﻿<?php
+
+
 class Query extends PqueryAppModel {
 
 	var $validate = array(

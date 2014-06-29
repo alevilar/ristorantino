@@ -6,9 +6,10 @@
 	echo $this->Paginator->counter(array(
 	'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}')
 	));
-	?>
 
-<?php
+
+
+
 echo $this->Form->create('User');
 echo $this->Form->input('txt_buscar', array('label' => 'Introducir texto a buscar'));
 echo $this->Form->end();

@@ -1,5 +1,7 @@
 ﻿<?php
 
+
+
 App::uses('RistoAppController', 'Risto.Controller');
 
 class TipoDePagosController extends RistoAppController {

@@ -2,7 +2,11 @@
 
 
 
+
+
 ALTER TABLE  `mesas` ADD  `estado_id` TINYINT NOT NULL DEFAULT  0 AFTER  `cant_comensales`;
+
+
 
 
 

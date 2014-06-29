@@ -1,5 +1,7 @@
 ﻿<?php
+
 App::uses('UsersAppController', 'Users.Controller');
+
 
 
 class UsersController extends UsersAppController {

@@ -1,6 +1,9 @@
 ﻿<?php
 
+
+
 class CashierController extends AditionAppController {
+
 
 	var $helpers = array('Html', 'Form');
 	var $uses = array('Mozo','Mesa');

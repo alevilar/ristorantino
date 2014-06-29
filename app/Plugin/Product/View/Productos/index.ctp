@@ -1,10 +1,10 @@
-﻿
+﻿<?php    
 
-    <?php    
-    echo $this->Html->script('jquery/jquery.jeditable.mini', false);
-    echo $this->Html->script('ale_fieldupdates', false);
+echo $this->Html->script('jquery/jquery.jeditable.mini', false);
+echo $this->Html->script('ale_fieldupdates', false);
 
-    ?>
+
+?>
 
 
 <script type="text/javascript">

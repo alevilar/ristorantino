@@ -1,9 +1,12 @@
-    <?php    
-         echo $this->element('menuadmin');
-    ?>
+<?php    
 
+     echo $this->element('menuadmin');
+
+
+?>
 
 <h1>Cambiar su contraseña</h1>
+
 <div class="users form">
     <?php echo $form->create('User',array('action' => 'cambiar_password'));?>
     <fieldset>

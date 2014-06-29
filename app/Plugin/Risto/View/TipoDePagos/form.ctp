@@ -1,10 +1,12 @@
-﻿    <?php    
+﻿<?php    
 
-	if ( !empty($this->request->data['TipoDePago']['image_url']) ) {
-		echo $this->Html->image($this->request->data['TipoDePago']['image_url'], array('width'=>100));
-	}
+
+if ( !empty($this->request->data['TipoDePago']['image_url']) ) {
+	echo $this->Html->image($this->request->data['TipoDePago']['image_url'], array('width'=>100));
+}
+
     
-    ?>
+?>
 
 
 <div class="tipoDePagos form">
