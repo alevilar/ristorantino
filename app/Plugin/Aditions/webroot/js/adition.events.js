@@ -449,22 +449,7 @@ $(document).bind("mobileinit", function(){
     });
 
 
-    /**
-     *
-     *          OPCIONES    ----   CAJERO
-     *
-     */
-    $('#cajero-opciones').live('pageshow',function(event, ui){
-        $('#modo-k').bind('change',function(){
-            Risto.IMPRIME_REMITO_PRIMERO = !Risto.IMPRIME_REMITO_PRIMERO;
-            $.get(urlDomain+'/configs/toggle_remito');
-
-        });
-    });
-
-    $('#cajero-opciones').live('pagebeforehide',function(event, ui){
-         $('#modo-k').unbind('change');
-    });
+    
 
 
     /**
@@ -518,6 +503,36 @@ $(document).bind("mobileinit", function(){
     
     $('#clientes-addfacturaa').live('pagehide', function() {
         $('#form-cliente-add', '#clientes-addfacturaa').unbind('submit');
+    });
+
+
+
+
+    /**
+     *
+     *
+     *          Page Mesas.cobradas
+     *
+     */
+    $('#mesas-edit').live('pageshow', function ( e, p) {
+        $('form', e.target).bind('submit', function ( evt, coso ) {
+            var action = this.action;
+            var data = $(this).serialize();
+
+            $.ajax({
+              type: "PUT",
+              url: action,
+              data: data,
+              success: function () {
+                    history.back();
+              },
+            });
+            return false;
+        });
+    });
+
+     $('#mesas-edit').live('pagehide', function( e ) {
+        $('form', e.target).unbind('submit');
     });
 
 

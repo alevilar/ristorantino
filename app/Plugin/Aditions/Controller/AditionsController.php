@@ -7,12 +7,12 @@ App::uses('AditionsAppController', 'Aditions.Controller');
 
 class AditionsController extends AditionsAppController {
     
-	var $helpers = array('Html', 'Form');
-	var $uses = array('Mesa.Mozo','Mesa.Mesa');
-	var $current_mozo_id;
-	var $current_mesa_id;
-	var $current_mesa_numero;
-	var $layout = 'adicion';
+	public $helpers = array('Html', 'Form');
+	public $uses = array('Mesa.Mozo','Mesa.Mesa');
+	public $current_mozo_id;
+	public $current_mesa_id;
+	public $current_mesa_numero;
+	public $layout = 'adicion';
 
 
 	function home()
@@ -74,7 +74,8 @@ class AditionsController extends AditionsAppController {
             $this->set('observacionesComanda', ClassRegistry::init('Comanda.ObservacionComanda')->find('list', array('order' => 'ObservacionComanda.name')));
 	}
 	
-	
+
+	/*
 	function cambiarMozo($mozo_id = 0)
         {
             $this->current_mozo_id = $mozo_id;
@@ -83,5 +84,11 @@ class AditionsController extends AditionsAppController {
 
             $this->redirect('adicionar/mozo_id:'.$this->current_mozo_id.'/mesa_id:'.$this->current_mesa_id.'/mesa_numero:'.$this->current_mesa_numero);
 	}
+*/
+
+
+    
+    
+
 	
 }

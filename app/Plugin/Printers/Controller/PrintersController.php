@@ -16,6 +16,8 @@ class PrintersController extends PrintersAppController {
  */
 	public $components = array('Paginator', 'Session');
 
+
+
 /**
  * index method
  *
@@ -103,8 +105,15 @@ class PrintersController extends PrintersAppController {
 		return $this->redirect(array('action' => 'index'));
 	}
 
-	public function cierre_z(){
-		$this->Printer->imprimirCierreZ();
+
+
+	/**
+	 * @param string $type puede ser X o Z. 
+	 * 		El cierre X realiza un cierre parcial, típico para cambio de cajero
+	 * 		El cierre Z es un cierre fiscal, y pone los contadopres del impresor fiscal en cero
+	 */
+	public function cierre( $type = "X"){
+		$this->Printer->imprimirCierre( $type );
 
 		if ( !$this->request->is('ajax') ) {
 			$this->Session->setFlash("Se imprimió un Cierre Z");
@@ -113,30 +122,20 @@ class PrintersController extends PrintersAppController {
         	exit;
         }
     }
-	
-	
-	public function cierre_x(){
-		$this->Printer->imprimirCierreX(); 
-		
-		if ( !$this->request->is('ajax') ) {
-			$this->Session->setFlash("Se imprimió un Cierre X");
-			$this->redirect($this->referer());
-        } else {
-        	exit;
-        }
-	}
+
+
 
 
     public function nota_credito(){
-		if ( !empty($this->request->data) ) {
+		if ( $this->request->is(array('post', 'put')) ) {
             $cliente = array();
-            if(!empty($this->request->data['Cliente']) && $this->request->data['Cajero']['tipo'] == 'A'){
+            if( !empty($this->request->data['Cliente']) && $this->request->data['Cajero']['tipo'] == 'A'){
                 $cliente['razonsocial'] = $this->request->data['Cliente']['razonsocial'];
                 $cliente['numerodoc'] = $this->request->data['Cliente']['numerodoc'];
                 $cliente['respo_iva'] = $this->request->data['Cliente']['respo_iva'];
                 $cliente['tipodoc'] = $this->request->data['Cliente']['tipodoc'];
             }
-            
+         
             $this->Printer->imprimirNotaDeCredito(
                     $this->request->data['Cajero']['numero_ticket'],
                     $this->request->data['Cajero']['importe'],
@@ -145,7 +144,7 @@ class PrintersController extends PrintersAppController {
                     $cliente
                     );
 
-            $this->Session->setFlash("Se envió a imprimir una nota de crédito");
+            $this->Session->setFlash("Se envió a imprimir una nota de crédito", 'flash_success');
         }
 	}
 

@@ -2,7 +2,7 @@
 /**
  * Group test - Search
  */
-class AllPrinterEngineTest extends PHPUnit_Framework_TestSuite {
+class AllPrintersTest extends PHPUnit_Framework_TestSuite {
 
 	/**
 	 * suite method, defines tests for this suite.

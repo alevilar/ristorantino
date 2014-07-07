@@ -1,6 +1,6 @@
 <?php
 
-App::uses('PrinterOutput', 'PrinterEngine.PrinterOutput');
+App::uses('PrinterOutput', 'Printers.PrinterOutput');
 
 
 class CupsPrinterOutput extends PrinterOutput

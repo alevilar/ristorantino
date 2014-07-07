@@ -1,0 +1,120 @@
+body{
+	background-color: #BBBBBB;
+}
+
+.mozo-column{
+	float: left;
+}
+
+.mozo-column ul{
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.mozo-column .mesa{
+	height: 80px;
+        padding-top: 10px;
+        margin: 3px;
+	background-color: buttonface;
+	 -webkit-transition: all 1s ease-in-out;
+	  -moz-transition: all 1s ease-in-out;
+	  -o-transition: all 1s ease-in-out;
+	  transition: all 1s ease-in-out;
+          display: block;
+         border: 1px #999 ridge;
+         text-align: center;
+}
+
+.mozo-column .mesa:hover{
+    text-decoration: none;
+    opacity: 0.4;
+}
+
+.mozo-column .mozo{
+	width: 100%;
+}
+
+.estado_2{
+	background-color: #FFEFAA !important;
+}
+
+.estado_3{
+	background-color: #EEFFFF !important;
+}
+
+.expanded{
+	top: 10%;
+	
+	position: fixed;
+	
+	top: 10%;
+	left: 50%;
+	z-index: 1050;
+	width: 680px;
+	height: 500px;
+	
+	margin-left: -340px;
+	background-color: #ffffff;
+	border: 1px solid #999;
+	border: 1px solid rgba(0, 0, 0, 0.3);
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+	outline: none;
+	-webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+	-moz-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+	box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+	-webkit-background-clip: padding-box;
+	-moz-background-clip: padding-box;
+	background-clip: padding-box;
+
+	transform: rotate3d(180, 0);
+	
+	-webkit-transform: rotate3d(180, 0);
+	
+	-moz-transform: rotate3d(180, 0);
+	
+	-o-transform: rotate3d(180, 0);
+}
+
+
+.big-modal{
+	width: 92%;
+	margin-left: -46%;
+        height: 92%;
+        top: 2%;
+      
+}
+/*
+.big-modal footer {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+}
+*/
+
+.big-modal .mesa{
+     height: 100%;
+    
+}
+
+.mesa .mesa-actions a{
+    width: 100%;
+}
+
+
+
+#listado_categorias, #listado_productos{
+    -moz-column-count: 7;
+    -moz-column-gap: 3px;
+    -webkit-column-count: 7;
+    -webkit-column-gap: 3px;
+    column-count: 7;
+    column-gap: 3px;
+}
+
+#listado_productos button, #listado_categorias button{    
+    margin: 2px;
+    width: 95%;
+}

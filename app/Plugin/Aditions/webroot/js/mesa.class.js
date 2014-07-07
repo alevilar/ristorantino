@@ -591,10 +591,7 @@ Mesa.prototype = {
                 totalText = '$'+total ;
             
             
-            if (this.Cliente() && !this.Cliente().hasOwnProperty('length') && this.Cliente().tipofactura() && this.Cliente().tipofactura().toLowerCase() == 'a'){               
-                totalText = 'Factura "A" '+totalText;
-            }
-
+        
             if ( this.porcentajeDescuento() ) {
                 dto = Math.round( Math.floor( total * this.porcentajeDescuento()  / 100 ) *100 ) /100;
                 totalText = totalText+' - [Dto '+this.porcentajeDescuento()+'%] $'+dto+' = $'+ this.totalCalculado();
@@ -619,7 +616,7 @@ Mesa.prototype = {
         
         
         clienteTipoFacturaText: function(){
-            var texto = 'B';
+            var texto = Risto.DEFAULT_TIPOFACTURA_NAME;
             if ( this.Cliente() && typeof this.Cliente().getTipoFactura == 'function' ) {
                 texto = this.Cliente().getTipoFactura();
             }

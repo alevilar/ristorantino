@@ -44,12 +44,14 @@
                 $debug = Configure::read('debug');
                 if ( $debug > 0 ) {
                     echo $this->Html->script( array(
-                        '/aditions/js/jquery-1.6.1.min',
+                        '/aditions/js/jquery-1.6.4',
                         '/aditions/js/jquery.tmpl.min',
+
 
                         '/aditions/js/knockout-2.0.0.min.js',
 //                        'knockout-1.2.1.debug',
-                        '/aditions/js/knockout.mapping.debug',
+                        '/aditions/js/knockout.mapping-2.0.debug',
+                
 
                         '/aditions/js/cake_saver',
                         '/aditions/js/risto',

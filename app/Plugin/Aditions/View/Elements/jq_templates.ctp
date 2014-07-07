@@ -174,7 +174,7 @@ el ajax que verifica el estado de las mesas (si fue abierta o cerrada alguna. --
             <span class="mesa-mozo" data-bind="text: mozo().numero"></span>
             <span class="mesa-descuento" data-bind="visible: clienteDescuentoText(),text: clienteDescuentoText()"></span>
             <span  class="mesa-tipofactura" data-bind="visible: clienteTipoFacturaText()">
-                "<span data-bind="text: clienteTipoFacturaText()"></span>"
+                <span data-bind="text: clienteTipoFacturaText()"></span>
             </span>
             <span class="mesa-time" data-bind="text: textoHora()"></span>
         </a>

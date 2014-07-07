@@ -1,0 +1,11 @@
+.comandas button{
+    width: 97%;
+}
+
+.detalle_comanda .entradas{
+    float: right;
+}
+
+.detalle_comanda .entradas label{
+    float: left;
+}

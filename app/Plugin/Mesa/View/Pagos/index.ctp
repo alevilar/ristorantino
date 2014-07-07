@@ -78,7 +78,7 @@ foreach ($pagos as $pago):
 			<?php echo $pago['Mesa']['Mozo']['numero']; ?>
 		</td>
 		<td class="text-center">
-			<?php echo $pago['Mesa']['numero']; ?>
+			<?php echo $this->Html->link($pago['Mesa']['numero'], array('plugin'=>'mesa', 'controller'=>'mesas', 'action'=>'edit', $pago['Mesa']['id'] )); ?>
 		</td>
                 <td class="text-center">
 			<?php echo $this->Html->image($pago['TipoDePago']['image_url'], array('height'=> '45', 'title'=>$pago['TipoDePago']['name'], 'alt'=>$pago['TipoDePago']['name'])); ?>

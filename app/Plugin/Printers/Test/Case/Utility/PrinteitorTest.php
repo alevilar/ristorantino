@@ -1,5 +1,5 @@
 <?php
-App::uses('Printaitor', 'PrinterEngine.Utility');
+App::uses('Printaitor', 'Printers.Utility');
 
 App::uses('Config','Model');
 

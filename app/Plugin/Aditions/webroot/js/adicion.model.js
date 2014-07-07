@@ -136,7 +136,9 @@ var AditionModel = {
      */
     _processOnSuccess: function () {
         if (this.readyState == 4 && this.responseText) {
-            var data = JSON.parse( this.responseText );
+            var data = JSON.parse( this.responseText.trim() );
+
+            // var data = txt;
             if (data.time) {
                 AditionModel.mesasLastUpdatedTime = data.time;
             } 

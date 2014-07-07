@@ -162,6 +162,8 @@ Risto.Adition.detalleComanda.prototype = {
             this.modificada(true);
         }
         var dc = this;
+        console.debug(urlDomain);
+        console.debug(dc.id());
         $cakeSaver.send({
            url: urlDomain + '/detalle_comandas/edit/' + dc.id(),
            obj: dc

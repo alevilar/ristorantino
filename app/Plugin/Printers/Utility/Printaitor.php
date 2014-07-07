@@ -2,7 +2,7 @@
 
 App::uses('Comandera', 'Model');
 App::uses('Helper', 'View');
-App::uses('FiscalPrinter', 'PrinterEngine.FiscalPrinter');
+App::uses('FiscalPrinter', 'Printers.FiscalPrinter');
 
 
 /**
@@ -32,14 +32,7 @@ class Printaitor
   
     
     public static function setup( Model $printer , $id = null)
-    {        
-        if ( !empty() ) {
-            $pData = $printer->read(null, $id);
-        } else {
-            $pData = $printer->read();
-
-
-        }
+    {                
         
         if ( !self::$isLoad ) {
             if ( empty($outputEngine ) ) {
@@ -66,9 +59,13 @@ class Printaitor
      * Fiscal close "X" (partial) or "Z" (daily close)
      * @param char $type 
      */
-    public static function  close($printer, $type = 'X') {
-        $type = strtoupper($string);
-        throw new NotImplementeException("Cierre Z o X fiscal sin implementar");
+    public static function  close( $type = 'X', $printer = null) {
+        $type = strtoupper($type);
+        if ( $type == "X" || $type == "Z" ) {
+            throw new NotImplementedException("Cierre $type fiscal sin implementar");    
+        } else {
+            throw new Exception("Cierre no válido. Los valores solo pueden ser o X o Z, se pasó $type como parámetro");
+        }
     }
     
     
@@ -111,7 +108,7 @@ class Printaitor
         $outputType = ucfirst(strtolower( $outputType ));
         $printerOutputName = $outputType."PrinterOutput";
                 
-        App::uses($printerOutputName, "PrinterEngine.PrinterOutput");
+        App::uses($printerOutputName, "Printers.PrinterOutput");
         self::$PrinterOutput = new $printerOutputName();
     }
     
@@ -141,7 +138,7 @@ class Printaitor
         
         $View->helpers = array(
             'PE' => array(
-                   'className' => 'PrinterEngine.'. $driverName
+                   'className' => 'Printers.'. $driverName
             )
         );
         

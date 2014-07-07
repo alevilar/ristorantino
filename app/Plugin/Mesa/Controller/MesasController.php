@@ -9,7 +9,8 @@ class MesasController extends MesaAppController {
 
     var $name = 'Mesas';
 
-    public $components = array(        
+    public $components = array(     
+        'RequestHandler',  
         'Search.Prg',
         'Paginator', 
         );
@@ -195,11 +196,12 @@ class MesasController extends MesaAppController {
     
     
     public function add() {
+
         $insertedId = 0;
            
-        if ( $this->request->is('post') ) {
+        if ($this->request->is('post')) {
             $this->Mesa->create();
-            if ($this->Mesa->save($this->request->data)) {
+            if ( $this->Mesa->save($this->request->data) ) {
                 $insertedId = $this->Mesa->getLastInsertId();
 
                 if ( !empty( $this->request->data['Mesa']['tipo_de_pago'])  && !empty($this->request->data['Mesa']['total']) ) {
@@ -224,10 +226,10 @@ class MesasController extends MesaAppController {
         if ( !$this->request->is('ajax') ) {
             $mozos = $this->Mesa->Mozo->listFullName();
             $tipo_pagos = $this->Mesa->Pago->TipoDePago->find('list');
-            $descuentos = $this->Descuentos->find('list');
-            $clientes = $this->Descuentos->find('list');
+            $descuentos = $this->Mesa->Descuento->find('list');
+            $clientes = $this->Mesa->Cliente->find('list');
 
-            $this->set(compact('mozos', 'descuentos', 'tipo_pagos'));
+            $this->set(compact('mozos', 'descuentos', 'tipo_pagos', 'clientes'));
         }
         
         $this->set('insertedId', $insertedId);
@@ -241,12 +243,14 @@ class MesasController extends MesaAppController {
 
 
     public function edit($id = null) {
-                
-        if (!$id && empty($this->request->data)) {
+
+
+        if (!$id && !$this->request->is('post') ) {
             $this->Session->setFlash(__('Invalid Mesa', 'flash_error'));
             $this->redirect(array('action'=>'index'));
         }
-        if (!empty($this->request->data)) {
+
+        if ($this->request->is(array('post', 'put'))) {
             if ($this->Mesa->save($this->request->data)) {
                 $this->Session->setFlash(__('La mesa fue editada correctamente', 'flash_success'));
                 $this->redirect(array('action'=>'index'));
@@ -254,22 +258,28 @@ class MesasController extends MesaAppController {
                 $this->Session->setFlash(__('La mesa no pudo ser guardada. Intente nuevamente.', 'flash_error'));
             }
         }
-        if (empty($this->request->data)) {
-            $this->request->data = $this->Mesa->find('first',array(
-                    'conditions'=> array(
-                            'Mesa.id'=>$id),
-                    'contain'=>	array(
-                            'Mozo',
-                            'Cliente' => 'Descuento',
-                            'Comanda' => array (
-                                'DetalleComanda' => array(
-                                    'Producto',
-                                    'DetalleSabor' => 'Sabor'
-                                    )
+
+        
+        $this->request->data = $this->Mesa->find('first',array(
+                'conditions'=> array(
+                        'Mesa.id'=>$id),
+                'contain'=>	array(
+                        'Mozo',
+                        'Cliente' => array(
+                            'Descuento',
+                            'IvaResponsabilidad' => array('TipoFactura'),
+                            ) ,
+                        'Pago' => array(
+                            'TipoDePago'
+                            ),
+                        'Comanda' => array (
+                            'DetalleComanda' => array(
+                                'Producto',
+                                'DetalleSabor' => 'Sabor'
                                 )
                             )
-            ));
-        }
+                        )
+        ));
 
         $items = $this->request->data['Comanda'];
         $mesa = $this->request->data;

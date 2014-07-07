@@ -14,6 +14,7 @@ Risto.Adition.handleMesasRecibidas = {
          * 
          */
         created: function ( data ) {
+
             if (!data.mozos) return -1;
 
             if ( this.mesas().length ) {
@@ -163,20 +164,28 @@ Risto.Adition.adicionar = {
 
     /**
      * Constructor
+     * @param mesas json de mesas abiertas por crear
      */
-    initialize: function () {
+    initialize: function ( mesas ) {
         var worker = null, // webWorker
             cbk = 0, // contaddor para el for de mesas
-            time = ''; // timestamp php que envia el server
+            time = '', // timestamp php que envia el server
+            useWorker = true; // si quiero usar el worker para ctualizar las mesas constantemente
+
+
+        // inicializacion de las mesas
+        Risto.Adition.handleMesasRecibidas.created.call( Risto.Adition.adicionar, mesas );
+
             
-        if ( Worker ) {  
+        if ( Worker && useWorker ) {  
             
             // Crea el Web Worker
             worker = new Worker(urlDomain + "aditions/js/adicion.model.js");
-                
+
             worker.onmessage = function ( evt ) {
+
                 // si tiene mesas las proceso
-                if ( evt.hasOwnProperty('data') && evt.data.hasOwnProperty('mesas') ) {                                        
+                if ( evt.hasOwnProperty('data') && evt.data.hasOwnProperty('mesas') ) { 
                     for ( cbk in evt.data.mesas ) {                       
                         if ( typeof Risto.Adition.handleMesasRecibidas[cbk] == 'function' ) {
                             Risto.Adition.handleMesasRecibidas[cbk].call( Risto.Adition.adicionar, evt.data.mesas[cbk] );
@@ -192,6 +201,7 @@ Risto.Adition.adicionar = {
                 }
             }        
 
+
             // inicializacion y parametros de configuracion del worker
             worker.postMessage( {updateInterval: Risto.MESAS_RELOAD_INTERVAL} );
 
@@ -201,7 +211,6 @@ Risto.Adition.adicionar = {
             $(window).bind("offline", function(){
                  worker.postMessage( {onLine: false} );
             });
-
 
             time = this.mesasLastUpdatedTime();
             worker.postMessage( {urlDomain: urlDomain, timeText: time} );
@@ -337,7 +346,7 @@ Risto.Adition.adicionar = {
         var mozo = this.findMozoById(mesaJSON.mozo_id),
             mesa = new Mesa(mozo, mesaJSON);
         
-        $cakeSaver.send({url:urlDomain+'mesas/abrirMesa.json', obj: mesa});
+        $cakeSaver.send({url:urlDomain+'mesas/add.json', obj: mesa});
         return mesa;
     },
     

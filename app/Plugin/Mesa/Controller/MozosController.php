@@ -83,7 +83,9 @@ class MozosController extends MesaAppController {
         public function mesas_abiertas( $microtime = 0 ) {
             
             $lastAccess = null;
+            $type = 'created';
             if ( $microtime != 0 ) {
+            	$type = 'modified';
                 $lastAccess = $this->Session->read('lastAccess');
 
                 // setear el nuevo lastAccess
@@ -91,11 +93,12 @@ class MozosController extends MesaAppController {
                 $this->Session->write('lastAccess', $nowTime );
             }
 
-            $mesas = $this->Mozo->mesasAbiertas(null, $lastAccess);             
+            $mesas = $this->Mozo->mesasAbiertas( null, $lastAccess);
 
+            
             $this->set('mesasLastUpdatedTime', 1 );
             $this->set('modified', $lastAccess );
-            $this->set('mesas', array('created' => $mesas));
+            $this->set('mesas', array( $type => $mesas));
             
         }
 

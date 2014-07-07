@@ -3,7 +3,7 @@
 App::uses('File', 'Utility');
 App::uses('Folder', 'Utility');
 App::uses('Inflector', 'Utility');
-App::uses('PrinterOutput', 'PrinterEngine.PrinterOutput');
+App::uses('PrinterOutput', 'Printers.PrinterOutput');
 
 class FilePrinterOutput extends PrinterOutput
 {

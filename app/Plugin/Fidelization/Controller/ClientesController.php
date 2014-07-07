@@ -51,6 +51,13 @@ class ClientesController extends FidelizationAppController {
 
 	public function jqm_clientes($tipo = 'todos'){
 		// die("asas asmasm");
+		 	$this->Cliente->contain(array(
+		 		'Descuento',
+		 		'TipoDocumento',
+		 		'IvaResponsabilidad' => array('TipoFactura'),
+		 		'Mesa'
+		 		));
+
              $this->conHeader = false;
              $this->pageTitle = 'Listado de Clientes';
              $tipo = '';
@@ -78,8 +85,8 @@ class ClientesController extends FidelizationAppController {
         }
 
 
-
-    function addFacturaA() {
+	// addFacturaA
+    function simple_add() {
         $this->pageTitle = 'Agregar Factura A';
 		if (!empty($this->request->data)) {
 			$this->Cliente->create();
@@ -96,7 +103,12 @@ class ClientesController extends FidelizationAppController {
 		$tipo_documentos = $this->Cliente->TipoDocumento->find('list');
 		$iva_responsabilidades = $this->Cliente->IvaResponsabilidad->find('list');
 
-		$this->set(compact('iva_responsabilidades', 'tipo_documentos'));
+		$descuentos = $this->Cliente->Descuento->find('list');
+		$tipoDocumentos = $this->Cliente->TipoDocumento->find('list');
+		$ivaResponsabilidades = $this->Cliente->IvaResponsabilidad->find('list');
+		$this->set(compact('descuentos', 'tipoDocumentos', 'ivaResponsabilidades'));
+
+		$this->set(compact('descuentos', 'tipoDocumentos', 'ivaResponsabilidades'));
 	}
 
 

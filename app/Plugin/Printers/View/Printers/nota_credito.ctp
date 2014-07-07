@@ -1,12 +1,20 @@
+<div data-role="page">
 
+    <div data-role="header">
+        <h1>Nota de crédito</h1>
+        <a href="#listado-mesas-cerradas">Cancelar</a>
+    </div>
 
-    	<div class="listado-mesas">
-               <div><?php $this->Session->flash(); $this->Session->flash('auth'); ?></div>
+    <div data-role="content">
+
+        <?php echo $this->Session->flash(); ?>
+
+        <div class="listado-mesas">
 
     <?php
 
     echo $this->Form->create('Cajero', array(
-        'url'=>'nota_credito', 
+        // 'url'=>'nota_credito', 
         'type' =>'post', 
         'data-rel' => 'back', 
         'data-direction' =>"reverse",
@@ -43,14 +51,12 @@
                 </div>
                 
        <?php echo $this->Form->end() ?>         
-
-
     <script type="text/javascript">
-        jQuery('#CajeroTipoA').on('change', function(){
+        jQuery('#CajeroTipoA').live('change', function(){
                 jQuery('.factura_a').show();
         });
         
-        jQuery('#CajeroTipoB').on('change', function(){
+        jQuery('#CajeroTipoB').live('change', function(){
             jQuery('.factura_a').hide();
         });
     </script>
@@ -58,4 +64,8 @@
 
 
         </div>
-    
+    </div>
+
+
+
+</div>

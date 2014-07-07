@@ -12,7 +12,6 @@ Risto.Adition.cliente = function(jsonMap){
 Risto.Adition.cliente.prototype = {
     Descuento: ko.observable(null),
     porcentaje: ko.observable( undefined ),
-    tipofactura: ko.observable(null),
     
     tieneDescuento: function() {
         var porcentaje = undefined;
@@ -32,10 +31,12 @@ Risto.Adition.cliente.prototype = {
     },
     
     getTipoFactura: function(){
-        var tipo = 'R';
-        if ( this.tipofactura() && this.tipofactura() != '0' ) {
-            tipo = this.tipofactura();
+        var tipo = '';
+
+        if ( this.IvaResponsabilidad && this.IvaResponsabilidad.TipoFactura) {
+            tipo = this.IvaResponsabilidad.TipoFactura.name();    
         }
+        
         return tipo;
     },
     

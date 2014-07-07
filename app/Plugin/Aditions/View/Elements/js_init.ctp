@@ -19,6 +19,8 @@
             
         Risto.TITULO_MESA = "<?php echo Configure::read('Mesa.tituloMesa')?>";
         Risto.TITULO_MOZO = "<?php echo Configure::read('Mesa.tituloMozo')?>";
+
+        Risto.DEFAULT_TIPOFACTURA_NAME = "<?php echo Configure::read('Restaurante.tipofactura_name')?>";
         
         
         // intervalo en milisegundos en el que seran renovadas las mesas
@@ -45,8 +47,30 @@
         Risto.Adition.cubiertosObligatorios   = <?php echo Configure::read('Adicion.cantidadCubiertosObligatorio')?'true':'false'?>;
 
 
+      
+
+
+        <?php
+        // $vec['mesas'] = array('created'=> $mesas);
+        // $vec['time'] = $mesasLastUpdatedTime; // curren Unix server time
+        // $vec['modified'] = $modified;
+
+        $mesas = json_encode($mesas);
+        ?>
+
+        var jsonMesas = <?php echo $mesas; ?>;
+
+        //Risto.Adition.handleMesasRecibidas.created( jsonMesas );    
+
         // instancio el objeto adicion que sera el kernel de la app
-        Risto.Adition.adicionar.initialize();
-        
+
+        $(function(){
+            Risto.Adition.adicionar.initialize( jsonMesas );
+        });
+
+        // unset, free var
+        delete jsonMesas;
+
     -->
     </script>
+   

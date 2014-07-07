@@ -61,25 +61,27 @@
             
             <h3>Informes Fiscales</h3>
             <div class="ui-grid-a">
-                <div class="ui-block-a"><a href="#listado-mesas-cerradas" data-role="button" data-href="<?php echo $this->Html->url('/aditions/cashier/cierre_x');?>" data-direction="reverse">Imprimir informe "X"</a></div>
-                <div class="ui-block-b"><a href="#listado-mesas-cerradas" data-role="button" data-href="<?php echo $this->Html->url('/aditions/cashier/cierre_z');?>" data-direction="reverse">Imprimir informe "Z"</a></div>
+                <div class="ui-block-a">
+                    <a href="#listado-mesas-cerradas" 
+                       data-role="button" 
+                       data-href="<?php echo $this->Html->url('/printers/printers/cierre/x');?>" 
+                       data-direction="reverse">
+                       Imprimir informe "X"
+                   </a>
+                </div>
+                <div class="ui-block-b">
+                    <a href="#listado-mesas-cerradas" 
+                       data-role="button" 
+                       data-href="<?php echo $this->Html->url('/printers/printers/cierre/z');?>" 
+                       data-direction="reverse">
+                       Imprimir informe "Z"
+                   </a>
+               </div>
             </div>
-            <a href="<?php echo $this->Html->url('/aditions/cashier/nota_credito');?>" data-role="button">Nota de crédito</a>
-            
+            <a href="<?php echo $this->Html->url('/printers/printers/nota_credito');?>" data-role="button">Nota de crédito</a>
             
             <hr />
-            <h3>Impresoras</h3>
-            <div data-role="fieldcontain">
-                    <label for="slider">Imprimir Ticket al Cerrar:</label>
-                    <select name="slider" id="modo-k" data-role="slider">
-                            
-                            <option value="0" <?php echo Configure::read('Mesa.imprimePrimeroRemito')?'':'selected="selected"'?>>Si</option>
-                            <option value="1" <?php echo Configure::read('Mesa.imprimePrimeroRemito')?'selected="selected"':''?>>No</option>
-                    </select> 
-            </div>
-            <a href="#listado-mesas-cerradas" data-role="button" data-href="<?php echo $this->Html->url('/aditions/cashier/vaciar_cola_impresion_fiscal');?>" class="silent-click" >Vaciar cola de impresión</a>
-            
-            <hr />
+           
             
             <div class="ui-grid-a">
                 <div class="ui-block-a"><a href="#" data-rel="back" data-role="button">Cancelar</a></div>
@@ -574,11 +576,6 @@
 </div>  
 
 
-<?php $jsonMesas =  json_encode( $mesas );  ?>
-<script type="text/javascript">
-    // var jsonMesas = <?php echo $jsonMesas?>;
-
-    // $(function(){
-    //     Risto.Adition.handleMesasRecibidas.created( jsonMesas );
-    // });    
-</script>
+<?php 
+// $jsonMesas =  json_encode( $mesas );  
+?>

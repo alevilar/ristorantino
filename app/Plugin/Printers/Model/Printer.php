@@ -1,5 +1,9 @@
 <?php
 App::uses('PrintersAppModel', 'Printers.Model');
+
+App::uses('Printaitor', 'Printers.Utility');
+
+
 /**
  * Printer Model
  *
@@ -56,15 +60,10 @@ class Printer extends PrintersAppModel {
 	/**
 	 * @param int $id Printer Id
 	 */
-	public function imprimirCierreZ ( $id = null ) {
-		Printaitor::close('Z');
-		throw new NotImplementedException("imprimirCierreZ no implementado");
+	public function imprimirCierre ( $type = "X", $id = null ) {
+		Printaitor::close( $type );
 	}
 
-	public function imprimirCierreX ( $id = null ) {
-		Printaitor::close('X');
-		throw new NotImplementedException("imprimirCierreX no implementado");
-	}
 
 	public function imprimirTicket ( $id = null ) {
 		Printaitor::send($dataToView, $printerName, $viewName);
