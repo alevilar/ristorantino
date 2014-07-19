@@ -7,9 +7,9 @@ $this->Html
 	->addCrumb(__d('croogo', 'Users'), array('plugin' => 'users', 'controller' => 'users', 'action' => 'index'));
 
 if ($this->request->params['action'] == 'admin_edit') {
-	$this->Html->addCrumb($this->data['User']['name'], array(
+	$this->Html->addCrumb($this->request->data['User']['name'], array(
 		'plugin' => 'users', 'controller' => 'users', 'action' => 'edit',
-		$this->data['User']['id']
+		$this->request->data['User']['id']
 	));
 }
 

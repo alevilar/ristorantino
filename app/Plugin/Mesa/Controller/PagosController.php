@@ -7,12 +7,7 @@ class PagosController extends MesaAppController
 {
 
 	public $name = 'Pagos';
-	public $helpers = array('Html', 'Form','Number');
-
-   public $components = array(        
-    'Search.Prg',
-    'Paginator', 
-    );
+	
 
    public function index() {
     $this->Prg->commonProcess();

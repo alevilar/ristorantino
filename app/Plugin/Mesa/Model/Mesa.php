@@ -139,14 +139,14 @@ class Mesa extends MesaAppModel {
 	// enctonces debo eliminar todos los pagos realizados para que no me los duplique
 	// cuando la vuelva a cobrar
 	 private function __deletePagosSiReabre () {
-		 if ( !empty($this->data['Mesa']['id']) 
-			 && !empty($this->data['Mesa']['estado_id'])
-			 && $this->data['Mesa']['estado_id'] != MESA_COBRADA
+		 if ( !empty($this->request->data['Mesa']['id']) 
+			 && !empty($this->request->data['Mesa']['estado_id'])
+			 && $this->request->data['Mesa']['estado_id'] != MESA_COBRADA
 			 ) {               
-			 if ( $this->estaCobrada($this->data['Mesa']['id'], $force_db = true) ) {
+			 if ( $this->estaCobrada($this->request->data['Mesa']['id'], $force_db = true) ) {
 				
 				 $this->Pago->deleteAll(array(
-				  'Pago.mesa_id' => $this->data['Mesa']['id']
+				  'Pago.mesa_id' => $this->request->data['Mesa']['id']
 				  ));
 				 
 			 }
@@ -416,8 +416,8 @@ function calcular_subtotal($id = null){
 	 */
 // 	function numero_de_mesa_existente($numero_mesa = 0){
 // 		if($numero_mesa == 0){
-//             if(!empty($this->data['Mesa']['numero'])){
-//                $numero_mesa = $this->data['Mesa']['numero'];
+//             if(!empty($this->request->data['Mesa']['numero'])){
+//                $numero_mesa = $this->request->data['Mesa']['numero'];
 //            }
 //        }		
 
@@ -539,8 +539,8 @@ function calcular_subtotal($id = null){
 		//         $this->id = $id;
 		//     }
 		//     // si lo tengo en memoria primero busco por aca
-		//     if (!empty($this->data[$this->name]['estado_id'])){
-		//         return $this->data[$this->name]['estado_id'] == MESA_CERRADA;
+		//     if (!empty($this->request->data[$this->name]['estado_id'])){
+		//         return $this->request->data[$this->name]['estado_id'] == MESA_CERRADA;
 		//     }
 		//     // lo busco en BBDD        
 		//     $ret = $this->find('count', array(
@@ -568,8 +568,8 @@ function calcular_subtotal($id = null){
 				$this->id = $id;
 			}
 			
-			if ( !empty($this->data[$this->name]['estado_id']) ){
-				$ret = $this->data[$this->name]['estado_id'] == MESA_COBRADA;
+			if ( !empty($this->request->data[$this->name]['estado_id']) ){
+				$ret = $this->request->data[$this->name]['estado_id'] == MESA_COBRADA;
 			}
 			
 			if ( $force_db) {
@@ -599,8 +599,8 @@ function calcular_subtotal($id = null){
 		//         $this->id = $id;
 		//     }
 		//     // si lo tengo en memoria primero busco por aca
-		//     if ( !empty($this->data[$this->name]['estado_id']) ){
-		//         return $this->data[$this->name]['estado_id'] == MESA_ABIERTA;
+		//     if ( !empty($this->request->data[$this->name]['estado_id']) ){
+		//         return $this->request->data[$this->name]['estado_id'] == MESA_ABIERTA;
 		//     }
 		//     // lo busco en BBDD        
 		//     $ret = $this->find('count', array(

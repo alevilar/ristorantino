@@ -9,11 +9,6 @@ class MesasController extends MesaAppController {
 
     var $name = 'Mesas';
 
-    public $components = array(     
-        'RequestHandler',  
-        'Search.Prg',
-        'Paginator', 
-        );
 
     public $paginate = array(
         'order' => array('Mesa.created' => 'asc'),
@@ -30,7 +25,7 @@ class MesasController extends MesaAppController {
     
     public function index() {
         $this->Prg->commonProcess();
-        $conds = $this->Mesa->parseCriteria( $this->Prg->parsedParams() );
+        $conds = $this->Egreso->parseCriteria( $this->Prg->parsedParams() );
 
         $this->Paginator->settings['conditions'] = $conds;
         $this->Paginator->settings['contain'] = array(

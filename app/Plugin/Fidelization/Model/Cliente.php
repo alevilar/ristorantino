@@ -235,9 +235,9 @@ class Cliente extends FidelizationAppModel {
 
 
     function cuit_o_cuil_valido_si_tipodoc_es_cuit() {
-            if(!empty($this->data['Cliente']['tipo_documento_id'])) {
-                if($this->data['Cliente']['tipo_documento_id'] == 1) {
-                    $cuit = $this->data['Cliente']['nrodocumento'];
+            if(!empty($this->request->data['Cliente']['tipo_documento_id'])) {
+                if($this->request->data['Cliente']['tipo_documento_id'] == 1) {
+                    $cuit = $this->request->data['Cliente']['nrodocumento'];
 
                     $coeficiente[0]=5;
                     $coeficiente[1]=4;
@@ -294,10 +294,10 @@ class Cliente extends FidelizationAppModel {
     
     
     function tipodocumento_valido(){
-        if(!empty($this->data['Cliente']['tipofactura'])){
-            if($this->data['Cliente']['tipofactura'] == 'A'){
+        if(!empty($this->request->data['Cliente']['tipofactura'])){
+            if($this->request->data['Cliente']['tipofactura'] == 'A'){
                 // tiene que ser un CUIT si o si para hacer factura A
-                if( $this->data['Cliente']['tipo_documento_id'] == 1){  // '-'
+                if( $this->request->data['Cliente']['tipo_documento_id'] == 1){  // '-'
                         return true;
                 }
                 else return false;
@@ -309,13 +309,13 @@ class Cliente extends FidelizationAppModel {
     
     
     function responsabilidad_iva_valido(){
-        if(!empty($this->data['Cliente']['tipofactura'])){
-            if($this->data['Cliente']['tipofactura'] == 'A'){
-                if( $this->data['Cliente']['iva_responsabilidad_id'] == 1 || // 'I'
-                    $this->data['Cliente']['iva_responsabilidad_id'] == 2  // 'E'
-                    //$this->data['Cliente']['iva_responsabilidad_id'] == 3 || // 'A'
-                    //$this->data['Cliente']['iva_responsabilidad_id'] == 4 || // 'C'
-                    //$this->data['Cliente']['iva_responsabilidad_id'] == 5    // 'T'
+        if(!empty($this->request->data['Cliente']['tipofactura'])){
+            if($this->request->data['Cliente']['tipofactura'] == 'A'){
+                if( $this->request->data['Cliente']['iva_responsabilidad_id'] == 1 || // 'I'
+                    $this->request->data['Cliente']['iva_responsabilidad_id'] == 2  // 'E'
+                    //$this->request->data['Cliente']['iva_responsabilidad_id'] == 3 || // 'A'
+                    //$this->request->data['Cliente']['iva_responsabilidad_id'] == 4 || // 'C'
+                    //$this->request->data['Cliente']['iva_responsabilidad_id'] == 5    // 'T'
                     ){  
                         return true;
                     }

@@ -1,4 +1,4 @@
-<h2 class="hidden-desktop"><?php echo __d('croogo', 'Reset password'); ?>: <?php echo $this->data['User']['username']; ?></h2>
+<h2 class="hidden-desktop"><?php echo __d('croogo', 'Reset password'); ?>: <?php echo $this->request->data['User']['username']; ?></h2>
 <?php
 	$this->Html
 		->addCrumb($this->Html->icon('home'), '/admin')

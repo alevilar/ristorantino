@@ -193,6 +193,7 @@ class PrgComponent extends Component {
 			$args = $this->controller->request->query;
 		}
 
+
 		$parsedParams = array();
 		$data = array($model => array());
 		foreach ($this->controller->presetVars as $field) {
@@ -355,7 +356,6 @@ class PrgComponent extends Component {
 		extract(Hash::merge($defaults, $options));
 
 		$paramType = strtolower($paramType);
-
 		if (empty($modelName)) {
 			$modelName = $this->controller->modelClass;
 		}

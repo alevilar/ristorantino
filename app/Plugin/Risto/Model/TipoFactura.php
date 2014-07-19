@@ -2,7 +2,6 @@
 
 App::uses('RistoAppModel', 'Risto.Model');
 
-
 class TipoFactura extends RistoAppModel {
 
 	public $name = 'TipoFactura';
@@ -56,7 +55,7 @@ class TipoFactura extends RistoAppModel {
 	 */
 	public $hasMany = array(
 		'IvaResponsabilidad' => array(
-			'className' => 'IvaResponsabilidad',
+			'className' => 'Risto.IvaResponsabilidad',
 			'foreignKey' => 'tipo_factura_id',
 			'dependent' => false,
 			'conditions' => '',

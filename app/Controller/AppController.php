@@ -33,9 +33,10 @@ App::uses('Controller', 'Controller');
 class AppController extends Controller {
     public $helpers = array(
         'Html' => array('className' => 'Bs3Html'),
-        'Form' => array('className' => 'Bs3Form'),
+        'Form' => array('className' => 'PxForm'),
         'Session',
         'Paginator',
+        'Number',
     );
     public $components = array(
         'Auth',
@@ -44,16 +45,19 @@ class AppController extends Controller {
         'RequestHandler',
         'Session',
         'Cookie',
-        'DebugKit.Toolbar',
+        'Search.Prg' => array(
+            'presetForm' => array(
+                'paramType' => 'querystring'
+                )
+                
+            ),
+        'Paginator', 
         
+        'DebugKit.Toolbar',
     );
 
     public function beforeFilter()
-    {
-
-        Configure::read('Mesa.tituloMozo');
-        Configure::read('Restaurante.razon_social');
-
+    {       
         
         $this->Auth->allow();
    //     $this->Auth->authorize = array('Actions');

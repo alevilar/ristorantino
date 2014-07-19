@@ -193,8 +193,8 @@ class User extends UsersAppModel {
  * @return boolean
  */
 	public function beforeSave($options = array()) {
-		if (!empty($this->data['User']['password'])) {
-			$this->data['User']['password'] = AuthComponent::password($this->data['User']['password']);
+		if (!empty($this->request->data['User']['password'])) {
+			$this->request->data['User']['password'] = AuthComponent::password($this->request->data['User']['password']);
 		}
 		return true;
 	}
@@ -217,8 +217,8 @@ class User extends UsersAppModel {
  * @return boolean
  */
 	public function validIdentical($check) {
-		if (isset($this->data['User']['password'])) {
-			if ($this->data['User']['password'] != $check['verify_password']) {
+		if (isset($this->request->data['User']['password'])) {
+			if ($this->request->data['User']['password'] != $check['verify_password']) {
 				return __d('croogo', 'Passwords do not match. Please, try again.');
 			}
 		}

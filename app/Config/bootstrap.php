@@ -123,15 +123,6 @@ Configure::config('ini', new IniReader(ROOT . "/" . APP_DIR . '/Config/'));
 Configure::load('coqus_config', 'ini');
 
 
-// App::uses('PrinterHelperSkel', 'PrinterEngine.Lib');
-// App::uses('FiscalPrinterHelper', 'PrinterEngine.Lib');
-
-
-CakePlugin::load('Acl', array('bootstrap' => true));
-
-CakePlugin::load('Aditions', array( 'bootstrap' => true, 'routes' => true ));
-
-
 // Loads all plugins at once
 CakePlugin::loadAll();
 
@@ -139,6 +130,17 @@ CakePlugin::loadAll();
 //    'Adition',
 //    'Stats',
 // )); 
+
+
+
+
+CakePlugin::load('Acl', array('bootstrap' => true));
+
+CakePlugin::load('Aditions', array( 'bootstrap' => true, 'routes' => true ));
+CakePlugin::load('Account', array( 'bootstrap' => true, 'routes' => true ));
+
+
+
 
 CakePlugin::load('DebugKit');
 CakePlugin::load('Search');

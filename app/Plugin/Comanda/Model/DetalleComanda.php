@@ -83,7 +83,7 @@ class DetalleComanda extends ComandaAppModel {
 	public function afterSave ($created, $options = array() ) {
 		$dMesa = $this->find('first', array(
                     'contain' => array('Comanda(mesa_id)'),
-                    'conditions' => array('DetalleComanda.id' => $this->data['DetalleComanda']['id'])
+                    'conditions' => array('DetalleComanda.id' => $this->request->data['DetalleComanda']['id'])
                 ));
         $this->Comanda->Mesa->id = $dMesa['Comanda']['mesa_id'];
         $this->Comanda->Mesa->saveField('modified', date('Y-m-d H:i:s'), false);
