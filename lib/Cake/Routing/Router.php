@@ -636,7 +636,7 @@ class Router {
 /**
  * Parses a file extension out of a URL, if Router::parseExtensions() is enabled.
  *
- * @param string $url
+ * @param string $url URL.
  * @return array Returns an array containing the altered URL and the parsed extension.
  */
 	protected static function _parseExtension($url) {
@@ -700,10 +700,10 @@ class Router {
 	}
 
 /**
- * Get the either the current request object, or the first one.
+ * Gets the current request object, or the first one.
  *
- * @param boolean $current Whether you want the request from the top of the stack or the first one.
- * @return CakeRequest or null.
+ * @param boolean $current True to get the current request object, or false to get the first one.
+ * @return CakeRequest|null Null if stack is empty.
  */
 	public static function getRequest($current = false) {
 		if ($current) {

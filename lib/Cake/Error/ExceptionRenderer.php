@@ -92,7 +92,8 @@ class ExceptionRenderer {
 		$this->controller = $this->_getController($exception);
 
 		if (method_exists($this->controller, 'appError')) {
-			return $this->controller->appError($exception);
+			$this->controller->appError($exception);
+			return;
 		}
 		$method = $template = Inflector::variable(str_replace('Exception', '', get_class($exception)));
 		$code = $exception->getCode();
@@ -179,7 +180,7 @@ class ExceptionRenderer {
 /**
  * Generic handler for the internal framework errors CakePHP can generate.
  *
- * @param CakeException $error
+ * @param CakeException $error The exception to render.
  * @return void
  */
 	protected function _cakeError(CakeException $error) {
@@ -201,7 +202,7 @@ class ExceptionRenderer {
 /**
  * Convenience method to display a 400 series page.
  *
- * @param Exception $error
+ * @param Exception $error The exception to render.
  * @return void
  */
 	public function error400($error) {
@@ -224,7 +225,7 @@ class ExceptionRenderer {
 /**
  * Convenience method to display a 500 page.
  *
- * @param Exception $error
+ * @param Exception $error The exception to render.
  * @return void
  */
 	public function error500($error) {
@@ -248,7 +249,7 @@ class ExceptionRenderer {
 /**
  * Convenience method to display a PDOException.
  *
- * @param PDOException $error
+ * @param PDOException $error The exception to render.
  * @return void
  */
 	public function pdoError(PDOException $error) {

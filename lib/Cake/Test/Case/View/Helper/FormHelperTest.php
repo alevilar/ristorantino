@@ -1009,7 +1009,7 @@ class FormHelperTest extends CakeTestCase {
 
 		$result = $this->Form->secure($this->Form->fields);
 
-		$hash = 'c9118120e680a7201b543f562e5301006ccfcbe2%3AAddresses.0.id%7CAddresses.1.id';
+		$hash = 'a3b9b2ba1cb688838f92818a5970e17dd7943a78%3AAddresses.0.id%7CAddresses.1.id';
 
 		$expected = array(
 			'div' => array('style' => 'display:none;'),
@@ -1074,7 +1074,7 @@ class FormHelperTest extends CakeTestCase {
 		$this->Form->input('Addresses.1.phone');
 
 		$result = $this->Form->secure($this->Form->fields);
-		$hash = '629b6536dcece48aa41a117045628ce602ccbbb2%3AAddresses.0.id%7CAddresses.1.id';
+		$hash = '5c9cadf9da008cc444d3960b481391a425a5d979%3AAddresses.0.id%7CAddresses.1.id';
 
 		$expected = array(
 			'div' => array('style' => 'display:none;'),
@@ -1124,7 +1124,7 @@ class FormHelperTest extends CakeTestCase {
 
 		$result = $this->Form->secure($expected);
 
-		$hash = '2981c38990f3f6ba935e6561dc77277966fabd6d%3AAddresses.id';
+		$hash = '40289bd07811587887ff56585a8526ff9da59d7a%3AAddresses.id';
 		$expected = array(
 			'div' => array('style' => 'display:none;'),
 			array('input' => array(
@@ -1247,7 +1247,7 @@ class FormHelperTest extends CakeTestCase {
 		);
 		$this->assertEquals($expected, $result);
 
-		$hash = 'bd7c4a654e5361f9a433a43f488ff9a1065d0aaf%3AUserForm.hidden%7CUserForm.stuff';
+		$hash = '6014b4e1c4f39eb62389712111dbe6435bec66cb%3AUserForm.hidden%7CUserForm.stuff';
 
 		$result = $this->Form->secure($this->Form->fields);
 		$expected = array(
@@ -1294,7 +1294,7 @@ class FormHelperTest extends CakeTestCase {
  *
  * @return void
  */
-	public function testFormSecuredFileInput() {
+	public function testSecuredFileInput() {
 		$this->Form->request['_Token'] = array('key' => 'testKey');
 		$this->assertEquals(array(), $this->Form->fields);
 
@@ -1311,7 +1311,7 @@ class FormHelperTest extends CakeTestCase {
  *
  * @return void
  */
-	public function testFormSecuredMultipleSelect() {
+	public function testSecuredMultipleSelect() {
 		$this->Form->request['_Token'] = array('key' => 'testKey');
 		$this->assertEquals(array(), $this->Form->fields);
 		$options = array('1' => 'one', '2' => 'two');
@@ -1330,7 +1330,7 @@ class FormHelperTest extends CakeTestCase {
  *
  * @return void
  */
-	public function testFormSecuredRadio() {
+	public function testSecuredRadio() {
 		$this->Form->request['_Token'] = array('key' => 'testKey');
 		$this->assertEquals(array(), $this->Form->fields);
 		$options = array('1' => 'option1', '2' => 'option2');
@@ -1345,7 +1345,7 @@ class FormHelperTest extends CakeTestCase {
  *
  * @return void
  */
-	public function testFormSecuredAndDisabledNotAssoc() {
+	public function testSecuredAndDisabledNotAssoc() {
 		$this->Form->request['_Token'] = array('key' => 'testKey');
 
 		$this->Form->select('Model.select', array(1, 2), array('disabled'));
@@ -1367,7 +1367,7 @@ class FormHelperTest extends CakeTestCase {
  *
  * @return void
  */
-	public function testFormSecuredAndDisabled() {
+	public function testSecuredAndDisabled() {
 		$this->Form->request['_Token'] = array('key' => 'testKey');
 
 		$this->Form->checkbox('Model.checkbox', array('disabled' => true));
@@ -1387,6 +1387,83 @@ class FormHelperTest extends CakeTestCase {
 			'Model.radio' => ''
 		);
 		$this->assertEquals($expected, $this->Form->fields);
+	}
+
+/**
+ * Test that only the path + query elements of a form's URL show up in their hash.
+ *
+ * @return void
+ */
+	public function testSecuredFormUrlIgnoresHost() {
+		$this->Form->request['_Token'] = array('key' => 'testKey');
+
+		$expected = '0ff0c85cd70584d8fd18fa136846d22c66c21e2d%3A';
+		$this->Form->create('Address', array(
+			'url' => array('controller' => 'articles', 'action' => 'view', 1, '?' => array('page' => 1))
+		));
+		$result = $this->Form->secure();
+		$this->assertContains($expected, $result);
+
+		$this->Form->create('Address', array('url' => 'http://localhost/articles/view/1?page=1'));
+		$result = $this->Form->secure();
+		$this->assertContains($expected, $result, 'Full URL should only use path and query.');
+
+		$this->Form->create('Address', array('url' => '/articles/view/1?page=1'));
+		$result = $this->Form->secure();
+		$this->assertContains($expected, $result, 'URL path + query should work.');
+
+		$this->Form->create('Address', array('url' => '/articles/view/1'));
+		$result = $this->Form->secure();
+		$this->assertNotContains($expected, $result, 'URL is different');
+	}
+
+/**
+ * Ensure named parameters work correctly with hash generation.
+ *
+ * @return void
+ */
+	public function testSecuredFormUrlWorksWithNamedParameter() {
+		$this->Form->request['_Token'] = array('key' => 'testKey');
+
+		$expected = 'c890c5f041b1d83d1610dee8f52cd257df7ce618%3A';
+		$this->Form->create('Address', array(
+			'url' => array('controller' => 'articles', 'action' => 'view', 1, 'type' => 'red')
+		));
+		$result = $this->Form->secure();
+		$this->assertContains($expected, $result);
+	}
+
+/**
+ * Test that URL, HTML and identifer show up in their hashs.
+ *
+ * @return void
+ */
+	public function testSecuredFormUrlHasHtmlAndIdentifer() {
+		$this->Form->request['_Token'] = array('key' => 'testKey');
+
+		$expected = 'ece0693fb1b19ca116133db1832ac29baaf41ce5%3A';
+		$this->Form->create('Address', array(
+			'url' => array(
+				'controller' => 'articles',
+				'action' => 'view',
+				'?' => array(
+					'page' => 1,
+					'limit' => 10,
+					'html' => '<>"',
+				),
+				'#' => 'result',
+			),
+		));
+		$result = $this->Form->secure();
+		$this->assertContains($expected, $result);
+
+		$this->Form->create('Address', array('url' => 'http://localhost/articles/view?page=1&limit=10&html=%3C%3E%22#result'));
+		$result = $this->Form->secure();
+		$this->assertContains($expected, $result, 'Full URL should only use path and query.');
+
+		$this->Form->create('Address', array('url' => '/articles/view?page=1&limit=10&html=%3C%3E%22#result'));
+		$result = $this->Form->secure();
+		$this->assertContains($expected, $result, 'URL path + query should work.');
 	}
 
 /**
@@ -4862,7 +4939,7 @@ class FormHelperTest extends CakeTestCase {
  */
 	public function testSelectMultipleWithDisabledElements() {
 		$options = array(1 => 'One', 2 => 'Two', '3' => 'Three', '3x' => 'Stringy');
-		$disabled = array(2, 3);
+		$disabled = array(1);
 		$result = $this->Form->select('Contact.multiple', $options, array('multiple' => 'multiple', 'disabled' => $disabled));
 		$expected = array(
 			'input' => array(
@@ -4871,13 +4948,13 @@ class FormHelperTest extends CakeTestCase {
 			'select' => array(
 				'name' => 'data[Contact][multiple][]', 'multiple' => 'multiple', 'id' => 'ContactMultiple'
 			),
-			array('option' => array('value' => '1')),
+			array('option' => array('value' => '1', 'disabled' => 'disabled')),
 			'One',
 			'/option',
-			array('option' => array('value' => '2', 'disabled' => 'disabled')),
+			array('option' => array('value' => '2')),
 			'Two',
 			'/option',
-			array('option' => array('value' => '3', 'disabled' => 'disabled')),
+			array('option' => array('value' => '3')),
 			'Three',
 			'/option',
 			array('option' => array('value' => '3x')),
@@ -7669,6 +7746,40 @@ class FormHelperTest extends CakeTestCase {
 	}
 
 /**
+ * Test that security hashes for postLink include the url.
+ *
+ * @return void
+ */
+	public function testPostLinkSecurityHash() {
+		$hash = Security::hash(
+			'/posts/delete/1' .
+			serialize(array()) .
+			'' .
+			Configure::read('Security.salt')
+		);
+		$hash .= '%3A';
+		$this->Form->request->params['_Token']['key'] = 'test';
+
+		$result = $this->Form->postLink('Delete', '/posts/delete/1');
+		$this->assertTags($result, array(
+			'form' => array(
+				'method' => 'post', 'action' => '/posts/delete/1',
+				'name', 'id', 'style' => 'display:none;'
+			),
+			array('input' => array('type' => 'hidden', 'name' => '_method', 'value' => 'POST')),
+			array('input' => array('type' => 'hidden', 'name' => 'data[_Token][key]', 'value' => 'test', 'id')),
+			'div' => array('style' => 'display:none;'),
+			array('input' => array('type' => 'hidden', 'name' => 'data[_Token][fields]', 'value' => $hash, 'id')),
+			array('input' => array('type' => 'hidden', 'name' => 'data[_Token][unlocked]', 'value' => '', 'id')),
+			'/div',
+			'/form',
+			'a' => array('href' => '#', 'onclick' => 'preg:/document\.post_\w+\.submit\(\); event\.returnValue = false; return false;/'),
+			'Delete',
+			'/a'
+		));
+	}
+
+/**
  * Test using postLink with N dimensional data.
  *
  * @return void
@@ -8475,6 +8586,26 @@ class FormHelperTest extends CakeTestCase {
 			'input' => array('type' => 'hidden', 'name' => '_method', 'value' => 'POST'),
 			'/div'
 		);
+		$this->assertTags($result, $expected);
+	}
+
+/**
+ * test that create() works without raising errors with a Mock Model
+ *
+ * @return void
+ */
+	public function testCreateNoErrorsWithMockModel() {
+		$encoding = strtolower(Configure::read('App.encoding'));
+		$ContactMock = $this->getMockBuilder('Contact')
+				->disableOriginalConstructor()
+				->getMock();
+		ClassRegistry::removeObject('Contact');
+		ClassRegistry::addObject('Contact', $ContactMock);
+		$result = $this->Form->create('Contact', array('type' => 'GET'));
+		$expected = array('form' => array(
+			'id' => 'ContactAddForm', 'method' => 'get', 'action' => '/contacts/add',
+			'accept-charset' => $encoding
+		));
 		$this->assertTags($result, $expected);
 	}
 

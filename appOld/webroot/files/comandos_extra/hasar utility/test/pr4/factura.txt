@@ -1,10 +1,0 @@
-bJuan Perez20183697308IC
-@AT
-ADescripcion adicional ... 0
-BArticulo Nro 15.000100.0018.00M0.000B
-ADescripcion adicional ... 0
-BArticulo Nro 24.00050.0021.00M0.000B
-`*.*Percepcion A20.00
-`*.*Percepcion B15.00
-DPago Nro 12222.00T0
-E

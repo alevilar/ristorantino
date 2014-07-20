@@ -252,6 +252,13 @@ class View extends Object {
 	protected $_paths = array();
 
 /**
+ * Holds an array of plugin paths.
+ *
+ * @var array
+ */
+	protected $_pathsForPlugin = array();
+
+/**
  * The names of views and their parents used with View::extend();
  *
  * @var array
@@ -381,13 +388,12 @@ class View extends Object {
  *   If an array, the following keys can be used:
  *   - `config` - Used to store the cached element in a custom cache configuration.
  *   - `key` - Used to define the key used in the Cache::write(). It will be prefixed with `element_`
- * - `plugin` - Load an element from a specific plugin. This option is deprecated, see below.
+ * - `plugin` - (deprecated!) Load an element from a specific plugin. This option is deprecated, and
+ *              will be removed in CakePHP 3.0. Use `Plugin.element_name` instead.
  * - `callbacks` - Set to true to fire beforeRender and afterRender helper callbacks for this element.
  *   Defaults to false.
  * - `ignoreMissing` - Used to allow missing elements. Set to true to not trigger notices.
  * @return string Rendered Element
- * @deprecated The `$options['plugin']` is deprecated and will be removed in CakePHP 3.0. Use
- *   `Plugin.element_name` instead.
  */
 	public function element($name, $data = array(), $options = array()) {
 		$file = $plugin = null;
@@ -591,8 +597,7 @@ class View extends Object {
 	}
 
 /**
- * Returns the contents of the given View variable or a block.
- * Blocks are checked before view variables.
+ * Returns the contents of the given View variable.
  *
  * @param string $var The view var you want the contents of.
  * @param mixed $default The default/fallback content of $var.
@@ -930,7 +935,7 @@ class View extends Object {
 /**
  * Sandbox method to evaluate a template / view script in.
  *
- * @param string $viewFn Filename of the view
+ * @param string $viewFile Filename of the view
  * @param array $dataForView Data to include in rendered view.
  *    If empty the current View::$viewVars will be used.
  * @return string Rendered output
@@ -1112,8 +1117,13 @@ class View extends Object {
  * @return array paths
  */
 	protected function _paths($plugin = null, $cached = true) {
-		if ($plugin === null && $cached === true && !empty($this->_paths)) {
-			return $this->_paths;
+		if ($cached === true) {
+			if ($plugin === null && !empty($this->_paths)) {
+				return $this->_paths;
+			}
+			if ($plugin !== null && isset($this->_pathsForPlugin[$plugin])) {
+				return $this->_pathsForPlugin[$plugin];
+			}
 		}
 		$paths = array();
 		$viewPaths = App::path('View');
@@ -1145,7 +1155,7 @@ class View extends Object {
 		}
 		$paths = array_merge($paths, $corePaths);
 		if ($plugin !== null) {
-			return $paths;
+			return $this->_pathsForPlugin[$plugin] = $paths;
 		}
 		return $this->_paths = $paths;
 	}

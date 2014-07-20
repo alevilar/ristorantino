@@ -8,8 +8,6 @@ App::uses('AccountAppController', 'Account.Controller');
 class CierresController extends AccountAppController
 {
 
-    public $uses = 'Account.Cierre';
-    
             
     function index()
     {
@@ -36,8 +34,8 @@ class CierresController extends AccountAppController
     }
     
     function view( $id ) {
-
-        if (empty($id)) {
+        debug( $this->RequestHandler->ext );
+        if ( empty($id) ) {
             throw new Exception("Se debe pasar un ID como parámetro");            
         }
         
@@ -49,22 +47,12 @@ class CierresController extends AccountAppController
         );
 
         $gastos = $this->Cierre->Gasto->find('all', $ops);
-        $cierre = $this->Cierre->read(null, $id);
-        $this->set('tipo_impuestos', $this->Cierre->Gasto->TipoImpuesto->find('list'));
-        $this->set(compact('gastos', 'cierre'));       
-
-        
-        if ($this->params['url']['ext'] == 'xls' ) {
-            // es excel
+        $cierre = $this->Cierre->read( null, $id );
+        $tipo_impuestos = $this->Cierre->Gasto->TipoImpuesto->find('list');
+        $this->set(compact('gastos', 'cierre', 'tipo_impuestos'));       
             
-            $this->layout = 'xls';            
-            $this->render( '/gastos/xls/history' );
-        } else {
-
-        }
     }
 
 
 }
 
-?>

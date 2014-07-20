@@ -112,11 +112,6 @@ CakeLog::config('error', array(
 
 
 
-
-
-
-
-
 // Read configuration file from ini file
 App::uses('IniReader', 'Configure');
 Configure::config('ini', new IniReader(ROOT . "/" . APP_DIR . '/Config/'));
@@ -124,7 +119,7 @@ Configure::load('coqus_config', 'ini');
 
 
 // Loads all plugins at once
-CakePlugin::loadAll();
+
 
 // CakePlugin::loadAll(array(
 //    'Adition',
@@ -133,17 +128,6 @@ CakePlugin::loadAll();
 
 
 
-
-CakePlugin::load('Acl', array('bootstrap' => true));
-
-CakePlugin::load('Aditions', array( 'bootstrap' => true, 'routes' => true ));
-CakePlugin::load('Account', array( 'bootstrap' => true, 'routes' => true ));
-
-
-
-
-CakePlugin::load('DebugKit');
-CakePlugin::load('Search');
 
 //reglas en español
 
@@ -173,10 +157,26 @@ Inflector::rules('plural', array(
         'config_category' => 'config_categories',
         'pquery_category' => 'pquery_categories',
         'habitación' => 'habitaciones',
+        'cierre' => 'cierres',
     ),
     'uninflected' => array()
         )
 );
+
+
+
+CakePlugin::loadAll();
+
+CakePlugin::load('Acl', array('bootstrap' => true));
+
+CakePlugin::load('Aditions', array( 'bootstrap' => true, 'routes' => true ));
+CakePlugin::load('Account', array( 'bootstrap' => true, 'routes' => true ));
+
+
+
+CakePlugin::load('DebugKit');
+CakePlugin::load('Search');
+
 
 
 

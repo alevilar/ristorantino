@@ -1,10 +1,0 @@
-@TT
-ATexto Fiscal0
-BPlu Nro 11.000100.0018.00M0.111T
-BPlu Nro 21.000120.0018.00M0.111T
-BPlu Nro 31.000140.0018.00M0.111T
-BPlu Nro 41.000160.0018.00M0.111T
-BPlu Nro 51.000180.0018.00M0.111T
-CP 0
-DPago Nro 12222.00T0
-E

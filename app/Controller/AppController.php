@@ -31,16 +31,23 @@ App::uses('Controller', 'Controller');
  * @link		http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
 class AppController extends Controller {
+    
     public $helpers = array(
-        'Html' => array('className' => 'Bs3Html'),
-        'Form' => array('className' => 'PxForm'),
+        'Html' => array(
+            'className' => 'Bs3Html'
+            ),
+        'Form' => array(
+            'className' => 'PxForm'
+            ),
         'Session',
         'Paginator',
         'Number',
     );
+
     public $components = array(
         'Auth',
         'Acl',
+        'Paginator',
         'Configurator',
         'RequestHandler',
         'Session',
@@ -49,15 +56,13 @@ class AppController extends Controller {
             'presetForm' => array(
                 'paramType' => 'querystring'
                 )
-                
             ),
-        'Paginator', 
         
         'DebugKit.Toolbar',
     );
 
     public function beforeFilter()
-    {       
+    {
         
         $this->Auth->allow();
    //     $this->Auth->authorize = array('Actions');

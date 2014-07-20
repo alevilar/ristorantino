@@ -203,7 +203,7 @@ class ConsoleOutput {
 /**
  * Replace tags with color codes.
  *
- * @param array $matches.
+ * @param array $matches An array of matches to replace.
  * @return string
  */
 	protected function _replaceTags($matches) {
@@ -295,7 +295,9 @@ class ConsoleOutput {
  * Clean up and close handles
  */
 	public function __destruct() {
-		fclose($this->_output);
+		if (is_resource($this->_output)) {
+			fclose($this->_output);
+		}
 	}
 
 }

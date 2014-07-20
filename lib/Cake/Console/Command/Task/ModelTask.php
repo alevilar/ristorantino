@@ -401,7 +401,7 @@ class ModelTask extends BakeTask {
  *
  * @param string $fieldName Name of field to be validated.
  * @param array $metaData metadata for field
- * @param string $primaryKey
+ * @param string $primaryKey The primary key field.
  * @return array Array of validation for the field.
  */
 	public function fieldValidation($fieldName, $metaData, $primaryKey = 'id') {
@@ -510,7 +510,7 @@ class ModelTask extends BakeTask {
 /**
  * Handles associations
  *
- * @param Model $model
+ * @param Model $model The model object
  * @return array Associations
  */
 	public function doAssociations($model) {
@@ -562,7 +562,7 @@ class ModelTask extends BakeTask {
 /**
  * Handles behaviors
  *
- * @param Model $model
+ * @param Model $model The model object.
  * @return array Behaviors
  */
 	public function doActsAs($model) {
@@ -632,13 +632,13 @@ class ModelTask extends BakeTask {
 			}
 			foreach ($tempFieldNames as $fieldName) {
 				$assoc = false;
-				if ($fieldName != $model->primaryKey && $fieldName == $foreignKey) {
+				if ($fieldName !== $model->primaryKey && $fieldName === $foreignKey) {
 					$assoc = array(
 						'alias' => $tempOtherModel->name,
 						'className' => $tempOtherModel->name,
 						'foreignKey' => $fieldName
 					);
-				} elseif ($otherTable == $model->table && $fieldName === 'parent_id') {
+				} elseif ($otherTable === $model->table && $fieldName === 'parent_id') {
 					$assoc = array(
 						'alias' => 'Child' . $model->name,
 						'className' => $model->name,

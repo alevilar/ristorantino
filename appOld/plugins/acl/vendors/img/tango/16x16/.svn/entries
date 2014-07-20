@@ -1,126 +1,0 @@
-10
-
-dir
-1258
-https://regetp01.googlecode.com/svn/trunk/app/plugins/acl/vendors/img/tango/16x16
-https://regetp01.googlecode.com/svn
-
-
-
-2010-07-01T16:41:15.435729Z
-494
-pablo.de.alpha
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-e1a5d64a-0cb6-11de-a6e9-d320b29efae0
-
-actions
-dir
-
-devices
-dir
-
-animations
-dir
-
-Makefile.in
-file
-
-
-
-
-2009-02-14T16:57:03.000000Z
-2478d88eb54a500bb153a7050827bf43
-2010-07-01T16:41:15.435729Z
-494
-pablo.de.alpha
-has-props
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-16047
-
-status
-dir
-
-apps
-dir
-
-emblems
-dir
-
-categories
-dir
-
-places
-dir
-
-Makefile.am
-file
-
-
-
-
-2009-02-14T16:57:03.000000Z
-395286a7a99f6231dd174473ba9a995d
-2010-07-01T16:41:15.435729Z
-494
-pablo.de.alpha
-has-props
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-94
-
-mimetypes
-dir
-
-emotes
-dir
-

@@ -7,7 +7,6 @@ App::uses('AccountAppModel', 'Account.Model');
  */
 class Cierre extends AccountAppModel {
 
-    public $name = 'Cierre';
     
     public $order = array('Cierre.created DESC');
         

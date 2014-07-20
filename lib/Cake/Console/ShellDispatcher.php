@@ -317,12 +317,13 @@ class ShellDispatcher {
 /**
  * Parses out the paths from from the argv
  *
- * @param array $args
+ * @param array $args The argv to parse.
  * @return void
  */
 	protected function _parsePaths($args) {
 		$parsed = array();
 		$keys = array('-working', '--working', '-app', '--app', '-root', '--root');
+		$args = (array)$args;
 		foreach ($keys as $key) {
 			while (($index = array_search($key, $args)) !== false) {
 				$keyname = str_replace('-', '', $key);

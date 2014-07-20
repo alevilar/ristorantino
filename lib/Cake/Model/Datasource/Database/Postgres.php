@@ -158,7 +158,7 @@ class Postgres extends DboSource {
 /**
  * Returns an array of tables in the database. If there are no tables, an error is raised and the application exits.
  *
- * @param mixed $data
+ * @param mixed $data The sources to list.
  * @return array Array of table names in the database
  */
 	public function listSources($data = null) {
@@ -240,7 +240,7 @@ class Postgres extends DboSource {
 					'length' => $length
 				);
 				if ($model instanceof Model) {
-					if ($c->name == $model->primaryKey) {
+					if ($c->name === $model->primaryKey) {
 						$fields[$c->name]['key'] = 'primary';
 						if ($fields[$c->name]['type'] !== 'string') {
 							$fields[$c->name]['length'] = 11;
@@ -361,7 +361,7 @@ class Postgres extends DboSource {
 /**
  * Prepares field names to be quoted by parent
  *
- * @param string $data
+ * @param string $data The name to format.
  * @return string SQL field
  */
 	public function name($data) {
@@ -374,10 +374,10 @@ class Postgres extends DboSource {
 /**
  * Generates the fields list of an SQL query.
  *
- * @param Model $model
- * @param string $alias Alias table name
- * @param mixed $fields
- * @param boolean $quote
+ * @param Model $model The model to get fields for.
+ * @param string $alias Alias table name.
+ * @param mixed $fields The list of fields to get.
+ * @param boolean $quote Whether or not to quote identifiers.
  * @return array
  */
 	public function fields(Model $model, $alias = null, $fields = array(), $quote = true) {
@@ -509,7 +509,7 @@ class Postgres extends DboSource {
 		$colList = array();
 		foreach ($compare as $curTable => $types) {
 			$indexes = $colList = array();
-			if (!$table || $table == $curTable) {
+			if (!$table || $table === $curTable) {
 				$out .= 'ALTER TABLE ' . $this->fullTableName($curTable) . " \n";
 				foreach ($types as $type => $column) {
 					if (isset($column['indexes'])) {
@@ -540,7 +540,7 @@ class Postgres extends DboSource {
 
 								$default = isset($col['default']) ? $col['default'] : null;
 								$nullable = isset($col['null']) ? $col['null'] : null;
-								$boolToInt = $original['type'] == 'boolean' && $col['type'] == 'integer';
+								$boolToInt = $original['type'] === 'boolean' && $col['type'] === 'integer';
 								unset($col['default'], $col['null']);
 								if ($field !== $col['name']) {
 									$newName = $this->name($col['name']);
@@ -731,7 +731,7 @@ class Postgres extends DboSource {
 /**
  * resultSet method
  *
- * @param array $results
+ * @param array &$results The results
  * @return void
  */
 	public function resultSet(&$results) {
@@ -886,8 +886,8 @@ class Postgres extends DboSource {
 /**
  * Format indexes for create table
  *
- * @param array $indexes
- * @param string $table
+ * @param array $indexes The index to build
+ * @param string $table The table name.
  * @return string
  */
 	public function buildIndex($indexes, $table = null) {
@@ -918,8 +918,8 @@ class Postgres extends DboSource {
 /**
  * Overrides DboSource::renderStatement to handle schema generation with Postgres-style indexes
  *
- * @param string $type
- * @param array $data
+ * @param string $type The query type.
+ * @param array $data The array of data to render.
  * @return string
  */
 	public function renderStatement($type, $data) {

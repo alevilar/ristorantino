@@ -38,6 +38,7 @@ class RedisEngine extends CacheEngine {
  *  - port = integer port number to the Redis server (default: 6379)
  *  - timeout = float timeout in seconds (default: 0)
  *  - persistent = boolean Connects to the Redis server with a persistent connection (default: true)
+ *  - unix_socket = path to the unix socket file (default: false)
  *
  * @var array
  */
@@ -64,7 +65,8 @@ class RedisEngine extends CacheEngine {
 			'port' => 6379,
 			'password' => false,
 			'timeout' => 0,
-			'persistent' => true
+			'persistent' => true,
+			'unix_socket' => false
 			), $settings)
 		);
 
@@ -80,7 +82,9 @@ class RedisEngine extends CacheEngine {
 		$return = false;
 		try {
 			$this->_Redis = new Redis();
-			if (empty($this->settings['persistent'])) {
+			if (!empty($this->settings['unix_socket'])) {
+				$return = $this->_Redis->connect($this->settings['unix_socket']);
+			} elseif (empty($this->settings['persistent'])) {
 				$return = $this->_Redis->connect($this->settings['server'], $this->settings['port'], $this->settings['timeout']);
 			} else {
 				$persistentId = $this->settings['port'] . $this->settings['timeout'] . $this->settings['database'];
@@ -171,7 +175,8 @@ class RedisEngine extends CacheEngine {
 /**
  * Delete all keys from the cache
  *
- * @param boolean $check
+ * @param boolean $check Whether or not expiration keys should be checked. If
+ *   true, no keys will be removed as cache will rely on redis TTL's.
  * @return boolean True if the cache was successfully cleared, false otherwise
  */
 	public function clear($check) {
@@ -208,6 +213,7 @@ class RedisEngine extends CacheEngine {
  * Increments the group value to simulate deletion of all keys under a group
  * old values will remain in storage until they expire.
  *
+ * @param string $group The group name to clear.
  * @return boolean success
  */
 	public function clearGroup($group) {

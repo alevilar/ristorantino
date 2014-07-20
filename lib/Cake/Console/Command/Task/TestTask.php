@@ -102,7 +102,7 @@ class TestTask extends BakeTask {
 /**
  * Handles interactive baking
  *
- * @param string $type
+ * @param string $type The type of object to bake a test for.
  * @return string|boolean
  */
 	protected function _interactive($type = null) {
@@ -302,7 +302,7 @@ class TestTask extends BakeTask {
 
 		$position = strpos($class, $type);
 
-		if ($position !== false && strlen($class) - $position == strlen($type)) {
+		if ($position !== false && (strlen($class) - $position) === strlen($type)) {
 			return $class;
 		}
 		return $class . $type;

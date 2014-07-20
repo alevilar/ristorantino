@@ -512,7 +512,7 @@ class AuthComponent extends Component {
  * `$this->Auth->allow('edit', 'add');` or
  * `$this->Auth->allow();` to allow all actions
  *
- * @param string|array $action,... Controller action name or array of actions
+ * @param string|array $action Controller action name or array of actions
  * @return void
  * @link http://book.cakephp.org/2.0/en/core-libraries/components/authentication.html#making-actions-public
  */
@@ -537,7 +537,7 @@ class AuthComponent extends Component {
  * `$this->Auth->deny('edit', 'add');` or
  * `$this->Auth->deny();` to remove all items from the allowed list
  *
- * @param string|array $action,... Controller action name or array of actions
+ * @param string|array $action Controller action name or array of actions
  * @return void
  * @see AuthComponent::allow()
  * @link http://book.cakephp.org/2.0/en/core-libraries/components/authentication.html#making-actions-require-authorization
@@ -723,7 +723,7 @@ class AuthComponent extends Component {
 			$redir = $this->Session->read('Auth.redirect');
 			$this->Session->delete('Auth.redirect');
 
-			if (Router::normalize($redir) == Router::normalize($this->loginAction)) {
+			if (Router::normalize($redir) === Router::normalize($this->loginAction)) {
 				$redir = $this->loginRedirect;
 			}
 		} elseif ($this->loginRedirect) {
@@ -776,6 +776,10 @@ class AuthComponent extends Component {
 			unset($config[AuthComponent::ALL]);
 		}
 		foreach ($config as $class => $settings) {
+			if (!empty($settings['className'])) {
+				$class = $settings['className'];
+				unset($settings['className']);
+			}
 			list($plugin, $class) = pluginSplit($class, true);
 			$className = $class . 'Authenticate';
 			App::uses($className, $plugin . 'Controller/Component/Auth');
