@@ -55,7 +55,7 @@ Inflector::rules('plural', array(
 
 
 
-CakePlugin::loadAll();
+// CakePlugin::loadAll();
 
 CakePlugin::load('Acl', array('bootstrap' => true));
 

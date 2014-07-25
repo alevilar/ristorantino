@@ -22,6 +22,14 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
+
+App::build(array(
+	'Plugin' => array(APP . 'Vendor' . DS . 'risto' . DS . 'risto' . DS ),
+), App::APPEND);
+
+
+
+
 // Setup a 'default' cache configuration for use in the application.
 Cache::config('default', array('engine' => 'File'));
 
@@ -111,12 +119,11 @@ CakeLog::config('error', array(
 // CakePlugin::load('Risto', array('bootstrap' => true, 'routes'=> true));
 
 
-// CakePlugin::loadAll();
+CakePlugin::loadAll();
 
 // CakePlugin::load('DebugKit');
 // CakePlugin::load('Search');
 CakePlugin::load('Risto', array( 'bootstrap' => true, 'routes' => true ));
-
 
 
 

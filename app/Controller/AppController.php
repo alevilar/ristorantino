@@ -32,6 +32,8 @@ App::uses('Controller', 'Controller');
  */
 class AppController extends Controller {
     
+    public $layout = 'Risto.default';
+
     public $helpers = array(
         'Html' => array(
             'className' => 'Bs3Html'
