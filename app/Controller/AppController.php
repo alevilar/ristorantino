@@ -38,6 +38,7 @@ class AppController extends Controller {
             ),
         'Form' => array(
             'className' => 'PxForm'
+            // 'className' => 'Bs3Form'
             ),
         'Session',
         'Paginator',

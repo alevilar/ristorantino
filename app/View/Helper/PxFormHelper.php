@@ -1,10 +1,10 @@
 <?php
 
- App::uses('FormHelper', 'View/Helper');
+ App::uses('Bs3FormHelper', 'View/Helper');
 
 
-class PxFormHelper extends FormHelper {
 
+class PxFormHelper extends Bs3FormHelper {
 
 
 /**
@@ -89,4 +89,8 @@ class PxFormHelper extends FormHelper {
 				return $this->{$type}($fieldName, $options);
 		}
 	}
+
+
+
+
 }

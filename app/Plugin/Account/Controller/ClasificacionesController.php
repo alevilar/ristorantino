@@ -13,13 +13,13 @@ class ClasificacionesController extends AccountAppController
     }
 
     function add_edit($id = null)
-    {
-
-        if ( $this->request->is('post') || $this->request->is('put') ) {
+    {        
+        $this->Clasificacion->recover();
+        if ( $this->request->is('post') || $this->request->is('put') ) {            
             if ( $this->Clasificacion->save( $this->request->data ) ) {
                 $this->Session->setFlash('La clasificacion ha sido guardada');
             } else {
-                $this->Session->setFlash('Error al guardar la clasificación');
+                $this->Session->setFlash('Error al guardar la clasificación', 'flash_error');
             }
         }
 
@@ -47,12 +47,9 @@ class ClasificacionesController extends AccountAppController
 
     function gastos()
     {
-        debug($this->request->params);
         $this->Prg->commonProcess('Clasificacion', array('paramType' => 'querystring'));
         $conditions = $this->Clasificacion->Gasto->parseCriteria( $this->request->query );
         $this->Prg->presetForm('Clasificacion');
-               debug($conditions);
-               debug($this->request->data);
         
         $this->set('resumen_x_clasificacion', $this->Clasificacion->gastos($conditions));
         $this->set('clasificaciones', $this->Clasificacion->find('list'));

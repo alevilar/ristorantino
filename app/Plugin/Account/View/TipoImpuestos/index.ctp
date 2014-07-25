@@ -1,16 +1,14 @@
-     <?php  
-        echo $this->element('menuadmin');
-     ?>
+
 
 <div class="tipoImpuestos index">
 <h2><?php __('Tipo de Impuestos');?></h2>
 <p>
 <?php
 echo $this->Paginator->counter(array(
-'format' => __('Página %page% de %pages%, mostrando %current% de %count% elementos', true)
+	'format' => __('Página {:page} de {:pages}, mostrando {:current} de {:count} elementos')
 ));
 ?></p>
-<table cellpadding="0" cellspacing="0">
+<table class="table">
 <tr>
 	<th><?php echo $this->Paginator->sort('Nombre','name');?></th>
 	<th><?php echo $this->Paginator->sort('porcentaje');?></th>
@@ -40,20 +38,20 @@ foreach ($tipoImpuestos as $tipoImpuesto):
 			<?php echo $tipoImpuesto['TipoImpuesto']['tiene_impuesto']; ?>
 		</td>
 		<td class="actions">
-			<?php echo $this->Html->link(__('Editar', true), array('action' => 'edit', $tipoImpuesto['TipoImpuesto']['id'])); ?>
-			<?php echo $this->Html->link(__('Borrar', true), array('action' => 'delete', $tipoImpuesto['TipoImpuesto']['id']), null, sprintf(__('¿Esta seguro que desea eliminar el tipo de impuesto "%s"?', true), $tipoImpuesto['TipoImpuesto']['name'])); ?>
+			<?php echo $this->Html->link(__('Editar'), array('action' => 'edit', $tipoImpuesto['TipoImpuesto']['id'])); ?>
+			<?php echo $this->Html->link(__('Borrar'), array('action' => 'delete', $tipoImpuesto['TipoImpuesto']['id']), null, sprintf(__('¿Esta seguro que desea eliminar el tipo de impuesto "%s"?'), $tipoImpuesto['TipoImpuesto']['name'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>
 </table>
 </div>
 <div class="paging">
-	<?php echo $this->Paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
+	<?php echo $this->Paginator->prev('<< '.__('previous'), array(), null, array('class'=>'disabled'));?>
  | 	<?php echo $this->Paginator->numbers();?>
-	<?php echo $this->Paginator->next(__('next', true).' >>', array(), null, array('class' => 'disabled'));?>
+	<?php echo $this->Paginator->next(__('next').' >>', array(), null, array('class' => 'disabled'));?>
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $this->Html->link(__('Crear Tipo de impuesto', true), array('action' => 'add')); ?></li>
+		<li><?php echo $this->Html->link(__('Crear Tipo de impuesto'), array('action' => 'add')); ?></li>
 	</ul>
 </div>

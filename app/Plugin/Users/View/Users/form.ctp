@@ -15,18 +15,12 @@
     </div>
     
     <div class="col-md-6">
-        <fieldset>
             <?php
             echo $this->Form->input('rol_id', array(
                 'type' => "radio",
-                'label' => array(
-                    'fieldset' => array(
-                        'class' => 'papspas',
-                        'data-type' => "horizontal"))
-            ));
+                ));
             
             ?>
-        </fieldset>
     </div>
 </div>
 <?php echo $this->Form->submit(__('Submit'), array('class'=>'btn btn-success')); ?>

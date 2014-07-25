@@ -3,7 +3,6 @@
 <table class="table">
     <tbody>
         <?php
-        debug($cierres);
         foreach ($cierres as $c) {
             $link = $this->Html->link($c['Cierre']['name'], array('controller' => 'cierres', 'action' => 'view', $c['Cierre']['id']));
 

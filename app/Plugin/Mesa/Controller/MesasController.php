@@ -25,7 +25,7 @@ class MesasController extends MesaAppController {
     
     public function index() {
         $this->Prg->commonProcess();
-        $conds = $this->Egreso->parseCriteria( $this->Prg->parsedParams() );
+        $conds = $this->Mesa->parseCriteria( $this->Prg->parsedParams() );
 
         $this->Paginator->settings['conditions'] = $conds;
         $this->Paginator->settings['contain'] = array(

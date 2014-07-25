@@ -7,10 +7,6 @@ class ProveedoresController extends AccountAppController {
 
 	public $name = 'Proveedores';
 
-	public $components = array('Paginator', 'RequestHandler');
-	// public $helpers = array('Html', 'Form');
-
-     
         
         
 	public function index () {
@@ -27,8 +23,8 @@ class ProveedoresController extends AccountAppController {
 
 	public function view($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid Proveedor', true));
-			$this->redirect($arrayName = array('' => , );('action' => 'index'));
+			$this->Session->setFlash(__('Invalid Proveedor'));
+			$this->redirect($this->referer());
 		}
 		$this->set('proveedor', $this->Proveedor->read(null, $id));
 	}
@@ -37,26 +33,25 @@ class ProveedoresController extends AccountAppController {
 		if (!empty($this->request->data)) {
 			$this->Proveedor->create();
 			if ($this->Proveedor->save($this->request->data)) {
-				$this->Session->setFlash(__('The Proveedor has been saved', true));
+				$this->Session->setFlash(__('The Proveedor has been saved'));
                                 unset($this->request->data);
 			} else {
-				$this->Session->setFlash(__('The Proveedor could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('The Proveedor could not be saved. Please, try again.'));
 			}
 		}
 	}
 
 	public function edit($id = null) {
-            $this->rutaUrl_for_layout[] =array('name'=> 'Proveedores','link'=>'/account/proveedores' );
 		if (!$id && empty($this->request->data)) {
-			$this->Session->setFlash(__('Invalid Proveedor', true));
+			$this->Session->setFlash(__('Invalid Proveedor'), 'flash_error');
 			$this->redirect(array('action' => 'index'));
 		}
-		if (!empty($this->request->data)) {
+		if ( $this->request->is('put') || $this->request->is('post') ) {
 			if ($this->Proveedor->save($this->request->data)) {
-				$this->Session->setFlash(__('The Proveedor has been saved', true));
+				$this->Session->setFlash(__('The Proveedor has been saved'));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The Proveedor could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('The Proveedor could not be saved. Please, try again.'));
 			}
 		}
 		if (empty($this->request->data)) {
@@ -66,14 +61,14 @@ class ProveedoresController extends AccountAppController {
 
 	public function delete($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for Proveedor', true));
+			$this->Session->setFlash(__('Invalid id for Proveedor'));
 			$this->redirect(array('action' => 'index'));
 		}
 		if ($this->Proveedor->delete($id)) {
-			$this->Session->setFlash(__('Proveedor deleted', true));
+			$this->Session->setFlash(__('Proveedor deleted'));
 			$this->redirect(array('action' => 'index'));
 		}
-		$this->Session->setFlash(__('The Proveedor could not be deleted. Please, try again.', true));
+		$this->Session->setFlash(__('The Proveedor could not be deleted. Please, try again.'));
 		$this->redirect(array('action' => 'index'));
 	}
 

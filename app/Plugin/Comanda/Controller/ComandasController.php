@@ -79,4 +79,3 @@ class ComandasController extends ComandaAppController {
     }
 
 }
-?>

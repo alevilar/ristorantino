@@ -1,6 +1,3 @@
-     <?php  
-        echo $this->element('menuadmin');
-     ?>
 
 <div class="proveedores view">
 <h2><?php  __('Proveedor');?></h2>

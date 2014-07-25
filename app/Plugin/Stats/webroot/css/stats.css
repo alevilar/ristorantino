@@ -1,0 +1,142 @@
+@CHARSET "UTF-8";
+
+/* Seccion estadisticas */
+
+
+
+.menu_stats ul {
+    font-size: 120%;
+    margin-left: 0;
+}
+
+.menu_stats ul li {
+    margin: 0;
+    padding: 0;
+    margin-bottom: 10px;
+    display: block;
+
+}
+
+.menu_stats ul li a{
+    text-decoration: none;
+    color: #6b6b6e;
+    font-size: 80%;
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+.menu_stats ul li a:hover{
+    color: #000000;
+}
+
+.menu_stats ul li.sep {
+    border-bottom-color: #6b6b6e;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.jqplot-highlighter-tooltip span {
+    font-size: 110%;
+}
+
+table.jqplot-table-legend {
+    width: auto;
+}
+
+table.jqplot-table-legend tr td {
+    padding: 0;
+    border-right: none;
+    border-bottom: none;
+    font-size: 16px;
+}
+
+.menu_periodo {
+    width: 60px;
+    padding-top: 5px;
+    height: 22px;
+    background-color: grey;
+    border: none;
+    float: left;
+    display: inline;
+    color: #002847;
+    cursor: pointer;
+    margin: 5px;
+    text-align: center;
+    position: relative;
+    clear: both;
+    
+    
+    background: #cfe7fa; /* Old browsers */
+    background: -moz-linear-gradient(top, #cfe7fa 0%, #6393c1 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#cfe7fa), color-stop(100%,#6393c1)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #cfe7fa 0%,#6393c1 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #cfe7fa 0%,#6393c1 100%); /* Opera11.10+ */
+    background: -ms-linear-gradient(top, #cfe7fa 0%,#6393c1 100%); /* IE10+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cfe7fa', endColorstr='#6393c1',GradientType=0 ); /* IE6-9 */
+    background: linear-gradient(top, #cfe7fa 0%,#6393c1 100%); /* W3C */
+
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px; 
+
+
+    -webkit-box-shadow: inset 0px 0px 2px 0px #136aad;
+    -moz-box-shadow: inset 0px 0px 2px 0px #136aad;
+    box-shadow: inset 0px 0px 2px 0px #136aad; 
+}
+
+.menu_periodo:hover {
+    color: #FFFFFF;
+}
+
+.select_periodo {
+    margin-top: 70px;
+    text-align: right;
+}
+
+.desaparecer {
+    display: none;
+}
+
+.coloruno {
+    background-color: #4BB2C5;
+    color: #ffffff;
+}
+
+.colordos{
+    background-color: #EAA228;
+    color: #ffffff;    
+}
+
+.tabla-info {
+    overflow: auto;
+}
+
+
+.formufecha {
+    margin-top: 10px;
+    float: left;
+    height: 53px;
+}
+
+
+.formufecha input{
+    width: 132px;
+    margin-right: 10px;
+}
+
+.formufecha h2{
+   
+}
+
+#MesaAddForm input{
+    width: 110px;
+    height: 50px;
+    padding: 0px;
+    margin: 0px;
+    
+    font-size: 20px;
+}

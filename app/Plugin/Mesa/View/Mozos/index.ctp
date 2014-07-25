@@ -9,7 +9,7 @@ $this->Paginator->options(array('url' => $this->passedArgs));
 <p>
 <?php
 echo $this->Paginator->counter(array(
-    'format' => __('Página %page% de %pages%, mostrando %current% elementos de %count%')
+    'format' => __('Página {:page} de {:pages}, mostrando {:current} elementos de {:count}')
 ));
 ?></p>
 <table cellpadding="0" cellspacing="0" class="table">

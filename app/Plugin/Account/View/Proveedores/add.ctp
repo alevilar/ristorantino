@@ -1,6 +1,4 @@
-     <?php  
-        echo $this->element('menuadmin');
-     ?>
+
 <div class="proveedores form">
 <?php echo $this->Form->create('Proveedor');?>
 	<fieldset>
