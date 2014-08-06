@@ -1,3 +1,7 @@
+/app/config
+/app/tmp
+/plugins
+/vendors
 app/tmp
 app/webroot/img/thumbs
 vendors
