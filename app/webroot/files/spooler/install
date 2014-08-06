@@ -13,9 +13,11 @@ if [ -z "$MY_PATH" ] ; then
   exit 1  # fail
 fi
 
-cp spooler /usr/bin
-cp printServer.py /usr/bin
-cp ristorantino.config /etc/init
+cp -s spooler /usr/bin
+cp -s pruf /usr/bin
+cp -s printServer.py /usr/bin
+cp -s ristorantino.config /etc/init
+cp -s 99-usb-serial.rules etc/udev/rules.d
 
 apt-get python-daemon
 service ristorantino start

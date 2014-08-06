@@ -83,7 +83,7 @@ class DATABASE_CONFIG {
 		'host' => 'localhost',
 		'login' => 'root',
 		'password' => 'alejandro',
-		'database' => 'ristorantino_chocha012',
+		'database' => 'px_chocha012',
 		'prefix' => '',
 	);
 
