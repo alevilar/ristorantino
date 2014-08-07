@@ -18,11 +18,15 @@ class ProductosController extends AppController {
 			$pagCondiciones = array();
 			foreach($this->data as $modelo=>$campos){
 				foreach($campos as $key=>$val){
-						if(!is_array($val))
-							$condiciones[$modelo.".".$key." LIKE"] = '%'.$val.'%';
-							$pagCondiciones[$modelo.".".$key] = $val;
+						if(!is_array($val)) {
+							if (!empty($val)) {
+								$condiciones[$modelo.".".$key." LIKE"] = '%'.$val.'%';
+								$pagCondiciones[$modelo.".".$key] = $val;	
+							}
+						}
 				}
 			}
+			
 			$this->Producto->recursive = 0;
 			$this->paginate['Producto'] = array(
 				'conditions' => $condiciones

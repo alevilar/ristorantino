@@ -88,8 +88,12 @@ function jsDate($date)
  * @param integer $precision
  * @param const $extra flags de la funcion round() de PHP ver: http://php.net/manual/es/function.round.php
  */
-function cqs_round($number, $precision = 0)
+function cqs_round($number, $precision = 2)
 {
+    $precisionConf = Configure::read('ImpresoraFiscal.precision');
+    if (is_numeric( $precisionConf) ) {
+        $precision = $precisionConf;
+    }
     if ($precision == 0) {
         $num = ceil($number);
     } else {

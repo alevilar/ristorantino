@@ -13,13 +13,13 @@ if [ -z "$MY_PATH" ] ; then
   exit 1  # fail
 fi
 
-cp -s spooler /usr/bin
-cp -s pruf /usr/bin
-cp -s printServer.py /usr/bin
-cp -s ristorantino.config /etc/init
-cp -s 99-usb-serial.rules etc/udev/rules.d
+ln -s $MY_PATH/spooler /usr/bin
+ln -s $MY_PATH/pruf /usr/bin
+ln -s $MY_PATH/printServer.py /usr/bin
+ln -s $MY_PATH/ristorantino.conf /etc/init
+ln -s $MY_PATH/99-usb-serial.rules /etc/udev/rules.d
 
-apt-get python-daemon
+apt-get install python-daemon
 service ristorantino start
 
 echo "LISTO! ahora debe configurar printServer.py para que use la impresora requerida"

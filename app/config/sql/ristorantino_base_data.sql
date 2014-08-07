@@ -1458,11 +1458,12 @@ INSERT INTO `configs` (`id`, `config_category_id`, `key`, `value`, `description`
 (20, 4, 'reload_interval_timeout', '60000', 'valor en milisegundos que debe esperar el ajax para actualizar las mesas. Si el ajax no se resuelve. entonces se termina a la fuerza.', NULL, '2012-11-28 21:37:29'),
 (21, 4, 'jqm_page_transition', '1', 'activar animaciones\r\n', NULL, '2012-11-28 21:37:44'),
 (22, 3, 'server', 'auto', '', NULL, '2012-11-28 22:19:51'),
-(23, 3, 'nombre', 'fiscalfile', 'nombre de la impresora CUPS, es la impresora fiscal que para CUPS será una impresora que imprima "raw" en una carpeta particular donde estará leyendo el spooler', NULL, '2011-11-15 21:33:01'),
+(23, 3, 'nombre', 'fiscalprinter', 'nombre de la impresora CUPS, es la impresora fiscal que para CUPS será una impresora que imprima "raw" en una carpeta particular donde estará leyendo el spooler', NULL, '2011-11-15 21:33:01'),
 (24, 1, 'prueba', '1111111', '', '2011-11-04 09:21:31', '2011-11-04 09:21:31'),
 (25, 2, 'valorCubierto', '0', '', '2011-11-06 17:55:21', '2011-11-15 20:10:11'),
 (26, 2, 'mail', 'info@mail.com.ar', '', '2011-11-22 20:13:01', '2012-11-25 00:02:17'),
-(27, 4, 'preTicketHeader', '            COMPROBANTE DE CONSUMICION', '', '2011-11-22 20:13:38', '2011-11-22 20:13:38');
+(27, 4, 'preTicketHeader', '            COMPROBANTE DE CONSUMICION', '', '2011-11-22 20:13:38', '2011-11-22 20:13:38'),
+(28, 3, 'precision', '2', '', NULL, NULL);
 
 --
 -- Volcar la base de datos para la tabla `config_categories`
@@ -1471,7 +1472,7 @@ INSERT INTO `configs` (`id`, `config_category_id`, `key`, `value`, `description`
 INSERT INTO `config_categories` (`id`, `name`) VALUES
 (1, 'Mesa'),
 (2, 'Restaurante'),
-(3, 'ImpresoraFiscal'),
+(3, 'ImpresoraFiscal')
 (4, 'Adicion'),
 (5, ''),
 (6, 'Mozo'),

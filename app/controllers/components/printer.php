@@ -647,7 +647,7 @@ class PrinterComponent extends Object {
             if ( $serverImpresoraFiscal == 'auto' ) {
                 $serverImpresoraFiscal = $_SERVER['REMOTE_ADDR'];
             }
-            $this->log("imprimiendo a con la impresora $nombreImpresoraFiscal al server: s".$serverImpresoraFiscal);
+            $this->log("imprimiendo con la impresora $nombreImpresoraFiscal al server: ".$serverImpresoraFiscal, 'debug');
             
             // cambiar el encoding del texto si esta configurado
             $encoding = Configure::read('ImpresoraFiscal.encoding');
