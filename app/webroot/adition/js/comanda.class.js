@@ -64,8 +64,10 @@ Risto.Adition.comanda.prototype = {
     
     
     handleAjaxSuccess: function(data){
-        this.id( data.Comanda.Comanda.id );
-        this.created( data.Comanda.Comanda.created );
+        if (data && data.hasOwnProperty('Comanda')) {
+            this.id( data.Comanda.Comanda.id );
+            this.created( data.Comanda.Comanda.created );    
+        }
         return this;
     },
     

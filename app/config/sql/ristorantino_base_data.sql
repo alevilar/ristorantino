@@ -421,7 +421,7 @@ CREATE TABLE IF NOT EXISTS `descuentos` (
 CREATE TABLE IF NOT EXISTS `detalle_comandas` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `producto_id` int(10) unsigned NOT NULL,
-  `cant` tinyint(4) NOT NULL,
+  `cant` FLOAT( 4 ) NOT NULL,
   `cant_eliminada` tinyint(4) NOT NULL DEFAULT '0',
   `comanda_id` int(11) unsigned NOT NULL,
   `observacion` text CHARACTER SET utf8 COLLATE utf8_spanish_ci,
@@ -1463,7 +1463,13 @@ INSERT INTO `configs` (`id`, `config_category_id`, `key`, `value`, `description`
 (25, 2, 'valorCubierto', '0', '', '2011-11-06 17:55:21', '2011-11-15 20:10:11'),
 (26, 2, 'mail', 'info@mail.com.ar', '', '2011-11-22 20:13:01', '2012-11-25 00:02:17'),
 (27, 4, 'preTicketHeader', '            COMPROBANTE DE CONSUMICION', '', '2011-11-22 20:13:38', '2011-11-22 20:13:38'),
-(28, 3, 'precision', '2', '', NULL, NULL);
+(28, 3, 'precision', '2', 'Cantidad de decimales a mostrar en los totales y en el ticket', NULL, NULL),
+(29, 1, 'usar_generica', '1', 'va 0 o 1 dependiendo si quiero mostrar y adicionar con mesa generica (usa por defecto mozo 99, numero de mesa 99, y cero cubiertos para abrir la mesa generica)', NULL, NULL),
+(30, 1, 'generica_name', 'Kiosko', 'Nombre generico para abrir mesas que sean de pronta atencion', NULL, NULL),
+(31, 1, 'generica_mozo_id', '1', 'ID del mozo a utilizar como generico, generalmente tratamos de crear un mozo con numero 99 y usar ese. Pero por defecto el sistema usa el mozo con ID:1, que, por defecto es el mozo de identico numero (el 1)', NULL, NULL)
+;
+
+
 
 --
 -- Volcar la base de datos para la tabla `config_categories`

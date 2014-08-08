@@ -645,7 +645,12 @@ class PrinterComponent extends Object {
             $serverImpresoraFiscal = Configure::read('ImpresoraFiscal.server');
             
             if ( $serverImpresoraFiscal == 'auto' ) {
-                $serverImpresoraFiscal = $_SERVER['REMOTE_ADDR'];
+            	$ipclient = getenv('HTTP_X_FORWARDED_FOR');
+            	if (empty($ipclient)) {
+            		$ipclient = $_SERVER['REMOTE_ADDR'];
+            	}
+
+                $serverImpresoraFiscal = $ipclient;
             }
             $this->log("imprimiendo con la impresora $nombreImpresoraFiscal al server: ".$serverImpresoraFiscal, 'debug');
             

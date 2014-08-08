@@ -1517,8 +1517,10 @@ Risto.Adition.comanda.prototype = {
     
     
     handleAjaxSuccess: function(data){
-        this.id( data.Comanda.Comanda.id );
-        this.created( data.Comanda.Comanda.created );
+        if (data && data.hasOwnProperty('Comanda')) {
+            this.id( data.Comanda.Comanda.id );
+            this.created( data.Comanda.Comanda.created );    
+        }
         return this;
     },
     
@@ -2659,7 +2661,11 @@ Risto.Adition.detalleComanda.prototype = {
      * O sea, la cantidad agregada menos la quitada
      */
     realCant: function(){
-        return parseInt( this.cant() ) - parseInt( this.cant_eliminada() );
+        var cant = parseFloat( this.cant() ) - parseInt( this.cant_eliminada() );
+        if (cant < 0) {
+            cant = 0;
+        }
+        return cant;
     },
     
     
@@ -2748,7 +2754,18 @@ Risto.Adition.detalleComanda.prototype = {
         } else {
             this.es_entrada( 1 );
         }
-        
+    },
+
+
+    fraccionar: function() {
+        var cant = prompt("Fraccionar Unidad");
+        if ( isNaN( cant )) {
+            alert('ERROR: Debe ingresar un valor numérico');
+        }
+        if ( cant && !isNaN(cant)) {
+            this.cant(cant);
+            this.cant_eliminada(0);
+        }
     },
     
     
@@ -3131,11 +3148,24 @@ $(document).bind("mobileinit", function(){
             return false;        
         });
 
+
+        $("#mesa-abrir-mesa-generica-btn").bind( 'click', function(e) {
+            var miniMesa = {
+                numero: $(this).attr('data-numero'),
+                mozo_id: $(this).attr('data-mozo-id'),
+                cubiertos: 1
+            };
+            mesa = Risto.Adition.adicionar.crearNuevaMesa( miniMesa );
+            Risto.Adition.EventHandler.mesaSeleccionada( {"mesa": mesa} );
+            Risto.Adition.adicionar.setCurrentMesa( mesa );            
+        });
+
     });
 
 
     $('#listado-mesas').live('pagebeforehide',function(event, ui){
         $('#listado-mozos-para-mesas').undelegate('a','click');
+        $("#mesa-abrir-mesa-generica-btn").unbind( 'click');
     });
     
     

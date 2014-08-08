@@ -23,6 +23,11 @@
      background-position: center;
      background-repeat: no-repeat;
 }
+.ui-icon-fraccionar {
+     background-image: url(images/fraccionar.png); 
+     background-position: center;
+     background-repeat: no-repeat;
+}
 .ui-icon-mesa-abierta {
      background-image: url(images/mesa-abrio.png); 
      background-position: center;

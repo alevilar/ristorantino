@@ -35,6 +35,21 @@
                     
         <div  data-role="content" class="content_mesas">           
 
+                <?php $usar_generica =  Configure::read('Mesa.usar_generica');
+                if ( !empty($usar_generica) ) {
+                    ?>
+
+                    <a href="#mesa-view" id="mesa-abrir-mesa-generica-btn" class="abrir-mesa" 
+                        data-mozo-id="<?php echo Configure::read('Mesa.generica_mozo_id')?>"
+                        data-numero="99"
+                        data-role="button" 
+                        title="<?php echo Configure::read('Mesa.generica_name')?>"
+                        data-theme="a"><?php echo $html->image('flash.png')?></a>
+                    
+                    <?php
+                }
+                ?>
+
                 <!-- aca va el listado de mesas que se carga dinamicamente en un script de abajo -->
                 <a href="#mesa-add" id="mesa-abrir-mesa-btn" data-rel="dialog"  class="abrir-mesa" data-role="button" data-theme="a">Abrir<br><?php echo Configure::read('Mesa.tituloMesa')?></a>  
                 <ul id="mesas_container" class="listado-adicion" data-bind='template: { name: "listaMesas", foreach: adn().mesas }'>
@@ -323,7 +338,7 @@
                     </li>
                     
                     <li style="width: 49%; float: right;" id="mesa-action-edit" data-bind="attr: {'estado': 'mesa-borrar_'+adn().currentMesa().estado().icon}">
-                        <a href="#" data-href="<? echo $html->url('/mesas/edit/') ?>">Editar</a>
+                        <a href="#" target="_blank" data-href="<? echo $html->url('/mesas/edit/') ?>">Editar</a>
                     </li>
                     
                     

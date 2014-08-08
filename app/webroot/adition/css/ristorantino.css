@@ -16,10 +16,18 @@ ul.listado-adicion{
     margin: 0 !important;
 }
 
+#mesa-abrir-mesa-generica-btn{
+    min-width: 85px;
+}
+
+#mesa-abrir-mesa-btn{
+    min-width: 85px;
+}
 
 ul.listado-adicion li {
     height: auto;
     margin: 0.5%;
+    min-width: 70px;
 }
 ul.listado-adicion li a {
     margin: 0;

@@ -17,7 +17,8 @@ ln -s $MY_PATH/spooler /usr/bin
 ln -s $MY_PATH/pruf /usr/bin
 ln -s $MY_PATH/printServer.py /usr/bin
 ln -s $MY_PATH/ristorantino.conf /etc/init
-ln -s $MY_PATH/99-usb-serial.rules /etc/udev/rules.d
+ln -s $MY_PATH/99-usb-hasar441-serial.rules /etc/udev/rules.d
+ln -s $MY_PATH/99-usb-hasar715-serial.rules /etc/udev/rules.d
 
 apt-get install python-daemon
 service ristorantino start

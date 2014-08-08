@@ -299,11 +299,24 @@ $(document).bind("mobileinit", function(){
             return false;        
         });
 
+
+        $("#mesa-abrir-mesa-generica-btn").bind( 'click', function(e) {
+            var miniMesa = {
+                numero: $(this).attr('data-numero'),
+                mozo_id: $(this).attr('data-mozo-id'),
+                cubiertos: 1
+            };
+            mesa = Risto.Adition.adicionar.crearNuevaMesa( miniMesa );
+            Risto.Adition.EventHandler.mesaSeleccionada( {"mesa": mesa} );
+            Risto.Adition.adicionar.setCurrentMesa( mesa );            
+        });
+
     });
 
 
     $('#listado-mesas').live('pagebeforehide',function(event, ui){
         $('#listado-mozos-para-mesas').undelegate('a','click');
+        $("#mesa-abrir-mesa-generica-btn").unbind( 'click');
     });
     
     

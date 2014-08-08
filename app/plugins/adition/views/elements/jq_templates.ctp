@@ -52,6 +52,16 @@
                     <span class="ui-icon ui-icon-entrada ui-icon-shadow"></span>
                 </span>
             </a>
+            <a data-role="button" data-iconpos="notext" data-icon="fraccionar" 
+               href="#" title="Fraccionar" data-theme="c" 
+               class="ui-btn ui-btn-icon-notext ui-corner-right ui-controlgroup-last ui-btn-up-c"
+               data-bind="click: fraccionar"
+               >
+                <span class="ui-btn-inner ui-corner-right ui-controlgroup-last">
+                    <span class="ui-btn-text">Fraccionar</span>
+                    <span class="ui-icon ui-icon-fraccionar ui-icon-shadow"></span>
+                </span>
+            </a>
          </div>
         
         
