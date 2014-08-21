@@ -36,7 +36,11 @@
  * ...and connect the rest of 'Pages' controller's urls.
  */
 	Router::connect('/pages/*', array('controller' => 'pages', 'action' => 'display'));
+
+
+
+	Router::mapResources('PrinterJobs');
+
 	
 	
 	Router::parseExtensions('json','ajax', 'xls');
-?>

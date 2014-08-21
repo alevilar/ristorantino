@@ -838,6 +838,14 @@ CREATE TABLE IF NOT EXISTS `users` (
 );
 
 
+CREATE TABLE IF NOT EXISTS `printer_jobs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `printer_id` int(11) NOT NULL,
+  `text` text  CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
+  `created` timestamp NULL DEFAULT NULL,
+  `modified` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
 
 
 
@@ -1420,6 +1428,13 @@ INSERT INTO `clientes` (`id`, `user_id`, `codigo`, `mail`, `telefono`, `descuent
 INSERT INTO `comandas` (`id`, `mesa_id`, `prioridad`, `impresa`, `created`, `observacion`) VALUES
 (1, 1, 0, NULL, '2012-11-28 23:07:32', '');
 
+
+
+
+INSERT INTO `comanderas` (`id`, `name`, `description`, `path`, `imprime_ticket`) VALUES
+(1, 'comanderacocina', 'comandera de la cocina', '/tmp', 0);
+
+
 -- --------------------------------------------------------
 
 --
@@ -1478,7 +1493,7 @@ INSERT INTO `configs` (`id`, `config_category_id`, `key`, `value`, `description`
 INSERT INTO `config_categories` (`id`, `name`) VALUES
 (1, 'Mesa'),
 (2, 'Restaurante'),
-(3, 'ImpresoraFiscal')
+(3, 'ImpresoraFiscal'),
 (4, 'Adicion'),
 (5, ''),
 (6, 'Mozo'),
@@ -1568,13 +1583,13 @@ INSERT INTO `observacion_comandas` (`name`) VALUES
 
 
 INSERT INTO `productos` (`id`, `name`, `abrev`, `description`, `categoria_id`, `precio`, `comandera_id`, `order`, `created`, `modified`, `deleted_date`, `deleted`) VALUES
-(1, 'Paella', 'paella', '', 1, 100.00, 0, NULL, '2012-11-28 23:11:57', '2012-11-28 23:11:57', NULL, 0),
-(2, 'Pure', 'pure', '', 2, 12.00, 0, 2, '2013-05-17 13:50:34', '2013-05-17 13:50:34', NULL, 0),
-(3, 'Papas Fritas', 'papas', '', 2, 33.00, 0, NULL, '2013-05-17 13:50:46', '2013-05-17 13:50:46', NULL, 0),
-(4, 'Papa al Natural', 'papa', '', 2, 21.00, 0, 2, '2013-05-17 13:51:09', '2013-05-17 13:51:09', NULL, 0),
-(5, 'Pepsi', 'pepsi', '', 3, 20.00, 0, NULL, '2014-04-02 06:52:34', '2014-04-02 06:52:34', NULL, 0),
-(6, 'Big Ristorantino', 'bg risto', '', 4, 40.00, 0, 2, '2014-04-02 06:56:37', '2014-04-02 06:56:37', NULL, 0),
-(7, 'Super de Pollo', 'pollo', '', 4, 33.00, 0, NULL, '2014-04-02 06:57:03', '2014-04-02 06:57:03', NULL, 0);
+(1, 'Paella', 'paella', '', 1, 100.00, 1, NULL, '2012-11-28 23:11:57', '2012-11-28 23:11:57', NULL, 0),
+(2, 'Pure', 'pure', '', 2, 12.00, 1, 2, '2013-05-17 13:50:34', '2013-05-17 13:50:34', NULL, 0),
+(3, 'Papas Fritas', 'papas', '', 2, 33.00, 1, NULL, '2013-05-17 13:50:46', '2013-05-17 13:50:46', NULL, 0),
+(4, 'Papa al Natural', 'papa', '', 2, 21.00, 1, 2, '2013-05-17 13:51:09', '2013-05-17 13:51:09', NULL, 0),
+(5, 'Pepsi', 'pepsi', '', 3, 20.00, 1, NULL, '2014-04-02 06:52:34', '2014-04-02 06:52:34', NULL, 0),
+(6, 'Big Ristorantino', 'bg risto', '', 4, 40.00, 1, 2, '2014-04-02 06:56:37', '2014-04-02 06:56:37', NULL, 0),
+(7, 'Super de Pollo', 'pollo', '', 4, 33.00, 1, NULL, '2014-04-02 06:57:03', '2014-04-02 06:57:03', NULL, 0);
 
 -- --------------------------------------------------------
 

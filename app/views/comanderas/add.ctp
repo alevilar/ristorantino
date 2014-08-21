@@ -5,7 +5,6 @@
 	<?php
 		echo $form->input('name');
 		echo $form->input('description');
-		echo $form->input('path');
 		echo $form->input('imprime_ticket');
 	?>
 	</fieldset>
@@ -13,6 +12,8 @@
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $html->link(__('List Comanderas', true), array('action'=>'index'));?></li>
+		<li><?php echo $html->link(__('Listar Comanderas', true), array('action'=>'index')); ?></li>
+		<li><?php echo $html->link(__('Nueva Comandera', true), array('action'=>'add')); ?></li>
+		<li><?php echo $html->link(__('Configurar Impresora Fiscal', true), array('action'=>'fiscal_edit')); ?></li>
 	</ul>
 </div>

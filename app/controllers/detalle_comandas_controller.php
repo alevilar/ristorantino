@@ -132,10 +132,8 @@ class DetalleComandasController extends AppController {
 				if ($data['comandera_id'] == $comandera_id){
                                     $dataToSave['DetalleComanda'] = $data;
                                         $this->DetalleComanda->create();
-                            debug( $dataToSave );
 					if ($this->DetalleComanda->save($dataToSave)){
 						$ok = true;
-                            debug( $data['DetalleSabor'] );
                                                 if (!empty($data['DetalleSabor'])){                                                    
                                                     $detalleSabor = $data['DetalleSabor'];
                                                     foreach ($detalleSabor as $ds){

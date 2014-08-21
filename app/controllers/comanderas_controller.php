@@ -2,7 +2,6 @@
 class ComanderasController extends AppController {
 
 	var $name = 'Comanderas';
-	var $helpers = array('Html', 'Form');
 
 	function index() {
 		$this->Comandera->recursive = 0;
@@ -56,6 +55,36 @@ class ComanderasController extends AppController {
 			$this->Session->setFlash(__('Comandera deleted', true));
 			$this->redirect(array('action'=>'index'));
 		}
+	}
+
+
+	function fiscal_edit() {
+		$ImpFiscalID = 3;
+		$C = ClassRegistry::init("Config");
+		$C->recursive = -1;
+		if ( !empty($this->data)){
+			
+			foreach ($this->data['Config'] as $field=>$value) {
+				$cond = array(
+					"config_category_id" => $ImpFiscalID,
+					"key"=> $field					
+					);
+				$conf = $C->find('first', array('conditions' => $cond));
+				$conf['Config']['value'] = $value;
+				if ( !$C->save( $conf ) )	{
+					throw new Exception("No se pudo guardar");
+					
+				}
+			}
+		}
+		$ddd = $C->find('all', array( array(
+				'config_category_id' => $ImpFiscalID
+			) ) );
+		$vals = array();
+		foreach ($ddd as $d) {
+			$vals['Config'][$d['Config']['key']] = $d['Config']['value'];
+		}
+		$this->data = $vals;
 	}
 
 }

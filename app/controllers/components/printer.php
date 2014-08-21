@@ -188,14 +188,13 @@ class PrinterComponent extends Object {
 	function __inicio_manual() {
 		$comandera =& ClassRegistry::init('Comandera');
 		$comandera->recursive = -1;
-		$comanderas = $comandera->find('all');
+		$comanderas = $comandera->find('all');	
+
 		// creo las carpetas temporales
 		foreach($comanderas as $c)
 		{
 			$this->comanderas[$c['Comandera']['id']] = $c;
-				
-			$this->__crearDirectorioSiNoExiste($c['Comandera']['path']);
-		}
+		}	
 
 		$this->impresoraFiscal = Configure::read('Dev.printer');
 	}
@@ -275,10 +274,9 @@ class PrinterComponent extends Object {
                             return 'Error: '.  $e->getMessage();
 			}
                         
-                        
-                        //si paso todo bien la creacion del archivo la mando a imprimir
+            //si paso todo bien la creacion del archivo la mando a imprimir
 			$comandera_name = $this->comanderas[$comandera_id]['Comandera']['name'];
-                        return $this->cupsPrint($comandera_name, $textoAImprimir);
+            return $this->cupsPrint($comandera_name, $textoAImprimir);
 				
 			return $retorno;
 		endforeach;
@@ -642,41 +640,29 @@ class PrinterComponent extends Object {
          * @return type boolean true si salio todo bien false caso contrario
          */
         function cupsPrint( $nombreImpresoraFiscal, $texto ) {
-            $serverImpresoraFiscal = Configure::read('ImpresoraFiscal.server');
-            
-            if ( $serverImpresoraFiscal == 'auto' ) {
-            	$ipclient = getenv('HTTP_X_FORWARDED_FOR');
-            	if (empty($ipclient)) {
-            		$ipclient = $_SERVER['REMOTE_ADDR'];
-            	}
+        	$comanda = ClassRegistry::init('Comandera');
+        	$comanda->recursive = -1;
 
-                $serverImpresoraFiscal = $ipclient;
-            }
-            $this->log("imprimiendo con la impresora $nombreImpresoraFiscal al server: ".$serverImpresoraFiscal, 'debug');
-            
-            // cambiar el encoding del texto si esta configurado
-            $encoding = Configure::read('ImpresoraFiscal.encoding');
-            if (!empty( $encoding )) {
-                $texto = mb_convert_encoding($texto, $encoding, mb_detect_encoding($texto));
-            }
-                    
-            $descriptorspec = array(
-               0 => array("pipe", "r"), //esto lo uso para mandarle comandos
-               1 => array("pipe", "w"),  // el stdout a un archivo tmp
-               2 => array("file", "/tmp/lprerrout.txt", "a") // el stderr a un archivo tmp
-            );
-            $process = proc_open('lp -h '.$serverImpresoraFiscal.' -d '.$nombreImpresoraFiscal, $descriptorspec, $pipes, '/tmp', null);
+        	$printer = $comanda->findByName($nombreImpresoraFiscal);
+        	
+        	if ( !empty($printer)){
+        		$printer_id = $printer['Comandera']['id'];
+        	} else {
+        		$printer_id = 0;
+        	}
+        	
+        	$pjData['PrinterJob'] = array(
+        		'printer_id' => $printer_id ,
+        		'text' => $texto
+        		);
 
-            if (is_resource($process)) 
-            {
-                    fwrite($pipes[0],$texto);
-                    
-                    fclose($pipes[0]);
-                    fclose($pipes[1]);
-                    $ret =  proc_close($process);
-                    return true;
-            }
-            return false;
+        	$pj =& ClassRegistry::init('PrinterJob');
+        	
+        	$pj->create();
+
+        	$pj->save($pjData);
+
+			return 1;
+            
         }
 }
-?>

@@ -6,7 +6,6 @@
 		echo $form->input('id');
 		echo $form->input('name');
 		echo $form->input('description');
-		echo $form->input('path');
 		echo $form->input('imprime_ticket');
 	?>
 	</fieldset>

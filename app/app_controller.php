@@ -54,12 +54,15 @@ class AppController extends Controller {
              /* @var $auth AuthComponent */
              $auth;
 
+
+            header("Access-Control-Allow-Origin: *");
+
             $this->Auth->loginError ='Usuario o Contraseña Incorrectos';
             $this->Auth->authError = 'Usted no tiene permisos para acceder a esta página.';
 
                 
-            $this->Auth->allow('*');
-            $this->Auth->allow('display');
+          //  $this->Auth->allow('*');
+          //  $this->Auth->allow('display');
             $this->Auth->authorize = 'controller';
             //$this->Auth->loginAction = array('controller' => 'users', 'action' => 'login');
             $this->Auth->logoutRedirect='/users/login';
@@ -98,4 +101,3 @@ class AppController extends Controller {
         }
         
 }
-?>

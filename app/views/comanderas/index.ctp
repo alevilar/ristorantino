@@ -6,12 +6,11 @@ echo $paginator->counter(array(
 'format' => __('Pagina %page% de %pages%, mostrando %current% elementos de %count%', true)
 ));
 ?></p>
-<table cellpadding="0" cellspacing="0">
+<table class="table">
 <tr>
 	<th><?php echo $paginator->sort('id');?></th>
 	<th><?php echo $paginator->sort('name');?></th>
 	<th><?php echo $paginator->sort('description');?></th>
-	<th><?php echo $paginator->sort('path');?></th>
 	<th><?php echo $paginator->sort('imprime_ticket');?></th>
 	<th class="actions"><?php __('Acciones');?></th>
 </tr>
@@ -32,10 +31,7 @@ foreach ($comanderas as $comandera):
 		</td>
 		<td>
 			<?php echo $comandera['Comandera']['description']; ?>
-		</td>
-		<td>
-			<?php echo $comandera['Comandera']['path']; ?>
-		</td>
+		</td>		
 		<td>
 			<?php echo $comandera['Comandera']['imprime_ticket']; ?>
 		</td>
@@ -56,5 +52,6 @@ foreach ($comanderas as $comandera):
 <div class="actions">
 	<ul>
 		<li><?php echo $html->link(__('Nueva Comandera', true), array('action'=>'add')); ?></li>
+		<li><?php echo $html->link(__('Configurar Impresora Fiscal', true), array('action'=>'fiscal_edit')); ?></li>
 	</ul>
 </div>

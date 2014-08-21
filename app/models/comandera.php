@@ -4,8 +4,6 @@ class Comandera extends AppModel {
 	var $name = 'Comandera';
 	var $validate = array(
 		'name' => array('notempty'),
-		'description' => array('notempty'),
-		'path' => array('notempty'),
 		'imprime_ticket' => array('boolean')
 	);
 

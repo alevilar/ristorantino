@@ -402,7 +402,7 @@ class AuthComponent extends Object {
 		}
 
 		$this->Session->setFlash($this->authError, 'default', array(), 'auth');
-		$controller->redirect($controller->referer(), null, true);
+		$controller->redirect($controller->referer(), 403, true);
 		return false;
 	}
 /**
