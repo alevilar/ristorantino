@@ -15,10 +15,10 @@
         echo $this->Html->meta('icon');
 
         echo $this->Html->css(array(
-            '/lib/bootstrap/css/bootstrap.min',
-            '/lib/bootstrap/css/bootstrap-theme.min',
-            'ristorantino/style',
-            '/lib/bootstrap_datetimepicker/css/bootstrap-datetimepicker.min',
+            '/risto/lib/bootstrap/css/bootstrap.min',
+            '/risto/lib/bootstrap/css/bootstrap-theme.min',
+            '/risto/css/ristorantino/style',
+            '/risto/lib/bootstrap_datetimepicker/css/bootstrap-datetimepicker.min',
         ));
 
         $cssUserRole = "acl-" . $this->Session->read('Auth.User.role');
@@ -27,9 +27,9 @@
         }
         
         echo $this->Html->script(array(
-            'jquery.min',
-            '/lib/bootstrap/js/bootstrap.min',
-            '/lib/bootstrap_datetimepicker/js/bootstrap-datetimepicker.min',
+            '/risto/js/jquery.min',
+            '/risto/lib/bootstrap/js/bootstrap.min',
+            '/risto/lib/bootstrap_datetimepicker/js/bootstrap-datetimepicker.min',
         ));
 
         //echo $this->Html->script->link('Controls'); // PAD numerico

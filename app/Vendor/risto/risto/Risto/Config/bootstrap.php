@@ -34,6 +34,8 @@ Inflector::rules('plural', array(
         'pquery_category' => 'pquery_categories',
         'habitación' => 'habitaciones',
         'cierre' => 'cierres',
+        'room' => 'rooms',
+        'reservation' => 'reservations',
     ),
     'uninflected' => array()
         )

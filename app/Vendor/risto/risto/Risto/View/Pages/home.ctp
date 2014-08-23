@@ -1,5 +1,5 @@
 ﻿<?php
-echo $this->Html->css('ristorantino/home/ristorantino.home');
+echo $this->Html->css('/risto/css/ristorantino/home/ristorantino.home');
 
 
 ?>

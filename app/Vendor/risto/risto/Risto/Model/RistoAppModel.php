@@ -16,13 +16,14 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  **/
 
-App::uses('AppModel', 'Model');
+App::uses('Model', 'Model');
 
 /**
  * Class RistoAppModel
  *
  * @since         RistoAppModel
  */
-class RistoAppModel extends AppModel {
+class RistoAppModel extends Model {
 
+	public $actsAs = array('Containable');
 }

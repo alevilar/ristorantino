@@ -19,7 +19,7 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-App::uses('Controller', 'Controller');
+App::uses('RistoAppController', 'Risto.Controller');
 
 /**
  * Application Controller
@@ -30,52 +30,6 @@ App::uses('Controller', 'Controller');
  * @package		app.Controller
  * @link		http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
-class AppController extends Controller {
+class AppController extends RistoAppController {
     
-    public $layout = 'Risto.default';
-
-    public $helpers = array(
-        'Html' => array(
-            'className' => 'Bs3Html'
-            ),
-        'Form' => array(
-            'className' => 'PxForm'
-            // 'className' => 'Bs3Form'
-            ),
-        'Session',
-        'Paginator',
-        'Number',
-    );
-
-    public $components = array(
-        'Auth',
-        'Acl',
-        'Paginator',
-        'Configurator',
-        'RequestHandler',
-        'Session',
-        'Cookie',
-        'Search.Prg' => array(
-            'presetForm' => array(
-                'paramType' => 'querystring'
-                )
-            ),
-        
-        'DebugKit.Toolbar',
-    );
-
-    public function beforeFilter()
-    {
-        
-        $this->Auth->allow();
-   //     $this->Auth->authorize = array('Actions');
-/*
-        $this->Auth->loginAction = array(Configure::read('Routing.admin') => false, 'controller' => 'users', 'action' => 'login');
-        $this->Auth->logoutRedirect = array(Configure::read('Routing.admin') => false, 'controller' => 'users', 'action' => 'logout');
-*/
-
-  //      $this->RequestHandler->setContent('jqm', 'xhtml');
-
-        return parent::beforeFilter();
-    }
 }
