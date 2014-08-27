@@ -10,8 +10,5 @@
 	},
 	"require-dev": {
 		"phpunit/phpunit": "3.7.*"
-	},
-	"bin": [
-		"lib/Cake/Console/cake"
-	]
+	}
 }
