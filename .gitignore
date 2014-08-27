@@ -4,6 +4,7 @@ Config/database.php
 Config/settings.json
 Plugin/Search
 Plugin/FileUpload
+Plugin/DebugKit
 webroot/uploads/
 Vendor/
 *.bak
