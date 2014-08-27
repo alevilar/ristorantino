@@ -1,9 +1,9 @@
 {
-	"name": "ristorantino/app",
+	"name": "ristorantino/app",	
 	"description": "Ristorantino skeleton app",
 	"homepage": "http://github.com/alevilar/ristorantino-app",
 	"license": "MIT",
-	"version": "2.0.0",
+	"type": "project",
 	"authors": [
 		{
 			"name": "Ale Vilar",
@@ -29,8 +29,8 @@
 	"require": {
 		"php": ">=5.3.10",
 		"cakephp/cakephp": "~2.5",
-		"ristorantino/ristorantino": "master",
-		"fileupload/fileupload":"2.*"
+		"risto/risto": "master",
+		"file_upload/file_upload":"2.*"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "3.7.*@dev",
