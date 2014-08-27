@@ -2,11 +2,11 @@
 
 Skeleton for composer installer
 
-FOr installing you have to do this 3 steps in console:
+3 steps from in console, to install:
 
-* git clone git@github.com:alevilar/ristorantino.git
-* cd ristorantino
-* composer install
+- git clone git@github.com:alevilar/ristorantino.git
+- cd ristorantino
+- composer install
 
 
 ## Requirements
