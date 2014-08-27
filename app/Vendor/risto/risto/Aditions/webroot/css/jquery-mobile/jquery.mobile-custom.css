@@ -1,42 +1,42 @@
 .ui-icon-mesa {
-     background-image: url(images/tenedor.png); 
+     background-image: url(aditions/images/tenedor.png); 
      background-position: center;
      background-repeat: no-repeat;
  }
  .ui-icon-mesab {
-     background-image: url(images/tenedorb.png); 
+     background-image: url(aditions/images/tenedorb.png); 
      background-position: center;
      background-repeat: no-repeat;
  }
 .ui-icon-mozo {
-     background-image: url(images/mozomonio.png); 
+     background-image: url(aditions/images/mozomonio.png); 
      background-position: center;
      background-repeat: no-repeat;
 }
 .ui-icon-mozob {
-     background-image: url(images/mozomoniob.png); 
+     background-image: url(aditions/images/mozomoniob.png); 
      background-position: center;
      background-repeat: no-repeat;
 }
 .ui-icon-entrada {
-     background-image: url(images/entrada.png); 
+     background-image: url(aditions/images/entrada.png); 
      background-position: center;
      background-repeat: no-repeat;
 }
 .ui-icon-mesa-abierta {
-     background-image: url(images/mesa-abrio.png); 
+     background-image: url(aditions/images/mesa-abrio.png); 
      background-position: center;
      background-repeat: no-repeat;
 }
 
 .ui-icon-mesa-cobrada {
-     background-image: url(images/mesa-porcerrar.png); 
+     background-image: url(aditions/images/mesa-porcerrar.png); 
      background-position: center;
      background-repeat: no-repeat;
 }
 
 .ui-icon-mesa-cerrada {
-     background-image: url(images/mesa-cerrada.png); 
+     background-image: url(aditions/images/mesa-cerrada.png); 
      background-position: center;
      background-repeat: no-repeat;
 }

@@ -42,7 +42,8 @@
                 
                
                 $debug = Configure::read('debug');
-                if ( $debug > 0 ) {
+
+                if ( $debug > 0 || true) {
                     echo $this->Html->script( array(
                         '/aditions/js/jquery-1.6.4',
                         '/aditions/js/jquery.tmpl.min',

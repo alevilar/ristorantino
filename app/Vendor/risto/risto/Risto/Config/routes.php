@@ -18,8 +18,6 @@
 
 	
 
-
-
 	// URL´s para la adicion
 	// estos se suponen que son rutas temporales de migracion de Chocha012 a la Chocha014
 	$myPlugins = array(		
@@ -33,11 +31,13 @@
 		);
 
 	foreach ( $myPlugins as $rt) {		
-		Router::connect('/'. $rt['controller'] .':action', array('plugin'=>$rt['plugin'], 'controller' => $rt['controller']));
-		Router::connect('/'. $rt['controller'] .':action/*', array('plugin'=>$rt['plugin'], 'controller' => $rt['controller']));
+		Router::connect('/'. $rt['controller'] .'/:action', array('plugin'=>$rt['plugin'], 'controller' => $rt['controller']));
+		Router::connect('/'. $rt['controller'] .'/:action/*', array('plugin'=>$rt['plugin'], 'controller' => $rt['controller']));
 		Router::connect('/'.$rt['controller'], array('plugin'=>$rt['plugin'], 'action' => 'index', 'controller' => $rt['controller']));
 	}
 
 	unset($myPlugins);
+
+	
 
 

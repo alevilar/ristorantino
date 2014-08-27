@@ -32,8 +32,7 @@ Risto.Adition.cliente.prototype = {
     
     getTipoFactura: function(){
         var tipo = '';
-
-        if ( this.IvaResponsabilidad && this.IvaResponsabilidad.TipoFactura) {
+        if ( this.IvaResponsabilidad && this.IvaResponsabilidad.TipoFactura && typeof this.IvaResponsabilidad.TipoFactura != 'function' ) {
             tipo = this.IvaResponsabilidad.TipoFactura.name();    
         }
         
