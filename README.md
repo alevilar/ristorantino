@@ -10,6 +10,7 @@ Skeleton for composer installer
 
 
 Then you need to:
+
 1. create a database (mysql)
 2. copy Config/database.php.default as database.php file and set user and password (cakePHP`s database file)
 3. import into that database you have created the sql´s files from Config/Schema:
