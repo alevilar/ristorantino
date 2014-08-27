@@ -1,7 +1,38 @@
+# App
+Config/croogo.php
+Config/database.php
+Config/settings.json
+webroot/uploads/
+Vendor/
+*.bak
+*.swp
+
+# Packages
+cookbooks/
+node_modules/
+webroot/vendors/
+
+# Cake cache
+tmp/
+tmp/*
+[Cc]onfig/core.php
+[Cc]onfig/database.php
+app/tmp/*
+app/[Cc]onfig/core.php
+app/[Cc]onfig/database.php
+!empty
+
+
+# Others
+.DS_Store
+
+
+
+
+
 # User specific & automatically generated files #
 #################################################
 /app/Config/database.php
-/app/tmp
 /lib/Cake/Console/Templates/skel/tmp/
 /plugins
 /vendors
@@ -20,3 +51,6 @@
 Icon?
 ehthumbs.db
 Thumbs.db
+
+
+composer.lock
