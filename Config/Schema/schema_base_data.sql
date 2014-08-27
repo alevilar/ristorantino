@@ -703,9 +703,9 @@ INSERT INTO `mesas` (`id`, `numero`, `mozo_id`, `subtotal`, `total`, `cliente_id
 -- Volcar la base de datos para la tabla `mozos`
 --
 
-INSERT INTO `mozos` (`id`, `user_id`, `numero`, `activo`, `deleted_date`, `deleted`) VALUES
-(1, 2, 1, 1, NULL, 0),
-(2, 2, 4, 1, NULL, 0);
+INSERT INTO `mozos` ( `numero`, `nombre`, `apellido` ,`activo`, `deleted_date`, `deleted`) VALUES
+(1, "Carlos", "Lopez", 1, NULL, 0),
+(4, "Mariano", "Gomez", 1, NULL, 0);
 
 -- --------------------------------------------------------
 
