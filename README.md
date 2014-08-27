@@ -1,4 +1,4 @@
-== Ristorantino Project==
+# Ristorantino Project 
 
 Skeleton for composer installer
 
@@ -9,6 +9,6 @@ cd ristorantino
 composer install
 
 
-=== Requirements ===
+## Requirements
 You need composer (https://getcomposer.org) installed, so dependencies are auto-managed.
 
