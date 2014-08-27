@@ -30,7 +30,7 @@
 		"php": ">=5.3",		
 		"cakephp/cakephp": "~2.5",
 		"risto/risto": "master",
-		"risto/fileupload": "2.0"
+		"cakephp/file_upload": "2.*"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "3.7.*@dev",

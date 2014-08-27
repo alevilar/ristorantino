@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `account_cierres` (
   `created` timestamp NULL DEFAULT NULL,
   `modified` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
 
 -- --------------------------------------------------------
 
@@ -171,13 +171,13 @@ CREATE TABLE IF NOT EXISTS `account_tipo_impuestos` (
 CREATE TABLE IF NOT EXISTS `acos` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `parent_id` int(10) DEFAULT NULL,
-  `model` varchar(255) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `model` varchar(255) COLLATE utf8_general_ci DEFAULT NULL,
   `foreign_key` int(10) DEFAULT NULL,
-  `alias` varchar(255) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `alias` varchar(255) COLLATE utf8_general_ci DEFAULT NULL,
   `lft` int(10) DEFAULT NULL,
   `rght` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=814 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=814 ;
 
 -- --------------------------------------------------------
 
@@ -188,13 +188,13 @@ CREATE TABLE IF NOT EXISTS `acos` (
 CREATE TABLE IF NOT EXISTS `aros` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `parent_id` int(10) DEFAULT NULL,
-  `model` varchar(255) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `model` varchar(255) COLLATE utf8_general_ci DEFAULT NULL,
   `foreign_key` int(10) DEFAULT NULL,
-  `alias` varchar(255) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `alias` varchar(255) COLLATE utf8_general_ci DEFAULT NULL,
   `lft` int(10) DEFAULT NULL,
   `rght` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=37 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=37 ;
 
 -- --------------------------------------------------------
 
@@ -206,13 +206,13 @@ CREATE TABLE IF NOT EXISTS `aros_acos` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `aro_id` int(10) NOT NULL,
   `aco_id` int(10) NOT NULL,
-  `_create` varchar(2) COLLATE utf8_spanish_ci NOT NULL DEFAULT '0',
-  `_read` varchar(2) COLLATE utf8_spanish_ci NOT NULL DEFAULT '0',
-  `_update` varchar(2) COLLATE utf8_spanish_ci NOT NULL DEFAULT '0',
-  `_delete` varchar(2) COLLATE utf8_spanish_ci NOT NULL DEFAULT '0',
+  `_create` varchar(2) COLLATE utf8_general_ci NOT NULL DEFAULT '0',
+  `_read` varchar(2) COLLATE utf8_general_ci NOT NULL DEFAULT '0',
+  `_update` varchar(2) COLLATE utf8_general_ci NOT NULL DEFAULT '0',
+  `_delete` varchar(2) COLLATE utf8_general_ci NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `ARO_ACO_KEY` (`aro_id`,`aco_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=9 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=9 ;
 
 -- --------------------------------------------------------
 
@@ -225,7 +225,7 @@ CREATE TABLE IF NOT EXISTS `cake_sessions` (
   `data` text,
   `expires` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -299,16 +299,16 @@ CREATE TABLE IF NOT EXISTS `categorias` (
   `parent_id` int(10) unsigned DEFAULT NULL,
   `lft` int(10) unsigned DEFAULT NULL,
   `rght` int(10) unsigned DEFAULT NULL,
-  `name` varchar(20) COLLATE utf8_spanish_ci NOT NULL,
-  `description` text COLLATE utf8_spanish_ci NOT NULL,
-  `image_url` varchar(200) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `name` varchar(20) COLLATE utf8_general_ci NOT NULL,
+  `description` text COLLATE utf8_general_ci NOT NULL,
+  `image_url` varchar(200) COLLATE utf8_general_ci DEFAULT NULL,
   `created` timestamp NULL DEFAULT NULL,
   `modified` timestamp NULL DEFAULT NULL,
   `deleted_date` timestamp NULL DEFAULT NULL,
   `deleted` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `parent` (`parent_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=105 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=105 ;
 
 -- --------------------------------------------------------
 
@@ -318,19 +318,19 @@ CREATE TABLE IF NOT EXISTS `categorias` (
 
 CREATE TABLE IF NOT EXISTS `clientes` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `codigo` varchar(64) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `mail` varchar(110) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `telefono` varchar(30) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `codigo` varchar(64) COLLATE utf8_general_ci DEFAULT NULL,
+  `mail` varchar(110) COLLATE utf8_general_ci DEFAULT NULL,
+  `telefono` varchar(30) COLLATE utf8_general_ci DEFAULT NULL,
   `descuento_id` int(10) unsigned DEFAULT '0',
-  `nombre` varchar(110) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `nrodocumento` varchar(11) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `nombre` varchar(110) COLLATE utf8_general_ci DEFAULT NULL,
+  `nrodocumento` varchar(11) COLLATE utf8_general_ci DEFAULT NULL,
   `tipo_documento_id` int(11) DEFAULT NULL,
-  `domicilio` varchar(110) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `domicilio` varchar(110) COLLATE utf8_general_ci DEFAULT NULL,
   `iva_responsabilidad_id` int(11) DEFAULT NULL,
   `created` timestamp NULL DEFAULT NULL,
   `modified` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=98 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=98 ;
 
 -- --------------------------------------------------------
 
@@ -344,10 +344,10 @@ CREATE TABLE IF NOT EXISTS `comandas` (
   `prioridad` tinyint(4) NOT NULL,
   `impresa` timestamp NULL DEFAULT NULL,
   `created` timestamp NULL DEFAULT NULL,
-  `observacion` text COLLATE utf8_spanish_ci,
+  `observacion` text COLLATE utf8_general_ci,
   PRIMARY KEY (`id`),
   KEY `mesa_id` (`mesa_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=10206 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=10206 ;
 
 -- --------------------------------------------------------
 
@@ -357,13 +357,13 @@ CREATE TABLE IF NOT EXISTS `comandas` (
 
 CREATE TABLE IF NOT EXISTS `comanderas` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(64) COLLATE utf8_spanish_ci NOT NULL,
-  `description` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
-  `driver_name` varchar(32) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `path` varchar(64) COLLATE utf8_spanish_ci NOT NULL,
+  `name` varchar(64) COLLATE utf8_general_ci NOT NULL,
+  `description` varchar(100) COLLATE utf8_general_ci NOT NULL,
+  `driver_name` varchar(32) COLLATE utf8_general_ci DEFAULT NULL,
+  `path` varchar(64) COLLATE utf8_general_ci NOT NULL,
   `imprime_ticket` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'me dice si imprime o no tickets factura',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=6 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=6 ;
 
 -- --------------------------------------------------------
 
@@ -378,7 +378,7 @@ CREATE TABLE IF NOT EXISTS `comensales` (
   `cant_bebes` tinyint(4) NOT NULL,
   `mesa_id` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -395,7 +395,7 @@ CREATE TABLE IF NOT EXISTS `configs` (
   `created` timestamp NULL DEFAULT NULL,
   `modified` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=30 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=30 ;
 
 -- --------------------------------------------------------
 
@@ -407,7 +407,7 @@ CREATE TABLE IF NOT EXISTS `config_categories` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
 
 -- --------------------------------------------------------
 
@@ -417,8 +417,8 @@ CREATE TABLE IF NOT EXISTS `config_categories` (
 
 CREATE TABLE IF NOT EXISTS `descuentos` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
-  `description` text CHARACTER SET utf8 COLLATE utf8_spanish_ci,
+  `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `description` text CHARACTER SET utf8 COLLATE utf8_general_ci,
   `porcentaje` float NOT NULL,
   `created` timestamp NULL DEFAULT NULL,
   `modified` timestamp NULL DEFAULT NULL,
@@ -439,7 +439,7 @@ CREATE TABLE IF NOT EXISTS `detalle_comandas` (
   `cant` tinyint(4) NOT NULL,
   `cant_eliminada` tinyint(4) NOT NULL DEFAULT '0',
   `comanda_id` int(11) unsigned NOT NULL,
-  `observacion` text CHARACTER SET utf8 COLLATE utf8_spanish_ci,
+  `observacion` text CHARACTER SET utf8 COLLATE utf8_general_ci,
   `created` timestamp NULL DEFAULT NULL,
   `modified` timestamp NULL DEFAULT NULL,
   `es_entrada` tinyint(4) DEFAULT '0',
@@ -459,7 +459,7 @@ CREATE TABLE IF NOT EXISTS `detalle_sabores` (
   `detalle_comanda_id` int(11) NOT NULL,
   `sabor_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=6068 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=6068 ;
 
 -- --------------------------------------------------------
 
@@ -481,12 +481,12 @@ CREATE TABLE IF NOT EXISTS `estados` (
 
 CREATE TABLE IF NOT EXISTS `gastos` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(200) COLLATE utf8_spanish_ci NOT NULL,
+  `name` varchar(200) COLLATE utf8_general_ci NOT NULL,
   `importe` float(10,2) NOT NULL,
   `created` timestamp NULL DEFAULT NULL,
   `modified` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -529,7 +529,7 @@ CREATE TABLE IF NOT EXISTS `historico_precios` (
   `producto_id` int(11) NOT NULL,
   `created` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=461 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=461 ;
 
 -- --------------------------------------------------------
 
@@ -589,10 +589,10 @@ CREATE TABLE IF NOT EXISTS `hotel_room_states` (
 
 CREATE TABLE IF NOT EXISTS `impfiscales` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(20) COLLATE utf8_spanish_ci NOT NULL,
-  `path` varchar(64) COLLATE utf8_spanish_ci NOT NULL,
+  `name` varchar(20) COLLATE utf8_general_ci NOT NULL,
+  `path` varchar(64) COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -602,11 +602,11 @@ CREATE TABLE IF NOT EXISTS `impfiscales` (
 
 CREATE TABLE IF NOT EXISTS `inventory_categories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(65) COLLATE utf8_spanish_ci NOT NULL,
+  `name` varchar(65) COLLATE utf8_general_ci NOT NULL,
   `created` timestamp NULL DEFAULT NULL,
   `modified` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -621,7 +621,7 @@ CREATE TABLE IF NOT EXISTS `inventory_counts` (
   `created` timestamp NULL DEFAULT NULL,
   `modified` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -631,11 +631,11 @@ CREATE TABLE IF NOT EXISTS `inventory_counts` (
 
 CREATE TABLE IF NOT EXISTS `inventory_products` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(65) COLLATE utf8_spanish_ci NOT NULL,
+  `name` varchar(65) COLLATE utf8_general_ci NOT NULL,
   `category_id` int(11) DEFAULT NULL,
   `created` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -645,11 +645,11 @@ CREATE TABLE IF NOT EXISTS `inventory_products` (
 
 CREATE TABLE IF NOT EXISTS `iva_responsabilidades` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `codigo_fiscal` varchar(1) COLLATE utf8_spanish_ci NOT NULL,
-  `name` varchar(24) COLLATE utf8_spanish_ci NOT NULL,
+  `codigo_fiscal` varchar(1) COLLATE utf8_general_ci NOT NULL,
+  `name` varchar(24) COLLATE utf8_general_ci NOT NULL,
   `tipo_factura_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=7 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=7 ;
 
 -- --------------------------------------------------------
 
@@ -680,7 +680,7 @@ CREATE TABLE IF NOT EXISTS `mesas` (
   KEY `numero` (`numero`),
   KEY `time_cobro` (`time_cobro`),
   KEY `created` (`time_cerro`,`mozo_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=3302 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=3302 ;
 
 -- --------------------------------------------------------
 
@@ -690,16 +690,16 @@ CREATE TABLE IF NOT EXISTS `mesas` (
 
 CREATE TABLE IF NOT EXISTS `mozos` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(64) COLLATE utf8_spanish_ci NOT NULL,
-  `apellido` varchar(64) COLLATE utf8_spanish_ci NOT NULL,
-  `image_url` varchar(256) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `nombre` varchar(64) COLLATE utf8_general_ci NOT NULL,
+  `apellido` varchar(64) COLLATE utf8_general_ci NOT NULL,
+  `image_url` varchar(256) COLLATE utf8_general_ci DEFAULT NULL,
   `numero` int(11) NOT NULL,
   `activo` tinyint(1) NOT NULL DEFAULT '0',
   `deleted_date` timestamp NULL DEFAULT NULL,
   `deleted` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `numero` (`numero`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=24 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=24 ;
 
 -- --------------------------------------------------------
 
@@ -709,11 +709,11 @@ CREATE TABLE IF NOT EXISTS `mozos` (
 
 CREATE TABLE IF NOT EXISTS `observaciones` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(64) COLLATE utf8_spanish_ci NOT NULL,
+  `name` varchar(64) COLLATE utf8_general_ci NOT NULL,
   `created` timestamp NULL DEFAULT NULL,
   `modified` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=6 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=6 ;
 
 -- --------------------------------------------------------
 
@@ -723,11 +723,11 @@ CREATE TABLE IF NOT EXISTS `observaciones` (
 
 CREATE TABLE IF NOT EXISTS `observacion_comandas` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(64) COLLATE utf8_spanish_ci NOT NULL,
+  `name` varchar(64) COLLATE utf8_general_ci NOT NULL,
   `created` timestamp NULL DEFAULT NULL,
   `modified` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=4 ;
 
 -- --------------------------------------------------------
 
@@ -743,7 +743,7 @@ CREATE TABLE IF NOT EXISTS `pagos` (
   `created` timestamp NULL DEFAULT NULL,
   `modified` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=2785 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=2785 ;
 
 -- --------------------------------------------------------
 
@@ -753,11 +753,11 @@ CREATE TABLE IF NOT EXISTS `pagos` (
 
 CREATE TABLE IF NOT EXISTS `pquery_categories` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
+  `name` varchar(50) COLLATE utf8_general_ci NOT NULL,
   `created` timestamp NULL DEFAULT NULL,
   `modified` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
@@ -767,17 +767,17 @@ CREATE TABLE IF NOT EXISTS `pquery_categories` (
 
 CREATE TABLE IF NOT EXISTS `pquery_queries` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(78) COLLATE utf8_spanish_ci NOT NULL,
-  `description` text COLLATE utf8_spanish_ci,
-  `query` text COLLATE utf8_spanish_ci NOT NULL,
+  `name` varchar(78) COLLATE utf8_general_ci NOT NULL,
+  `description` text COLLATE utf8_general_ci,
+  `query` text COLLATE utf8_general_ci NOT NULL,
   `ver_online` tinyint(1) NOT NULL DEFAULT '0',
   `created` timestamp NULL DEFAULT NULL,
   `modified` timestamp NULL DEFAULT NULL,
   `category_id` int(11) NOT NULL DEFAULT '0',
   `expiration_time` timestamp NULL DEFAULT NULL,
-  `columns` text COLLATE utf8_spanish_ci,
+  `columns` text COLLATE utf8_general_ci,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=3 ;
 
 -- --------------------------------------------------------
 
@@ -804,9 +804,9 @@ CREATE TABLE IF NOT EXISTS `printers` (
 
 CREATE TABLE IF NOT EXISTS `productos` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(30) COLLATE utf8_spanish_ci NOT NULL,
-  `abrev` varchar(28) COLLATE utf8_spanish_ci NOT NULL,
-  `description` text COLLATE utf8_spanish_ci NOT NULL,
+  `name` varchar(30) COLLATE utf8_general_ci NOT NULL,
+  `abrev` varchar(28) COLLATE utf8_general_ci NOT NULL,
+  `description` text COLLATE utf8_general_ci NOT NULL,
   `categoria_id` int(10) unsigned NOT NULL,
   `precio` float(10,2) NOT NULL,
   `comandera_id` int(11) NOT NULL,
@@ -816,7 +816,7 @@ CREATE TABLE IF NOT EXISTS `productos` (
   `deleted_date` timestamp NULL DEFAULT NULL,
   `deleted` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=1078 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1078 ;
 
 -- --------------------------------------------------------
 
@@ -830,7 +830,7 @@ CREATE TABLE IF NOT EXISTS `productos_precios_futuros` (
   `precio` float NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `producto_id` (`producto_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 -- --------------------------------------------------------
 
@@ -870,9 +870,9 @@ CREATE TABLE IF NOT EXISTS `reservations` (
 
 CREATE TABLE IF NOT EXISTS `restaurantes` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(60) COLLATE utf8_spanish_ci NOT NULL,
+  `name` varchar(60) COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -928,7 +928,7 @@ CREATE TABLE IF NOT EXISTS `room_states` (
 
 CREATE TABLE IF NOT EXISTS `sabores` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(64) COLLATE utf8_spanish_ci NOT NULL,
+  `name` varchar(64) COLLATE utf8_general_ci NOT NULL,
   `categoria_id` int(11) NOT NULL,
   `precio` float NOT NULL,
   `created` timestamp NULL DEFAULT NULL,
@@ -936,7 +936,7 @@ CREATE TABLE IF NOT EXISTS `sabores` (
   `deleted_date` timestamp NULL DEFAULT NULL,
   `deleted` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=123 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=123 ;
 
 -- --------------------------------------------------------
 
@@ -960,10 +960,10 @@ CREATE TABLE IF NOT EXISTS `tags` (
 
 CREATE TABLE IF NOT EXISTS `tipo_de_pagos` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(110) COLLATE utf8_spanish_ci NOT NULL,
-  `image_url` varchar(200) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `name` varchar(110) COLLATE utf8_general_ci NOT NULL,
+  `image_url` varchar(200) COLLATE utf8_general_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=15 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=15 ;
 
 -- --------------------------------------------------------
 
@@ -973,10 +973,10 @@ CREATE TABLE IF NOT EXISTS `tipo_de_pagos` (
 
 CREATE TABLE IF NOT EXISTS `tipo_documentos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `codigo_fiscal` varchar(1) COLLATE utf8_spanish_ci NOT NULL,
-  `name` varchar(24) COLLATE utf8_spanish_ci NOT NULL,
+  `codigo_fiscal` varchar(1) COLLATE utf8_general_ci NOT NULL,
+  `name` varchar(24) COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=9 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=9 ;
 
 -- --------------------------------------------------------
 
@@ -986,13 +986,13 @@ CREATE TABLE IF NOT EXISTS `tipo_documentos` (
 
 CREATE TABLE IF NOT EXISTS `tipo_facturas` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
-  `codename` varchar(1) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `name` varchar(100) COLLATE utf8_general_ci NOT NULL,
+  `codename` varchar(1) COLLATE utf8_general_ci DEFAULT NULL,
   `created` timestamp NULL DEFAULT NULL,
   `modified` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=9 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=9 ;
 
 -- --------------------------------------------------------
 
@@ -1002,16 +1002,16 @@ CREATE TABLE IF NOT EXISTS `tipo_facturas` (
 
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `username` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
+  `username` varchar(50) COLLATE utf8_general_ci NOT NULL,
   `rol_id` int(11) NOT NULL,
-  `password` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
-  `role` varchar(64) COLLATE utf8_spanish_ci NOT NULL DEFAULT 'invitado',
-  `nombre` varchar(40) COLLATE utf8_spanish_ci NOT NULL,
-  `apellido` varchar(40) COLLATE utf8_spanish_ci DEFAULT '',
-  `telefono` varchar(20) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `domicilio` varchar(110) COLLATE utf8_spanish_ci DEFAULT '',
+  `password` varchar(50) COLLATE utf8_general_ci NOT NULL,
+  `role` varchar(64) COLLATE utf8_general_ci NOT NULL DEFAULT 'invitado',
+  `nombre` varchar(40) COLLATE utf8_general_ci NOT NULL,
+  `apellido` varchar(40) COLLATE utf8_general_ci DEFAULT '',
+  `telefono` varchar(20) COLLATE utf8_general_ci DEFAULT NULL,
+  `domicilio` varchar(110) COLLATE utf8_general_ci DEFAULT '',
   `created` timestamp NULL DEFAULT NULL,
   `modified` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=31 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=31 ;
