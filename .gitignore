@@ -2,6 +2,7 @@
 Config/croogo.php
 Config/database.php
 Config/settings.json
+Plugin/
 Plugin/Search
 Plugin/FileUpload
 Plugin/DebugKit

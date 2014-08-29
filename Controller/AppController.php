@@ -31,5 +31,18 @@ App::uses('RistoAppController', 'Risto.Controller');
  * @link		http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
 class AppController extends RistoAppController {
-    
+     public function beforeFilter()
+    {
+        
+        //$this->Auth->allow();
+   //     $this->Auth->authorize = array('Actions');
+/*
+        $this->Auth->loginAction = array(Configure::read('Routing.admin') => false, 'controller' => 'users', 'action' => 'login');
+        $this->Auth->logoutRedirect = array(Configure::read('Routing.admin') => false, 'controller' => 'users', 'action' => 'logout');
+*/
+
+  //      $this->RequestHandler->setContent('jqm', 'xhtml');
+
+        return parent::beforeFilter();
+    }
 }

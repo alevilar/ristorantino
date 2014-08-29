@@ -883,11 +883,13 @@ CREATE TABLE IF NOT EXISTS `restaurantes` (
 CREATE TABLE IF NOT EXISTS `roles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) NOT NULL,
-  `machin_name` varchar(64) NOT NULL,
+  `machin_name` VARCHAR( 64 ) NOT NULL,
   `created` timestamp NULL DEFAULT NULL,
   `modified` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
+);
+
+
 
 -- --------------------------------------------------------
 
@@ -930,6 +932,7 @@ CREATE TABLE IF NOT EXISTS `sabores` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) COLLATE utf8_general_ci NOT NULL,
   `categoria_id` int(11) NOT NULL,
+  `grupo_sabor_id` int(11) NULL,
   `precio` float NOT NULL,
   `created` timestamp NULL DEFAULT NULL,
   `modified` timestamp NULL DEFAULT NULL,
@@ -1005,7 +1008,6 @@ CREATE TABLE IF NOT EXISTS `users` (
   `username` varchar(50) COLLATE utf8_general_ci NOT NULL,
   `rol_id` int(11) NOT NULL,
   `password` varchar(50) COLLATE utf8_general_ci NOT NULL,
-  `role` varchar(64) COLLATE utf8_general_ci NOT NULL DEFAULT 'invitado',
   `nombre` varchar(40) COLLATE utf8_general_ci NOT NULL,
   `apellido` varchar(40) COLLATE utf8_general_ci DEFAULT '',
   `telefono` varchar(20) COLLATE utf8_general_ci DEFAULT NULL,
