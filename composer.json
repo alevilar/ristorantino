@@ -1,5 +1,4 @@
 {	
-	"name": "risto/project",
 	"type": "project",
 	"description": "Ristorantino skeleton app",
 	"homepage": "http://github.com/alevilar/ristorantino-app",
@@ -29,10 +28,8 @@
     ],
 	"require": {
 		"php": ">=5.3",		
-		"cakephp/cakephp": "~2.5",
-		"cakedc/search": "~2.5",
-		"risto/risto": "master",
-		"cakephp/file_upload": "2.*"
+		"cakephp/cakephp": "~2.5",		
+		"risto/risto": "master"		
 	},
 	"require-dev": {
 		"phpunit/phpunit": "3.7.*@dev",
