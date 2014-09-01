@@ -349,21 +349,6 @@ CREATE TABLE IF NOT EXISTS `comandas` (
   KEY `mesa_id` (`mesa_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=10206 ;
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `comanderas`
---
-
-CREATE TABLE IF NOT EXISTS `comanderas` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(64) COLLATE utf8_general_ci NOT NULL,
-  `description` varchar(100) COLLATE utf8_general_ci NOT NULL,
-  `driver_name` varchar(32) COLLATE utf8_general_ci DEFAULT NULL,
-  `path` varchar(64) COLLATE utf8_general_ci NOT NULL,
-  `imprime_ticket` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'me dice si imprime o no tickets factura',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=6 ;
 
 -- --------------------------------------------------------
 
@@ -790,6 +775,7 @@ CREATE TABLE IF NOT EXISTS `printers` (
   `name` varchar(32) NOT NULL,
   `alias` varchar(32) NOT NULL,
   `driver` varchar(32) NOT NULL,
+  `driver_model` varchar(32) NULL,
   `output` varchar(64) DEFAULT NULL,
   `created` timestamp NULL DEFAULT NULL,
   `modified` timestamp NULL DEFAULT NULL,
@@ -809,7 +795,7 @@ CREATE TABLE IF NOT EXISTS `productos` (
   `description` text COLLATE utf8_general_ci NOT NULL,
   `categoria_id` int(10) unsigned NOT NULL,
   `precio` float(10,2) NOT NULL,
-  `comandera_id` int(11) NOT NULL,
+  `printer_id` int(11) NOT NULL,
   `order` int(11) DEFAULT '0',
   `created` timestamp NULL DEFAULT NULL,
   `modified` timestamp NULL DEFAULT NULL,
@@ -1017,3 +1003,14 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=31 ;
+
+
+
+CREATE TABLE IF NOT EXISTS `printer_jobs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `printer_id` int(11) NOT NULL,
+  `text` text  CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
+  `created` timestamp NULL DEFAULT NULL,
+  `modified` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);

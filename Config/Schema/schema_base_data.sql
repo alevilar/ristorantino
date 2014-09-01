@@ -579,19 +579,11 @@ INSERT INTO `comandas` (`id`, `mesa_id`, `prioridad`, `impresa`, `created`, `obs
 
 
 
-INSERT INTO `comanderas` (`id`, `name`, `description`, `path`, `imprime_ticket`) VALUES
-(1, 'comanderacocina', 'comandera de la cocina', '/tmp', 0);
+
+INSERT INTO  `printers` ( `id` , `name` ,`alias` ,`driver` ,`driver_model` ,`output` ,`created` ,`modified`) 
+VALUES ( NULL ,  'comanderacocina',  'comanderacocina',  'Receipt',  'Bematech',  'Database', NULL , NULL );
 
 
--- --------------------------------------------------------
-
---
--- Volcar la base de datos para la tabla `comanderas`
---
-
---
--- Volcar la base de datos para la tabla `comensales`
---
 
 
 --
@@ -815,3 +807,4 @@ INSERT INTO `roles` (`name`, `machin_name`) VALUES
 ('Administrador', 'administrador'),
 ('Mozo', 'mozo'),
 ('Adicionista', 'adicionista');
+
