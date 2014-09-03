@@ -1,6 +1,8 @@
 # App
 Config/croogo.php
 Config/database.php
+Config/risto_config.ini
+Config/risto.ini
 Config/settings.json
 Plugin/
 Plugin/Search

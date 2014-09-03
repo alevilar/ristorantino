@@ -1,0 +1,7 @@
+<?php
+	
+
+Configure::write('Site', array(
+	'domain' => 'example.com',
+	'protocol' => 'http//',
+));

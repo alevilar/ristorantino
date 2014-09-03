@@ -1,8 +1,14 @@
+[Site]
+alias = subdomain
+name = Site Name
+domain = example.com
+protocol = http://
+
+
 [Printers]
 ticket_template  = ticket
 receipt_template = comandas
 output = Database
-
 
 [Adicion]
 reload_interval_timeout = 60000

@@ -218,7 +218,7 @@ setlocale(LC_TIME ,"es_AR.utf8");
  *
  */
 	Configure::write('Session', array(
-		'defaults' => 'php'
+		'defaults' => 'database'
 	));
 
 /**
@@ -263,7 +263,7 @@ setlocale(LC_TIME ,"es_AR.utf8");
  * access control lists.
  */
 	Configure::write('Acl.classname', 'DbAcl');
-	Configure::write('Acl.database', 'default');
+	Configure::write('Acl.database', 'tenant');
 
 /**
  * Uncomment this line and correct your server timezone to fix
