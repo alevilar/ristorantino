@@ -29,6 +29,9 @@ TempImpfiscal = /tmp/impfiscal
 imprimePrimeroRemito = 1
 tituloMozo = Mozo
 tituloMesa = Mesa
+usar_generica = 1
+generica_name = Kiosko
+generica_mozo_id = 1
 
 [Mozo]
 descuento_maximo = 15
@@ -43,7 +46,6 @@ name = Nombre Comercio
 mail = info@resto.com
 cuit = 30-00000000-1
 backup_mail = mails-backups@gmail.com
-
 
 
 [Search]

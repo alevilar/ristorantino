@@ -23,6 +23,7 @@
  */
 
 
+
 App::build(array(
 	'Plugin' => array(APP . 'Vendor' . DS . 'ristorantino' . DS . 'plugins' . DS ),
 ), App::APPEND);
