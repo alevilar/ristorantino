@@ -1,5 +1,8 @@
+# Tenants
+Tenants/
+
+
 # App
-Config/Tenants
 Config/croogo.php
 Config/database.php
 Config/risto.php

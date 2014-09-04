@@ -992,7 +992,7 @@ CREATE TABLE IF NOT EXISTS `tipo_facturas` (
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `username` varchar(50) COLLATE utf8_general_ci NOT NULL,
-  `role_id` int(11) NOT NULL,
+  `rol_id` int(11) NOT NULL,
   `password` varchar(50) COLLATE utf8_general_ci NOT NULL,
   `nombre` varchar(40) COLLATE utf8_general_ci NOT NULL,
   `apellido` varchar(40) COLLATE utf8_general_ci DEFAULT '',
