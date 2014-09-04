@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "dd0c83dc48d3c2d28d896903fb6c1ac6",
+    "hash": "02aced2d12eebd346d55f5bb6e696822",
     "packages": [
         {
             "name": "cakedc/search",
@@ -56,12 +56,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/cakephp.git",
-                "reference": "4a805af5c6e0e6f89552e1f1dd402e87675f9857"
+                "reference": "b5bfbfcf15ca387db7c5d3c4fee0846e872ee1e8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/4a805af5c6e0e6f89552e1f1dd402e87675f9857",
-                "reference": "4a805af5c6e0e6f89552e1f1dd402e87675f9857",
+                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/b5bfbfcf15ca387db7c5d3c4fee0846e872ee1e8",
+                "reference": "b5bfbfcf15ca387db7c5d3c4fee0846e872ee1e8",
                 "shasum": ""
             },
             "require": {
@@ -91,7 +91,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2014-08-23 07:20:19"
+            "time": "2014-09-03 08:39:37"
         },
         {
             "name": "cakephp/file_upload",
@@ -200,15 +200,16 @@
             "time": "2014-08-18 20:00:12"
         },
         {
-            "name": "risto/risto",
+            "name": "ristorantino/plugins",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/alevilar/ristorantino-vendor",
-                "reference": "4f9af6577f707fe88df92344f60955531851b386"
+                "reference": "44b080a1bb7ed44f68622b90b262303e4a3ed48f"
             },
             "require": {
                 "cakedc/search": "~2.2",
+                "cakephp/file_upload": "2.*",
                 "composer/installers": "~1.0",
                 "php": ">=5.3.0"
             },
@@ -225,7 +226,7 @@
             ],
             "description": "Ristorantino Mágico Vendor",
             "homepage": "http://github.com/alevilar/ristorantino-vendor",
-            "time": "2014-08-27 04:56:46"
+            "time": "2014-09-04 06:46:18"
         }
     ],
     "packages-dev": [
@@ -284,19 +285,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "61fed79803b6c75d461b909dfac05bbef5cd4f46"
+                "reference": "fe2466802556d3fe4e4d1d58ffd3ccfd0a19be0b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/61fed79803b6c75d461b909dfac05bbef5cd4f46",
-                "reference": "61fed79803b6c75d461b909dfac05bbef5cd4f46",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/fe2466802556d3fe4e4d1d58ffd3ccfd0a19be0b",
+                "reference": "fe2466802556d3fe4e4d1d58ffd3ccfd0a19be0b",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3",
                 "phpunit/php-file-iterator": ">=1.3.0@stable",
                 "phpunit/php-text-template": ">=1.2.0@stable",
-                "phpunit/php-token-stream": ">=1.1.3@stable"
+                "phpunit/php-token-stream": ">=1.1.3,<1.3.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "3.7.*@dev"
@@ -337,7 +338,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2014-05-19 01:58:57"
+            "time": "2014-09-02 10:13:14"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -478,12 +479,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-token-stream.git",
-                "reference": "15a719c78af351a7b7cf3e390d28c9f23ae8fbbb"
+                "reference": "f8d5d08c56de5cfd592b3340424a81733259a876"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/15a719c78af351a7b7cf3e390d28c9f23ae8fbbb",
-                "reference": "15a719c78af351a7b7cf3e390d28c9f23ae8fbbb",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/f8d5d08c56de5cfd592b3340424a81733259a876",
+                "reference": "f8d5d08c56de5cfd592b3340424a81733259a876",
                 "shasum": ""
             },
             "require": {
@@ -496,7 +497,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.2-dev"
+                    "dev-master": "1.3-dev"
                 }
             },
             "autoload": {
@@ -519,7 +520,7 @@
             "keywords": [
                 "tokenizer"
             ],
-            "time": "2014-08-27 08:24:49"
+            "time": "2014-08-31 06:12:13"
         },
         {
             "name": "phpunit/phpunit",
@@ -658,12 +659,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Yaml.git",
-                "reference": "d84b97a12046b2c34e8457626b9f2b72dec0c183"
+                "reference": "b5922e0afc21531b84ddef806e66ba4f84f770b0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Yaml/zipball/d84b97a12046b2c34e8457626b9f2b72dec0c183",
-                "reference": "d84b97a12046b2c34e8457626b9f2b72dec0c183",
+                "url": "https://api.github.com/repos/symfony/Yaml/zipball/b5922e0afc21531b84ddef806e66ba4f84f770b0",
+                "reference": "b5922e0afc21531b84ddef806e66ba4f84f770b0",
                 "shasum": ""
             },
             "require": {
@@ -696,7 +697,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "http://symfony.com",
-            "time": "2014-08-05 09:07:51"
+            "time": "2014-08-31 03:28:38"
         }
     ],
     "aliases": [
