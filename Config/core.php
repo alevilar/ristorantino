@@ -1,4 +1,32 @@
 <?php
+
+if (file_exists(APP . 'Config' . DS . 'risto.php')) {
+	require APP . 'Config' . DS . 'risto.php';
+} else {
+	if (!defined('LOG_ERROR')) {
+		define('LOG_ERROR', LOG_ERR);
+	}
+
+	Configure::write('Error', array(
+		'handler' => 'ErrorHandler::handleError',
+		'level' => E_ALL & ~E_DEPRECATED,
+		'trace' => true
+	));
+
+	Configure::write('Exception', array(
+		'handler' => 'ErrorHandler::handleException',
+		'renderer' => 'ExceptionRenderer',
+		'log' => true
+	));
+
+	Configure::write('Session', array(
+		'defaults' => 'php',
+		'ini' => array(
+			'session.cookie_httponly' => 1
+		)
+	));
+}
+
 /**
  * This is core configuration file.
  *

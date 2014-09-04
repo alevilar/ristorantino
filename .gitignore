@@ -2,8 +2,7 @@
 Config/Tenants
 Config/croogo.php
 Config/database.php
-Config/risto_config.ini
-Config/risto.ini
+Config/risto.php
 Config/settings.json
 Plugin/
 Plugin/Search

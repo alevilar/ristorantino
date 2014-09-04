@@ -721,7 +721,7 @@ INSERT INTO `observacion_comandas` (`name`) VALUES
 --
 
 
-INSERT INTO `productos` (`id`, `name`, `abrev`, `description`, `categoria_id`, `precio`, `comandera_id`, `order`, `created`, `modified`, `deleted_date`, `deleted`) VALUES
+INSERT INTO `productos` (`id`, `name`, `abrev`, `description`, `categoria_id`, `precio`, `printer_id`, `order`, `created`, `modified`, `deleted_date`, `deleted`) VALUES
 (1, 'Paella', 'paella', '', 1, 100.00, 1, NULL, '2012-11-28 23:11:57', '2012-11-28 23:11:57', NULL, 0),
 (2, 'Pure', 'pure', '', 2, 12.00, 1, 2, '2013-05-17 13:50:34', '2013-05-17 13:50:34', NULL, 0),
 (3, 'Papas Fritas', 'papas', '', 2, 33.00, 1, NULL, '2013-05-17 13:50:46', '2013-05-17 13:50:46', NULL, 0),
