@@ -1,9 +1,7 @@
 [Site]
 alias = subdomain
 name = Site Name
-domain = example.com
-protocol = http://
-
+country_code = AR
 
 [Printers]
 ticket_template  = ticket
@@ -22,14 +20,7 @@ jqm_page_transition = 1
 [Horario]
 corte_del_dia = 6
 
-[ImpresoraFiscal]
-server = localhost
-tempDest = /tmp/dest
-modelo = hasar_441
-tempFuente = /tmp/fuente
-encoding = 
-nombre = fiscal
-TempImpfiscal = /tmp/impfiscal
+
 
 [Mesa]
 imprimePrimeroRemito = 1
@@ -48,7 +39,6 @@ valorCubierto = 0
 iva_resp =
 razon_social = RAZON SOCIAL S.A
 ib = 
-name = Nombre Comercio
 mail = info@resto.com
 cuit = 30-00000000-1
 backup_mail = mails-backups@gmail.com
