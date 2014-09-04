@@ -24,8 +24,11 @@
         {
             "type": "git",
             "url": "https://github.com/alevilar/ristorantino-vendor"
+        },
+        {
+            "type": "git",
+            "url": "git@github.com:alevilar/MtSites.git"
         }
-        
     ],
 	"require": {
 		"php": ">=5.3",		
