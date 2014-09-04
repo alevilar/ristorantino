@@ -7,7 +7,10 @@ Configure::write('Site', array(
 ));
 
 
-
+	
+if ( !defined(ADMIN_ROLE_ID) ) {
+	define('ADMIN_ROLE_ID', 1);
+}
 
 /**
  * Session configuration.
