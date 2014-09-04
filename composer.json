@@ -19,11 +19,11 @@
     "repositories": [
         {
             "type": "git",
-            "url": "https://github.com/alevilar/CakePHP-FileUpload-Plugin"
+            "url": "git@github.com:alevilar/CakePHP-FileUpload-Plugin"
         },
         {
             "type": "git",
-            "url": "https://github.com/alevilar/ristorantino-vendor"
+            "url": "git@github.com:alevilar/ristorantino-vendor"
         },
         {
             "type": "git",
@@ -33,7 +33,9 @@
 	"require": {
 		"php": ">=5.3",		
 		"cakephp/cakephp": "~2.5",		
-		"ristorantino/plugins": "master"		
+		"ristorantino/plugins": "master",
+		"ristorantino/mt_sites": "master",
+		"ristorantino/install": "master"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "3.7.*@dev",

@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "02aced2d12eebd346d55f5bb6e696822",
+    "hash": "1fff3f08ef3e6432cea99aaf060309a3",
     "packages": [
         {
             "name": "cakedc/search",
@@ -200,12 +200,42 @@
             "time": "2014-08-18 20:00:12"
         },
         {
+            "name": "ristorantino/mt_sites",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:alevilar/MtSites.git",
+                "reference": "ea94e24f08ec41b11099f617113d266919b30769"
+            },
+            "require": {
+                "composer/installers": "*",
+                "php": ">=5.3.0"
+            },
+            "type": "cakephp-plugin",
+            "extra": {
+                "installer-name": "MtSites"
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alejandro Vilar",
+                    "email": "alevilar@gmail.com",
+                    "homepage": "https://github.com/alevilar/MtSites"
+                }
+            ],
+            "description": "Multi Tenant Sites for Ristorantino Mágico",
+            "homepage": "https://github.com/alevilar/MtSites",
+            "time": "2014-09-04 23:12:14"
+        },
+        {
             "name": "ristorantino/plugins",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/alevilar/ristorantino-vendor",
-                "reference": "44b080a1bb7ed44f68622b90b262303e4a3ed48f"
+                "reference": "1d6fd423c445ef2b84cea83ce90605f1ca6b0861"
             },
             "require": {
                 "cakedc/search": "~2.2",
@@ -226,7 +256,7 @@
             ],
             "description": "Ristorantino Mágico Vendor",
             "homepage": "http://github.com/alevilar/ristorantino-vendor",
-            "time": "2014-09-04 06:46:18"
+            "time": "2014-09-04 17:14:06"
         }
     ],
     "packages-dev": [
@@ -475,44 +505,45 @@
         },
         {
             "name": "phpunit/php-token-stream",
-            "version": "dev-master",
+            "version": "1.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-token-stream.git",
-                "reference": "f8d5d08c56de5cfd592b3340424a81733259a876"
+                "reference": "ad4e1e23ae01b483c16f600ff1bebec184588e32"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/f8d5d08c56de5cfd592b3340424a81733259a876",
-                "reference": "f8d5d08c56de5cfd592b3340424a81733259a876",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/ad4e1e23ae01b483c16f600ff1bebec184588e32",
+                "reference": "ad4e1e23ae01b483c16f600ff1bebec184588e32",
                 "shasum": ""
             },
             "require": {
                 "ext-tokenizer": "*",
                 "php": ">=5.3.3"
             },
-            "require-dev": {
-                "phpunit/phpunit": "~4.2"
-            },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.3-dev"
+                    "dev-master": "1.2-dev"
                 }
             },
             "autoload": {
                 "classmap": [
-                    "src/"
+                    "PHP/"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
+            "include-path": [
+                ""
+            ],
             "license": [
                 "BSD-3-Clause"
             ],
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sebastian@phpunit.de"
+                    "email": "sb@sebastian-bergmann.de",
+                    "role": "lead"
                 }
             ],
             "description": "Wrapper around PHP's tokenizer extension.",
@@ -520,7 +551,7 @@
             "keywords": [
                 "tokenizer"
             ],
-            "time": "2014-08-31 06:12:13"
+            "time": "2014-03-03 05:10:30"
         },
         {
             "name": "phpunit/phpunit",
