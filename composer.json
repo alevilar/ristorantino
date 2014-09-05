@@ -1,15 +1,15 @@
 {	
 	"name":"ristorantino/ristorantino",
 	"type": "project",
-	"description": "Ristorantino skeleton app",
-	"homepage": "http://github.com/alevilar/ristorantino-app",
+	"description": "Ristorantino Mágico Punto de Venta en CakePHP",
+	"homepage": "http://github.com/alevilar/ristorantino",
 	"license": "MIT",
 	"type": "project",
 	"authors": [
 		{
 			"name": "Ale Vilar",
 			"email": "alevilar@gmail.com",
-			"homepage": "http://alevilar.com"
+			"homepage": "http://www.alevilar.com"
 		}
 	],
 	"minimum-stability": "dev",
