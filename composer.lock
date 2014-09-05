@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1fff3f08ef3e6432cea99aaf060309a3",
+    "hash": "02d2a32e9e70bf6d8d8c0cfbee586660",
     "packages": [
         {
             "name": "cakedc/search",
@@ -200,12 +200,42 @@
             "time": "2014-08-18 20:00:12"
         },
         {
+            "name": "ristorantino/install",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:alevilar/Install.git",
+                "reference": "db424ecad17c1565a71a067a063a0ca027eee657"
+            },
+            "require": {
+                "composer/installers": "*",
+                "php": ">=5.3.0"
+            },
+            "type": "cakephp-plugin",
+            "extra": {
+                "installer-name": "Install"
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alejandro Vilar",
+                    "email": "alevilar@gmail.com",
+                    "homepage": "www.alevilar.com"
+                }
+            ],
+            "description": "Install Plugin Ristorantino Mágico",
+            "homepage": "https://github.com/alevilar/Install",
+            "time": "2014-09-04 23:53:19"
+        },
+        {
             "name": "ristorantino/mt_sites",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "git@github.com:alevilar/MtSites.git",
-                "reference": "ea94e24f08ec41b11099f617113d266919b30769"
+                "reference": "42045dc4b735b3fe86681c180cd93f9c146c8deb"
             },
             "require": {
                 "composer/installers": "*",
@@ -227,15 +257,15 @@
             ],
             "description": "Multi Tenant Sites for Ristorantino Mágico",
             "homepage": "https://github.com/alevilar/MtSites",
-            "time": "2014-09-04 23:12:14"
+            "time": "2014-09-04 23:48:56"
         },
         {
             "name": "ristorantino/plugins",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/alevilar/ristorantino-vendor",
-                "reference": "1d6fd423c445ef2b84cea83ce90605f1ca6b0861"
+                "url": "git@github.com:alevilar/ristorantino-vendor",
+                "reference": "629bd721bcb025f662b689b48b2f6cd3bf5f80fd"
             },
             "require": {
                 "cakedc/search": "~2.2",
@@ -256,7 +286,7 @@
             ],
             "description": "Ristorantino Mágico Vendor",
             "homepage": "http://github.com/alevilar/ristorantino-vendor",
-            "time": "2014-09-04 17:14:06"
+            "time": "2014-09-04 23:28:58"
         }
     ],
     "packages-dev": [
