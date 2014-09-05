@@ -1,24 +1,22 @@
-# Ristorantino Project 
+# Ristorantino Mágico CakePHP Project 
 
-Skeleton for composer installer
+### How to install?
+.... into your webroot folder run
 
-3 steps from console, to install:
+*For using*
+''' composer create-project -s dev ristorantino/ristorantino '''
 
-1. git clone git@github.com:alevilar/ristorantino.git
-2. cd ristorantino
-3. composer install
+*For Development*
+''' composer create-project -s dev --dev --prefer-source ristorantino/ristorantino=dev-master '''
 
 
 Then you need to:
 
-1. create a database (mysql)
-2. copy Config/database.php.default as database.php file and set user and password (cakePHP`s database file)
-3. import into that database you have created the sql´s files from Config/Schema:
-  - schema_struct.sql (This will create the structure)
-  - schema_base_data.sql (This will put some basic data into databases, including some examples)
+go to your web browser, visit http://localhost/ristorantino and finish installing
+
 
 ## Requirements
-You need composer (https://getcomposer.org) installed, so dependencies are auto-managed.
+You need composer (https://getcomposer.org) and Git installed, so dependencies are auto-managed.
 
 
 

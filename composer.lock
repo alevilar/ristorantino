@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "02d2a32e9e70bf6d8d8c0cfbee586660",
+    "hash": "3f2bce773c97781c7ac36dab04470644",
     "packages": [
         {
             "name": "cakedc/search",
@@ -56,12 +56,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/cakephp.git",
-                "reference": "b5bfbfcf15ca387db7c5d3c4fee0846e872ee1e8"
+                "reference": "2311c13f129f152264f712144f27e40c38cf753d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/b5bfbfcf15ca387db7c5d3c4fee0846e872ee1e8",
-                "reference": "b5bfbfcf15ca387db7c5d3c4fee0846e872ee1e8",
+                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/2311c13f129f152264f712144f27e40c38cf753d",
+                "reference": "2311c13f129f152264f712144f27e40c38cf753d",
                 "shasum": ""
             },
             "require": {
@@ -91,7 +91,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2014-09-03 08:39:37"
+            "time": "2014-09-05 00:26:55"
         },
         {
             "name": "cakephp/file_upload",
@@ -205,7 +205,7 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:alevilar/Install.git",
-                "reference": "db424ecad17c1565a71a067a063a0ca027eee657"
+                "reference": "9293253e6196bae87b53d1765d0881aa5d1cb2e1"
             },
             "require": {
                 "composer/installers": "*",
@@ -227,7 +227,7 @@
             ],
             "description": "Install Plugin Ristorantino Mágico",
             "homepage": "https://github.com/alevilar/Install",
-            "time": "2014-09-04 23:53:19"
+            "time": "2014-09-06 00:13:21"
         },
         {
             "name": "ristorantino/mt_sites",
