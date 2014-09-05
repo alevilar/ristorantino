@@ -7,11 +7,7 @@
 ```
 composer create-project -s dev ristorantino/ristorantino
 ```
-
-*For Development*
-```
-composer create-project -s dev --dev --prefer-source ristorantino/ristorantino=dev-master
-```
+Do not delete VCS files (.git files) if you are a developer
 
 
 Then you need to:
