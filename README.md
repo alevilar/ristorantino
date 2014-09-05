@@ -3,7 +3,6 @@
 ### How to install?
 .... into your webroot folder run
 
-*For using*
 ```
 composer create-project -s dev ristorantino/ristorantino
 ```
@@ -12,7 +11,9 @@ Do not delete VCS files (.git files) if you are a developer
 
 Then you need to:
 
-go to your web browser, visit http://localhost/ristorantino and finish installing
+1) check perms in filesystem
+2) go to your web browser, visit http://localhost/ristorantino 
+3) Run web installer
 
 
 ## Requirements
