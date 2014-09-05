@@ -205,7 +205,7 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:alevilar/Install.git",
-                "reference": "9293253e6196bae87b53d1765d0881aa5d1cb2e1"
+                "reference": "b57de7089e50806e007dc583c14ef256611287bb"
             },
             "require": {
                 "composer/installers": "*",
@@ -222,12 +222,12 @@
                 {
                     "name": "Alejandro Vilar",
                     "email": "alevilar@gmail.com",
-                    "homepage": "www.alevilar.com"
+                    "homepage": "http://www.alevilar.com"
                 }
             ],
             "description": "Install Plugin Ristorantino Mágico",
             "homepage": "https://github.com/alevilar/Install",
-            "time": "2014-09-06 00:13:21"
+            "time": "2014-09-05 04:14:32"
         },
         {
             "name": "ristorantino/mt_sites",
@@ -235,7 +235,7 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:alevilar/MtSites.git",
-                "reference": "42045dc4b735b3fe86681c180cd93f9c146c8deb"
+                "reference": "9a4af144d75f3abe641d51da3ebc54869a71503e"
             },
             "require": {
                 "composer/installers": "*",
@@ -257,7 +257,7 @@
             ],
             "description": "Multi Tenant Sites for Ristorantino Mágico",
             "homepage": "https://github.com/alevilar/MtSites",
-            "time": "2014-09-04 23:48:56"
+            "time": "2014-09-05 05:31:16"
         },
         {
             "name": "ristorantino/plugins",
@@ -265,7 +265,7 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:alevilar/ristorantino-vendor",
-                "reference": "629bd721bcb025f662b689b48b2f6cd3bf5f80fd"
+                "reference": "934d07b1c704bcfab836f4b6363f9ef9261d8278"
             },
             "require": {
                 "cakedc/search": "~2.2",
@@ -286,7 +286,7 @@
             ],
             "description": "Ristorantino Mágico Vendor",
             "homepage": "http://github.com/alevilar/ristorantino-vendor",
-            "time": "2014-09-04 23:28:58"
+            "time": "2014-09-05 05:32:24"
         }
     ],
     "packages-dev": [
