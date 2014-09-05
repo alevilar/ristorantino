@@ -4,10 +4,14 @@
 .... into your webroot folder run
 
 *For using*
-''' composer create-project -s dev ristorantino/ristorantino '''
+```
+composer create-project -s dev ristorantino/ristorantino
+```
 
 *For Development*
-''' composer create-project -s dev --dev --prefer-source ristorantino/ristorantino=dev-master '''
+```
+composer create-project -s dev --dev --prefer-source ristorantino/ristorantino=dev-master
+```
 
 
 Then you need to:
