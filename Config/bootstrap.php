@@ -96,6 +96,10 @@ Cache::config('default', array('engine' => 'File'));
  *
  * ));
  */
+
+
+
+
 Configure::write('Dispatcher.filters', array(
     'AssetDispatcher',
     'CacheDispatcher'
@@ -117,14 +121,16 @@ CakeLog::config('error', array(
 ));
 
 
+
+if ( !defined('ADMIN_ROLE_ID') ) {
+    define('ADMIN_ROLE_ID', 1);
+}
+
+
 // CakePlugin::load('Risto', array('bootstrap' => true, 'routes'=> true));
 
 
+CakePlugin::load('Install', array('bootstrap' => true, 'routes' => true));
+
 CakePlugin::loadAll();
-
-// CakePlugin::load('DebugKit');
-// CakePlugin::load('Search');
 CakePlugin::load('Risto', array( 'bootstrap' => true, 'routes' => true ));
-
-
-

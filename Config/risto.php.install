@@ -4,7 +4,7 @@
 Configure::write('Site', array(
 	'domain' => 'example.com',
 	'protocol' => 'http//',
-	'multiTenant' => false,
+	'multiTenant' => true,
 ));
 
 

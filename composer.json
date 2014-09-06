@@ -19,7 +19,7 @@
     "repositories": [
         {
             "type": "git",
-            "url": "git@github.com:alevilar/CakePHP-FileUpload-Plugin"
+            "url": "https://github.com/alevilar/CakePHP-FileUpload-Plugin"
         },
         {
             "type": "git",
@@ -29,17 +29,23 @@
             "type": "git",
             "url": "git@github.com:alevilar/MtSites.git"
         },
-         {
+        {
             "type": "git",
             "url": "git@github.com:alevilar/Install.git"
+        },
+        {
+            "type": "git",
+            "url": "git@github.com:alevilar/ReservationManager.git"
         }
+        
     ],
 	"require": {
 		"php": ">=5.3",		
 		"cakephp/cakephp": "~2.5",		
 		"ristorantino/plugins": "master",
 		"ristorantino/mt_sites": "master",
-		"ristorantino/install": "master"
+		"ristorantino/install": "master",
+		"ristorantino/reservation_manager": "master"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "3.7.*@dev",

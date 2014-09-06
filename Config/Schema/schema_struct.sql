@@ -1014,3 +1014,26 @@ CREATE TABLE IF NOT EXISTS `printer_jobs` (
   `modified` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
+
+
+
+
+CREATE TABLE IF NOT EXISTS `sites` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(64) CHARACTER SET utf8 NOT NULL,
+  `alias` varchar(64) CHARACTER SET utf8 NOT NULL,
+  `enabled` tinyint(1) DEFAULT '1',
+  `created` timestamp NULL DEFAULT NULL,
+  `modified` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+
+CREATE TABLE IF NOT EXISTS `sites_users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `site_id` int(11) NOT NULL,
+  `created` datetime DEFAULT NULL,
+  `updated` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
