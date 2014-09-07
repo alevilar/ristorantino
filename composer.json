@@ -41,7 +41,7 @@
     ],
 	"require": {
 		"php": ">=5.3",		
-		"cakephp/cakephp": "~2.5",		
+		"cakephp/cakephp": "2.5.4",		
 		"ristorantino/plugins": "master",
 		"ristorantino/mt_sites": "master",
 		"ristorantino/install": "master",
