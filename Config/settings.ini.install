@@ -1,7 +1,8 @@
 [Site]
-alias = subdomain
+alias = tenantName
 name = Site Name
 country_code = AR
+
 
 [Printers]
 ticket_template  = ticket
@@ -26,6 +27,8 @@ corte_del_dia = 6
 imprimePrimeroRemito = 1
 tituloMozo = Mozo
 tituloMesa = Mesa
+tituloCubierto = Huesped
+tituloCliente = Afiliado
 usar_generica = 1
 generica_name = Kiosko
 generica_mozo_id = 1

@@ -833,20 +833,6 @@ CREATE TABLE IF NOT EXISTS `productos_tags` (
 
 -- --------------------------------------------------------
 
---
--- Estructura de tabla para la tabla `reservations`
---
-
-CREATE TABLE IF NOT EXISTS `reservations` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `room_id` int(10) NOT NULL,
-  `observation` text,
-  `checkin` datetime NOT NULL,
-  `checkout` datetime NOT NULL,
-  `created` datetime DEFAULT NULL,
-  `modified` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -877,36 +863,6 @@ CREATE TABLE IF NOT EXISTS `roles` (
 
 
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `rooms`
---
-
-CREATE TABLE IF NOT EXISTS `rooms` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  `price` decimal(8,4) NOT NULL DEFAULT '0.0000',
-  `description` text,
-  `room_state_id` int(10) NOT NULL,
-  `created` datetime DEFAULT NULL,
-  `modified` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `room_states`
---
-
-CREATE TABLE IF NOT EXISTS `room_states` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  `created` datetime DEFAULT NULL,
-  `modified` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 

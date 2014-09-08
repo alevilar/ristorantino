@@ -70,29 +70,11 @@ class DATABASE_CONFIG {
 		'host' => 'localhost',
 		'login' => 'user',
 		'password' => 'password',
-		'database' => 'database_name',
+		'database' => 'database_name',		
 		'prefix' => '',
 		//'encoding' => 'utf8',
 	);
 
-
-
-	/**
-	*
-	*	For tenant connections
-	*
-	**/
-	public $tenant = array(
-		'datasource' => 'Database/Mysql',
-		'persistent' => false,
-		'host' => 'localhost',
-		'login' => 'user',
-		'password' => 'password',
-		'database' => '', // NO COMPLETAR !! se completa dinamicamente en el construct
-		'database_prefix' => 'risto_', // donde ir creando los nuevos tenants segun nombre del sitio
-		'prefix' => '',
-		//'encoding' => 'utf8',
-	);
 
 
 

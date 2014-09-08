@@ -808,3 +808,16 @@ INSERT INTO `roles` (`name`, `machin_name`) VALUES
 ('Mozo', 'mozo'),
 ('Adicionista', 'adicionista');
 
+
+
+
+INSERT INTO `hotel_room_states` (`id`, `name`, `created`, `modified`, `color`) VALUES
+(1, 'Disponible', '2014-09-08 00:03:55', '2014-09-08 00:03:55', NULL),
+(2, 'En RefacciÃ³n', '2014-09-08 00:04:29', '2014-09-08 00:04:29', NULL);
+
+
+
+
+INSERT INTO `hotel_rooms` (`id`, `name`, `description`, `room_state_id`, `created`, `modified`) VALUES
+(1, 'Imperial', '', 1, '2014-09-08 00:04:50', '2014-09-08 00:04:50'),
+(2, 'Presidencial', '', 2, '2014-09-08 00:05:01', '2014-09-08 00:05:01');
