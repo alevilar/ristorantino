@@ -23,19 +23,19 @@
         },
         {
             "type": "git",
-            "url": "git@github.com:alevilar/ristorantino-vendor"
+            "url": "https://github.com/alevilar/ristorantino-vendor"
         },
         {
             "type": "git",
-            "url": "git@github.com:alevilar/MtSites.git"
+            "url": "https://github.com/alevilar/MtSites.git"
         },
         {
             "type": "git",
-            "url": "git@github.com:alevilar/Install.git"
+            "url": "https://github.com/alevilar/Install.git"
         },
         {
             "type": "git",
-            "url": "git@github.com:alevilar/ReservationManager.git"
+            "url": "https://github.com/alevilar/ReservationManager.git"
         }
         
     ],
