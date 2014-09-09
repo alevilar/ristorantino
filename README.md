@@ -6,7 +6,11 @@
 ```
 composer create-project -s dev ristorantino/ristorantino
 ```
+
 Do not delete VCS files (.git files) if you are a developer
+when asking:
+Do you want to remove the existing VCS (.git, .svn..) history? [Y,n]? 
+PRESS NOOOOO!!!
 
 
 Then you need to:

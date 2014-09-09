@@ -130,7 +130,8 @@ if ( !defined('ADMIN_ROLE_ID') ) {
 // CakePlugin::load('Risto', array('bootstrap' => true, 'routes'=> true));
 
 
+CakePlugin::loadAll();
+
 CakePlugin::load('Install', array('bootstrap' => true, 'routes' => true));
 
-CakePlugin::loadAll();
 CakePlugin::load('Risto', array( 'bootstrap' => true, 'routes' => true ));
