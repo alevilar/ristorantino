@@ -455,8 +455,9 @@ CREATE TABLE IF NOT EXISTS `detalle_sabores` (
 CREATE TABLE IF NOT EXISTS `estados` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `name` varchar(60) NOT NULL,
+  `color` VARCHAR( 14 ) NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 

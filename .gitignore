@@ -4,6 +4,7 @@ Tenants/
 
 # App
 Config/croogo.php
+Config/resume.php
 Config/database.php
 Config/risto.php
 Config/settings.json

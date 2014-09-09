@@ -799,11 +799,17 @@ INSERT INTO `roles` (`name`, `machin_name`) VALUES
 ('Adicionista', 'adicionista');
 
 
+INSERT INTO `estados` (`name`, `color`) VALUES
+('Abierta', 'btn-info'),
+('Cerrada', 'btn-warning'),
+('Cobrada', 'btn-default');
+
+
 
 
 INSERT INTO `hotel_room_states` (`id`, `name`, `created`, `modified`, `color`) VALUES
-(1, 'Disponible', '2014-09-08 00:03:55', '2014-09-08 00:03:55', NULL),
-(2, 'En RefacciÃ³n', '2014-09-08 00:04:29', '2014-09-08 00:04:29', NULL);
+(1, 'Disponible', '2014-09-08 00:03:55', '2014-09-08 00:03:55', 'btn-success'),
+(2, 'En Refacción', '2014-09-08 00:04:29', '2014-09-08 00:04:29', 'btn-warning');
 
 
 
@@ -811,3 +817,10 @@ INSERT INTO `hotel_room_states` (`id`, `name`, `created`, `modified`, `color`) V
 INSERT INTO `hotel_rooms` (`id`, `name`, `description`, `room_state_id`, `created`, `modified`) VALUES
 (1, 'Imperial', '', 1, '2014-09-08 00:04:50', '2014-09-08 00:04:50'),
 (2, 'Presidencial', '', 2, '2014-09-08 00:05:01', '2014-09-08 00:05:01');
+
+
+
+INSERT INTO `cash_cajas` (`id`, `name`, `computa_ingresos`, `computa_egresos`, `created`, `modified`) VALUES
+(1, 'Caja Ventas', 1, 1, '2014-09-09 14:20:21', '2014-09-09 14:20:21');
+
+
