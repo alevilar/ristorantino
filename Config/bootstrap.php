@@ -30,9 +30,9 @@ App::build(array(
 
 
 
-
 // Setup a 'default' cache configuration for use in the application.
 Cache::config('default', array('engine' => 'File'));
+
 
 /**
  * The settings below can be used to set additional paths to models, views and controllers.
@@ -128,7 +128,6 @@ if ( !defined('ADMIN_ROLE_ID') ) {
 
 
 // CakePlugin::load('Risto', array('bootstrap' => true, 'routes'=> true));
-
 
 CakePlugin::loadAll();
 
