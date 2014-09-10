@@ -677,12 +677,12 @@ INSERT INTO `detalle_comandas` (`id`, `producto_id`, `cant`, `cant_eliminada`, `
 -- Volcar la base de datos para la tabla `iva_responsabilidades`
 --
 
-INSERT INTO `iva_responsabilidades` (`id`, `codigo_fiscal`, `name`) VALUES
-(1, 'I', 'Resp. Inscripto'),
-(2, 'E', 'Exento'),
-(3, 'A', 'No Responsable'),
-(4, 'C', 'Consumidor Final'),
-(5, 'T', 'No Categorizado');
+INSERT INTO `iva_responsabilidades` (`id`, `codigo_fiscal`, `name`, , `tipo_factura_id`) VALUES
+(1, 'I', 'Resp. Inscripto', 1),
+(2, 'E', 'Exento', 2),
+(3, 'A', 'No Responsable', 2),
+(4, 'C', 'Consumidor Final', 2),
+(5, 'T', 'No Categorizado', 2);
 
 -- --------------------------------------------------------
 
@@ -783,11 +783,11 @@ INSERT INTO `tipo_documentos` (`id`, `codigo_fiscal`, `name`) VALUES
 --
 
 INSERT INTO `tipo_facturas` (`id`, `name`, `created`, `modified`) VALUES
-(1, 'Factura "A"', '2010-03-27 20:04:20', '2010-03-27 20:04:20'),
-(2, 'Factura "B"', '2010-03-27 20:04:27', '2010-03-27 20:04:27'),
-(3, 'Remito "X"', '2010-03-27 20:04:36', '2010-03-27 20:04:36'),
-(4, 'Factura "M"', '2010-03-27 20:04:42', '2010-03-27 20:04:42'),
-(5, 'Factura "C"', '2010-03-27 20:04:48', '2010-03-27 20:04:48'),
+(1, '"A"', '2010-03-27 20:04:20', '2010-03-27 20:04:20'),
+(2, '"B"', '2010-03-27 20:04:27', '2010-03-27 20:04:27'),
+(3, '"X"', '2010-03-27 20:04:36', '2010-03-27 20:04:36'),
+(4, '"M"', '2010-03-27 20:04:42', '2010-03-27 20:04:42'),
+(5, '"C"', '2010-03-27 20:04:48', '2010-03-27 20:04:48'),
 (6, 'Vale', '2010-03-27 20:04:54', '2010-03-27 20:04:54'),
 (7, 'Otros', '2010-03-27 20:05:18', '2010-03-27 20:05:18');
 
@@ -801,7 +801,7 @@ INSERT INTO `roles` (`name`, `machin_name`) VALUES
 
 INSERT INTO `estados` (`name`, `color`) VALUES
 ('Abierta', 'btn-info'),
-('Cerrada', 'btn-warning'),
+('Facturada', 'btn-warning'),
 ('Cobrada', 'btn-default');
 
 

@@ -1,18 +1,6 @@
 <?php
 	
 
-Configure::write('Site', array(
-	'domain' => 'example.com',
-	'protocol' => 'http//',
-));
-
-
-	
-if ( !defined(ADMIN_ROLE_ID) ) {
-	define('ADMIN_ROLE_ID', 1);
-}
-
-
 /**
  * Session configuration.
  *

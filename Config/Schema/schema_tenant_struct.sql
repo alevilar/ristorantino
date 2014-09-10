@@ -952,3 +952,15 @@ CREATE TABLE IF NOT EXISTS `printer_jobs` (
 );
 
 
+
+CREATE TABLE IF NOT EXISTS `roles_users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `rol_id` int(11) NOT NULL,
+  `created` timestamp NULL DEFAULT NULL,
+  `modified` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`,`rol_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+
