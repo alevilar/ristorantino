@@ -1,8 +1,7 @@
 [Site]
-alias = tenantName
-name = Site Name
-country_code = AR
-
+alias = {default_alias}
+name = {default_name}
+country_code = {default_country_code}
 
 [Printers]
 ticket_template  = ticket
