@@ -1,32 +1,5 @@
 <?php
 
-if ( file_exists(APP . 'Config' . DS . 'risto.php') ) {
-	require APP . 'Config' . DS . 'risto.php';
-} else {
-	if (!defined('LOG_ERROR')) {
-		define('LOG_ERROR', LOG_ERR);
-	}
-
-	Configure::write('Error', array(
-		'handler' => 'ErrorHandler::handleError',
-		'level' => E_ALL & ~E_DEPRECATED,
-		'trace' => true
-	));
-
-	Configure::write('Exception', array(
-		'handler' => 'ErrorHandler::handleException',
-		'renderer' => 'ExceptionRenderer',
-		'log' => true
-	));
-
-	Configure::write('Session', array(
-		'defaults' => 'php',
-		'ini' => array(
-			'session.cookie_httponly' => 1
-		)
-	));
-}
-
 /**
  * This is core configuration file.
  *
@@ -114,6 +87,61 @@ setlocale(LC_TIME ,"es_AR.utf8");
  * Application wide charset encoding
  */
 	Configure::write('App.encoding', 'UTF-8');
+
+
+
+
+/**
+ * Session configuration.
+ *
+ * Contains an array of settings to use for session configuration. The defaults key is
+ * used to define a default preset to use for sessions, any settings declared here will override
+ * the settings of the default config.
+ *
+ * ## Options
+ *
+ * - `Session.cookie` - The name of the cookie to use. Defaults to 'CAKEPHP'
+ * - `Session.timeout` - The number of minutes you want sessions to live for. This timeout is handled by CakePHP
+ * - `Session.cookieTimeout` - The number of minutes you want session cookies to live for.
+ * - `Session.checkAgent` - Do you want the user agent to be checked when starting sessions? You might want to set the
+ *    value to false, when dealing with older versions of IE, Chrome Frame or certain web-browsing devices and AJAX
+ * - `Session.defaults` - The default configuration set to use as a basis for your session.
+ *    There are four builtins: php, cake, cache, database.
+ * - `Session.handler` - Can be used to enable a custom session handler. Expects an array of callables,
+ *    that can be used with `session_save_handler`. Using this option will automatically add `session.save_handler`
+ *    to the ini array.
+ * - `Session.autoRegenerate` - Enabling this setting, turns on automatic renewal of sessions, and
+ *    sessionids that change frequently. See CakeSession::$requestCountdown.
+ * - `Session.ini` - An associative array of additional ini values to set.
+ *
+ * The built in defaults are:
+ *
+ * - 'php' - Uses settings defined in your php.ini.
+ * - 'cake' - Saves session files in CakePHP's /tmp directory.
+ * - 'database' - Uses CakePHP's database sessions.
+ * - 'cache' - Use the Cache class to save sessions.
+ *
+ * To define a custom session handler, save it at /app/Model/Datasource/Session/<name>.php.
+ * Make sure the class implements `CakeSessionHandlerInterface` and set Session.handler to <name>
+ *
+ * To use database sessions, run the app/Config/Schema/sessions.php schema using
+ * the cake shell command: cake schema create Sessions
+ *
+ */
+//ini_set('session.cookie_domain', '.paxapos.kom'); 
+Configure::write('Session', array(
+	    'defaults' => 'php',
+	    'cookie' => 'ristorantino',
+	    'cookieTimeout' => 2200, // 1 dia y medio
+	    'timeout' => 32400, // como 1 mes
+	    'ini' => array(
+	    	'session.name' => 'risto'
+	    )
+	));
+
+
+
+
 
 /**
  * To configure CakePHP *not* to use mod_rewrite and to
