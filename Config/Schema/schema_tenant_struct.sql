@@ -796,7 +796,7 @@ CREATE TABLE IF NOT EXISTS `productos` (
   `description` text COLLATE utf8_general_ci NOT NULL,
   `categoria_id` int(10) unsigned NOT NULL,
   `precio` float(10,2) NOT NULL,
-  `printer_id` int(11) NOT NULL,
+  `printer_id` int(11) NULL,
   `order` int(11) DEFAULT '0',
   `created` timestamp NULL DEFAULT NULL,
   `modified` timestamp NULL DEFAULT NULL,
