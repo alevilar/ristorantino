@@ -36,6 +36,10 @@
         {
             "type": "git",
             "url": "https://github.com/alevilar/ReservationManager.git"
+        },
+        {
+        	"type": "git",
+            "url": "https://github.com/alevilar/users.git"
         }
         
     ],
@@ -46,7 +50,9 @@
 		"ristorantino/mt_sites": "master",
 		"ristorantino/install": "master",
 		"ristorantino/reservation_manager": "master",
-		"cakephp/file_upload": "2.*"
+		"cakephp/file_upload": "2.*",
+		"ristorantino/users": "master",
+		"cakedc/utils": "1.*",
 	},
 	"require-dev": {
 		"phpunit/phpunit": "3.7.*@dev",
