@@ -19,6 +19,10 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
+if (file_exists(APP . 'Config' . DS . 'risto.php')) {
+	require APP . 'Config' . DS . 'risto.php';
+}
+
 setlocale(LC_TIME ,"es_AR.utf8");
 
 /**
@@ -185,6 +189,16 @@ Configure::write('Session', array(
  */
 	//Configure::write('App.cssBaseUrl', 'css/');
 
+
+
+
+
+/**
+ *  Internationalization
+ */
+Configure::write('Config.language', 'spa');
+
+
 /**
  * Web path to the js files directory under webroot.
  * If not set defaults to 'js/'
@@ -207,7 +221,7 @@ Configure::write('Session', array(
  *	`manager_index()` and `/manager/controller/index`
  *
  */
-	//Configure::write('Routing.prefixes', array('admin'));
+	Configure::write('Routing.prefixes', array('admin'));
 
 /**
  * Turn off all caching application-wide.

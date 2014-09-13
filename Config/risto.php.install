@@ -1,0 +1,22 @@
+<?php
+
+/**
+* Google Oauth
+**/
+// Configure::write('ExtAuth.Provider.Google.key', '123456789012.apps.googleusercontent.com');
+// Configure::write('ExtAuth.Provider.Google.secret', 'blahblahblahblahblahblah');
+
+
+
+/**
+* Twitter Oauth
+**/
+// Configure::write('ExtAuth.Provider.Twitter.key', 'blahblahblah');
+// Configure::write('ExtAuth.Provider.Twitter.secret', 'blahblahblahblahblahblah');
+
+
+/**
+* FB Oauth
+**/
+// Configure::write('ExtAuth.Provider.Facebook.key', '431235136634241414');
+// Configure::write('ExtAuth.Provider.Facebook.secret', '12344g4f3241e4d2144');

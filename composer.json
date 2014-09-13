@@ -53,6 +53,8 @@
 		"cakephp/file_upload": "2.*",
 		"ristorantino/users": "master",
 		"cakedc/utils": "1.*",
+		"codaxis/cakephp-bootstrap3-helpers": "1.1",
+		"sc0ttyd/ext-auth": "dev-master"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "3.7.*@dev",

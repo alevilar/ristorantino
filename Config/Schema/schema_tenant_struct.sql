@@ -955,7 +955,7 @@ CREATE TABLE IF NOT EXISTS `printer_jobs` (
 
 CREATE TABLE IF NOT EXISTS `roles_users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
+  `user_id` varchar(36) NOT NULL,
   `rol_id` int(11) NOT NULL,
   `created` timestamp NULL DEFAULT NULL,
   `modified` timestamp NULL DEFAULT NULL,
