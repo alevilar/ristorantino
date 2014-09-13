@@ -1,5 +1,11 @@
 <?php
 
+// If you wan your custom logo
+//Configure::write('Site.logo_path', 'logo.png');
+
+
+
+
 /**
 * Google Oauth
 **/
