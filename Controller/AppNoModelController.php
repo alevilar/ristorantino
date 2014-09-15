@@ -19,7 +19,7 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-App::uses('RistoAppController', 'Risto.Controller');
+App::uses('RistoNoModelAppController', 'Risto.Controller');
 
 /**
  * Application Controller
@@ -30,29 +30,7 @@ App::uses('RistoAppController', 'Risto.Controller');
  * @package		app.Controller
  * @link		http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
-class AppNoModelController extends Controller {
-    public $uses = false;
-
-    public $components = array(
-        'Session',
-        'Cookie',
-        'RequestHandler',
-        'MtSites.MtSites',
-        'Auth' => array(
-            'loginAction' => array('plugin'=>'users','controller' => 'users', 'action' => 'login'),
-            'logoutRedirect' => array('plugin'=>'users','controller' => 'users', 'action' => 'login'),
-            'loginError' => 'Usuario o Contraseña Incorrectos',
-            'authError' => 'Usted no tiene permisos para acceder a esta página.', 
-            'authorize' => array('MtSites.MtSites'),
-            'authenticate' => array(
-                'Form' => array(
-                    'recursive' => 1
-                )
-            ),        
-        ),
-        'ExtAuth.ExtAuth',
-        
-        'DebugKit.Toolbar',        
-    );
+class AppNoModelController extends RistoNoModelAppController {
+    
 
 }
