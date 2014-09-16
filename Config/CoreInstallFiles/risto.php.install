@@ -5,6 +5,24 @@
 
 
 
+/**
+ * 
+ *	Favicon
+ * Se pueden poner varios si asi se desea, listando en un array
+ *
+ *	Configure::write('Site.favicon', array(
+ *				'/img/favicon-16' => array( 'sizes' => '16x16'),
+ *				'/img/favicon-64' => array( 'sizes' => '64x64'),
+ *				'/img/favicon-128'=> array( 'sizes' => '128x128')
+ * 		));
+ *
+ */
+// Configure::write('Site.favicon', '/img/mozomonio.png');
+
+
+
+
+
 
 /**
 * Google Oauth
