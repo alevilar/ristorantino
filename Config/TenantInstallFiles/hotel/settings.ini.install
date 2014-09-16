@@ -1,0 +1,50 @@
+[Site]
+alias = {default_alias}
+name = {default_name}
+country_code = {default_country_code}
+
+[Printers]
+ticket_template  = ticket
+receipt_template = comandas
+output = Database
+
+[Adicion]
+reload_interval_timeout = 60000
+cantidadCubiertosObligatorio = 0
+preTicketHeader = COMPROBANTE DE CONSUMICION
+usarCajero = 1
+reload_interval = 19700
+cobrada_hide_ms = 0
+jqm_page_transition = 1
+
+[Horario]
+corte_del_dia = 6
+
+
+
+[Mesa]
+imprimePrimeroRemito = 1
+tituloMozo = Receicionista
+tituloMesa = Habitación
+tituloCubierto = Pasajero
+tituloCliente = Cliente
+usar_generica = 1
+generica_name = Kiosko
+generica_mozo_id = 1
+
+[Mozo]
+descuento_maximo = 15
+
+[Restaurante]
+tipofactura_name = B
+valorCubierto = 0
+iva_resp =
+razon_social = RAZON SOCIAL S.A
+ib = 
+mail = info@resto.com
+cuit = 30-00000000-1
+backup_mail = mails-backups@gmail.com
+
+
+[Search]
+Prg.presetForm = querystring
