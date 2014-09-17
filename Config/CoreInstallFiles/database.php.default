@@ -75,7 +75,7 @@ class DATABASE_CONFIG {
 		'prefix' => '{default_prefix}',
 		'encoding' => '{default_encoding}',
 		'port' => '{default_port}',
-
+		);
 
 
 	public $test = array(
