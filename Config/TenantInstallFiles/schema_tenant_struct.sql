@@ -654,6 +654,12 @@ CREATE TABLE IF NOT EXISTS `mesas` (
   `menu` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'es para cuando un cliente quiere imprimir el importe como MENU sin que se vea lo que consumio',
   `cant_comensales` int(11) DEFAULT '0',
   `estado_id` tinyint(4) NOT NULL DEFAULT '0',
+
+  `nombre_mesa_id` int(11) NOT NULL,
+  `observation` text COLLATE utf8_general_ci,
+  `checkin` timestamp NULL DEFAULT NULL,
+  `checkout` timestamp NULL DEFAULT NULL,
+
   `created` timestamp NULL DEFAULT NULL,
   `modified` timestamp NULL DEFAULT NULL,
   `time_cerro` timestamp NULL DEFAULT NULL,
@@ -663,10 +669,27 @@ CREATE TABLE IF NOT EXISTS `mesas` (
   PRIMARY KEY (`id`),
   KEY `time_cerro` (`time_cerro`,`time_cobro`),
   KEY `mozo_id` (`mozo_id`),
+  KEY `nombre_mesa_id` (`nombre_mesa_id`),
+  KEY `checkin` (`checkin`),
+  KEY `checkout` (`checkout`),
   KEY `numero` (`numero`),
   KEY `time_cobro` (`time_cobro`),
   KEY `created` (`time_cerro`,`mozo_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+
+
+CREATE TABLE IF NOT EXISTS `nombre_mesas` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(64) NOT NULL,
+  `description` text COLLATE utf8_general_ci,
+  `activo` tinyint(1) NOT NULL DEFAULT '1',
+  `created` timestamp NULL DEFAULT NULL,
+  `modified` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+
 
 -- --------------------------------------------------------
 
