@@ -3,6 +3,10 @@ alias = {default_alias}
 name = {default_name}
 country_code = {default_country_code}
 
+# puede ser: restarante, hotel o generic
+type = hotel
+
+
 [Printers]
 ticket_template  = ticket
 receipt_template = comandas
