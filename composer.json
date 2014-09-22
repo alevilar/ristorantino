@@ -19,11 +19,11 @@
     "repositories": [
         {
             "type": "git",
-            "url": "https://github.com/alevilar/CakePHP-FileUpload-Plugin"
+            "url": "https://github.com/alevilar/CakePHP-FileUpload-Plugin.git"
         },
         {
             "type": "git",
-            "url": "https://github.com/alevilar/ristorantino-vendor"
+            "url": "https://github.com/alevilar/ristorantino-vendor.git"
         },
         {
             "type": "git",
@@ -43,7 +43,7 @@
         },
         {
         	"type": "git",
-            "url": "https://github.com/alevilar/ExtAuth"
+            "url": "https://github.com/alevilar/ExtAuth.git"
         }
         
     ],
