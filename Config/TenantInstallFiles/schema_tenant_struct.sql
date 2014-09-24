@@ -655,8 +655,7 @@ CREATE TABLE IF NOT EXISTS `mesas` (
   `cant_comensales` int(11) DEFAULT '0',
   `estado_id` tinyint(4) NOT NULL DEFAULT '0',
 
-  `nombre_mesa_id` int(11) NOT NULL,
-  `observation` text COLLATE utf8_general_ci,
+  `observation` text NOT NULL DEFAULT  '',
   `checkin` timestamp NULL DEFAULT NULL,
   `checkout` timestamp NULL DEFAULT NULL,
 
