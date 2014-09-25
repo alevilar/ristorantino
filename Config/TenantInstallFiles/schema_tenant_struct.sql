@@ -935,4 +935,4 @@ CREATE TABLE IF NOT EXISTS `media` (
   `created` timestamp NULL DEFAULT NULL,
   `modified` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT;
+) ENGINE=InnoDB;
