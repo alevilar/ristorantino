@@ -94,7 +94,7 @@ CREATE TABLE IF NOT EXISTS `account_gastos` (
   `importe_neto` decimal(10,2) NOT NULL DEFAULT '0.00',
   `importe_total` decimal(10,2) NOT NULL DEFAULT '0.00',
   `observacion` text COLLATE utf8_bin,
-  `file` varchar(64) COLLATE utf8_bin DEFAULT NULL,
+  `media_id` INT NULL ;
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -162,70 +162,6 @@ CREATE TABLE IF NOT EXISTS `account_tipo_impuestos` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `acos`
---
-
-CREATE TABLE IF NOT EXISTS `acos` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `parent_id` int(10) DEFAULT NULL,
-  `model` varchar(255) COLLATE utf8_general_ci DEFAULT NULL,
-  `foreign_key` int(10) DEFAULT NULL,
-  `alias` varchar(255) COLLATE utf8_general_ci DEFAULT NULL,
-  `lft` int(10) DEFAULT NULL,
-  `rght` int(10) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `aros`
---
-
-CREATE TABLE IF NOT EXISTS `aros` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `parent_id` int(10) DEFAULT NULL,
-  `model` varchar(255) COLLATE utf8_general_ci DEFAULT NULL,
-  `foreign_key` int(10) DEFAULT NULL,
-  `alias` varchar(255) COLLATE utf8_general_ci DEFAULT NULL,
-  `lft` int(10) DEFAULT NULL,
-  `rght` int(10) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `aros_acos`
---
-
-CREATE TABLE IF NOT EXISTS `aros_acos` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `aro_id` int(10) NOT NULL,
-  `aco_id` int(10) NOT NULL,
-  `_create` varchar(2) COLLATE utf8_general_ci NOT NULL DEFAULT '0',
-  `_read` varchar(2) COLLATE utf8_general_ci NOT NULL DEFAULT '0',
-  `_update` varchar(2) COLLATE utf8_general_ci NOT NULL DEFAULT '0',
-  `_delete` varchar(2) COLLATE utf8_general_ci NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `ARO_ACO_KEY` (`aro_id`,`aco_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `cake_sessions`
---
-
-CREATE TABLE IF NOT EXISTS `cake_sessions` (
-  `id` varchar(255) NOT NULL DEFAULT '',
-  `data` text,
-  `expires` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -301,7 +237,7 @@ CREATE TABLE IF NOT EXISTS `categorias` (
   `rght` int(10) unsigned DEFAULT NULL,
   `name` varchar(20) COLLATE utf8_general_ci NOT NULL,
   `description` text COLLATE utf8_general_ci NOT NULL,
-  `image_url` varchar(200) COLLATE utf8_general_ci DEFAULT NULL,
+  `media_id` int(10) unsigned DEFAULT NULL,
   `created` timestamp NULL DEFAULT NULL,
   `modified` timestamp NULL DEFAULT NULL,
   `deleted_date` timestamp NULL DEFAULT NULL,
@@ -700,7 +636,7 @@ CREATE TABLE IF NOT EXISTS `mozos` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `nombre` varchar(64) COLLATE utf8_general_ci NOT NULL,
   `apellido` varchar(64) COLLATE utf8_general_ci NOT NULL,
-  `image_url` varchar(256) COLLATE utf8_general_ci DEFAULT NULL,
+  `media_id` int(10) unsigned NULL,
   `numero` int(11) NOT NULL,
   `activo` tinyint(1) NOT NULL DEFAULT '0',
   `deleted_date` timestamp NULL DEFAULT NULL,
@@ -929,9 +865,9 @@ CREATE TABLE IF NOT EXISTS `tags` (
 CREATE TABLE IF NOT EXISTS `tipo_de_pagos` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(110) COLLATE utf8_general_ci NOT NULL,
-  `image_url` varchar(200) COLLATE utf8_general_ci DEFAULT NULL,
+  `media_id` int(10) unsigned NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 
@@ -986,3 +922,17 @@ CREATE TABLE IF NOT EXISTS `roles_users` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 
+
+
+
+CREATE TABLE IF NOT EXISTS `media` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `model` VARCHAR( 32 ) NULL,
+  `type` varchar(48) NOT NULL,
+  `size` smallint(6) NOT NULL,
+  `name` varchar(48) NOT NULL,
+  `file` longblob NOT NULL,
+  `created` timestamp NULL DEFAULT NULL,
+  `modified` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT;

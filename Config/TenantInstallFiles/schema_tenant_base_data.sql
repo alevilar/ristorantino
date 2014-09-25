@@ -3,11 +3,11 @@
 -- Volcar la base de datos para la tabla `categorias`
 --
 
-INSERT INTO `categorias` (`parent_id`, `lft`, `rght`, `name`, `description`, `image_url`, `created`, `modified`, `deleted_date`, `deleted`) VALUES
-( NULL, 1, 8, '/', '', '', '2012-11-28 22:57:10', '2012-11-28 22:57:10', NULL, 0),
-( 1, 2, 3, 'Guarnicion', '', 'french_fries_icon.png', '2013-05-17 13:49:56', '2013-05-17 13:46:57', NULL, 0),
-( 1, 4, 5, 'Bebidas', '', 'Pepsi_Classic_128.png', '2014-04-02 06:49:47', '2014-04-02 06:49:47', NULL, 0),
-( 1, 6, 7, 'Hamburguesas', '', 'hamburger_128.png', '2014-04-02 06:53:54', '2014-04-02 06:53:54', NULL, 0);
+INSERT INTO `categorias` (`parent_id`, `lft`, `rght`, `name`, `description`, `media_id`, `created`, `modified`, `deleted_date`, `deleted`) VALUES
+( NULL, 1, 8, '/', '', NULL, '2012-11-28 22:57:10', '2012-11-28 22:57:10', NULL, 0),
+( 1, 2, 3, 'Guarnicion', '', NULL, '2013-05-17 13:49:56', '2013-05-17 13:46:57', NULL, 0),
+( 1, 4, 5, 'Bebidas', '', NULL, '2014-04-02 06:49:47', '2014-04-02 06:49:47', NULL, 0),
+( 1, 6, 7, 'Hamburguesas', '', NULL, '2014-04-02 06:53:54', '2014-04-02 06:53:54', NULL, 0);
 -- --------------------------------------------------------
 
 INSERT INTO `clientes` (`id`, `codigo`, `mail`, `telefono`, `descuento_id`, `nombre`, `nrodocumento`, `tipo_documento_id`, `domicilio`, `iva_responsabilidad_id`, `created`, `modified`) VALUES
@@ -124,17 +124,17 @@ INSERT INTO `sabores` (`id`, `name`, `categoria_id`, `precio`, `created`, `modif
 -- Volcar la base de datos para la tabla `tipo_de_pagos`
 --
 
-INSERT INTO `tipo_de_pagos` (`id`, `name`, `image_url`) VALUES
-(1, 'Efectivo', 'dollar_icon.png'),
-(2, 'No Paga', 'no_paga.png'),
-(3, 'Tarjeta Amex', 'american_express_icon.png'),
-(4, 'Tarjeta Visa', 'visa_icon.png'),
-(5, 'Tarjeta Master Card', 'mastercard_icon.png'),
-(6, 'Tarjeta Visa Debito', '1315361034_visa_electron_curved.png'),
-(7, 'Tarjeta Maestro', 'maestro_icon.png'),
-(8, 'No volvio Cupon', 'no_volvio_cupon.png'),
-(9, 'Dudoso', 'dudoso.png'),
-(10, 'Voucher Cine', 'check_icon.png');
+INSERT INTO `tipo_de_pagos` (`id`, `name`, `media_id`) VALUES
+(1, 'Efectivo', NULL),
+(2, 'No Paga', NULL),
+(3, 'Tarjeta Amex', NULL),
+(4, 'Tarjeta Visa', NULL),
+(5, 'Tarjeta Master Card', NULL),
+(6, 'Tarjeta Visa Debito', NULL),
+(7, 'Tarjeta Maestro', NULL),
+(8, 'No volvio Cupon', NULL),
+(9, 'Dudoso', NULL),
+(10, 'Voucher Cine', NULL);
 
 --
 -- Volcar la base de datos para la tabla `tipo_documentos`
