@@ -4,4 +4,7 @@
 	RewriteRule ^(.*)$ http://www.%{HTTP_HOST}/$1 [R=301,L]
     RewriteRule    ^$    webroot/    [L]
     RewriteRule    (.*) webroot/$1    [L]
+
+    php_value post_max_size 30M
+    php_value upload_max_filesize 30M
 </IfModule>
