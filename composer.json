@@ -54,7 +54,6 @@
 		"ristorantino/mt_sites": "master",
 		"ristorantino/install": "master",
 		"ristorantino/reservation_manager": "master",
-		"cakephp/file_upload": "2.*",
 		"ristorantino/users": "master",
 		"cakedc/utils": "1.*",
 		"codaxis/cakephp-bootstrap3-helpers": "1.1",
