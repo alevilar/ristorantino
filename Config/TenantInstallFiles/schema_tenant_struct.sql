@@ -682,7 +682,7 @@ CREATE TABLE IF NOT EXISTS `observacion_comandas` (
 CREATE TABLE IF NOT EXISTS `pagos` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `mesa_id` int(10) unsigned NOT NULL,
-  `tipo_de_pago_id` int(10) unsigned NOT NULL,
+  `tipo_de_pago_id` int(10) unsigned NULL,
   `valor` float NOT NULL COMMENT 'por ahora este campo vale cuando el tipo de pago es mixto, entonces se pone la cantidad de efectivo que pagó. Para poder hacer el arqueo.',
   `created` timestamp NULL DEFAULT NULL,
   `modified` timestamp NULL DEFAULT NULL,
