@@ -634,10 +634,10 @@ CREATE TABLE IF NOT EXISTS `nombre_mesas` (
 
 CREATE TABLE IF NOT EXISTS `mozos` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(64) COLLATE utf8_general_ci NOT NULL,
-  `apellido` varchar(64) COLLATE utf8_general_ci NOT NULL,
+  `numero` varchar(64) NOT NULL,
+  `nombre` varchar(64) COLLATE utf8_general_ci NULL,
+  `apellido` varchar(64) COLLATE utf8_general_ci NULL,
   `media_id` int(10) unsigned NULL,
-  `numero` int(11) NOT NULL,
   `activo` tinyint(1) NOT NULL DEFAULT '0',
   `deleted_date` timestamp NULL DEFAULT NULL,
   `deleted` tinyint(4) NOT NULL DEFAULT '0',
