@@ -16,48 +16,10 @@
 	"config": {
 		"vendor-dir": "Vendor"
 	},
-    "repositories": [
-        {
-            "type": "git",
-            "url": "https://github.com/alevilar/CakePHP-FileUpload-Plugin.git"
-        },
-        {
-            "type": "git",
-            "url": "https://github.com/alevilar/ristorantino-vendor.git"
-        },
-        {
-            "type": "git",
-            "url": "https://github.com/alevilar/MtSites.git"
-        },
-        {
-            "type": "git",
-            "url": "https://github.com/alevilar/Install.git"
-        },
-        {
-            "type": "git",
-            "url": "https://github.com/alevilar/ReservationManager.git"
-        },
-        {
-        	"type": "git",
-            "url": "https://github.com/alevilar/users.git"
-        },
-        {
-        	"type": "git",
-            "url": "https://github.com/alevilar/ExtAuth.git"
-        }
-        
-    ],
 	"require": {
-		"php": ">=5.3",		
-		"cakephp/cakephp": "2.5.4",		
+		"php": ">=5.3.10",		
 		"ristorantino/plugins": "master",
-		"ristorantino/mt_sites": "master",
-		"ristorantino/install": "master",
-		"ristorantino/reservation_manager": "master",
-		"ristorantino/users": "master",
-		"cakedc/utils": "1.*",
-		"codaxis/cakephp-bootstrap3-helpers": "1.1",
-		"sc0ttyd/ext-auth": "dev-master"
+		"cakephp/cakephp": "~2.5"	
 	},
 	"require-dev": {
 		"phpunit/phpunit": "3.7.*@dev",
