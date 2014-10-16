@@ -2,7 +2,7 @@
 	"name":"ristorantino/ristorantino",
 	"type": "project",
 	"description": "Ristorantino Mágico Punto de Venta en CakePHP",
-	"homepage": "http://github.com/alevilar/ristorantino",
+	"homepage": "http://github.com/ristorantino/ristorantino",
 	"license": "MIT",
 	"type": "project",
 	"authors": [
@@ -16,6 +16,12 @@
 	"config": {
 		"vendor-dir": "Vendor"
 	},
+	"repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/ristorantino/ristorantino-vendor.git"
+        }
+    	],
 	"require": {
 		"php": ">=5.3.10",		
 		"ristorantino/plugins": "master",
