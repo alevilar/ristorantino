@@ -17,10 +17,10 @@
 		"vendor-dir": "Vendor"
 	},
 	"repositories": [
-        {
-            "type": "git",
-            "url": "https://github.com/ristorantino/ristorantino-vendor.git"
-        }
+        	{
+   	         	"type": "git",
+	        	 "url": "https://github.com/ristorantino/ristorantino-vendor.git"
+        	}
     	],
 	"require": {
 		"php": ">=5.3.10",		
