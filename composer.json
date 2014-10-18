@@ -16,15 +16,9 @@
 	"config": {
 		"vendor-dir": "Vendor"
 	},
-	"repositories": [
-	        {
-	            "type": "git",
-	            "url": "https://github.com/alevilar/ristorantino-vendor.git"
-	        }
-        ],
 	"require": {
-		"php": ">=5.3.10",		
-		"ristorantino/plugins": "master",
+		"php": "~5.4",		
+		"ristorantino/plugins": "master@dev",
 		"cakephp/cakephp": "~2.5"	
 	},
 	"require-dev": {
