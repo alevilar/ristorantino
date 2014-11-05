@@ -1,4 +1,0 @@
-[submodule "app/Plugin/FileUpload"]
-	path = app/Plugin/FileUpload
-	url = https://github.com/webtechnick/CakePHP-FileUpload-Plugin.git
-	branch = cakephp2.0
