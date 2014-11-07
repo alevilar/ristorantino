@@ -26,7 +26,6 @@ if (file_exists(APP . 'Config' . DS . 'risto.php')) {
 	require APP . 'Config' . DS . 'risto.php';
 }
 
-setlocale(LC_TIME ,"es_AR.utf8");
 
 
 /**
@@ -125,8 +124,8 @@ setlocale(LC_TIME ,"es_AR.utf8");
 Configure::write('Session', array(
 	    'defaults' => 'php',
 	    'cookie' => 'ristorantino',
-	    'cookieTimeout' => 2200, // 1 dia y medio
-	    'timeout' => 32400, // como 1 mes
+	    'cookieTimeout' => 32400, // como 1 mes
+	    'timeout' => 2200, // 1 dia y medio
 	    'ini' => array(
 	    	'session.name' => 'risto'
 	    )
