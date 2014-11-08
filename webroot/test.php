@@ -60,6 +60,11 @@ if (!defined('APP_DIR')) {
  * /lib/Cake/Console/Templates/skel/webroot/test.php
  */
 //define('CAKE_CORE_INCLUDE_PATH', ROOT . DS . 'lib');
+$coreDir = ROOT . DS . APP_DIR . DS . 'Vendor' . DS . 'cakephp' . DS . 'cakephp' . DS . 'lib';
+if (!defined('CAKE_CORE_INCLUDE_PATH') && is_dir($coreDir . DS . 'Cake')) {
+	define('CAKE_CORE_INCLUDE_PATH', $coreDir);
+}
+
 
 /**
  * Editing below this line should not be necessary.

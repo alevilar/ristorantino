@@ -17,9 +17,7 @@
 		"vendor-dir": "Vendor"
 	},
 	"require": {
-		"php": "~5.4",		
 		"ristorantino/plugins": "master@dev",
-		"cakephp/cakephp": "~2.5"	
 	},
 	"require-dev": {
 		"phpunit/phpunit": "3.7.*",
