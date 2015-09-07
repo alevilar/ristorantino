@@ -23,5 +23,10 @@ Then you need to:
 ## Requirements
 You need composer (https://getcomposer.org) and Git installed, so dependencies are auto-managed.
 
+And configure URL rewriting for CakePHP (the framework Ristorantino uses):
+http://book.cakephp.org/2.0/en/installation/url-rewriting.html
+
+
+
 
 
